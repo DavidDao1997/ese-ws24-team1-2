@@ -1,0 +1,25 @@
+Modellierung (top-down)
+------------------------------
+
+1. Use-Case
+
+2. Requirements / Abnahmetests
+
+3. BDD
+
+4. IDB
+
+5. Klassendiagramm
+
+6. FSM
+
+7. Activity-Diagramm / Sequenz-Diagramm usw.
+
+
+
+
+
+
+
+
+
