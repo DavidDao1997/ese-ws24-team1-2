@@ -6,8 +6,10 @@ qnx-workspace/*
 !qnx-workspace/**/*.h
 !qnx-workspace/**/Makefile
 
+# zeige unterordner an (von chatgpt vorgeschlagen kann weg?)
 !qnx-workspace/**
 
+# explizit ignorieren der verstecken files und dem build ordner
 build
 .*/
 .*
