@@ -9,6 +9,6 @@ qnx-workspace/*
 !qnx-workspace/**
 
 build
-
+.*/
 
 
