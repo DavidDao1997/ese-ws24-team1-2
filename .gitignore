@@ -1,1 +1,8 @@
-#empty
+#ignore alle dateien in qnx-workspace
+qnx-workspace/**
+
+# erlaube .cpp .h und Makefile in qnx-workspace
+!qnx-workspace/**/*.cpp
+!qnx-workspace/**/*.h
+!qnx-workspace/**/Makefile
+
