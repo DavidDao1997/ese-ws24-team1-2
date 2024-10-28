@@ -10,5 +10,6 @@ qnx-workspace/*
 
 build
 .*/
+.*
 
 
