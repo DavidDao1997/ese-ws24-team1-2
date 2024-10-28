@@ -6,5 +6,9 @@ qnx-workspace/*
 !qnx-workspace/**/*.h
 !qnx-workspace/**/Makefile
 
+!qnx-workspace/**
+
+build
+
 
 

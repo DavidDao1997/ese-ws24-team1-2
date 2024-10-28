@@ -1,0 +1,7 @@
+13:17:47 **** Build of configuration armv7le-debug for project sample ****
+make -j4 all 
+qcc -lang-c++ -Vgcc_ntoarmv7le -c -Wp,-MMD,build/armv7le-debug/src/sample.d,-MT,build/armv7le-debug/src/sample.o -o build/armv7le-debug/src/sample.o  -Wall -fmessage-length=0 -g -O0 -fno-builtin  src/sample.cpp
+qcc -lang-c++ -Vgcc_ntoarmv7le -o build/armv7le-debug/sample   build/armv7le-debug/src/sample.o  
+13:18:10 **** Incremental Build of configuration armv7le-debug for project sample ****
+make -j4 all 
+make: Nothing to be done for 'all'.
