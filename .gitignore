@@ -1,8 +1,3 @@
-
-*
-!*/
-
-
 #ignore alle dateien in qnx-workspace
 qnx-workspace/*
 
@@ -10,4 +5,6 @@ qnx-workspace/*
 !qnx-workspace/**/*.cpp
 !qnx-workspace/**/*.h
 !qnx-workspace/**/Makefile
+
+!qnx-workspace/**
 
