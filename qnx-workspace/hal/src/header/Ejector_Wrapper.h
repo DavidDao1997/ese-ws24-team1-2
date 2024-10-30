@@ -9,11 +9,12 @@
 #define EJECTOR_WRAPPER_H_
 
 #include "../interface/I_SortingModule.h"
+#include "HALConfig.h"
+
 
 class Ejector_Wrapper : I_SortingModule {
-
-	bool getPucksStatus() override;
-
+	void setOpen() override;
+	void setClosed() override;
 };
 
 

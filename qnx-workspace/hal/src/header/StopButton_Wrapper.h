@@ -9,7 +9,8 @@
 #define HEADER_STOPBUTTON_WRAPPER_H_
 
 
-
+#include "../interface/I_Button.h"
+#include "HALConfig.h"
 
 
 #endif /* HEADER_STOPBUTTON_WRAPPER_H_ */

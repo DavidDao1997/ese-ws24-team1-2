@@ -10,11 +10,11 @@
 
 
 #include "../interface/I_SortingModule.h"
+#include "HALConfig.h"
 
 class Switch_Wrapper : I_SortingModule {
-
-	bool getPucksStatus() override;
-
+	void setOpen() override;
+	void setClosed() override;
 };
 
 

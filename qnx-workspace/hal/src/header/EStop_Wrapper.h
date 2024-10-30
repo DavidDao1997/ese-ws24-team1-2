@@ -8,6 +8,8 @@
 #ifndef HEADER_ESTOP_WRAPPER_H_
 #define HEADER_ESTOP_WRAPPER_H_
 
+#include "../interface/I_EStop.h"
+#include "HALConfig.h"
 
 
 
