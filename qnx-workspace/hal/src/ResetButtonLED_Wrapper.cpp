@@ -6,7 +6,7 @@
  */
 
 
-#include "interface/I_ButtonLED.h"
+#include "interface/I_Led.h"
 
 void ResetButtonLED::switchLightOn() {
 	// set Hardware adress

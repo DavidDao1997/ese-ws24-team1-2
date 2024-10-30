@@ -8,7 +8,7 @@
 #ifndef HEADER_STARTBUTTONLED_H_
 #define HEADER_STARTBUTTONLED_H_
 
-#include "../interface/I_ButtonLED.h"
+#include "../interface/I_Led.h"
 
 class StartButtonLED_Wrapper : I_ButtonLED {
 
