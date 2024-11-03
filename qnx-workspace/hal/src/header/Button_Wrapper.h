@@ -12,5 +12,16 @@
 #include "../interface/I_Button.h"
 #include "HALConfig.h"
 
+class Button_Wrapper : I_Button {
+public:
+	Button_Wrapper(Pin pin);
+
+
+	bool getPressed() override;
+
+private:
+	Pin pin;
+};
+
 
 #endif /* HEADER_STOPBUTTON_WRAPPER_H_ */

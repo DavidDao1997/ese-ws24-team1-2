@@ -10,7 +10,8 @@
 
 class I_SortingModule {
 public:
-	virtual bool getPucksStatus() = 0;
+	void setOpen() = 0;
+	void setClosed() = 0;
 
 	virtual ~I_SortingModule();
 };

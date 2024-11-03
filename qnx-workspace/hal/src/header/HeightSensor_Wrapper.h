@@ -9,7 +9,8 @@
 #define HEADER_HEIGHTSENSOR_WRAPPER_H_
 
 
-
+#include "../interface/I_HeightSensor.h"
+#include "HALConfig.h"
 
 
 #endif /* HEADER_HEIGHTSENSOR_WRAPPER_H_ */

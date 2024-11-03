@@ -10,9 +10,13 @@
 
 class I_Motor {
 public:
-	virtual void runRight() = 0;
-	virtual void runtLeft() = 0;
+	virtual void setRight() = 0;
+	virtual void setLeft() = 0;
+	virtual void setStop() = 0;
 	virtual void runSlow() = 0;
+	virtual void setFast() = 0;
+
+	virtual ~I_Motor();
 };
 
 

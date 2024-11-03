@@ -6,5 +6,12 @@
  */
 
 
+#include "header/Ejector_Wrapper.h"
 
+
+
+
+void Ejector_Wrapper::setOpen(){
+
+}
 

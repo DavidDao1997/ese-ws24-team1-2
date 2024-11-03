@@ -9,12 +9,19 @@
 #define HEADER_STARTBUTTONLED_H_
 
 #include "../interface/I_Led.h"
+#include "../HALConfig.h"
 
-class StartButtonLED_Wrapper : I_ButtonLED {
+class Led_Wrapper : I_Led {
+public:
+	Led_Wrapper(Pin pin);
+
 
 	void switchLightOn() override;
 	void switchLightOff() override;
+	void setPulse() override;
 
+private:
+	Pin pin;
 };
 
 
