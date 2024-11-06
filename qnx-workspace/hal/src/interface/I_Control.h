@@ -21,47 +21,32 @@
 
 class I_Control {
 public:
-	I_Control(); //TODO I_Control(uint16 someident);
 	virtual ~I_Control();
 
-	bool init();
+	virtual bool init() = 0;
 
 	// Actors
-	void redLampLightOn();
-	void redLampLightOff();
-	void yellowLampLightOn();
-	void yellowLampLightOff();
-	void greenLampLightOn();
-	void greenLampLightOff();
+	virtual void redLampLightOn() = 0;
+	virtual void redLampLightOff() = 0;
+	virtual void yellowLampLightOn() = 0;
+	virtual void yellowLampLightOff() = 0;
+	virtual void greenLampLightOn() = 0;
+	virtual void greenLampLightOff() = 0;
 
-	void startButtonLightOn();
-	void startButtonLightOff();
-	void stopButtonLightOn();
-	void stopButtonLightOn();
-	void Q1LightOn();
-	void Q1LightOff();
-	void Q2LightOn();
-	void Q2LightOff();
+	virtual void startButtonLightOn() = 0;
+	virtual void startButtonLightOff() = 0;
+	virtual void stopButtonLightOn() = 0;
+	virtual void stopButtonLightOn() = 0;
+	virtual void Q1LightOn() = 0;
+	virtual void Q1LightOff() = 0;
+	virtual void Q2LightOn() = 0;
+	virtual void Q2LightOff() = 0;
 
 
-	void conveyorRight();
-	void conveyorLeft();
-	void conveyorSlow();
-	void conveyorFast();
-
-private:
-
-	//uint16 identifuer // TODO
-
-	//I_HeightSensor hs;
-	I_Led redLamp;
-	I_Led yellowLamp;
-	I_Led greenLamp;
-	I_Led startBtnLed;
-	I_Led stopBtnLed;
-	I_Led q1;
-	I_Led q2;
-	I_Motor motor;
+	virtual void conveyorRight() = 0;
+	virtual void conveyorLeft() = 0;
+	virtual void conveyorSlow() = 0;
+	virtual void conveyorFast() = 0;
 
 };
 
