@@ -8,6 +8,8 @@
 #ifndef HALCONFIG_H_
 #define HALCONFIG_H_
 
+#include <stdint.h>
+
 
 // GPIO Banks
 #define GPIO_BANK_0 0x44E07000
@@ -47,7 +49,7 @@
 
 
 // Type to specify Pin number
-typedef uint8 Pin;
+typedef uint8_t Pin;
 
 
 

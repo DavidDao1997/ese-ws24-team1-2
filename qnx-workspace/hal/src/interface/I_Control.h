@@ -14,9 +14,9 @@
 // #include "../interface/I_MetalSensor.h"
 
 //#include "../interface/I_HeightSensor.h"
-#include "../interface/I_Led.h"
-#include "../interface/I_Motor.h"
-#include "../interface/I_SortingModule.h"
+//#include "../interface/I_Led.h"
+//#include "../interface/I_Motor.h"
+//#include "../interface/I_SortingModule.h"
 
 
 class I_Control {
@@ -35,8 +35,8 @@ public:
 
 	virtual void startButtonLightOn() = 0;
 	virtual void startButtonLightOff() = 0;
-	virtual void stopButtonLightOn() = 0;
-	virtual void stopButtonLightOn() = 0;
+	//virtual void stopButtonLightOn() = 0;
+	//virtual void stopButtonLightOn() = 0;
 	virtual void Q1LightOn() = 0;
 	virtual void Q1LightOff() = 0;
 	virtual void Q2LightOn() = 0;

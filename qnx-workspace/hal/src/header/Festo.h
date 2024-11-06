@@ -5,8 +5,8 @@
  *      Author: Marc
  */
 
-#ifndef HEADER_I_CONTROL_H_
-#define HEADER_I_CONTROL_H_
+#ifndef HEADER_FESTO_H_
+#define HEADER_FESTO_H_
 
 // #include "../interface/I_Button.h"
 // #include "../interface/I_EStop.h"
@@ -14,9 +14,12 @@
 // #include "../interface/I_MetalSensor.h"
 
 //#include "../interface/I_HeightSensor.h"
-//#include "../interface/I_Led.h"
-//#include "../interface/I_Motor.h"
-//#include "../interface/I_SortingModule.h"
+#include "../interface/I_Led.h"
+#include "../interface/I_Motor.h"
+#include "../interface/I_SortingModule.h"
+
+
+#include "../interface/I_Control.h"
 
 
 class Festo : I_Control {
@@ -36,8 +39,8 @@ public:
 
 	void startButtonLightOn() override;
 	void startButtonLightOff() override;
-	void stopButtonLightOn() override;
-	void stopButtonLightOn() override;
+	//void stopButtonLightOn() override;
+	//void stopButtonLightOn() override;
 	void Q1LightOn() override;
 	void Q1LightOff() override;
 	void Q2LightOn() override;
@@ -66,4 +69,4 @@ private:
 };
 
 
-#endif /* HEADER_I_CONTROL_H_ */
+#endif /* HEADER_FESTO_H_ */

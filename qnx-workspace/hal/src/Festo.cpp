@@ -9,11 +9,11 @@
 #include <stdint.h>
 #include "sys/mman.h"
 #include "sys/neutrino.h"
-#include "interface/I_Control.h"
-#include "HALConfig.h"
+#include "header/Festo.h"
+#include "header/HALConfig.h"
 
 
-I_Control::I_Control(){
+Festo::Festo(){
 	redLamp = new I_Led(LR_PIN);
 	yellowLamp = new I_Led(LY_PIN);
 	greenLamp = new I_Led(LG_PIN);

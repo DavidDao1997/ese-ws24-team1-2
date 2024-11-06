@@ -5,10 +5,26 @@
  *      Author: Marc
  */
 
-#include
+#include "header/Motor_Wrapper.h"
 
-virtual void runRight() = 0;
-	virtual void runtLeft() = 0;
-	virtual void runSlow() = 0;
+Motor::Motor(Pin pin){
+
+}
+
+void Motor::setRight(){
+
+}
+
+void Motor::setLeft(){
+
+}
+
+void Motor::setSlow(){
+
+}
+
+void Motor::setFast(){
+
+}
 
 
