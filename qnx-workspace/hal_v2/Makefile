@@ -1,4 +1,4 @@
-ARTIFACT = testy1
+ARTIFACT = hal_v2
 
 #Build architecture/variant string, possible values: x86, armv7le, etc...
 PLATFORM ?= armv7le
@@ -13,10 +13,8 @@ TARGET = $(OUTPUT_DIR)/$(ARTIFACT)
 #Compiler definitions
 
 CC = qcc -Vgcc_nto$(PLATFORM)
-CXX = qcc -lang-c++ -Vgcc_nto$(PLATFORM) -DSIM_SHOW_SENSORS -DSIM_SHOW_ACTUATORS
+CXX = qcc -lang-c++ -Vgcc_nto$(PLATFORM)
 LD = $(CXX)
-
-
 
 #User defined include/preprocessor flags and libraries
 
