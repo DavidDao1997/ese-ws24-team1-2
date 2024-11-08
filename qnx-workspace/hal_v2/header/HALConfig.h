@@ -17,7 +17,12 @@
 #define GPIO_BANK_2 0x481AC000
 #define GPIO_BANK_3 0x481AE000
 
+#define SHIFT_BIT 0x00000001
+
 #define IO_MEM_LEN 0x1000
+
+#define GPIO_DATAIN 0x138
+#define GPIO_DATAOUT 0x13
 
 #define GPIO_CLEAR 0x190
 #define GPIO_SET 0x194
@@ -36,7 +41,7 @@
 #define BGSL_PIN 2
 #define BRSL_PIN 3
 #define Q1_PIN 4
-#define Q2_PIN 5
+#define Q2_PIN 5 
 
 //Motor
 #define M_FORWARD_PIN 12
