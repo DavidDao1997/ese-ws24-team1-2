@@ -34,7 +34,7 @@ public:
 	virtual void motorStop() = 0;
 
 
-	//virtual ~I_Actuators();
+	virtual ~I_Actuators() {};
 };
 
 

@@ -14,7 +14,7 @@
 #include "sys/mman.h"
 #include "sys/neutrino.h"
 #include "hw/inout.h"
-#include "../header/Actuators_Wrapper.h"
+#include "header/Actuators_Wrapper.h"
 #include "../simulationadapterqnx/simqnxgpioapi.h"
 
 
@@ -120,7 +120,7 @@ void Actuators_Wrapper::runRight(){
 
 void Actuators_Wrapper::runLeft(){
     out32((uintptr_t) (gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << M_STOP_PIN);
-     out32((uintptr_t) (gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << M_FORWARD_PIN);
+    out32((uintptr_t) (gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << M_FORWARD_PIN);
 
     out32((uintptr_t) (gpio_bank_1 + GPIO_SET), SHIFT_BIT << M_BACKWARD_PIN );
 }

@@ -9,8 +9,8 @@ using namespace std;
 
 
 
-#include "../header/I_Actuators.h"
-#include "../header/Actuators_Wrapper.h"
+#include "header/I_Actuators.h"
+#include "header/Actuators_Wrapper.h"
 
 
 int main() {
