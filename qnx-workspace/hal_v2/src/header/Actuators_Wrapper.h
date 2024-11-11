@@ -37,11 +37,18 @@ public:
 	void runFast() override;
 	void motorStop() override;
 
+
+//Sorting Module
+	uint8_t readSortingModule();
+	void openSortingModule();
+	void closeSortingModule();
+
 	
 
 
 private:
-
+	// volatile entfernen
+	volatile uintptr_t gpio_bank_0;
 	volatile uintptr_t gpio_bank_1;
 	volatile uintptr_t gpio_bank_2;
 

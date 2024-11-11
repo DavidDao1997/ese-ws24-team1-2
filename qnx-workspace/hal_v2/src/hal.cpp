@@ -20,7 +20,34 @@ int main() {
 	if (!actuators_test->init()) {
 		delete actuators_test;
 	} else {
+
 		while(1){
+			actuators_test->yellowLampLightOn();
+
+			uint8_t SMbit = 0;
+
+			SMbit = actuators_test->readSortingModule();
+			char buffer[50];
+			sprintf(buffer, "readBit %d", SMbit);
+
+			cout << buffer << endl;
+
+			if (SMbit == 0){
+				actuators_test->openSortingModule();
+				usleep(1000*500);
+				actuators_test->closeSortingModule();
+				usleep(1000*500);
+			}
+
+			usleep(1000*1000);
+
+			actuators_test->yellowLampLightOff();
+			actuators_test->motorStop();
+			actuators_test->yellowLampLightOff();
+			actuators_test->redLampLightOff();
+			actuators_test->greenLampLightOff();
+			usleep(1000*500);
+			/*
 			cout << "new" << endl;
 			actuators_test->redLampLightOn();
 			usleep(1000*500);
@@ -33,8 +60,7 @@ int main() {
 			usleep(1000*500);
 			actuators_test->greenLampLightOn();
 			usleep(1000*500);
-
-
+			*/
 
 			/*
 			//cout << "motor right" << endl;
@@ -50,6 +76,8 @@ int main() {
 			usleep(1000*500);
 			actuators_test->runFast();
 			*/
+
+
 
 		}
 

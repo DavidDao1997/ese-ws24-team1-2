@@ -15,15 +15,17 @@
 #include "sys/neutrino.h"
 #include "hw/inout.h"
 #include "header/Actuators_Wrapper.h"
-#include "../simulationadapterqnx/simqnxgpioapi.h"
+//#include "../simulationadapterqnx/simqnxgpioapi.h"
 
 
 Actuators_Wrapper::Actuators_Wrapper(){
+	gpio_bank_0 = MAP_DEVICE_FAILED;
     gpio_bank_1 = MAP_DEVICE_FAILED;
     gpio_bank_1 = MAP_DEVICE_FAILED;
 }
 
 Actuators_Wrapper::~Actuators_Wrapper(){
+	munmap_device_io(gpio_bank_0, IO_MEM_LEN);
     munmap_device_io(gpio_bank_1, IO_MEM_LEN);
     munmap_device_io(gpio_bank_2, IO_MEM_LEN);
 }
@@ -31,10 +33,11 @@ Actuators_Wrapper::~Actuators_Wrapper(){
 //initielisierung der gpio's
 bool Actuators_Wrapper::init() {
 
+	gpio_bank_0 = mmap_device_io(IO_MEM_LEN, (uint64_t) GPIO_BANK_0);
 	gpio_bank_1 = mmap_device_io(IO_MEM_LEN, (uint64_t) GPIO_BANK_1);
     gpio_bank_2 = mmap_device_io(IO_MEM_LEN, (uint64_t) GPIO_BANK_2);
     // think bubble: clarification? should it be ||? 
-	if (MAP_DEVICE_FAILED == gpio_bank_1 || MAP_DEVICE_FAILED == gpio_bank_2){
+	if (MAP_DEVICE_FAILED == gpio_bank_1 || MAP_DEVICE_FAILED == gpio_bank_2 || MAP_DEVICE_FAILED == gpio_bank_0){
 		return false;
 	}
     return true;
@@ -71,7 +74,7 @@ void Actuators_Wrapper::greenLampLightOn() {
 }
 
 void Actuators_Wrapper::greenLampLightOff(){
-    out32((uintptr_t) (gpio_bank_2 + GPIO_CLEAR), SHIFT_BIT << LG_PIN);
+    out32((uintptr_t) (gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << LG_PIN);
     
 }
 
@@ -142,6 +145,20 @@ void Actuators_Wrapper::motorStop(){
 
     out32((uintptr_t) (gpio_bank_1 + GPIO_SET), SHIFT_BIT << M_STOP_PIN);
     
+}
+
+
+uint8_t Actuators_Wrapper::readSortingModule(){
+	uint32_t gpioIn = in32((uintptr_t) (gpio_bank_0 + GPIO_DATAIN));
+    return ((gpioIn >> SM_PIN) & SHIFT_BIT);
+}
+
+
+void Actuators_Wrapper::openSortingModule(){
+	out32((uintptr_t) (gpio_bank_1 + GPIO_SET), SHIFT_BIT << SM_PIN);
+}
+void Actuators_Wrapper::closeSortingModule(){
+	out32((uintptr_t) (gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << SM_PIN);
 }
 
 

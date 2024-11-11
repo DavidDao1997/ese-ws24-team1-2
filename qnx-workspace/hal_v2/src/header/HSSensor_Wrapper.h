@@ -8,11 +8,7 @@
 #ifndef HEADER_HSSENSOR_WRAPPER_H_
 #define HEADER_HSSENSOR_WRAPPER_H_
 
-class HSSensor_Wrapper : I_HSSensor{
 
-
-
-};
 
 
 
