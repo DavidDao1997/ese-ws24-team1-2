@@ -150,15 +150,15 @@ void Actuators_Wrapper::motorStop(){
 
 uint8_t Actuators_Wrapper::readSortingModule(){
 	uint32_t gpioIn = in32((uintptr_t) (gpio_bank_0 + GPIO_DATAIN));
-    return ((gpioIn >> SM_PIN) & SHIFT_BIT);
+    return ((gpioIn >> 14) & SHIFT_BIT);
 }
 
 
 void Actuators_Wrapper::openSortingModule(){
-	out32((uintptr_t) (gpio_bank_1 + GPIO_SET), SHIFT_BIT << SM_PIN);
+	out32((uintptr_t) (gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << SM_PIN);
 }
 void Actuators_Wrapper::closeSortingModule(){
-	out32((uintptr_t) (gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << SM_PIN);
+	out32((uintptr_t) (gpio_bank_1 + GPIO_SET), SHIFT_BIT << SM_PIN);
 }
 
 

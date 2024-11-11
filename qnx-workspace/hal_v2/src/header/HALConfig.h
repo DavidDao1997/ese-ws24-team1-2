@@ -51,7 +51,8 @@
 
 //SortingMOdule
 #define SM_PIN 19
-
+#define SM_TYPE 14
+#define SM_TYPE_EJECTOR 1
 
 // Type to specify Pin number
 typedef uint8_t Pin;

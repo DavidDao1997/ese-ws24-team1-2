@@ -32,7 +32,12 @@ int main() {
 
 			cout << buffer << endl;
 
-			if (SMbit == 0){
+			if (SMbit == SM_TYPE_EJECTOR){
+				actuators_test->closeSortingModule();
+				usleep(1000*500);
+				actuators_test->openSortingModule();
+				usleep(1000*500);
+			} else {
 				actuators_test->openSortingModule();
 				usleep(1000*500);
 				actuators_test->closeSortingModule();
