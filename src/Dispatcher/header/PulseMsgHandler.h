@@ -17,6 +17,7 @@
 #include <stdint.h>
 #include <sys/iofunc.h>
 #include <sys/dispatch.h>
+#include <name>
 
 /* FOR REFERECE
 typedef struct _name_attach {
@@ -33,11 +34,10 @@ class PulseMsgHandler {
 // methods that can be overriden, no need to implement
 public:
     static int32_t createChannel();
-    static name_attach_t* createNamedChannel(const char* channelName);
+    static name_attach_t* createNamedChannel(const std::string channelName);
     static void destroyChannel(uint32_t channelID);
     static void destroyNamedChannel(int32_t channelID, name_attach_t* attach);
     static int32_t connectToChannel(int32_t connectChannelID);
-    static int32_t subscribeToDispatcher();
 
 // methods needed to be implemented
 public:    

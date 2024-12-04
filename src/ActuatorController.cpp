@@ -5,11 +5,9 @@
  *      Author: Marc
  */
 
-
 #include "festoheader/ActuatorController.h"
 
-
-ActuatorController::ActuatorController(const char* name, Actuators_Wrapper* actuatorsWrapper){
+ActuatorController::ActuatorController(const std::string name, Actuators_Wrapper* actuatorsWrapper){
     actConChannel = createNamedChannel(name);
     channelID = actConChannel->chid;
     actuators = actuatorsWrapper;

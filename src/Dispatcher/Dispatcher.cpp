@@ -6,9 +6,8 @@
  */
 
 
-#include "festoheader/Dispatcher.h"
-#include "HAL/halheader/HALConfig.h"
-#include "HAL/halheader/SensorISR.h"
+#include "header/Dispatcher.h"
+#include "../HAL/halheader/SensorISR.h"
 
 
 #include <stdint.h>
@@ -38,12 +37,10 @@ Dispatcher::~Dispatcher() {
     destroyNamedChannel(channelID, dispatcherChannel);
 }
 
-void Dispatcher::connectToAllChannels(){
-    //int DecID = connectToChannel(decoder->getChannel()); // TODO Decoder usw muss schon existieren !!!!!!!!
-    // usw
-    int connectionIDs[allSubs.numOfSubs];
-    for (int i= 0; i < allSubs.numOfSubs; i++){
-        //connectionIDs[i] = connectToChannel(allSubs.subs[i]->getChannel()); // funktioniert so leider nicht mit void*
+void Dispatcher::addSubscriber(int32_t coid, int8_t pulses[], int8_t numOfPulses) {
+    for (uint8_t i = 0; i < numOfPulses; ++i) {
+        uint8_t pulse = pulses[i];
+        channelsByPulse[pulse].push_back(coid);
     }
 }
 
@@ -57,29 +54,44 @@ void Dispatcher::handleMsg() {
     while (running) {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
 
+
+
         if (recvid < 0) {
             perror("MsgReceivePulse failed!");
             exit(EXIT_FAILURE);  // TODO exit??? was passiert wenn der dispatcher stirbt. fehlerbhandlung?
         }
 
         if (recvid == 0) { // Pulse received
-            if (msg.code == PULSE_STOP_THREAD) {
-                running = false;
-            }
-
-            else {
-                // iteriere durch alle angebundenen channels und hau die nachricht raus.
-                // Der jeweilige empfänger entscheided ob nachricht sinnvoll
+            switch (msg.code){
+                case PULSE_STOP_THREAD: 
+                    running = false;
+                    break;
+                //case PULSE_DISPATCHER_SUBSCRIBE:
+                    //std::cout << "subscribing" << std::endl;
+            	    // coids add msg.coid;
+                    // events = msg.events;
+                    /*
+                    map[key]value
+                    {
+                        "10234": PULSE_DISPATCHER_SUBSCRIBE, PULSE_DISPATCHER_SUBSCRIBE,PULSE_DISPATCHER_SUBSCRIBE
+                    }
+                    */
+                    //break;
+                default:
+                    // Schaue in map wer sich für msg.code interessiert und schicke an diese
+                    auto coids = channelsByPulse.find(msg.code);
+                    if (coids != channelsByPulse.end()) {
+                        for (const auto& coid : coids->second){
+                            MsgSendPulse(coid, -1, msg.code, 0);
+                        }
+                    }            	    
             }
         }
     }
 }
 
-void Dispatcher::sendMsg(){
+void Dispatcher::sendMsg(){}
 
-
-    
-}
 
 int32_t Dispatcher::getChannel(){
     return channelID;

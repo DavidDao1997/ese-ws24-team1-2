@@ -13,6 +13,8 @@
 Decoder::Decoder(const char* name) {
     decoderChannel = createNamedChannel(name);
     channelID = decoderChannel->chid;
+
+    // init SensorISR
 }
 
 Decoder::~Decoder(){
@@ -76,7 +78,7 @@ void Decoder::handleInterrupt(void) {
 }
 
 void Decoder::sendMsg(){
-
+    // senden an den dispatcher
 
 }
 

@@ -13,31 +13,33 @@
 #include <iostream>
 #include <thread>
 #include <stdexcept>
+#include <map>
+#include <vector>
+#include <string>
 
-#include "../Dispatcher/PulseMsgHandler.h"
 
-typedef struct allSubcribers {
-    int numOfSubs;
-    void * subs[];
-} allSubcribers_t;
+#include "PulseMsgHandler.h"
+#include "PulseMsgConfig.h"
+
+
 
 class Dispatcher : public PulseMsgHandler{
 public:
 
-    Dispatcher(const char* name); // liste mit allen erreichbaren teilnehmer müssen hier hin. eigener typ?? zb ein array vom typ allSubscribers?
+    Dispatcher(const std::string name); // liste mit allen erreichbaren teilnehmer müssen hier hin. eigener typ?? zb ein array vom typ allSubscribers?
     ~Dispatcher();
 
     void handleMsg() override;
     void sendMsg() override;
     int32_t getChannel() override;
 
-    void connectToAllChannels();
+    void addSubscriber(int32_t coid, uint8_t pulses[], int8_t numOfPulses);
     
 
 private:
     int32_t channelID;
     name_attach_t* dispatcherChannel;
-    allSubcribers_t allSubs;
+    std::map<uint8_t, std::vector<int32_t>> channelsByPulse;
 
 };
 

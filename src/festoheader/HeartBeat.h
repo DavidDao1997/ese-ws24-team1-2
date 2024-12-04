@@ -15,9 +15,9 @@
 #include <thread>
 #include <stdexcept>
 
-#include "../Dispatcher/PulseMsgHandler.h"
+#include "../Dispatcher/header/PulseMsgHandler.h"
 #include "../HAL/halheader/HALConfig.h"
-
+#include "../Dispatcher/header/PulseMsgConfig.h"
 class HeartBeat : public PulseMsgHandler {
 public:
     HeartBeat();

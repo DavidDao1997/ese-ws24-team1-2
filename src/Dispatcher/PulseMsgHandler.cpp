@@ -6,7 +6,7 @@
  */
 
 
-#include "../Dispatcher/PulseMsgHandler.h"
+#include "header/PulseMsgHandler.h"
 
 
 int32_t PulseMsgHandler::createChannel(){
@@ -19,7 +19,7 @@ int32_t PulseMsgHandler::createChannel(){
 }
 
 
-name_attach_t* PulseMsgHandler::createNamedChannel(const char* channelName){
+name_attach_t* PulseMsgHandler::createNamedChannel(const std::string channelName){
     name_attach_t* attach = name_attach(NULL, channelName, 0);
     if (attach == NULL){
         throw std::runtime_error("Failed to create GNS channel!");
