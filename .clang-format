@@ -1,0 +1,20 @@
+AlignAfterOpenBracket: BlockIndent
+BinPackArguments: false
+BinPackParameters: false
+BraceWrapping:
+  AfterFunction: false
+  AfterControlStatement: false
+  BeforeElse: false
+  AfterClass: false
+  AfterStruct: false
+  AfterUnion: false
+  AfterNamespace: false
+  AfterArrayInitializer: true
+  BeforeCatch: false
+  BeforeWhile: false
+BreakBeforeBraces: Custom
+ColumnLimit: 120
+IndentWidth: 4
+Standard: Latest
+TabWidth: 4
+UseTab: Never

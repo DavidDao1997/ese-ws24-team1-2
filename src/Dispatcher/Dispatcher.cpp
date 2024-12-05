@@ -5,20 +5,17 @@
  *      Author: Marc
  */
 
-
-#include "header/Dispatcher.h"
-#include "../HAL/halheader/SensorISR.h"
-
-
-#include <stdint.h>
+#include "hw/inout.h"
 #include "sys/mman.h"
 #include "sys/neutrino.h"
-#include "hw/inout.h"
+#include <stdint.h>
 #include <sys/procmgr.h>
 #include <thread>
 
+#include "../HAL/halheader/SensorISR.h"
+#include "header/Dispatcher.h"
 
-Dispatcher::Dispatcher(const char* name) {
+Dispatcher::Dispatcher(const std::string name) {
     dispatcherChannel = createNamedChannel(name);
     channelID = dispatcherChannel->chid;
 }
@@ -44,7 +41,6 @@ void Dispatcher::addSubscriber(int32_t coid, int8_t pulses[], int8_t numOfPulses
     }
 }
 
-
 void Dispatcher::handleMsg() {
     ThreadCtl(_NTO_TCTL_IO, 0); // Request IO privileges
 
@@ -54,45 +50,40 @@ void Dispatcher::handleMsg() {
     while (running) {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
 
-
-
         if (recvid < 0) {
             perror("MsgReceivePulse failed!");
-            exit(EXIT_FAILURE);  // TODO exit??? was passiert wenn der dispatcher stirbt. fehlerbhandlung?
+            exit(EXIT_FAILURE); // TODO exit??? was passiert wenn der dispatcher stirbt. fehlerbhandlung?
         }
 
         if (recvid == 0) { // Pulse received
-            switch (msg.code){
-                case PULSE_STOP_THREAD: 
-                    running = false;
-                    break;
-                //case PULSE_DISPATCHER_SUBSCRIBE:
-                    //std::cout << "subscribing" << std::endl;
-            	    // coids add msg.coid;
-                    // events = msg.events;
-                    /*
-                    map[key]value
-                    {
+            switch (msg.code) {
+            case PULSE_STOP_THREAD:
+                running = false;
+                break;
+                // case PULSE_DISPATCHER_SUBSCRIBE:
+                // std::cout << "subscribing" << std::endl;
+                //  coids add msg.coid;
+                //  events = msg.events;
+                /*
+                map[key]value
+                {
                         "10234": PULSE_DISPATCHER_SUBSCRIBE, PULSE_DISPATCHER_SUBSCRIBE,PULSE_DISPATCHER_SUBSCRIBE
+                }
+                */
+                // break;
+            default:
+                // Schaue in map wer sich für msg.code interessiert und schicke an diese
+                auto coids = channelsByPulse.find(msg.code);
+                if (coids != channelsByPulse.end()) {
+                    for (const auto &coid : coids->second) {
+                        MsgSendPulse(coid, -1, msg.code, 0);
                     }
-                    */
-                    //break;
-                default:
-                    // Schaue in map wer sich für msg.code interessiert und schicke an diese
-                    auto coids = channelsByPulse.find(msg.code);
-                    if (coids != channelsByPulse.end()) {
-                        for (const auto& coid : coids->second){
-                            MsgSendPulse(coid, -1, msg.code, 0);
-                        }
-                    }            	    
+                }
             }
         }
     }
 }
 
-void Dispatcher::sendMsg(){}
+void Dispatcher::sendMsg() {}
 
-
-int32_t Dispatcher::getChannel(){
-    return channelID;
-}
+int32_t Dispatcher::getChannel() { return channelID; }
