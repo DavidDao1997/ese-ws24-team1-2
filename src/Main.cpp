@@ -3,10 +3,10 @@
 #include <string>
 #include <thread>
 
-#include "Dispatcher/header/Dispatcher.h"
+#include "Actuatorcontroller/headers/ActuatorController.h"
+#include "Dispatcher/headers/Dispatcher.h"
 #include "Logik/headers/FSM.h"
 #include "Util/headers/Util.h"
-#include "festoheader/ActuatorController.h"
 
 int main() {
     std::string dispatcherChannelName = "dispatcher";

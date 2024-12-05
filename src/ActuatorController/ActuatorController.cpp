@@ -5,7 +5,7 @@
  *      Author: Marc
  */
 
-#include "festoheader/ActuatorController.h"
+#include "headers/ActuatorController.h"
 
 int8_t ActuatorController::numOfPulses = ACTUATOR_CONTROLLER_NUM_OF_PULSES;
 int8_t ActuatorController::pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {

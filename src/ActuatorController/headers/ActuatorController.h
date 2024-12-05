@@ -10,15 +10,15 @@
 
 #include <string>
 
-#include "../Dispatcher/header/PulseMsgConfig.h"
-#include "../Dispatcher/header/PulseMsgHandler.h"
-#include "../HAL/halheader/Actuators_Wrapper.h"
+#include "../../Dispatcher/headers/PulseMsgConfig.h"
+#include "../../Dispatcher/headers/PulseMsgHandler.h"
+#include "../../HAL/headers/Actuators_Wrapper.h"
 
 #define ACTUATOR_CONTROLLER_NUM_OF_PULSES 4
 
 class ActuatorController : public PulseMsgHandler {
-   public:
-    ActuatorController(const std::string name, Actuators_Wrapper* actuators);
+  public:
+    ActuatorController(const std::string name, Actuators_Wrapper *actuators);
     ~ActuatorController();
 
     void handleMsg() override;
@@ -28,10 +28,10 @@ class ActuatorController : public PulseMsgHandler {
     static int8_t numOfPulses;
     static int8_t pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES];
 
-   private:
+  private:
     int32_t channelID;
-    name_attach_t* actConChannel;
-    Actuators_Wrapper* actuators;
+    name_attach_t *actConChannel;
+    Actuators_Wrapper *actuators;
 };
 
 #endif /* ACTUATORCONTROLLER_H_ */

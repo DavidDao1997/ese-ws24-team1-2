@@ -8,8 +8,8 @@
 #ifndef FSM_H
 #define FSM_H
 
-#include "../../Dispatcher/header/PulseMsgConfig.h"
-#include "../../Dispatcher/header/PulseMsgHandler.h"
+#include "../../Dispatcher/headers/PulseMsgConfig.h"
+#include "../../Dispatcher/headers/PulseMsgHandler.h"
 
 class FSM : public PulseMsgHandler {
   public:

@@ -5,19 +5,18 @@
  *      Author: Marc
  */
 
+#include "headers/Decoder.h"
+#include "../HAL/headers/HALConfig.h"
+#include "../HAL/headers/SensorISR.h"
 
-#include "festoheader/Decoder.h"
-#include "HAL/halheader/HALConfig.h"
-#include "HAL/halheader/SensorISR.h"
-
-Decoder::Decoder(const char* name) {
-    decoderChannel = createNamedChannel(name);
+Decoder::Decoder(const std::string channelName, const std::string dispatcherChannelName) {
+    decoderChannel = createNamedChannel(channelName);
     channelID = decoderChannel->chid;
 
     // init SensorISR
 }
 
-Decoder::~Decoder(){
+Decoder::~Decoder() {
     // Send stop pulse to terminate any dispatch thread
     int connectionID = connectToChannel(channelID);
     if (connectionID >= 0) {
@@ -26,7 +25,6 @@ Decoder::~Decoder(){
     }
     destroyNamedChannel(channelID, decoderChannel);
 }
-
 
 void Decoder::handleMsg() {
     ThreadCtl(_NTO_TCTL_IO, 0); // Request IO privileges
@@ -48,13 +46,12 @@ void Decoder::handleMsg() {
             }
 
             if (msg.code == PULSE_INTR_ON_PORT0) {
-            	handleInterrupt(); // unmask and send to dispatcher
+                handleInterrupt(); // unmask and send to dispatcher
                 std::cout << "Interrupt received entpacken und weitergabe an dispatcher" << std::endl;
             }
         }
     }
 }
-
 
 void Decoder::handleInterrupt(void) {
 
@@ -62,30 +59,23 @@ void Decoder::handleInterrupt(void) {
 
     uintptr_t gpioBase = mmap_device_io(GPIO_REGISTER_LENGHT, GPIO_PORT0);
     // uintptr_t gpioBase = SensorISR->getAddr(); // SensorISR::portBaseAddr; //?????
-    int interruptID = SensorISR::interruptID;       // ????
+    int interruptID = SensorISR::interruptID; // ????
 
     unsigned int intrStatusReg = in32(uintptr_t(gpioBase + GPIO_IRQSTATUS_1));
-    out32(uintptr_t(gpioBase + GPIO_IRQSTATUS_1), 0xffffffff);     // Clear all interrupts.
-    InterruptUnmask(INTR_GPIO_PORT0, interruptID);                 // Unmask interrupt.
+    out32(uintptr_t(gpioBase + GPIO_IRQSTATUS_1), 0xffffffff); // Clear all interrupts.
+    InterruptUnmask(INTR_GPIO_PORT0, interruptID);             // Unmask interrupt.
 
     for (int pin = 0; pin < 32; pin++) {
-        unsigned int mask = (uint32_t) BIT_MASK(pin);
-        if ((intrStatusReg & mask) != 0) {  // Check if interrupt occurred on this pin.
-            int current_level = (in32((uintptr_t) gpioBase + GPIO_DATAIN) >> pin) & 0x1;
+        unsigned int mask = (uint32_t)BIT_MASK(pin);
+        if ((intrStatusReg & mask) != 0) { // Check if interrupt occurred on this pin.
+            int current_level = (in32((uintptr_t)gpioBase + GPIO_DATAIN) >> pin) & 0x1;
             printf("Interrupt on pin %d, now %d\n", pin, current_level);
         }
     }
 }
 
-void Decoder::sendMsg(){
+void Decoder::sendMsg() {
     // senden an den dispatcher
-
 }
 
-
-
-
-int32_t Decoder::getChannel(){
-    return channelID;
-}
-
+int32_t Decoder::getChannel() { return channelID; }

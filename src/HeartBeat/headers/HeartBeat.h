@@ -5,21 +5,21 @@
  *      Author: Marc
  */
 
-#ifndef FESTOHEADER_HEARTBEAT_H_
-#define FESTOHEADER_HEARTBEAT_H_
+#ifndef HEARTBEAT_H_
+#define HEARTBEAT_H_
 
+#include <iostream>
+#include <stdexcept>
 #include <stdint.h>
 #include <sys/neutrino.h>
 #include <sys/procmgr.h>
-#include <iostream>
 #include <thread>
-#include <stdexcept>
 
-#include "../Dispatcher/header/PulseMsgHandler.h"
-#include "../HAL/halheader/HALConfig.h"
-#include "../Dispatcher/header/PulseMsgConfig.h"
+#include "../../Dispatcher/headers/PulseMsgConfig.h"
+#include "../../Dispatcher/headers/PulseMsgHandler.h"
+#include "../../HAL/headers/HALConfig.h"
 class HeartBeat : public PulseMsgHandler {
-public:
+  public:
     HeartBeat();
     ~HeartBeat();
 
@@ -28,7 +28,7 @@ public:
     void sendMsg() override;
     void handleMsg() override;
 
-private:
+  private:
     void handleDisconnect();
 
     int32_t channelID;
@@ -37,10 +37,9 @@ private:
 
 /*
     Master als auch Slave senden synchrone Pulsemsgs in einem definierten Zeitraum
-    Wenn Nachricht angekommen sleep for weitere 300 ms (?) dann neue Nachricht. 
+    Wenn Nachricht angekommen sleep for weitere 300 ms (?) dann neue Nachricht.
     Wenn nicht erfolgreiche antwort, dann E-Stop verhalten.
 
  */
 
-
-#endif /* FESTOHEADER_HEARTBEAT_H_ */
+#endif /* HEARTBEAT_H_ */

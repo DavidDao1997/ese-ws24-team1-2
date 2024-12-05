@@ -5,7 +5,7 @@
  *      Author: Marc
  */
 
-#include "header/PulseMsgHandler.h"
+#include "headers/PulseMsgHandler.h"
 
 int32_t PulseMsgHandler::createChannel() {
     uint32_t channelID = -1;

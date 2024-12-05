@@ -5,7 +5,7 @@
  *      Author: Marc
  */
 
-#include "header/Dispatcher.h"
+#include "headers/Dispatcher.h"
 
 Dispatcher::Dispatcher(const std::string name) {
     dispatcherChannel = createNamedChannel(name);

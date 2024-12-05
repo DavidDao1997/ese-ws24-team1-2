@@ -5,9 +5,8 @@
  *      Author: Marc
  */
 
-
-#include "halheader/SensorISR.h"
-#include "halheader/HALConfig.h"
+#include "headers/SensorISR.h"
+#include "headers/HALConfig.h"
 
 // Static variables
 int SensorISR::interruptID = -1;
@@ -15,10 +14,8 @@ uintptr_t SensorISR::portBaseAddr = 0;
 
 SensorISR::SensorISR(uintptr_t gpioBaseAddr, int gpioPort, int pulseCode, int channelID) {
 
-
-
-	// Change to code, no method call in Constructor, method might not exist yet!
-	if (!initializeGPIOBaseAddr(gpioBaseAddr)) {
+    // Change to code, no method call in Constructor, method might not exist yet!
+    if (!initializeGPIOBaseAddr(gpioBaseAddr)) {
         throw std::runtime_error("Failed to initialize GPIO base address!");
     }
     if (!registerInterrupt(gpioPort, pulseCode, channelID)) {
@@ -82,5 +79,3 @@ void SensorISR::configureEdgeDetection(uintptr_t baseAddr, int pin, bool rising,
         out32(baseAddr + GPIO_FALLINGDETECT, temp);
     }
 }
-
-
