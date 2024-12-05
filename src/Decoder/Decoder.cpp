@@ -7,75 +7,79 @@
 
 #include "headers/Decoder.h"
 #include "../HAL/headers/HALConfig.h"
-#include "../HAL/headers/SensorISR.h"
 
-Decoder::Decoder(const std::string channelName, const std::string dispatcherChannelName) {
-    decoderChannel = createNamedChannel(channelName);
-    channelID = decoderChannel->chid;
+Decoder::Decoder(const std::string dispatcherChannelName) {
+    running = false;
 
-    // init SensorISR
+    channelID = createChannel();
+
+    sensorISR = new SensorISR();
+    // sonsorISR = foo;
+    sensorISR->registerInterrupt(channelID);
+    dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
+
+    // TODO check if festo 1 or festo 2 in parameter list
 }
 
 Decoder::~Decoder() {
-    // Send stop pulse to terminate any dispatch thread
-    int connectionID = connectToChannel(channelID);
-    if (connectionID >= 0) {
-        MsgSendPulse(connectionID, -1, PULSE_STOP_THREAD, 0);
-        ConnectDetach(connectionID);
-    }
-    destroyNamedChannel(channelID, decoderChannel);
+    running = false;
+    // TODO How to end thread if blocked in MsgReveivePulse
+    destroyChannel(channelID);
 }
 
 void Decoder::handleMsg() {
     ThreadCtl(_NTO_TCTL_IO, 0); // Request IO privileges
 
     _pulse msg;
-    bool running = true;
+    running = true;
 
     while (running) {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
 
         if (recvid < 0) {
-            perror("MsgReceivePulse failed!");
-            exit(EXIT_FAILURE);
+            perror("MsgReceivePulse failed!"); // TODO does this happen on decoonstruct???
+            running = false;
+            return; // TODO
         }
 
         if (recvid == 0) { // Pulse received
-            if (msg.code == PULSE_STOP_THREAD) {
-                running = false;
+            if (msg.code != PULSE_INTR_ON_PORT0) {
+                perror("Unexpected Pulse!");
             }
-
-            if (msg.code == PULSE_INTR_ON_PORT0) {
-                handleInterrupt(); // unmask and send to dispatcher
-                std::cout << "Interrupt received entpacken und weitergabe an dispatcher" << std::endl;
-            }
+            sensorISR->clearCurrentInterrupt();
+            decode();
+            std::cout << "Interrupt received entpacken und weitergabe an dispatcher" << std::endl;
         }
     }
 }
 
-void Decoder::handleInterrupt(void) {
+void Decoder::decode() {
+    uint32_t flippedValues = sensorISR->getFlippedValues();
+    uint32_t previousValues = sensorISR->getPreviousValues();
 
-    // TODO ÜBERARBEITEN DEMASKIEREN UND AN DISPATCHER
-
-    uintptr_t gpioBase = mmap_device_io(GPIO_REGISTER_LENGHT, GPIO_PORT0);
-    // uintptr_t gpioBase = SensorISR->getAddr(); // SensorISR::portBaseAddr; //?????
-    int interruptID = SensorISR::interruptID; // ????
-
-    unsigned int intrStatusReg = in32(uintptr_t(gpioBase + GPIO_IRQSTATUS_1));
-    out32(uintptr_t(gpioBase + GPIO_IRQSTATUS_1), 0xffffffff); // Clear all interrupts.
-    InterruptUnmask(INTR_GPIO_PORT0, interruptID);             // Unmask interrupt.
-
-    for (int pin = 0; pin < 32; pin++) {
-        unsigned int mask = (uint32_t)BIT_MASK(pin);
-        if ((intrStatusReg & mask) != 0) { // Check if interrupt occurred on this pin.
-            int current_level = (in32((uintptr_t)gpioBase + GPIO_DATAIN) >> pin) & 0x1;
-            printf("Interrupt on pin %d, now %d\n", pin, current_level);
-        }
+    if (flippedValues & (uint32_t)BIT_MASK(LBF_PIN) != 0) {
+        // LBF_PIN
+        uint8_t current_level = (previousValues >> LBF_PIN) & 0x1;
+        // TODO Add 2 Festo support eg add festo# to value instead of sending just 0 and remove number ->
+        // PULSE_LBF_INTERRUPTED
+        int32_t code = current_level ? PULSE_LBF1_INTERRUPTED : PULSE_LBF1_OPEN;
+        sendMsg(code, 0);
     }
+    if (flippedValues & (uint32_t)BIT_MASK(LBM_PIN) != 0) {
+        // LBM_PIN
+    }
+    // TODO
+    // if (...) {
+    //     ...
+    // }
+    // ...
 }
 
-void Decoder::sendMsg() {
+void Decoder::sendMsg(int8_t msgCode, int32_t msgValue) {
     // senden an den dispatcher
+    if (0 > MsgSendPulse(dispatcherConnectionID, -1, msgCode, msgValue)) {
+        perror("Decoder Send failed");
+    }
 }
 
 int32_t Decoder::getChannel() { return channelID; }

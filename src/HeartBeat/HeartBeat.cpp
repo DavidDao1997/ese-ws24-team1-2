@@ -7,7 +7,10 @@
 
 #include "headers/HeartBeat.h"
 
-HeartBeat::HeartBeat() {}
+HeartBeat::HeartBeat() {
+
+    // TODO check if festo 1 or festo 2 in parameter list
+}
 
 bool init(int32_t hbOtherFesto) {
     int32_t channelIDSecondFesto = hbOtherFesto;
@@ -19,7 +22,7 @@ bool init(int32_t hbOtherFesto) {
     return true;
 }
 
-void HeartBeat::sendMsg() {
+void HeartBeat::sendMsg(int8_t msgCode, int32_t msgValue) {
     // TODO: Send heartbeat and check when last heartbeat was received. if received heartbeat is
     // overdue then handleDisconnect, else reset timer
 
@@ -55,13 +58,6 @@ void HeartBeat::handleMsg() {
             }
         }
     }
-
-    /*
-    Master als auch Slave senden synchrone Pulsemsgs in einem definierten Zeitraum
-    Wenn Nachricht angekommen sleep for weitere 300 ms (?) dann neue Nachricht.
-    Wenn nicht erfolgreiche antwort, dann E-Stop verhalten.
-
- */
 }
 
 void HeartBeat::handleDisconnect() {

@@ -74,4 +74,4 @@ void ActuatorController::handleMsg() {
 
 int32_t ActuatorController::getChannel() { return channelID; }
 
-void ActuatorController::sendMsg() {} // keep empty, not needed
+void ActuatorController::sendMsg(int8_t msgCode, int32_t msgValue) {} // keep empty, not needed

@@ -17,7 +17,7 @@ class FSM : public PulseMsgHandler {
     ~FSM();
 
     void handleMsg() override;
-    void sendMsg() override;
+    void sendMsg(int8_t msgCode, int32_t msgValue) override;
     int32_t getChannel() override;
 
   private:

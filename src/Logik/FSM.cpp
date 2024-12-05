@@ -49,6 +49,6 @@ void FSM::handleMsg() {
     }
 }
 
-void FSM::sendMsg() {}
+void FSM::sendMsg(int8_t msgCode, int32_t msgValue) {}
 
 int32_t FSM::getChannel() { return channelID; }

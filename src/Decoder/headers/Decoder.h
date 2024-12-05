@@ -16,22 +16,25 @@
 
 #include "../../Dispatcher/headers/PulseMsgConfig.h"
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
+#include "../../HAL/headers/SensorISR.h"
 
 class Decoder : public PulseMsgHandler {
   public:
-    Decoder(const std::string channelName, const std::string dispatcherChannelName);
+    Decoder(const std::string dispatcherChannelName);
     ~Decoder();
 
     void handleMsg() override;
-    void sendMsg() override;
+    void sendMsg(int8_t msgCode, int32_t msgValue) override;
     int32_t getChannel() override;
 
   private:
-    void handleInterrupt();
+    void decode();
 
   private:
+    bool running;
     int32_t channelID;
-    name_attach_t *decoderChannel;
+    SensorISR *sensorISR;
+    int32_t dispatcherConnectionID;
 };
 
 #endif /* HEADER_DECODER_H_ */

@@ -25,7 +25,7 @@ class HeartBeat : public PulseMsgHandler {
 
     bool init(int32_t hbOtherFesto);
     int32_t getChannel() override;
-    void sendMsg() override;
+    void sendMsg(int8_t msgCode, int32_t msgValue) override;
     void handleMsg() override;
 
   private:

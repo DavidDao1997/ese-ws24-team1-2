@@ -8,27 +8,34 @@
 #ifndef SENSOR_ISR_H
 #define SENSOR_ISR_H
 
-#include <iostream>
-#include <sys/neutrino.h>
-#include <sys/mman.h>
 #include <hw/inout.h>
+#include <iostream>
 #include <stdexcept>
+#include <stdint.h>
+#include <sys/mman.h>
+#include <sys/neutrino.h>
+
+#include "../../Dispatcher/headers/PulseMsgConfig.h"
+#include "HALConfig.h"
 
 class SensorISR {
-public:
-    static int interruptID;
-    static uintptr_t portBaseAddr;
-
-    SensorISR(uintptr_t gpioBaseAddr, int gpioPort, int pulseCode, int channelID);
+  public:
+    SensorISR();
     ~SensorISR();
 
-    static bool initializeGPIOBaseAddr(uintptr_t portAddr);
-    static bool registerInterrupt(int gpioPort, int pulseCode, int channelID);
-    void initializeGPIOInterrupt(int pin) const;
-    static int getInterruptID() { return interruptID; }
+    void registerInterrupt(int32_t channelID);
+    void clearCurrentInterrupt();
+    uint32_t getFlippedValues();
+    uint32_t getPreviousValues(); // TODO check if these are ACTUALLY the previous values
 
-private:
-    void configureEdgeDetection(uintptr_t baseAddr, int pin, bool rising, bool falling) const;
+    //     static bool initializeGPIOBaseAddr(uintptr_t portAddr);
+    //     static bool registerInterrupt(int gpioPort, int pulseCode, int channelID);
+    //     void initializeGPIOInterrupt(int pin) const;
+    //     static int getInterruptID() { return interruptID; }
+
+  private:
+    uintptr_t gpioBase;
+    //     void configureEdgeDetection(uintptr_t baseAddr, int pin, bool rising, bool falling) const;
 };
 
 #endif // SENSOR_ISR_H
