@@ -33,7 +33,7 @@ public:
     void sendMsg() override;
     int32_t getChannel() override;
 
-    void addSubscriber(int32_t coid, uint8_t pulses[], int8_t numOfPulses);
+    void addSubscriber(int32_t coid, int8_t pulses[], int8_t numOfPulses);
     
 
 private:
