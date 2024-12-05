@@ -8,39 +8,35 @@
 #ifndef DISPATCHER_H
 #define DISPATCHER_H
 
+#include <cstdio> // For sprintf
+#include <iostream>
+#include <map>
+#include <stdint.h>
+#include <string>
 #include <sys/neutrino.h>
 #include <sys/procmgr.h>
-#include <iostream>
 #include <thread>
-#include <stdexcept>
-#include <map>
 #include <vector>
-#include <string>
 
-
-#include "PulseMsgHandler.h"
 #include "PulseMsgConfig.h"
+#include "PulseMsgHandler.h"
 
-
-
-class Dispatcher : public PulseMsgHandler{
-public:
-
-    Dispatcher(const std::string name); // liste mit allen erreichbaren teilnehmer müssen hier hin. eigener typ?? zb ein array vom typ allSubscribers?
+class Dispatcher : public PulseMsgHandler {
+  public:
+    Dispatcher(const std::string name);
     ~Dispatcher();
 
     void handleMsg() override;
     void sendMsg() override;
     int32_t getChannel() override;
 
-    void addSubscriber(int32_t coid, int8_t pulses[], int8_t numOfPulses);
-    
+    void addSubscriber(int32_t chid, int8_t pulses[], int8_t numOfPulses);
 
-private:
+  private:
     int32_t channelID;
-    name_attach_t* dispatcherChannel;
-    std::map<uint8_t, std::vector<int32_t>> channelsByPulse;
-
+    name_attach_t *dispatcherChannel;
+    std::vector<int32_t> connections;
+    std::map<uint8_t, std::vector<int32_t>> connectionsByPulse;
 };
 
 #endif // DISPATCHER_H

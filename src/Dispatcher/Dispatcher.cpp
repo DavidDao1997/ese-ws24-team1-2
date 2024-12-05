@@ -5,14 +5,6 @@
  *      Author: Marc
  */
 
-#include "hw/inout.h"
-#include "sys/mman.h"
-#include "sys/neutrino.h"
-#include <stdint.h>
-#include <sys/procmgr.h>
-#include <thread>
-
-#include "../HAL/halheader/SensorISR.h"
 #include "header/Dispatcher.h"
 
 Dispatcher::Dispatcher(const std::string name) {
@@ -30,14 +22,24 @@ Dispatcher::~Dispatcher() {
         perror("Failed to connect for stop pulse!");
     }
 
+    for (int32_t coid : connections) {
+        ConnectDetach(coid);
+    }
+
     // Destroy the channel
     destroyNamedChannel(channelID, dispatcherChannel);
 }
 
-void Dispatcher::addSubscriber(int32_t coid, int8_t pulses[], int8_t numOfPulses) {
+void Dispatcher::addSubscriber(int32_t chid, int8_t pulses[], int8_t numOfPulses) {
+    int coid = ConnectAttach(0, 0, chid, _NTO_SIDE_CHANNEL, 0);
+    if (coid < 0) {
+        perror("Failed to connect!");
+        return;
+    }
+    connections.push_back(coid);
     for (uint8_t i = 0; i < numOfPulses; ++i) {
         uint8_t pulse = pulses[i];
-        channelsByPulse[pulse].push_back(coid);
+        connectionsByPulse[pulse].push_back(coid);
     }
 }
 
@@ -72,11 +74,20 @@ void Dispatcher::handleMsg() {
                 */
                 // break;
             default:
+                char buffer[100];
+                sprintf(buffer, "DISPATCHER: Revieved pulse %d\n", msg.code);
+                std::cout << buffer << std::flush;
+
                 // Schaue in map wer sich für msg.code interessiert und schicke an diese
-                auto coids = channelsByPulse.find(msg.code);
-                if (coids != channelsByPulse.end()) {
+                auto coids = connectionsByPulse.find(msg.code);
+                if (coids != connectionsByPulse.end()) {
                     for (const auto &coid : coids->second) {
-                        MsgSendPulse(coid, -1, msg.code, 0);
+                        sprintf(buffer, "DISPATCHER: Forwarding pulse %d to connectionId %d\n", msg.code, coid);
+                        std::cout << buffer << std::flush;
+                        int err = MsgSendPulse(coid, -1, msg.code, 0);
+                        if (err == -1) {
+                            perror("DISPACHER: MsgSendPulse failed");
+                        }
                     }
                 }
             }

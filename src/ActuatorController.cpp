@@ -52,19 +52,19 @@ void ActuatorController::handleMsg() {
                 running = false;
                 break;
             case PULSE_MOTOR_STOP:
-                std::cout << "Motor will be stopped" << std::endl;
+                std::cout << "ACTUATORCONTROLLER: Motor will be stopped" << std::endl;
                 actuators->motorStop();
                 break;
             case PULSE_MOTOR_START:
-                std::cout << "Motor will be start running right" << std::endl;
+                std::cout << "ACTUATORCONTROLLER: Motor will start running right" << std::endl;
                 actuators->runRight();
                 break;
             case PULSE_MOTOR_SLOW:
-                std::cout << "Motor will be slow running" << std::endl;
+                std::cout << "ACTUATORCONTROLLER: Motor will be slow running" << std::endl;
                 actuators->runSlow();
                 break;
             case PULSE_MOTOR_FAST:
-                std::cout << "Motor will be fast running" << std::endl;
+                std::cout << "ACTUATORCONTROLLER: Motor will be fast running" << std::endl;
                 actuators->runFast();
                 break;
             }
