@@ -16,8 +16,8 @@ int8_t ActuatorController::pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
 };
 
 ActuatorController::ActuatorController(const std::string name, Actuators_Wrapper *actuatorsWrapper) {
-    actConChannel = createNamedChannel(name);
-    channelID = actConChannel->chid;
+    actuatorControllerChannel = createNamedChannel(name);
+    channelID = actuatorControllerChannel->chid;
     actuators = actuatorsWrapper;
     running = false;
 };
@@ -26,8 +26,11 @@ ActuatorController::~ActuatorController() {
     // thread löschen
     running = false;
     // attach löschen
-    destroyNamedChannel(channelID, actConChannel);
+    destroyNamedChannel(channelID, actuatorControllerChannel);
 };
+
+int8_t* ActuatorController::getPulses() { return pulses; };
+int8_t ActuatorController::getNumOfPulses() { return numOfPulses; };
 
 void ActuatorController::handleMsg() {
     ThreadCtl(_NTO_TCTL_IO, 0); // Request IO privileges
