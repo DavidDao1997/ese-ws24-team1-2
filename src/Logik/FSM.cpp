@@ -30,13 +30,13 @@ void FSM::handleMsg() {
         sprintf(
             buffer,
             "FSM: Publishing pulse %s(code: %d)\n",
-            motorRunning ? "PULSE_MOTOR_STOP" : "PULSE_MOTOR_START",
-            motorRunning ? PULSE_MOTOR_STOP : PULSE_MOTOR_START
+            motorRunning ? "PULSE_MOTOR1_STOP" : "PULSE_MOTOR1_START",
+            motorRunning ? PULSE_MOTOR1_STOP : PULSE_MOTOR1_START
         );
         std::cout << buffer << std::flush;
 
         // Send pulse
-        int err = MsgSendPulse(dispatcherConnectionID, -1, motorRunning ? PULSE_MOTOR_STOP : PULSE_MOTOR_START, 0);
+        int err = MsgSendPulse(dispatcherConnectionID, -1, motorRunning ? PULSE_MOTOR1_STOP : PULSE_MOTOR1_START, 0);
         if (err == -1) {
             perror("FSM: MsgSendPulse failed");
         } else {

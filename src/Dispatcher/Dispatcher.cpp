@@ -10,17 +10,12 @@
 Dispatcher::Dispatcher(const std::string name) {
     dispatcherChannel = createNamedChannel(name);
     channelID = dispatcherChannel->chid;
+    running = false;
 }
 
 Dispatcher::~Dispatcher() {
     // Send stop pulse to terminate any dispatch thread
-    int connectionID = ConnectAttach(0, 0, channelID, _NTO_SIDE_CHANNEL, 0);
-    if (connectionID >= 0) {
-        MsgSendPulse(connectionID, -1, PULSE_STOP_THREAD, 0);
-        ConnectDetach(connectionID);
-    } else {
-        perror("Failed to connect for stop pulse!");
-    }
+    running = false;
 
     for (int32_t coid : connections) {
         ConnectDetach(coid);
@@ -47,7 +42,7 @@ void Dispatcher::handleMsg() {
     ThreadCtl(_NTO_TCTL_IO, 0); // Request IO privileges
 
     _pulse msg;
-    bool running = true;
+    running = true;
 
     while (running) {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
@@ -59,9 +54,6 @@ void Dispatcher::handleMsg() {
 
         if (recvid == 0) { // Pulse received
             switch (msg.code) {
-            case PULSE_STOP_THREAD:
-                running = false;
-                break;
                 // case PULSE_DISPATCHER_SUBSCRIBE:
                 // std::cout << "subscribing" << std::endl;
                 //  coids add msg.coid;

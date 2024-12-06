@@ -33,6 +33,8 @@ class ActuatorController : public PulseMsgHandler {
     int32_t channelID;
     name_attach_t *actConChannel;
     Actuators_Wrapper *actuators;
+
+    bool running;
 };
 
 #endif /* ACTUATORCONTROLLER_H_ */

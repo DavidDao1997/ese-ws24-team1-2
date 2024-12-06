@@ -37,6 +37,7 @@ class Dispatcher : public PulseMsgHandler {
     name_attach_t *dispatcherChannel;
     std::vector<int32_t> connections;
     std::map<uint8_t, std::vector<int32_t>> connectionsByPulse;
+    bool running;
 };
 
 #endif // DISPATCHER_H

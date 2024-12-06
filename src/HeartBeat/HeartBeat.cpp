@@ -8,8 +8,12 @@
 #include "headers/HeartBeat.h"
 
 HeartBeat::HeartBeat() {
-
+    running = false;
     // TODO check if festo 1 or festo 2 in parameter list
+}
+
+HeartBeat::~HeartBeat(){
+    running = false;
 }
 
 bool init(int32_t hbOtherFesto) {
@@ -37,7 +41,7 @@ void HeartBeat::handleMsg() {
     ThreadCtl(_NTO_TCTL_IO, 0); // Request IO privileges
 
     _pulse msg;
-    bool running = true;
+    running = true;
 
     while (running) {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
@@ -47,11 +51,6 @@ void HeartBeat::handleMsg() {
         }
 
         if (recvid == 0) { // Pulse received
-            if (msg.code == PULSE_STOP_THREAD) {
-                running = false;
-                // TODO Stop Timer
-            }
-
             if (msg.code == PULSE_HEARTBEAT) {
                 // TODO update time when last heartbeat was received.
                 std::cout << "Getting Heartbeat from Slave" << std::endl;

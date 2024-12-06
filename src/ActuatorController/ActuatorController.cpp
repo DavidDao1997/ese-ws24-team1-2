@@ -9,25 +9,22 @@
 
 int8_t ActuatorController::numOfPulses = ACTUATOR_CONTROLLER_NUM_OF_PULSES;
 int8_t ActuatorController::pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
-    PULSE_MOTOR_STOP,
-    PULSE_MOTOR_START,
-    PULSE_MOTOR_SLOW,
-    PULSE_MOTOR_FAST,
+    PULSE_MOTOR1_STOP,
+    PULSE_MOTOR1_START,
+    PULSE_MOTOR1_SLOW,
+    PULSE_MOTOR1_FAST,
 };
 
 ActuatorController::ActuatorController(const std::string name, Actuators_Wrapper *actuatorsWrapper) {
     actConChannel = createNamedChannel(name);
     channelID = actConChannel->chid;
     actuators = actuatorsWrapper;
+    running = false;
 };
 
 ActuatorController::~ActuatorController() {
     // thread löschen
-    int connectionID = connectToChannel(channelID);
-    if (connectionID >= 0) {
-        MsgSendPulse(connectionID, -1, PULSE_STOP_THREAD, 0);
-        ConnectDetach(connectionID);
-    }
+    running = false;
     // attach löschen
     destroyNamedChannel(channelID, actConChannel);
 };
@@ -36,7 +33,7 @@ void ActuatorController::handleMsg() {
     ThreadCtl(_NTO_TCTL_IO, 0); // Request IO privileges
 
     _pulse msg;
-    bool running = true;
+    running = true;
 
     while (running) {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
@@ -48,22 +45,19 @@ void ActuatorController::handleMsg() {
 
         if (recvid == 0) { // Pulse received
             switch (msg.code) {
-            case PULSE_STOP_THREAD:
-                running = false;
-                break;
-            case PULSE_MOTOR_STOP:
+            case PULSE_MOTOR1_STOP:
                 std::cout << "ACTUATORCONTROLLER: Motor will be stopped" << std::endl;
                 actuators->motorStop();
                 break;
-            case PULSE_MOTOR_START:
+            case PULSE_MOTOR1_START:
                 std::cout << "ACTUATORCONTROLLER: Motor will start running right" << std::endl;
                 actuators->runRight();
                 break;
-            case PULSE_MOTOR_SLOW:
+            case PULSE_MOTOR1_SLOW:
                 std::cout << "ACTUATORCONTROLLER: Motor will be slow running" << std::endl;
                 actuators->runSlow();
                 break;
-            case PULSE_MOTOR_FAST:
+            case PULSE_MOTOR1_FAST:
                 std::cout << "ACTUATORCONTROLLER: Motor will be fast running" << std::endl;
                 actuators->runFast();
                 break;

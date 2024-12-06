@@ -62,7 +62,7 @@ void Decoder::decode() {
         uint8_t current_level = (previousValues >> LBF_PIN) & 0x1;
         // TODO Add 2 Festo support eg add festo# to value instead of sending just 0 and remove number ->
         // PULSE_LBF_INTERRUPTED
-        int32_t code = current_level ? PULSE_LBF1_INTERRUPTED : PULSE_LBF1_OPEN;
+        int32_t code = current_level ? PULSE_LBF_INTERRUPTED : PULSE_LBF_OPEN;
         sendMsg(code, 0);
     }
     if (flippedValues & (uint32_t)BIT_MASK(LBM_PIN) != 0) {

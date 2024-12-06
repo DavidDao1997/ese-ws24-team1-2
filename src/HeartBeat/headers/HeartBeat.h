@@ -30,7 +30,7 @@ class HeartBeat : public PulseMsgHandler {
 
   private:
     void handleDisconnect();
-
+    bool running;
     int32_t channelID;
     int32_t channelIDSecondFesto;
 };
