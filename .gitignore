@@ -12,3 +12,4 @@ qnx-workspace/*
 # explizit ignorieren der verstecken files und dem build ordner
 build
 .*/
+.DS_Store
