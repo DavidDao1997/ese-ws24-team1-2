@@ -1,24 +1,25 @@
 #include "header/HeightSensorControl.h"
+
 #include <thread>
-#include <vector> // Für das Speichern der Werte in einem Array
+#include <vector>  // Für das Speichern der Werte in einem Array
 
 // Deklaration von Variablen
-std::vector<int> heights; // Array für Höhen
-std::vector<int> sampleCounts; // Array für die Anzahl der Samples für jede Höhe
+std::vector<int> heights;  // Array für Höhen
+std::vector<int>
+    sampleCounts;  // Array für die Anzahl der Samples für jede Höhe
 
 bool receivingRunning = false;
-int bandHeight = 0;
+// int bandHeight = 0;
 bool firstValue = false;
 int lastValue = -1;
 int stableCount = 0;
-int countSample = 0; // Zähler für Samples
-
-using namespace std;
+int countSample = 0;  // Zähler für Samples
 
 // Constructor
-HeightSensorControl::HeightSensorControl() {
-    std::cout << "HwAdcDemo object created." << std::endl;
-
+HeightSensorControl::HeightSensorControl(const std::string channelName) {
+    hsControllerChannel = createNamedChannel(channelName);
+    channelID = actuatorControllerChannel->chid;
+    running = false;
 }
 
 // Destructor
@@ -26,23 +27,26 @@ HeightSensorControl::~HeightSensorControl() {
     std::cout << "HwAdcDemo object destroyed." << std::endl;
 }
 
-//global to store Height information into a array
-//std::vector<SampleData> HeightSensorControl::heightData;
+// global to store Height information into a array
+// std::vector<SampleData> HeightSensorControl::heightData;
 
 // Need some ErrorHandling
-//void HeightSensorControl::initHS() {
+// void HeightSensorControl::initHS() {
 ////    int chanID = initializeChannel();
 ////    uintptr_t port1BaseAddr = setupGPIO();
 ////    TSCADC tsc;
 ////    ADC *adc = new ADC(tsc);
-////    adc->registerAdcISR(ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0), PULSE_ADC_START_SAMLING);
+////    adc->registerAdcISR(ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0),
+/// PULSE_ADC_START_SAMLING);
 //
 //    //start Thread
-//    //std::thread receivingThread(&HeightSensorControl::receivingRoutine, this, chanID, adc);
+//    //std::thread receivingThread(&HeightSensorControl::receivingRoutine,
+//    this, chanID, adc);
 //    //adc->sample();
 //
 //    //cleanUp need to be put somewhere else
-//    //cleanupResources(chanID, ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0), port1BaseAddr, receivingThread);
+//    //cleanupResources(chanID, ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL,
+//    0), port1BaseAddr, receivingThread);
 //}
 
 // Initialisiere den Kanal
@@ -66,24 +70,22 @@ uintptr_t HeightSensorControl::setupGPIO() {
 }
 
 // clean up all ressource from Height Sensor
-void HeightSensorControl::cleanupResources(int chanID, int conID, uintptr_t port1BaseAddr, thread &receivingThread) {
-//    MsgSendPulse(conID, -1, PULSE_STOP_THREAD, 0);
-//    receivingThread.join();
-    if (ConnectDetach(conID) != EOK)
-        perror("Detaching channel failed!");
+void HeightSensorControl::cleanupResources(int chanID, int conID) {
+    // MsgSendPulse(conID, -1, PULSE_STOP_THREAD, 0);
+    // receivingThread.join();
+    if (ConnectDetach(conID) != EOK) perror("Detaching channel failed!");
 
-    if (ChannelDestroy(chanID) != EOK)
-        perror("Destroying channel failed!");
-
+    if (ChannelDestroy(chanID) != EOK) perror("Destroying channel failed!");
 }
 
 // thread that received msg
-void HeightSensorControl::initRoutine() {
+void HeightSensorControl::handleMsg() {
     int channelID = initializeChannel();
     setupGPIO();
     TSCADC tsc;
     ADC *adc = new ADC(tsc);
-    adc->registerAdcISR(ConnectAttach(0, 0, channelID, _NTO_SIDE_CHANNEL, 0), PULSE_ADC_START_SAMLING);
+    adc->registerAdcISR(ConnectAttach(0, 0, channelID, _NTO_SIDE_CHANNEL, 0),
+                        PULSE_ADC_SAMPLE);
 
     int candidateValue = 0;
     bool secondChance = false;
@@ -92,87 +94,94 @@ void HeightSensorControl::initRoutine() {
     _pulse msg;
     receivingRunning = true;
 
-    //need to switch to a switch case variant if more pulse msg are available
+    int32_t previousValue;
+    // need to switch to a switch case variant if more pulse msg are available
     while (receivingRunning) {
-    	printf("Iam into Routine\n");
+        printf("Iam into Routine\n");
         if (MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr) < 0) {
             perror("MsgReceivePulse failed!");
             exit(EXIT_FAILURE);
         }
-    	printf("Iam into Routine HeightPulse\n");
-//
-//        if (msg.code == PULSE_STOP_THREAD) {
-//            printf("Thread kill code received!\n");
-//            receivingRunning = false;
-//        }
-        if (msg.code == PULSE_ADC_START_SAMLING) {
-            int currentValue = msg.value.sival_int;
-            processSample(currentValue, secondChance, candidateValue, adc);
+        printf("Iam into Routine HeightPulse\n");
+        if (msg.code == PULSE_ADC_SAMPLE) {
+            int32_t currentValue = msg.value.sival_int;
+            // check if currentValue matches previousValue
+            if (abs(currentValue - previousValue) > THRESHOLD) {
+                previousValue = currentValue;
+                continue;
+            } else {
+                if (MsgSendPulse(connectionId, -1, PULSE_HS_SAMPLE,
+                                 currentValue)) {
+                    perror("Send failed.");
+                }
+            }
         }
+
+        // processSample(currentValue, secondChance, candidateValue, adc);
     }
     printf("Message thread stops...\n");
 }
 
+// TODO move towards FSM
 // Evaluate sample
-void HeightSensorControl::processSample(int currentValue, bool &secondChance, int &candidateValue, ADC *adc) {
-    if (!firstValue) {
-        bandHeight = currentValue;
-        firstValue = true;
-    }
+// void HeightSensorControl::processSample(int currentValue, bool &secondChance,
+// int &candidateValue, ADC *adc) {
+//     if (!firstValue) {
+//         bandHeight = currentValue;
+//         firstValue = true;
+//     }
 
-    if (abs(currentValue - bandHeight) <= THRESHOLD) {
-        handleBandHeightReached(secondChance);
-    }
-    else if (abs(currentValue - lastValue) <= THRESHOLD) {
-        printf("%d\n", currentValue);
-    }
-    else {
-        handleNewValue(currentValue, secondChance, candidateValue);
-    }
+//     if (abs(currentValue - bandHeight) <= THRESHOLD) {
+//         handleBandHeightReached(secondChance);
+//     }
+//     else if (abs(currentValue - lastValue) <= THRESHOLD) {
+//         printf("%d\n", currentValue);
+//     }
+//     else {
+//         handleNewValue(currentValue, secondChance, candidateValue);
+//     }
 
-    this_thread::sleep_for(chrono::milliseconds(10));
-    adc->sample();
-}
+//     this_thread::sleep_for(chrono::milliseconds(10));
+//     adc->sample();
+// }
 
-// If bandheight is reached
-void HeightSensorControl::handleBandHeightReached(bool &secondChance) {
-    // Höhe wird erreicht - Speichern der Höhe
-    if (countSample > 0 && !heights.empty()) {
-        heights.push_back(bandHeight);
-        sampleCounts.push_back(countSample);
-    }
+// // If bandheight is reached
+// void HeightSensorControl::handleBandHeightReached(bool &secondChance) {
+//     // Höhe wird erreicht - Speichern der Höhe
+//     if (countSample > 0 && !heights.empty()) {
+//         heights.push_back(bandHeight);
+//         sampleCounts.push_back(countSample);
+//     }
 
-    secondChance = false;
-    countSample = 0;
-}
+//     secondChance = false;
+//     countSample = 0;
+// }
 
-// Wenn ein neuer Wert erkannt wird
-void HeightSensorControl::handleNewValue(int currentValue, bool &secondChance, int &candidateValue) {
-    if (!secondChance) {
-        secondChance = true;
-        candidateValue = currentValue;
-    }
-    else if (abs(currentValue - candidateValue) <= THRESHOLD) {
-        lastValue = currentValue;
-        secondChance = false;
-        countSample = 1;  // Sample wird gezählt
-    }
-    else {
-        secondChance = false;
-        countSample = 0;
-    }
-}
+// // Wenn ein neuer Wert erkannt wird
+// void HeightSensorControl::handleNewValue(int currentValue, bool
+// &secondChance, int &candidateValue) {
+//     if (!secondChance) {
+//         secondChance = true;
+//         candidateValue = currentValue;
+//     }
+//     else if (abs(currentValue - candidateValue) <= THRESHOLD) {
+//         lastValue = currentValue;
+//         secondChance = false;
+//         countSample = 1;  // Sample wird gezählt
+//     }
+//     else {
+//         secondChance = false;
+//         countSample = 0;
+//     }
+// }
 
-//void HeightSensorControl::printHeightData() {
-//    if (heightData.empty()) {
-//        std::cout << "No height data available!" << std::endl;
-//    } else {
-//        for (const auto& data : heightData) {
-//            std::cout << "Count Sample: " << data.countSample << ", Median Height: " << data.medianHeight << std::endl;
-//        }
-//    }
-//}
-
-
-
-
+// void HeightSensorControl::printHeightData() {
+//     if (heightData.empty()) {
+//         std::cout << "No height data available!" << std::endl;
+//     } else {
+//         for (const auto& data : heightData) {
+//             std::cout << "Count Sample: " << data.countSample << ", Median
+//             Height: " << data.medianHeight << std::endl;
+//         }
+//     }
+// }
