@@ -23,18 +23,20 @@ class SensorISR {
     SensorISR();
     ~SensorISR();
 
-    void registerInterrupt(int32_t channelID);
+    bool registerInterrupt(int32_t channelID);
     void clearCurrentInterrupt();
     uint32_t getFlippedValues();
     uint32_t getPreviousValues(); // TODO check if these are ACTUALLY the previous values
 
-    //     static bool initializeGPIOBaseAddr(uintptr_t portAddr);
+    
     //     static bool registerInterrupt(int gpioPort, int pulseCode, int channelID);
     //     void initializeGPIOInterrupt(int pin) const;
     //     static int getInterruptID() { return interruptID; }
 
   private:
+    bool initializeGPIOBaseAddr(uintptr_t portAddr);
     uintptr_t gpioBase;
+    int32_t interruptID;
     //     void configureEdgeDetection(uintptr_t baseAddr, int pin, bool rising, bool falling) const;
 };
 

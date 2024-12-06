@@ -15,7 +15,9 @@ Decoder::Decoder(const std::string dispatcherChannelName) {
 
     sensorISR = new SensorISR();
     // sonsorISR = foo;
-    sensorISR->registerInterrupt(channelID);
+    if (!sensorISR->registerInterrupt(channelID)){
+        perror("decoder could not register interrupt")
+;    }
     dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
 
     // TODO check if festo 1 or festo 2 in parameter list
@@ -57,18 +59,66 @@ void Decoder::decode() {
     uint32_t flippedValues = sensorISR->getFlippedValues();
     uint32_t previousValues = sensorISR->getPreviousValues();
 
-    if (flippedValues & (uint32_t)BIT_MASK(LBF_PIN) != 0) {
+    // ESTOP
+    if ((flippedValues & (uint32_t)BIT_MASK(SES_PIN)) != 0) {
+        // SES_PIN
+        int8_t current_level = (previousValues >> SES_PIN) & 0x1;
+        int32_t code = current_level ? PULSE_ESTOP_HIGH : PULSE_ESTOP_LOW;
+        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+    }
+    // Light Barrier Front
+    if ((flippedValues & (uint32_t)BIT_MASK(LBF_PIN)) != 0) {
         // LBF_PIN
         uint8_t current_level = (previousValues >> LBF_PIN) & 0x1;
         // TODO Add 2 Festo support eg add festo# to value instead of sending just 0 and remove number ->
         // PULSE_LBF_INTERRUPTED
         int32_t code = current_level ? PULSE_LBF_INTERRUPTED : PULSE_LBF_OPEN;
-        sendMsg(code, 0);
+        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
-    if (flippedValues & (uint32_t)BIT_MASK(LBM_PIN) != 0) {
+    // Light Berrier End
+    if ((flippedValues & (uint32_t)BIT_MASK(LBE_PIN)) != 0) {
         // LBM_PIN
+        int8_t current_level = (previousValues >> LBE_PIN) & 0x1;
+        int32_t code = current_level ? PULSE_LBE_INTERRUPTED : PULSE_LBE_OPEN;
+        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
-    // TODO
+    // Light Barrier Ramp
+    if ((flippedValues & (uint32_t)BIT_MASK(LBR_PIN)) != 0) {
+        // LBM_PIN
+        int8_t current_level = (previousValues >> LBR_PIN) & 0x1;
+        int32_t code = current_level ? PULSE_LBR_INTERRUPTED : PULSE_LBR_OPEN;
+        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+    }
+    // Light Barrier Metal Sensor
+    if ((flippedValues & (uint32_t)BIT_MASK(LBM_PIN)) != 0) {
+        // LBM_PIN
+        int8_t current_level = (previousValues >> LBM_PIN) & 0x1;
+        int32_t code = current_level ? PULSE_LBM_INTERRUPTED : PULSE_LBM_OPEN;
+        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+    }
+    // Button Start
+    if ((flippedValues & (uint32_t)BIT_MASK(BGS_PIN)) != 0) {
+        // LBM_PIN
+        int8_t current_level = (previousValues >> BGS_PIN) & 0x1;
+        int32_t code = current_level ? PULSE_BGS_HIGH : PULSE_BGS_LOW;
+        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+    }
+    // Button Stop
+    if ((flippedValues & (uint32_t)BIT_MASK(BRS_PIN)) != 0) {
+        // LBM_PIN
+        int8_t current_level = (previousValues >> BRS_PIN) & 0x1;
+        int32_t code = current_level ? PULSE_BRS_HIGH : PULSE_BRS_LOW;
+        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+    }
+    // Button Reset
+    if ((flippedValues & (uint32_t)BIT_MASK(BGR_PIN)) != 0) {
+        // LBM_PIN
+        int8_t current_level = (previousValues >> BGR_PIN) & 0x1;
+        int32_t code = current_level ? PULSE_BGR_HIGH : PULSE_BGR_LOW;
+        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+    }
+    
+    // TODO if neccessary
     // if (...) {
     //     ...
     // }

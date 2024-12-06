@@ -77,9 +77,9 @@ typedef uint8_t Pin;
 
 
 /* GPIO port addresses (spruh73l.pdf S.177 ff.) */
-#define GPIO_PORT0 0x44E07000
-#define GPIO_PORT1 0x4804C000
-#define GPIO_PORT2 0x481AC000
+// #define GPIO_PORT0 0x44E07000
+// #define GPIO_PORT1 0x4804C000
+// #define GPIO_PORT2 0x481AC000
 
 
 /* GPIO port registers length */
