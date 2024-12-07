@@ -3,789 +3,526 @@
 #ifndef FSM_QUALITYGATE_H_
 #define FSM_QUALITYGATE_H_
 
+#ifdef __cplusplus
+extern "C" { 
+#endif
+
 /*!
-Forward declaration for the FSM_QualityGate state machine.
+* Forward declaration for the FSM_QualityGate state machine.
 */
-class FSM_QualityGate;
+typedef struct FSM_QualityGate FSM_QualityGate;
 
+/*!
+* Forward declaration of the data structure for the FSM_QualityGateIface interface scope.
+*/
+typedef struct FSM_QualityGateIface FSM_QualityGateIface;
 
-#include <deque>
+/*!
+* Forward declaration of the data structure for the FSM_QualityGateInternal interface scope.
+*/
+typedef struct FSM_QualityGateInternal FSM_QualityGateInternal;
+
+#ifdef __cplusplus
+}
+#endif
+
 #include "../src/sc_types.h"
-#include "../src/sc_rxcpp.h"
-#include "../src/sc_statemachine.h"
-#include "../src/sc_eventdriven.h"
+#include "../src/sc_rxc.h"
 #include <string.h>
+
+#ifdef __cplusplus
+extern "C" { 
+#endif 
 
 /*! \file
 Header of the state machine 'FSM_QualityGate'.
 */
 
+#ifndef FSM_QUALITYGATE_EVENTQUEUE_BUFFERSIZE
+#define FSM_QUALITYGATE_EVENTQUEUE_BUFFERSIZE 20
+#endif
+#ifndef FSM_QUALITYGATE_IN_EVENTQUEUE_BUFFERSIZE
+#define FSM_QUALITYGATE_IN_EVENTQUEUE_BUFFERSIZE FSM_QUALITYGATE_EVENTQUEUE_BUFFERSIZE
+#endif
+#ifndef FSM_QUALITYGATE_INTERNAL_EVENTQUEUE_BUFFERSIZE
+#define FSM_QUALITYGATE_INTERNAL_EVENTQUEUE_BUFFERSIZE FSM_QUALITYGATE_EVENTQUEUE_BUFFERSIZE
+#endif
+#ifndef SC_INVALID_EVENT_VALUE
+#define SC_INVALID_EVENT_VALUE 0
+#endif
+/*! Define number of states in the state enum */
+#define FSM_QUALITYGATE_STATE_COUNT 45
 
-class FSM_QualityGate : public sc::EventDrivenInterface
+/*! Define dimension of the state configuration vector for orthogonal states. */
+#define FSM_QUALITYGATE_MAX_ORTHOGONAL_STATES 9
+/*! Define dimension of the state configuration vector for history states. */
+#define FSM_QUALITYGATE_MAX_HISTORY_STATES 1
+
+/*! Define indices of states in the StateConfVector */
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE_INGRESS_INGRESS 0
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE_INGRESS_INGRESS_INGRESS_IDLE 0
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE_INGRESS_INGRESS_INGRESS_PUKPRESENT 0
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE_INGRESS_INGRESS_INGRESS_CREATINGDISTANCE 0
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE_INGRESS_PAUSED 0
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__HEIGHTMEASUREMENT_HEIGHTMEASUREMENT 1
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__HEIGHTMEASUREMENT_HEIGHTMEASUREMENT_HEIGHTMEASUREMENT_IDLE 1
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__HEIGHTMEASUREMENT_HEIGHTMEASUREMENT_HEIGHTMEASUREMENT_MEASURING 1
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__HEIGHTMEASUREMENT_HEIGHTMEASUREMENT_HEIGHTMEASUREMENT_PUKPRESENT 1
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__HEIGHTMEASUREMENT_PAUSED 1
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__SORTING_SORTING 2
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__SORTING_SORTING_SORTING_IDLE 2
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__SORTING_SORTING_SORTING_METALMEASUREMENT 2
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__SORTING_SORTING_SORTING_PASSTHROUGH 2
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__SORTING_SORTING_SORTING_PUKPRESENT 2
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__SORTING_SORTING_SORTING_EJECTING 2
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__SORTING_RAMPFULL 2
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__SORTING_PAUSED 2
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__EGRESS_EGRESS 3
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__EGRESS_EGRESS_EGRESS_IDLE 3
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__EGRESS_EGRESS_EGRESS_PUKPRESENT 3
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__EGRESS_EGRESS_EGRESS_TRANSFER 3
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__EGRESS_PAUSED 3
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__MOTOR_SYSTEMMOTOR 4
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__MOTOR_SYSTEMMOTOR_FSM_SYSTEMMOTOR_IDLE 4
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__MOTOR_SYSTEMMOTOR_FSM_SYSTEMMOTOR_FORWARD 4
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__MOTOR_SYSTEMMOTOR_FSM_SYSTEMMOTOR_SLOW 4
+#define SCVI_FSM_QUALITYGATE_FSM_QUALITYGATE__MOTOR_SYSTEMMOTOR_FSM_SYSTEMMOTOR_STOP 4
+#define SCVI_FSM_QUALITYGATE_FSM_SYSTEM_OPERATIONAL 5
+#define SCVI_FSM_QUALITYGATE_FSM_SYSTEM_ESTOP 5
+#define SCVI_FSM_QUALITYGATE_FSM_SYSTEM_ESTOP_ESTOP_AWAITINGESTOPBUTTON 5
+#define SCVI_FSM_QUALITYGATE_FSM_SYSTEM_ESTOP_ESTOP__FINAL_ 5
+#define SCVI_FSM_QUALITYGATE_FSM_SYSTEM_START 5
+#define SCVI_FSM_QUALITYGATE_FSM_SYSTEM_READY 5
+#define SCVI_FSM_QUALITYGATE_FSM_SYSTEM_SERVICEMODE 5
+#define SCVI_FSM_QUALITYGATE_FSM_SIGNALING_FSM_LAMP 6
+#define SCVI_FSM_QUALITYGATE_FSM_SIGNALING_FSM_LAMP_FSM_LAMP_FSM_LAMP 6
+#define SCVI_FSM_QUALITYGATE_FSM_SIGNALING_FSM_LAMP_FSM_LAMP_FSM_LAMP_FSM_LAMP_GREEN_OFF 6
+#define SCVI_FSM_QUALITYGATE_FSM_SIGNALING_FSM_LAMP_FSM_LAMP_FSM_LAMP_FSM_LAMP_GREEN_CONSTANT 6
+#define SCVI_FSM_QUALITYGATE_FSM_SIGNALING_FSM_LAMP_FSM_LAMP_FSM_LAMP_FSM_LAMP_GREEN_BLINKING_1HZ 6
+#define SCVI_FSM_QUALITYGATE_FSM_SIGNALING_FSM_LAMP_FSM_LAMP_FSM_LAMP_FSM_LAMP_YELLOW_OFF 7
+#define SCVI_FSM_QUALITYGATE_FSM_SIGNALING_FSM_LAMP_FSM_LAMP_FSM_LAMP_FSM_LAMP_YELLOW_CONSTANT 7
+#define SCVI_FSM_QUALITYGATE_FSM_SIGNALING_FSM_LAMP_FSM_LAMP_FSM_LAMP_FSM_LAMP_YELLOW_BLINKING_1HZ 7
+#define SCVI_FSM_QUALITYGATE_FSM_SIGNALING_FSM_LAMP_FSM_LAMP_FSM_LAMP_FSM_LAMP_RED_OFF 8
+#define SCVI_FSM_QUALITYGATE_FSM_SIGNALING_FSM_LAMP_FSM_LAMP_FSM_LAMP_FSM_LAMP_RED_CONSTANT 8
+
+
+/* 
+ * Enum of event names in the statechart.
+ */
+typedef enum  {
+	FSM_QualityGate_invalid_event = SC_INVALID_EVENT_VALUE,
+	FSM_QualityGate_ESTOP_1_HIGH,
+	FSM_QualityGate_ESTOP_1_LOW,
+	FSM_QualityGate_LBF_1_INTERRUPTED,
+	FSM_QualityGate_LBF_1_OPEN,
+	FSM_QualityGate_PUK_ENTRY_HeightMeasurement,
+	FSM_QualityGate_HS_1_SAMPLE,
+	FSM_QualityGate_HS_1_SAMPLING_DONE,
+	FSM_QualityGate_PUK_ENTRY_SORTING,
+	FSM_QualityGate_TIMEOUT_200,
+	FSM_QualityGate_LBM_1_INTERRUPTED,
+	FSM_QualityGate_PUK_DESIRED,
+	FSM_QualityGate_PUK_NOT_DESIRED,
+	FSM_QualityGate_PUK_EJECTOR_DISTANCE_VALID,
+	FSM_QualityGate_LBR_1_INTERRUPTED,
+	FSM_QualityGate_LBR_1_OPEN,
+	FSM_QualityGate_LBE_1_OPEN,
+	FSM_QualityGate_LBE_1_INTERRUPTED,
+	FSM_QualityGate_MOTOR_STOP,
+	FSM_QualityGate_MOTOR_STOP_RESET,
+	FSM_QualityGate_MOTOR_SLOW_RESET,
+	FSM_QualityGate_MOTOR_FORWARD_RESET,
+	FSM_QualityGate_BGS_1_LONG_PRESSED,
+	FSM_QualityGate_BGS_1_INTERRUPTED,
+	FSM_QualityGate_BRS_1_INTERRUPTED,
+	FSM_QualityGate_BGR_1_INTERRUPTED,
+	FSM_QualityGate_LampEStop,
+	FSM_QualityGate_Lamp,
+	FSM_QualityGate_ESTOP_SIGNAL,
+	FSM_QualityGate_ESTOP_SIGNAL_RESET,
+	FSM_QualityGate_RUNNING_SIGNAL,
+	FSM_QualityGate_RUNNING_SIGNAL_RESET,
+	FSM_QualityGate_WARNING_SIGNAL,
+	FSM_QualityGate_WARNING_SIGNAL_RESET,
+	FSM_QualityGate_READY_SIGNAL,
+	FSM_QualityGate_READY_RESET,
+	FSM_QualityGate_ERROR_SIGNAL,
+	FSM_QualityGate_internal_local_SYSTEM_OPERATIONAL_OUT,
+	FSM_QualityGate_internal_local_PUK_DISTANCE_VALID,
+	FSM_QualityGate_internal_local_SYSTEM_OPERATIONAL_IN,
+	FSM_QualityGate_internal_local_PUK_ENTRY_EGRESS,
+	FSM_QualityGate_internal_local_ESTOP_RECEIVED,
+	FSM_QualityGate_internal_local_SYSTEM_SERVICE_IN,
+	FSM_QualityGate_internal_local_ESTOP_CLEARED,
+	FSM_QualityGate_internal_local_SYSTEM_SERVICE_OUT,
+	FSM_QualityGate_internal_local_LAMP_YELLOW_BLINKING_1_HZ,
+	FSM_QualityGate_internal_local_LAMP_YELLOW_BLINKING_1_HZ_RESET
+} FSM_QualityGateEventID;
+
+/*
+ * Struct that represents a single event.
+ */
+typedef struct {
+	FSM_QualityGateEventID name;
+} fsm_qualitygate_event;
+
+/*
+ * Queue that holds the raised events.
+ */
+typedef struct fsm_qualitygate_eventqueue_s {
+	fsm_qualitygate_event *events;
+	sc_integer capacity;
+	sc_integer pop_index;
+	sc_integer push_index;
+	sc_integer size;
+} fsm_qualitygate_eventqueue;
+
+/*! Enumeration of all states */ 
+typedef enum
 {
-	public:
-		FSM_QualityGate() noexcept;
-		
-		virtual ~FSM_QualityGate();
-		
-		
-		
-		/*! Enumeration of all states. */
-		enum class State
-		{
-			NO_STATE,
-			FSM_QualityGate_Ingress_Ingress,
-			FSM_QualityGate_Ingress_Ingress_Ingress_Idle,
-			FSM_QualityGate_Ingress_Ingress_Ingress_PukPresent,
-			FSM_QualityGate_Ingress_Ingress_Ingress_CreatingDistance,
-			FSM_QualityGate_Ingress_EStop,
-			FSM_QualityGate_Ingress_SystemStopped,
-			FSM_QualityGate_Ingress_SystemIdle,
-			FSM_QualityGate__HeightMeasurement_HeightMeasurement,
-			FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle,
-			FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring,
-			FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent,
-			FSM_QualityGate__HeightMeasurement_EStop,
-			FSM_QualityGate__HeightMeasurement_SystemStopped,
-			FSM_QualityGate__HeightMeasurement_SystemIdle,
-			FSM_QualityGate__Sorting_Sorting,
-			FSM_QualityGate__Sorting_Sorting_Sorting_Idle,
-			FSM_QualityGate__Sorting_Sorting_Sorting_MetalMeasurement,
-			FSM_QualityGate__Sorting_Sorting_Sorting_Ejecting,
-			FSM_QualityGate__Sorting_Sorting_Sorting_Passthrough,
-			FSM_QualityGate__Sorting_Sorting_Sorting_PUkPresent,
-			FSM_QualityGate__Sorting_RampFull,
-			FSM_QualityGate__Sorting_EStop,
-			FSM_QualityGate__Sorting_SystemIdle,
-			FSM_QualityGate__Sorting_SystemStopped,
-			FSM_QualityGate__Egress_Egress,
-			FSM_QualityGate__Egress_Egress_Egress_IDLE,
-			FSM_QualityGate__Egress_Egress_Egress_PukPresent,
-			FSM_QualityGate__Egress_Egress_Egress_Transfer,
-			FSM_QualityGate__Egress_SystemStopped,
-			FSM_QualityGate__Egress_EStop,
-			FSM_QualityGate__Egress_SystemIdle,
-			FSM_QualityGate__Motor_SystemMotor,
-			FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle,
-			FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward,
-			FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow,
-			FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop,
-			FSM_System_Operational,
-			FSM_System_Operational_FSM_Operational_Ready,
-			FSM_System_Operational_FSM_Operational_Running,
-			FSM_System_EStop,
-			FSM_Signaling_FSM_LAMP,
-			FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp,
-			FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off,
-			FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant,
-			FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off,
-			FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant,
-			FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1_Hz,
-			FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off,
-			FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant
-		};
-		
-		/*! The number of states. */
-		static constexpr const sc::integer numStates {49};
-		static constexpr const sc::integer scvi_FSM_QualityGate_Ingress_Ingress {0};
-		static constexpr const sc::integer scvi_FSM_QualityGate_Ingress_Ingress_Ingress_Idle {0};
-		static constexpr const sc::integer scvi_FSM_QualityGate_Ingress_Ingress_Ingress_PukPresent {0};
-		static constexpr const sc::integer scvi_FSM_QualityGate_Ingress_Ingress_Ingress_CreatingDistance {0};
-		static constexpr const sc::integer scvi_FSM_QualityGate_Ingress_EStop {0};
-		static constexpr const sc::integer scvi_FSM_QualityGate_Ingress_SystemStopped {0};
-		static constexpr const sc::integer scvi_FSM_QualityGate_Ingress_SystemIdle {0};
-		static constexpr const sc::integer scvi_FSM_QualityGate__HeightMeasurement_HeightMeasurement {1};
-		static constexpr const sc::integer scvi_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle {1};
-		static constexpr const sc::integer scvi_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring {1};
-		static constexpr const sc::integer scvi_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent {1};
-		static constexpr const sc::integer scvi_FSM_QualityGate__HeightMeasurement_EStop {1};
-		static constexpr const sc::integer scvi_FSM_QualityGate__HeightMeasurement_SystemStopped {1};
-		static constexpr const sc::integer scvi_FSM_QualityGate__HeightMeasurement_SystemIdle {1};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Sorting_Sorting {2};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Sorting_Sorting_Sorting_Idle {2};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Sorting_Sorting_Sorting_MetalMeasurement {2};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Sorting_Sorting_Sorting_Ejecting {2};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Sorting_Sorting_Sorting_Passthrough {2};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Sorting_Sorting_Sorting_PUkPresent {2};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Sorting_RampFull {2};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Sorting_EStop {2};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Sorting_SystemIdle {2};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Sorting_SystemStopped {2};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Egress_Egress {3};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Egress_Egress_Egress_IDLE {3};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Egress_Egress_Egress_PukPresent {3};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Egress_Egress_Egress_Transfer {3};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Egress_SystemStopped {3};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Egress_EStop {3};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Egress_SystemIdle {3};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Motor_SystemMotor {4};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle {4};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward {4};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow {4};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop {4};
-		static constexpr const sc::integer scvi_FSM_System_Operational {5};
-		static constexpr const sc::integer scvi_FSM_System_Operational_FSM_Operational_Ready {5};
-		static constexpr const sc::integer scvi_FSM_System_Operational_FSM_Operational_Running {5};
-		static constexpr const sc::integer scvi_FSM_System_EStop {5};
-		static constexpr const sc::integer scvi_FSM_Signaling_FSM_LAMP {6};
-		static constexpr const sc::integer scvi_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp {6};
-		static constexpr const sc::integer scvi_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off {6};
-		static constexpr const sc::integer scvi_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant {6};
-		static constexpr const sc::integer scvi_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off {7};
-		static constexpr const sc::integer scvi_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant {7};
-		static constexpr const sc::integer scvi_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1_Hz {7};
-		static constexpr const sc::integer scvi_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off {8};
-		static constexpr const sc::integer scvi_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant {8};
-		
-		/*! Enumeration of all events which are consumed. */
-		enum class Event
-		{
-			NO_EVENT,
-			ESTOP_TOGGLED,
-			ESTOP_CLEARED,
-			ESTOP_Received,
-			LBF_1_INTERRUPTED,
-			LBF_1_OPEN,
-			PUK_ENTRY_HeightMeasurement,
-			HS_1_OPEN,
-			HS_1_INTERRUPTED,
-			PUK_ENTRY_SORTING,
-			LBM_1_INTERRUPTED,
-			BGR_1_INTERRUPTED,
-			PUK_DESIRED,
-			PUK_NOT_DESIRED,
-			PUK_EJECTOR_DISTANCE_VALID,
-			LBE_1_OPEN,
-			LBE_1_INTERRUPTED,
-			LBR_1_INTERRUPTED,
-			MOTOR_STOP,
-			MOTOR_STOP_RESET,
-			MOTOR_SLOW,
-			MOTOR_SLOW_RESET,
-			MOTOR_FORWARD,
-			MOTOR_FORWARD_RESET,
-			LampEStop,
-			Lamp,
-			BGS_1_INTERRUPTED,
-			BRS_1_INTERRUPTED,
-			ESTOP_SIGNAL,
-			ESTOP_SIGNAL_RESET,
-			RUNNING_SIGNAL,
-			RUNNING_SIGNAL_RESET,
-			WARNING_SIGNAL,
-			WARNING_SIGNAL_RESET,
-			READY_SIGNAL,
-			READY_RESET,
-			ERROR_SIGNAL,
-			Internal_local_SYSTEM_STOPPED,
-			Internal_local_PUK_DISTANCE_VALID,
-			Internal_local_SYSTEM_RUNNING,
-			Internal_local_PUK_ENTRY_EGRESS,
-			Internal_local_LAMP_YELLOW_BLINKING_1_HZ,
-			Internal_local_LAMP_YELLOW_BLINKING_1_HZ_RESET
-		};
-		
-		class EventInstance
-		{
-			public:
-				explicit  EventInstance(Event id) noexcept : eventId(id){}
-				virtual ~EventInstance() = default;
-				const Event eventId;
-		};
-		/*! Raises the in event 'ESTOP_TOGGLED' of default interface scope. */
-		void raiseESTOP_TOGGLED();
-		/*! Raises the in event 'ESTOP_CLEARED' of default interface scope. */
-		void raiseESTOP_CLEARED();
-		/*! Raises the in event 'ESTOP_Received' of default interface scope. */
-		void raiseESTOP_Received();
-		/*! Raises the in event 'LBF_1_INTERRUPTED' of default interface scope. */
-		void raiseLBF_1_INTERRUPTED();
-		/*! Raises the in event 'LBF_1_OPEN' of default interface scope. */
-		void raiseLBF_1_OPEN();
-		/*! Raises the in event 'PUK_ENTRY_HeightMeasurement' of default interface scope. */
-		void raisePUK_ENTRY_HeightMeasurement();
-		/*! Get observable for event 'LAMP_YELLOW_BLINKING_1_HZ' of default interface scope. */
-		sc::rx::Observable<void>& getLAMP_YELLOW_BLINKING_1_HZ() noexcept;
-		/*! Get observable for event 'LAMP_YELLOW_BLINKING_1_HZ_RESET' of default interface scope. */
-		sc::rx::Observable<void>& getLAMP_YELLOW_BLINKING_1_HZ_RESET() noexcept;
-		/*! Raises the in event 'HS_1_OPEN' of default interface scope. */
-		void raiseHS_1_OPEN();
-		/*! Raises the in event 'HS_1_INTERRUPTED' of default interface scope. */
-		void raiseHS_1_INTERRUPTED();
-		/*! Get observable for event 'PUK_DISTANCE_VALID' of default interface scope. */
-		sc::rx::Observable<void>& getPUK_DISTANCE_VALID() noexcept;
-		/*! Raises the in event 'PUK_ENTRY_SORTING' of default interface scope. */
-		void raisePUK_ENTRY_SORTING();
-		/*! Raises the in event 'LBM_1_INTERRUPTED' of default interface scope. */
-		void raiseLBM_1_INTERRUPTED();
-		/*! Raises the in event 'BGR_1_INTERRUPTED' of default interface scope. */
-		void raiseBGR_1_INTERRUPTED();
-		/*! Raises the in event 'PUK_DESIRED' of default interface scope. */
-		void raisePUK_DESIRED();
-		/*! Raises the in event 'PUK_NOT_DESIRED' of default interface scope. */
-		void raisePUK_NOT_DESIRED();
-		/*! Get observable for event 'PUK_ENTRY_EGRESS' of default interface scope. */
-		sc::rx::Observable<void>& getPUK_ENTRY_EGRESS() noexcept;
-		/*! Raises the in event 'PUK_EJECTOR_DISTANCE_VALID' of default interface scope. */
-		void raisePUK_EJECTOR_DISTANCE_VALID();
-		/*! Raises the in event 'LBE_1_OPEN' of default interface scope. */
-		void raiseLBE_1_OPEN();
-		/*! Raises the in event 'LBE_1_INTERRUPTED' of default interface scope. */
-		void raiseLBE_1_INTERRUPTED();
-		/*! Raises the in event 'LBR_1_INTERRUPTED' of default interface scope. */
-		void raiseLBR_1_INTERRUPTED();
-		/*! Raises the in event 'MOTOR_STOP' of default interface scope. */
-		void raiseMOTOR_STOP();
-		/*! Raises the in event 'MOTOR_STOP_RESET' of default interface scope. */
-		void raiseMOTOR_STOP_RESET();
-		/*! Raises the in event 'MOTOR_SLOW' of default interface scope. */
-		void raiseMOTOR_SLOW();
-		/*! Raises the in event 'MOTOR_SLOW_RESET' of default interface scope. */
-		void raiseMOTOR_SLOW_RESET();
-		/*! Raises the in event 'MOTOR_FORWARD' of default interface scope. */
-		void raiseMOTOR_FORWARD();
-		/*! Raises the in event 'MOTOR_FORWARD_RESET' of default interface scope. */
-		void raiseMOTOR_FORWARD_RESET();
-		/*! Raises the in event 'LampEStop' of default interface scope. */
-		void raiseLampEStop();
-		/*! Raises the in event 'Lamp' of default interface scope. */
-		void raiseLamp();
-		/*! Raises the in event 'BGS_1_INTERRUPTED' of default interface scope. */
-		void raiseBGS_1_INTERRUPTED();
-		/*! Raises the in event 'BRS_1_INTERRUPTED' of default interface scope. */
-		void raiseBRS_1_INTERRUPTED();
-		/*! Get observable for event 'SYSTEM_RUNNING' of default interface scope. */
-		sc::rx::Observable<void>& getSYSTEM_RUNNING() noexcept;
-		/*! Get observable for event 'SYSTEM_STOPPED' of default interface scope. */
-		sc::rx::Observable<void>& getSYSTEM_STOPPED() noexcept;
-		/*! Raises the in event 'ESTOP_SIGNAL' of default interface scope. */
-		void raiseESTOP_SIGNAL();
-		/*! Raises the in event 'ESTOP_SIGNAL_RESET' of default interface scope. */
-		void raiseESTOP_SIGNAL_RESET();
-		/*! Raises the in event 'RUNNING_SIGNAL' of default interface scope. */
-		void raiseRUNNING_SIGNAL();
-		/*! Raises the in event 'RUNNING_SIGNAL_RESET' of default interface scope. */
-		void raiseRUNNING_SIGNAL_RESET();
-		/*! Raises the in event 'WARNING_SIGNAL' of default interface scope. */
-		void raiseWARNING_SIGNAL();
-		/*! Raises the in event 'WARNING_SIGNAL_RESET' of default interface scope. */
-		void raiseWARNING_SIGNAL_RESET();
-		/*! Raises the in event 'READY_SIGNAL' of default interface scope. */
-		void raiseREADY_SIGNAL();
-		/*! Raises the in event 'READY_RESET' of default interface scope. */
-		void raiseREADY_RESET();
-		/*! Raises the in event 'ERROR_SIGNAL' of default interface scope. */
-		void raiseERROR_SIGNAL();
-		
-		
-		/*! Gets the value of the variable 'EStopFST_1_Toggle' that is defined in the default interface scope. */
-		bool getEStopFST_1_Toggle() const noexcept;
-		/*! Sets the value of the variable 'EStopFST_1_Toggle' that is defined in the default interface scope. */
-		void setEStopFST_1_Toggle(bool EStopFST_1_Toggle) noexcept;
-		/*! Gets the value of the variable 'FST1RampFull' that is defined in the default interface scope. */
-		bool getFST1RampFull() const noexcept;
-		/*! Sets the value of the variable 'FST1RampFull' that is defined in the default interface scope. */
-		void setFST1RampFull(bool FST1RampFull) noexcept;
-		/*! Gets the value of the variable 'timePassed' that is defined in the default interface scope. */
-		sc::integer getTimePassed() const noexcept;
-		/*! Sets the value of the variable 'timePassed' that is defined in the default interface scope. */
-		void setTimePassed(sc::integer timePassed) noexcept;
-		/*! Gets the value of the variable 'motorStop' that is defined in the default interface scope. */
-		sc::integer getMotorStop() const noexcept;
-		/*! Sets the value of the variable 'motorStop' that is defined in the default interface scope. */
-		void setMotorStop(sc::integer motorStop) noexcept;
-		/*! Gets the value of the variable 'motorSlow' that is defined in the default interface scope. */
-		sc::integer getMotorSlow() const noexcept;
-		/*! Sets the value of the variable 'motorSlow' that is defined in the default interface scope. */
-		void setMotorSlow(sc::integer motorSlow) noexcept;
-		/*! Gets the value of the variable 'motorForward' that is defined in the default interface scope. */
-		sc::integer getMotorForward() const noexcept;
-		/*! Sets the value of the variable 'motorForward' that is defined in the default interface scope. */
-		void setMotorForward(sc::integer motorForward) noexcept;
-		/*! Gets the value of the variable 'eStop_lamp_active' that is defined in the default interface scope. */
-		bool getEStop_lamp_active() const noexcept;
-		/*! Sets the value of the variable 'eStop_lamp_active' that is defined in the default interface scope. */
-		void setEStop_lamp_active(bool eStop_lamp_active) noexcept;
-		/*! Gets the value of the variable 'running_lamp_active' that is defined in the default interface scope. */
-		bool getRunning_lamp_active() const noexcept;
-		/*! Sets the value of the variable 'running_lamp_active' that is defined in the default interface scope. */
-		void setRunning_lamp_active(bool running_lamp_active) noexcept;
-		/*! Gets the value of the variable 'warning_lamp_active' that is defined in the default interface scope. */
-		bool getWarning_lamp_active() const noexcept;
-		/*! Sets the value of the variable 'warning_lamp_active' that is defined in the default interface scope. */
-		void setWarning_lamp_active(bool warning_lamp_active) noexcept;
-		
-		/*! Can be used by the client code to trigger a run to completion step without raising an event. */
-		void triggerWithoutEvent() override;
-		
-		/*
-		 * Functions inherited from StatemachineInterface
-		 */
-		 void enter() override;
-		
-		 void exit() override;
-		
-		/*!
-		 * Checks if the state machine is active (until 2.4.1 this method was used for states).
-		 * A state machine is active if it has been entered. It is inactive if it has not been entered at all or if it has been exited.
-		 */
-		 bool isActive() const noexcept override;
-		
-		
-		/*!
-		* Checks if all active states are final. 
-		* If there are no active states then the state machine is considered being inactive. In this case this method returns false.
-		*/
-		 bool isFinal() const noexcept override;
-		
-		/*! 
-		 * Checks if member of the state machine must be set. For example an operation callback.
-		 */
-		bool check() const noexcept;
-		
-		
-		/*! Checks if the specified state is active (until 2.4.1 the used method for states was calles isActive()). */
-		bool isStateActive(State state) const noexcept;
-		
-		
-		
-	protected:
-		
-		
-		std::deque<EventInstance*> incomingEventQueue;
-		
-		std::deque<EventInstance*> internalEventQueue;
-		
-		EventInstance* getNextEvent() noexcept;
-		
-		bool dispatchEvent(EventInstance* event) noexcept;
-		
-		
-		
-	private:
-		
-		bool EStopFST_1_Toggle {false};
-		bool FST1RampFull {false};
-		sc::integer timePassed {0};
-		sc::integer motorStop {0};
-		sc::integer motorSlow {0};
-		sc::integer motorForward {0};
-		bool eStop_lamp_active {false};
-		bool running_lamp_active {false};
-		bool warning_lamp_active {false};
-		
-		
-		
-		
-		
-		//! the maximum number of orthogonal states defines the dimension of the state configuration vector.
-		static const sc::ushort maxOrthogonalStates {9};
-		//! dimension of the state configuration vector for history states
-		static const sc::ushort maxHistoryStates {1};
-		
-		
-		
-		State stateConfVector[maxOrthogonalStates];
-		
-		State historyVector[maxHistoryStates];
-		
-		
-		
-		bool isExecuting {false};
-		sc::integer stateConfVectorPosition {0};
-		
-		
-		
-		// prototypes of all internal functions
-		
-		void enact_FSM_QualityGate_Ingress_Ingress_Ingress_Idle();
-		void enact_FSM_QualityGate_Ingress_Ingress_Ingress_PukPresent();
-		void enact_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
-		void enact_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
-		void enact_FSM_QualityGate__Sorting_Sorting_Sorting_PUkPresent();
-		void enact_FSM_QualityGate__Sorting_RampFull();
-		void enact_FSM_QualityGate__Egress_Egress_Egress_PukPresent();
-		void enact_FSM_QualityGate__Egress_Egress_Egress_Transfer();
-		void enact_FSM_System_Operational_FSM_Operational_Running();
-		void enact_FSM_System_EStop();
-		void exact_FSM_QualityGate_Ingress_Ingress_Ingress_Idle();
-		void exact_FSM_QualityGate_Ingress_Ingress_Ingress_CreatingDistance();
-		void exact_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
-		void exact_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
-		void exact_FSM_QualityGate__Sorting_RampFull();
-		void exact_FSM_QualityGate__Egress_Egress_Egress_PukPresent();
-		void exact_FSM_QualityGate__Egress_Egress_Egress_Transfer();
-		void exact_FSM_System_Operational_FSM_Operational_Running();
-		void exact_FSM_System_EStop();
-		void enseq_FSM_QualityGate_Ingress_Ingress_default();
-		void enseq_FSM_QualityGate_Ingress_Ingress_Ingress_Idle_default();
-		void enseq_FSM_QualityGate_Ingress_Ingress_Ingress_PukPresent_default();
-		void enseq_FSM_QualityGate_Ingress_Ingress_Ingress_CreatingDistance_default();
-		void enseq_FSM_QualityGate_Ingress_EStop_default();
-		void enseq_FSM_QualityGate_Ingress_SystemStopped_default();
-		void enseq_FSM_QualityGate_Ingress_SystemIdle_default();
-		void enseq_FSM_QualityGate__HeightMeasurement_HeightMeasurement_default();
-		void enseq_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_default();
-		void enseq_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default();
-		void enseq_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_default();
-		void enseq_FSM_QualityGate__HeightMeasurement_EStop_default();
-		void enseq_FSM_QualityGate__HeightMeasurement_SystemStopped_default();
-		void enseq_FSM_QualityGate__HeightMeasurement_SystemIdle_default();
-		void enseq_FSM_QualityGate__Sorting_Sorting_default();
-		void enseq_FSM_QualityGate__Sorting_Sorting_Sorting_Idle_default();
-		void enseq_FSM_QualityGate__Sorting_Sorting_Sorting_MetalMeasurement_default();
-		void enseq_FSM_QualityGate__Sorting_Sorting_Sorting_Ejecting_default();
-		void enseq_FSM_QualityGate__Sorting_Sorting_Sorting_Passthrough_default();
-		void enseq_FSM_QualityGate__Sorting_Sorting_Sorting_PUkPresent_default();
-		void enseq_FSM_QualityGate__Sorting_RampFull_default();
-		void enseq_FSM_QualityGate__Sorting_EStop_default();
-		void enseq_FSM_QualityGate__Sorting_SystemIdle_default();
-		void enseq_FSM_QualityGate__Sorting_SystemStopped_default();
-		void enseq_FSM_QualityGate__Egress_Egress_default();
-		void enseq_FSM_QualityGate__Egress_Egress_Egress_IDLE_default();
-		void enseq_FSM_QualityGate__Egress_Egress_Egress_PukPresent_default();
-		void enseq_FSM_QualityGate__Egress_Egress_Egress_Transfer_default();
-		void enseq_FSM_QualityGate__Egress_SystemStopped_default();
-		void enseq_FSM_QualityGate__Egress_EStop_default();
-		void enseq_FSM_QualityGate__Egress_SystemIdle_default();
-		void enseq_FSM_QualityGate__Motor_SystemMotor_default();
-		void enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
-		void enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
-		void enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
-		void enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
-		void enseq_FSM_System_Operational_default();
-		void enseq_FSM_System_Operational_FSM_Operational_Ready_default();
-		void enseq_FSM_System_Operational_FSM_Operational_Running_default();
-		void enseq_FSM_System_EStop_default();
-		void enseq_FSM_Signaling_FSM_LAMP_default();
-		void enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_default();
-		void enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
-		void enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
-		void enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
-		void enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default();
-		void enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1_Hz_default();
-		void enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
-		void enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default();
-		void enseq_FSM_QualityGate_Ingress_default();
-		void enseq_FSM_QualityGate_Ingress_Ingress_Ingress_default();
-		void enseq_FSM_QualityGate__HeightMeasurement_default();
-		void enseq_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_default();
-		void enseq_FSM_QualityGate__Sorting_default();
-		void enseq_FSM_QualityGate__Sorting_Sorting_Sorting_default();
-		void enseq_FSM_QualityGate__Egress_default();
-		void enseq_FSM_QualityGate__Egress_Egress_Egress_default();
-		void enseq_FSM_QualityGate__Motor_default();
-		void enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_default();
-		void shenseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor();
-		void enseq_FSM_System_default();
-		void enseq_FSM_System_Operational_FSM_Operational_default();
-		void enseq_FSM_Signaling_default();
-		void enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_default();
-		void enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_default();
-		void enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_default();
-		void enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_default();
-		void exseq_FSM_QualityGate_Ingress_Ingress();
-		void exseq_FSM_QualityGate_Ingress_Ingress_Ingress_Idle();
-		void exseq_FSM_QualityGate_Ingress_Ingress_Ingress_PukPresent();
-		void exseq_FSM_QualityGate_Ingress_Ingress_Ingress_CreatingDistance();
-		void exseq_FSM_QualityGate_Ingress_EStop();
-		void exseq_FSM_QualityGate_Ingress_SystemStopped();
-		void exseq_FSM_QualityGate_Ingress_SystemIdle();
-		void exseq_FSM_QualityGate__HeightMeasurement_HeightMeasurement();
-		void exseq_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle();
-		void exseq_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
-		void exseq_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
-		void exseq_FSM_QualityGate__HeightMeasurement_EStop();
-		void exseq_FSM_QualityGate__HeightMeasurement_SystemStopped();
-		void exseq_FSM_QualityGate__HeightMeasurement_SystemIdle();
-		void exseq_FSM_QualityGate__Sorting_Sorting();
-		void exseq_FSM_QualityGate__Sorting_Sorting_Sorting_Idle();
-		void exseq_FSM_QualityGate__Sorting_Sorting_Sorting_MetalMeasurement();
-		void exseq_FSM_QualityGate__Sorting_Sorting_Sorting_Ejecting();
-		void exseq_FSM_QualityGate__Sorting_Sorting_Sorting_Passthrough();
-		void exseq_FSM_QualityGate__Sorting_Sorting_Sorting_PUkPresent();
-		void exseq_FSM_QualityGate__Sorting_RampFull();
-		void exseq_FSM_QualityGate__Sorting_EStop();
-		void exseq_FSM_QualityGate__Sorting_SystemIdle();
-		void exseq_FSM_QualityGate__Sorting_SystemStopped();
-		void exseq_FSM_QualityGate__Egress_Egress();
-		void exseq_FSM_QualityGate__Egress_Egress_Egress_IDLE();
-		void exseq_FSM_QualityGate__Egress_Egress_Egress_PukPresent();
-		void exseq_FSM_QualityGate__Egress_Egress_Egress_Transfer();
-		void exseq_FSM_QualityGate__Egress_SystemStopped();
-		void exseq_FSM_QualityGate__Egress_EStop();
-		void exseq_FSM_QualityGate__Egress_SystemIdle();
-		void exseq_FSM_QualityGate__Motor_SystemMotor();
-		void exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle();
-		void exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
-		void exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
-		void exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop();
-		void exseq_FSM_System_Operational();
-		void exseq_FSM_System_Operational_FSM_Operational_Ready();
-		void exseq_FSM_System_Operational_FSM_Operational_Running();
-		void exseq_FSM_System_EStop();
-		void exseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-		void exseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
-		void exseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
-		void exseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant();
-		void exseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1_Hz();
-		void exseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-		void exseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-		void exseq_FSM_QualityGate_Ingress();
-		void exseq_FSM_QualityGate_Ingress_Ingress_Ingress();
-		void exseq_FSM_QualityGate__HeightMeasurement();
-		void exseq_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement();
-		void exseq_FSM_QualityGate__Sorting();
-		void exseq_FSM_QualityGate__Sorting_Sorting_Sorting();
-		void exseq_FSM_QualityGate__Egress();
-		void exseq_FSM_QualityGate__Egress_Egress_Egress();
-		void exseq_FSM_QualityGate__Motor();
-		void exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor();
-		void exseq_FSM_System();
-		void exseq_FSM_System_Operational_FSM_Operational();
-		void exseq_FSM_Signaling();
-		void react_FSM_QualityGate_Ingress_Ingress_Ingress__entry_Default();
-		void react_FSM_QualityGate_Ingress__entry_Default();
-		void react_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement__entry_Default();
-		void react_FSM_QualityGate__HeightMeasurement__entry_Default();
-		void react_FSM_QualityGate__Sorting_Sorting_Sorting__entry_Default();
-		void react_FSM_QualityGate__Sorting__entry_Default();
-		void react_FSM_QualityGate__Egress_Egress_Egress__entry_Default();
-		void react_FSM_QualityGate__Egress__entry_Default();
-		void react_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor__entry_Default();
-		void react_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_history();
-		void react_FSM_QualityGate__Motor__entry_Default();
-		void react_FSM_System__entry_Default();
-		void react_FSM_System_Operational_FSM_Operational__entry_Default();
-		void react_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green__entry_Default();
-		void react_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow__entry_Default();
-		void react_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red__entry_Default();
-		void react_FSM_Signaling_FSM_LAMP_FSM_LAMP__entry_Default();
-		void react_FSM_Signaling__entry_Default();
-		sc::integer react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate_Ingress_Ingress_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate_Ingress_Ingress_Ingress_Idle_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate_Ingress_Ingress_Ingress_PukPresent_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate_Ingress_Ingress_Ingress_CreatingDistance_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate_Ingress_EStop_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate_Ingress_SystemStopped_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate_Ingress_SystemIdle_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__HeightMeasurement_HeightMeasurement_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__HeightMeasurement_EStop_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__HeightMeasurement_SystemStopped_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__HeightMeasurement_SystemIdle_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Sorting_Sorting_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Sorting_Sorting_Sorting_Idle_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Sorting_Sorting_Sorting_MetalMeasurement_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Sorting_Sorting_Sorting_Ejecting_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Sorting_Sorting_Sorting_Passthrough_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Sorting_Sorting_Sorting_PUkPresent_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Sorting_RampFull_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Sorting_EStop_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Sorting_SystemIdle_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Sorting_SystemStopped_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Egress_Egress_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Egress_Egress_Egress_IDLE_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Egress_Egress_Egress_PukPresent_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Egress_Egress_Egress_Transfer_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Egress_SystemStopped_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Egress_EStop_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Egress_SystemIdle_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Motor_SystemMotor_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_react(const sc::integer transitioned_before);
-		sc::integer FSM_System_Operational_react(const sc::integer transitioned_before);
-		sc::integer FSM_System_Operational_FSM_Operational_Ready_react(const sc::integer transitioned_before);
-		sc::integer FSM_System_Operational_FSM_Operational_Running_react(const sc::integer transitioned_before);
-		sc::integer FSM_System_EStop_react(const sc::integer transitioned_before);
-		sc::integer FSM_Signaling_FSM_LAMP_react(const sc::integer transitioned_before);
-		sc::integer FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(const sc::integer transitioned_before);
-		sc::integer FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_react(const sc::integer transitioned_before);
-		sc::integer FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_react(const sc::integer transitioned_before);
-		sc::integer FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_react(const sc::integer transitioned_before);
-		sc::integer FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_react(const sc::integer transitioned_before);
-		sc::integer FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1_Hz_react(const sc::integer transitioned_before);
-		sc::integer FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_react(const sc::integer transitioned_before);
-		sc::integer FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_react(const sc::integer transitioned_before);
-		void clearInEvents() noexcept;
-		void clearInternalEvents() noexcept;
-		void microStep();
-		void runCycle();
-		
-		
-		
-		/*! Indicates event 'ESTOP_TOGGLED' of default interface scope is active. */
-		bool ESTOP_TOGGLED_raised {false};
-		
-		/*! Indicates event 'ESTOP_CLEARED' of default interface scope is active. */
-		bool ESTOP_CLEARED_raised {false};
-		
-		/*! Indicates event 'ESTOP_Received' of default interface scope is active. */
-		bool ESTOP_Received_raised {false};
-		
-		/*! Indicates event 'LBF_1_INTERRUPTED' of default interface scope is active. */
-		bool LBF_1_INTERRUPTED_raised {false};
-		
-		/*! Indicates event 'LBF_1_OPEN' of default interface scope is active. */
-		bool LBF_1_OPEN_raised {false};
-		
-		/*! Indicates event 'PUK_ENTRY_HeightMeasurement' of default interface scope is active. */
-		bool PUK_ENTRY_HeightMeasurement_raised {false};
-		
-		/*! Observable for event 'LAMP_YELLOW_BLINKING_1_HZ' of default interface scope. */
-		sc::rx::Observable<void> LAMP_YELLOW_BLINKING_1_HZ_observable = sc::rx::Observable<void>{};
-		
-		/*! Observable for event 'LAMP_YELLOW_BLINKING_1_HZ_RESET' of default interface scope. */
-		sc::rx::Observable<void> LAMP_YELLOW_BLINKING_1_HZ_RESET_observable = sc::rx::Observable<void>{};
-		
-		/*! Indicates event 'HS_1_OPEN' of default interface scope is active. */
-		bool HS_1_OPEN_raised {false};
-		
-		/*! Indicates event 'HS_1_INTERRUPTED' of default interface scope is active. */
-		bool HS_1_INTERRUPTED_raised {false};
-		
-		/*! Observable for event 'PUK_DISTANCE_VALID' of default interface scope. */
-		sc::rx::Observable<void> PUK_DISTANCE_VALID_observable = sc::rx::Observable<void>{};
-		
-		/*! Indicates event 'PUK_ENTRY_SORTING' of default interface scope is active. */
-		bool PUK_ENTRY_SORTING_raised {false};
-		
-		/*! Indicates event 'LBM_1_INTERRUPTED' of default interface scope is active. */
-		bool LBM_1_INTERRUPTED_raised {false};
-		
-		/*! Indicates event 'BGR_1_INTERRUPTED' of default interface scope is active. */
-		bool BGR_1_INTERRUPTED_raised {false};
-		
-		/*! Indicates event 'PUK_DESIRED' of default interface scope is active. */
-		bool PUK_DESIRED_raised {false};
-		
-		/*! Indicates event 'PUK_NOT_DESIRED' of default interface scope is active. */
-		bool PUK_NOT_DESIRED_raised {false};
-		
-		/*! Observable for event 'PUK_ENTRY_EGRESS' of default interface scope. */
-		sc::rx::Observable<void> PUK_ENTRY_EGRESS_observable = sc::rx::Observable<void>{};
-		
-		/*! Indicates event 'PUK_EJECTOR_DISTANCE_VALID' of default interface scope is active. */
-		bool PUK_EJECTOR_DISTANCE_VALID_raised {false};
-		
-		/*! Indicates event 'LBE_1_OPEN' of default interface scope is active. */
-		bool LBE_1_OPEN_raised {false};
-		
-		/*! Indicates event 'LBE_1_INTERRUPTED' of default interface scope is active. */
-		bool LBE_1_INTERRUPTED_raised {false};
-		
-		/*! Indicates event 'LBR_1_INTERRUPTED' of default interface scope is active. */
-		bool LBR_1_INTERRUPTED_raised {false};
-		
-		/*! Indicates event 'MOTOR_STOP' of default interface scope is active. */
-		bool MOTOR_STOP_raised {false};
-		
-		/*! Indicates event 'MOTOR_STOP_RESET' of default interface scope is active. */
-		bool MOTOR_STOP_RESET_raised {false};
-		
-		/*! Indicates event 'MOTOR_SLOW' of default interface scope is active. */
-		bool MOTOR_SLOW_raised {false};
-		
-		/*! Indicates event 'MOTOR_SLOW_RESET' of default interface scope is active. */
-		bool MOTOR_SLOW_RESET_raised {false};
-		
-		/*! Indicates event 'MOTOR_FORWARD' of default interface scope is active. */
-		bool MOTOR_FORWARD_raised {false};
-		
-		/*! Indicates event 'MOTOR_FORWARD_RESET' of default interface scope is active. */
-		bool MOTOR_FORWARD_RESET_raised {false};
-		
-		/*! Indicates event 'LampEStop' of default interface scope is active. */
-		bool LampEStop_raised {false};
-		
-		/*! Indicates event 'Lamp' of default interface scope is active. */
-		bool Lamp_raised {false};
-		
-		/*! Indicates event 'BGS_1_INTERRUPTED' of default interface scope is active. */
-		bool BGS_1_INTERRUPTED_raised {false};
-		
-		/*! Indicates event 'BRS_1_INTERRUPTED' of default interface scope is active. */
-		bool BRS_1_INTERRUPTED_raised {false};
-		
-		/*! Observable for event 'SYSTEM_RUNNING' of default interface scope. */
-		sc::rx::Observable<void> SYSTEM_RUNNING_observable = sc::rx::Observable<void>{};
-		
-		/*! Observable for event 'SYSTEM_STOPPED' of default interface scope. */
-		sc::rx::Observable<void> SYSTEM_STOPPED_observable = sc::rx::Observable<void>{};
-		
-		/*! Indicates event 'ESTOP_SIGNAL' of default interface scope is active. */
-		bool ESTOP_SIGNAL_raised {false};
-		
-		/*! Indicates event 'ESTOP_SIGNAL_RESET' of default interface scope is active. */
-		bool ESTOP_SIGNAL_RESET_raised {false};
-		
-		/*! Indicates event 'RUNNING_SIGNAL' of default interface scope is active. */
-		bool RUNNING_SIGNAL_raised {false};
-		
-		/*! Indicates event 'RUNNING_SIGNAL_RESET' of default interface scope is active. */
-		bool RUNNING_SIGNAL_RESET_raised {false};
-		
-		/*! Indicates event 'WARNING_SIGNAL' of default interface scope is active. */
-		bool WARNING_SIGNAL_raised {false};
-		
-		/*! Indicates event 'WARNING_SIGNAL_RESET' of default interface scope is active. */
-		bool WARNING_SIGNAL_RESET_raised {false};
-		
-		/*! Indicates event 'READY_SIGNAL' of default interface scope is active. */
-		bool READY_SIGNAL_raised {false};
-		
-		/*! Indicates event 'READY_RESET' of default interface scope is active. */
-		bool READY_RESET_raised {false};
-		
-		/*! Indicates event 'ERROR_SIGNAL' of default interface scope is active. */
-		bool ERROR_SIGNAL_raised {false};
-		
-		/*! Indicates event 'local_SYSTEM_STOPPED' of internal scope is active. */
-		bool local_SYSTEM_STOPPED_raised {false};
-		
-		/*! Raises the out event 'local_SYSTEM_STOPPED' of internal scope as a local event. */
-		void raiseLocal_SYSTEM_STOPPED();
-		
-		/*! Indicates event 'local_PUK_DISTANCE_VALID' of internal scope is active. */
-		bool local_PUK_DISTANCE_VALID_raised {false};
-		
-		/*! Raises the out event 'local_PUK_DISTANCE_VALID' of internal scope as a local event. */
-		void raiseLocal_PUK_DISTANCE_VALID();
-		
-		/*! Indicates event 'local_SYSTEM_RUNNING' of internal scope is active. */
-		bool local_SYSTEM_RUNNING_raised {false};
-		
-		/*! Raises the out event 'local_SYSTEM_RUNNING' of internal scope as a local event. */
-		void raiseLocal_SYSTEM_RUNNING();
-		
-		/*! Indicates event 'local_PUK_ENTRY_EGRESS' of internal scope is active. */
-		bool local_PUK_ENTRY_EGRESS_raised {false};
-		
-		/*! Raises the out event 'local_PUK_ENTRY_EGRESS' of internal scope as a local event. */
-		void raiseLocal_PUK_ENTRY_EGRESS();
-		
-		/*! Indicates event 'local_LAMP_YELLOW_BLINKING_1_HZ' of internal scope is active. */
-		bool local_LAMP_YELLOW_BLINKING_1_HZ_raised {false};
-		
-		/*! Raises the out event 'local_LAMP_YELLOW_BLINKING_1_HZ' of internal scope as a local event. */
-		void raiseLocal_LAMP_YELLOW_BLINKING_1_HZ();
-		
-		/*! Indicates event 'local_LAMP_YELLOW_BLINKING_1_HZ_RESET' of internal scope is active. */
-		bool local_LAMP_YELLOW_BLINKING_1_HZ_RESET_raised {false};
-		
-		/*! Raises the out event 'local_LAMP_YELLOW_BLINKING_1_HZ_RESET' of internal scope as a local event. */
-		void raiseLocal_LAMP_YELLOW_BLINKING_1_HZ_RESET();
-		
-		
-		
+	FSM_QualityGate_last_state,
+	FSM_QualityGate_FSM_QualityGate_Ingress_Ingress,
+	FSM_QualityGate_FSM_QualityGate_Ingress_Ingress_Ingress_Idle,
+	FSM_QualityGate_FSM_QualityGate_Ingress_Ingress_Ingress_PukPresent,
+	FSM_QualityGate_FSM_QualityGate_Ingress_Ingress_Ingress_CreatingDistance,
+	FSM_QualityGate_FSM_QualityGate_Ingress_Paused,
+	FSM_QualityGate_FSM_QualityGate__HeightMeasurement_HeightMeasurement,
+	FSM_QualityGate_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle,
+	FSM_QualityGate_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring,
+	FSM_QualityGate_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent,
+	FSM_QualityGate_FSM_QualityGate__HeightMeasurement_Paused,
+	FSM_QualityGate_FSM_QualityGate__Sorting_Sorting,
+	FSM_QualityGate_FSM_QualityGate__Sorting_Sorting_Sorting_Idle,
+	FSM_QualityGate_FSM_QualityGate__Sorting_Sorting_Sorting_MetalMeasurement,
+	FSM_QualityGate_FSM_QualityGate__Sorting_Sorting_Sorting_Passthrough,
+	FSM_QualityGate_FSM_QualityGate__Sorting_Sorting_Sorting_PukPresent,
+	FSM_QualityGate_FSM_QualityGate__Sorting_Sorting_Sorting_Ejecting,
+	FSM_QualityGate_FSM_QualityGate__Sorting_RampFull,
+	FSM_QualityGate_FSM_QualityGate__Sorting_Paused,
+	FSM_QualityGate_FSM_QualityGate__Egress_Egress,
+	FSM_QualityGate_FSM_QualityGate__Egress_Egress_Egress_IDLE,
+	FSM_QualityGate_FSM_QualityGate__Egress_Egress_Egress_PukPresent,
+	FSM_QualityGate_FSM_QualityGate__Egress_Egress_Egress_Transfer,
+	FSM_QualityGate_FSM_QualityGate__Egress_Paused,
+	FSM_QualityGate_FSM_QualityGate__Motor_SystemMotor,
+	FSM_QualityGate_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle,
+	FSM_QualityGate_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward,
+	FSM_QualityGate_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow,
+	FSM_QualityGate_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop,
+	FSM_QualityGate_FSM_System_Operational,
+	FSM_QualityGate_FSM_System_EStop,
+	FSM_QualityGate_FSM_System_EStop_EStop_AwaitingEStopButton,
+	FSM_QualityGate_FSM_System_EStop_EStop__final_,
+	FSM_QualityGate_FSM_System_Start,
+	FSM_QualityGate_FSM_System_Ready,
+	FSM_QualityGate_FSM_System_ServiceMode,
+	FSM_QualityGate_FSM_Signaling_FSM_LAMP,
+	FSM_QualityGate_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp,
+	FSM_QualityGate_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off,
+	FSM_QualityGate_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant,
+	FSM_QualityGate_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz,
+	FSM_QualityGate_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off,
+	FSM_QualityGate_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant,
+	FSM_QualityGate_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz,
+	FSM_QualityGate_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off,
+	FSM_QualityGate_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant
+} FSM_QualityGateStates;
+
+
+/*! Type declaration of the data structure for the FSM_QualityGateIface interface scope. */
+struct FSM_QualityGateIface
+{
+	sc_boolean calibrated;
+	sc_observable SYSTEM_OPERATIONAL_IN;
+	sc_observable SYSTEM_OPERATIONAL_OUT;
+	sc_observable SYSTEM_SERVICE_IN;
+	sc_observable SYSTEM_SERVICE_OUT;
+	sc_boolean ESTOP_1_HIGH_raised;
+	sc_boolean ESTOP_1_LOW_raised;
+	sc_observable ESTOP_RECEIVED;
+	sc_observable ESTOP_CLEARED;
+	sc_boolean eStopActive;
+	sc_boolean LBF_1_INTERRUPTED_raised;
+	sc_boolean LBF_1_OPEN_raised;
+	sc_boolean PUK_ENTRY_HeightMeasurement_raised;
+	sc_observable LAMP_YELLOW_BLINKING_1_HZ;
+	sc_observable LAMP_YELLOW_BLINKING_1_HZ_RESET;
+	sc_boolean HS_1_SAMPLE_raised;
+	sc_boolean HS_1_SAMPLING_DONE_raised;
+	sc_observable PUK_DISTANCE_VALID;
+	sc_boolean PUK_ENTRY_SORTING_raised;
+	sc_boolean TIMEOUT_200_raised;
+	sc_boolean FST1RampFull;
+	sc_boolean LBM_1_INTERRUPTED_raised;
+	sc_integer timePassed;
+	sc_boolean PUK_DESIRED_raised;
+	sc_boolean PUK_NOT_DESIRED_raised;
+	sc_observable PUK_ENTRY_EGRESS;
+	sc_boolean PUK_EJECTOR_DISTANCE_VALID_raised;
+	sc_boolean LBR_1_INTERRUPTED_raised;
+	sc_boolean LBR_1_OPEN_raised;
+	sc_boolean ramp1Full;
+	sc_boolean LBE_1_OPEN_raised;
+	sc_boolean LBE_1_INTERRUPTED_raised;
+	sc_boolean MOTOR_STOP_raised;
+	sc_boolean MOTOR_STOP_RESET_raised;
+	sc_boolean MOTOR_SLOW_RESET_raised;
+	sc_boolean MOTOR_FORWARD_RESET_raised;
+	sc_integer motorStop;
+	sc_integer motorSlow;
+	sc_integer motorForward;
+	sc_boolean BGS_1_LONG_PRESSED_raised;
+	sc_boolean BGS_1_INTERRUPTED_raised;
+	sc_boolean BRS_1_INTERRUPTED_raised;
+	sc_boolean BGR_1_INTERRUPTED_raised;
+	sc_boolean LampEStop_raised;
+	sc_boolean Lamp_raised;
+	sc_observable SYSTEM_RUNNING;
+	sc_observable SYSTEM_STOPPED;
+	sc_boolean ESTOP_SIGNAL_raised;
+	sc_boolean ESTOP_SIGNAL_RESET_raised;
+	sc_boolean eStop_lamp_active;
+	sc_boolean RUNNING_SIGNAL_raised;
+	sc_boolean RUNNING_SIGNAL_RESET_raised;
+	sc_boolean running_lamp_active;
+	sc_boolean WARNING_SIGNAL_raised;
+	sc_boolean WARNING_SIGNAL_RESET_raised;
+	sc_boolean warning_lamp_active;
+	sc_boolean READY_SIGNAL_raised;
+	sc_boolean READY_RESET_raised;
+	sc_boolean ERROR_SIGNAL_raised;
 };
 
 
 
+/*! Type declaration of the data structure for the FSM_QualityGateInternal interface scope. */
+struct FSM_QualityGateInternal
+{
+	sc_boolean local_SYSTEM_OPERATIONAL_OUT_raised;
+	sc_boolean local_PUK_DISTANCE_VALID_raised;
+	sc_boolean local_SYSTEM_OPERATIONAL_IN_raised;
+	sc_boolean local_PUK_ENTRY_EGRESS_raised;
+	sc_boolean local_ESTOP_RECEIVED_raised;
+	sc_boolean local_SYSTEM_SERVICE_IN_raised;
+	sc_boolean local_ESTOP_CLEARED_raised;
+	sc_boolean local_SYSTEM_SERVICE_OUT_raised;
+	sc_boolean local_LAMP_YELLOW_BLINKING_1_HZ_raised;
+	sc_boolean local_LAMP_YELLOW_BLINKING_1_HZ_RESET_raised;
+};
+
+
+
+
+
+
+/*! 
+ * Type declaration of the data structure for the FSM_QualityGate state machine.
+ * This data structure has to be allocated by the client code. 
+ */
+struct FSM_QualityGate
+{
+	FSM_QualityGateStates stateConfVector[FSM_QUALITYGATE_MAX_ORTHOGONAL_STATES];
+	FSM_QualityGateStates historyVector[FSM_QUALITYGATE_MAX_HISTORY_STATES];
+	FSM_QualityGateIface iface;
+	FSM_QualityGateInternal internal;
+	sc_boolean isExecuting;
+	sc_integer stateConfVectorPosition;
+	fsm_qualitygate_eventqueue internal_event_queue;
+	fsm_qualitygate_event internal_buffer[FSM_QUALITYGATE_INTERNAL_EVENTQUEUE_BUFFERSIZE];
+	fsm_qualitygate_eventqueue in_event_queue;
+	fsm_qualitygate_event in_buffer[FSM_QUALITYGATE_IN_EVENTQUEUE_BUFFERSIZE];
+};
+
+
+
+/*! Initializes the FSM_QualityGate state machine data structures. Must be called before first usage.*/
+extern void fSM_QualityGate_init(FSM_QualityGate* handle);
+
+
+/*! Activates the state machine. */
+extern void fSM_QualityGate_enter(FSM_QualityGate* handle);
+
+/*! Deactivates the state machine. */
+extern void fSM_QualityGate_exit(FSM_QualityGate* handle);
+
+/*! 
+Can be used by the client code to trigger a run to completion step without raising an event.
+*/
+extern void fSM_QualityGate_trigger_without_event(FSM_QualityGate* handle);
+
+
+
+/*! Gets the value of the variable 'calibrated' that is defined in the default interface scope. */ 
+extern sc_boolean fSM_QualityGate_get_calibrated(const FSM_QualityGate* handle);
+/*! Sets the value of the variable 'calibrated' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_set_calibrated(FSM_QualityGate* handle, sc_boolean value);
+/*! Returns the observable for the out event 'SYSTEM_OPERATIONAL_IN' that is defined in the default interface scope. */ 
+extern sc_observable* fSM_QualityGate_get_sYSTEM_OPERATIONAL_IN(FSM_QualityGate* handle);
+
+/*! Returns the observable for the out event 'SYSTEM_OPERATIONAL_OUT' that is defined in the default interface scope. */ 
+extern sc_observable* fSM_QualityGate_get_sYSTEM_OPERATIONAL_OUT(FSM_QualityGate* handle);
+
+/*! Returns the observable for the out event 'SYSTEM_SERVICE_IN' that is defined in the default interface scope. */ 
+extern sc_observable* fSM_QualityGate_get_sYSTEM_SERVICE_IN(FSM_QualityGate* handle);
+
+/*! Returns the observable for the out event 'SYSTEM_SERVICE_OUT' that is defined in the default interface scope. */ 
+extern sc_observable* fSM_QualityGate_get_sYSTEM_SERVICE_OUT(FSM_QualityGate* handle);
+
+/*! Raises the in event 'ESTOP_1_HIGH' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_eSTOP_1_HIGH(FSM_QualityGate* handle);
+/*! Raises the in event 'ESTOP_1_LOW' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_eSTOP_1_LOW(FSM_QualityGate* handle);
+/*! Returns the observable for the out event 'ESTOP_RECEIVED' that is defined in the default interface scope. */ 
+extern sc_observable* fSM_QualityGate_get_eSTOP_RECEIVED(FSM_QualityGate* handle);
+
+/*! Returns the observable for the out event 'ESTOP_CLEARED' that is defined in the default interface scope. */ 
+extern sc_observable* fSM_QualityGate_get_eSTOP_CLEARED(FSM_QualityGate* handle);
+
+/*! Gets the value of the variable 'eStopActive' that is defined in the default interface scope. */ 
+extern sc_boolean fSM_QualityGate_get_eStopActive(const FSM_QualityGate* handle);
+/*! Sets the value of the variable 'eStopActive' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_set_eStopActive(FSM_QualityGate* handle, sc_boolean value);
+/*! Raises the in event 'LBF_1_INTERRUPTED' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_lBF_1_INTERRUPTED(FSM_QualityGate* handle);
+/*! Raises the in event 'LBF_1_OPEN' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_lBF_1_OPEN(FSM_QualityGate* handle);
+/*! Raises the in event 'PUK_ENTRY_HeightMeasurement' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_pUK_ENTRY_HeightMeasurement(FSM_QualityGate* handle);
+/*! Returns the observable for the out event 'LAMP_YELLOW_BLINKING_1_HZ' that is defined in the default interface scope. */ 
+extern sc_observable* fSM_QualityGate_get_lAMP_YELLOW_BLINKING_1_HZ(FSM_QualityGate* handle);
+
+/*! Returns the observable for the out event 'LAMP_YELLOW_BLINKING_1_HZ_RESET' that is defined in the default interface scope. */ 
+extern sc_observable* fSM_QualityGate_get_lAMP_YELLOW_BLINKING_1_HZ_RESET(FSM_QualityGate* handle);
+
+/*! Raises the in event 'HS_1_SAMPLE' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_hS_1_SAMPLE(FSM_QualityGate* handle);
+/*! Raises the in event 'HS_1_SAMPLING_DONE' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_hS_1_SAMPLING_DONE(FSM_QualityGate* handle);
+/*! Returns the observable for the out event 'PUK_DISTANCE_VALID' that is defined in the default interface scope. */ 
+extern sc_observable* fSM_QualityGate_get_pUK_DISTANCE_VALID(FSM_QualityGate* handle);
+
+/*! Raises the in event 'PUK_ENTRY_SORTING' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_pUK_ENTRY_SORTING(FSM_QualityGate* handle);
+/*! Raises the in event 'TIMEOUT_200' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_tIMEOUT_200(FSM_QualityGate* handle);
+/*! Gets the value of the variable 'FST1RampFull' that is defined in the default interface scope. */ 
+extern sc_boolean fSM_QualityGate_get_fST1RampFull(const FSM_QualityGate* handle);
+/*! Sets the value of the variable 'FST1RampFull' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_set_fST1RampFull(FSM_QualityGate* handle, sc_boolean value);
+/*! Raises the in event 'LBM_1_INTERRUPTED' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_lBM_1_INTERRUPTED(FSM_QualityGate* handle);
+/*! Gets the value of the variable 'timePassed' that is defined in the default interface scope. */ 
+extern sc_integer fSM_QualityGate_get_timePassed(const FSM_QualityGate* handle);
+/*! Sets the value of the variable 'timePassed' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_set_timePassed(FSM_QualityGate* handle, sc_integer value);
+/*! Raises the in event 'PUK_DESIRED' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_pUK_DESIRED(FSM_QualityGate* handle);
+/*! Raises the in event 'PUK_NOT_DESIRED' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_pUK_NOT_DESIRED(FSM_QualityGate* handle);
+/*! Returns the observable for the out event 'PUK_ENTRY_EGRESS' that is defined in the default interface scope. */ 
+extern sc_observable* fSM_QualityGate_get_pUK_ENTRY_EGRESS(FSM_QualityGate* handle);
+
+/*! Raises the in event 'PUK_EJECTOR_DISTANCE_VALID' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_pUK_EJECTOR_DISTANCE_VALID(FSM_QualityGate* handle);
+/*! Raises the in event 'LBR_1_INTERRUPTED' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_lBR_1_INTERRUPTED(FSM_QualityGate* handle);
+/*! Raises the in event 'LBR_1_OPEN' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_lBR_1_OPEN(FSM_QualityGate* handle);
+/*! Gets the value of the variable 'ramp1Full' that is defined in the default interface scope. */ 
+extern sc_boolean fSM_QualityGate_get_ramp1Full(const FSM_QualityGate* handle);
+/*! Sets the value of the variable 'ramp1Full' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_set_ramp1Full(FSM_QualityGate* handle, sc_boolean value);
+/*! Raises the in event 'LBE_1_OPEN' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_lBE_1_OPEN(FSM_QualityGate* handle);
+/*! Raises the in event 'LBE_1_INTERRUPTED' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_lBE_1_INTERRUPTED(FSM_QualityGate* handle);
+/*! Raises the in event 'MOTOR_STOP' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_mOTOR_STOP(FSM_QualityGate* handle);
+/*! Raises the in event 'MOTOR_STOP_RESET' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_mOTOR_STOP_RESET(FSM_QualityGate* handle);
+/*! Raises the in event 'MOTOR_SLOW_RESET' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_mOTOR_SLOW_RESET(FSM_QualityGate* handle);
+/*! Raises the in event 'MOTOR_FORWARD_RESET' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_mOTOR_FORWARD_RESET(FSM_QualityGate* handle);
+/*! Gets the value of the variable 'motorStop' that is defined in the default interface scope. */ 
+extern sc_integer fSM_QualityGate_get_motorStop(const FSM_QualityGate* handle);
+/*! Sets the value of the variable 'motorStop' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_set_motorStop(FSM_QualityGate* handle, sc_integer value);
+/*! Gets the value of the variable 'motorSlow' that is defined in the default interface scope. */ 
+extern sc_integer fSM_QualityGate_get_motorSlow(const FSM_QualityGate* handle);
+/*! Sets the value of the variable 'motorSlow' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_set_motorSlow(FSM_QualityGate* handle, sc_integer value);
+/*! Gets the value of the variable 'motorForward' that is defined in the default interface scope. */ 
+extern sc_integer fSM_QualityGate_get_motorForward(const FSM_QualityGate* handle);
+/*! Sets the value of the variable 'motorForward' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_set_motorForward(FSM_QualityGate* handle, sc_integer value);
+/*! Raises the in event 'BGS_1_LONG_PRESSED' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_bGS_1_LONG_PRESSED(FSM_QualityGate* handle);
+/*! Raises the in event 'BGS_1_INTERRUPTED' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_bGS_1_INTERRUPTED(FSM_QualityGate* handle);
+/*! Raises the in event 'BRS_1_INTERRUPTED' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_bRS_1_INTERRUPTED(FSM_QualityGate* handle);
+/*! Raises the in event 'BGR_1_INTERRUPTED' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_bGR_1_INTERRUPTED(FSM_QualityGate* handle);
+/*! Raises the in event 'LampEStop' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_lampEStop(FSM_QualityGate* handle);
+/*! Raises the in event 'Lamp' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_lamp(FSM_QualityGate* handle);
+/*! Returns the observable for the out event 'SYSTEM_RUNNING' that is defined in the default interface scope. */ 
+extern sc_observable* fSM_QualityGate_get_sYSTEM_RUNNING(FSM_QualityGate* handle);
+
+/*! Returns the observable for the out event 'SYSTEM_STOPPED' that is defined in the default interface scope. */ 
+extern sc_observable* fSM_QualityGate_get_sYSTEM_STOPPED(FSM_QualityGate* handle);
+
+/*! Raises the in event 'ESTOP_SIGNAL' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_eSTOP_SIGNAL(FSM_QualityGate* handle);
+/*! Raises the in event 'ESTOP_SIGNAL_RESET' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_eSTOP_SIGNAL_RESET(FSM_QualityGate* handle);
+/*! Gets the value of the variable 'eStop_lamp_active' that is defined in the default interface scope. */ 
+extern sc_boolean fSM_QualityGate_get_eStop_lamp_active(const FSM_QualityGate* handle);
+/*! Sets the value of the variable 'eStop_lamp_active' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_set_eStop_lamp_active(FSM_QualityGate* handle, sc_boolean value);
+/*! Raises the in event 'RUNNING_SIGNAL' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_rUNNING_SIGNAL(FSM_QualityGate* handle);
+/*! Raises the in event 'RUNNING_SIGNAL_RESET' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_rUNNING_SIGNAL_RESET(FSM_QualityGate* handle);
+/*! Gets the value of the variable 'running_lamp_active' that is defined in the default interface scope. */ 
+extern sc_boolean fSM_QualityGate_get_running_lamp_active(const FSM_QualityGate* handle);
+/*! Sets the value of the variable 'running_lamp_active' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_set_running_lamp_active(FSM_QualityGate* handle, sc_boolean value);
+/*! Raises the in event 'WARNING_SIGNAL' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_wARNING_SIGNAL(FSM_QualityGate* handle);
+/*! Raises the in event 'WARNING_SIGNAL_RESET' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_wARNING_SIGNAL_RESET(FSM_QualityGate* handle);
+/*! Gets the value of the variable 'warning_lamp_active' that is defined in the default interface scope. */ 
+extern sc_boolean fSM_QualityGate_get_warning_lamp_active(const FSM_QualityGate* handle);
+/*! Sets the value of the variable 'warning_lamp_active' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_set_warning_lamp_active(FSM_QualityGate* handle, sc_boolean value);
+/*! Raises the in event 'READY_SIGNAL' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_rEADY_SIGNAL(FSM_QualityGate* handle);
+/*! Raises the in event 'READY_RESET' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_rEADY_RESET(FSM_QualityGate* handle);
+/*! Raises the in event 'ERROR_SIGNAL' that is defined in the default interface scope. */ 
+extern void fSM_QualityGate_raise_eRROR_SIGNAL(FSM_QualityGate* handle);
+
+/*!
+ * Checks whether the state machine is active (until 2.4.1 this method was used for states).
+ * A state machine is active if it was entered. It is inactive if it has not been entered at all or if it has been exited.
+ */
+extern sc_boolean fSM_QualityGate_is_active(const FSM_QualityGate* handle);
+
+/*!
+ * Checks if all active states are final. 
+ * If there are no active states then the state machine is considered being inactive. In this case this method returns false.
+ */
+extern sc_boolean fSM_QualityGate_is_final(const FSM_QualityGate* handle);
+
+/*! Checks if the specified state is active (until 2.4.1 the used method for states was called isActive()). */
+extern sc_boolean fSM_QualityGate_is_state_active(const FSM_QualityGate* handle, FSM_QualityGateStates state);
+
+
+#ifdef __cplusplus
+}
+#endif 
 
 #endif /* FSM_QUALITYGATE_H_ */
