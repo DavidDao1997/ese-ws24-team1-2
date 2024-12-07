@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 
-
+/* GPIO port addresses (spruh73l.pdf S.177 ff.) */
 // GPIO Banks
 #define GPIO_BANK_0 0x44E07000
 #define GPIO_BANK_1 0x4804C000
@@ -74,13 +74,6 @@ typedef uint8_t Pin;
 #define INTR_GPIO_PORT0 97
 #define INTR_GPIO_PORT1 99
 #define INTR_GPIO_PORT2 33
-
-
-/* GPIO port addresses (spruh73l.pdf S.177 ff.) */
-#define GPIO_PORT0 0x44E07000
-#define GPIO_PORT1 0x4804C000
-#define GPIO_PORT2 0x481AC000
-
 
 /* GPIO port registers length */
 #define GPIO_REGISTER_LENGHT 0x1000

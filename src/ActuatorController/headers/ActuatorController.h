@@ -26,15 +26,17 @@ class ActuatorController : public PulseMsgHandler {
     int32_t getChannel() override;
     void sendMsg(int8_t msgCode, int32_t msgValue) override;
 
-    static int8_t numOfPulses;
-    static int8_t pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES];
+    int8_t* getPulses();
+    int8_t getNumOfPulses();
 
   private:
     int32_t channelID;
-    name_attach_t *actConChannel;
+    name_attach_t *actuatorControllerChannel;
     Actuators_Wrapper *actuators;
 
     bool running;
+    static int8_t numOfPulses;
+    static int8_t pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES];
 };
 
 #endif /* ACTUATORCONTROLLER_H_ */
