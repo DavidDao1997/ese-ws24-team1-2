@@ -9,12 +9,13 @@
     start and reset Button }
  */
 
-#include "headers/Actuators_Wrapper.h"
 #include "hw/inout.h"
 #include "sys/mman.h"
 #include "sys/neutrino.h"
 #include <iostream>
 #include <stdint.h>
+
+#include "headers/Actuators_Wrapper.h"
 
 Actuators_Wrapper::Actuators_Wrapper() {
     gpio_bank_0 = MAP_DEVICE_FAILED;
@@ -32,7 +33,7 @@ Actuators_Wrapper::~Actuators_Wrapper() {
     munmap_device_io(gpio_bank_2, IO_MEM_LEN);
 }
 
-// initielisierung der gpio's
+// initialisierung der gpio's
 bool Actuators_Wrapper::init() {
 
     gpio_bank_0 = mmap_device_io(IO_MEM_LEN, (uint64_t)GPIO_BANK_0);

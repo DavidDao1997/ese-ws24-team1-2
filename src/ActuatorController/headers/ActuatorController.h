@@ -12,7 +12,7 @@
 
 #include "../../Dispatcher/headers/PulseMsgConfig.h"
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
-#include "../../HAL/headers/Actuators_Wrapper.h"
+#include "../../HAL/headers/IActuators_Wrapper.h"
 
 #define ACTUATOR_CONTROLLER_NUM_OF_PULSES 4
 
