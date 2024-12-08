@@ -150,10 +150,6 @@ class FSM_QualityGate : public sc::EventDrivenInterface
 			LBR_1_OPEN,
 			LBE_1_OPEN,
 			LBE_1_INTERRUPTED,
-			MOTOR_STOP,
-			MOTOR_STOP_RESET,
-			MOTOR_SLOW_RESET,
-			MOTOR_FORWARD_RESET,
 			BGS_1_LONG_PRESSED,
 			BGS_1_INTERRUPTED,
 			BRS_1_INTERRUPTED,
@@ -242,14 +238,6 @@ class FSM_QualityGate : public sc::EventDrivenInterface
 		void raiseLBE_1_OPEN();
 		/*! Raises the in event 'LBE_1_INTERRUPTED' of default interface scope. */
 		void raiseLBE_1_INTERRUPTED();
-		/*! Raises the in event 'MOTOR_STOP' of default interface scope. */
-		void raiseMOTOR_STOP();
-		/*! Raises the in event 'MOTOR_STOP_RESET' of default interface scope. */
-		void raiseMOTOR_STOP_RESET();
-		/*! Raises the in event 'MOTOR_SLOW_RESET' of default interface scope. */
-		void raiseMOTOR_SLOW_RESET();
-		/*! Raises the in event 'MOTOR_FORWARD_RESET' of default interface scope. */
-		void raiseMOTOR_FORWARD_RESET();
 		/*! Raises the in event 'BGS_1_LONG_PRESSED' of default interface scope. */
 		void raiseBGS_1_LONG_PRESSED();
 		/*! Raises the in event 'BGS_1_INTERRUPTED' of default interface scope. */
@@ -701,18 +689,6 @@ class FSM_QualityGate : public sc::EventDrivenInterface
 		
 		/*! Indicates event 'LBE_1_INTERRUPTED' of default interface scope is active. */
 		bool LBE_1_INTERRUPTED_raised {false};
-		
-		/*! Indicates event 'MOTOR_STOP' of default interface scope is active. */
-		bool MOTOR_STOP_raised {false};
-		
-		/*! Indicates event 'MOTOR_STOP_RESET' of default interface scope is active. */
-		bool MOTOR_STOP_RESET_raised {false};
-		
-		/*! Indicates event 'MOTOR_SLOW_RESET' of default interface scope is active. */
-		bool MOTOR_SLOW_RESET_raised {false};
-		
-		/*! Indicates event 'MOTOR_FORWARD_RESET' of default interface scope is active. */
-		bool MOTOR_FORWARD_RESET_raised {false};
 		
 		/*! Indicates event 'BGS_1_LONG_PRESSED' of default interface scope is active. */
 		bool BGS_1_LONG_PRESSED_raised {false};

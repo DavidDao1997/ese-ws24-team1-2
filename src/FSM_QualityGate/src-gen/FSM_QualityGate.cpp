@@ -149,26 +149,6 @@ bool FSM_QualityGate::dispatchEvent(FSM_QualityGate::EventInstance* event) noexc
 			LBE_1_INTERRUPTED_raised = true;
 			break;
 		}
-		case FSM_QualityGate::Event::MOTOR_STOP:
-		{
-			MOTOR_STOP_raised = true;
-			break;
-		}
-		case FSM_QualityGate::Event::MOTOR_STOP_RESET:
-		{
-			MOTOR_STOP_RESET_raised = true;
-			break;
-		}
-		case FSM_QualityGate::Event::MOTOR_SLOW_RESET:
-		{
-			MOTOR_SLOW_RESET_raised = true;
-			break;
-		}
-		case FSM_QualityGate::Event::MOTOR_FORWARD_RESET:
-		{
-			MOTOR_FORWARD_RESET_raised = true;
-			break;
-		}
 		case FSM_QualityGate::Event::BGS_1_LONG_PRESSED:
 		{
 			BGS_1_LONG_PRESSED_raised = true;
@@ -488,38 +468,6 @@ void FSM_QualityGate::raiseLBE_1_OPEN() {
 /*! Raises the in event 'LBE_1_INTERRUPTED' of default interface scope. */
 void FSM_QualityGate::raiseLBE_1_INTERRUPTED() {
 	incomingEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::LBE_1_INTERRUPTED))
-	;
-	runCycle();
-}
-
-
-/*! Raises the in event 'MOTOR_STOP' of default interface scope. */
-void FSM_QualityGate::raiseMOTOR_STOP() {
-	incomingEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::MOTOR_STOP))
-	;
-	runCycle();
-}
-
-
-/*! Raises the in event 'MOTOR_STOP_RESET' of default interface scope. */
-void FSM_QualityGate::raiseMOTOR_STOP_RESET() {
-	incomingEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::MOTOR_STOP_RESET))
-	;
-	runCycle();
-}
-
-
-/*! Raises the in event 'MOTOR_SLOW_RESET' of default interface scope. */
-void FSM_QualityGate::raiseMOTOR_SLOW_RESET() {
-	incomingEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::MOTOR_SLOW_RESET))
-	;
-	runCycle();
-}
-
-
-/*! Raises the in event 'MOTOR_FORWARD_RESET' of default interface scope. */
-void FSM_QualityGate::raiseMOTOR_FORWARD_RESET() {
-	incomingEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::MOTOR_FORWARD_RESET))
 	;
 	runCycle();
 }
@@ -3745,10 +3693,6 @@ void FSM_QualityGate::clearInEvents() noexcept {
 	LBR_1_OPEN_raised = false;
 	LBE_1_OPEN_raised = false;
 	LBE_1_INTERRUPTED_raised = false;
-	MOTOR_STOP_raised = false;
-	MOTOR_STOP_RESET_raised = false;
-	MOTOR_SLOW_RESET_raised = false;
-	MOTOR_FORWARD_RESET_raised = false;
 	BGS_1_LONG_PRESSED_raised = false;
 	BGS_1_INTERRUPTED_raised = false;
 	BRS_1_INTERRUPTED_raised = false;
