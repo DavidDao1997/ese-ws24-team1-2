@@ -138,6 +138,8 @@ class FSM_QualityGate : public sc::EventDrivenInterface
 			LBF_1_INTERRUPTED,
 			LBF_1_OPEN,
 			PUK_ENTRY_HeightMeasurement,
+			INGRESS_IN,
+			INGRESS_OUT,
 			HS_1_SAMPLE,
 			HS_1_SAMPLING_DONE,
 			PUK_ENTRY_SORTING,
@@ -172,9 +174,7 @@ class FSM_QualityGate : public sc::EventDrivenInterface
 			Internal_local_ESTOP_RECEIVED,
 			Internal_local_SYSTEM_SERVICE_IN,
 			Internal_local_ESTOP_CLEARED,
-			Internal_local_SYSTEM_SERVICE_OUT,
-			Internal_local_LAMP_YELLOW_BLINKING_1_HZ,
-			Internal_local_LAMP_YELLOW_BLINKING_1_HZ_RESET
+			Internal_local_SYSTEM_SERVICE_OUT
 		};
 		
 		class EventInstance
@@ -206,10 +206,10 @@ class FSM_QualityGate : public sc::EventDrivenInterface
 		void raiseLBF_1_OPEN();
 		/*! Raises the in event 'PUK_ENTRY_HeightMeasurement' of default interface scope. */
 		void raisePUK_ENTRY_HeightMeasurement();
-		/*! Get observable for event 'LAMP_YELLOW_BLINKING_1_HZ' of default interface scope. */
-		sc::rx::Observable<void>& getLAMP_YELLOW_BLINKING_1_HZ() noexcept;
-		/*! Get observable for event 'LAMP_YELLOW_BLINKING_1_HZ_RESET' of default interface scope. */
-		sc::rx::Observable<void>& getLAMP_YELLOW_BLINKING_1_HZ_RESET() noexcept;
+		/*! Raises the in event 'INGRESS_IN' of default interface scope. */
+		void raiseINGRESS_IN();
+		/*! Raises the in event 'INGRESS_OUT' of default interface scope. */
+		void raiseINGRESS_OUT();
 		/*! Raises the in event 'HS_1_SAMPLE' of default interface scope. */
 		void raiseHS_1_SAMPLE();
 		/*! Raises the in event 'HS_1_SAMPLING_DONE' of default interface scope. */
@@ -238,6 +238,12 @@ class FSM_QualityGate : public sc::EventDrivenInterface
 		void raiseLBE_1_OPEN();
 		/*! Raises the in event 'LBE_1_INTERRUPTED' of default interface scope. */
 		void raiseLBE_1_INTERRUPTED();
+		/*! Get observable for event 'MOTOR_STOP' of default interface scope. */
+		sc::rx::Observable<void>& getMOTOR_STOP() noexcept;
+		/*! Get observable for event 'MOTOR_FAST' of default interface scope. */
+		sc::rx::Observable<void>& getMOTOR_FAST() noexcept;
+		/*! Get observable for event 'MOTOR_SLOW' of default interface scope. */
+		sc::rx::Observable<void>& getMOTOR_SLOW() noexcept;
 		/*! Raises the in event 'BGS_1_LONG_PRESSED' of default interface scope. */
 		void raiseBGS_1_LONG_PRESSED();
 		/*! Raises the in event 'BGS_1_INTERRUPTED' of default interface scope. */
@@ -250,6 +256,12 @@ class FSM_QualityGate : public sc::EventDrivenInterface
 		void raiseLampEStop();
 		/*! Raises the in event 'Lamp' of default interface scope. */
 		void raiseLamp();
+		/*! Get observable for event 'LG1_ON' of default interface scope. */
+		sc::rx::Observable<void>& getLG1_ON() noexcept;
+		/*! Get observable for event 'LG1_BLINKING_1HZ' of default interface scope. */
+		sc::rx::Observable<void>& getLG1_BLINKING_1HZ() noexcept;
+		/*! Get observable for event 'LG1_OFF' of default interface scope. */
+		sc::rx::Observable<void>& getLG1_OFF() noexcept;
 		/*! Get observable for event 'SYSTEM_RUNNING' of default interface scope. */
 		sc::rx::Observable<void>& getSYSTEM_RUNNING() noexcept;
 		/*! Get observable for event 'SYSTEM_STOPPED' of default interface scope. */
@@ -410,9 +422,16 @@ class FSM_QualityGate : public sc::EventDrivenInterface
 		void enact_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
 		void enact_FSM_QualityGate__Sorting_RampFull();
 		void enact_FSM_QualityGate__Egress_Egress_Egress_Transfer();
+		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle();
+		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
+		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
+		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop();
 		void enact_FSM_System_Operational();
 		void enact_FSM_System_EStop();
 		void enact_FSM_System_ServiceMode();
+		void enact_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
+		void enact_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
+		void enact_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
 		void exact_FSM_QualityGate_Ingress_Ingress_Ingress_Idle();
 		void exact_FSM_QualityGate_Ingress_Ingress_Ingress_CreatingDistance();
 		void exact_FSM_QualityGate__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
@@ -642,11 +661,11 @@ class FSM_QualityGate : public sc::EventDrivenInterface
 		/*! Indicates event 'PUK_ENTRY_HeightMeasurement' of default interface scope is active. */
 		bool PUK_ENTRY_HeightMeasurement_raised {false};
 		
-		/*! Observable for event 'LAMP_YELLOW_BLINKING_1_HZ' of default interface scope. */
-		sc::rx::Observable<void> LAMP_YELLOW_BLINKING_1_HZ_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'INGRESS_IN' of default interface scope is active. */
+		bool INGRESS_IN_raised {false};
 		
-		/*! Observable for event 'LAMP_YELLOW_BLINKING_1_HZ_RESET' of default interface scope. */
-		sc::rx::Observable<void> LAMP_YELLOW_BLINKING_1_HZ_RESET_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'INGRESS_OUT' of default interface scope is active. */
+		bool INGRESS_OUT_raised {false};
 		
 		/*! Indicates event 'HS_1_SAMPLE' of default interface scope is active. */
 		bool HS_1_SAMPLE_raised {false};
@@ -690,6 +709,15 @@ class FSM_QualityGate : public sc::EventDrivenInterface
 		/*! Indicates event 'LBE_1_INTERRUPTED' of default interface scope is active. */
 		bool LBE_1_INTERRUPTED_raised {false};
 		
+		/*! Observable for event 'MOTOR_STOP' of default interface scope. */
+		sc::rx::Observable<void> MOTOR_STOP_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'MOTOR_FAST' of default interface scope. */
+		sc::rx::Observable<void> MOTOR_FAST_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'MOTOR_SLOW' of default interface scope. */
+		sc::rx::Observable<void> MOTOR_SLOW_observable = sc::rx::Observable<void>{};
+		
 		/*! Indicates event 'BGS_1_LONG_PRESSED' of default interface scope is active. */
 		bool BGS_1_LONG_PRESSED_raised {false};
 		
@@ -707,6 +735,15 @@ class FSM_QualityGate : public sc::EventDrivenInterface
 		
 		/*! Indicates event 'Lamp' of default interface scope is active. */
 		bool Lamp_raised {false};
+		
+		/*! Observable for event 'LG1_ON' of default interface scope. */
+		sc::rx::Observable<void> LG1_ON_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'LG1_BLINKING_1HZ' of default interface scope. */
+		sc::rx::Observable<void> LG1_BLINKING_1HZ_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'LG1_OFF' of default interface scope. */
+		sc::rx::Observable<void> LG1_OFF_observable = sc::rx::Observable<void>{};
 		
 		/*! Observable for event 'SYSTEM_RUNNING' of default interface scope. */
 		sc::rx::Observable<void> SYSTEM_RUNNING_observable = sc::rx::Observable<void>{};
@@ -788,18 +825,6 @@ class FSM_QualityGate : public sc::EventDrivenInterface
 		
 		/*! Raises the out event 'local_SYSTEM_SERVICE_OUT' of internal scope as a local event. */
 		void raiseLocal_SYSTEM_SERVICE_OUT();
-		
-		/*! Indicates event 'local_LAMP_YELLOW_BLINKING_1_HZ' of internal scope is active. */
-		bool local_LAMP_YELLOW_BLINKING_1_HZ_raised {false};
-		
-		/*! Raises the out event 'local_LAMP_YELLOW_BLINKING_1_HZ' of internal scope as a local event. */
-		void raiseLocal_LAMP_YELLOW_BLINKING_1_HZ();
-		
-		/*! Indicates event 'local_LAMP_YELLOW_BLINKING_1_HZ_RESET' of internal scope is active. */
-		bool local_LAMP_YELLOW_BLINKING_1_HZ_RESET_raised {false};
-		
-		/*! Raises the out event 'local_LAMP_YELLOW_BLINKING_1_HZ_RESET' of internal scope as a local event. */
-		void raiseLocal_LAMP_YELLOW_BLINKING_1_HZ_RESET();
 		
 		
 		

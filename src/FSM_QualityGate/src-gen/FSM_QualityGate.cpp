@@ -89,6 +89,16 @@ bool FSM_QualityGate::dispatchEvent(FSM_QualityGate::EventInstance* event) noexc
 			PUK_ENTRY_HeightMeasurement_raised = true;
 			break;
 		}
+		case FSM_QualityGate::Event::INGRESS_IN:
+		{
+			INGRESS_IN_raised = true;
+			break;
+		}
+		case FSM_QualityGate::Event::INGRESS_OUT:
+		{
+			INGRESS_OUT_raised = true;
+			break;
+		}
 		case FSM_QualityGate::Event::HS_1_SAMPLE:
 		{
 			HS_1_SAMPLE_raised = true;
@@ -264,16 +274,6 @@ bool FSM_QualityGate::dispatchEvent(FSM_QualityGate::EventInstance* event) noexc
 			local_SYSTEM_SERVICE_OUT_raised = true;
 			break;
 		}
-		case FSM_QualityGate::Event::Internal_local_LAMP_YELLOW_BLINKING_1_HZ:
-		{
-			local_LAMP_YELLOW_BLINKING_1_HZ_raised = true;
-			break;
-		}
-		case FSM_QualityGate::Event::Internal_local_LAMP_YELLOW_BLINKING_1_HZ_RESET:
-		{
-			local_LAMP_YELLOW_BLINKING_1_HZ_RESET_raised = true;
-			break;
-		}
 		
 		
 		default:
@@ -357,13 +357,19 @@ void FSM_QualityGate::raisePUK_ENTRY_HeightMeasurement() {
 }
 
 
-sc::rx::Observable<void>& FSM_QualityGate::getLAMP_YELLOW_BLINKING_1_HZ() noexcept {
-	return this->LAMP_YELLOW_BLINKING_1_HZ_observable;
+/*! Raises the in event 'INGRESS_IN' of default interface scope. */
+void FSM_QualityGate::raiseINGRESS_IN() {
+	incomingEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::INGRESS_IN))
+	;
+	runCycle();
 }
 
 
-sc::rx::Observable<void>& FSM_QualityGate::getLAMP_YELLOW_BLINKING_1_HZ_RESET() noexcept {
-	return this->LAMP_YELLOW_BLINKING_1_HZ_RESET_observable;
+/*! Raises the in event 'INGRESS_OUT' of default interface scope. */
+void FSM_QualityGate::raiseINGRESS_OUT() {
+	incomingEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::INGRESS_OUT))
+	;
+	runCycle();
 }
 
 
@@ -473,6 +479,21 @@ void FSM_QualityGate::raiseLBE_1_INTERRUPTED() {
 }
 
 
+sc::rx::Observable<void>& FSM_QualityGate::getMOTOR_STOP() noexcept {
+	return this->MOTOR_STOP_observable;
+}
+
+
+sc::rx::Observable<void>& FSM_QualityGate::getMOTOR_FAST() noexcept {
+	return this->MOTOR_FAST_observable;
+}
+
+
+sc::rx::Observable<void>& FSM_QualityGate::getMOTOR_SLOW() noexcept {
+	return this->MOTOR_SLOW_observable;
+}
+
+
 /*! Raises the in event 'BGS_1_LONG_PRESSED' of default interface scope. */
 void FSM_QualityGate::raiseBGS_1_LONG_PRESSED() {
 	incomingEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::BGS_1_LONG_PRESSED))
@@ -518,6 +539,21 @@ void FSM_QualityGate::raiseLamp() {
 	incomingEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::Lamp))
 	;
 	runCycle();
+}
+
+
+sc::rx::Observable<void>& FSM_QualityGate::getLG1_ON() noexcept {
+	return this->LG1_ON_observable;
+}
+
+
+sc::rx::Observable<void>& FSM_QualityGate::getLG1_BLINKING_1HZ() noexcept {
+	return this->LG1_BLINKING_1HZ_observable;
+}
+
+
+sc::rx::Observable<void>& FSM_QualityGate::getLG1_OFF() noexcept {
+	return this->LG1_OFF_observable;
 }
 
 
@@ -647,18 +683,6 @@ void FSM_QualityGate::raiseLocal_ESTOP_CLEARED() {
 
 void FSM_QualityGate::raiseLocal_SYSTEM_SERVICE_OUT() {
 	internalEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::Internal_local_SYSTEM_SERVICE_OUT))
-	;
-}
-
-
-void FSM_QualityGate::raiseLocal_LAMP_YELLOW_BLINKING_1_HZ() {
-	internalEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::Internal_local_LAMP_YELLOW_BLINKING_1_HZ))
-	;
-}
-
-
-void FSM_QualityGate::raiseLocal_LAMP_YELLOW_BLINKING_1_HZ_RESET() {
-	internalEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::Internal_local_LAMP_YELLOW_BLINKING_1_HZ_RESET))
 	;
 }
 
@@ -1036,8 +1060,8 @@ void FSM_QualityGate::setWarning_lamp_active(bool warning_lamp_active_) noexcept
 void FSM_QualityGate::enact_FSM_QualityGate_Ingress_Ingress_Ingress_Idle()
 {
 	/* Entry action for state 'Idle'. */
-	LAMP_YELLOW_BLINKING_1_HZ_RESET_observable.next();
-	raiseLocal_LAMP_YELLOW_BLINKING_1_HZ_RESET();
+	incomingEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::INGRESS_OUT))
+	;
 }
 
 /* Entry action for state 'PukPresent'. */
@@ -1075,6 +1099,34 @@ void FSM_QualityGate::enact_FSM_QualityGate__Egress_Egress_Egress_Transfer()
 	motorStop++;
 }
 
+/* Entry action for state 'Idle'. */
+void FSM_QualityGate::enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle()
+{
+	/* Entry action for state 'Idle'. */
+	MOTOR_STOP_observable.next();
+}
+
+/* Entry action for state 'Forward'. */
+void FSM_QualityGate::enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward()
+{
+	/* Entry action for state 'Forward'. */
+	MOTOR_FAST_observable.next();
+}
+
+/* Entry action for state 'Slow'. */
+void FSM_QualityGate::enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow()
+{
+	/* Entry action for state 'Slow'. */
+	MOTOR_SLOW_observable.next();
+}
+
+/* Entry action for state 'Stop'. */
+void FSM_QualityGate::enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop()
+{
+	/* Entry action for state 'Stop'. */
+	MOTOR_STOP_observable.next();
+}
+
 /* Entry action for state 'Operational'. */
 void FSM_QualityGate::enact_FSM_System_Operational()
 {
@@ -1100,12 +1152,33 @@ void FSM_QualityGate::enact_FSM_System_ServiceMode()
 	raiseLocal_SYSTEM_SERVICE_IN();
 }
 
+/* Entry action for state 'Off'. */
+void FSM_QualityGate::enact_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off()
+{
+	/* Entry action for state 'Off'. */
+	LG1_OFF_observable.next();
+}
+
+/* Entry action for state 'Constant'. */
+void FSM_QualityGate::enact_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant()
+{
+	/* Entry action for state 'Constant'. */
+	LG1_ON_observable.next();
+}
+
+/* Entry action for state 'Blinking 1Hz'. */
+void FSM_QualityGate::enact_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz()
+{
+	/* Entry action for state 'Blinking 1Hz'. */
+	LG1_BLINKING_1HZ_observable.next();
+}
+
 /* Exit action for state 'Idle'. */
 void FSM_QualityGate::exact_FSM_QualityGate_Ingress_Ingress_Ingress_Idle()
 {
 	/* Exit action for state 'Idle'. */
-	LAMP_YELLOW_BLINKING_1_HZ_observable.next();
-	raiseLocal_LAMP_YELLOW_BLINKING_1_HZ();
+	incomingEventQueue.push_back(new FSM_QualityGate::EventInstance(FSM_QualityGate::Event::INGRESS_IN))
+	;
 }
 
 /* Exit action for state 'CreatingDistance'. */
@@ -1366,6 +1439,7 @@ void FSM_QualityGate::enseq_FSM_QualityGate__Motor_SystemMotor_default()
 void FSM_QualityGate::enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle_default()
 {
 	/* 'default' enter sequence for state Idle */
+	enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle();
 	stateConfVector[4] = FSM_QualityGate::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle;
 	stateConfVectorPosition = 4;
 }
@@ -1374,6 +1448,7 @@ void FSM_QualityGate::enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_I
 void FSM_QualityGate::enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_default()
 {
 	/* 'default' enter sequence for state Forward */
+	enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
 	stateConfVector[4] = FSM_QualityGate::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward;
 	stateConfVectorPosition = 4;
 }
@@ -1382,6 +1457,7 @@ void FSM_QualityGate::enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_F
 void FSM_QualityGate::enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow_default()
 {
 	/* 'default' enter sequence for state Slow */
+	enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
 	stateConfVector[4] = FSM_QualityGate::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow;
 	stateConfVectorPosition = 4;
 }
@@ -1390,6 +1466,7 @@ void FSM_QualityGate::enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_S
 void FSM_QualityGate::enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_default()
 {
 	/* 'default' enter sequence for state Stop */
+	enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop();
 	stateConfVector[4] = FSM_QualityGate::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop;
 	stateConfVectorPosition = 4;
 }
@@ -1472,6 +1549,7 @@ void FSM_QualityGate::enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_default()
 void FSM_QualityGate::enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default()
 {
 	/* 'default' enter sequence for state Off */
+	enact_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
 	stateConfVector[6] = FSM_QualityGate::State::FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off;
 	stateConfVectorPosition = 6;
 }
@@ -1480,6 +1558,7 @@ void FSM_QualityGate::enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Gr
 void FSM_QualityGate::enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default()
 {
 	/* 'default' enter sequence for state Constant */
+	enact_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
 	stateConfVector[6] = FSM_QualityGate::State::FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant;
 	stateConfVectorPosition = 6;
 }
@@ -1488,6 +1567,7 @@ void FSM_QualityGate::enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Gr
 void FSM_QualityGate::enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_default()
 {
 	/* 'default' enter sequence for state Blinking 1Hz */
+	enact_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
 	stateConfVector[6] = FSM_QualityGate::State::FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz;
 	stateConfVectorPosition = 6;
 }
@@ -3582,7 +3662,7 @@ sc::integer FSM_QualityGate::FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Y
 			transitioned_after = 7;
 		}  else
 		{
-			if (local_LAMP_YELLOW_BLINKING_1_HZ_raised)
+			if (INGRESS_IN_raised)
 			{ 
 				exseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
 				enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz_default();
@@ -3613,7 +3693,7 @@ sc::integer FSM_QualityGate::FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Y
 	sc::integer transitioned_after = transitioned_before;
 	if ((transitioned_after) < (7))
 	{ 
-		if (local_LAMP_YELLOW_BLINKING_1_HZ_RESET_raised)
+		if (INGRESS_OUT_raised)
 		{ 
 			exseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz();
 			enseq_FSM_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
@@ -3681,6 +3761,8 @@ void FSM_QualityGate::clearInEvents() noexcept {
 	LBF_1_INTERRUPTED_raised = false;
 	LBF_1_OPEN_raised = false;
 	PUK_ENTRY_HeightMeasurement_raised = false;
+	INGRESS_IN_raised = false;
+	INGRESS_OUT_raised = false;
 	HS_1_SAMPLE_raised = false;
 	HS_1_SAMPLING_DONE_raised = false;
 	PUK_ENTRY_SORTING_raised = false;
@@ -3719,8 +3801,6 @@ void FSM_QualityGate::clearInternalEvents() noexcept {
 	local_SYSTEM_SERVICE_IN_raised = false;
 	local_ESTOP_CLEARED_raised = false;
 	local_SYSTEM_SERVICE_OUT_raised = false;
-	local_LAMP_YELLOW_BLINKING_1_HZ_raised = false;
-	local_LAMP_YELLOW_BLINKING_1_HZ_RESET_raised = false;
 }
 
 void FSM_QualityGate::microStep() {
