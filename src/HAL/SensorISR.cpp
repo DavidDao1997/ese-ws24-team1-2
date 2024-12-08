@@ -48,7 +48,7 @@ uint32_t SensorISR::getFlippedValues() { return in32(uintptr_t(gpioBase + GPIO_I
 uint32_t SensorISR::getCurrentValues() { return in32((uintptr_t)gpioBase + GPIO_DATAIN); }
 
 bool SensorISR::initializeGPIOBaseAddr(uintptr_t portAddr) {
-    gpioBase = mmap_device_io(GPIO_REGISTER_LENGHT, portAddr);
+    gpioBase = mmap_device_io(IO_MEM_LEN, portAddr);
     if (gpioBase == MAP_DEVICE_FAILED) {
         perror("Failed to map GPIO base address!");
         return false;

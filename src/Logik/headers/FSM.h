@@ -11,7 +11,7 @@
 #include "../../Dispatcher/headers/PulseMsgConfig.h"
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
 
-#define FSM_NUM_OF_PULSES 16
+#define FSM_NUM_OF_PULSES 10
 
 class FSM : public PulseMsgHandler {
   public:
@@ -19,7 +19,7 @@ class FSM : public PulseMsgHandler {
     ~FSM();
 
     void handleMsg() override;
-    void sendMsg(int8_t msgCode, int32_t msgValue) override;
+    void sendMsg() override;
     int32_t getChannel() override;
 
     int8_t* getPulses();

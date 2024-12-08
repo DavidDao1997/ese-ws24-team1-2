@@ -43,6 +43,7 @@ Decoder::~Decoder() {
     running = false;
     // TODO How to end thread if blocked in MsgReveivePulse
     destroyChannel(channelID);
+    // TODO disconnect from dispatcher
 }
 
 void Decoder::handleMsg() {
@@ -71,6 +72,8 @@ void Decoder::handleMsg() {
 }
 
 void Decoder::decode() {
+    int32_t festoId = 0;
+
     uint32_t flippedValues = sensorISR->getFlippedValues();
     uint32_t currentValues = sensorISR->getCurrentValues();
     sensorISR->clearCurrentInterrupt();
@@ -93,7 +96,9 @@ void Decoder::decode() {
         char buffer[100];
         sprintf(buffer, "DECODER: current level %d\n",current_level);
         std::cout << buffer << std::endl;
-        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
+            perror("Dispatcher Send failed");
+        } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
     // Light Barrier Front
     if ((flippedValues & (uint32_t)BIT_MASK(LBF_PIN)) != 0) {
@@ -103,7 +108,9 @@ void Decoder::decode() {
         // PULSE_LBF_INTERRUPTED
         int32_t code = current_level ? PULSE_LBF_OPEN : PULSE_LBF_INTERRUPTED;
         std::cout << "LBF erkannt" << std::endl;
-        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
+            perror("Dispatcher Send failed");
+        } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
     // Light Berrier End
     if ((flippedValues & (uint32_t)BIT_MASK(LBE_PIN)) != 0) {
@@ -111,7 +118,9 @@ void Decoder::decode() {
         int8_t current_level = (currentValues >> LBE_PIN) & 0x1;
         int32_t code = current_level ? PULSE_LBE_OPEN : PULSE_LBE_INTERRUPTED;
         std::cout << "LBE erkannt" << std::endl;
-        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
+            perror("Dispatcher Send failed");
+        } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
     // Light Barrier Ramp
     if ((flippedValues & (uint32_t)BIT_MASK(LBR_PIN)) != 0) {
@@ -119,7 +128,9 @@ void Decoder::decode() {
         int8_t current_level = (currentValues >> LBR_PIN) & 0x1;
         int32_t code = current_level ? PULSE_LBR_OPEN : PULSE_LBR_INTERRUPTED;
         std::cout << "LBR erkannt" << std::endl;
-        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
+            perror("Dispatcher Send failed");
+        } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
     // Light Barrier Metal Sensor
     if ((flippedValues & (uint32_t)BIT_MASK(LBM_PIN)) != 0) {
@@ -127,31 +138,48 @@ void Decoder::decode() {
         int8_t current_level = (currentValues >> LBM_PIN) & 0x1;
         int32_t code = current_level ? PULSE_LBM_OPEN : PULSE_LBM_INTERRUPTED;
         std::cout << "LBM erkannt" << std::endl;
-        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
+            perror("Dispatcher Send failed");
+        } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
     // Button Start
     if ((flippedValues & (uint32_t)BIT_MASK(BGS_PIN)) != 0) {
         // LBM_PIN
         int8_t current_level = (currentValues >> BGS_PIN) & 0x1;
-        int32_t code = current_level ? PULSE_BGS_HIGH : PULSE_BGS_LOW;
-        std::cout << "BGS erkannt" << std::endl;
-        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+        if (current_level) {
+            std::cout << "BGS_SHORT erkannt" << std::endl;
+            if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, festoId)) {
+                perror("Dispatcher Send failed");
+            }
+        } else {
+            // timer stuff to check if it was short or long press
+        }
+        // TODO implment PULSE_BGS_LONG
+
     }
     // Button Stop
     if ((flippedValues & (uint32_t)BIT_MASK(BRS_PIN)) != 0) {
         // LBM_PIN
         int8_t current_level = (currentValues >> BRS_PIN) & 0x1;
-        int32_t code = current_level ? PULSE_BRS_HIGH : PULSE_BRS_LOW;
-        std::cout << "BRS erkannt" << std::endl;
-        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+        if (current_level) {
+            std::cout << "BRS_SHORT erkannt" << std::endl;
+            if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_SHORT, festoId)) {
+                perror("Dispatcher Send failed");
+            }
+        }
+        // TODO implment PULSE_BRS_LONG
     }
     // Button Reset
     if ((flippedValues & (uint32_t)BIT_MASK(BGR_PIN)) != 0) {
         // LBM_PIN
         int8_t current_level = (currentValues >> BGR_PIN) & 0x1;
-        int32_t code = current_level ? PULSE_BGR_HIGH : PULSE_BGR_LOW;
-         std::cout << "BGR erkannt" << std::endl;
-        sendMsg(code, 0); // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+        if (current_level) {
+            std::cout << "BGR_SHORT erkannt" << std::endl;
+            if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_SHORT, festoId)) {
+                perror("Dispatcher Send failed");
+            }
+        }
+        // TODO implment PULSE_BGR_LONG
     }
     
     // TODO if neccessary
@@ -161,11 +189,9 @@ void Decoder::decode() {
     // ...
 }
 
-void Decoder::sendMsg(int8_t msgCode, int32_t msgValue) {
+void Decoder::sendMsg() {
     // senden an den dispatcher
-    if (0 > MsgSendPulse(dispatcherConnectionID, -1, msgCode, msgValue)) {
-        perror("Decoder Send failed");
-    }
+    
 }
 
 int32_t Decoder::getChannel() { return channelID; }

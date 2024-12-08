@@ -87,6 +87,6 @@ void Dispatcher::handleMsg() {
     }
 }
 
-void Dispatcher::sendMsg(int8_t msgCode, int32_t msgValue) {}
+void Dispatcher::sendMsg() {}
 
 int32_t Dispatcher::getChannel() { return channelID; }

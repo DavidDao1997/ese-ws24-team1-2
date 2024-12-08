@@ -14,7 +14,7 @@
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
 #include "../../HAL/headers/Actuators_Wrapper.h"
 
-#define ACTUATOR_CONTROLLER_NUM_OF_PULSES 4
+#define ACTUATOR_CONTROLLER_NUM_OF_PULSES 32
 
 class ActuatorController : public PulseMsgHandler {
   public:
@@ -24,7 +24,7 @@ class ActuatorController : public PulseMsgHandler {
 
     void handleMsg() override;
     int32_t getChannel() override;
-    void sendMsg(int8_t msgCode, int32_t msgValue) override;
+    void sendMsg() override;
 
     int8_t* getPulses();
     int8_t getNumOfPulses();

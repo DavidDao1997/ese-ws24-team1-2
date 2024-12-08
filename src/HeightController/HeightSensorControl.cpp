@@ -57,7 +57,7 @@ int HeightSensorControl::initializeChannel() {
 
 // Setup der GPIO
 uintptr_t HeightSensorControl::setupGPIO() {
-    uintptr_t port1BaseAddr = mmap_device_io(GPIO_REGISTER_LENGHT, GPIO_BANK_1);
+    uintptr_t port1BaseAddr = mmap_device_io(IO_MEM_LEN, GPIO_BANK_1);
     if (port1BaseAddr == MAP_DEVICE_FAILED) {
         perror("Failed to map GPIO port!");
         exit(EXIT_FAILURE);
@@ -83,7 +83,7 @@ void HeightSensorControl::initRoutine() {
     setupGPIO();
     TSCADC tsc;
     ADC *adc = new ADC(tsc);
-    adc->registerAdcISR(ConnectAttach(0, 0, channelID, _NTO_SIDE_CHANNEL, 0), PULSE_ADC_START_SAMLING);
+    adc->registerAdcISR(ConnectAttach(0, 0, channelID, _NTO_SIDE_CHANNEL, 0), PULSE_ADC_SAMPLE);
 
     int candidateValue = 0;
     bool secondChance = false;
@@ -105,7 +105,8 @@ void HeightSensorControl::initRoutine() {
 //            printf("Thread kill code received!\n");
 //            receivingRunning = false;
 //        }
-        if (msg.code == PULSE_ADC_START_SAMLING) {
+        //is now a Enum? PULSE_ADC_START_SAMPLING?
+        if (msg.code == PULSE_ADC_SAMPLE) {
             int currentValue = msg.value.sival_int;
             processSample(currentValue, secondChance, candidateValue, adc);
         }
@@ -129,7 +130,7 @@ void HeightSensorControl::processSample(int currentValue, bool &secondChance, in
     else {
         handleNewValue(currentValue, secondChance, candidateValue);
     }
-
+    //take a sample every 10ms
     this_thread::sleep_for(chrono::milliseconds(10));
     adc->sample();
 }

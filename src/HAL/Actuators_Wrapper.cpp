@@ -51,65 +51,70 @@ bool Actuators_Wrapper::init() {
     hal config and actuators should be similar with the names
  */
 
-// LED's/Lamp's set/clear
-void Actuators_Wrapper::redLampLightOn() { out32((uintptr_t)(gpio_bank_1 + GPIO_SET), SHIFT_BIT << LR_PIN); }
+/*LED's/Lamp's set/clear*/
+void Actuators_Wrapper::redLampLightOn() { out32((uintptr_t)(gpio_bank_1 + GPIO_SET), BIT_MASK(LR_PIN)); }
+void Actuators_Wrapper::redLampLightOff() { out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(LR_PIN)); }
 
-void Actuators_Wrapper::redLampLightOff() { out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << LR_PIN); }
+void Actuators_Wrapper::yellowLampLightOn() { out32((uintptr_t)(gpio_bank_1 + GPIO_SET), BIT_MASK(LY_PIN)); }
+void Actuators_Wrapper::yellowLampLightOff() { out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(LY_PIN)); }
 
-void Actuators_Wrapper::yellowLampLightOn() { out32((uintptr_t)(gpio_bank_1 + GPIO_SET), SHIFT_BIT << LY_PIN); }
+void Actuators_Wrapper::greenLampLightOn() { out32((uintptr_t)(gpio_bank_1 + GPIO_SET), BIT_MASK(LG_PIN)); }
+void Actuators_Wrapper::greenLampLightOff() { out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(LG_PIN)); }
 
-void Actuators_Wrapper::yellowLampLightOff() { out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << LY_PIN); }
+/*Button's LED's set/clear*/
 
-void Actuators_Wrapper::greenLampLightOn() { out32((uintptr_t)(gpio_bank_1 + GPIO_SET), SHIFT_BIT << LG_PIN); }
+//Start Button LED
+void Actuators_Wrapper::startButtonLightOn() { out32((uintptr_t)(gpio_bank_2 + GPIO_SET), BIT_MASK(BGSL_PIN)); }
+void Actuators_Wrapper::startButtonLightOff() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), BIT_MASK(BGSL_PIN)); }
 
-void Actuators_Wrapper::greenLampLightOff() { out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << LG_PIN); }
-
-// Button's LED's set/clear
-void Actuators_Wrapper::startButtonLightOn() { out32((uintptr_t)(gpio_bank_2 + GPIO_SET), SHIFT_BIT << BGSL_PIN); }
-
-void Actuators_Wrapper::startButtonLightOff() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), SHIFT_BIT << BGSL_PIN); }
-void Actuators_Wrapper::resetButtonLightOn() { out32((uintptr_t)(gpio_bank_2 + GPIO_SET), SHIFT_BIT << BRSL_PIN); }
-void Actuators_Wrapper::resetButtonLightOff() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), SHIFT_BIT << BRSL_PIN); }
+//Reset Button LED
+void Actuators_Wrapper::resetButtonLightOn() { out32((uintptr_t)(gpio_bank_2 + GPIO_SET), BIT_MASK(BRSL_PIN)); }
+void Actuators_Wrapper::resetButtonLightOff() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), BIT_MASK(BRSL_PIN)); }
 
 // set/clear SignalLed's help tools
-void Actuators_Wrapper::Q1LightOn() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), SHIFT_BIT << Q1_PIN); }
+//Signal Light 1
+void Actuators_Wrapper::Q1LightOn() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), BIT_MASK(Q1_PIN)); }
+void Actuators_Wrapper::Q1LightOff() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), BIT_MASK(Q1_PIN)); }
 
-void Actuators_Wrapper::Q1LightOff() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), SHIFT_BIT << Q1_PIN); }
-void Actuators_Wrapper::Q2LightOn() { out32((uintptr_t)(gpio_bank_2 + GPIO_SET), SHIFT_BIT << Q2_PIN); }
+//Signal Light 2
+void Actuators_Wrapper::Q2LightOn() { out32((uintptr_t)(gpio_bank_2 + GPIO_SET), BIT_MASK(Q2_PIN)); }
+void Actuators_Wrapper::Q2LightOff() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), BIT_MASK(Q2_PIN)); }
 
-void Actuators_Wrapper::Q2LightOff() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), SHIFT_BIT << Q2_PIN); }
-
-// set/clear Motor
+/* set/clear Motor*/
+// clear pin to start run right Motor
 void Actuators_Wrapper::runRight() {
-    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << M_STOP_PIN);
-    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << M_BACKWARD_PIN);
+    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(M_STOP_PIN));
+    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(M_BACKWARD_PIN));
 
-    out32((uintptr_t)(gpio_bank_1 + GPIO_SET), SHIFT_BIT << M_FORWARD_PIN);
+    out32((uintptr_t)(gpio_bank_1 + GPIO_SET), BIT_MASK(M_FORWARD_PIN));
 }
-
+// clear pin to start run left Motor
 void Actuators_Wrapper::runLeft() {
-    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << M_STOP_PIN);
-    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << M_FORWARD_PIN);
+    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(M_STOP_PIN));
+    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(M_FORWARD_PIN));
 
-    out32((uintptr_t)(gpio_bank_1 + GPIO_SET), SHIFT_BIT << M_BACKWARD_PIN);
+    out32((uintptr_t)(gpio_bank_1 + GPIO_SET), BIT_MASK(M_BACKWARD_PIN));
 }
+//set pin to slow down the Motor
+void Actuators_Wrapper::runSlow() { out32((uintptr_t)(gpio_bank_1 + GPIO_SET), BIT_MASK(M_SLOW_PIN)); }
 
-void Actuators_Wrapper::runSlow() { out32((uintptr_t)(gpio_bank_1 + GPIO_SET), SHIFT_BIT << M_SLOW_PIN); }
+//clear pin to set the speed of the Motor to normal
+void Actuators_Wrapper::runFast() { out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(M_SLOW_PIN)); }
 
-void Actuators_Wrapper::runFast() { out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << M_SLOW_PIN); }
-
+// set pin to stop Motor
 void Actuators_Wrapper::motorStop() {
-    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << M_SLOW_PIN);
-    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << M_BACKWARD_PIN);
-    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << M_FORWARD_PIN);
+    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(M_SLOW_PIN));
+    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(M_BACKWARD_PIN));
+    out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(M_FORWARD_PIN));
 
-    out32((uintptr_t)(gpio_bank_1 + GPIO_SET), SHIFT_BIT << M_STOP_PIN);
+    out32((uintptr_t)(gpio_bank_1 + GPIO_SET), BIT_MASK(M_STOP_PIN));
 }
-
+//reading Module to find out which Sorting Module is available
 uint8_t Actuators_Wrapper::readSortingModule() {
     uint32_t gpioIn = in32((uintptr_t)(gpio_bank_0 + GPIO_DATAIN));
-    return ((gpioIn >> SM_TYPE) & SHIFT_BIT);
+    return ((gpioIn >> SM_TYPE) & 0x01);
 }
 
-void Actuators_Wrapper::openSortingModule() { out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), SHIFT_BIT << SM_PIN); }
-void Actuators_Wrapper::closeSortingModule() { out32((uintptr_t)(gpio_bank_1 + GPIO_SET), SHIFT_BIT << SM_PIN); }
+// Set/clear pin for sorting Module -> depends which sorting Module it is
+void Actuators_Wrapper::openSortingModule() { out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(SM_PIN)); }
+void Actuators_Wrapper::closeSortingModule() { out32((uintptr_t)(gpio_bank_1 + GPIO_SET), BIT_MASK(SM_PIN)); }

@@ -39,7 +39,7 @@ class PulseMsgHandler {
     // methods needed to be implemented
   public:
     virtual void handleMsg() = 0;
-    virtual void sendMsg(int8_t msgCode, int32_t msgValue) = 0;
+    virtual void sendMsg() = 0;
     virtual int32_t getChannel() = 0;
 
   private:

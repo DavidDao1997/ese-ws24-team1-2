@@ -52,7 +52,7 @@ using namespace std;
 
 /* Threshold */
 #define THRESHOLD 180 // Hysterese-Bereich.
-#define MAX_PRINT_COUNT 100 // Maximale Bestätigungsanzahl.
+//#define MAX_PRINT_COUNT 100 // Maximale Bestätigungsanzahl -> braucht man eigenlich nicht mehr
 
 using namespace std;
 

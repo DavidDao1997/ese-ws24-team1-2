@@ -18,13 +18,7 @@ int8_t FSM::pulses[FSM_NUM_OF_PULSES] = {
     PULSE_LBR_INTERRUPTED,
     PULSE_LBR_OPEN,
     PULSE_LBM_INTERRUPTED,
-    PULSE_LBM_OPEN,
-    PULSE_BGS_HIGH,
-    PULSE_BGS_LOW,
-    PULSE_BRS_HIGH,
-    PULSE_BRS_LOW,
-    PULSE_BGR_HIGH,
-    PULSE_BGR_LOW
+    PULSE_LBM_OPEN
 };
 
 FSM::FSM(const std::string name) {
@@ -61,7 +55,7 @@ void FSM::handleMsg() {
         switch (msg.code)
         {
         case PULSE_LBF_INTERRUPTED:
-            if(0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_MOTOR1_START, 0)) {
+            if(0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_MOTOR1_FAST, 0)) {
                 perror("FSM: MsgSendPulse failed");
             }
             break;
@@ -99,6 +93,6 @@ void FSM::handleMsg() {
     }
 }
 
-void FSM::sendMsg(int8_t msgCode, int32_t msgValue) {}
+void FSM::sendMsg() {}
 
 int32_t FSM::getChannel() { return channelID; }

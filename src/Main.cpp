@@ -9,6 +9,7 @@
 #include "Util/headers/Util.h"
 #include "HeightController/header/HeightSensorControl.h"
 #include "Decoder/headers/Decoder.h"
+#include "Logik/FSM/headers/FSMController.h"
 
 int main() {
     std::string dispatcherChannelName = "dispatcher";
@@ -29,26 +30,33 @@ int main() {
 	//start Thread
     std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::initRoutine, heightSensorController));
 
+    // std::string fsmChannelName = "fsm";
+    // FSM *fsm = new FSM(fsmChannelName);
+    // fsm->connectToChannel(dispatcher->getChannel());
+    // dispatcher->addSubscriber(
+    //     fsm->getChannel(), fsm->getPulses(), fsm->getNumOfPulses()
+    // );
 
-
-    std::string fsmChannelName = "fsm";
-    FSM *fsm = new FSM(fsmChannelName);
-    fsm->connectToChannel(dispatcher->getChannel());
+    FSMController *fsmController = new FSMController(dispatcherChannelName);
     dispatcher->addSubscriber(
-        fsm->getChannel(), fsm->getPulses(), fsm->getNumOfPulses()
+        fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
     );
 
     // start threads
     std::thread dispatcherThread(std::bind(&Dispatcher::handleMsg, dispatcher));
     WAIT(1000);
-    std::thread fsmThread(std::bind(&FSM::handleMsg, fsm));
+    // std::thread fsmThread(std::bind(&FSM::handleMsg, fsm));
+    std::thread fsmControllerHandleMsgThread(std::bind(&FSMController::handleMsg, fsmController));
+    std::thread fsmControllerSendMsgThread(std::bind(&FSMController::sendMsg, fsmController));
     std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
     std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
 
     // join threads
     std::cout << "\nThreads, started, main going idle...\n" << std::endl;
     dispatcherThread.join();
-    fsmThread.join();
+    // fsmThread.join();
+    fsmControllerHandleMsgThread.join();
+    fsmControllerSendMsgThread.join();
     actuatorControllerThread.join();
     decoderThread.join();
     return 0;

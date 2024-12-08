@@ -8,36 +8,46 @@
 #ifndef LOGIK_FSM_FSMCONTROLLER_H_
 #define LOGIK_FSM_FSMCONTROLLER_H_
 
+#include <functional>  // For std::bind
 
 #include "../../../Dispatcher/headers/PulseMsgHandler.h"
 #include "../../../Dispatcher/headers/PulseMsgConfig.h"
 #include "../../../FSM_QualityGate/src-gen/FSM_QualityGate.h"
+#include "../../../FSM_QualityGate/src/sc_rxcpp.h"
 
 #define FSM_CONTROLLER_NUM_OF_PULSES 16
 
 class FSMController : public PulseMsgHandler {
 public:
 
-FSMController(int32_t dispatcherChannel);
-virtual ~FSMController();
+    FSMController(const std::string dispatcherChannelName);
+    virtual ~FSMController();
 
-void handleMsg() override;
-void sendMsg(int8_t msgCode, int32_t msgValue) override;
-int32_t getChannel() override;
+    void handleMsg() override;
+    void sendMsg() override;
+    int32_t getChannel() override;
 
+    int8_t* getPulses();
+    int8_t getNumOfPulses();
 
 private:
+    FSM_QualityGate* fsm;
+    int32_t channelID;
+    int32_t dispatcherConnectionID;
 
+    bool running;
+    bool subThreadsRunning;
+    static int8_t numOfPulses;
+    static int8_t pulses[FSM_CONTROLLER_NUM_OF_PULSES];
 
-
-FSM_QualityGate* fsm;
-int32_t channelID;
-int32_t dispatcherChannelID;
-
-bool running;
-static int8_t numOfPulses;
-static int8_t pulses[FSM_CONTROLLER_NUM_OF_PULSES];
-
+    static void monitorObservable(
+        sc::rx::Observable<void> observable, 
+        std::string pulseName, 
+        PulseCode pulseCode, 
+        int32_t pulseValue,
+        bool subThreadsRunning,
+        int32_t dispatcherConnectionID
+    );
 };
 
 

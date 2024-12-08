@@ -19,12 +19,9 @@ int8_t FSMController::pulses[FSM_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_LBR_OPEN,
     PULSE_LBM_INTERRUPTED,
     PULSE_LBM_OPEN,
-    PULSE_BGS_HIGH,
-    PULSE_BGS_LOW,
-    PULSE_BRS_HIGH,
-    PULSE_BRS_LOW,
-    PULSE_BGR_HIGH,
-    PULSE_BGR_LOW,
+    PULSE_BGS_SHORT,
+    PULSE_BRS_SHORT,
+    PULSE_BGR_SHORT,
     // PULSE_HS_SAMPLE
 };
 
@@ -33,19 +30,29 @@ int8_t FSMController::pulses[FSM_CONTROLLER_NUM_OF_PULSES] = {
 #define FESTO2 1
 
 
-FSMController::FSMController(int32_t dispatcherChannel){
-    dispatcherChannelID = dispatcherChannel;
+FSMController::FSMController(const std::string dispatcherChannelName){
     channelID = createChannel();
     running = false;
+    subThreadsRunning = false;
     // FSM_QualityGate qualityGateInstance;
     fsm = new FSM_QualityGate();
+
+    // TODO connect to dispatcher
+    //create a connection to Dispatcher
+    dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
 }
 
 
 FSMController::~FSMController(){
     running = false;
+    subThreadsRunning = false;
     destroyChannel(channelID);
+    // TODO disconnect from dispatcher ?? this should disconnect not destroy a channel
+    destroyChannel(dispatcherConnectionID);
 }
+
+int8_t* FSMController::getPulses() { return pulses; };
+int8_t FSMController::getNumOfPulses() { return numOfPulses; };
 
 void FSMController::handleMsg() {
     _pulse msg;
@@ -142,50 +149,26 @@ void FSMController::handleMsg() {
                     // TODO
                 }
                 break;
-            case PULSE_BGS_HIGH:
-                std::cout << "FSMCONTROLLER: received PULSE_BGS_HIGH " << std::endl;
+            case PULSE_BGS_SHORT:
+                std::cout << "FSMCONTROLLER: received PULSE_BGS_SHORT " << std::endl;
                 if (FESTO1 == msgVal){
                 	fsm->raiseBGS_1_INTERRUPTED();
                 } else {
                     // TODO
                 }
                 break;
-            case PULSE_BGS_LOW:
-                std::cout << "FSMCONTROLLER: received PULSE_BGS_LOW " << std::endl;
-                if (FESTO1 == msgVal){
-                	// TODO fsm->raiseBGS_1_OPEN();
-                } else {
-                    // TODO
-                }
-                break;
-            case PULSE_BRS_HIGH:
-                std::cout << "FSMCONTROLLER: received PULSE_BRS_HIGH " << std::endl;
+            case PULSE_BRS_SHORT:
+                std::cout << "FSMCONTROLLER: received PULSE_BRS_SHORT " << std::endl;
                 if (FESTO1 == msgVal){
                 	// TODO fsm->raiseBRS_1_OPEN();
                 } else {
                     // TODO
                 }
                 break;
-            case PULSE_BRS_LOW:
-                std::cout << "FSMCONTROLLER: received PULSE_BRS_LOW " << std::endl;
-                if (FESTO1 == msgVal){
-                	fsm->raiseBRS_1_INTERRUPTED();
-                } else {
-                    // TODO
-                }
-                break;
-            case PULSE_BGR_HIGH:
-                std::cout << "FSMCONTROLLER: received PULSE_BGR_HIGH " << std::endl;
+            case PULSE_BGR_SHORT:
+                std::cout << "FSMCONTROLLER: received PULSE_BGR_SHORT " << std::endl;
                 if (FESTO1 == msgVal){
                 	fsm->raiseBGR_1_INTERRUPTED();
-                } else {
-                    // TODO
-                }
-                break;
-            case PULSE_BGR_LOW:
-                std::cout << "FSMCONTROLLER: received PULSE_BGR_LOW " << std::endl;
-                if (FESTO1 == msgVal){
-                	// TODO fsm->raiseBGR_1_OPEN();
                 } else {
                     // TODO
                 }
@@ -210,6 +193,56 @@ int32_t FSMController::getChannel(){
 }
 
 
-void FSMController::sendMsg(int8_t msgCode, int32_t msgValue){
+void FSMController::sendMsg(){
     // TODO check if needed when FSMs dont send Pulses    
+    
+    sc::rx::Observable<void> motorStop = fsm->getMOTOR_STOP();
+    sc::rx::Observable<void> motorFast = fsm->getMOTOR_FAST();
+    sc::rx::Observable<void> motorSlow = fsm->getMOTOR_SLOW();
+
+    sc::rx::Observable<void> lg1On = fsm->getLG1_ON();
+    sc::rx::Observable<void> lg1Blinking1Hz = fsm->getLG1_BLINKING_1HZ();
+    sc::rx::Observable<void> lg1Off = fsm->getLG1_OFF();
+
+    subThreadsRunning = true;
+    FSMController *fsmController = new FSMController("foo");
+
+    // void monitorObservable(sc::rx::Observable<void> observable, std::string pulseName, PulseCode pulseCode, int32_t pulseValue) {
+    //     while (subThreadsRunning) {
+    //         observable.next();
+    //         if (0 > MsgSendPulse(dispatcherConnectionID, -1, pulseCode, pulseValue)) {
+    //             perror("FSMController failed to send " + pulseName)
+    //         }
+    //     }
+    // }
+
+    std::thread motorStopThread(FSMController::monitorObservable, motorStop, "PULSE_MOTOR1_STOP", PULSE_MOTOR1_STOP, 0, subThreadsRunning, dispatcherConnectionID);
+    std::thread motorFastThread(FSMController::monitorObservable, motorFast, "PULSE_MOTOR1_FAST", PULSE_MOTOR1_FAST, 0, subThreadsRunning, dispatcherConnectionID);
+    std::thread motorSlowThread(FSMController::monitorObservable, motorSlow, "PULSE_MOTOR1_SLOW", PULSE_MOTOR1_SLOW, 0, subThreadsRunning, dispatcherConnectionID);
+    std::thread lg1OnThread(FSMController::monitorObservable, lg1On, "PULSE_LG1_ON", PULSE_LG1_ON, 0, subThreadsRunning, dispatcherConnectionID);
+    std::thread lg1Blinking1HzThread(FSMController::monitorObservable, lg1Blinking1Hz, "PULSE_LG1_BLINKING", PULSE_LG1_BLINKING, 1000, subThreadsRunning, dispatcherConnectionID);
+    std::thread lg1OffThread(FSMController::monitorObservable, lg1Off, "PULSE_LG1_OFF", PULSE_LG1_OFF, 0, subThreadsRunning, dispatcherConnectionID);
+
+    motorStopThread.join();
+    motorFastThread.join();
+    motorSlowThread.join();
+    lg1OnThread.join();
+    lg1Blinking1HzThread.join();
+    lg1OffThread.join();
+}
+
+void FSMController::monitorObservable(
+    sc::rx::Observable<void> observable, 
+    std::string pulseName, 
+    PulseCode pulseCode, 
+    int32_t pulseValue,
+    bool subThreadsRunning,
+    int32_t dispatcherConnectionID
+) {
+    while (subThreadsRunning) {
+        observable.next();
+        if (0 > MsgSendPulse(dispatcherConnectionID, -1, pulseCode, pulseValue)) {
+            perror("FSMController failed to send "); // + pulseName
+        }
+    }
 }
