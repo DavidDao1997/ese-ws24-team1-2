@@ -51,6 +51,12 @@ int main() {
     std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
     std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
 
+    WAIT(1000);
+    int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
+    if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, 0)) {
+        perror("ups");
+    }
+
     // join threads
     std::cout << "\nThreads, started, main going idle...\n" << std::endl;
     dispatcherThread.join();
@@ -59,5 +65,7 @@ int main() {
     fsmControllerSendMsgThread.join();
     actuatorControllerThread.join();
     decoderThread.join();
+
+
     return 0;
 }

@@ -20,6 +20,7 @@ int8_t FSMController::pulses[FSM_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_LBM_INTERRUPTED,
     PULSE_LBM_OPEN,
     PULSE_BGS_SHORT,
+    PULSE_BGS_LONG,
     PULSE_BRS_SHORT,
     PULSE_BGR_SHORT,
     // PULSE_HS_SAMPLE
@@ -36,6 +37,7 @@ FSMController::FSMController(const std::string dispatcherChannelName){
     subThreadsRunning = false;
     // FSM_QualityGate qualityGateInstance;
     fsm = new FSM_QualityGate();
+    fsm->enter();
 
     // TODO connect to dispatcher
     //create a connection to Dispatcher
@@ -157,6 +159,14 @@ void FSMController::handleMsg() {
                     // TODO
                 }
                 break;
+            case PULSE_BGS_LONG:
+                std::cout << "FSMCONTROLLER: received PULSE_BGS_LONG " << std::endl;
+                if (FESTO1 == msgVal){
+                	fsm->raiseBGS_1_LONG_PRESSED();
+                } else {
+                    // TODO
+                }
+                break;
             case PULSE_BRS_SHORT:
                 std::cout << "FSMCONTROLLER: received PULSE_BRS_SHORT " << std::endl;
                 if (FESTO1 == msgVal){
@@ -205,8 +215,6 @@ void FSMController::sendMsg(){
     sc::rx::Observable<void> lg1Off = fsm->getLG1_OFF();
 
     subThreadsRunning = true;
-    FSMController *fsmController = new FSMController("foo");
-
     // void monitorObservable(sc::rx::Observable<void> observable, std::string pulseName, PulseCode pulseCode, int32_t pulseValue) {
     //     while (subThreadsRunning) {
     //         observable.next();
@@ -241,8 +249,9 @@ void FSMController::monitorObservable(
 ) {
     while (subThreadsRunning) {
         observable.next();
-        if (0 > MsgSendPulse(dispatcherConnectionID, -1, pulseCode, pulseValue)) {
-            perror("FSMController failed to send "); // + pulseName
-        }
+        // perror(pulseName.c_str());
+        // if (0 > MsgSendPulse(dispatcherConnectionID, -1, pulseCode, pulseValue)) {
+        //     perror("FSMController failed to send "); // + pulseName
+        // }
     }
 }

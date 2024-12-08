@@ -15,7 +15,7 @@
 #include "../../../FSM_QualityGate/src-gen/FSM_QualityGate.h"
 #include "../../../FSM_QualityGate/src/sc_rxcpp.h"
 
-#define FSM_CONTROLLER_NUM_OF_PULSES 16
+#define FSM_CONTROLLER_NUM_OF_PULSES 14
 
 class FSMController : public PulseMsgHandler {
 public:
