@@ -322,10 +322,14 @@ void FSMController::handleMsg() {
                     break;
                 case EVENT_SYSTEM_OPERATIONAL_IN:
                     fsmIngress->raiseSystemOperationalIn();
+fsmLG1->raiseSystemOperationalIn();
+                    fsmEgress->raiseSystemOperationalIn();
                     // TODO
                     break;
                 case EVENT_SYSTEM_OPERATIONAL_OUT:
                     fsmIngress->raiseSystemOperationalOut();
+fsmLG1->raiseSystemOperationalOut();
+                    fsmEgress->raiseSystemOperationalOut();
                     // TODO
                     break;
                 case EVENT_SYSTEM_ESTOP_IN:

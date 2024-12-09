@@ -14,6 +14,8 @@ class FSMLampGreen {
     void raiseSystemServiceOut();
     void raiseEStopReceived();
     void raiseEStopCleared();
+    void raiseSystemOperationalIn();
+    void raiseSystemOperationalOut();
 
     //   void onSystemServiceIn(std::function<void()> callBackFunction);
     //   void raiseBGS1LongPressed();

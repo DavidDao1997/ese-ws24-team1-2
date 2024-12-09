@@ -25,16 +25,24 @@ void FSMLampGreen::raiseSystemServiceOut() {
         setState(LampGreenState::Off);
     }
 }
-
 void FSMLampGreen::raiseEStopCleared() {
     if (currentState == LampGreenState::Constant) {
         setState(LampGreenState::Off);
     }
 }
-
 void FSMLampGreen::raiseEStopReceived() {
     if (currentState != LampGreenState::Constant) {
         setState(LampGreenState::Constant);
+    }
+}
+void FSMLampGreen::raiseSystemOperationalIn() {
+    if (currentState == LampGreenState::Off) {
+        setState(LampGreenState::Constant);
+    }
+}
+void FSMLampGreen::raiseSystemOperationalOut() {
+    if (currentState == LampGreenState::Constant) {
+        setState(LampGreenState::Off);
     }
 }
 
@@ -50,16 +58,19 @@ void FSMLampGreen::onLG1Blinking1Hz(std::function<void(int32_t conId)> callbackF
 void FSMLampGreen::setState(LampGreenState nextState) {
     // Block for entry Off
     if (nextState == LampGreenState::Off && currentState != LampGreenState::Off) {
+        std::cout << "FSMLamGreen: entry off" << std::endl;
         currentState = LampGreenState::Off;
         callbackLG1Off(dispConnectionId);
     }
     // Block for entry Constant
     else if (nextState == LampGreenState::Constant && currentState != LampGreenState::Constant) {
+        std::cout << "FSMLampGreen: entry on" << std::endl;
         currentState = LampGreenState::Constant;
         callbackLG1On(dispConnectionId);
     }
     // Block for entry Constant
     else if (nextState == LampGreenState::Blinking1HZ && currentState != LampGreenState::Blinking1HZ) {
+        std::cout << "FSMLampGreen: entry blinking" << std::endl;
         currentState = LampGreenState::Blinking1HZ;
         callbackLGBlinking1HZ(dispConnectionId);
     }
