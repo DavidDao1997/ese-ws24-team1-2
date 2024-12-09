@@ -9,7 +9,8 @@
 
 FSMLampYellow::FSMLampYellow(int32_t dispatcherConnectionId) {
     dispConnectionId = dispatcherConnectionId;
-    setState(LampYellowState::Off);
+    // setState(LampYellowState::Off);
+    currentState = LampYellowState::Off;
 }
 
 FSMLampYellow::~FSMLampYellow() {}

@@ -9,7 +9,8 @@
 
 FSMSystem::FSMSystem(int32_t dispatcherConnectionId) {
     dispConnectionId = dispatcherConnectionId;
-    setState(Start);
+    // setState(Start);
+    currentState = Start;
 }
 
 FSMSystem::~FSMSystem() {}

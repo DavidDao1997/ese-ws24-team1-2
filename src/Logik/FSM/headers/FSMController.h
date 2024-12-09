@@ -19,6 +19,7 @@
 #include "../../headers/FSMLampGreen.h"
 #include "../../headers/FSMLampRed.h"
 #include "../../headers/FSMLampYellow.h"
+#include "../../headers/FSMMotor.h"
 #include "../../headers/FSMSystem.h"
 
 #define FSM_CONTROLLER_NUM_OF_PULSES 15
@@ -39,6 +40,7 @@ class FSMController : public PulseMsgHandler {
     FSM_QualityGate *fsm;
     // FSM System
     FSMSystem *fsmSystem;
+    FSMMotor *fsmMotor;
     // FSM LED
     FSMLampGreen *fsmLG1;
     FSMLampRed *fsmLR1;

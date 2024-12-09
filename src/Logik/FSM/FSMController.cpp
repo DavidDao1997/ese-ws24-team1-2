@@ -124,7 +124,7 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
             perror("LR1 Off Failed");
         }
     });
-
+    // callback for Ingress
     fsmIngress = new FSMIngress(dispatcherConnectionID);
     fsmIngress->onIngressIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_INGRESS_IN)) {
@@ -136,9 +136,36 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
             perror("Event Ingress out  Failed");
         }
     });
+    fsmIngress->onPukPresentIn([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_INGRESS_PUKPRESENT_IN)) {
+            perror("Event onPukPresentIn Failed");
+        }
+    });
+    fsmIngress->onPukCreatingDistanceOut([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_INGRESS_CREATINGDISTANCE_OUT)) {
+            perror("Event onCreatingDistanceOut Failed");
+        }
+    });
     fsmIngress->onPukEntryHeightMeasurement([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_PUK_ENTRY_HEIGHT_MEASUREMENT)) {
             perror("Event Puk Height Measurement  Failed");
+        }
+    });
+
+    fsmMotor = new FSMMotor(dispatcherConnectionID);
+    fsmMotor->onMotorStopIn([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
+            perror("Event onMotorStopIn Failed");
+        }
+    });
+    fsmMotor->onMotorSlowIn([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_SLOW, 0)) {
+            perror("Event onMotorSlowIn Failed");
+        }
+    });
+    fsmMotor->onMotorFastIn([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_FAST, 0)) {
+            perror("Event onMotorFastIn Failed");
         }
     });
     // TODO connect to dispatcher
@@ -301,12 +328,17 @@ void FSMController::handleMsg() {
                     fsmLR1->raiseEStopReceived();
                     fsmLY1->raiseEStopReceived();
                     fsmLG1->raiseEStopReceived();
-
+                    fsmMotor->raiseSystemEStopIn();
                     break;
                 case EVENT_SYSTEM_ESTOP_OUT:
+                    fsmMotor->raiseSystemEStopOut();
                     // TODO
                     break;
-
+                case EVENT_INGRESS_PUKPRESENT_IN:
+                    fsmMotor->raiseIngressPukPresentIn();
+                    break;
+                case EVENT_INGRESS_CREATINGDISTANCE_OUT:
+                    fsmMotor->raiseIngressCreatingDistanceOut();
                 default:
                     break;
                 }

@@ -10,11 +10,13 @@
 
 FSMIngress::FSMIngress(int32_t dispatcherConnectionId) {
     dispConnectionId = dispatcherConnectionId;
-    setState(FSMIngressStates::Paused);
+    // setState(FSMIngressStates::Paused);
+    currentState = FSMIngressStates::Paused;
 }
 
-// FSMIngress::~FSMIngress(){}
+FSMIngress::~FSMIngress() {}
 
+/* Events */
 void FSMIngress::raiseLBF1Interrupted() {
     if (currentState == FSMIngressStates::Idle) {
         setState(FSMIngressStates::PukPresent);
@@ -41,31 +43,42 @@ void FSMIngress::raiseSystemOperationalOut() {
     historyState = currentState;
     setState(FSMIngressStates::Paused);
 }
-
-void FSMIngress::onIngressIn(std::function<void(int32_t conId)> callbackFunction) {
-
-    callbackIngressIn = callbackFunction;
+// callback function/exit
+void FSMIngress::onIngressIn(std::function<void(int32_t conId)> callBackFunction) {
+    callbackIngressIn = callBackFunction;
 }
 
-void FSMIngress::onIngressOut(std::function<void(int32_t conId)> callbackFunction) {
-    callbackIngressOut = callbackFunction;
+void FSMIngress::onIngressOut(std::function<void(int32_t conId)> callBackFunction) {
+    callbackIngressOut = callBackFunction;
 }
-void FSMIngress::onPukEntryHeightMeasurement(std::function<void(int32_t conId)> callbackFunction) {
-    callbackPukEntryHeightMeasurement = callbackFunction;
+void FSMIngress::onPukEntryHeightMeasurement(std::function<void(int32_t conId)> callBackFunction) {
+    callbackPukEntryHeightMeasurement = callBackFunction;
 }
+
+void FSMIngress::onPukPresentIn(std::function<void(int32_t conId)> callBackFunction) {
+    callbackPukPresentIn = callBackFunction;
+}
+
+void FSMIngress::onPukCreatingDistanceOut(std::function<void(int32_t conId)> callBackFunction) {
+    callbackPukCreatingDistanceOut = callBackFunction;
+}
+
+// set the next state
 void FSMIngress::setState(FSMIngressStates nextState) {
     // exit
     if (currentState == FSMIngressStates::Idle && nextState != FSMIngressStates::Idle) {
         callbackIngressIn(dispConnectionId);
     } else if (currentState == FSMIngressStates::CreatingDistance && nextState != FSMIngressStates::CreatingDistance) {
-        // motorforward
+        callbackPukCreatingDistanceOut(dispConnectionId); // MotorForward--
     }
-
     // entry
     if (nextState == FSMIngressStates::Idle && currentState != FSMIngressStates::Idle) {
         callbackIngressOut(dispConnectionId);
-        currentState = FSMIngressStates::Idle;
     } else if (nextState == FSMIngressStates::PukPresent && currentState != FSMIngressStates::PukPresent) {
-        // motorforward
+        // entry PukPresent
+        callbackPukPresentIn(dispConnectionId); // MotorForward++;
+        currentState = FSMIngressStates::PukPresent;
+    } else {
+        currentState = nextState;
     }
 }

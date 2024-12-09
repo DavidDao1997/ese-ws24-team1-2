@@ -9,7 +9,8 @@
 
 FSMLampGreen::FSMLampGreen(int32_t dispatcherConnectionId) {
     dispConnectionId = dispatcherConnectionId;
-    setState(LampGreenState::Off);
+    // setState(LampGreenState::Off);
+    currentState = LampGreenState::Off;
 }
 
 FSMLampGreen::~FSMLampGreen() {}
