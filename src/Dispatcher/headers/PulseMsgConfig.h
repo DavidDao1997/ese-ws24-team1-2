@@ -120,8 +120,8 @@ enum FsmEvent {
     EVENT_OPERATIONAL_OUT,
 
     // ESTOP
-    EVENT_ESTOP_RECEIVED,
-    EVENT_ESTOP_CLEARED,
+    EVENT_ESTOP_IN,
+    EVENT_ESTOP_OUT,
 
     /* SignalEvent */
     // Green Lamp

@@ -52,14 +52,14 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
         }
     });
 
-    fsmSystem->onEStopReceived([](int32_t conId) {
+    fsmSystem->onEStopIn([](int32_t conId) {
         std::cout << "ESTOP Catched" << std::endl;
-        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_ESTOP_RECEIVED)) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_ESTOP_IN)) {
             perror("ESTOP Received Failed");
         }
     });
-    fsmSystem->onEStopCleared([](int32_t conId) {
-        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_ESTOP_CLEARED)) {
+    fsmSystem->onEStopOut([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_ESTOP_OUT)) {
             perror("ESTOP Cleared Failed");
         }
     });
@@ -181,7 +181,7 @@ void FSMController::handleMsg() {
             case PULSE_LBF_INTERRUPTED:
                 std::cout << "FSMCONTROLLER: received PULSE_LBF_INTERRUPTED " << std::endl;
                 if (FESTO1 == msgVal) {
-                    fsm->raiseLBF_1_INTERRUPTED();
+                    // fsm->raiseLBF_1_INTERRUPTED();
                 } else {
                     // TODO
                 }
@@ -189,7 +189,7 @@ void FSMController::handleMsg() {
             case PULSE_LBF_OPEN:
                 std::cout << "FSMCONTROLLER: received PULSE_LBF_OPEN " << std::endl;
                 if (FESTO1 == msgVal) {
-                    fsm->raiseLBF_1_OPEN();
+                    // fsm->raiseLBF_1_OPEN();
                 } else {
                     // TODO
                 }
@@ -197,7 +197,7 @@ void FSMController::handleMsg() {
             case PULSE_LBE_INTERRUPTED:
                 std::cout << "FSMCONTROLLER: received PULSE_LBE_INTERRUPTED " << std::endl;
                 if (FESTO1 == msgVal) {
-                    fsm->raiseLBE_1_INTERRUPTED();
+                    // fsm->raiseLBE_1_INTERRUPTED();
                 } else {
                     // TODO
                 }
@@ -205,7 +205,7 @@ void FSMController::handleMsg() {
             case PULSE_LBE_OPEN:
                 std::cout << "FSMCONTROLLER: received PULSE_LBE_OPEN " << std::endl;
                 if (FESTO1 == msgVal) {
-                    fsm->raiseLBE_1_OPEN();
+                    // fsm->raiseLBE_1_OPEN();
                 } else {
                     // TODO
                 }
@@ -213,7 +213,7 @@ void FSMController::handleMsg() {
             case PULSE_LBR_INTERRUPTED:
                 std::cout << "FSMCONTROLLER: received PULSE_LBR_INTERRUPTED " << std::endl;
                 if (FESTO1 == msgVal) {
-                    fsm->raiseLBF_1_OPEN();
+                    // fsm->raiseLBF_1_OPEN();
                 } else {
                     // TODO
                 }
@@ -221,7 +221,7 @@ void FSMController::handleMsg() {
             case PULSE_LBR_OPEN:
                 std::cout << "FSMCONTROLLER: received PULSE_LBR_OPEN " << std::endl;
                 if (FESTO1 == msgVal) {
-                    fsm->raiseLBR_1_OPEN();
+                    // fsm->raiseLBR_1_OPEN();
                 } else {
                     // TODO
                 }
@@ -229,7 +229,7 @@ void FSMController::handleMsg() {
             case PULSE_LBM_INTERRUPTED:
                 std::cout << "FSMCONTROLLER: received PULSE_LBM_INTERRUPTED " << std::endl;
                 if (FESTO1 == msgVal) {
-                    fsm->raiseLBM_1_INTERRUPTED();
+                    // fsm->raiseLBM_1_INTERRUPTED();
                 } else {
                     // TODO
                 }
@@ -245,7 +245,7 @@ void FSMController::handleMsg() {
             case PULSE_BGS_SHORT:
                 std::cout << "FSMCONTROLLER: received PULSE_BGS_SHORT " << std::endl;
                 if (FESTO1 == msgVal) {
-                    fsm->raiseBGS_1_INTERRUPTED();
+                    // fsm->raiseBGS_1_INTERRUPTED();
                 } else {
                     // TODO
                 }
@@ -253,7 +253,7 @@ void FSMController::handleMsg() {
             case PULSE_BGS_LONG:
                 std::cout << "FSMCONTROLLER: received PULSE_BGS_LONG " << std::endl;
                 if (FESTO1 == msgVal) {
-                    fsmSystem->raiseBGS1LongPressed();
+                    fsmSystem->raiseBGS1Long();
                 } else {
                     // TODO
                 }
@@ -269,7 +269,7 @@ void FSMController::handleMsg() {
             case PULSE_BGR_SHORT:
                 std::cout << "FSMCONTROLLER: received PULSE_BGR_SHORT " << std::endl;
                 if (FESTO1 == msgVal) {
-                    fsm->raiseBGR_1_INTERRUPTED();
+                    // fsm->raiseBGR_1_INTERRUPTED();
                 } else {
                     // TODO
                 }
@@ -288,13 +288,13 @@ void FSMController::handleMsg() {
                 case EVENT_OPERATIONAL_OUT:
                     // TODO
                     break;
-                case EVENT_ESTOP_RECEIVED:
+                case EVENT_ESTOP_IN:
                     fsmLR1->raiseEStopReceived();
                     fsmLY1->raiseEStopReceived();
                     fsmLG1->raiseEStopReceived();
 
                     break;
-                case EVENT_ESTOP_CLEARED:
+                case EVENT_ESTOP_OUT:
                     // TODO
                     break;
 

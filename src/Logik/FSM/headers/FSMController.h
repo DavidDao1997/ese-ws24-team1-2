@@ -8,18 +8,23 @@
 #ifndef LOGIK_FSM_FSMCONTROLLER_H_
 #define LOGIK_FSM_FSMCONTROLLER_H_
 
-#include <functional>  // For std::bind
+#include <functional> // For std::bind
 
-#include "../../../Dispatcher/headers/PulseMsgHandler.h"
 #include "../../../Dispatcher/headers/PulseMsgConfig.h"
+#include "../../../Dispatcher/headers/PulseMsgHandler.h"
 #include "../../../FSM_QualityGate/src-gen/FSM_QualityGate.h"
 #include "../../../FSM_QualityGate/src/sc_rxcpp.h"
 
-#define FSM_CONTROLLER_NUM_OF_PULSES 14
+#include "../../headers/FSMIngress.h"
+#include "../../headers/FSMLampGreen.h"
+#include "../../headers/FSMLampRed.h"
+#include "../../headers/FSMLampYellow.h"
+#include "../../headers/FSMSystem.h"
+
+#define FSM_CONTROLLER_NUM_OF_PULSES 15
 
 class FSMController : public PulseMsgHandler {
-public:
-
+  public:
     FSMController(const std::string dispatcherChannelName);
     virtual ~FSMController();
 
@@ -27,11 +32,19 @@ public:
     void sendMsg() override;
     int32_t getChannel() override;
 
-    int8_t* getPulses();
+    int8_t *getPulses();
     int8_t getNumOfPulses();
 
-private:
-    FSM_QualityGate* fsm;
+  private:
+    FSM_QualityGate *fsm;
+    // FSM System
+    FSMSystem *fsmSystem;
+    // FSM LED
+    FSMLampGreen *fsmLG1;
+    FSMLampRed *fsmLR1;
+    FSMLampYellow *fsmLY1;
+    FSMIngress *fsmIngress;
+
     int32_t channelID;
     int32_t dispatcherConnectionID;
 
@@ -41,15 +54,13 @@ private:
     static int8_t pulses[FSM_CONTROLLER_NUM_OF_PULSES];
 
     static void monitorObservable(
-        sc::rx::Observable<void> observable, 
-        std::string pulseName, 
-        PulseCode pulseCode, 
+        sc::rx::Observable<void> observable,
+        std::string pulseName,
+        PulseCode pulseCode,
         int32_t pulseValue,
         bool subThreadsRunning,
         int32_t dispatcherConnectionID
     );
 };
-
-
 
 #endif /* LOGIK_FSM_FSMCONTROLLER_H_ */

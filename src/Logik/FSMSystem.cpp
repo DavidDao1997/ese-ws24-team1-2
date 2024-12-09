@@ -20,10 +20,10 @@ void FSMSystem::onSystemServiceIn(std::function<void(int32_t conId)> callBackFun
 void FSMSystem::onSystemServiceOut(std::function<void(int32_t conId)> callBackFunction) {
     callbackSystemServiceOut = callBackFunction;
 }
-void FSMSystem::onEStopReceived(std::function<void(int32_t conId)> callBackFunction) {
+void FSMSystem::onEStopIn(std::function<void(int32_t conId)> callBackFunction) {
     callbackEStopReceived = callBackFunction;
 }
-void FSMSystem::onEStopCleared(std::function<void(int32_t conId)> callBackFunction) {
+void FSMSystem::onEStopOut(std::function<void(int32_t conId)> callBackFunction) {
     callbackEStopCleared = callBackFunction;
 }
 
@@ -31,7 +31,7 @@ void FSMSystem::onSystemOperationalOut(std::function<void(int32_t conId)> callBa
     callbackSystemOperationalOut = callBackFunction;
 }
 
-void FSMSystem::raiseBGS1LongPressed() {
+void FSMSystem::raiseBGS1Long() {
     if (currentState == Start) {
         setState(ServiceMode);
     } else if (currentState == Ready) {

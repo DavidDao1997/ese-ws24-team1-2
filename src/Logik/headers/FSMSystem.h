@@ -10,16 +10,16 @@ class FSMSystem {
 
     void onSystemServiceIn(std::function<void(int32_t conId)> callBackFunction);
     void onSystemServiceOut(std::function<void(int32_t conId)> callBackFunction);
-    void onEStopReceived(std::function<void(int32_t conId)> callBackFunction);
-    void onEStopCleared(std::function<void(int32_t conId)> callBackFunction);
+    void onEStopIn(std::function<void(int32_t conId)> callBackFunction);
+    void onEStopOut(std::function<void(int32_t conId)> callBackFunction);
     void onSystemOperationalOut(std::function<void(int32_t conId)> callBackFunction);
 
-    // Start Button
-    void raiseBGS1Short();
-    void raiseBGS1LongPressed();
     // ESTOP
     void raiseEStop1Low();
     void raiseEStop1High();
+    // Start Button
+    void raiseBGS1Short();
+    void raiseBGS1Long();
     // Stop Button
     void raiseBRS1Short();
     // Reset Button
