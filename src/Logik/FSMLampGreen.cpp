@@ -56,6 +56,7 @@ void FSMLampGreen::onLG1Blinking1Hz(std::function<void(int32_t conId)> callbackF
 // }
 
 void FSMLampGreen::setState(LampGreenState nextState) {
+
     // Block for entry Off
     if (nextState == LampGreenState::Off && currentState != LampGreenState::Off) {
         std::cout << "FSMLampGreen: entry off" << std::endl;

@@ -53,6 +53,7 @@ void FSMEgress::setState(FSMEgressStates nextState) {
     }
     // block Entry
     if (currentState != FSMEgressStates::Transfer && nextState == FSMEgressStates::Transfer) {
+        std::cout << "FSMEgress: entry Transfer " << std::endl;
         // TODO motorStop++
         currentState = FSMEgressStates::Transfer;
     } else {

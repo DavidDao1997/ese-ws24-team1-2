@@ -72,6 +72,12 @@ void FSMIngress::setState(FSMIngressStates nextState) {
     } else if (currentState == FSMIngressStates::CreatingDistance && nextState != FSMIngressStates::CreatingDistance) {
         callbackPukCreatingDistanceOut(dispConnectionId); // MotorForward--
     }
+
+    // transitions
+    if (currentState == FSMIngressStates::PukPresent && nextState == FSMIngressStates::CreatingDistance) {
+        callbackPukEntryHeightMeasurement(dispConnectionId);
+    }
+
     // entry
     if (nextState == FSMIngressStates::Idle && currentState != FSMIngressStates::Idle) {
         std::cout << "FSMIngresss: entry idle " << std::endl;
@@ -82,6 +88,9 @@ void FSMIngress::setState(FSMIngressStates nextState) {
         std::cout << "FSMIngresss: entry PukPresent " << std::endl;
         callbackPukPresentIn(dispConnectionId); // MotorForward++;
         currentState = FSMIngressStates::PukPresent;
+    } else if (nextState == FSMIngressStates::CreatingDistance && currentState != FSMIngressStates::CreatingDistance) {
+        std::cout << "FSMIngresss: entry CreatingDistance " << std::endl;
+        currentState = nextState;
     } else {
         currentState = nextState;
     }

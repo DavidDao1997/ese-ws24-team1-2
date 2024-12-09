@@ -73,7 +73,7 @@ void FSMSystem::raiseBRS1Short() {
 }
 
 void FSMSystem::setState(SystemState nextState) {
-    // EXIT BLOCKS
+    /*EXIT BLOCKS*/
     // TODO MAKE SURE STATE AwaitingEStopButton doesnt break this
     if (currentState == ESTOP_RESET && nextState != ESTOP_RESET) {
         // exit eStop_reset
@@ -88,19 +88,24 @@ void FSMSystem::setState(SystemState nextState) {
         callbackSystemOperationalOut(dispConnectionId);
     }
 
-    // ENTRY BLOCKS
+    /*ENTRY BLOCKS*/
+    // Entry for EStop
     if (nextState == ESTOP && currentState != ESTOP) {
         std::cout << "FSMSystem: entry eStop " << std::endl;
         // entry eStop
         // motorstop++
         callbackEStopIn(dispConnectionId);
         currentState = ESTOP;
-    } else if (nextState == ServiceMode && currentState != ServiceMode) {
+    }
+    // Entry for ServiceMode
+    else if (nextState == ServiceMode && currentState != ServiceMode) {
         std::cout << "FSMSystem: entry serviceMode " << std::endl;
         // entry servicemode
         currentState = ServiceMode;
         callbackSystemServiceIn(dispConnectionId);
-    } else if (nextState == Operational && currentState != Operational) {
+    }
+    // Entry for ServiceMode
+    else if (nextState == Operational && currentState != Operational) {
         std::cout << "FSMSystem: entry operational " << std::endl;
         currentState = nextState;
         callbackSystemOperationalIn(dispConnectionId);

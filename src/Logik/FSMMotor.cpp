@@ -40,12 +40,28 @@ void FSMMotor::raiseSystemEStopOut() {
     evaluteInternalVariables();
 }
 void FSMMotor::raiseIngressPukPresentIn() {
-    std::cout << "MOTOR GOT PUK PRESENT" << std::endl;
     motorFastRequests++;
     evaluteInternalVariables();
 }
 void FSMMotor::raiseIngressCreatingDistanceOut() {
     motorFastRequests--;
+    evaluteInternalVariables();
+}
+
+void FSMMotor::raiseHeightMeasurementPukPresentIn() {
+    motorFastRequests++;
+    evaluteInternalVariables();
+}
+void FSMMotor::raiseHeightMeasurementPukPresentOut() {
+    motorFastRequests--;
+    evaluteInternalVariables();
+}
+void FSMMotor::raiseHeightMeasurementMeasurementIn() {
+    motorSlowRequests++;
+    evaluteInternalVariables();
+}
+void FSMMotor::raiseHeightMeasurementMeasurementOut() {
+    motorSlowRequests--;
     evaluteInternalVariables();
 }
 

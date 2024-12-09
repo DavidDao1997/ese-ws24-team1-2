@@ -23,7 +23,9 @@ int8_t FSMController::pulses[FSM_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_BGS_LONG,
     PULSE_BRS_SHORT,
     PULSE_BGR_SHORT,
-    PULSE_FSM
+    PULSE_HS_SAMPLE,
+    PULSE_FSM,
+    PULSE_HS_SAMPLING_DONE
     // PULSE_HS_SAMPLE
 };
 
@@ -121,6 +123,25 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
             perror("LR1 Off Failed");
         }
     });
+
+    // callback for motor
+    fsmMotor = new FSMMotor(dispatcherConnectionID);
+    fsmMotor->onMotorStopIn([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
+            perror("Event onMotorStopIn Failed");
+        }
+    });
+    fsmMotor->onMotorSlowIn([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_SLOW, 0)) {
+            perror("Event onMotorSlowIn Failed");
+        }
+    });
+    fsmMotor->onMotorFastIn([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_FAST, 0)) {
+            perror("Event onMotorFastIn Failed");
+        }
+    });
+
     // callback for Ingress
     fsmIngress = new FSMIngress(dispatcherConnectionID);
     fsmIngress->onIngressIn([](int32_t conId) {
@@ -148,59 +169,41 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
             perror("Event Puk Height Measurement  Failed");
         }
     });
-    // callback for motor
-    fsmEgress = new FSMEgress(dispatcherConnectionID);
 
-    //fsmHeightMeasurement = new FSMHeightMeasurement(dispatcherConnectionID);
-    // fsmHeightMeasurement->onPukDistanceValid([](int32_t conId) {
-    //     if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
-    //         perror("Event onMotorStopIn Failed");
-    //     }
-    // });
-    // fsmHeightMeasurement->onPukEntrySorting([](int32_t conId) {
-    //     if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
-    //         perror("Event onMotorStopIn Failed");
-    //     }
-    // });
-    // fsmHeightMeasurement->onMeasurementIn([](int32_t conId) {
-    //     if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
-    //         perror("Event onMotorStopIn Failed");
-    //     }
-    // });
-    // fsmHeightMeasurement->onMeasurementOut([](int32_t conId) {
-    //     if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
-    //         perror("Event onMotorStopIn Failed");
-    //     }
-    // });
-    // fsmHeightMeasurement->onPukPresentIn([](int32_t conId) {
-    //     if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
-    //         perror("Event onMotorStopIn Failed");
-    //     }
-    // });
-    // fsmHeightMeasurement->onPukPresentOut([](int32_t conId) {
-    //     if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
-    //         perror("Event onMotorStopIn Failed");
-    //     }
-    // });
-
-    fsmMotor = new FSMMotor(dispatcherConnectionID);
-    fsmMotor->onMotorStopIn([](int32_t conId) {
-        if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
-            perror("Event onMotorStopIn Failed");
+    fsmHeightMeasurement = new FSMHeightMeasurement(dispatcherConnectionID);
+    fsmHeightMeasurement->onPukPresentIn([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_PUKPRESENT_IN)) {
+            perror("Event onPukPresentIn Failed");
         }
     });
-    fsmMotor->onMotorSlowIn([](int32_t conId) {
-        if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_SLOW, 0)) {
-            perror("Event onMotorSlowIn Failed");
+    fsmHeightMeasurement->onPukPresentOut([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_PUKPRESENT_OUT)) {
+            perror("Event onPukPresentIn Failed");
         }
     });
-    fsmMotor->onMotorFastIn([](int32_t conId) {
-        if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_FAST, 0)) {
-            perror("Event onMotorFastIn Failed");
+    fsmHeightMeasurement->onMeasurementIn([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_MEASUREMENT_IN)) {
+            perror("Event onPukPresentIn Failed");
+        }
+    });
+    fsmHeightMeasurement->onMeasurementOut([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_MEASUREMENT_OUT)) {
+            perror("Event onPukPresentIn Failed");
+        }
+    });
+    fsmHeightMeasurement->onPukDistanceValid([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_PUK_DISTANCE_VALID)) {
+            perror("Event onPukPresentIn Failed");
+        }
+    });
+    fsmHeightMeasurement->onPukLeaveHeightMeasurement([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_PUK_LEAVING_HEIGHTMEASUREMENT)) {
+            perror("Event onPukPresentIn Failed");
         }
     });
 
     // callback for EEgress
+    fsmEgress = new FSMEgress(dispatcherConnectionID);
     // TODO connect to dispatcher
     // create a connection to Dispatcher
 }
@@ -258,6 +261,7 @@ void FSMController::handleMsg() {
             case PULSE_LBF_OPEN:
                 std::cout << "FSMCONTROLLER: received PULSE_LBF_OPEN " << std::endl;
                 if (FESTO1 == msgVal) {
+                    fsmIngress->raiseLBF1Open();
                     // fsm->raiseLBF_1_OPEN();
                 } else {
                     // TODO
@@ -348,6 +352,14 @@ void FSMController::handleMsg() {
                     // TODO
                 }
                 break;
+            case PULSE_HS_SAMPLE:
+                std::cout << "FSMCONTROLLER: received PULSE_HS_SAMPLE FST_1" << std::endl;
+                fsmHeightMeasurement->raiseHS1Sample();
+                break;
+            case PULSE_HS_SAMPLING_DONE:
+                std::cout << "FSMCONTROLLER: received PULSE_HS_SAMPLING_DONE FST_1" << std::endl;
+                fsmHeightMeasurement->raiseHS1SamplingDone();
+                break;
             case PULSE_FSM:
                 switch (msgVal) {
                 case EVENT_SYSTEM_SERVICE_IN:
@@ -357,14 +369,16 @@ void FSMController::handleMsg() {
                     fsmLG1->raiseSystemServiceOut();
                     break;
                 case EVENT_SYSTEM_OPERATIONAL_IN:
-                    fsmIngress->raiseSystemOperationalIn();
                     fsmLG1->raiseSystemOperationalIn();
+                    fsmIngress->raiseSystemOperationalIn();
+                    fsmHeightMeasurement->raiseSystemOperationalIn();
                     fsmEgress->raiseSystemOperationalIn();
                     // TODO
                     break;
                 case EVENT_SYSTEM_OPERATIONAL_OUT:
-                    fsmIngress->raiseSystemOperationalOut();
                     fsmLG1->raiseSystemOperationalOut();
+                    fsmIngress->raiseSystemOperationalOut();
+                    fsmHeightMeasurement->raiseSystemOperationalOut();
                     fsmEgress->raiseSystemOperationalOut();
                     // TODO
                     break;
@@ -385,9 +399,38 @@ void FSMController::handleMsg() {
                 case EVENT_INGRESS_CREATINGDISTANCE_OUT:
                     fsmMotor->raiseIngressCreatingDistanceOut();
                     break;
+                case EVENT_INGRESS_IN:
+                    fsmLY1->raiseIngressIn();
+                    break;
+                case EVENT_INGRESS_OUT:
+                    fsmLY1->raiseIngressOut();
+                    break;
                 case EVENT_EGRESS_PUKPRESENT_IN:
+                    // fsmMotor->raise;
+                    break;
+                case EVENT_PUK_ENTRY_HEIGHT_MEASUREMENT:
+                    fsmHeightMeasurement->raisePukEntryHeightMasurement();
+                    break;
+                case EVENT_HM_PUKPRESENT_IN:
+                    fsmMotor->raiseHeightMeasurementPukPresentIn();
+                    break;
+                case EVENT_HM_PUKPRESENT_OUT:
+                    fsmMotor->raiseHeightMeasurementPukPresentOut();
+                    break;
+                case EVENT_HM_MEASUREMENT_IN:
+                    fsmMotor->raiseHeightMeasurementMeasurementIn();
+                    break;
+                case EVENT_HM_MEASUREMENT_OUT:
+                    fsmMotor->raiseHeightMeasurementMeasurementOut();
+                    break;
+                case EVENT_HM_PUK_DISTANCE_VALID:
+                    fsmIngress->raisePukDistanceValid();
+                    break;
+                case EVENT_HM_PUK_LEAVING_HEIGHTMEASUREMENT:
+                    // TODO
                     break;
                 default:
+
                     break;
                 }
                 break;

@@ -24,7 +24,7 @@
 #include "../../headers/FSMMotor.h"
 #include "../../headers/FSMSystem.h"
 
-#define FSM_CONTROLLER_NUM_OF_PULSES 15
+#define FSM_CONTROLLER_NUM_OF_PULSES 20
 
 class FSMController : public PulseMsgHandler {
   public:
