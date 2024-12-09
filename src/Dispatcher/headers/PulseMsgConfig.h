@@ -112,16 +112,16 @@ enum PulseCode {
 enum FsmEvent {
     /* SystemEvent */
     // Service Mode
-    EVENT_SERVICE_IN = 0,
-    EVENT_SERVICE_OUT,
+    EVENT_SYSTEM_SERVICE_IN = 0,
+    EVENT_SYSTEM_SERVICE_OUT,
 
     // Operational Mode
-    EVENT_OPERATIONAL_IN,
-    EVENT_OPERATIONAL_OUT,
+    EVENT_SYSTEM_OPERATIONAL_IN,
+    EVENT_SYSTEM_OPERATIONAL_OUT,
 
     // ESTOP
-    EVENT_ESTOP_IN,
-    EVENT_ESTOP_OUT,
+    EVENT_SYSTEM_ESTOP_IN,
+    EVENT_SYSTEM_ESTOP_OUT,
 
     /* SignalEvent */
     // Green Lamp

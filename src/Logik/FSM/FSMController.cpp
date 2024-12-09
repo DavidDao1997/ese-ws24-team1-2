@@ -42,25 +42,34 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     // callback for FSM System
     fsmSystem = new FSMSystem(dispatcherConnectionID);
     fsmSystem->onSystemServiceIn([](int32_t conId) {
-        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SERVICE_IN)) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SYSTEM_SERVICE_IN)) {
             perror("Service In Failed");
         }
     });
     fsmSystem->onSystemServiceOut([](int32_t conId) {
-        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SERVICE_OUT)) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SYSTEM_SERVICE_OUT)) {
             perror("Service Out Failed");
         }
     });
-
     fsmSystem->onEStopIn([](int32_t conId) {
         std::cout << "ESTOP Catched" << std::endl;
-        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_ESTOP_IN)) {
-            perror("ESTOP Received Failed");
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SYSTEM_ESTOP_IN)) {
+            perror("ESTOP In Failed");
         }
     });
     fsmSystem->onEStopOut([](int32_t conId) {
-        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_ESTOP_OUT)) {
-            perror("ESTOP Cleared Failed");
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SYSTEM_ESTOP_OUT)) {
+            perror("ESTOP Out Failed");
+        }
+    });
+    fsmSystem->onSystemOperationalIn([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SYSTEM_OPERATIONAL_IN)) {
+            perror("Operational In Failed");
+        }
+    });
+    fsmSystem->onSystemOperationalOut([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SYSTEM_OPERATIONAL_OUT)) {
+            perror("Operational Out Failed");
         }
     });
 
@@ -276,25 +285,25 @@ void FSMController::handleMsg() {
                 break;
             case PULSE_FSM:
                 switch (msgVal) {
-                case EVENT_SERVICE_IN:
+                case EVENT_SYSTEM_SERVICE_IN:
                     fsmLG1->raiseSystemServiceIn();
                     break;
-                case EVENT_SERVICE_OUT:
+                case EVENT_SYSTEM_SERVICE_OUT:
                     fsmLG1->raiseSystemServiceOut();
                     break;
-                case EVENT_OPERATIONAL_IN:
+                case EVENT_SYSTEM_OPERATIONAL_IN:
                     // TODO
                     break;
-                case EVENT_OPERATIONAL_OUT:
+                case EVENT_SYSTEM_OPERATIONAL_OUT:
                     // TODO
                     break;
-                case EVENT_ESTOP_IN:
+                case EVENT_SYSTEM_ESTOP_IN:
                     fsmLR1->raiseEStopReceived();
                     fsmLY1->raiseEStopReceived();
                     fsmLG1->raiseEStopReceived();
 
                     break;
-                case EVENT_ESTOP_OUT:
+                case EVENT_SYSTEM_ESTOP_OUT:
                     // TODO
                     break;
 
