@@ -151,7 +151,7 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     // callback for motor
     fsmEgress = new FSMEgress(dispatcherConnectionID);
 
-    fsmHeightMeasurement = new FSMHeightMeasurement(dispatcherConnectionID);
+    //fsmHeightMeasurement = new FSMHeightMeasurement(dispatcherConnectionID);
     // fsmHeightMeasurement->onPukDistanceValid([](int32_t conId) {
     //     if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
     //         perror("Event onMotorStopIn Failed");

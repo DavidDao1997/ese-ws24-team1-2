@@ -9,6 +9,8 @@
 #include "../HAL/headers/HALConfig.h"
 #include <cstdio> // For sprintf
 
+#include <chrono>
+
 Decoder::Decoder(const std::string dispatcherChannelName) {
     running = false;
 
@@ -78,6 +80,9 @@ void Decoder::decode() {
     uint32_t currentValues = sensorISR->getCurrentValues();
     sensorISR->clearCurrentInterrupt();
 
+    static std::chrono::steady_clock::time_point pressStartTime;  // Zeit, wann der Button gedrückt wurde
+    const std::chrono::milliseconds longPressDuration(2000);  // Definiert, was als langer Druck gilt (z. B. 1 Sekunde)
+
     // char buffer1[100];
     // sprintf(
     //     buffer1, 
@@ -85,7 +90,7 @@ void Decoder::decode() {
     //     (flippedValues & (uint32_t)BIT_MASK(LBF_PIN)),
     //     (currentValues & (uint32_t)BIT_MASK(LBF_PIN))
     // );
-    std::cout << "buffer1" << std::endl;
+    std::cout << "decode" << std::endl;
 
     // ESTOP
     if ((flippedValues & (uint32_t)BIT_MASK(SES_PIN)) != 0) {
@@ -145,41 +150,80 @@ void Decoder::decode() {
     // Button Start
     if ((flippedValues & (uint32_t)BIT_MASK(BGS_PIN)) != 0) {
         // LBM_PIN
-        int8_t current_level = (currentValues >> BGS_PIN) & 0x1;
+        int8_t current_level = (currentValues >> BGS_PIN) & 0x1; // HIGH wenn bestätigt
         if (current_level) {
-            std::cout << "BGS_SHORT erkannt" << std::endl;
-            if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, festoId)) {
-                perror("Dispatcher Send failed");
-            }
+            std::cout << "BGS gedrueckt" << std::endl;
+            pressStartTime = std::chrono::steady_clock::now();  // Startzeit des Tastendrucks
         } else {
+        	std::cout << "BGS losgelassen" << std::endl;
             // timer stuff to check if it was short or long press
+        	 auto pressDuration = std::chrono::steady_clock::now() - pressStartTime;  // Berechnung der Dauer
+        	 if (pressDuration < longPressDuration) {
+				 // Kurz drücken
+				 std::cout << "BGS_SHORT erkannt" << std::endl;
+				 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, festoId)) {
+					 perror("Dispatcher Send failed");
+				 }
+			 } else {
+				 // Lang drücken
+				 std::cout << "BGS_LONG erkannt" << std::endl;
+				 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, festoId)) {
+					 perror("Dispatcher Send failed");
+				 }
+			 }
         }
-        // TODO implment PULSE_BGS_LONG
-
     }
     // Button Stop
     if ((flippedValues & (uint32_t)BIT_MASK(BRS_PIN)) != 0) {
         // LBM_PIN
-        int8_t current_level = (currentValues >> BRS_PIN) & 0x1;
-        if (current_level) {
-            std::cout << "BRS_SHORT erkannt" << std::endl;
-            if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_SHORT, festoId)) {
-                perror("Dispatcher Send failed");
-            }
+        int8_t current_level = (currentValues >> BRS_PIN) & 0x1; // LOW wenn bestätigt
+        if (!current_level) {
+        	std::cout << "BGS gedrueckt" << std::endl;
+			pressStartTime = std::chrono::steady_clock::now();  // Startzeit des Tastendrucks
+		} else {
+			std::cout << "BGS losgelassen" << std::endl;
+			// timer stuff to check if it was short or long press
+			 auto pressDuration = std::chrono::steady_clock::now() - pressStartTime;  // Berechnung der Dauer
+			 if (pressDuration < longPressDuration) {
+				 // Kurz drücken
+				 std::cout << "BRS_SHORT erkannt" << std::endl;
+				 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_SHORT, festoId)) {
+					 perror("Dispatcher Send failed");
+				 }
+			 } else {
+				 // Lang drücken
+				 std::cout << "BRS_LONG erkannt" << std::endl;
+				 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_LONG, festoId)) {
+					 perror("Dispatcher Send failed");
+				 }
+			 }
         }
-        // TODO implment PULSE_BRS_LONG
     }
     // Button Reset
     if ((flippedValues & (uint32_t)BIT_MASK(BGR_PIN)) != 0) {
         // LBM_PIN
-        int8_t current_level = (currentValues >> BGR_PIN) & 0x1;
+        int8_t current_level = (currentValues >> BGR_PIN) & 0x1; // HIGH wenn bestätigt
         if (current_level) {
-            std::cout << "BGR_SHORT erkannt" << std::endl;
-            if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_SHORT, festoId)) {
-                perror("Dispatcher Send failed");
-            }
-        }
-        // TODO implment PULSE_BGR_LONG
+			std::cout << "BGS gedrueckt" << std::endl;
+			pressStartTime = std::chrono::steady_clock::now();  // Startzeit des Tastendrucks
+		} else {
+			std::cout << "BGS losgelassen" << std::endl;
+			// timer stuff to check if it was short or long press
+			 auto pressDuration = std::chrono::steady_clock::now() - pressStartTime;  // Berechnung der Dauer
+			 if (pressDuration < longPressDuration) {
+				 // Kurz drücken
+				 std::cout << "BGS_SHORT erkannt" << std::endl;
+				 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_SHORT, festoId)) {
+					 perror("Dispatcher Send failed");
+				 }
+			 } else {
+				 // Lang drücken
+				 std::cout << "BGS_LONG erkannt" << std::endl;
+				 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_LONG, festoId)) {
+					 perror("Dispatcher Send failed");
+				 }
+			 }
+		}
     }
     
     // TODO if neccessary

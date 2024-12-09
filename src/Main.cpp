@@ -13,9 +13,10 @@
 
 int main() {
     std::string dispatcherChannelName = "dispatcher";
+    std::cout << "1" << std::endl;
     Dispatcher *dispatcher = new Dispatcher(dispatcherChannelName);
     // dispatcher->addSubSbrber(int32_t coid, uint_8[])
-
+    std::cout << "2" << std::endl;
     Decoder *decoder = new Decoder(dispatcherChannelName);
 
     std::string actuatorControllerChannelName = "actuatorController";
@@ -24,11 +25,12 @@ int main() {
     dispatcher->addSubscriber(
         actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
     );
+    std::cout << "3" << std::endl;
     //init HS
-	HeightSensorControl *heightSensorController = new HeightSensorControl(); // Create an object of HwAdcDemo
+	HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName); // Create an object of HwAdcDemo
 	//heightSensorController->initRoutine();
 	//start Thread
-    std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::initRoutine, heightSensorController));
+    std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
 
     // std::string fsmChannelName = "fsm";
     // FSM *fsm = new FSM(fsmChannelName);
@@ -38,31 +40,56 @@ int main() {
     // );
 
     FSMController *fsmController = new FSMController(dispatcherChannelName);
+    std::cout << "3.5" << std::endl;
     dispatcher->addSubscriber(
         fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
     );
+    std::cout << "4" << std::endl;
 
     // start threads
     std::thread dispatcherThread(std::bind(&Dispatcher::handleMsg, dispatcher));
     WAIT(1000);
     // std::thread fsmThread(std::bind(&FSM::handleMsg, fsm));
     std::thread fsmControllerHandleMsgThread(std::bind(&FSMController::handleMsg, fsmController));
-    std::thread fsmControllerSendMsgThread(std::bind(&FSMController::sendMsg, fsmController));
+    //std::thread fsmControllerSendMsgThread(std::bind(&FSMController::sendMsg, fsmController));
     std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
     std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
-
-    WAIT(1000);
-    int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
-    if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, 0)) {
-        perror("ups");
-    }
-
+    std::cout << "1" << std::endl;
+//    WAIT(1000);
+//    int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
+//    if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, 0)) {
+//        perror("ups");
+//    }
+//    WAIT(10000);
+//    if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LG1_OFF, 0)) {
+//            perror("ups");
+//    }
+//    WAIT(1000);
+////	int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
+////	if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, 0)) {
+////		perror("ups");
+////	}
+//	WAIT(500);
+////	if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_SHORT, 0)) {
+////		perror("ups");
+////	}
+//	WAIT(500);
+////	if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, 0)) {
+////		perror("ups");
+////	}
+//	WAIT(500);
+////	if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBF_INTERRUPTED, 0)) {
+////		perror("ups");
+////	}
+    std::cout << "5" << std::endl;
     // join threads
     std::cout << "\nThreads, started, main going idle...\n" << std::endl;
+
+
     dispatcherThread.join();
     // fsmThread.join();
     fsmControllerHandleMsgThread.join();
-    fsmControllerSendMsgThread.join();
+    //fsmControllerSendMsgThread.join();
     actuatorControllerThread.join();
     decoderThread.join();
 
