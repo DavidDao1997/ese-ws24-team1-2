@@ -189,7 +189,6 @@ void FSMController::handleMsg() {
 
     while (running) {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
-
         if (recvid < 0) {
             perror("MsgReceivePulse failed!");
             exit(EXIT_FAILURE);
@@ -218,6 +217,7 @@ void FSMController::handleMsg() {
                 std::cout << "FSMCONTROLLER: received PULSE_LBF_INTERRUPTED " << std::endl;
                 if (FESTO1 == msgVal) {
                     // fsm->raiseLBF_1_INTERRUPTED();
+                    fsmIngress->raiseLBF1Interrupted();
                 } else {
                     // TODO
                 }
@@ -282,6 +282,7 @@ void FSMController::handleMsg() {
                 std::cout << "FSMCONTROLLER: received PULSE_BGS_SHORT " << std::endl;
                 if (FESTO1 == msgVal) {
                     // fsm->raiseBGS_1_INTERRUPTED();
+                    fsmSystem->raiseBGS1Short();
                 } else {
                     // TODO
                 }
@@ -297,6 +298,7 @@ void FSMController::handleMsg() {
             case PULSE_BRS_SHORT:
                 std::cout << "FSMCONTROLLER: received PULSE_BRS_SHORT " << std::endl;
                 if (FESTO1 == msgVal) {
+                    fsmSystem->raiseBRS1Short();
                     // TODO fsm->raiseBRS_1_OPEN();
                 } else {
                     // TODO
@@ -319,9 +321,11 @@ void FSMController::handleMsg() {
                     fsmLG1->raiseSystemServiceOut();
                     break;
                 case EVENT_SYSTEM_OPERATIONAL_IN:
+                    fsmIngress->raiseSystemOperationalIn();
                     // TODO
                     break;
                 case EVENT_SYSTEM_OPERATIONAL_OUT:
+                    fsmIngress->raiseSystemOperationalOut();
                     // TODO
                     break;
                 case EVENT_SYSTEM_ESTOP_IN:

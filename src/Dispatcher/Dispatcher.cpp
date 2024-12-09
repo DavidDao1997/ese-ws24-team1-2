@@ -46,7 +46,6 @@ void Dispatcher::handleMsg() {
 
     while (running) {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
-
         if (recvid < 0) {
             perror("MsgReceivePulse failed!");
             exit(EXIT_FAILURE); // TODO exit??? was passiert wenn der dispatcher stirbt. fehlerbhandlung?
@@ -76,7 +75,7 @@ void Dispatcher::handleMsg() {
                     for (const auto &coid : coids->second) {
                         sprintf(buffer, "DISPATCHER: Forwarding pulse %d to connectionId %d\n", msg.code, coid);
                         std::cout << buffer << std::flush;
-                        int err = MsgSendPulse(coid, -1, msg.code, 0);
+                        int err = MsgSendPulse(coid, -1, msg.code, msg.value.sival_int);
                         if (err == -1) {
                             perror("DISPACHER: MsgSendPulse failed");
                         }

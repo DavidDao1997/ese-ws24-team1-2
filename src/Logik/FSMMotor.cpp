@@ -71,13 +71,16 @@ void FSMMotor::onMotorSlowIn(std::function<void(int32_t conId)> callBackFunction
 
 void FSMMotor::setState(MotorState nextState) {
     if (nextState == Stop && currentState != Stop) {
+        std::cout << "FSMMotor: entry stop" << std::endl;
         callbackMotorStopIn(dispConnectionId);
         currentState = nextState;
 
     } else if (nextState == Slow && currentState != Slow) {
+        std::cout << "FSMMotor: entry slow" << std::endl;
         callbackMotorSlowIn(dispConnectionId);
         currentState = nextState;
     } else if (nextState == Fast && currentState != Fast) {
+        std::cout << "FSMMotor: entry fast" << std::endl;
         callbackMotorFastIn(dispConnectionId);
         currentState = Fast;
     }

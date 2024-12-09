@@ -35,13 +35,13 @@ void FSMEgress::raiseLBE1Open() {
 
 void FSMEgress::raiseSystemOperationalIn() {
     if (currentState == FSMEgressStates::Paused) {
-        setState(historyState);
+        // setState(historyState);
+        setState(FSMEgressStates::Idle);
     }
 }
-
 void FSMEgress::raiseSystemOperationalOut() {
     if (currentState != FSMEgressStates::Paused) {
-        historyState = currentState;
+        // historyState = currentState;
         setState(FSMEgressStates::Paused);
     }
 }

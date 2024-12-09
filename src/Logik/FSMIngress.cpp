@@ -35,7 +35,8 @@ void FSMIngress::raisePukDistanceValid() {
 }
 void FSMIngress::raiseSystemOperationalIn() {
     if (currentState == FSMIngressStates::Paused) {
-        setState(historyState);
+        // setState(historyState);
+        setState(FSMIngressStates::Idle);
     }
 }
 
@@ -73,9 +74,12 @@ void FSMIngress::setState(FSMIngressStates nextState) {
     }
     // entry
     if (nextState == FSMIngressStates::Idle && currentState != FSMIngressStates::Idle) {
+        std::cout << "FSMIngresss: entry idle " << std::endl;
         callbackIngressOut(dispConnectionId);
+        currentState = nextState;
     } else if (nextState == FSMIngressStates::PukPresent && currentState != FSMIngressStates::PukPresent) {
         // entry PukPresent
+        std::cout << "FSMIngresss: entry PukPresent " << std::endl;
         callbackPukPresentIn(dispConnectionId); // MotorForward++;
         currentState = FSMIngressStates::PukPresent;
     } else {
