@@ -41,7 +41,7 @@ void FSMIngress::raiseSystemOperationalIn() {
 }
 
 void FSMIngress::raiseSystemOperationalOut() {
-    historyState = currentState;
+    // historyState = currentState;
     setState(FSMIngressStates::Paused);
 }
 // callback function/exit

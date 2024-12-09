@@ -39,6 +39,7 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
 
     // FSM_QualityGate qualityGateInstance;
     fsm = new FSM_QualityGate();
+
     // callback for FSM System
     fsmSystem = new FSMSystem(dispatcherConnectionID);
     fsmSystem->onSystemServiceIn([](int32_t conId) {
@@ -52,7 +53,6 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
         }
     });
     fsmSystem->onEStopIn([](int32_t conId) {
-        std::cout << "ESTOP Catched" << std::endl;
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SYSTEM_ESTOP_IN)) {
             perror("ESTOP In Failed");
         }
@@ -86,7 +86,6 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
         }
     });
     fsmLG1->onLG1Blinking1Hz([](int32_t conId) {
-        std::cout << "Green Blink" << std::endl;
         if (0 < MsgSendPulse(conId, -1, PULSE_LG1_BLINKING, 1000)) {
             perror("LY1 Blink Failed");
         }
@@ -94,8 +93,7 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
 
     // callback for LED Yellow
     fsmLY1 = new FSMLampYellow(dispatcherConnectionID);
-    fsmLY1->onLY1Off([](int32_t conId) {
-        std::cout << "Yellow Blink" << std::endl;
+    fsmLY1->onLY1On([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_LY1_ON, 0)) {
             perror("LY1 On Failed");
         }
@@ -106,7 +104,6 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
         }
     });
     fsmLY1->onLY1Blinking1Hz([](int32_t conId) {
-        std::cout << "wuhuuuuu" << std::endl;
         if (0 < MsgSendPulse(conId, -1, PULSE_LY1_BLINKING, 1000)) {
             perror("LY1 Blink Failed");
         }
@@ -151,6 +148,40 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
             perror("Event Puk Height Measurement  Failed");
         }
     });
+    // callback for motor
+    fsmEgress = new FSMEgress(dispatcherConnectionID);
+
+    fsmHeightMeasurement = new FSMHeightMeasurement(dispatcherConnectionID);
+    // fsmHeightMeasurement->onPukDistanceValid([](int32_t conId) {
+    //     if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
+    //         perror("Event onMotorStopIn Failed");
+    //     }
+    // });
+    // fsmHeightMeasurement->onPukEntrySorting([](int32_t conId) {
+    //     if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
+    //         perror("Event onMotorStopIn Failed");
+    //     }
+    // });
+    // fsmHeightMeasurement->onMeasurementIn([](int32_t conId) {
+    //     if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
+    //         perror("Event onMotorStopIn Failed");
+    //     }
+    // });
+    // fsmHeightMeasurement->onMeasurementOut([](int32_t conId) {
+    //     if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
+    //         perror("Event onMotorStopIn Failed");
+    //     }
+    // });
+    // fsmHeightMeasurement->onPukPresentIn([](int32_t conId) {
+    //     if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
+    //         perror("Event onMotorStopIn Failed");
+    //     }
+    // });
+    // fsmHeightMeasurement->onPukPresentOut([](int32_t conId) {
+    //     if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
+    //         perror("Event onMotorStopIn Failed");
+    //     }
+    // });
 
     fsmMotor = new FSMMotor(dispatcherConnectionID);
     fsmMotor->onMotorStopIn([](int32_t conId) {
@@ -168,6 +199,8 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
             perror("Event onMotorFastIn Failed");
         }
     });
+
+    // callback for EEgress
     // TODO connect to dispatcher
     // create a connection to Dispatcher
 }
@@ -234,6 +267,7 @@ void FSMController::handleMsg() {
                 std::cout << "FSMCONTROLLER: received PULSE_LBE_INTERRUPTED " << std::endl;
                 if (FESTO1 == msgVal) {
                     // fsm->raiseLBE_1_INTERRUPTED();
+                    fsmEgress->raiseLBE1Interrupted();
                 } else {
                     // TODO
                 }
@@ -242,6 +276,7 @@ void FSMController::handleMsg() {
                 std::cout << "FSMCONTROLLER: received PULSE_LBE_OPEN " << std::endl;
                 if (FESTO1 == msgVal) {
                     // fsm->raiseLBE_1_OPEN();
+                    fsmEgress->raiseLBE1Interrupted();
                 } else {
                     // TODO
                 }
@@ -250,6 +285,7 @@ void FSMController::handleMsg() {
                 std::cout << "FSMCONTROLLER: received PULSE_LBR_INTERRUPTED " << std::endl;
                 if (FESTO1 == msgVal) {
                     // fsm->raiseLBF_1_OPEN();
+
                 } else {
                     // TODO
                 }
@@ -322,17 +358,18 @@ void FSMController::handleMsg() {
                     break;
                 case EVENT_SYSTEM_OPERATIONAL_IN:
                     fsmIngress->raiseSystemOperationalIn();
-fsmLG1->raiseSystemOperationalIn();
+                    fsmLG1->raiseSystemOperationalIn();
                     fsmEgress->raiseSystemOperationalIn();
                     // TODO
                     break;
                 case EVENT_SYSTEM_OPERATIONAL_OUT:
                     fsmIngress->raiseSystemOperationalOut();
-fsmLG1->raiseSystemOperationalOut();
+                    fsmLG1->raiseSystemOperationalOut();
                     fsmEgress->raiseSystemOperationalOut();
                     // TODO
                     break;
                 case EVENT_SYSTEM_ESTOP_IN:
+                    std::cout << "FSMCONTROLLER: received EVENT_SYSTEM_ESTOP_IN" << std::endl;
                     fsmLR1->raiseEStopReceived();
                     fsmLY1->raiseEStopReceived();
                     fsmLG1->raiseEStopReceived();
@@ -347,6 +384,9 @@ fsmLG1->raiseSystemOperationalOut();
                     break;
                 case EVENT_INGRESS_CREATINGDISTANCE_OUT:
                     fsmMotor->raiseIngressCreatingDistanceOut();
+                    break;
+                case EVENT_EGRESS_PUKPRESENT_IN:
+                    break;
                 default:
                     break;
                 }

@@ -51,16 +51,19 @@ void FSMLampYellow::onLY1Blinking1Hz(std::function<void(int32_t conId)> callback
 
 void FSMLampYellow::setState(LampYellowState nextState) {
     if (nextState == LampYellowState::Off && currentState != LampYellowState::Off) {
+        std::cout << "FSMLampYellow: entry off" << std::endl;
         currentState = LampYellowState::Off;
         callbackLY1Off(dispConnectionId);
     }
     // Block for entry Constant
     else if (nextState == LampYellowState::Constant && currentState != LampYellowState::Constant) {
+        std::cout << "FSMLampYellow: entry on" << std::endl;
         currentState = LampYellowState::Constant;
         callbackLY1On(dispConnectionId);
     }
     // Block for entry Constant
     else if (nextState == LampYellowState::Blinking1HZ && currentState != LampYellowState::Blinking1HZ) {
+        std::cout << "FSMLampYellow: entry blinking" << std::endl;
         currentState = LampYellowState::Blinking1HZ;
         callbackLY1Blinking1Hz(dispConnectionId);
     }

@@ -29,6 +29,7 @@ FSMMotor::~FSMMotor() {}
 //     motorSlowRequests = 0;
 // }
 void FSMMotor::raiseSystemEStopIn() {
+    std::cout << "MOTOR GOT ESTOP" << std::endl;
     motorStopRequests++;
     evaluteInternalVariables();
 }
@@ -39,6 +40,7 @@ void FSMMotor::raiseSystemEStopOut() {
     evaluteInternalVariables();
 }
 void FSMMotor::raiseIngressPukPresentIn() {
+    std::cout << "MOTOR GOT PUK PRESENT" << std::endl;
     motorFastRequests++;
     evaluteInternalVariables();
 }
