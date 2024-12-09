@@ -19,62 +19,79 @@ enum PulseCode {
     PULSE_HEARTBEAT,
 
     // EStop
-    PULSE_ESTOP_HIGH,       // msg.value int32_t (festoID)
-    PULSE_ESTOP_LOW,        // msg.value int32_t (festoID)
+    PULSE_ESTOP_HIGH, // msg.value int32_t (festoID)
+    PULSE_ESTOP_LOW,  // msg.value int32_t (festoID)
 
     // LightBarriers
-    PULSE_LBF_INTERRUPTED,  // msg.value int32_t (festoID)
-    PULSE_LBF_OPEN,         // msg.value int32_t (festoID)
-    PULSE_LBE_INTERRUPTED,  // msg.value int32_t (festoID)
-    PULSE_LBE_OPEN,         // msg.value int32_t (festoID)
-    PULSE_LBR_INTERRUPTED,  // msg.value int32_t (festoID)
-    PULSE_LBR_OPEN,         // msg.value int32_t (festoID)
-    PULSE_LBM_INTERRUPTED,  // msg.value int32_t (festoID)
-    PULSE_LBM_OPEN,         // msg.value int32_t (festoID)
+    PULSE_LBF_INTERRUPTED, // msg.value int32_t (festoID)
+    PULSE_LBF_OPEN,        // msg.value int32_t (festoID)
+    PULSE_LBE_INTERRUPTED, // msg.value int32_t (festoID)
+    PULSE_LBE_OPEN,        // msg.value int32_t (festoID)
+    PULSE_LBR_INTERRUPTED, // msg.value int32_t (festoID)
+    PULSE_LBR_OPEN,        // msg.value int32_t (festoID)
+    PULSE_LBM_INTERRUPTED, // msg.value int32_t (festoID)
+    PULSE_LBM_OPEN,        // msg.value int32_t (festoID)
 
-    // Buttons
-    PULSE_BGS_SHORT,        // msg.value int32_t (festoID)
-    PULSE_BGS_LONG,         // msg.value int32_t (festoID)
-    PULSE_BRS_SHORT,        // msg.value int32_t (festoID)
-    PULSE_BRS_LONG,         // msg.value int32_t (festoID)
-    PULSE_BGR_SHORT,        // msg.value int32_t (festoID)
-    PULSE_BGR_LONG,         // msg.value int32_t (festoID)
+    /* Buttons */
+    // Start
+    PULSE_BGS_SHORT, // msg.value int32_t (festoID)
+    PULSE_BGS_LONG,  // msg.value int32_t (festoID)
+    // Stop
+    PULSE_BRS_SHORT, // msg.value int32_t (festoID)
+    PULSE_BRS_LONG,  // msg.value int32_t (festoID)
+    // Reset
+    PULSE_BGR_SHORT, // msg.value int32_t (festoID)
+    PULSE_BGR_LONG,  // msg.value int32_t (festoID)
 
-    // Actuators
-    // Motor
+    /* Actuators */
+
+    // Motor 1
     PULSE_MOTOR1_STOP,
     PULSE_MOTOR1_SLOW,
     PULSE_MOTOR1_FAST,
+
+    // Motor 2
     PULSE_MOTOR2_STOP,
     PULSE_MOTOR2_SLOW,
     PULSE_MOTOR2_FAST,
 
-    // LEDs
+    /* LED's */
+    // red 1
     PULSE_LR1_ON,
-    PULSE_LR1_BLINKING,     // msg.value int32_t (period [ms])
+    PULSE_LR1_BLINKING, // msg.value int32_t (period [ms])
     PULSE_LR1_OFF,
+    // yellow 1
     PULSE_LY1_ON,
-    PULSE_LY1_BLINKING,     // msg.value int32_t (period [ms])
+    PULSE_LY1_BLINKING, // msg.value int32_t (period [ms])
     PULSE_LY1_OFF,
+    // green 1
     PULSE_LG1_ON,
-    PULSE_LG1_BLINKING,     // msg.value int32_t (period [ms])
+    PULSE_LG1_BLINKING, // msg.value int32_t (period [ms])
     PULSE_LG1_OFF,
+
+    // red 2
     PULSE_LR2_ON,
-    PULSE_LR2_BLINKING,     // msg.value int32_t (period [ms])
+    PULSE_LR2_BLINKING, // msg.value int32_t (period [ms])
     PULSE_LR2_OFF,
+    // yellow 2
     PULSE_LY2_ON,
-    PULSE_LY2_BLINKING,     // msg.value int32_t (period [ms])
+    PULSE_LY2_BLINKING, // msg.value int32_t (period [ms])
     PULSE_LY2_OFF,
+    // green 2
     PULSE_LG2_ON,
-    PULSE_LG2_BLINKING,     // msg.value int32_t (period [ms])
+    PULSE_LG2_BLINKING, // msg.value int32_t (period [ms])
     PULSE_LG2_OFF,
+
+    // Signal Light 1
     PULSE_Q11_ON,
     PULSE_Q11_OFF,
+
+    // Signal Light 2
     PULSE_Q12_ON,
     PULSE_Q12_OFF,
 
     // Sorting
-    PULSE_SM1_OPEN, 
+    PULSE_SM1_OPEN,
     PULSE_SM1_CLOSE,
     PULSE_SM2_OPEN,
     PULSE_SM2_CLOSE,
@@ -87,6 +104,45 @@ enum PulseCode {
     // MetalSensor
     PULSE_MS_INTERRUPED,
     PULSE_MS_OPEN,
+
+    /* FSM pulses */
+    PULSE_FSM // msg.value int32_t (FsmEvent)
+};
+
+enum FsmEvent {
+    /* SystemEvent */
+    // Service Mode
+    EVENT_SERVICE_IN = 0,
+    EVENT_SERVICE_OUT,
+
+    // Operational Mode
+    EVENT_OPERATIONAL_IN,
+    EVENT_OPERATIONAL_OUT,
+
+    // ESTOP
+    EVENT_ESTOP_RECEIVED,
+    EVENT_ESTOP_CLEARED,
+
+    /* SignalEvent */
+    // Green Lamp
+    EVENT_LG1_ON,
+    EVENT_LG1_OFF,
+    EVENT_LG1_BLINK_1HZ,
+
+    // red Lamp
+    EVENT_LR1_ON,
+    EVENT_LR1_OFF,
+    EVENT_LR1_BLINK_1HZ,
+
+    // yellow Lamp
+    EVENT_LY1_ON,
+    EVENT_LY1_OFF,
+    EVENT_LY1_BLINK_1HZ,
+
+    // Ingress
+    EVENT_INGRESS_IN,
+    EVENT_INGRESS_OUT,
+    EVENT_PUK_ENTRY_HEIGHT_MEASUREMENT
 };
 
 // // PULSECODE DECODER
@@ -169,6 +225,5 @@ enum PulseCode {
 
 // // Pulse Msg for HeightSensor
 // #define PULSE_ADC_START_SAMLING _PULSE_CODE_MINAVAIL + 51
-
 
 #endif /* DISPATCHER_PULSEMSGCONFIG_H_ */
