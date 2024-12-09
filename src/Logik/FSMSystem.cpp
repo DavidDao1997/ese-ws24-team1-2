@@ -20,13 +20,11 @@ void FSMSystem::onSystemServiceIn(std::function<void(int32_t conId)> callBackFun
 void FSMSystem::onSystemServiceOut(std::function<void(int32_t conId)> callBackFunction) {
     callbackSystemServiceOut = callBackFunction;
 }
-void FSMSystem::onEStopIn(std::function<void(int32_t conId)> callBackFunction) {
-    callbackEStopReceived = callBackFunction;
+void FSMSystem::onEStopIn(std::function<void(int32_t conId)> callBackFunction) { callbackEStopIn = callBackFunction; }
+void FSMSystem::onEStopOut(std::function<void(int32_t conId)> callBackFunction) { callbackEStopOut = callBackFunction; }
+void FSMSystem::onSystemOperationalIn(std::function<void(int32_t conId)> callBackFunction) {
+    callbackSystemOperationalIn = callBackFunction;
 }
-void FSMSystem::onEStopOut(std::function<void(int32_t conId)> callBackFunction) {
-    callbackEStopCleared = callBackFunction;
-}
-
 void FSMSystem::onSystemOperationalOut(std::function<void(int32_t conId)> callBackFunction) {
     callbackSystemOperationalOut = callBackFunction;
 }
@@ -81,7 +79,7 @@ void FSMSystem::setState(SystemState nextState) {
         // motorStop = 0
         // motorForward = 0
         // motorSlow = 0
-        callbackEStopCleared(dispConnectionId);
+        callbackEStopOut(dispConnectionId);
     } else if (currentState == ServiceMode && nextState != ServiceMode) {
         // exit serviceMode
         callbackSystemServiceOut(dispConnectionId);
@@ -93,7 +91,7 @@ void FSMSystem::setState(SystemState nextState) {
     if (nextState == ESTOP && currentState != ESTOP) {
         // entry eStop
         // motorstop++
-        callbackEStopReceived(dispConnectionId);
+        callbackEStopIn(dispConnectionId);
         currentState = ESTOP;
     } else if (nextState == ServiceMode && currentState != ServiceMode) {
         // entry servicemode

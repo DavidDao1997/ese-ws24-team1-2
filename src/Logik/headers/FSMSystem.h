@@ -12,6 +12,7 @@ class FSMSystem {
     void onSystemServiceOut(std::function<void(int32_t conId)> callBackFunction);
     void onEStopIn(std::function<void(int32_t conId)> callBackFunction);
     void onEStopOut(std::function<void(int32_t conId)> callBackFunction);
+    void onSystemOperationalIn(std::function<void(int32_t conId)> callBackFunction);
     void onSystemOperationalOut(std::function<void(int32_t conId)> callBackFunction);
 
     // ESTOP
@@ -34,8 +35,9 @@ class FSMSystem {
 
     std::function<void(int32_t conId)> callbackSystemServiceOut;
     std::function<void(int32_t conId)> callbackSystemServiceIn;
-    std::function<void(int32_t conId)> callbackEStopReceived;
-    std::function<void(int32_t conId)> callbackEStopCleared;
+    std::function<void(int32_t conId)> callbackEStopIn;
+    std::function<void(int32_t conId)> callbackEStopOut;
+    std::function<void(int32_t conId)> callbackSystemOperationalIn;
     std::function<void(int32_t conId)> callbackSystemOperationalOut;
 
     void setState(SystemState nextState);
