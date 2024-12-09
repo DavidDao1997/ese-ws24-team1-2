@@ -16,7 +16,7 @@
 #include "../../../FSM_QualityGate/src/sc_rxcpp.h"
 
 #include "../../headers/FSMEgress.h"
-//#include "../../headers/FSMHeightMeasurement.h"
+#include "../../headers/FSMHeightMeasurement.h"
 #include "../../headers/FSMIngress.h"
 #include "../../headers/FSMLampGreen.h"
 #include "../../headers/FSMLampRed.h"
@@ -48,7 +48,7 @@ class FSMController : public PulseMsgHandler {
     FSMLampRed *fsmLR1;
     FSMLampYellow *fsmLY1;
     FSMIngress *fsmIngress;
-    //FSMHeightMeasurement *fsmHeightMeasurement;
+    FSMHeightMeasurement *fsmHeightMeasurement;
     FSMEgress *fsmEgress;
 
     int32_t channelID;
