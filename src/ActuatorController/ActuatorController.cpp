@@ -127,7 +127,7 @@ void ActuatorController::handleMsg() {
 					break;
 				case PULSE_LR1_OFF:
 					std::cout << "ACTUATORCONTROLLER: LED GREEN OFF" << std::endl;
-					lyblinking = false;
+					lrblinking = false;
 					actuators->yellowLampLightOff();
 					break;
 				case PULSE_LG1_BLINKING:
@@ -147,14 +147,17 @@ void ActuatorController::handleMsg() {
 					break;
 				case PULSE_LG1_ON:
 					std::cout << "ACTUATORCONTROLLER: LED GREEN ON" << std::endl;
+					lgblinking = false;
 					actuators->greenLampLightOn();
 					break;
 				case PULSE_LY1_ON:
 					std::cout << "ACTUATORCONTROLLER: LED YELLOW ON" << std::endl;
+					lyblinking = false;
 					actuators->yellowLampLightOn();
 					break;
 				case PULSE_LR1_ON:
 					std::cout << "ACTUATORCONTROLLER: LED RED ON" << std::endl;
+					lrblinking = false;
 					actuators->redLampLightOn();
 					break;
             }

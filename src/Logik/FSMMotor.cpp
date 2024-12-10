@@ -28,6 +28,18 @@ FSMMotor::~FSMMotor() {}
 //     motorFastRequests = 0;
 //     motorSlowRequests = 0;
 // }
+
+void FSMMotor::raiseEgressPukTransferIn() {
+    std::cout << "FSMMotor: Motor Stop Transfer In " << std::endl;
+    motorStopRequests++;
+    evaluteInternalVariables();
+}
+
+void FSMMotor::raiseEgressPukTransferOut() {
+	motorStopRequests--;
+    evaluteInternalVariables();
+}
+
 void FSMMotor::raiseSystemEStopIn() {
     std::cout << "MOTOR GOT ESTOP" << std::endl;
     motorStopRequests++;
@@ -62,6 +74,11 @@ void FSMMotor::raiseHeightMeasurementMeasurementIn() {
 }
 void FSMMotor::raiseHeightMeasurementMeasurementOut() {
     motorSlowRequests--;
+    evaluteInternalVariables();
+}
+
+void FSMMotor::raiseSortingPukPresentIn(){
+    motorFastRequests++;
     evaluteInternalVariables();
 }
 

@@ -23,6 +23,7 @@
 #include "../../headers/FSMLampYellow.h"
 #include "../../headers/FSMMotor.h"
 #include "../../headers/FSMSystem.h"
+#include "../../headers/FSMSorting.h"
 
 #define FSM_CONTROLLER_NUM_OF_PULSES 20
 
@@ -50,6 +51,7 @@ class FSMController : public PulseMsgHandler {
     FSMIngress *fsmIngress;
     FSMHeightMeasurement *fsmHeightMeasurement;
     FSMEgress *fsmEgress;
+    FSMSorting *fsmSorting;
 
     int32_t channelID;
     int32_t dispatcherConnectionID;

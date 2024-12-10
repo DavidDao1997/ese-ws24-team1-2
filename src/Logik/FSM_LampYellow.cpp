@@ -30,12 +30,14 @@ void FSMLampYellow::raiseEStopReceived() {
     if (currentState == LampYellowState::Blinking1HZ) {
         setState(LampYellowState::Constant);
     } else if (currentState == LampYellowState::Off) {
+        std::cout << "FSMLAMPYELLOW: ESTOP Received" << std::endl;
         setState(LampYellowState::Constant);
     }
 }
 
 void FSMLampYellow::raiseEStopCleared() {
     if (currentState == LampYellowState::Constant) {
+        std::cout << "FSMLAMPYELLOW: ESTOP Cleared" << std::endl;
         setState(LampYellowState::Off);
     }
 }

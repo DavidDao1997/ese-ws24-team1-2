@@ -47,10 +47,14 @@ void FSMSorting::raiseBGR1Interrupted() {
 
 void FSMSorting::raiseSystemOperationalIn() {
     if (currentState == FSMSortingStates::Paused) {
+        std::cout << "FSMSORTING: System Operational in" << std::endl;
         setState(FSMSortingStates::Idle);
     }
 }
-void FSMSorting::raiseSystemOperationalOut() { setState(FSMSortingStates::Paused); }
+void FSMSorting::raiseSystemOperationalOut() {
+     setState(FSMSortingStates::Paused); 
+     std::cout << "FSMSORTING: System Operational out" << std::endl;
+}
 
 void FSMSorting::onPukPresentIn(std::function<void(int32_t conId)> callBackFunction) {
     callbackPukPresentIn = callBackFunction;

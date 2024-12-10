@@ -24,6 +24,7 @@ class FSMHeightMeasurement {
     void onMeasurementOut(std::function<void(int32_t conId)> callBackFunction);
     void onPukPresentIn(std::function<void(int32_t conId)> callBackFunction);
     void onPukPresentOut(std::function<void(int32_t conId)> callBackFunction);
+    void onPukEntrySorting(std::function<void(int32_t conId)> callBackFunction);
 
   private:
     int32_t dispConnectionId;
@@ -31,6 +32,7 @@ class FSMHeightMeasurement {
     void setState(FSMHeightMeasurementStates nextState);
 
     std::function<void(int32_t conId)> callbackPukDistanceValid;
+    std::function<void(int32_t conId)> callbackPukEntrySorting;
     std::function<void(int32_t conId)> callbackPukLeaveHeightMeasurement;
 
     std::function<void(int32_t conId)> callbackMeasurementIn;

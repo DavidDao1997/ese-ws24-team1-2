@@ -124,23 +124,24 @@ private:
 
 
 
-    // // Helper Functions for Processing
-    // void processSample(
-    //     int currentValue,
-    //     bool &secondChance,
-    //     int &candidateValue,
-    //     ADC *adc
-    // );
+    // Helper Functions for Processing
+    void processSample(
+        int currentValue,
+        bool &secondChance,
+        bool  &candidatesSend,
+        int &candidateValue,
+        ADC * adc
+    );
 
-    // void handleBandHeightReached(
-    //     bool &secondChance
-    // );
+    void handleBandHeightReached(
+        bool &secondChance
+    );
 
-    // void handleNewValue(
-    //     int currentValue,
-    //     bool &secondChance,
-    //     int &candidateValue
-    // );
+    void handleNewValue(
+        int currentValue,
+        bool &secondChance,
+        int &candidateValue
+    );
 };
 
 #endif /* HEIGHTSENSORCONTROL_H_ */

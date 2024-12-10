@@ -13,11 +13,17 @@ class FSMEgress {
     void raiseLBE1Open();
     void raiseSystemOperationalIn();
     void raiseSystemOperationalOut();
+    
+    void onEgressTransferIn(std::function<void(int32_t conId)> callBackFunction);
+    void onEgressTransferOut(std::function<void(int32_t conId)> callBackFunction);
 
   private:
     int32_t dispConnectionId;
     FSMEgressStates currentState;
     FSMEgressStates historyState;
+
+    std::function<void(int32_t conId)> callbackEgressTransferIn;
+  	std::function<void(int32_t conId)> callbackEgressTransferOut;
     void setState(FSMEgressStates nextState);
 };
 

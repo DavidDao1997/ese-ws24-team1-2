@@ -11,6 +11,9 @@
 
 #include <chrono>
 
+
+#define LONG_PRESS_DURATION 1000
+
 Decoder::Decoder(const std::string dispatcherChannelName) {
     running = false;
 
@@ -81,7 +84,7 @@ void Decoder::decode() {
     sensorISR->clearCurrentInterrupt();
 
     static std::chrono::steady_clock::time_point pressStartTime;  // Zeit, wann der Button gedrückt wurde
-    const std::chrono::milliseconds longPressDuration(2000);  // Definiert, was als langer Druck gilt (z. B. 1 Sekunde)
+    const std::chrono::milliseconds longPressDuration(LONG_PRESS_DURATION);  // Definiert, was als langer Druck gilt (z. B. 1 Sekunde)
 
     // char buffer1[100];
     // sprintf(

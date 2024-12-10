@@ -21,11 +21,13 @@ void FSMLampRed::onLR1Off(std::function<void(int32_t conId)> callBackFunction) {
 
 void FSMLampRed::raiseEStopReceived() {
     if (currentState == LampRedState::Off) {
-        setState(LampRedState::Constant);
+     std::cout << "FSMLAMPRED: ESTOP Received" << std::endl;
+     setState(LampRedState::Constant);
     }
 }
 void FSMLampRed::raiseEStopCleared() {
     if (currentState == LampRedState::Constant) {
+        std::cout << "FSMLAMPRED: ESTOP Cleared" << std::endl;
         setState(LampRedState::Off);
     }
 }

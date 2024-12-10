@@ -19,7 +19,11 @@ class FSMMotor {
     void raiseHeightMeasurementPukPresentOut();
     void raiseHeightMeasurementMeasurementIn();
     void raiseHeightMeasurementMeasurementOut();
-
+    void raiseSortingPukPresentIn();
+    void raiseSortingPukPresentout();
+    void raiseEgressPukTransferIn();
+    void raiseEgressPukTransferOut();
+    
     void onMotorStopIn(std::function<void(int32_t conId)> callBackFunction);
     void onMotorFastIn(std::function<void(int32_t conId)> callBackFunction);
     void onMotorSlowIn(std::function<void(int32_t conId)> callBackFunction);

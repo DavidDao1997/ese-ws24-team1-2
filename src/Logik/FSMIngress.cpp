@@ -36,12 +36,14 @@ void FSMIngress::raisePukDistanceValid() {
 void FSMIngress::raiseSystemOperationalIn() {
     if (currentState == FSMIngressStates::Paused) {
         // setState(historyState);
+        std::cout << "FSMINGRESS: System Operational in" << std::endl;
         setState(FSMIngressStates::Idle);
     }
 }
 
 void FSMIngress::raiseSystemOperationalOut() {
     // historyState = currentState;
+    std::cout << "FSMINGRESS: System Operational out" << std::endl;
     setState(FSMIngressStates::Paused);
 }
 // callback function/exit

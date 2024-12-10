@@ -34,6 +34,10 @@ void FSMHeightMeasurement::onPukPresentIn(std::function<void(int32_t conId)> cal
 void FSMHeightMeasurement::onPukPresentOut(std::function<void(int32_t conId)> callBackFunction) {
     callbackPukPresentOut = callBackFunction;
 }
+void FSMHeightMeasurement::onPukEntrySorting(std::function<void(int32_t conId)> callBackFunction){
+    callbackPukEntrySorting = callBackFunction;
+}
+
 
 void FSMHeightMeasurement::raisePukEntryHeightMasurement() {
     if (currentState == FSMHeightMeasurementStates::Idle) {
@@ -53,10 +57,13 @@ void FSMHeightMeasurement::raiseHS1SamplingDone() {
 
 void FSMHeightMeasurement::raiseSystemOperationalIn() {
     if (currentState == FSMHeightMeasurementStates::Paused) {
+        std::cout << "FSMHEIGHTMEASUREMENT: System Operational in" << std::endl;
         setState(FSMHeightMeasurementStates::Idle);
     }
 }
-void FSMHeightMeasurement::raiseSystemOperationalOut() { setState(FSMHeightMeasurementStates::Paused); }
+void FSMHeightMeasurement::raiseSystemOperationalOut() { 
+    setState(FSMHeightMeasurementStates::Paused); 
+     std::cout << "FSMHEIGHTMEASUREMENT: System Operational out" << std::endl;}
 
 void FSMHeightMeasurement::setState(FSMHeightMeasurementStates nextState) {
 
@@ -68,7 +75,10 @@ void FSMHeightMeasurement::setState(FSMHeightMeasurementStates nextState) {
     // Exit for Measuring
     else if (currentState == FSMHeightMeasurementStates::Measuring &&
              nextState != FSMHeightMeasurementStates::Measuring) {
-        callbackMeasurementOut(dispConnectionId);
+        std::cout << "FSMHeightMeasurement: exit measurement " << std::endl;
+            callbackPukDistanceValid(dispConnectionId);
+            callbackPukEntrySorting(dispConnectionId);
+            callbackMeasurementOut(dispConnectionId);
     }
 
     // Transfer blocks
@@ -94,9 +104,8 @@ void FSMHeightMeasurement::setState(FSMHeightMeasurementStates nextState) {
     // Entry for Idle
     else if (currentState != FSMHeightMeasurementStates::Idle && nextState == FSMHeightMeasurementStates::Idle) {
         std::cout << "FSMHeightMeasurement: entry Idle " << std::endl;
-        // callbackPukDistanceValid(dispConnectionId);
-        // callbackPukEntrySorting(dispConnectionId);
-        callbackPukPresentIn(dispConnectionId);
+  
+        //callbackPukPresentIn(dispConnectionId);
         currentState = FSMHeightMeasurementStates::Idle;
     } /*Else*/
     else {

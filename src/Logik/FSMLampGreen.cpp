@@ -37,11 +37,14 @@ void FSMLampGreen::raiseEStopReceived() {
 }
 void FSMLampGreen::raiseSystemOperationalIn() {
     if (currentState == LampGreenState::Off) {
+        std::cout << "FSMLAMPGREEN: System Operational in" << std::endl;
         setState(LampGreenState::Constant);
     }
 }
 void FSMLampGreen::raiseSystemOperationalOut() {
     if (currentState == LampGreenState::Constant) {
+        std::cout << "FSMLAMPGREEN: System Operational out" << std::endl;
+
         setState(LampGreenState::Off);
     }
 }
