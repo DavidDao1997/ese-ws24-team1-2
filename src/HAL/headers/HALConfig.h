@@ -67,6 +67,9 @@
 // Switches
 #define SES_PIN 27  // EStop Switch (active low)
 
+// Metal Sensor
+#define MS_PIN 7    // High when True
+
 
 // Type to specify Pin number
 typedef uint8_t Pin;

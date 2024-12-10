@@ -228,6 +228,16 @@ void Decoder::decode() {
 			 }
 		}
     }
+    // Metal Sensor
+    if ((flippedValues & (uint32_t)BIT_MASK(MS_PIN)) != 0) {
+        // LBM_PIN
+        int8_t current_level = (currentValues >> LBR_PIN) & 0x1;
+        int32_t code = current_level ? PULSE_MS_TRUE : PULSE_MS_FALSE;
+        std::cout << "LBR erkannt" << std::endl;
+        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
+            perror("Dispatcher Send failed");
+        } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+    }
     
     // TODO if neccessary
     // if (...) {

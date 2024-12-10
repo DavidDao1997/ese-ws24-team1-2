@@ -32,6 +32,8 @@ class FSMSorting {
     void onMetalMeasurementIn(std::function<void(int32_t conId)> callBackFunction);
     void onMetalMeasurementOut(std::function<void(int32_t conId)> callBackFunction);
 
+    void onPassthroughOut(std::function<void(int32_t conId)> callBackFunction);
+    void onEjectingOut(std::function<void(int32_t conId)> callBackFunction);
   private:
     bool rampFull;
     int32_t dispConnectionId;
@@ -51,6 +53,11 @@ class FSMSorting {
 
     std::function<void(int32_t conId)> callbackRampFullIn;
     std::function<void(int32_t conId)> callbackRampFullOut;
+
+    std::function<void(int32_t conId)> callbackPassthroughOut;
+    std::function<void(int32_t conId)> callbackEjectingOut;
+    
+    
 };
 
 #endif

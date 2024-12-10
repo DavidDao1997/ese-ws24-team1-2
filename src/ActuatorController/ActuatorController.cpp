@@ -85,7 +85,7 @@ void ActuatorController::handleMsg() {
 
         if (recvid == 0) { // Pulse received^
         	int32_t msgVal = msg.value.sival_int;
-        	std::cout << "MSG VAL: " << msgVal << std::endl;
+        	//std::cout << "MSG VAL: " << msgVal << std::endl;
             switch (msg.code) {
 				case PULSE_MOTOR1_STOP:
 					std::cout << "ACTUATORCONTROLLER: Motor will be stopped" << std::endl;
@@ -121,14 +121,14 @@ void ActuatorController::handleMsg() {
 					actuators->greenLampLightOff();
 					break;
 				case PULSE_LY1_OFF:
-					std::cout << "ACTUATORCONTROLLER: LED GREEN OFF" << std::endl;
+					std::cout << "ACTUATORCONTROLLER: LED YELLOW OFF" << std::endl;
 					lyblinking = false;
 					actuators->yellowLampLightOff();
 					break;
 				case PULSE_LR1_OFF:
-					std::cout << "ACTUATORCONTROLLER: LED GREEN OFF" << std::endl;
+					std::cout << "ACTUATORCONTROLLER: LED RED OFF" << std::endl;
 					lrblinking = false;
-					actuators->yellowLampLightOff();
+					actuators->redLampLightOff();
 					break;
 				case PULSE_LG1_BLINKING:
 					std::cout << "ACTUATORCONTROLLER: LED GREEN BLINKING" << std::endl;
@@ -138,10 +138,10 @@ void ActuatorController::handleMsg() {
 				case PULSE_LY1_BLINKING:
 					std::cout << "ACTUATORCONTROLLER: LED YELLOW BLINKING" << std::endl;
 					lyblinking = true;
-					startGreenLampBlinkingThread(msgVal);
+					startYellowLampBlinkingThread(msgVal);
 					break;
 				case PULSE_LR1_BLINKING:
-					std::cout << "ACTUATORCONTROLLER: LED YELLOW BLINKING" << std::endl;
+					std::cout << "ACTUATORCONTROLLER: LED RED BLINKING" << std::endl;
 					lrblinking = true;
 					startRedLampBlinkingThread(msgVal);
 					break;
@@ -195,9 +195,9 @@ void ActuatorController::startYellowLampBlinkingThread(int frequency) {
 void ActuatorController::greenlampBlinking(bool* blink, int32_t frequency){
 	while (*blink && (frequency > 0)){
 
-		actuators->greenLampLightOn();
-		std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
 		actuators->greenLampLightOff();
+		std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
+		actuators->greenLampLightOn();
 		std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
 	}
 	std::cout << "green blinking stopped" <<  std::endl;
@@ -206,9 +206,9 @@ void ActuatorController::greenlampBlinking(bool* blink, int32_t frequency){
 void ActuatorController::yellowlampBlinking(bool* blink, int32_t frequency){
 	while (*blink && (frequency > 0)){
 
-			actuators->yellowLampLightOn();
-			std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
 			actuators->yellowLampLightOff();
+			std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
+			actuators->yellowLampLightOn();
 			std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
 	}
 	std::cout << "yellow blinking stopped" <<  std::endl;
@@ -217,9 +217,9 @@ void ActuatorController::yellowlampBlinking(bool* blink, int32_t frequency){
 void ActuatorController::redlampBlinking(bool* blink, int32_t frequency){
 	while (*blink && (frequency > 0)){
 
-				actuators->redLampLightOn();
-				std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
 				actuators->redLampLightOff();
+				std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
+				actuators->redLampLightOn();
 				std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
 	}
 	std::cout << "red blinking stopped" <<  std::endl;

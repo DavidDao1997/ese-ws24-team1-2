@@ -22,12 +22,10 @@ void FSMEgress::raisePukEntryEgress() {
     }
 }
 void FSMEgress::raiseLBE1Interrupted() {
-    //if (currentState == FSMEgressStates::PukPresent) {
+    if (currentState == FSMEgressStates::PukPresent) {
         setState(FSMEgressStates::Transfer);
-    //}
+    }
 }
-
-
 
 void FSMEgress::raiseLBE1Open() {
     if (currentState == FSMEgressStates::Transfer) {
@@ -58,18 +56,29 @@ void FSMEgress::onEgressTransferIn(std::function<void(int32_t conId)> callBackFu
 void FSMEgress::onEgressTransferOut(std::function<void(int32_t conId)> callBackFunction){
 	callbackEgressTransferOut = callBackFunction;
 }
+void FSMEgress::onEgressPukPresentIn(std::function<void(int32_t conId)> callBackFunction){
+	callbackEgressPukPresentIn = callBackFunction;
+}
+void FSMEgress::onEgressPukPresentOut(std::function<void(int32_t conId)> callBackFunction){
+	callbackEgressPukPresentOut = callBackFunction;
+}
 
 void FSMEgress::setState(FSMEgressStates nextState) {
     // block exit
     if (currentState == FSMEgressStates::Transfer && nextState != FSMEgressStates::Transfer) {
-        // TODO Motor--
+       callbackEgressTransferOut(dispConnectionId);
+    }else if(currentState == FSMEgressStates::PukPresent && nextState != FSMEgressStates::PukPresent){
+        callbackEgressPukPresentOut(dispConnectionId);
     }
     // block Entry
     if (currentState != FSMEgressStates::Transfer && nextState == FSMEgressStates::Transfer) {
         std::cout << "FSMEgress: entry Transfer state " << std::endl;
         callbackEgressTransferIn(dispConnectionId);
-        currentState = FSMEgressStates::Transfer;
-    } else {
+        currentState = nextState;
+    } else if(currentState != FSMEgressStates::PukPresent && nextState == FSMEgressStates::PukPresent){
+        currentState = nextState;
+        callbackEgressPukPresentIn(dispConnectionId);
+    }else{
         currentState = nextState;
     }
 }

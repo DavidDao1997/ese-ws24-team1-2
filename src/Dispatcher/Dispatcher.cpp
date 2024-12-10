@@ -48,7 +48,7 @@ void Dispatcher::handleMsg() {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
         if (recvid < 0) {
             perror("MsgReceivePulse failed!");
-            exit(EXIT_FAILURE); // TODO exit??? was passiert wenn der dispatcher stirbt. fehlerbhandlung?
+            //exit(EXIT_FAILURE); // TODO exit??? was passiert wenn der dispatcher stirbt. fehlerbhandlung?
         }
 
         if (recvid == 0) { // Pulse received
@@ -65,7 +65,7 @@ void Dispatcher::handleMsg() {
                 */
                 // break;
             default:
-                char buffer[100];
+                // char buffer[100];
                 // sprintf(buffer, "DISPATCHER: Revieved pulse %d\n", msg.code);
                 // std::cout << buffer << std::flush;
 

@@ -35,13 +35,13 @@ void FSMLampRed::raiseEStopCleared() {
 void FSMLampRed::setState(LampRedState nextstate) {
     // block entry for off state
     if (nextstate == LampRedState::Off && currentState != LampRedState::Off) {
-        std::cout << "FSMLampRed: entry off" << std::endl;
+        std::cout << "FSMLAMPRED: entry off" << std::endl;
         currentState = LampRedState::Off;
         callbackLR1Off(dispConnectionId);
     }
     // block entry for constant state
     else if (nextstate == LampRedState::Constant && currentState != LampRedState::Constant) {
-        std::cout << "FSMLampRed: entry on" << std::endl;
+        std::cout << "FSMLAMPRED: entry on" << std::endl;
         currentState = LampRedState::Constant;
         callbackLR1On(dispConnectionId);
     }

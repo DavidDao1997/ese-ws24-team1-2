@@ -29,17 +29,6 @@ FSMMotor::~FSMMotor() {}
 //     motorSlowRequests = 0;
 // }
 
-void FSMMotor::raiseEgressPukTransferIn() {
-    std::cout << "FSMMotor: Motor Stop Transfer In " << std::endl;
-    motorStopRequests++;
-    evaluteInternalVariables();
-}
-
-void FSMMotor::raiseEgressPukTransferOut() {
-	motorStopRequests--;
-    evaluteInternalVariables();
-}
-
 void FSMMotor::raiseSystemEStopIn() {
     std::cout << "MOTOR GOT ESTOP" << std::endl;
     motorStopRequests++;
@@ -81,6 +70,52 @@ void FSMMotor::raiseSortingPukPresentIn(){
     motorFastRequests++;
     evaluteInternalVariables();
 }
+void FSMMotor::raiseSortingPukPresentOut(){
+    motorFastRequests--;
+    evaluteInternalVariables();
+}
+
+void FSMMotor::raiseSortingRampFullIn(){
+    motorStopRequests++;
+    evaluteInternalVariables();
+}
+
+void FSMMotor::raiseSortingRampFullOut(){
+    motorStopRequests--;
+    evaluteInternalVariables();
+}
+
+void FSMMotor::raiseSortingEjectorOut(){
+	motorFastRequests--;
+    evaluteInternalVariables();
+}
+void FSMMotor::raiseSortingPassthroughOut(){
+    motorFastRequests--;
+    evaluteInternalVariables();
+}
+
+void FSMMotor::raiseEgressPukPresentIn() {
+    motorStopRequests++;
+    evaluteInternalVariables();
+}
+
+void FSMMotor::raiseEgressPukPresentOut() {
+	motorStopRequests--;
+    evaluteInternalVariables();
+}
+
+void FSMMotor::raiseEgressPukTransferIn() {
+    std::cout << "FSMMotor: Motor Stop Transfer In " << std::endl;
+    motorStopRequests++;
+    evaluteInternalVariables();
+}
+
+void FSMMotor::raiseEgressPukTransferOut() {
+    std::cout << "MOTOR:EgressPukTransferOut" << std::endl;
+	motorStopRequests--;
+    evaluteInternalVariables();
+}
+
 
 void FSMMotor::evaluteInternalVariables() {
     if (motorStopRequests > 0) {

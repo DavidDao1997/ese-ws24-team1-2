@@ -95,7 +95,7 @@ void FSMSystem::setState(SystemState nextState) {
     /*ENTRY BLOCKS*/
     // Entry for EStop
     if (nextState == ESTOP && currentState != ESTOP) {
-        std::cout << "FSMSystem: entry eStop " << std::endl;
+        std::cout << "FSMSYSTEM: entry eStop " << std::endl;
         // entry eStop
         // motorstop++
         callbackEStopIn(dispConnectionId);
@@ -103,22 +103,22 @@ void FSMSystem::setState(SystemState nextState) {
     }
     // Entry for ServiceMode
     else if (nextState == ServiceMode && currentState != ServiceMode) {
-        std::cout << "FSMSystem: entry serviceMode " << std::endl;
+        std::cout << "FSMSYSTEM: entry serviceMode " << std::endl;
         // entry servicemode
         currentState = ServiceMode;
         callbackSystemServiceIn(dispConnectionId);
     }
     // Entry for ServiceMode
     else if (nextState == Operational && currentState != Operational) {
-        std::cout << "FSMSystem: entry operational " << std::endl;
+        std::cout << "FSMSYSTEM: entry operational " << std::endl;
         currentState = nextState;
         callbackSystemOperationalIn(dispConnectionId);
     } else if (currentState == Ready && nextState == ServiceMode) {
         // ???
         currentState = ServiceMode;
         callbackSystemServiceIn(dispConnectionId);
-    } else if (currentState == ESTOP_RESET && nextState!=ESTOP_RESET ) {
-            std::cout << "E Stop out" << std::endl;
+    } else if (currentState == ESTOP_RESET && nextState != ESTOP_RESET ) {
+            std::cout << "FSMSYSTEM: E Stop out" << std::endl;
             currentState = nextState;
             callbackEStopOut(dispConnectionId);
 
