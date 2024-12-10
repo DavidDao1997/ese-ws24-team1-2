@@ -70,14 +70,14 @@ void FSMLampGreen::setState(LampGreenState nextState) {
     else if (nextState == LampGreenState::Constant && currentState != LampGreenState::Constant) {
         std::cout << "FSMLAMPGREEN: entry on" << std::endl;
         currentState = LampGreenState::Constant;
-        callbackLG1Off(dispConnectionId);
+        // callbackLG1Off(dispConnectionId);
         callbackLG1On(dispConnectionId);
     }
     // Block for entry Constant
     else if (nextState == LampGreenState::Blinking1HZ && currentState != LampGreenState::Blinking1HZ) {
         std::cout << "FSMLAMPGREEN: entry blinking" << std::endl;
         currentState = LampGreenState::Blinking1HZ;
-        callbackLG1Off(dispConnectionId);
+        // callbackLG1Off(dispConnectionId);
         callbackLGBlinking1HZ(dispConnectionId);
     }
     // block for entry servicemode

@@ -76,15 +76,15 @@ void FSMHeightMeasurement::setState(FSMHeightMeasurementStates nextState) {
     else if (currentState == FSMHeightMeasurementStates::Measuring &&
              nextState != FSMHeightMeasurementStates::Measuring) {
         std::cout << "FSMHeightMeasurement: exit measurement " << std::endl;
-            callbackPukDistanceValid(dispConnectionId);
-            callbackPukEntrySorting(dispConnectionId);
             callbackMeasurementOut(dispConnectionId);
+            
     }
 
     // Transfer blocks
     if (currentState == FSMHeightMeasurementStates::Measuring && nextState == FSMHeightMeasurementStates::Idle) {
         callbackPukDistanceValid(dispConnectionId);
-        callbackPukLeaveHeightMeasurement(dispConnectionId);
+        callbackPukEntrySorting(dispConnectionId);
+
     }
 
     /*Entry Block's*/

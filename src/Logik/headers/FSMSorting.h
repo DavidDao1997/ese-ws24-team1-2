@@ -10,6 +10,7 @@ class FSMSorting {
 
     void raisePukEntrySorting();
     void raiseLBM1Interrupted();
+    void raiseLBM1Open();
     void raisePukEjectorDistanceValid();
     void raiseLBR1Open();
     void raiseLBR1Interrupted();

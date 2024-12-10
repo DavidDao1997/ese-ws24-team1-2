@@ -256,6 +256,7 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
             perror("Event onPukPresentIn Failed\n");
         }
     });
+
     // callback for Egress
     fsmEgress = new FSMEgress(dispatcherConnectionID);
 
@@ -390,7 +391,7 @@ void FSMController::handleMsg() {
             case PULSE_LBM_OPEN:
                 std::cout << "FSMCONTROLLER: received PULSE_LBM_OPEN " << std::endl;
                 if (FESTO1 == msgVal) {
-                   
+                   fsmSorting->raiseLBM1Open();
                 } else {
                     // TODO
                 }
@@ -449,6 +450,7 @@ void FSMController::handleMsg() {
                     fsmLG1->raiseSystemOperationalIn();
                     fsmIngress->raiseSystemOperationalIn();
                     fsmHeightMeasurement->raiseSystemOperationalIn();
+                    fsmSorting -> raiseSystemOperationalIn();
                     fsmEgress->raiseSystemOperationalIn();
                     // TODO
                     break;
@@ -475,10 +477,10 @@ void FSMController::handleMsg() {
                     fsmLY1->raiseEStopCleared();
                     fsmLR1->raiseEStopCleared();
                     fsmMotor->raiseSystemEStopOut();
-                    fsmIngress->raiseSystemOperationalIn();
-                    fsmHeightMeasurement->raiseSystemOperationalIn();
-                    fsmSorting->raiseSystemOperationalIn();
-                    fsmEgress->raiseSystemOperationalIn();
+                    // fsmIngress->raiseSystemOperationalIn();
+                    // fsmHeightMeasurement->raiseSystemOperationalIn();
+                    // fsmSorting->raiseSystemOperationalIn();
+                    // fsmEgress->raiseSystemOperationalIn();
                     break;
                 case EVENT_INGRESS_PUKPRESENT_IN:
                     fsmMotor->raiseIngressPukPresentIn();
@@ -493,11 +495,6 @@ void FSMController::handleMsg() {
                 case EVENT_INGRESS_OUT:
                     fsmLY1->raiseIngressOut();
                     break;
-                case EVENT_EGRESS_TRANSFER_IN:
-                    fsmMotor->raiseEgressPukTransferIn();
-                    break;
-                case EVENT_EGRESS_TRANSFER_OUT:
-                    fsmMotor->raiseEgressPukTransferOut();
                 case EVENT_PUK_ENTRY_HEIGHT_MEASUREMENT:
                     fsmHeightMeasurement->raisePukEntryHeightMasurement();
                     break;
@@ -530,7 +527,7 @@ void FSMController::handleMsg() {
 
                     break;
                 case EVENT_SORTING_METALMEASUREMENT_OUT:
-
+                    fsmMotor->raiseSortingMetalMeasurementOut();
                     break;
                 case EVENT_SORTING_PUK_EJECTOR_DISTANCE_VALID:
                     fsmEgress->raisePukEntryEgress();
@@ -539,7 +536,7 @@ void FSMController::handleMsg() {
                     fsmEgress->raisePukEntryEgress();
                     break;
                 case EVENT_SORTING_PUKPRESENT_OUT:
-                    fsmMotor->raiseSortingPukPresentOut();
+                    // fsmMotor->raiseSortingPukPresentOut();
                     break;
                 case EVENT_SORTING_RAMP_FULL_IN:
                     fsmMotor->raiseSortingRampFullIn();
@@ -553,8 +550,17 @@ void FSMController::handleMsg() {
                 case EVENT_SORTING_PASSTHROUGH_OUT:
                     fsmMotor->raiseSortingPassthroughOut();
                     break;
-
-                    
+                case EVENT_EGRESS_PUKPRESENT_IN:
+                    fsmMotor->raiseEgressPukPresentIn();
+                    break;
+                case EVENT_EGRESS_PUKPRESENT_OUT:
+                    break;
+                case EVENT_EGRESS_TRANSFER_IN:
+                    fsmMotor->raiseEgressPukTransferIn();
+                    break;
+                case EVENT_EGRESS_TRANSFER_OUT:
+                    fsmMotor->raiseEgressPukTransferOut();
+                    break;
                 default:
 
                     break;

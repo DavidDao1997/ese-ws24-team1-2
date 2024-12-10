@@ -55,32 +55,74 @@ int main() {
     std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
     std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
     std::cout << "1" << std::endl;
-//    WAIT(1000);
-//    int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
-//    if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, 0)) {
-//        perror("ups");
-//    }
-//    WAIT(10000);
-//    if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LG1_OFF, 0)) {
-//            perror("ups");
-//    }
-//    WAIT(1000);
-////	int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
-////	if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, 0)) {
-////		perror("ups");
-////	}
-//	WAIT(500);
-////	if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_SHORT, 0)) {
-////		perror("ups");
-////	}
-//	WAIT(500);
-////	if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, 0)) {
-////		perror("ups");
-////	}
-//	WAIT(500);
-////	if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBF_INTERRUPTED, 0)) {
-////		perror("ups");
-////	}
+
+    // WAIT(1000);
+    // int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_SHORT, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBF_INTERRUPTED, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBF_OPEN, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS_SAMPLE, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS_SAMPLING_DONE, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBM_INTERRUPTED, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBM_OPEN, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBE_INTERRUPTED, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBF_INTERRUPTED, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBE_OPEN, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_ESTOP_LOW, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_ESTOP_HIGH, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_SHORT, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, 0)) {
+    //     perror("ups");
+    // }
+    // WAIT(500);
+
     std::cout << "5" << std::endl;
     // join threads
     std::cout << "\nThreads, started, main going idle...\n" << std::endl;

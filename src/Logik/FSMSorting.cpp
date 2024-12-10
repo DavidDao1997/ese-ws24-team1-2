@@ -18,6 +18,7 @@ FSMSorting::~FSMSorting() {}
 
 // TODO got a motorFOrward++
 void FSMSorting::raisePukEntrySorting() {
+    std::cout << "FOOOOOOOOOO" << std::endl;
     if (currentState == FSMSortingStates::Idle) {
         setState(FSMSortingStates::PukPresent);
     }
@@ -26,6 +27,11 @@ void FSMSorting::raisePukEntrySorting() {
 void FSMSorting::raiseLBM1Interrupted() {
     if (currentState == FSMSortingStates::PukPresent) {
         setState(FSMSortingStates::MetalMeasurement);
+    }
+}
+void FSMSorting::raiseLBM1Open() {
+    if (currentState == FSMSortingStates::MetalMeasurement) {
+        setState(FSMSortingStates::Idle);
     }
 }
 // TODO got a raise PUK_ENTRY_EGRESS
@@ -46,8 +52,9 @@ void FSMSorting::raiseBGR1Interrupted() {
 }
 
 void FSMSorting::raiseSystemOperationalIn() {
+    std::cout << "BARRRRRRRRRR" << std::endl;
     if (currentState == FSMSortingStates::Paused) {
-        std::cout << "FSMSORTING: System Operational in" << std::endl;
+        std::cout << "FSMSORTING: System Operational in 3" << std::endl;
         setState(FSMSortingStates::Idle);
     }
 }
@@ -106,6 +113,7 @@ void FSMSorting::setState(FSMSortingStates nextState) {
     // Exit for Measuring but how for which one
     else if (currentState == FSMSortingStates::MetalMeasurement && nextState != FSMSortingStates::MetalMeasurement) {
         callbackMetalMeasurementOut(dispConnectionId);
+        callbackPukEntryEgress(dispConnectionId);
     }
     // Exit for Passthrough
     else if (currentState == FSMSortingStates::Passthrough && nextState != FSMSortingStates::Passthrough) {
@@ -124,20 +132,29 @@ void FSMSorting::setState(FSMSortingStates nextState) {
     if (currentState != FSMSortingStates::RampFull && nextState == FSMSortingStates::RampFull) {
         std::cout << "FSMSorting: entry RampFull " << std::endl;
         callbackRampFullIn(dispConnectionId); // MotorForward++
-        currentState = FSMSortingStates::RampFull;
+        currentState = nextState;
     } else if (currentState != FSMSortingStates::MetalMeasurement && nextState == FSMSortingStates::MetalMeasurement) {
+        std::cout << "FSMSorting: entry metalMeasurement " << std::endl;
         callbackMetalMeasurementIn(dispConnectionId);
+        currentState = nextState;
     }
     else if (currentState != FSMSortingStates::Ejecting && nextState == FSMSortingStates::Ejecting) {
+        std::cout << "FSMSorting: entry ejecting " << std::endl;
         callbackPukEjectorDistanceValid(dispConnectionId);
+        currentState = nextState;
     }  
     else if (currentState != FSMSortingStates::Idle && nextState == FSMSortingStates::Idle) {
+        std::cout << "FSMSorting: entry idle " << std::endl;
         //callbackPukPresentIn(dispConnectionId);
+        currentState = nextState;
     }else if(currentState != FSMSortingStates::PukPresent && nextState == FSMSortingStates::PukPresent){
+        std::cout << "FSMSorting: entry pukPresent " << std::endl;
         callbackPukPresentIn(dispConnectionId);
-    }
-
-    else {
+        currentState = nextState;
+    } else if(currentState != FSMSortingStates::Passthrough && nextState == FSMSortingStates::Passthrough){
+        std::cout << "FSMSorting: entry passthrough " << std::endl;
+        currentState = nextState;
+    } else {
         currentState = nextState;
     }
 }

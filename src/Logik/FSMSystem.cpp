@@ -25,6 +25,7 @@ void FSMSystem::onEStopIn(std::function<void(int32_t conId)> callBackFunction) {
     callbackEStopIn = callBackFunction; }
 void FSMSystem::onEStopOut(std::function<void(int32_t conId)> callBackFunction) { 
     callbackEStopOut = callBackFunction; }
+    
 void FSMSystem::onSystemOperationalIn(std::function<void(int32_t conId)> callBackFunction) {
     callbackSystemOperationalIn = callBackFunction;
 }

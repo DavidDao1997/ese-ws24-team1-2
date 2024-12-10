@@ -71,6 +71,10 @@ void FSMMotor::raiseSortingPukPresentIn(){
     evaluteInternalVariables();
 }
 void FSMMotor::raiseSortingPukPresentOut(){
+    // motorFastRequests--;
+    // evaluteInternalVariables();
+}
+void FSMMotor::raiseSortingMetalMeasurementOut() {
     motorFastRequests--;
     evaluteInternalVariables();
 }
@@ -95,12 +99,12 @@ void FSMMotor::raiseSortingPassthroughOut(){
 }
 
 void FSMMotor::raiseEgressPukPresentIn() {
-    motorStopRequests++;
+    motorFastRequests++;
     evaluteInternalVariables();
 }
 
 void FSMMotor::raiseEgressPukPresentOut() {
-	motorStopRequests--;
+	motorFastRequests--;
     evaluteInternalVariables();
 }
 
@@ -113,6 +117,7 @@ void FSMMotor::raiseEgressPukTransferIn() {
 void FSMMotor::raiseEgressPukTransferOut() {
     std::cout << "MOTOR:EgressPukTransferOut" << std::endl;
 	motorStopRequests--;
+    motorFastRequests--;
     evaluteInternalVariables();
 }
 

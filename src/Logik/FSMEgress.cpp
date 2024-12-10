@@ -17,6 +17,7 @@ FSMEgress::FSMEgress(int32_t dispatcherConnectionId) {
 FSMEgress::~FSMEgress() {}
 
 void FSMEgress::raisePukEntryEgress() {
+    std::cout << "BAZZZZZZZZZZZZZZZZZZZZZZZz" << std::endl;
     if (currentState == FSMEgressStates::Idle) {
         setState(FSMEgressStates::PukPresent);
     }
@@ -70,14 +71,20 @@ void FSMEgress::setState(FSMEgressStates nextState) {
     }else if(currentState == FSMEgressStates::PukPresent && nextState != FSMEgressStates::PukPresent){
         callbackEgressPukPresentOut(dispConnectionId);
     }
+
     // block Entry
     if (currentState != FSMEgressStates::Transfer && nextState == FSMEgressStates::Transfer) {
         std::cout << "FSMEgress: entry Transfer state " << std::endl;
         callbackEgressTransferIn(dispConnectionId);
         currentState = nextState;
     } else if(currentState != FSMEgressStates::PukPresent && nextState == FSMEgressStates::PukPresent){
+         std::cout << "FSMEgress: entry PukPresent state " << std::endl;
         currentState = nextState;
+
         callbackEgressPukPresentIn(dispConnectionId);
+    }else if(currentState != FSMEgressStates::Idle && nextState == FSMEgressStates::Idle){
+         std::cout << "FSMEgress: entry idle " << std::endl;
+        currentState = nextState;
     }else{
         currentState = nextState;
     }

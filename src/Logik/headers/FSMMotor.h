@@ -25,6 +25,7 @@ class FSMMotor {
     void raiseSortingRampFullOut();
     void raiseSortingEjectorOut();
     void raiseSortingPassthroughOut();
+    void raiseSortingMetalMeasurementOut();
     void raiseEgressPukTransferIn();
     void raiseEgressPukTransferOut();
     void raiseEgressPukPresentIn();
