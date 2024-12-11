@@ -26,7 +26,7 @@ bool init(int32_t hbOtherFesto) {
     return true;
 }
 
-void HeartBeat::sendMsg(int8_t msgCode, int32_t msgValue) {
+void HeartBeat::sendMsg() {
     // TODO: Send heartbeat and check when last heartbeat was received. if received heartbeat is
     // overdue then handleDisconnect, else reset timer
 

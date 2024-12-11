@@ -24,7 +24,7 @@ class Decoder : public PulseMsgHandler {
     ~Decoder();
 
     void handleMsg() override;
-    void sendMsg(int8_t msgCode, int32_t msgValue) override;
+    void sendMsg() override;
     int32_t getChannel() override;
 
   private:

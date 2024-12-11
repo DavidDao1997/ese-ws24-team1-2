@@ -16,6 +16,7 @@ using namespace std;
 
 #include <sys/mman.h>
 #include <hw/inout.h>
+#include "../../Util/headers/Util.h"
 
 /* Code configuration */
 #define DEMO true         // true for demo time, false to spin forever.
@@ -29,6 +30,7 @@ using namespace std;
 
 #include "../../HAL/headers/HALConfig.h"
 #include "../../Dispatcher/headers/PulseMsgConfig.h"
+#include "../../Dispatcher/headers/PulseMsgHandler.h"
 
 
 
@@ -54,20 +56,19 @@ using namespace std;
 #define THRESHOLD 180 // Hysterese-Bereich.
 #define MAX_PRINT_COUNT 100 // Maximale Bestätigungsanzahl.
 
-using namespace std;
-
 // Struktur für das Speichern von Höhen- und Sample-Daten
 struct SampleData {
     int countSample;
     int medianHeight;
 };
 
-class HeightSensorControl
-{
+class HeightSensorControl: public PulseMsgHandler {
 public:
     // Constructor and Destructor
-    HeightSensorControl();
-    ~HeightSensorControl();
+    HeightSensorControl(const std::string channelName, const std::string dispatcherName);
+    virtual ~HeightSensorControl();
+
+    void initHS();
 
     // Public Methods
     //Example to save Height information
@@ -79,16 +80,29 @@ public:
     //void initHS();
 
     // thread for the HeightSensor
-    void initRoutine();
+    void handleMsg() override;
+    void sendMsg() override;
+    int32_t getChannel() override;
 
 private:
+    int32_t channelID;
+    name_attach_t *hsControllerChannel;
+    int32_t dispatcherConnectionID;
+    bool running;
+
+    TSCADC *tsc;
+    ADC *adc;
+
+
+    //static int8_t numOfPulses;
+    //static int8_t pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES];
     // Member Variables
-    bool receivingRunning;    // Indicates if the receiving routine is running
-    int bandHeight;           // Height of the band threshold
-    bool firstValue;          // Flag for the first value detection
-    int changeCounter;        // Counts value changes
-    int lastValue;            // Stores the last processed value
-    int stableCount;          // Counts consecutive stable values
+    // bool receivingRunning;    // Indicates if the receiving routine is running
+    // int bandHeight;           // Height of the band threshold
+    // bool firstValue;          // Flag for the first value detection
+    // int changeCounter;        // Counts value changes
+    // int lastValue;            // Stores the last processed value
+    // int stableCount;          // Counts consecutive stable values
 
     // Vektoren zum Speichern von Höhen- und Sample-Daten
 //    std::vector<SampleData> heightData;  // Speichert Höhen und zugehörige Sample-Daten
@@ -96,16 +110,16 @@ private:
 //    std::vector<int> sampleCounts;       // Speichert die Sample Counts für jede Höhe
 
     // ADC and Channel Initialization
-    int initializeChannel();
-    uintptr_t setupGPIO();
+    // int initializeChannel();
+    // uintptr_t setupGPIO();
 
-    // Cleanup Resources
-    void cleanupResources(
-        int chanID,
-        int conID,
-        uintptr_t port1BaseAddr,
-        std::thread &receivingThread
-    );
+    // // Cleanup Resources
+    // void cleanupResources(
+    //     int chanID,
+    //     int conID,
+    //     uintptr_t port1BaseAddr,
+    //     std::thread &receivingThread
+    // );
 
 
 
@@ -114,8 +128,9 @@ private:
     void processSample(
         int currentValue,
         bool &secondChance,
+        bool  &candidatesSend,
         int &candidateValue,
-        ADC *adc
+        ADC * adc
     );
 
     void handleBandHeightReached(

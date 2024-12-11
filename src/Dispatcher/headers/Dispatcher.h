@@ -27,7 +27,7 @@ class Dispatcher : public PulseMsgHandler {
     ~Dispatcher();
 
     void handleMsg() override;
-    void sendMsg(int8_t msgCode, int32_t msgValue) override;
+    void sendMsg() override;
     int32_t getChannel() override;
 
     void addSubscriber(int32_t chid, int8_t pulses[], int8_t numOfPulses);
