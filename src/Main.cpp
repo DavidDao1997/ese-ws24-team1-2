@@ -11,7 +11,18 @@
 #include "Decoder/headers/Decoder.h"
 #include "Logik/FSM/headers/FSMController.h"
 
-int main() {
+#include <gtest/gtest.h>
+
+#define TESTING 1
+
+
+int main(int argc, char **argv) {
+
+#if TESTING == 1
+	::testing::InitGoogleTest(&argc, argv);
+	auto result = RUN_ALL_TESTS();
+
+#else
     std::string dispatcherChannelName = "dispatcher";
     std::cout << "1" << std::endl;
     Dispatcher *dispatcher = new Dispatcher(dispatcherChannelName);
@@ -141,6 +152,8 @@ int main() {
     actuatorControllerThread.join();
     decoderThread.join();
 
-
+#endif /*_TESTING_*/
     return 0;
 }
+
+
