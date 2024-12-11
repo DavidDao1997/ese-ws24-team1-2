@@ -40,9 +40,6 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
 
     dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
 
-    // FSM_QualityGate qualityGateInstance;
-    fsm = new FSM_QualityGate();
-
     // callback for FSM System
     fsmSystem = new FSMSystem(dispatcherConnectionID);
 
@@ -607,16 +604,7 @@ int32_t FSMController::getChannel() { return channelID; }
 void FSMController::sendMsg() {
     // TODO check if needed when FSMs dont send Pulses
 
-    sc::rx::Observable<void> motorStop = fsm->getMOTOR_STOP();
-    sc::rx::Observable<void> motorFast = fsm->getMOTOR_FAST();
-    sc::rx::Observable<void> motorSlow = fsm->getMOTOR_SLOW();
-
-    sc::rx::Observable<void> lg1On = fsm->getLG1_ON();
-    sc::rx::Observable<void> lg1Blinking1Hz = fsm->getLG1_BLINKING_1HZ();
-    sc::rx::Observable<void> lg1Off = fsm->getLG1_OFF();
-
     subThreadsRunning = true;
-    // void monitorObservable(sc::rx::Observable<void> observable, std::string pulseName, PulseCode pulseCode, int32_t
     // pulseValue) {
     //     while (subThreadsRunning) {
     //         observable.next();
@@ -642,20 +630,4 @@ void FSMController::sendMsg() {
     // lg1OnThread.join();
     // lg1Blinking1HzThread.join();
     // lg1OffThread.join();
-}
-
-void FSMController::monitorObservable(
-    sc::rx::Observable<void> observable,
-    std::string pulseName,
-    PulseCode pulseCode,
-    int32_t pulseValue,
-    bool subThreadsRunning,
-    int32_t dispatcherConnectionID
-) {
-    while (subThreadsRunning) {
-        observable.next();
-        if (0 > MsgSendPulse(dispatcherConnectionID, -1, pulseCode, pulseValue)) {
-            perror("FSMController failed to send "); // + pulseName
-        }
-    }
 }

@@ -12,8 +12,6 @@
 
 #include "../../../Dispatcher/headers/PulseMsgConfig.h"
 #include "../../../Dispatcher/headers/PulseMsgHandler.h"
-#include "../../../FSM_QualityGate/src-gen/FSM_QualityGate.h"
-#include "../../../FSM_QualityGate/src/sc_rxcpp.h"
 
 #include "../../headers/FSMEgress.h"
 #include "../../headers/FSMHeightMeasurement.h"
@@ -40,7 +38,6 @@ class FSMController : public PulseMsgHandler {
     int8_t getNumOfPulses();
 
   private:
-    FSM_QualityGate *fsm;
     // FSM System
     FSMSystem *fsmSystem;
     FSMMotor *fsmMotor;
@@ -60,15 +57,6 @@ class FSMController : public PulseMsgHandler {
     bool subThreadsRunning;
     static int8_t numOfPulses;
     static int8_t pulses[FSM_CONTROLLER_NUM_OF_PULSES];
-
-    static void monitorObservable(
-        sc::rx::Observable<void> observable,
-        std::string pulseName,
-        PulseCode pulseCode,
-        int32_t pulseValue,
-        bool subThreadsRunning,
-        int32_t dispatcherConnectionID
-    );
 };
 
 #endif /* LOGIK_FSM_FSMCONTROLLER_H_ */
