@@ -24,16 +24,28 @@ void FSMSorting::raisePukEntrySorting() {
     }
 }
 
-void FSMSorting::raiseLBM1Interrupted() {
-    if (currentState == FSMSortingStates::PukPresent) {
-        setState(FSMSortingStates::MetalMeasurement);
+void FSMSorting::raiseLBM1Interrupted() { 
+    if (currentState == FSMSortingStates::PukPresent && !metalDetected) {
+        setState(FSMSortingStates::Passthrough);
+    } else if (currentState == FSMSortingStates::PukPresent && metalDetected && rampFull) {
+        setState(FSMSortingStates::RampFull);
+    } else if (currentState == FSMSortingStates::PukPresent && metalDetected && !rampFull ) {
+        setState(FSMSortingStates::Ejecting);
     }
 }
 void FSMSorting::raiseLBM1Open() {
-    if (currentState == FSMSortingStates::MetalMeasurement) {
+    if (currentState == FSMSortingStates::Passthrough || currentState == FSMSortingStates::Ejecting) {
         setState(FSMSortingStates::Idle);
     }
 }
+void FSMSorting::raiseMSTrue() {
+    metalDetected = true;
+}
+
+void FSMSorting::raiseMSFalse() {
+    metalDetected = false;
+}
+
 // TODO got a raise PUK_ENTRY_EGRESS
 void FSMSorting::raisePukEjectorDistanceValid() {
     if (currentState == FSMSortingStates::Passthrough) {
@@ -59,12 +71,11 @@ void FSMSorting::raiseSystemOperationalIn() {
     }
 }
 void FSMSorting::raiseSystemOperationalOut() {
-     setState(FSMSortingStates::Paused); 
-     std::cout << "FSMSORTING: System Operational out" << std::endl;
+    setState(FSMSortingStates::Paused);
+    std::cout << "FSMSORTING: System Operational out" << std::endl;
 }
 
-
-//callback's method's
+// callback's method's
 
 void FSMSorting::onPukPresentIn(std::function<void(int32_t conId)> callBackFunction) {
     callbackPukPresentIn = callBackFunction;
@@ -76,7 +87,7 @@ void FSMSorting::onPukPresentOut(std::function<void(int32_t conId)> callBackFunc
 void FSMSorting::onPukEntryEgress(std::function<void(int32_t conId)> callBackFunction) {
     callbackPukEntryEgress = callBackFunction;
 }
-//can be ejected
+// can be ejected
 void FSMSorting::onPukEjectorDistanceValid(std::function<void(int32_t conId)> callBackFunction) {
     callbackPukEjectorDistanceValid = callBackFunction;
 }
@@ -87,46 +98,70 @@ void FSMSorting::onRampFullIn(std::function<void(int32_t conId)> callBackFunctio
 void FSMSorting::onRampFullOut(std::function<void(int32_t conId)> callBackFunction) {
     callbackRampFullOut = callBackFunction;
 }
-void FSMSorting::onPassthroughOut(std::function<void(int32_t conId)> callBackFunction){
+void FSMSorting::onPassthroughOut(std::function<void(int32_t conId)> callBackFunction) {
     callbackPassthroughOut = callBackFunction;
 }
 
-void FSMSorting::onEjectingOut(std::function<void(int32_t conId)> callBackFunction){
+void FSMSorting::onEjectingOut(std::function<void(int32_t conId)> callBackFunction) {
     callbackEjectingOut = callBackFunction;
 }
-//On LBM so that Metal Measurement can be read 
+// On LBM so that Metal Measurement can be read
 void FSMSorting::onMetalMeasurementIn(std::function<void(int32_t conId)> callBackFunction) {
     callbackMetalMeasurementIn = callBackFunction;
 }
 void FSMSorting::onMetalMeasurementOut(std::function<void(int32_t conId)> callBackFunction) {
     callbackMetalMeasurementOut = callBackFunction;
 }
-
-
+void FSMSorting::onSortingModuleActive(std::function<void(int32_t conId)> callBackFunction) {
+    callbackSortingModuleActive = callBackFunction;
+}
+void FSMSorting::onSortingModuleResting(std::function<void(int32_t conId)> callBackFunction) {
+    callbackSortingModuleResting = callBackFunction;
+}
 
 void FSMSorting::setState(FSMSortingStates nextState) {
     /*EXIT BLock*/
     // Exit for Idle
     if (currentState == FSMSortingStates::Idle && nextState != FSMSortingStates::Idle) {
-        //callbackPukPresentIn(dispConnectionId);
+        // callbackPukPresentIn(dispConnectionId);
     }
     // Exit for Measuring but how for which one
     else if (currentState == FSMSortingStates::MetalMeasurement && nextState != FSMSortingStates::MetalMeasurement) {
-        callbackMetalMeasurementOut(dispConnectionId);
-        callbackPukEntryEgress(dispConnectionId);
+        // callbackMetalMeasurementOut(dispConnectionId);
+        // callbackPukEntryEgress(dispConnectionId);
     }
     // Exit for Passthrough
     else if (currentState == FSMSortingStates::Passthrough && nextState != FSMSortingStates::Passthrough) {
-        callbackPukEntryEgress(dispConnectionId);
+        // callbackPukEntryEgress(dispConnectionId);
         // TODO MotorForward--
     }
     // Exit for Rampfull
     else if (currentState == FSMSortingStates::RampFull && nextState != FSMSortingStates::RampFull) {
         callbackRampFullOut(dispConnectionId); // MotorForward--
-        // rampFull = false;
-    }else if(currentState == FSMSortingStates::PukPresent && nextState != FSMSortingStates::PukPresent){
-            callbackPukPresentOut(dispConnectionId);
+        rampFull = false;
+    } else if (currentState == FSMSortingStates::PukPresent && nextState != FSMSortingStates::PukPresent) {
+        // callbackPukPresentOut(dispConnectionId);
     }
+
+    std::cout << "ALMOST EEEEEEEEEEEJJJJJECTIIIIINNNNNNNNNGGGGGGGGGGG " << std::endl;
+    /*TRANSFER Block*/
+    if(currentState == FSMSortingStates::Passthrough && nextState == FSMSortingStates::Idle) {
+        std::cout << "EEEEEEEEEEEJJJJJECTIIIIINNNNNNNNNGGGGGGGGGGG " << std::endl;
+        callbackPassthroughOut(dispConnectionId);
+    } else if(currentState == FSMSortingStates::Ejecting && nextState == FSMSortingStates::Idle) {
+        std::cout << "EEEEEEEEEEEJJJJJECTIIIIINNNNNNNNNGGGGGGGGGGG " << std::endl;
+        callbackEjectingOut(dispConnectionId);
+    } else if (currentState == FSMSortingStates::PukPresent && nextState == FSMSortingStates::Passthrough) {
+        callbackPukEntryEgress(dispConnectionId);
+    } else if (currentState == FSMSortingStates::PukPresent && nextState == FSMSortingStates::Ejecting) {
+        callbackSortingModuleActive(dispConnectionId);
+        WAIT(500);
+        callbackSortingModuleResting(dispConnectionId);
+    } else if (currentState == FSMSortingStates::RampFull && nextState == FSMSortingStates::Ejecting) {
+        callbackSortingModuleActive(dispConnectionId);
+        WAIT(500);
+        callbackSortingModuleResting(dispConnectionId);
+    } 
 
     /*ENTRY Block*/
     if (currentState != FSMSortingStates::RampFull && nextState == FSMSortingStates::RampFull) {
@@ -135,23 +170,21 @@ void FSMSorting::setState(FSMSortingStates nextState) {
         currentState = nextState;
     } else if (currentState != FSMSortingStates::MetalMeasurement && nextState == FSMSortingStates::MetalMeasurement) {
         std::cout << "FSMSorting: entry metalMeasurement " << std::endl;
-        callbackMetalMeasurementIn(dispConnectionId);
+        // callbackPukEntryEgress(dispConnectionId);
+        // callbackMetalMeasurementIn(dispConnectionId);
         currentState = nextState;
-    }
-    else if (currentState != FSMSortingStates::Ejecting && nextState == FSMSortingStates::Ejecting) {
+    } else if (currentState != FSMSortingStates::Ejecting && nextState == FSMSortingStates::Ejecting) {
         std::cout << "FSMSorting: entry ejecting " << std::endl;
-        callbackPukEjectorDistanceValid(dispConnectionId);
+        // callbackPukEjectorDistanceValid(dispConnectionId);
         currentState = nextState;
-    }  
-    else if (currentState != FSMSortingStates::Idle && nextState == FSMSortingStates::Idle) {
+    } else if (currentState != FSMSortingStates::Idle && nextState == FSMSortingStates::Idle) {
         std::cout << "FSMSorting: entry idle " << std::endl;
-        //callbackPukPresentIn(dispConnectionId);
         currentState = nextState;
-    }else if(currentState != FSMSortingStates::PukPresent && nextState == FSMSortingStates::PukPresent){
+    } else if (currentState != FSMSortingStates::PukPresent && nextState == FSMSortingStates::PukPresent) {
         std::cout << "FSMSorting: entry pukPresent " << std::endl;
         callbackPukPresentIn(dispConnectionId);
         currentState = nextState;
-    } else if(currentState != FSMSortingStates::Passthrough && nextState == FSMSortingStates::Passthrough){
+    } else if (currentState != FSMSortingStates::Passthrough && nextState == FSMSortingStates::Passthrough) {
         std::cout << "FSMSorting: entry passthrough " << std::endl;
         currentState = nextState;
     } else {

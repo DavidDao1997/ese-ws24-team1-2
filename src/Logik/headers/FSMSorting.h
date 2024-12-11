@@ -17,6 +17,8 @@ class FSMSorting {
     void raiseBGR1Interrupted();
     void raisePukDesired();
     void raisePukNotDesired();
+    void raiseMSTrue();
+    void raiseMSFalse();
 
     void raiseSystemOperationalIn();
     void raiseSystemOperationalOut();
@@ -35,8 +37,13 @@ class FSMSorting {
 
     void onPassthroughOut(std::function<void(int32_t conId)> callBackFunction);
     void onEjectingOut(std::function<void(int32_t conId)> callBackFunction);
+
+    void onSortingModuleActive(std::function<void(int32_t conId)> callBackFunction);
+    void onSortingModuleResting(std::function<void(int32_t conId)> callBackFunction);
+
   private:
     bool rampFull;
+    bool metalDetected;
     int32_t dispConnectionId;
     FSMSortingStates currentState;
     FSMSortingStates historyState;
@@ -57,8 +64,9 @@ class FSMSorting {
 
     std::function<void(int32_t conId)> callbackPassthroughOut;
     std::function<void(int32_t conId)> callbackEjectingOut;
-    
-    
+
+    std::function<void(int32_t conId)> callbackSortingModuleActive;
+    std::function<void(int32_t conId)> callbackSortingModuleResting;
 };
 
 #endif

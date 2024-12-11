@@ -11,7 +11,6 @@
 
 #include <chrono>
 
-
 #define LONG_PRESS_DURATION 1000
 
 Decoder::Decoder(const std::string dispatcherChannelName) {
@@ -21,24 +20,27 @@ Decoder::Decoder(const std::string dispatcherChannelName) {
 
     sensorISR = new SensorISR();
     // sonsorISR = foo;
-    if (!sensorISR->registerInterrupt(channelID)){
-        perror("decoder could not register interrupt");    
+    if (!sensorISR->registerInterrupt(channelID)) {
+        perror("decoder could not register interrupt");
     }
-    //Buttons
+    // Buttons
     sensorISR->initializeGPIOInterrupt(BGS_PIN);
     sensorISR->initializeGPIOInterrupt(BRS_PIN);
     sensorISR->initializeGPIOInterrupt(BGR_PIN);
 
-    //LightBarrier
+    // LightBarrier
     sensorISR->initializeGPIOInterrupt(LBF_PIN);
     sensorISR->initializeGPIOInterrupt(LBE_PIN);
     sensorISR->initializeGPIOInterrupt(LBM_PIN);
     sensorISR->initializeGPIOInterrupt(LBR_PIN);
 
-    //EStop
+    // EStop
     sensorISR->initializeGPIOInterrupt(SES_PIN);
 
-    //create a connection to Dispatcher
+    // MetalSensor
+    sensorISR->initializeGPIOInterrupt(MS_PIN);
+
+    // create a connection to Dispatcher
     dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
 
     // TODO check if festo 1 or festo 2 in parameter list
@@ -83,13 +85,14 @@ void Decoder::decode() {
     uint32_t currentValues = sensorISR->getCurrentValues();
     sensorISR->clearCurrentInterrupt();
 
-    static std::chrono::steady_clock::time_point pressStartTime;  // Zeit, wann der Button gedrückt wurde
-    const std::chrono::milliseconds longPressDuration(LONG_PRESS_DURATION);  // Definiert, was als langer Druck gilt (z. B. 1 Sekunde)
+    static std::chrono::steady_clock::time_point pressStartTime; // Zeit, wann der Button gedrückt wurde
+    const std::chrono::milliseconds longPressDuration(LONG_PRESS_DURATION
+    ); // Definiert, was als langer Druck gilt (z. B. 1 Sekunde)
 
     // char buffer1[100];
     // sprintf(
-    //     buffer1, 
-    //     "DECODER: flippededValue %x\n\t getCurrentValue %x", 
+    //     buffer1,
+    //     "DECODER: flippededValue %x\n\t getCurrentValue %x",
     //     (flippedValues & (uint32_t)BIT_MASK(LBF_PIN)),
     //     (currentValues & (uint32_t)BIT_MASK(LBF_PIN))
     // );
@@ -100,9 +103,9 @@ void Decoder::decode() {
         // SES_PIN
         int8_t current_level = (currentValues >> SES_PIN) & 0x1;
         int32_t code = current_level ? PULSE_ESTOP_HIGH : PULSE_ESTOP_LOW;
-        //Test
+        // Test
         char buffer[100];
-        sprintf(buffer, "DECODER: current level %d\n",current_level);
+        sprintf(buffer, "DECODER: current level %d\n", current_level);
         std::cout << buffer << std::endl;
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
             perror("Dispatcher Send failed");
@@ -156,24 +159,24 @@ void Decoder::decode() {
         int8_t current_level = (currentValues >> BGS_PIN) & 0x1; // HIGH wenn bestätigt
         if (current_level) {
             std::cout << "BGS gedrueckt" << std::endl;
-            pressStartTime = std::chrono::steady_clock::now();  // Startzeit des Tastendrucks
+            pressStartTime = std::chrono::steady_clock::now(); // Startzeit des Tastendrucks
         } else {
-        	std::cout << "BGS losgelassen" << std::endl;
+            std::cout << "BGS losgelassen" << std::endl;
             // timer stuff to check if it was short or long press
-        	 auto pressDuration = std::chrono::steady_clock::now() - pressStartTime;  // Berechnung der Dauer
-        	 if (pressDuration < longPressDuration) {
-				 // Kurz drücken
-				 std::cout << "BGS_SHORT erkannt" << std::endl;
-				 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, festoId)) {
-					 perror("Dispatcher Send failed");
-				 }
-			 } else {
-				 // Lang drücken
-				 std::cout << "BGS_LONG erkannt" << std::endl;
-				 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, festoId)) {
-					 perror("Dispatcher Send failed");
-				 }
-			 }
+            auto pressDuration = std::chrono::steady_clock::now() - pressStartTime; // Berechnung der Dauer
+            if (pressDuration < longPressDuration) {
+                // Kurz drücken
+                std::cout << "BGS_SHORT erkannt" << std::endl;
+                if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, festoId)) {
+                    perror("Dispatcher Send failed");
+                }
+            } else {
+                // Lang drücken
+                std::cout << "BGS_LONG erkannt" << std::endl;
+                if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, festoId)) {
+                    perror("Dispatcher Send failed");
+                }
+            }
         }
     }
     // Button Stop
@@ -181,25 +184,25 @@ void Decoder::decode() {
         // LBM_PIN
         int8_t current_level = (currentValues >> BRS_PIN) & 0x1; // LOW wenn bestätigt
         if (!current_level) {
-        	std::cout << "BGS gedrueckt" << std::endl;
-			pressStartTime = std::chrono::steady_clock::now();  // Startzeit des Tastendrucks
-		} else {
-			std::cout << "BGS losgelassen" << std::endl;
-			// timer stuff to check if it was short or long press
-			 auto pressDuration = std::chrono::steady_clock::now() - pressStartTime;  // Berechnung der Dauer
-			 if (pressDuration < longPressDuration) {
-				 // Kurz drücken
-				 std::cout << "BRS_SHORT erkannt" << std::endl;
-				 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_SHORT, festoId)) {
-					 perror("Dispatcher Send failed");
-				 }
-			 } else {
-				 // Lang drücken
-				 std::cout << "BRS_LONG erkannt" << std::endl;
-				 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_LONG, festoId)) {
-					 perror("Dispatcher Send failed");
-				 }
-			 }
+            std::cout << "BGS gedrueckt" << std::endl;
+            pressStartTime = std::chrono::steady_clock::now(); // Startzeit des Tastendrucks
+        } else {
+            std::cout << "BGS losgelassen" << std::endl;
+            // timer stuff to check if it was short or long press
+            auto pressDuration = std::chrono::steady_clock::now() - pressStartTime; // Berechnung der Dauer
+            if (pressDuration < longPressDuration) {
+                // Kurz drücken
+                std::cout << "BRS_SHORT erkannt" << std::endl;
+                if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_SHORT, festoId)) {
+                    perror("Dispatcher Send failed");
+                }
+            } else {
+                // Lang drücken
+                std::cout << "BRS_LONG erkannt" << std::endl;
+                if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_LONG, festoId)) {
+                    perror("Dispatcher Send failed");
+                }
+            }
         }
     }
     // Button Reset
@@ -207,38 +210,39 @@ void Decoder::decode() {
         // LBM_PIN
         int8_t current_level = (currentValues >> BGR_PIN) & 0x1; // HIGH wenn bestätigt
         if (current_level) {
-			std::cout << "BGS gedrueckt" << std::endl;
-			pressStartTime = std::chrono::steady_clock::now();  // Startzeit des Tastendrucks
-		} else {
-			std::cout << "BGS losgelassen" << std::endl;
-			// timer stuff to check if it was short or long press
-			 auto pressDuration = std::chrono::steady_clock::now() - pressStartTime;  // Berechnung der Dauer
-			 if (pressDuration < longPressDuration) {
-				 // Kurz drücken
-				 std::cout << "BGS_SHORT erkannt" << std::endl;
-				 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_SHORT, festoId)) {
-					 perror("Dispatcher Send failed");
-				 }
-			 } else {
-				 // Lang drücken
-				 std::cout << "BGS_LONG erkannt" << std::endl;
-				 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_LONG, festoId)) {
-					 perror("Dispatcher Send failed");
-				 }
-			 }
-		}
+            std::cout << "BGS gedrueckt" << std::endl;
+            pressStartTime = std::chrono::steady_clock::now(); // Startzeit des Tastendrucks
+        } else {
+            std::cout << "BGS losgelassen" << std::endl;
+            // timer stuff to check if it was short or long press
+            auto pressDuration = std::chrono::steady_clock::now() - pressStartTime; // Berechnung der Dauer
+            if (pressDuration < longPressDuration) {
+                // Kurz drücken
+                std::cout << "BGS_SHORT erkannt" << std::endl;
+                if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_SHORT, festoId)) {
+                    perror("Dispatcher Send failed");
+                }
+            } else {
+                // Lang drücken
+                std::cout << "BGS_LONG erkannt" << std::endl;
+                if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_LONG, festoId)) {
+                    perror("Dispatcher Send failed");
+                }
+            }
+        }
     }
+
     // Metal Sensor
     if ((flippedValues & (uint32_t)BIT_MASK(MS_PIN)) != 0) {
         // LBM_PIN
-        int8_t current_level = (currentValues >> LBR_PIN) & 0x1;
+        int8_t current_level = (currentValues >> MS_PIN) & 0x1;
         int32_t code = current_level ? PULSE_MS_TRUE : PULSE_MS_FALSE;
-        std::cout << "LBR erkannt" << std::endl;
+        std::cout << "MS erkannt" << std::endl;
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
             perror("Dispatcher Send failed");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
-    
+
     // TODO if neccessary
     // if (...) {
     //     ...
@@ -248,7 +252,6 @@ void Decoder::decode() {
 
 void Decoder::sendMsg() {
     // senden an den dispatcher
-    
 }
 
 int32_t Decoder::getChannel() { return channelID; }

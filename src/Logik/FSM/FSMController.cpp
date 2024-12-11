@@ -131,7 +131,7 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
 
     // callback for motor
     fsmMotor = new FSMMotor(dispatcherConnectionID);
-    
+
     fsmMotor->onMotorStopIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
             perror("Event onMotorStopIn Failed\n");
@@ -207,15 +207,14 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
             perror("Event onPukPresentIn Failed\n");
         }
     });
-    
+
     fsmHeightMeasurement->onPukEntrySorting([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_ENTRY_SORTING)) {
             perror("Event onPukPresentIn Failed \n");
         }
     });
-    
+
     fsmSorting = new FSMSorting(dispatcherConnectionID);
-    
     fsmSorting->onPukPresentIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_PUKPRESENT_IN)) {
             perror("Event onPuk Present in Failed\n");
@@ -253,6 +252,28 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     });
     fsmSorting->onMetalMeasurementOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_METALMEASUREMENT_OUT)) {
+            perror("Event onPukPresentIn Failed\n");
+        }
+    });
+    fsmSorting->onSortingModuleActive([](int32_t conId) {
+        std::cout << "FSMCONTROLLER: onSortingModuleActive " << std::endl;
+        if (0 < MsgSendPulse(conId, -1, PULSE_SM1_ACTIVE, 0)) {
+            perror("Event onPukPresentIn Failed\n");
+        }
+    });
+    fsmSorting->onSortingModuleResting([](int32_t conId) {
+        std::cout << "FSMCONTROLLER: onSortingModuleResting " << std::endl;
+        if (0 < MsgSendPulse(conId, -1, PULSE_SM1_RESTING, 0)) {
+            perror("Event onPukPresentIn Failed\n");
+        }
+    });
+    fsmSorting->onEjectingOut([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_EJECTOR_OUT)) {
+            perror("Event onPukPresentIn Failed\n");
+        }
+    });
+    fsmSorting->onPassthroughOut([](int32_t conId) {
+        if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_PASSTHROUGH_OUT)) {
             perror("Event onPukPresentIn Failed\n");
         }
     });
@@ -367,7 +388,6 @@ void FSMController::handleMsg() {
                 std::cout << "FSMCONTROLLER: received PULSE_LBR_INTERRUPTED " << std::endl;
                 if (FESTO1 == msgVal) {
                     fsmSorting->raiseLBR1Interrupted();
-
                 } else {
                     // TODO
                 }
@@ -375,7 +395,7 @@ void FSMController::handleMsg() {
             case PULSE_LBR_OPEN:
                 std::cout << "FSMCONTROLLER: received PULSE_LBR_OPEN " << std::endl;
                 if (FESTO1 == msgVal) {
-                    //fsmSorting->raiseLBR_1_OPEN();
+                    fsmSorting->raiseLBR1Open();
                 } else {
                     // TODO
                 }
@@ -391,7 +411,7 @@ void FSMController::handleMsg() {
             case PULSE_LBM_OPEN:
                 std::cout << "FSMCONTROLLER: received PULSE_LBM_OPEN " << std::endl;
                 if (FESTO1 == msgVal) {
-                   fsmSorting->raiseLBM1Open();
+                    fsmSorting->raiseLBM1Open();
                 } else {
                     // TODO
                 }
@@ -431,12 +451,20 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_HS_SAMPLE:
-                std::cout << "FSMCONTROLLER: received PULSE_HS_SAMPLE FST_1" << std::endl;
+                // std::cout << "FSMCONTROLLER: received PULSE_HS_SAMPLE FST_1" << std::endl;
                 fsmHeightMeasurement->raiseHS1Sample();
                 break;
             case PULSE_HS_SAMPLING_DONE:
                 std::cout << "FSMCONTROLLER: received PULSE_HS_SAMPLING_DONE FST_1" << std::endl;
                 fsmHeightMeasurement->raiseHS1SamplingDone();
+                break;
+            case PULSE_MS_TRUE:
+                std::cout << "FSMCONTROLLER: received PULSE_MS_TRUE FST_1" << std::endl;
+                fsmSorting->raiseMSTrue();
+                break;
+            case PULSE_MS_FALSE:
+                std::cout << "FSMCONTROLLER: received PULSE_MS_FALSE FST_1" << std::endl;
+                fsmSorting->raiseMSFalse();
                 break;
             case PULSE_FSM:
                 switch (msgVal) {
@@ -450,7 +478,7 @@ void FSMController::handleMsg() {
                     fsmLG1->raiseSystemOperationalIn();
                     fsmIngress->raiseSystemOperationalIn();
                     fsmHeightMeasurement->raiseSystemOperationalIn();
-                    fsmSorting -> raiseSystemOperationalIn();
+                    fsmSorting->raiseSystemOperationalIn();
                     fsmEgress->raiseSystemOperationalIn();
                     // TODO
                     break;
@@ -484,7 +512,7 @@ void FSMController::handleMsg() {
                     break;
                 case EVENT_INGRESS_PUKPRESENT_IN:
                     fsmMotor->raiseIngressPukPresentIn();
-                    fsmLY1 -> raiseIngressIn();
+                    fsmLY1->raiseIngressIn();
                     break;
                 case EVENT_INGRESS_CREATINGDISTANCE_OUT:
                     fsmMotor->raiseIngressCreatingDistanceOut();
@@ -512,7 +540,7 @@ void FSMController::handleMsg() {
                     break;
                 case EVENT_HM_PUK_DISTANCE_VALID:
                     fsmIngress->raisePukDistanceValid();
-                    fsmLY1-> raiseIngressOut();
+                    fsmLY1->raiseIngressOut();
                     break;
                 case EVENT_HM_PUK_LEAVING_HEIGHTMEASUREMENT:
                     // TODO
