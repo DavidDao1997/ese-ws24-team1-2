@@ -106,7 +106,8 @@ enum PulseCode {
     PULSE_MS_FALSE,
 
     /* FSM pulses */
-    PULSE_FSM // msg.value int32_t (FsmEvent)
+    PULSE_FSM, // msg.value int32_t (FsmEvent)
+    PULSE_FSM_PARALLEL
 };
 
 enum FsmEvent {
@@ -184,6 +185,37 @@ enum FsmEvent {
     // Egress
     EVENT_EGRESS_PUKPRESENT_IN,
     EVENT_EGRESS_PUKPRESENT_OUT
+
+};
+
+enum PULSEFSMPARALLEL{
+    //ESTOP
+    ESTOP_RECEIVED,
+    ESTOP_CLEARED,
+    //System
+    SYSTEM_OPERATIONAL_OUT,
+    SYSTEM_OPERATIONAL_IN,
+    SYSTEM_SERVICE_IN,
+    SYSTEM_SERVICE_OUT,
+
+    //INGRESS
+    INGRESS_IN,
+    INGRESS_OUT,
+    PUK_ENTRY_HeightMeasurement,
+    
+    //HeightMeasurement
+    INGRESS_PUK_DISTANCE_VALID,
+    PUK_ENTRY_SORTING,
+    
+    //Sorting
+    PUK_ENTRY_EGRESS,
+    //MOTOR
+    MOTOR_FORWARD,
+    MOTOR_FORWARD_RESET,
+    MOTOR_SLOW,
+    MOTOR_SLOW_RESET,
+    MOTOR_STOP,
+    MOTOR_STOP_RESET
 
 };
 
