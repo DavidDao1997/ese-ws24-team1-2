@@ -206,6 +206,6 @@ int32_t Mock_Decoder::getChannel() { return channelID;}
 
 void Mock_Decoder::sendPulse(PulseCode code, uint8_t festoNr){
     if (0 < MsgSendPulse(dispatcherConnectionID, -1, code, festoNr)) {
-        perror("Sending Pulse failed\n");
+        perror("MOCKDECODER: Sending Pulse failed\n");
     }
 }

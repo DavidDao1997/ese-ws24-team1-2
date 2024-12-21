@@ -61,17 +61,26 @@ protected:
         delete heightSensorController;
         delete decoder;
         delete fsmController;
-        delete dispatcher;
-       
-        
         delete actuatorController;
+        delete dispatcher;
         delete actuatorsWrapper;
         
-        if (fsmControllerHandleMsgThread.joinable()) fsmControllerHandleMsgThread.join();
-        if (decoderThread.joinable()) decoderThread.join();
-        if (actuatorControllerThread.joinable()) actuatorControllerThread.join();
-        if (dispatcherThread.joinable()) dispatcherThread.join();
-        if (heightSensorControllerThread.joinable()) heightSensorControllerThread.join();             
+        std::cout << "ENDING TREADS" << std::endl;
+        // if (fsmControllerHandleMsgThread.joinable()) 
+        fsmControllerHandleMsgThread.join();
+        std::cout << "Tread fsmControllerHandleMsgThread Ended" << std::endl;
+        // if (decoderThread.joinable()) 
+        decoderThread.join();
+        std::cout << "Tread decoderThread Ended" << std::endl;
+        // if (actuatorControllerThread.joinable()) 
+        actuatorControllerThread.join();
+        std::cout << "Tread actuatorControllerThread Ended" << std::endl;
+        // if (dispatcherThread.joinable()) 
+        dispatcherThread.join();
+        std::cout << "Tread dispatcherThread Ended" << std::endl;
+        // if (heightSensorControllerThread.joinable()) 
+        heightSensorControllerThread.join();   
+        std::cout << "Tread heightSensorControllerThread Ended" << std::endl;          
 
 
     }

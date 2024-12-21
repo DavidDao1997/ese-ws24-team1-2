@@ -98,7 +98,7 @@ void HeightSensorControl::handleMsg() {
     while (receivingRunning) {
         // printf("Iam into Routine\n");
         if (MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr) < 0) {
-            perror("MsgReceivePulse failed!");
+            perror("HSCONTROLLER: MsgReceivePulse failed!");
             exit(EXIT_FAILURE);
         }
 
@@ -114,7 +114,7 @@ void HeightSensorControl::handleMsg() {
 
         // processSample(currentValue, secondChance, candidateValue, adc);
     }
-    printf("Message thread stops...\n");
+    printf("HSCONTROLLER: Message thread stops...\n");
 }
 
 void HeightSensorControl::sendMsg() {}
@@ -134,7 +134,7 @@ void HeightSensorControl::processSample(
         handleBandHeightReached(secondChance);
         if (candidatesSend) {
             if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS_SAMPLING_DONE, currentValue)) {
-                perror("Send failed.");
+                perror("HSCONTROLLER: Send failed.");
             }
             candidatesSend = false;
         }
@@ -142,7 +142,7 @@ void HeightSensorControl::processSample(
         // std::cout << "HSCONTROL: value is: " << currentValue << std::endl;
         // std::cout << "HSCONTROL: CounterValue is: " << countSample << std::endl;
         if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS_SAMPLE, currentValue)) {
-            perror("Send failed.");
+            perror("HSCONTROLLER: Send failed.");
         }
         candidatesSend = true;
     } else {

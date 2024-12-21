@@ -15,6 +15,7 @@
 
 enum PulseCode {
     PULSE_INTR_ON_PORT0 = _PULSE_CODE_MINAVAIL + 1,
+    PULSE_STOP_RECV_THREAD,
     // Heartbeath
     PULSE_HEARTBEAT,
 

@@ -46,9 +46,16 @@ Decoder::Decoder(const std::string dispatcherChannelName) {
 }
 
 Decoder::~Decoder() {
-    running = false;
+    if (0 < MsgSendPulse(channelID, -1, PULSE_STOP_RECV_THREAD, 0)) {
+        perror("DECODER: shutting down Msg Receiver failed");
+    } else {
+        std::cout << "DECODER: Shutting down PULSE send " << std::endl;
+    }
+
+
+    //running = false;
     // TODO How to end thread if blocked in MsgReveivePulse
-    destroyChannel(channelID);
+    //destroyChannel(channelID);
     // TODO disconnect from dispatcher
 }
 
@@ -62,17 +69,24 @@ void Decoder::handleMsg() {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
 
         if (recvid < 0) {
-            perror("MsgReceivePulse failed!"); // TODO does this happen on decoonstruct???
+            perror("DECODER: MsgReceivePulse failed!"); // TODO does this happen on decoonstruct???
             running = false;
             return; // TODO
         }
 
         if (recvid == 0) { // Pulse received
             if (msg.code != PULSE_INTR_ON_PORT0) {
-                perror("Unexpected Pulse!");
+                std::cout << "DECODER: received PULSE_STOP_RECV_THREAD " << std::endl;
+                running = false;
+                std::cout << "DECODER: destroying own channel " << std::endl;
+                destroyChannel(channelID);                        
             }
-            decode();
-            std::cout << "Interrupt received entpacken und weitergabe an dispatcher" << std::endl;
+            else if (msg.code != PULSE_INTR_ON_PORT0) {
+                perror("DECODER: Unexpected Pulse!");
+            } else {
+                decode();
+                std::cout << "DECODER: Interrupt received entpacken und weitergabe an dispatcher" << std::endl;
+            }
         }
     }
 }
@@ -107,7 +121,7 @@ void Decoder::decode() {
         sprintf(buffer, "DECODER: current level %d\n", current_level);
         std::cout << buffer << std::endl;
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
-            perror("Dispatcher Send failed");
+            perror("DECODER: Dispatcher Send failed");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
     // Light Barrier Front
@@ -119,7 +133,7 @@ void Decoder::decode() {
         int32_t code = current_level ? PULSE_LBF_OPEN : PULSE_LBF_INTERRUPTED;
         std::cout << "LBF erkannt" << std::endl;
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
-            perror("Dispatcher Send failed");
+            perror("DECODER: Dispatcher Send failed");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
     // Light Berrier End
@@ -129,7 +143,7 @@ void Decoder::decode() {
         int32_t code = current_level ? PULSE_LBE_OPEN : PULSE_LBE_INTERRUPTED;
         std::cout << "LBE erkannt" << std::endl;
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
-            perror("Dispatcher Send failed");
+            perror("DECODER: Dispatcher Send failed");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
     // Light Barrier Ramp
@@ -139,7 +153,7 @@ void Decoder::decode() {
         int32_t code = current_level ? PULSE_LBR_OPEN : PULSE_LBR_INTERRUPTED;
         std::cout << "LBR erkannt" << std::endl;
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
-            perror("Dispatcher Send failed");
+            perror("DECODER: Dispatcher Send failed");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
     // Light Barrier Metal Sensor
@@ -149,7 +163,7 @@ void Decoder::decode() {
         int32_t code = current_level ? PULSE_LBM_OPEN : PULSE_LBM_INTERRUPTED;
         std::cout << "LBM erkannt" << std::endl;
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
-            perror("Dispatcher Send failed");
+            perror("DECODER: Dispatcher Send failed");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
     // Button Start
@@ -167,13 +181,13 @@ void Decoder::decode() {
                 // Kurz drücken
                 std::cout << "BGS_SHORT erkannt" << std::endl;
                 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, festoId)) {
-                    perror("Dispatcher Send failed");
+                    perror("DECODER: Dispatcher Send failed");
                 }
             } else {
                 // Lang drücken
                 std::cout << "BGS_LONG erkannt" << std::endl;
                 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, festoId)) {
-                    perror("Dispatcher Send failed");
+                    perror("DECODER: Dispatcher Send failed");
                 }
             }
         }
@@ -193,13 +207,13 @@ void Decoder::decode() {
                 // Kurz drücken
                 std::cout << "BRS_SHORT erkannt" << std::endl;
                 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_SHORT, festoId)) {
-                    perror("Dispatcher Send failed");
+                    perror("DECODER: Dispatcher Send failed");
                 }
             } else {
                 // Lang drücken
                 std::cout << "BRS_LONG erkannt" << std::endl;
                 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_LONG, festoId)) {
-                    perror("Dispatcher Send failed");
+                    perror("DECODER: Dispatcher Send failed");
                 }
             }
         }
@@ -219,13 +233,13 @@ void Decoder::decode() {
                 // Kurz drücken
                 std::cout << "BGS_SHORT erkannt" << std::endl;
                 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_SHORT, festoId)) {
-                    perror("Dispatcher Send failed");
+                    perror("DECODER: Dispatcher Send failed");
                 }
             } else {
                 // Lang drücken
                 std::cout << "BGS_LONG erkannt" << std::endl;
                 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_LONG, festoId)) {
-                    perror("Dispatcher Send failed");
+                    perror("DECODER: Dispatcher Send failed");
                 }
             }
         }
@@ -238,7 +252,7 @@ void Decoder::decode() {
         int32_t code = current_level ? PULSE_MS_TRUE : PULSE_MS_FALSE;
         std::cout << "MS erkannt" << std::endl;
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
-            perror("Dispatcher Send failed");
+            perror("DECODER: Dispatcher Send failed");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
 

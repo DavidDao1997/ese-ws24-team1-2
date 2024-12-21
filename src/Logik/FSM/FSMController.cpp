@@ -305,11 +305,16 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
 }
 
 FSMController::~FSMController() {
-    running = false;
-    subThreadsRunning = false;
-    destroyChannel(channelID);
+    
+    if (0 < MsgSendPulse(channelID, -1, PULSE_STOP_RECV_THREAD, 0)) {
+            perror("FSMCONTROLLER: shutting down Msg Receiver failed");
+    } else {
+        std::cout << "FSMCONTROLLER: Shutting down PULSE send " << std::endl;
+    }
+    //running = false;
+    
     // TODO disconnect from dispatcher ?? this should disconnect not destroy a channel
-    destroyChannel(dispatcherConnectionID);
+    //destroyChannel(dispatcherConnectionID);
 }
 
 int8_t *FSMController::getPulses() { return pulses; };
@@ -323,7 +328,7 @@ void FSMController::handleMsg() {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
         if (recvid < 0) {
             perror("FSMCONTROLLER: MsgReceivePulse failed!");
-            exit(EXIT_FAILURE);
+            //exit(EXIT_FAILURE);
         }
 
         if (recvid == 0) { // Pulse received
@@ -344,6 +349,13 @@ void FSMController::handleMsg() {
                 } else {
                     // TODO
                 }
+                break;
+            case PULSE_STOP_RECV_THREAD:
+                std::cout << "FSMCONTROLLER: received PULSE_STOP_RECV_THREAD " << std::endl;
+                running = false;
+                subThreadsRunning = false;
+                std::cout << "FSMCONTROLLER: destroying own channel " << std::endl;
+                destroyChannel(channelID);                
                 break;
             case PULSE_LBF_INTERRUPTED:
                 std::cout << "FSMCONTROLLER: received PULSE_LBF_INTERRUPTED " << std::endl;

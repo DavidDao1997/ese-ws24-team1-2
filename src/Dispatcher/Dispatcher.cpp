@@ -15,20 +15,26 @@ Dispatcher::Dispatcher(const std::string name) {
 
 Dispatcher::~Dispatcher() {
     // Send stop pulse to terminate any dispatch thread
-    running = false;
-
-    for (int32_t coid : connections) {
-        ConnectDetach(coid);
+    if (0 < MsgSendPulse(channelID, -1, PULSE_STOP_RECV_THREAD, 0)) {
+            perror("DISPACHER: shutting down Msg Receiver failed");
+    } else {
+        std::cout << "DISPACHER: Shutting down PULSE send " << std::endl;
     }
+    
+    //running = false;
+
+    // for (int32_t coid : connections) {
+    //     ConnectDetach(coid);
+    // }
 
     // Destroy the channel
-    destroyNamedChannel(channelID, dispatcherChannel);
+    // destroyNamedChannel(channelID, dispatcherChannel);
 }
 
 void Dispatcher::addSubscriber(int32_t chid, int8_t pulses[], int8_t numOfPulses) {
     int coid = ConnectAttach(0, 0, chid, _NTO_SIDE_CHANNEL, 0);
     if (coid < 0) {
-        perror("Failed to connect!");
+        perror("DISPATCHER: Failed to connect!");
         return;
     }
     connections.push_back(coid);
@@ -53,6 +59,16 @@ void Dispatcher::handleMsg() {
 
         if (recvid == 0) { // Pulse received
             switch (msg.code) {
+            case PULSE_STOP_RECV_THREAD:
+                std::cout << "DISPACHER: received PULSE_STOP_RECV_THREAD " << std::endl;
+                running = false;
+                std::cout << "DISPACHER: destroying own channel " << std::endl;
+                        
+                for (int32_t coid : connections) {
+                    ConnectDetach(coid);
+                }     
+                destroyNamedChannel(channelID, dispatcherChannel);
+                break;
                 // case PULSE_DISPATCHER_SUBSCRIBE:
                 // std::cout << "subscribing" << std::endl;
                 //  coids add msg.coid;

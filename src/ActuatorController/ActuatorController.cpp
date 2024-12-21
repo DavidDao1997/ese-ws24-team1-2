@@ -59,9 +59,15 @@ ActuatorController::ActuatorController(const std::string name, I_Actuators_Wrapp
 
 ActuatorController::~ActuatorController() {
     // thread löschen
-    running = false;
+    if (0 < MsgSendPulse(channelID, -1, PULSE_STOP_RECV_THREAD, 0)) {
+            perror("ACTUATORCONTROLLER: shutting down Msg Receiver failed");
+    } else {
+        std::cout << "ACTUATORCONTROLLER: Shutting down PULSE send " << std::endl;
+    }
+    
+    // running = false;
     // attach löschen
-    destroyNamedChannel(channelID, actuatorControllerChannel);
+    // destroyNamedChannel(channelID, actuatorControllerChannel);
 };
 
 int8_t *ActuatorController::getPulses() { return pulses; };
@@ -86,6 +92,13 @@ void ActuatorController::handleMsg() {
             int32_t msgVal = msg.value.sival_int;
             // std::cout << "MSG VAL: " << msgVal << std::endl;
             switch (msg.code) {
+            case PULSE_STOP_RECV_THREAD:
+                std::cout << "ACTUATORCONTROLLER: received PULSE_STOP_RECV_THREAD " << std::endl;
+                running = false;
+                std::cout << "ACTUATORCONTROLLER: destroying own channel " << std::endl;
+                destroyChannel(channelID);        
+                destroyNamedChannel(channelID, actuatorControllerChannel);        
+                break;
             case PULSE_MOTOR1_STOP:
                 std::cout << "ACTUATORCONTROLLER: Motor will be stopped" << std::endl;
                 actuators->motorStop();
@@ -201,7 +214,7 @@ void ActuatorController::greenlampBlinking(bool *blink, int32_t frequency) {
         actuators->greenLampLightOn();
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
     }
-    std::cout << "green blinking stopped" << std::endl;
+    std::cout << "ACTUATORCONTROLLER: green blinking stopped" << std::endl;
 }
 
 void ActuatorController::yellowlampBlinking(bool *blink, int32_t frequency) {
@@ -212,7 +225,7 @@ void ActuatorController::yellowlampBlinking(bool *blink, int32_t frequency) {
         actuators->yellowLampLightOn();
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
     }
-    std::cout << "yellow blinking stopped" << std::endl;
+    std::cout << "ACTUATORCONTROLLER: yellow blinking stopped" << std::endl;
 }
 
 void ActuatorController::redlampBlinking(bool *blink, int32_t frequency) {
@@ -223,7 +236,7 @@ void ActuatorController::redlampBlinking(bool *blink, int32_t frequency) {
         actuators->redLampLightOn();
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
     }
-    std::cout << "red blinking stopped" << std::endl;
+    std::cout << "ACTUATORCONTROLLER: red blinking stopped" << std::endl;
 }
 
 int32_t ActuatorController::getChannel() { return channelID; }
