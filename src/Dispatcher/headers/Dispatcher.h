@@ -24,7 +24,7 @@
 class Dispatcher : public PulseMsgHandler {
   public:
     Dispatcher(const std::string name);
-    ~Dispatcher();
+    virtual ~Dispatcher();
 
     void handleMsg() override;
     void sendMsg() override;

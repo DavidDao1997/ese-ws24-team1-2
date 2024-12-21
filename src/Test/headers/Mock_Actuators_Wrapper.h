@@ -1,16 +1,20 @@
+/*
+ * Mock_Actuators_Wrapper.h
+ *
+ *  Created on: 20.12.2024
+ *      Author: Marc
+ */
 
-#ifndef ACTUATORS_WRAPPER_H
-#define ACTUATORS_WRAPPER_H
+#ifndef TEST_HEADERS_MOCK_ACTUATORS_WRAPPER_H_
+#define TEST_HEADERS_MOCK_ACTUATORS_WRAPPER_H_
+
+#include "../../HAL/interfaces/I_Actuators_Wrapper.h"
 
 
-#include "../interfaces/I_Actuators_Wrapper.h"
-
-
-class Actuators_Wrapper : public I_Actuators_Wrapper {
+class Mock_Actuators_Wrapper : public I_Actuators_Wrapper {
 public:
-	
-	Actuators_Wrapper();
-	~Actuators_Wrapper();
+    Mock_Actuators_Wrapper();
+	~Mock_Actuators_Wrapper();
 	bool init() override;
 
 	// Actors
@@ -43,14 +47,17 @@ public:
 	void openSortingModule() override;
 	void closeSortingModule() override;
 
-	
+
+    // return to read actuators
+    uintptr_t getActuators();   // for GPIO BANK 1
+    uintptr_t getPanelLights(); // for GPIO BANK 2
 
 
 private:
-	// volatile entfernen
-	volatile uintptr_t gpio_bank_0;
-	volatile uintptr_t gpio_bank_1;
-	volatile uintptr_t gpio_bank_2;
+	
+	uintptr_t mock_gpio_bank_actuators;
+    uintptr_t mock_gpio_bank_panel_lights;
+	
 
 
 
@@ -58,4 +65,5 @@ private:
 };
 
 
-#endif /*ACTUATORS_WRAPPER_H*/
+
+#endif /* TEST_HEADERS_MOCK_ACTUATORS_WRAPPER_H_ */

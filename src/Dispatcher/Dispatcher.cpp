@@ -47,7 +47,7 @@ void Dispatcher::handleMsg() {
     while (running) {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
         if (recvid < 0) {
-            perror("MsgReceivePulse failed!");
+            perror("DISPACHER: MsgReceivePulse failed!");
             //exit(EXIT_FAILURE); // TODO exit??? was passiert wenn der dispatcher stirbt. fehlerbhandlung?
         }
 

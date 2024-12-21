@@ -322,7 +322,7 @@ void FSMController::handleMsg() {
     while (running) {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
         if (recvid < 0) {
-            perror("MsgReceivePulse failed!");
+            perror("FSMCONTROLLER: MsgReceivePulse failed!");
             exit(EXIT_FAILURE);
         }
 

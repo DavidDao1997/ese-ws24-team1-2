@@ -50,7 +50,7 @@ bool ActuatorController::lgblinking = false; // TODO make thread save
 bool ActuatorController::lrblinking = false;
 bool ActuatorController::lyblinking = false;
 
-ActuatorController::ActuatorController(const std::string name, Actuators_Wrapper *actuatorsWrapper) {
+ActuatorController::ActuatorController(const std::string name, I_Actuators_Wrapper *actuatorsWrapper) {
     actuatorControllerChannel = createNamedChannel(name);
     channelID = actuatorControllerChannel->chid;
     actuators = actuatorsWrapper;
@@ -78,7 +78,7 @@ void ActuatorController::handleMsg() {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
 
         if (recvid < 0) {
-            perror("MsgReceivePulse failed!");
+            perror("ACTUATORCONTROLLER: MsgReceivePulse failed!");
             exit(EXIT_FAILURE);
         }
 

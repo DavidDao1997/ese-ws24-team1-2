@@ -68,10 +68,10 @@ int main(int argc, char **argv) {
     std::cout << "1" << std::endl;
 
     WAIT(1000);
-    int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
-    if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_SM1_RESTING, 0)) {
-        perror("Event onPukPresentIn Failed\n");
-    }
+    //int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
+    //if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_SM1_RESTING, 0)) {
+    //    perror("Event onPukPresentIn Failed\n");
+    //}
 
     // WAIT(1000);
     // int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);

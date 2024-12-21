@@ -10,11 +10,7 @@
  */
 
 #include "headers/Actuators_Wrapper.h"
-#include "hw/inout.h"
-#include "sys/mman.h"
-#include "sys/neutrino.h"
-#include <iostream>
-#include <stdint.h>
+
 
 Actuators_Wrapper::Actuators_Wrapper() {
     gpio_bank_0 = MAP_DEVICE_FAILED;

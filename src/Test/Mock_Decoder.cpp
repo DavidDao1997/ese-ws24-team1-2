@@ -1,92 +1,39 @@
 /*
- * Decoder.cpp
+ * Mock_Decoder.cpp
  *
- *  Created on: 10.11.2024
+ *  Created on: 20.12.2024
  *      Author: Marc
  */
 
-#include "headers/Decoder.h"
-#include "../HAL/headers/HALConfig.h"
-#include <cstdio> // For sprintf
+
+#include "headers/Mock_Decoder.h"
 
 
-#define LONG_PRESS_DURATION 1000
-
-Decoder::Decoder(const std::string dispatcherChannelName) {
-    running = false;
-
+Mock_Decoder::Mock_Decoder(const std::string dispatcherChannelName){
     channelID = createChannel();
-
-    sensorISR = new SensorISR();
-    // sonsorISR = foo;
-    if (!sensorISR->registerInterrupt(channelID)) {
-        perror("decoder could not register interrupt");
-    }
-    // Buttons
-    sensorISR->initializeGPIOInterrupt(BGS_PIN);
-    sensorISR->initializeGPIOInterrupt(BRS_PIN);
-    sensorISR->initializeGPIOInterrupt(BGR_PIN);
-
-    // LightBarrier
-    sensorISR->initializeGPIOInterrupt(LBF_PIN);
-    sensorISR->initializeGPIOInterrupt(LBE_PIN);
-    sensorISR->initializeGPIOInterrupt(LBM_PIN);
-    sensorISR->initializeGPIOInterrupt(LBR_PIN);
-
-    // EStop
-    sensorISR->initializeGPIOInterrupt(SES_PIN);
-
-    // MetalSensor
-    sensorISR->initializeGPIOInterrupt(MS_PIN);
 
     // create a connection to Dispatcher
     dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
 
-    // TODO check if festo 1 or festo 2 in parameter list
 }
 
-Decoder::~Decoder() {
-    running = false;
+Mock_Decoder::~Mock_Decoder() {
     // TODO How to end thread if blocked in MsgReveivePulse
     destroyChannel(channelID);
     // TODO disconnect from dispatcher
 }
 
-void Decoder::handleMsg() {
-    ThreadCtl(_NTO_TCTL_IO, 0); // Request IO privileges
-
-    _pulse msg;
-    running = true;
-
-    while (running) {
-        int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
-
-        if (recvid < 0) {
-            perror("MsgReceivePulse failed!"); // TODO does this happen on decoonstruct???
-            running = false;
-            return; // TODO
-        }
-
-        if (recvid == 0) { // Pulse received
-            if (msg.code != PULSE_INTR_ON_PORT0) {
-                perror("Unexpected Pulse!");
-            }
-            decode();
-            std::cout << "Interrupt received entpacken und weitergabe an dispatcher" << std::endl;
-        }
-    }
+void Mock_Decoder::handleMsg() {
+    
 }
 
-void Decoder::decode() {
+void Mock_Decoder::decode() {
+
+    /*
     int32_t festoId = 0;
 
-    uint32_t flippedValues = sensorISR->getFlippedValues();
-    uint32_t currentValues = sensorISR->getCurrentValues();
-    sensorISR->clearCurrentInterrupt();
-
-    static std::chrono::steady_clock::time_point pressStartTime; // Zeit, wann der Button gedrückt wurde
-    const std::chrono::milliseconds longPressDuration(LONG_PRESS_DURATION
-    ); // Definiert, was als langer Druck gilt (z. B. 1 Sekunde)
+    //static std::chrono::steady_clock::time_point pressStartTime; // Zeit, wann der Button gedrückt wurde
+    //const std::chrono::milliseconds longPressDuration(LONG_PRESS_DURATION); // Definiert, was als langer Druck gilt (z. B. 1 Sekunde)
 
     // char buffer1[100];
     // sprintf(
@@ -247,10 +194,18 @@ void Decoder::decode() {
     //     ...
     // }
     // ...
+    */
 }
 
-void Decoder::sendMsg() {
+void Mock_Decoder::sendMsg() {
     // senden an den dispatcher
 }
 
-int32_t Decoder::getChannel() { return channelID; }
+int32_t Mock_Decoder::getChannel() { return channelID;}
+
+
+void Mock_Decoder::sendPulse(PulseCode code, uint8_t festoNr){
+    if (0 < MsgSendPulse(dispatcherConnectionID, -1, code, festoNr)) {
+        perror("Sending Pulse failed\n");
+    }
+}
