@@ -36,6 +36,7 @@ class FSMController : public PulseMsgHandler {
 
     int8_t *getPulses();
     int8_t getNumOfPulses();
+    bool stop();
 
   private:
     // FSM System

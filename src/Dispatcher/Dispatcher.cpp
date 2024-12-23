@@ -14,21 +14,12 @@ Dispatcher::Dispatcher(const std::string name) {
 }
 
 Dispatcher::~Dispatcher() {
-    // Send stop pulse to terminate any dispatch thread
-    if (0 < MsgSendPulse(channelID, -1, PULSE_STOP_RECV_THREAD, 0)) {
-            perror("DISPACHER: shutting down Msg Receiver failed");
-    } else {
-        std::cout << "DISPACHER: Shutting down PULSE send " << std::endl;
+    for (int32_t coid : connections) {
+         ConnectDetach(coid);
     }
-    
-    //running = false;
-
-    // for (int32_t coid : connections) {
-    //     ConnectDetach(coid);
-    // }
 
     // Destroy the channel
-    // destroyNamedChannel(channelID, dispatcherChannel);
+    destroyNamedChannel(channelID, dispatcherChannel);
 }
 
 void Dispatcher::addSubscriber(int32_t chid, int8_t pulses[], int8_t numOfPulses) {
@@ -42,6 +33,21 @@ void Dispatcher::addSubscriber(int32_t chid, int8_t pulses[], int8_t numOfPulses
         uint8_t pulse = pulses[i];
         connectionsByPulse[pulse].push_back(coid);
     }
+}
+
+bool Dispatcher::stop(){
+	int coid = connectToChannel(channelID);
+    if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
+            perror("DISPATCHER: shutting down Msg Receiver failed");
+            return false;
+    }
+    // disconnect the connection to own channel
+    std::cout << "DISPATCHER: Shutting down PULSE send " << std::endl;
+    if (0 > ConnectDetach(coid)){
+        perror("DISPATCHER: Stop Detach failed");
+        return false;
+    }
+    return true;
 }
 
 void Dispatcher::handleMsg() {
@@ -62,12 +68,6 @@ void Dispatcher::handleMsg() {
             case PULSE_STOP_RECV_THREAD:
                 std::cout << "DISPACHER: received PULSE_STOP_RECV_THREAD " << std::endl;
                 running = false;
-                std::cout << "DISPACHER: destroying own channel " << std::endl;
-                        
-                for (int32_t coid : connections) {
-                    ConnectDetach(coid);
-                }     
-                destroyNamedChannel(channelID, dispatcherChannel);
                 break;
                 // case PULSE_DISPATCHER_SUBSCRIBE:
                 // std::cout << "subscribing" << std::endl;

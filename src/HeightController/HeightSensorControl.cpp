@@ -28,7 +28,15 @@ HeightSensorControl::HeightSensorControl(const std::string channelName, const st
 }
 
 // Destructor
-HeightSensorControl::~HeightSensorControl() { std::cout << "HwAdcDemo object destroyed." << std::endl; }
+HeightSensorControl::~HeightSensorControl() { 
+    // TODO disconnect from dispatcher
+    if (0 > ConnectDetach(dispatcherConnectionID)){
+        perror("HSCONTROLLER: Disconnection from Dispatcher failed");
+    }
+    // TODO How to end thread if blocked in MsgReveivePulse and return avlue?
+    std::cout << "HSCONTROLLER: destroying own channel " << std::endl;
+    destroyNamedChannel(channelID, hsControllerChannel); 
+}
 
 // global to store Height information into a array
 // std::vector<SampleData> HeightSensorControl::heightData;
@@ -79,6 +87,21 @@ HeightSensorControl::~HeightSensorControl() { std::cout << "HwAdcDemo object des
 //    if (ChannelDestroy(chanID) != EOK) perror("Destroying channel failed!");
 //}
 
+bool HeightSensorControl::stop(){
+	int coid = connectToChannel(channelID);
+    if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
+            perror("HSCONTROLLER: shutting down Msg Receiver failed");
+            return false;
+    }
+    // disconnect the connection to own channel
+    std::cout << "HSCONTROLLER: Shutting down PULSE send " << std::endl;
+    if (0 > ConnectDetach(coid)){
+        perror("HSCONTROLLER: Stop Detach failed");
+        return false;
+    }
+    return true;
+}
+
 // thread that received msg
 void HeightSensorControl::handleMsg() {
 
@@ -99,7 +122,7 @@ void HeightSensorControl::handleMsg() {
         // printf("Iam into Routine\n");
         if (MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr) < 0) {
             perror("HSCONTROLLER: MsgReceivePulse failed!");
-            exit(EXIT_FAILURE);
+            //exit(EXIT_FAILURE);
         }
 
         // printf("Iam into Routine HeightPulse with Code: %d\n", msg.code );
@@ -110,6 +133,9 @@ void HeightSensorControl::handleMsg() {
 
             // this_thread::sleep_for(chrono::milliseconds(10));
             // adc->sample();
+        } else if(msg.code == PULSE_STOP_RECV_THREAD) {
+                std::cout << "HSCONTROLLER: received PULSE_STOP_RECV_THREAD " << std::endl;
+                receivingRunning = false;  
         }
 
         // processSample(currentValue, secondChance, candidateValue, adc);

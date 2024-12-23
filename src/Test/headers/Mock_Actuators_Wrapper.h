@@ -49,14 +49,28 @@ public:
 
 
     // return to read actuators
-    uintptr_t getActuators();   // for GPIO BANK 1
-    uintptr_t getPanelLights(); // for GPIO BANK 2
+    uint32_t getActuators(uint8_t PIN);   // for GPIO BANK 1
+    uint32_t getPanelLights(uint8_t PIN); // for GPIO BANK 2
+
+
+	void toggleRedBlinking();
+	void toggleYellowBlinking();
+	void toggleGreenBlinking();
+
+	bool redBlinking();
+	bool yellowBlinking();
+	bool greenBlinking();
 
 
 private:
 	
-	uintptr_t mock_gpio_bank_actuators;
-    uintptr_t mock_gpio_bank_panel_lights;
+	uint32_t mock_gpio_bank_actuators;
+    uint32_t mock_gpio_bank_panel_lights;
+
+
+	bool redLightBlinking;
+    bool yellowLightBlinking;
+    bool greenLightBlinking; 
 	
 
 

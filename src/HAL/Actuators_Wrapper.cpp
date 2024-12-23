@@ -69,7 +69,7 @@ void Actuators_Wrapper::resetButtonLightOff() { out32((uintptr_t)(gpio_bank_2 + 
 
 // set/clear SignalLed's help tools
 //Signal Light 1
-void Actuators_Wrapper::Q1LightOn() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), BIT_MASK(Q1_PIN)); }
+void Actuators_Wrapper::Q1LightOn() { out32((uintptr_t)(gpio_bank_2 + GPIO_SET), BIT_MASK(Q1_PIN)); }
 void Actuators_Wrapper::Q1LightOff() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), BIT_MASK(Q1_PIN)); }
 
 //Signal Light 2

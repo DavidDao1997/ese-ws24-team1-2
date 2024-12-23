@@ -84,6 +84,8 @@ public:
     void sendMsg() override;
     int32_t getChannel() override;
 
+    bool stop();
+
 private:
     int32_t channelID;
     name_attach_t *hsControllerChannel;

@@ -21,6 +21,8 @@ public:
 
     void sendPulse(PulseCode code,uint8_t festoNr);
 
+    bool stop();
+
 private:
     void decode() override;
 

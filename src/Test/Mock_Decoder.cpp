@@ -18,9 +18,14 @@ Mock_Decoder::Mock_Decoder(const std::string dispatcherChannelName){
 }
 
 Mock_Decoder::~Mock_Decoder() {
+    // TODO disconnect from dispatcher
+    if (0 > ConnectDetach(dispatcherConnectionID)){
+        perror("DECODER: Disconnection from Dispatcher failed");
+    }
+
     // TODO How to end thread if blocked in MsgReveivePulse
     destroyChannel(channelID);
-    // TODO disconnect from dispatcher
+    
 }
 
 void Mock_Decoder::handleMsg() {

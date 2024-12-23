@@ -35,7 +35,7 @@ class PulseMsgHandler {
     static void destroyChannel(uint32_t channelID);
     static void destroyNamedChannel(int32_t channelID, name_attach_t *attach);
     static int32_t connectToChannel(int32_t connectChannelID);
-
+  
     // methods needed to be implemented
   public:
     virtual void handleMsg() = 0;

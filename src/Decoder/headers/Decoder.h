@@ -18,6 +18,7 @@ class Decoder : public I_Decoder {
     void handleMsg() override;
     void sendMsg() override;
     int32_t getChannel() override;
+    bool stop();
 
   private:
     void decode() override;

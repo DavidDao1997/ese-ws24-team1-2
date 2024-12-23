@@ -30,6 +30,8 @@ class Dispatcher : public PulseMsgHandler {
     void sendMsg() override;
     int32_t getChannel() override;
 
+    bool stop();
+
     void addSubscriber(int32_t chid, int8_t pulses[], int8_t numOfPulses);
 
   private:

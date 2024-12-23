@@ -46,17 +46,27 @@ Decoder::Decoder(const std::string dispatcherChannelName) {
 }
 
 Decoder::~Decoder() {
-    if (0 < MsgSendPulse(channelID, -1, PULSE_STOP_RECV_THREAD, 0)) {
-        perror("DECODER: shutting down Msg Receiver failed");
-    } else {
-        std::cout << "DECODER: Shutting down PULSE send " << std::endl;
-    }
-
-
-    //running = false;
-    // TODO How to end thread if blocked in MsgReveivePulse
-    //destroyChannel(channelID);
     // TODO disconnect from dispatcher
+    if (0 > ConnectDetach(dispatcherConnectionID)){
+        perror("DECODER: Disconnection from Dispatcher failed");
+    }
+    // TODO How to end thread if blocked in MsgReveivePulse and return avlue?
+    destroyChannel(channelID);
+}
+
+bool Decoder::stop(){
+	int coid = connectToChannel(channelID);
+    if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
+            perror("DECODER: shutting down Msg Receiver failed");
+            return false;
+    }
+    // disconnect the connection to own channel
+    std::cout << "DECODER: Shutting down PULSE send " << std::endl;
+    if (0 > ConnectDetach(coid)){
+        perror("DECODER: Stop Detach failed");
+        return false;
+    }
+    return true;
 }
 
 void Decoder::handleMsg() {
@@ -75,11 +85,9 @@ void Decoder::handleMsg() {
         }
 
         if (recvid == 0) { // Pulse received
-            if (msg.code != PULSE_INTR_ON_PORT0) {
+            if (msg.code != PULSE_STOP_RECV_THREAD) {
                 std::cout << "DECODER: received PULSE_STOP_RECV_THREAD " << std::endl;
-                running = false;
-                std::cout << "DECODER: destroying own channel " << std::endl;
-                destroyChannel(channelID);                        
+                running = false;                      
             }
             else if (msg.code != PULSE_INTR_ON_PORT0) {
                 perror("DECODER: Unexpected Pulse!");
