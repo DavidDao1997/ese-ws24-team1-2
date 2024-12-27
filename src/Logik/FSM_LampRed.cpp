@@ -21,13 +21,13 @@ void FSMLampRed::onLR1Off(std::function<void(int32_t conId)> callBackFunction) {
 
 void FSMLampRed::raiseEStopReceived() {
     if (currentState == LampRedState::Off) {
-     std::cout << "FSMLAMPRED: ESTOP Received" << std::endl;
-     setState(LampRedState::Constant);
+        Logger::getInstance().log(LogLevel::DEBUG, "ESTOP Received...", "FSMLampRed");
+        setState(LampRedState::Constant);
     }
 }
 void FSMLampRed::raiseEStopCleared() {
     if (currentState == LampRedState::Constant) {
-        std::cout << "FSMLAMPRED: ESTOP Cleared" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "ESTOP Cleared...", "FSMLampRed");
         setState(LampRedState::Off);
     }
 }
@@ -35,13 +35,13 @@ void FSMLampRed::raiseEStopCleared() {
 void FSMLampRed::setState(LampRedState nextstate) {
     // block entry for off state
     if (nextstate == LampRedState::Off && currentState != LampRedState::Off) {
-        std::cout << "FSMLAMPRED: entry off" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry off...", "FSMLampRed");
         currentState = LampRedState::Off;
         callbackLR1Off(dispConnectionId);
     }
     // block entry for constant state
     else if (nextstate == LampRedState::Constant && currentState != LampRedState::Constant) {
-        std::cout << "FSMLAMPRED: entry on" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry on...", "FSMLampRed");
         currentState = LampRedState::Constant;
         callbackLR1On(dispConnectionId);
     }

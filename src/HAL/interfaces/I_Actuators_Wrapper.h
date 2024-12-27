@@ -15,6 +15,8 @@
 #include <iostream>
 #include <stdint.h>
 
+#include "../../Logging/headers/Logger.h"
+
 class I_Actuators_Wrapper  {
 public:
 	

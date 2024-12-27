@@ -8,7 +8,7 @@
 #ifndef DISPATCHER_H
 #define DISPATCHER_H
 
-#include <cstdio> // For sprintf
+//#include <cstdio> // For sprintf TODO REMOVE
 #include <iostream>
 #include <map>
 #include <stdint.h>
@@ -20,6 +20,8 @@
 
 #include "PulseMsgConfig.h"
 #include "PulseMsgHandler.h"
+
+#include "../../Logging/headers/Logger.h"
 
 class Dispatcher : public PulseMsgHandler {
   public:

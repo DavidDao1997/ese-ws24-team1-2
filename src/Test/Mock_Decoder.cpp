@@ -20,7 +20,7 @@ Mock_Decoder::Mock_Decoder(const std::string dispatcherChannelName){
 Mock_Decoder::~Mock_Decoder() {
     // TODO disconnect from dispatcher
     if (0 > ConnectDetach(dispatcherConnectionID)){
-        perror("DECODER: Disconnection from Dispatcher failed");
+        Logger::getInstance().log(LogLevel::ERROR, "Disconnection from Dispatcher failed...", "Mock_Decoder");
     }
 
     // TODO How to end thread if blocked in MsgReveivePulse
@@ -211,6 +211,6 @@ int32_t Mock_Decoder::getChannel() { return channelID;}
 
 void Mock_Decoder::sendPulse(PulseCode code, uint8_t festoNr){
     if (0 < MsgSendPulse(dispatcherConnectionID, -1, code, festoNr)) {
-        perror("MOCKDECODER: Sending Pulse failed\n");
+        Logger::getInstance().log(LogLevel::ERROR, "Sending Pulse failed...", "Mock_Decoder");
     }
 }

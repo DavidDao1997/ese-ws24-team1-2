@@ -23,6 +23,8 @@
 #include "../../headers/FSMSystem.h"
 #include "../../headers/FSMSorting.h"
 
+#include "../../../Logging/headers/Logger.h"
+
 #define FSM_CONTROLLER_NUM_OF_PULSES 20
 
 class FSMController : public PulseMsgHandler {

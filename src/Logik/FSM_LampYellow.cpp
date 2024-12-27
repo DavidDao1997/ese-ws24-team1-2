@@ -30,14 +30,14 @@ void FSMLampYellow::raiseEStopReceived() {
     if (currentState == LampYellowState::Blinking1HZ) {
         setState(LampYellowState::Constant);
     } else if (currentState == LampYellowState::Off) {
-        std::cout << "FSMLAMPYELLOW: ESTOP Received" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "ESTOP Received...", "FSMLampYellow");
         setState(LampYellowState::Constant);
     }
 }
 
 void FSMLampYellow::raiseEStopCleared() {
     if (currentState == LampYellowState::Constant) {
-        std::cout << "FSMLAMPYELLOW: ESTOP Cleared" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "ESTOP Cleared...", "FSMLampYellow");
         setState(LampYellowState::Off);
     }
 }
@@ -53,19 +53,19 @@ void FSMLampYellow::onLY1Blinking1Hz(std::function<void(int32_t conId)> callback
 
 void FSMLampYellow::setState(LampYellowState nextState) {
     if (nextState == LampYellowState::Off && currentState != LampYellowState::Off) {
-        std::cout << "FSMLAMPYELLOW: entry off" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry off...", "FSMLampYellow");
         currentState = LampYellowState::Off;
         callbackLY1Off(dispConnectionId);
     }
     // Block for entry Constant
     else if (nextState == LampYellowState::Constant && currentState != LampYellowState::Constant) {
-        std::cout << "FSMLAMPYELLOW: entry on" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry on...", "FSMLampYellow");
         currentState = LampYellowState::Constant;
         callbackLY1On(dispConnectionId);
     }
     // Block for entry Constant
     else if (nextState == LampYellowState::Blinking1HZ && currentState != LampYellowState::Blinking1HZ) {
-        std::cout << "FSMLAMPYELLOW: entry blinking" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry blinking...", "FSMLampYellow");
         currentState = LampYellowState::Blinking1HZ;
         callbackLY1Blinking1Hz(dispConnectionId);
     }

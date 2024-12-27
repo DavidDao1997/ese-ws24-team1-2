@@ -33,6 +33,9 @@ using namespace std;
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
 
 
+#include "../../Logging/headers/Logger.h"
+
+
 
 /* GPIO port addresses (spruh73l.pdf S.177 ff.) */
 #define ADC_BASE 0x44E0D000

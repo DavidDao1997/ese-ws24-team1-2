@@ -34,7 +34,7 @@ const struct sigevent *ADC::adcISR(void *arg, int id) {
 
 ADC::ADC(TSCADC &tscadc) : tscadc(&tscadc) {
     if (-1 == ThreadCtl(_NTO_TCTL_IO, 0)) {
-        DBG_ERROR("ThreadCtl access failed\n");
+        Logger::getInstance().log(LogLevel::ERROR, "ThreadCtl access failed...", "ADC");
         exit(EXIT_FAILURE);
     }
     init();
@@ -54,7 +54,7 @@ void ADC::registerAdcISR(int connectionID, char msgType) {
 
     interruptID = InterruptAttach(ADC_TSC_GENINT, adcISR, this, sizeof(ADC), 0);
     if (interruptID == -1) {
-        DBG_ERROR("InterruptAttach failed");
+        Logger::getInstance().log(LogLevel::ERROR, "InterruptAttach failed...", "ADC");
         exit(EXIT_FAILURE);
     }
 
@@ -67,7 +67,7 @@ void ADC::registerAdcISR(int connectionID, char msgType) {
 
 void ADC::unregisterAdcISR(void) {
     if (InterruptDetach(interruptID) < 0) {
-        DBG_ERROR("could not detach adc interrupt handler");
+        Logger::getInstance().log(LogLevel::ERROR, "could not detach adc interrupt handler...", "ADC");
         exit(EXIT_FAILURE);
     }
     tscadc->eventInterruptDisable(END_OF_SEQUENCE_INT);

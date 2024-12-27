@@ -10,6 +10,7 @@
 #include "HeightController/header/HeightSensorControl.h"
 #include "Decoder/headers/Decoder.h"
 #include "Logik/FSM/headers/FSMController.h"
+#include "Logging/headers/Logger.h"
 
 #include <gtest/gtest.h>
 
@@ -18,7 +19,22 @@
 
 int main(int argc, char **argv) {
 
+Logger& logger = Logger::getInstance();
+
+
+logger.setLogLevel(LogLevel::WARNING);    // Log-Level setzen
+// Log-Level für verschiedene Klassen individuell festlegen
+// logger.setLogLevelForClass("ClassA", LogLevel::INFO); // Standardmodus
+// logger.setLogLevelForClass("ClassB", LogLevel::ERROR, true); // Nur ERROR loggen
+
+//logger.setLogFile("tmp/loggingFile.log");   // Log-Datei festlegen INFO: FILE IS ON TARGET
+
+logger.start();                        // Logger starten
+logger.log(LogLevel::INFO, "Application starting...", "Main");
+
 #if TESTING == 1
+
+    logger.log(LogLevel::INFO, "Testing starting...", "Main");
 	::testing::InitGoogleTest(&argc, argv);
 	auto result = RUN_ALL_TESTS();
 
@@ -152,7 +168,11 @@ int main(int argc, char **argv) {
     actuatorControllerThread.join();
     decoderThread.join();
 
+
+
+
 #endif /*_TESTING_*/
+    logger.stop();
     return 0;
 }
 

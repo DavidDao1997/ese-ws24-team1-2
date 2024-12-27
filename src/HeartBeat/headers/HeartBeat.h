@@ -18,6 +18,8 @@
 #include "../../Dispatcher/headers/PulseMsgConfig.h"
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
 #include "../../HAL/headers/HALConfig.h"
+
+#include "../../Logging/headers/Logger.h"
 class HeartBeat : public PulseMsgHandler {
   public:
     HeartBeat();

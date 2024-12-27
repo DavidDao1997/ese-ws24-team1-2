@@ -20,6 +20,8 @@
 #include "TSCADC.h"
 #include <sys/siginfo.h>
 
+#include "../../Logging/headers/Logger.h"
+
 #define ADC_TYPE   16
 
 class ADC{

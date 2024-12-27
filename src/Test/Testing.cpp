@@ -20,11 +20,13 @@
 #include "../HeightController/header/HeightSensorControl.h"
 #include "../Decoder/headers/Decoder.h"
 #include "../Logik/FSM/headers/FSMController.h"
+#include "../Logging/headers/Logger.h"
 
 
 class TestEnvironment : public ::testing::Test {
 protected:
     void SetUp() override {
+        Logger::getInstance().log(LogLevel::INFO, "Setup Tests...", "Testing");
         std::string dispatcherChannelName = "dispatcher";
         dispatcher = new Dispatcher(dispatcherChannelName);
         decoder = new Mock_Decoder(dispatcherChannelName);
@@ -56,30 +58,30 @@ protected:
     }
 
     void TearDown() override {
-        if (!fsmController->stop()) {std::cout << "loop fsmControllerHandleMsgThread has ended" << std::endl;}
+        Logger::getInstance().log(LogLevel::INFO, "Tear Down Tests...", "Testing");
+        if (!fsmController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop fsmControllerHandleMsgThread has ended...", "Testing");}
         //if (!decoder->stop()) {std::cout << "loop decoderThread has ended" << std::endl;} // MOCK DOESNT HAVE A MSGHANDLER
-        if (!actuatorController->stop()) {std::cout << "loop actuatorControllerThread has ended" << std::endl;}
-        if (!heightSensorController->stop()) {std::cout << "loop heightSensorControllerThread has ended" << std::endl;}
-        if (!dispatcher->stop()) {std::cout << "loop dispatcherThread has ended" << std::endl;}
+        if (!actuatorController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop actuatorControllerThread has ended...", "Testing");}
+        if (!heightSensorController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop heightSensorControllerThread has ended...", "Testing");}
+        if (!dispatcher->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop dispatcherThread has ended...", "Testing");}
 
 
-        
-        std::cout << "ENDING TREADS" << std::endl;
+        Logger::getInstance().log(LogLevel::INFO, "ENDING TREADS...", "Testing");
         // if (fsmControllerHandleMsgThread.joinable()) 
         fsmControllerHandleMsgThread.join();
-        std::cout << "Tread fsmControllerHandleMsgThread Ended" << std::endl;
+        Logger::getInstance().log(LogLevel::INFO, "Thread fsmControllerHandleMsgThread Ended...", "Testing");
         // if (decoderThread.joinable()) 
         decoderThread.join();
-        std::cout << "Tread decoderThread Ended" << std::endl;
+        Logger::getInstance().log(LogLevel::INFO, "Thread decoderThread Ended...", "Testing");
         // if (actuatorControllerThread.joinable()) 
         actuatorControllerThread.join();
-        std::cout << "Tread actuatorControllerThread Ended" << std::endl;
+        Logger::getInstance().log(LogLevel::INFO, "Thread actuatorControllerThread Ended...", "Testing");
         // if (heightSensorControllerThread.joinable()) 
-        heightSensorControllerThread.join();   
-        std::cout << "Tread heightSensorControllerThread Ended" << std::endl;
+        heightSensorControllerThread.join();  
+        Logger::getInstance().log(LogLevel::INFO, "Thread heightSensorControllerThread Ended...", "Testing"); 
         // if (dispatcherThread.joinable()) 
         dispatcherThread.join();
-        std::cout << "Tread dispatcherThread Ended" << std::endl;
+        Logger::getInstance().log(LogLevel::INFO, "Thread dispatcherThread Ended...", "Testing");
 
         delete heightSensorController;
 		delete decoder;

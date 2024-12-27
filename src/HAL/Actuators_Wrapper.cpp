@@ -18,7 +18,7 @@ Actuators_Wrapper::Actuators_Wrapper() {
     gpio_bank_1 = MAP_DEVICE_FAILED;
 
     if (!init()){
-        perror("Init actuator Wrapper Failed");
+        Logger::getInstance().log(LogLevel::INFO, "Init actuator Wrapper Failed...", "Actuators_Wrapper");
     }
 }
 

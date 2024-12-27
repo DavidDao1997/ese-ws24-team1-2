@@ -33,11 +33,12 @@ TSCADC::~TSCADC() { munmap_device_io(baseAdd, SIZE); }
 void TSCADC::gainAccess(void) {
     if (baseAdd == MAP_DEVICE_FAILED) {
         if (-1 == ThreadCtl(_NTO_TCTL_IO, 0)) {
-            DBG_ERROR("ThreadCtl access failed\n");
+            Logger::getInstance().log(LogLevel::CRITICAL, "ThreadCtl access failed...", "TSCADC");
             exit(EXIT_FAILURE);
         }
         baseAdd = mmap_device_io(SIZE, BASE);
         if (baseAdd == MAP_DEVICE_FAILED) {
+            Logger::getInstance().log(LogLevel::CRITICAL, "allocation of GPIO failed...", "TSCADC");
             DBG_ERROR("allocation of GPIO failed");
             exit(EXIT_FAILURE);
         }

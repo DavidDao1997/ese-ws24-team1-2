@@ -31,10 +31,10 @@ HeightSensorControl::HeightSensorControl(const std::string channelName, const st
 HeightSensorControl::~HeightSensorControl() { 
     // TODO disconnect from dispatcher
     if (0 > ConnectDetach(dispatcherConnectionID)){
-        perror("HSCONTROLLER: Disconnection from Dispatcher failed");
+        Logger::getInstance().log(LogLevel::ERROR, "Disconnection from Dispatcher failed...", "HeightSensorControl");
     }
     // TODO How to end thread if blocked in MsgReveivePulse and return avlue?
-    std::cout << "HSCONTROLLER: destroying own channel " << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "destroying own channel...", "HeightSensorControl");
     destroyNamedChannel(channelID, hsControllerChannel); 
 }
 
@@ -90,13 +90,13 @@ HeightSensorControl::~HeightSensorControl() {
 bool HeightSensorControl::stop(){
 	int coid = connectToChannel(channelID);
     if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
-            perror("HSCONTROLLER: shutting down Msg Receiver failed");
-            return false;
+        Logger::getInstance().log(LogLevel::ERROR, "Shutting down Msg Receiver failed...", "HeightSensorControl");
+        return false;
     }
     // disconnect the connection to own channel
-    std::cout << "HSCONTROLLER: Shutting down PULSE send " << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down PULSE send...", "HeightSensorControl");
     if (0 > ConnectDetach(coid)){
-        perror("HSCONTROLLER: Stop Detach failed");
+        Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "HeightSensorControl");
         return false;
     }
     return true;
@@ -121,7 +121,7 @@ void HeightSensorControl::handleMsg() {
     while (receivingRunning) {
         // printf("Iam into Routine\n");
         if (MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr) < 0) {
-            perror("HSCONTROLLER: MsgReceivePulse failed!");
+            Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "HeightSensorControl");
             //exit(EXIT_FAILURE);
         }
 
@@ -134,13 +134,13 @@ void HeightSensorControl::handleMsg() {
             // this_thread::sleep_for(chrono::milliseconds(10));
             // adc->sample();
         } else if(msg.code == PULSE_STOP_RECV_THREAD) {
-                std::cout << "HSCONTROLLER: received PULSE_STOP_RECV_THREAD " << std::endl;
-                receivingRunning = false;  
+            Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_STOP_RECV_THREAD...", "HeightSensorControl");
+            receivingRunning = false;  
         }
 
         // processSample(currentValue, secondChance, candidateValue, adc);
     }
-    printf("HSCONTROLLER: Message thread stops...\n");
+    Logger::getInstance().log(LogLevel::DEBUG, "Message thread stops...", "HeightSensorControl");
 }
 
 void HeightSensorControl::sendMsg() {}
@@ -160,7 +160,7 @@ void HeightSensorControl::processSample(
         handleBandHeightReached(secondChance);
         if (candidatesSend) {
             if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS_SAMPLING_DONE, currentValue)) {
-                perror("HSCONTROLLER: Send failed.");
+                Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
             }
             candidatesSend = false;
         }
@@ -168,7 +168,7 @@ void HeightSensorControl::processSample(
         // std::cout << "HSCONTROL: value is: " << currentValue << std::endl;
         // std::cout << "HSCONTROL: CounterValue is: " << countSample << std::endl;
         if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS_SAMPLE, currentValue)) {
-            perror("HSCONTROLLER: Send failed.");
+            Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
         }
         candidatesSend = true;
     } else {

@@ -17,6 +17,7 @@
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
 #include "../../HAL/interfaces/I_Actuators_Wrapper.h"
 #include "Mock_Actuators_Wrapper.h"
+#include "../../Logging/headers/Logger.h"
 
 #define ACTUATOR_CONTROLLER_NUM_OF_PULSES 32
 

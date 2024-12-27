@@ -9,7 +9,7 @@
 #define HEARTBEAT_INTERFACES_I_HEARTBEAT_H_
 
 
-
+#include "../../Logging/headers/Logger.h"
 
 
 #endif /* HEARTBEAT_INTERFACES_I_HEARTBEAT_H_ */

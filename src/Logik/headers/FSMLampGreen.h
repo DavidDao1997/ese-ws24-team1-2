@@ -1,6 +1,8 @@
 #ifndef FSMLAMPGREEN_H
 #define FSMLAMPGREEN_H
 
+#include "../../Logging/headers/Logger.h"
+
 enum class LampGreenState { Off, Constant, Blinking1HZ };
 
 class FSMLampGreen {

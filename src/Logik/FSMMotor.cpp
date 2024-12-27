@@ -30,7 +30,7 @@ FSMMotor::~FSMMotor() {}
 // }
 
 void FSMMotor::raiseSystemEStopIn() {
-    std::cout << "MOTOR GOT ESTOP" << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "GOT ESTOP...", "FSMMotor");
     motorStopRequests++;
     evaluteInternalVariables();
 }
@@ -109,13 +109,13 @@ void FSMMotor::raiseEgressPukPresentOut() {
 }
 
 void FSMMotor::raiseEgressPukTransferIn() {
-    std::cout << "FSMMotor: Motor Stop Transfer In " << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "Stop Transfer In...", "FSMMotor");
     motorStopRequests++;
     evaluteInternalVariables();
 }
 
 void FSMMotor::raiseEgressPukTransferOut() {
-    std::cout << "MOTOR:EgressPukTransferOut" << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "EgressPukTransferOut...", "FSMMotor");
 	motorStopRequests--;
     motorFastRequests--;
     evaluteInternalVariables();
@@ -146,16 +146,16 @@ void FSMMotor::onMotorSlowIn(std::function<void(int32_t conId)> callBackFunction
 
 void FSMMotor::setState(MotorState nextState) {
     if (nextState == Stop && currentState != Stop) {
-        std::cout << "FSMMotor: entry stop" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry stop...", "FSMMotor");
         callbackMotorStopIn(dispConnectionId);
         currentState = nextState;
 
     } else if (nextState == Slow && currentState != Slow) {
-        std::cout << "FSMMotor: entry slow" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry slow...", "FSMMotor");
         callbackMotorSlowIn(dispConnectionId);
         currentState = nextState;
     } else if (nextState == Fast && currentState != Fast) {
-        std::cout << "FSMMotor: entry fast" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry fast...", "FSMMotor");
         callbackMotorFastIn(dispConnectionId);
         currentState = Fast;
     }

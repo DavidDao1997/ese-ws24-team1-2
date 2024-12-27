@@ -16,11 +16,11 @@ HeartBeat::~HeartBeat(){
     running = false;
 }
 
-bool init(int32_t hbOtherFesto) {
+bool HeartBeat::init(int32_t hbOtherFesto) {
     int32_t channelIDSecondFesto = hbOtherFesto;
     int32_t coid = ConnectAttach(0, 0, channelIDSecondFesto, _NTO_SIDE_CHANNEL, 0);
     if (coid == -1) {
-        perror("Other Festo not Found");
+        Logger::getInstance().log(LogLevel::WARNING, "Other Festo not Found...", "HeartBeat");
         return false;
     }
     return true;
@@ -47,13 +47,13 @@ void HeartBeat::handleMsg() {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
 
         if (recvid < 0) {
-            perror("MsgReceivePulse failed!");
+            Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "HeartBeat");
         }
 
         if (recvid == 0) { // Pulse received
             if (msg.code == PULSE_HEARTBEAT) {
                 // TODO update time when last heartbeat was received.
-                std::cout << "Getting Heartbeat from Slave" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Getting Heartbeat from Slave...", "HeartBeat");
             }
         }
     }

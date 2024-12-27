@@ -1,6 +1,8 @@
 #ifndef FSMLAMPRED_H
 #define FSMLAMPRED_H
 
+#include "../../Logging/headers/Logger.h"
+
 enum class LampRedState { Off, Constant };
 
 class FSMLampRed {

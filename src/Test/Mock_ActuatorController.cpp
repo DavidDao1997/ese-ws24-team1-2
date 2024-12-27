@@ -61,19 +61,19 @@ Mock_ActuatorController::Mock_ActuatorController(const std::string name, Mock_Ac
 
 Mock_ActuatorController::~Mock_ActuatorController() {
     // thread löschen
-    std::cout << "ACTUATORCONTROLLER: destroying own channel " << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "destroying own channel...", "Mock_ActuatorController");
     destroyNamedChannel(channelID, actuatorControllerChannel); 
 };
 
 bool Mock_ActuatorController::stop(){
 	int coid = connectToChannel(channelID);
     if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
-            perror("ACTUATORCONTROLLER: shutting down Msg Receiver failed");
+            Logger::getInstance().log(LogLevel::ERROR, "shutting down Msg Receiver failed...", "Mock_ActuatorController");
             return false;
     }
-    std::cout << "ACTUATORCONTROLLER: Shutting down PULSE send " << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down PULSE send...", "Mock_ActuatorController");
     if (0 > ConnectDetach(coid)){
-        perror("ACTUATORCONTROLLER: Stop Detach failed");
+        Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "Mock_ActuatorController");
         return false;
     }
     return true;
@@ -96,96 +96,96 @@ void Mock_ActuatorController::handleMsg() {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
 
         if (recvid < 0) {
-            perror("ACTUATORCONTROLLER: MsgReceivePulse failed!");
+            Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "Mock_ActuatorController");
             //exit(EXIT_FAILURE);
         }
 
         if (recvid == 0) { // Pulse received^
             int32_t msgVal = msg.value.sival_int;
-            // std::cout << "MSG VAL: " << msgVal << std::endl;
+            // Logger::getInstance().log(LogLevel::DEBUG, "MSG VAL: " + std::to_string(msgVal), "Mock_ActuatorController");
             switch (msg.code) {
             case PULSE_STOP_RECV_THREAD:
-                std::cout << "ACTUATORCONTROLLER: received PULSE_STOP_RECV_THREAD " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_STOP_RECV_THREAD...", "Mock_ActuatorController");
                 running = false;
                 break;
             case PULSE_MOTOR1_STOP:
-                std::cout << "ACTUATORCONTROLLER: Motor will be stopped" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Festo 1 will be stopped...", "Mock_ActuatorController");
                 actuators->motorStop();
                 break;
             case PULSE_MOTOR1_SLOW:
-                std::cout << "ACTUATORCONTROLLER: Motor will be slow running" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Festo 1 will be slow running...", "Mock_ActuatorController");
                 actuators->runSlow();
                 actuators->runRight(); // TODO test is toggle button is not needed
                 break;
             case PULSE_MOTOR1_FAST:
-                std::cout << "ACTUATORCONTROLLER: Motor will be fast running" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Festo 1 will be fast running...", "Mock_ActuatorController");
                 actuators->runFast();
                 actuators->runRight();
                 break;
             case PULSE_MOTOR2_STOP:
-                std::cout << "ACTUATORCONTROLLER: Motor will be stopped" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Festo 2 will be stopped...", "Mock_ActuatorController");
                 actuators->motorStop();
                 break;
             case PULSE_MOTOR2_SLOW:
-                std::cout << "ACTUATORCONTROLLER: Motor will be slow running" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Festo 2 will be slow running...", "Mock_ActuatorController");
                 actuators->runSlow();
                 actuators->runRight(); // TODO test is toggle button is not needed
                 break;
             case PULSE_MOTOR2_FAST:
-                std::cout << "ACTUATORCONTROLLER: Motor will be fast running" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Festo 2 will be fast running...", "Mock_ActuatorController");
                 actuators->runFast();
                 actuators->runRight();
                 break;
             case PULSE_LG1_OFF:
-                std::cout << "ACTUATORCONTROLLER: LED GREEN OFF" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED GREEN OFF...", "Mock_ActuatorController");
                 // lgblinking = false;
                 Mock_ActuatorController::lgblinking = false;
                 actuators->greenLampLightOff();
                 break;
             case PULSE_LY1_OFF:
-                std::cout << "ACTUATORCONTROLLER: LED YELLOW OFF" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED YELLOW OFF...", "Mock_ActuatorController");
                 //lyblinking = false;
                 Mock_ActuatorController::lyblinking = false;
                 actuators->yellowLampLightOff();
                 break;
             case PULSE_LR1_OFF:
-                std::cout << "ACTUATORCONTROLLER: LED RED OFF" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED RED OFF...", "Mock_ActuatorController");
                 // lrblinking = false;
                 Mock_ActuatorController::lrblinking = false;
                 actuators->redLampLightOff();
                 break;
             case PULSE_LG1_BLINKING:
-                std::cout << "ACTUATORCONTROLLER: LED GREEN BLINKING" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED GREEN BLINKING...", "Mock_ActuatorController");
                 lgblinking = true;
                 Mock_ActuatorController::lgblinking = true;
                 startGreenLampBlinkingThread(msgVal);
                 break;
             case PULSE_LY1_BLINKING:
-                std::cout << "ACTUATORCONTROLLER: LED YELLOW BLINKING" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED YELLOW BLINKING...", "Mock_ActuatorController");
                 // lyblinking = true;
                 Mock_ActuatorController::lyblinking = true;
                 startYellowLampBlinkingThread(msgVal);
                 break;
             case PULSE_LR1_BLINKING:
-                std::cout << "ACTUATORCONTROLLER: LED RED BLINKING" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED RED BLINKING...", "Mock_ActuatorController");
                 // lrblinking = true;
                 Mock_ActuatorController::lrblinking = true;
                 startRedLampBlinkingThread(msgVal);
                 break;
             case PULSE_LG1_ON:
-                std::cout << "ACTUATORCONTROLLER: LED GREEN ON" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED GREEN ON...", "Mock_ActuatorController");
                 //lgblinking = false;
                 Mock_ActuatorController::lgblinking = false;
                 actuators->greenLampLightOn();
                 break;
             case PULSE_LY1_ON:
-                std::cout << "ACTUATORCONTROLLER: LED YELLOW ON" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED YELLOW ON...", "Mock_ActuatorController");
                 //lyblinking = false;
                 Mock_ActuatorController::lyblinking = false;
                 actuators->yellowLampLightOn();
                 break;
             case PULSE_LR1_ON:
-                std::cout << "ACTUATORCONTROLLER: LED RED ON" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED RED ON...", "Mock_ActuatorController");
                 //lrblinking = false;
                 Mock_ActuatorController::lrblinking = false;
                 actuators->redLampLightOn();
@@ -197,7 +197,7 @@ void Mock_ActuatorController::handleMsg() {
 				actuators->openSortingModule();
 				break;
 			default:
-				std::cout << "ACTUATORCONTROLLER: UNKNOW PULSE" << std::endl;
+                Logger::getInstance().log(LogLevel::WARNING, "Unknown Pulse received...", "Mock_ActuatorController");
             }
         }
     }
@@ -234,7 +234,7 @@ void Mock_ActuatorController::greenlampBlinking(std::atomic<bool> *blink, int32_
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
     }
     actuators->toggleGreenBlinking();
-    std::cout << "ACTUATORCONTROLLER: green blinking stopped" << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "green blinking stopped...", "Mock_ActuatorController");
 }
 
 void Mock_ActuatorController::yellowlampBlinking(std::atomic<bool> *blink, int32_t frequency) {
@@ -247,7 +247,7 @@ void Mock_ActuatorController::yellowlampBlinking(std::atomic<bool> *blink, int32
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
     }
     actuators->toggleYellowBlinking();
-    std::cout << "ACTUATORCONTROLLER: yellow blinking stopped" << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "yellow blinking stopped...", "Mock_ActuatorController");
 }
 
 void Mock_ActuatorController::redlampBlinking(std::atomic<bool> *blink, int32_t frequency) {
@@ -260,7 +260,7 @@ void Mock_ActuatorController::redlampBlinking(std::atomic<bool> *blink, int32_t 
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
     }
     actuators->toggleRedBlinking();
-    std::cout << "ACTUATORCONTROLLER: red blinking stopped" << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "red blinking stopped...", "Mock_ActuatorController");
 }
 
 int32_t Mock_ActuatorController::getChannel() { return channelID; }

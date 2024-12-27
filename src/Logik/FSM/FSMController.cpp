@@ -45,32 +45,32 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
 
     fsmSystem->onSystemServiceIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SYSTEM_SERVICE_IN)) {
-            perror("Service In Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Service In Failed...", "FSMController");
         }
     });
     fsmSystem->onSystemServiceOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SYSTEM_SERVICE_OUT)) {
-            perror("Service Out Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Service Out Failed...", "FSMController");
         }
     });
     fsmSystem->onEStopIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SYSTEM_ESTOP_IN)) {
-            perror("ESTOP In Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "ESTOP In Failed...", "FSMController");
         }
     });
     fsmSystem->onEStopOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SYSTEM_ESTOP_OUT)) {
-            perror("ESTOP Out Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "ESTOP Out Failed...", "FSMController");
         }
     });
     fsmSystem->onSystemOperationalIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SYSTEM_OPERATIONAL_IN)) {
-            perror("Operational In Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Operational In Failed...", "FSMController");
         }
     });
     fsmSystem->onSystemOperationalOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SYSTEM_OPERATIONAL_OUT)) {
-            perror("Operational Out Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Operational Out Failed...", "FSMController");
         }
     });
 
@@ -78,17 +78,17 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     fsmLG1 = new FSMLampGreen(dispatcherConnectionID);
     fsmLG1->onLG1On([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_LG1_ON, 0)) {
-            perror("LG1 On Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "LG1 On Failed...", "FSMController");
         }
     });
     fsmLG1->onLG1Off([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_LG1_OFF, 0)) {
-            perror("LG1 Off failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "LG1 Off failed...", "FSMController");
         }
     });
     fsmLG1->onLG1Blinking1Hz([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_LG1_BLINKING, 1000)) {
-            perror("LY1 Blink Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "LY1 Blink Failed...", "FSMController");
         }
     });
 
@@ -97,17 +97,17 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
 
     fsmLY1->onLY1On([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_LY1_ON, 0)) {
-            perror("LY1 On Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "LY1 On Failed...", "FSMController");
         }
     });
     fsmLY1->onLY1Off([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_LY1_OFF, 0)) {
-            perror("LY1 Off failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "LY1 Off failed...", "FSMController");
         }
     });
     fsmLY1->onLY1Blinking1Hz([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_LY1_BLINKING, 1000)) {
-            perror("LY1 Blink Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "LY1 Blink Failed...", "FSMController");
         }
     });
 
@@ -116,13 +116,13 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
 
     fsmLR1->onLR1On([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_LR1_ON, 0)) {
-            perror("LR1 On Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "LR1 On Failed...", "FSMController");
         }
     });
 
     fsmLR1->onLR1Off([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_LR1_OFF, 0)) {
-            perror("LR1 Off Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "LR1 Off Failed...", "FSMController");
         }
     });
 
@@ -131,17 +131,17 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
 
     fsmMotor->onMotorStopIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_STOP, 0)) {
-            perror("Event onMotorStopIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onMotorStopIn Failed...", "FSMController");
         }
     });
     fsmMotor->onMotorSlowIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_SLOW, 0)) {
-            perror("Event onMotorSlowIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onMotorSlowIn Failed...", "FSMController");
         }
     });
     fsmMotor->onMotorFastIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_MOTOR1_FAST, 0)) {
-            perror("Event onMotorFastIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onMotorFastIn Failed...", "FSMController");
         }
     });
 
@@ -149,129 +149,129 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     fsmIngress = new FSMIngress(dispatcherConnectionID);
     fsmIngress->onIngressIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_INGRESS_IN)) {
-            perror("Event Ingress in  Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event Ingress in  Failed...", "FSMController");
         }
     });
     fsmIngress->onIngressOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_INGRESS_OUT)) {
-            perror("Event Ingress out  Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event Ingress out  Failed...", "FSMController");
         }
     });
     fsmIngress->onPukPresentIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_INGRESS_PUKPRESENT_IN)) {
-            perror("Event onPukPresentIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onPukPresentIn Failed...", "FSMController");
         }
     });
     fsmIngress->onPukCreatingDistanceOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_INGRESS_CREATINGDISTANCE_OUT)) {
-            perror("Event onCreatingDistanceOut Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onCreatingDistanceOut Failed...", "FSMController");
         }
     });
     fsmIngress->onPukEntryHeightMeasurement([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_PUK_ENTRY_HEIGHT_MEASUREMENT)) {
-            perror("Event Puk Height Measurement  Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event Puk Height Measurement  Failed...", "FSMController");
         }
     });
 
     fsmHeightMeasurement = new FSMHeightMeasurement(dispatcherConnectionID);
     fsmHeightMeasurement->onPukPresentIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_PUKPRESENT_IN)) {
-            perror("Event onPukPresentIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onPukPresentIn Failed...", "FSMController");
         }
     });
     fsmHeightMeasurement->onPukPresentOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_PUKPRESENT_OUT)) {
-            perror("Event onPukPresentIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onPukPresentOut Failed...", "FSMController");
         }
     });
     fsmHeightMeasurement->onMeasurementIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_MEASUREMENT_IN)) {
-            perror("Event onPukPresentIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onMeasurementIn Failed...", "FSMController");
         }
     });
     fsmHeightMeasurement->onMeasurementOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_MEASUREMENT_OUT)) {
-            perror("Event onPukPresentIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onMeasurementOut Failed...", "FSMController");
         }
     });
     fsmHeightMeasurement->onPukDistanceValid([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_PUK_DISTANCE_VALID)) {
-            perror("Event onPukPresentIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onPukDistanceValid Failed...", "FSMController");
         }
     });
     fsmHeightMeasurement->onPukLeaveHeightMeasurement([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_PUK_LEAVING_HEIGHTMEASUREMENT)) {
-            perror("Event onPukPresentIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onPukLeaveHeightMeasurement Failed...", "FSMController");
         }
     });
 
     fsmHeightMeasurement->onPukEntrySorting([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_HM_ENTRY_SORTING)) {
-            perror("Event onPukPresentIn Failed \n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onPukEntrySorting Failed...", "FSMController");
         }
     });
 
     fsmSorting = new FSMSorting(dispatcherConnectionID);
     fsmSorting->onPukPresentIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_PUKPRESENT_IN)) {
-            perror("Event onPuk Present in Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onPukPresentIn Failed...", "FSMController");
         }
     });
     fsmSorting->onPukPresentOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_PUKPRESENT_OUT)) {
-            perror("Event Soritng Puk Present out Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onPukPresentOut Failed...", "FSMController");
         }
     });
     fsmSorting->onPukEntryEgress([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_PUK_ENTRY_EGRESS)) {
-            perror("Event Sorting Puk Entry Egress Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onPukEntryEgress Failed...", "FSMController");
         }
     });
     fsmSorting->onPukEjectorDistanceValid([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_PUK_EJECTOR_DISTANCE_VALID)) {
-            perror("Event Sorting Puk Ejector Distance Valid Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onPukEjectorDistanceValid Failed...", "FSMController");
         }
     });
     fsmSorting->onRampFullIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_RAMP_FULL_IN)) {
-            perror("Event Sorting Ramp Full In Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onRampFullIn Failed...", "FSMController");
         }
     });
     fsmSorting->onRampFullOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_RAMP_FULL_OUT)) {
-            perror("Event Sorting Ramp Full Out\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onRampFullOut Failed...", "FSMController");
         }
     });
     fsmSorting->onMetalMeasurementIn([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_METALMEASUREMENT_IN)) {
-            perror("Event Sorting  Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onMetalMeasurementIn Failed...", "FSMController");
         }
     });
     fsmSorting->onMetalMeasurementOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_METALMEASUREMENT_OUT)) {
-            perror("Event onPukPresentIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onMetalMeasurementOut Failed...", "FSMController");
         }
     });
     fsmSorting->onSortingModuleActive([](int32_t conId) {
-        std::cout << "FSMCONTROLLER: onSortingModuleActive " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "onSortingModuleActive...", "FSMController");
         if (0 < MsgSendPulse(conId, -1, PULSE_SM1_ACTIVE, 0)) {
-            perror("Event onPukPresentIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onSortingModuleActive Failed...", "FSMController");
         }
     });
     fsmSorting->onSortingModuleResting([](int32_t conId) {
-        std::cout << "FSMCONTROLLER: onSortingModuleResting " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "onSortingModuleResting...", "FSMController");
         if (0 < MsgSendPulse(conId, -1, PULSE_SM1_RESTING, 0)) {
-            perror("Event onPukPresentIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onSortingModuleResting Failed...", "FSMController");
         }
     });
     fsmSorting->onEjectingOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_EJECTOR_OUT)) {
-            perror("Event onPukPresentIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onEjectingOut Failed...", "FSMController");
         }
     });
     fsmSorting->onPassthroughOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_SORTING_PASSTHROUGH_OUT)) {
-            perror("Event onPukPresentIn Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onPassthroughOut Failed...", "FSMController");
         }
     });
 
@@ -279,25 +279,25 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     fsmEgress = new FSMEgress(dispatcherConnectionID);
 
     fsmEgress->onEgressTransferIn([](int32_t conId) {
-        std::cout << "FSMEgress: entry Transfer " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry Transfer...", "FSMController");
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_EGRESS_TRANSFER_IN)) {
-            perror("Event Egress in  Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onEgressTransferIn Failed...", "FSMController");
         }
     });
     fsmEgress->onEgressTransferOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_EGRESS_TRANSFER_OUT)) {
-            perror("Event Egress out  Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onEgressTransferOut Failed...", "FSMController");
         }
     });
     fsmEgress->onEgressPukPresentIn([](int32_t conId) {
-        std::cout << "FSMEgress: entry Transfer " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry Transfer...", "FSMController");
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_EGRESS_PUKPRESENT_IN)) {
-            perror("Event Egress in  Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onEgressPukPresentIn Failed...", "FSMController");
         }
     });
     fsmEgress->onEgressPukPresentOut([](int32_t conId) {
         if (0 < MsgSendPulse(conId, -1, PULSE_FSM, EVENT_EGRESS_PUKPRESENT_OUT)) {
-            perror("Event Egress out  Failed\n");
+            Logger::getInstance().log(LogLevel::ERROR, "Event onEgressPukPresentOut Failed...", "FSMController");
         }
     });
     // TODO connect to dispatcher
@@ -319,12 +319,12 @@ int8_t FSMController::getNumOfPulses() { return numOfPulses; };
 bool FSMController::stop(){
 	int coid = connectToChannel(channelID);
     if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
-            perror("FSMCONTROLLER: shutting down Msg Receiver failed");
-            return false;
+        Logger::getInstance().log(LogLevel::ERROR, "shutting down Msg Receiver failed...", "FSMController");
+        return false;
     }
-    std::cout << "FSMCONTROLLER: Shutting down PULSE send " << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down PULSE send...", "FSMController");
     if (0 > ConnectDetach(coid)){
-        perror("FSMCONTROLLER: Stop Detach failed");
+        Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "FSMController");
         return false;
     }
     return true;
@@ -337,7 +337,7 @@ void FSMController::handleMsg() {
     while (running) {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
         if (recvid < 0) {
-            perror("FSMCONTROLLER: MsgReceivePulse failed!");
+            Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "FSMController");
             //exit(EXIT_FAILURE);
         }
 
@@ -345,7 +345,7 @@ void FSMController::handleMsg() {
             int32_t msgVal = msg.value.sival_int;
             switch (msg.code) {
             case PULSE_ESTOP_HIGH:
-                std::cout << "FSMCONTROLLER: received PULSE_ESTOP_HIGH " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_ESTOP_HIGH...", "FSMController");
                 if (FESTO1 == msgVal) {
                     fsmSystem->raiseEStop1High();
                 } else {
@@ -353,7 +353,7 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_ESTOP_LOW:
-                std::cout << "FSMCONTROLLER: received PULSE_ESTOP_LOW " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_ESTOP_LOW...", "FSMController");
                 if (FESTO1 == msgVal) {
                     fsmSystem->raiseEStop1Low();
                 } else {
@@ -361,12 +361,12 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_STOP_RECV_THREAD:
-                std::cout << "FSMCONTROLLER: received PULSE_STOP_RECV_THREAD " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_STOP_RECV_THREAD...", "FSMController");
                 running = false;
                 subThreadsRunning = false;             
                 break;
             case PULSE_LBF_INTERRUPTED:
-                std::cout << "FSMCONTROLLER: received PULSE_LBF_INTERRUPTED " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBF_INTERRUPTED...", "FSMController");
                 if (FESTO1 == msgVal) {
                     // fsm->raiseLBF_1_INTERRUPTED();
                     fsmIngress->raiseLBF1Interrupted();
@@ -375,7 +375,7 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_LBF_OPEN:
-                std::cout << "FSMCONTROLLER: received PULSE_LBF_OPEN " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBF_OPEN...", "FSMController");
                 if (FESTO1 == msgVal) {
                     fsmIngress->raiseLBF1Open();
                     // fsm->raiseLBF_1_OPEN();
@@ -384,7 +384,7 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_LBE_INTERRUPTED:
-                std::cout << "FSMCONTROLLER: received PULSE_LBE_INTERRUPTED " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBE_INTERRUPTED...", "FSMController");
                 if (FESTO1 == msgVal) {
                     // fsm->raiseLBE_1_INTERRUPTED();
                     fsmEgress->raiseLBE1Interrupted();
@@ -393,7 +393,7 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_LBE_OPEN:
-                std::cout << "FSMCONTROLLER: received PULSE_LBE_OPEN " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBE_OPEN...", "FSMController");
                 if (FESTO1 == msgVal) {
                     // fsm->raiseLBE_1_OPEN();
                     fsmEgress->raiseLBE1Open();
@@ -402,7 +402,7 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_LBR_INTERRUPTED:
-                std::cout << "FSMCONTROLLER: received PULSE_LBR_INTERRUPTED " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBR_INTERRUPTED...", "FSMController");
                 if (FESTO1 == msgVal) {
                     fsmSorting->raiseLBR1Interrupted();
                 } else {
@@ -410,7 +410,7 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_LBR_OPEN:
-                std::cout << "FSMCONTROLLER: received PULSE_LBR_OPEN " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBR_OPEN...", "FSMController");
                 if (FESTO1 == msgVal) {
                     fsmSorting->raiseLBR1Open();
                 } else {
@@ -418,7 +418,7 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_LBM_INTERRUPTED:
-                std::cout << "FSMCONTROLLER: received PULSE_LBM_INTERRUPTED " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBM_INTERRUPTED...", "FSMController");
                 if (FESTO1 == msgVal) {
                     fsmSorting->raiseLBM1Interrupted();
                 } else {
@@ -426,7 +426,7 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_LBM_OPEN:
-                std::cout << "FSMCONTROLLER: received PULSE_LBM_OPEN " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBM_OPEN...", "FSMController");
                 if (FESTO1 == msgVal) {
                     fsmSorting->raiseLBM1Open();
                 } else {
@@ -434,7 +434,7 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_BGS_SHORT:
-                std::cout << "FSMCONTROLLER: received PULSE_BGS_SHORT " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BGS_SHORT...", "FSMController");
                 if (FESTO1 == msgVal) {
                     // fsm->raiseBGS_1_INTERRUPTED();
                     fsmSystem->raiseBGS1Short();
@@ -443,7 +443,7 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_BGS_LONG:
-                std::cout << "FSMCONTROLLER: received PULSE_BGS_LONG " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BGS_LONG...", "FSMController");
                 if (FESTO1 == msgVal) {
                     fsmSystem->raiseBGS1Long();
                 } else {
@@ -451,7 +451,7 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_BRS_SHORT:
-                std::cout << "FSMCONTROLLER: received PULSE_BRS_SHORT " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BRS_SHORT...", "FSMController");
                 if (FESTO1 == msgVal) {
                     fsmSystem->raiseBRS1Short();
                     // TODO fsm->raiseBRS_1_OPEN();
@@ -460,7 +460,7 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_BGR_SHORT:
-                std::cout << "FSMCONTROLLER: received PULSE_BGR_SHORT " << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BGR_SHORT...", "FSMController");
                 if (FESTO1 == msgVal) {
                     fsmSystem->raiseBGR1Short();
                 } else {
@@ -468,19 +468,19 @@ void FSMController::handleMsg() {
                 }
                 break;
             case PULSE_HS_SAMPLE:
-                // std::cout << "FSMCONTROLLER: received PULSE_HS_SAMPLE FST_1" << std::endl;
+                // Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS_SAMPLE FST_1...", "FSMController");
                 fsmHeightMeasurement->raiseHS1Sample();
                 break;
             case PULSE_HS_SAMPLING_DONE:
-                std::cout << "FSMCONTROLLER: received PULSE_HS_SAMPLING_DONE FST_1" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS_SAMPLING_DONE FST_1...", "FSMController");
                 fsmHeightMeasurement->raiseHS1SamplingDone();
                 break;
             case PULSE_MS_TRUE:
-                std::cout << "FSMCONTROLLER: received PULSE_MS_TRUE FST_1" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_MS_TRUE FST_1...", "FSMController");
                 fsmSorting->raiseMSTrue();
                 break;
             case PULSE_MS_FALSE:
-                std::cout << "FSMCONTROLLER: received PULSE_MS_FALSE FST_1" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_MS_FALSE FST_1...", "FSMController");
                 fsmSorting->raiseMSFalse();
                 break;
             case PULSE_FSM:
@@ -507,7 +507,7 @@ void FSMController::handleMsg() {
                     // TODO
                     break;
                 case EVENT_SYSTEM_ESTOP_IN:
-                    std::cout << "FSMCONTROLLER: received EVENT_SYSTEM_ESTOP_IN" << std::endl;
+                    Logger::getInstance().log(LogLevel::DEBUG, "received EVENT_SYSTEM_ESTOP_IN...", "FSMController");
                     fsmLR1->raiseEStopReceived();
                     fsmLY1->raiseEStopReceived();
                     fsmLG1->raiseEStopReceived();
@@ -612,7 +612,7 @@ void FSMController::handleMsg() {
                 }
                 break;
             default:
-                std::cout << "FSMCONTROLLER: received UNKNOWN! ERROR " << std::endl;
+                Logger::getInstance().log(LogLevel::WARNING, "received UNKNOWN EVENT...", "FSMController");
                 // TODO FEHLER
             }
         }

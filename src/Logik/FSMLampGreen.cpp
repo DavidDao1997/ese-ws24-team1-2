@@ -37,14 +37,13 @@ void FSMLampGreen::raiseEStopReceived() {
 }
 void FSMLampGreen::raiseSystemOperationalIn() {
     if (currentState == LampGreenState::Off) {
-        std::cout << "FSMLAMPGREEN: System Operational in" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "System Operational in...", "FSMLampGreen");
         setState(LampGreenState::Constant);
     }
 }
 void FSMLampGreen::raiseSystemOperationalOut() {
     if (currentState == LampGreenState::Constant) {
-        std::cout << "FSMLAMPGREEN: System Operational out" << std::endl;
-
+        Logger::getInstance().log(LogLevel::DEBUG, "System Operational out...", "FSMLampGreen");
         setState(LampGreenState::Off);
     }
 }
@@ -62,20 +61,20 @@ void FSMLampGreen::setState(LampGreenState nextState) {
 
     // Block for entry Off
     if (nextState == LampGreenState::Off && currentState != LampGreenState::Off) {
-        std::cout << "FSMLAMPGREEN: entry off" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry off...", "FSMLampGreen");
         currentState = LampGreenState::Off;
         callbackLG1Off(dispConnectionId);
     }
     // Block for entry Constant
     else if (nextState == LampGreenState::Constant && currentState != LampGreenState::Constant) {
-        std::cout << "FSMLAMPGREEN: entry on" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry on...", "FSMLampGreen");
         currentState = LampGreenState::Constant;
         // callbackLG1Off(dispConnectionId);
         callbackLG1On(dispConnectionId);
     }
     // Block for entry Constant
     else if (nextState == LampGreenState::Blinking1HZ && currentState != LampGreenState::Blinking1HZ) {
-        std::cout << "FSMLAMPGREEN: entry blinking" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry blinking...", "FSMLampGreen");
         currentState = LampGreenState::Blinking1HZ;
         // callbackLG1Off(dispConnectionId);
         callbackLGBlinking1HZ(dispConnectionId);

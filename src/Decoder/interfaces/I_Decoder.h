@@ -17,6 +17,7 @@
 
 
 #include "../../HAL/headers/SensorISR.h"
+#include "../../Logging/headers/Logger.h"
 
 
 #include "../../Dispatcher/headers/PulseMsgConfig.h"

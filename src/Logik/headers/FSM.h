@@ -11,6 +11,8 @@
 #include "../../Dispatcher/headers/PulseMsgConfig.h"
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
 
+#include "../../Logging/headers/Logger.h"
+
 #define FSM_NUM_OF_PULSES 10
 
 class FSM : public PulseMsgHandler {

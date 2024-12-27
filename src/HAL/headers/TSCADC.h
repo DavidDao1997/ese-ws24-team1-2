@@ -21,7 +21,7 @@
 #include "tscadc_hw.h"
 #include <cstdint>
 
-
+#include "../../Logging/headers/Logger.h"
 
 enum IdleMode : unsigned int{
 	FORCE_IDLE          = 0,
