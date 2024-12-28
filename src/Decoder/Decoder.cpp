@@ -85,7 +85,7 @@ void Decoder::handleMsg() {
         }
 
         if (recvid == 0) { // Pulse received
-            if (msg.code != PULSE_STOP_RECV_THREAD) {
+            if (msg.code == PULSE_STOP_RECV_THREAD) {
                 Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_STOP_RECV_THREAD...", "Decoder");
                 running = false;                      
             }

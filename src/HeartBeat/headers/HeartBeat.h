@@ -14,18 +14,20 @@
 #include <sys/neutrino.h>
 #include <sys/procmgr.h>
 #include <thread>
+#include <chrono>
 
 #include "../../Dispatcher/headers/PulseMsgConfig.h"
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
 #include "../../HAL/headers/HALConfig.h"
+#include "../../Util/headers/Util.h"
 
 #include "../../Logging/headers/Logger.h"
 class HeartBeat : public PulseMsgHandler {
   public:
-    HeartBeat();
+    HeartBeat(uint8_t festoNrOfOtherFesto);
     ~HeartBeat();
 
-    bool init(int32_t hbOtherFesto);
+    bool stop();
     int32_t getChannel() override;
     void sendMsg() override;
     void handleMsg() override;
@@ -34,7 +36,10 @@ class HeartBeat : public PulseMsgHandler {
     void handleDisconnect();
     bool running;
     int32_t channelID;
-    int32_t channelIDSecondFesto;
+    int32_t otherFesto;
+    name_attach_t* heartBeatChannel;
+    std::mutex heartbeatMutex;
+    std::chrono::steady_clock::time_point lastHeartbeatReceived;
 };
 
 /*
