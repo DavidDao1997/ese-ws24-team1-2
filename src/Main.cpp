@@ -14,15 +14,17 @@
 
 #include <gtest/gtest.h>
 
-#define TESTING 1
+#define TESTING 0
+#define LOGLEVEL INFO
 
 
 int main(int argc, char **argv) {
+int ret = 0;
 
 Logger& logger = Logger::getInstance();
 
 
-logger.setLogLevel(LogLevel::WARNING);    // Log-Level setzen
+logger.setLogLevel(LogLevel::LOGLEVEL);    // Log-Level setzen
 // Log-Level für verschiedene Klassen individuell festlegen
 // logger.setLogLevelForClass("ClassA", LogLevel::INFO); // Standardmodus
 // logger.setLogLevelForClass("ClassB", LogLevel::ERROR, true); // Nur ERROR loggen
@@ -40,145 +42,176 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
 
 #else
 
+    logger.log(LogLevel::INFO, "GNS must Be Running...", "Main");
+
+    if (argc < 2) {
+        if (argc <= 1) {
+            logger.log(LogLevel::ERROR, "No argument given...", "Main");
+        } else {
+            logger.log(LogLevel::ERROR, "Too few arguments given...", "Main");
+        }
+        logger.log(LogLevel::INFO, std::string("Usage: ") + argv[0] + " -s | -c", "Main");
+        ret = EXIT_FAILURE;
+    } else if (std::strcmp(argv[1], "-c") == 0) {
+        logger.log(LogLevel::INFO, "Running as Client ...", "Main");
+       
+        // TODO run as Client
 
 
 
 
-    std::string dispatcherChannelName = "dispatcher";
-    std::cout << "1" << std::endl;
-    Dispatcher *dispatcher = new Dispatcher(dispatcherChannelName);
-    // dispatcher->addSubSbrber(int32_t coid, uint_8[])
-    std::cout << "2" << std::endl;
-    Decoder *decoder = new Decoder(dispatcherChannelName, FESTO1);
 
-    std::string actuatorControllerChannelName = "actuatorController";
-    Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
-    ActuatorController *actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
-    dispatcher->addSubscriber(
-        actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
-    );
-    std::cout << "3" << std::endl;
-    //init HS
-	HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName, FESTO1); // Create an object of HwAdcDemo
-	//heightSensorController->initRoutine();
-	//start Thread
-    std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
-
-    // std::string fsmChannelName = "fsm";
-    // FSM *fsm = new FSM(fsmChannelName);
-    // fsm->connectToChannel(dispatcher->getChannel());
-    // dispatcher->addSubscriber(
-    //     fsm->getChannel(), fsm->getPulses(), fsm->getNumOfPulses()
-    // );
-
-    FSMController *fsmController = new FSMController(dispatcherChannelName);
-    std::cout << "3.5" << std::endl;
-    dispatcher->addSubscriber(
-        fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
-    );
-    std::cout << "4" << std::endl;
-
-    // start threads
-    std::thread dispatcherThread(std::bind(&Dispatcher::handleMsg, dispatcher));
-    WAIT(1000);
-    // std::thread fsmThread(std::bind(&FSM::handleMsg, fsm));
-    std::thread fsmControllerHandleMsgThread(std::bind(&FSMController::handleMsg, fsmController));
-    //std::thread fsmControllerSendMsgThread(std::bind(&FSMController::sendMsg, fsmController));
-    std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
-    std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
-    std::cout << "1" << std::endl;
-
-    WAIT(1000);
-    //int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
-    //if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_SM1_RESTING, 0)) {
-    //    perror("Event onPukPresentIn Failed\n");
-    //}
-
-    // WAIT(1000);
-    // int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_SHORT, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBF_INTERRUPTED, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBF_OPEN, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS_SAMPLE, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS_SAMPLING_DONE, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBM_INTERRUPTED, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBM_OPEN, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBE_INTERRUPTED, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBF_INTERRUPTED, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBE_OPEN, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_ESTOP_LOW, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_ESTOP_HIGH, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_SHORT, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-    // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, 0)) {
-    //     perror("ups");
-    // }
-    // WAIT(500);
-
-    std::cout << "5" << std::endl;
-    // join threads
-    std::cout << "\nThreads, started, main going idle...\n" << std::endl;
-
-
-    dispatcherThread.join();
-    // fsmThread.join();
-    fsmControllerHandleMsgThread.join();
-    //fsmControllerSendMsgThread.join();
-    actuatorControllerThread.join();
-    decoderThread.join();
+    } else if (std::strcmp(argv[1], "-s") == 0) {
+        logger.log(LogLevel::INFO, "Running as Server ...", "Main");
+       
+        // TODO run as Server
 
 
 
+
+
+
+    } else {
+        logger.log(LogLevel::INFO, "Running Fake Setup as Server ...", "Main");
+        logger.log(LogLevel::INFO, std::string("Usage: ") + argv[0] + " -s | -c", "Main");
+        
+
+        std::string dispatcherChannelName = "dispatcher";
+        std::cout << "1" << std::endl;
+        Dispatcher *dispatcher = new Dispatcher(dispatcherChannelName);
+        // dispatcher->addSubSbrber(int32_t coid, uint_8[])
+        std::cout << "2" << std::endl;
+        Decoder *decoder = new Decoder(dispatcherChannelName, FESTO1);
+
+        std::string actuatorControllerChannelName = "actuatorController";
+        Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
+        ActuatorController *actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
+        dispatcher->addSubscriber(
+            actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
+        );
+        std::cout << "3" << std::endl;
+        //init HS
+        HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName, FESTO1); // Create an object of HwAdcDemo
+        //heightSensorController->initRoutine();
+        //start Thread
+        std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
+
+        // std::string fsmChannelName = "fsm";
+        // FSM *fsm = new FSM(fsmChannelName);
+        // fsm->connectToChannel(dispatcher->getChannel());
+        // dispatcher->addSubscriber(
+        //     fsm->getChannel(), fsm->getPulses(), fsm->getNumOfPulses()
+        // );
+
+        FSMController *fsmController = new FSMController(dispatcherChannelName);
+        std::cout << "3.5" << std::endl;
+        dispatcher->addSubscriber(
+            fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
+        );
+        std::cout << "4" << std::endl;
+
+        // start threads
+        std::thread dispatcherThread(std::bind(&Dispatcher::handleMsg, dispatcher));
+        WAIT(1000);
+        // std::thread fsmThread(std::bind(&FSM::handleMsg, fsm));
+        std::thread fsmControllerHandleMsgThread(std::bind(&FSMController::handleMsg, fsmController));
+        //std::thread fsmControllerSendMsgThread(std::bind(&FSMController::sendMsg, fsmController));
+        std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
+        std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
+        std::cout << "1" << std::endl;
+
+        WAIT(1000);
+        //int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
+        //if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_SM1_RESTING, 0)) {
+        //    perror("Event onPukPresentIn Failed\n");
+        //}
+
+        // WAIT(1000);
+        // int32_t dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_SHORT, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBF_INTERRUPTED, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBF_OPEN, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS_SAMPLE, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS_SAMPLING_DONE, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBM_INTERRUPTED, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBM_OPEN, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBE_INTERRUPTED, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBF_INTERRUPTED, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_LBE_OPEN, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_ESTOP_LOW, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_ESTOP_HIGH, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_SHORT, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+        // if (0 < MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, 0)) {
+        //     perror("ups");
+        // }
+        // WAIT(500);
+
+        std::cout << "5" << std::endl;
+        // join threads
+        std::cout << "\nThreads, started, main going idle...\n" << std::endl;
+
+
+        dispatcherThread.join();
+        // fsmThread.join();
+        fsmControllerHandleMsgThread.join();
+        //fsmControllerSendMsgThread.join();
+        actuatorControllerThread.join();
+        decoderThread.join();
+
+
+    }
 
 #endif /*_TESTING_*/
+    logger.log(LogLevel::CRITICAL, "ENDING PROGRAM...", "Main");
     logger.stop();
-    return 0;
+    return ret;
 }
 
 

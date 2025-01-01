@@ -95,7 +95,7 @@ void Logger::processLogs() {
             // } else {
             //     std::cerr << logEntry << std::endl;
             // }
-            std::cerr << logEntry << std::endl;
+            std::cout << logEntry << std::endl;
         }
     }
 }
