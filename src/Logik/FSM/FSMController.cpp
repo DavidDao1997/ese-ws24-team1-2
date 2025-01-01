@@ -23,9 +23,11 @@ int8_t FSMController::pulses[FSM_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_BGS_LONG,
     PULSE_BRS_SHORT,
     PULSE_BGR_SHORT,
-    PULSE_HS_SAMPLE,
+    PULSE_HS1_SAMPLE,
+    PULSE_HS2_SAMPLE,
     PULSE_FSM,
-    PULSE_HS_SAMPLING_DONE,
+    PULSE_HS1_SAMPLING_DONE,
+    PULSE_HS2_SAMPLING_DONE,
     PULSE_MS_TRUE,
     PULSE_MS_FALSE
 };
@@ -467,11 +469,11 @@ void FSMController::handleMsg() {
                     // TODO
                 }
                 break;
-            case PULSE_HS_SAMPLE:
+            case PULSE_HS1_SAMPLE:
                 // Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS_SAMPLE FST_1...", "FSMController");
                 fsmHeightMeasurement->raiseHS1Sample();
                 break;
-            case PULSE_HS_SAMPLING_DONE:
+            case PULSE_HS1_SAMPLING_DONE:
                 Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS_SAMPLING_DONE FST_1...", "FSMController");
                 fsmHeightMeasurement->raiseHS1SamplingDone();
                 break;

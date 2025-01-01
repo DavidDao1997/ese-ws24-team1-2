@@ -25,7 +25,7 @@
 
 #include "../../../Logging/headers/Logger.h"
 
-#define FSM_CONTROLLER_NUM_OF_PULSES 20
+#define FSM_CONTROLLER_NUM_OF_PULSES 21
 
 class FSMController : public PulseMsgHandler {
   public:

@@ -16,7 +16,7 @@
 #include "../../HAL/headers/Actuators_Wrapper.h"
 #include "../../Logging/headers/Logger.h"
 
-#define ACTUATOR_CONTROLLER_NUM_OF_PULSES 32
+#define ACTUATOR_CONTROLLER_NUM_OF_PULSES 36
 
 class ActuatorController : public PulseMsgHandler {
   public:

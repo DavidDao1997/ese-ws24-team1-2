@@ -87,9 +87,17 @@ enum PulseCode {
     PULSE_Q11_ON,
     PULSE_Q11_OFF,
 
-    // Signal Light 2
+    // Signal Light 1
     PULSE_Q12_ON,
     PULSE_Q12_OFF,
+
+    // Signal Light 2
+    PULSE_Q21_ON,
+    PULSE_Q21_OFF,
+
+    // Signal Light 2
+    PULSE_Q22_ON,
+    PULSE_Q22_OFF,
 
     // Sorting
     PULSE_SM1_ACTIVE,
@@ -99,8 +107,10 @@ enum PulseCode {
 
     // HeightSensor
     PULSE_ADC_SAMPLE,
-    PULSE_HS_SAMPLE,
-    PULSE_HS_SAMPLING_DONE,
+    PULSE_HS1_SAMPLE,
+    PULSE_HS1_SAMPLING_DONE,
+    PULSE_HS2_SAMPLE,
+    PULSE_HS2_SAMPLING_DONE,
 
     // MetalSensor
     PULSE_MS_TRUE,

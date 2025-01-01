@@ -39,12 +39,17 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
 	auto result = RUN_ALL_TESTS();
 
 #else
+
+
+
+
+
     std::string dispatcherChannelName = "dispatcher";
     std::cout << "1" << std::endl;
     Dispatcher *dispatcher = new Dispatcher(dispatcherChannelName);
     // dispatcher->addSubSbrber(int32_t coid, uint_8[])
     std::cout << "2" << std::endl;
-    Decoder *decoder = new Decoder(dispatcherChannelName);
+    Decoder *decoder = new Decoder(dispatcherChannelName, FESTO1);
 
     std::string actuatorControllerChannelName = "actuatorController";
     Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
@@ -54,7 +59,7 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
     );
     std::cout << "3" << std::endl;
     //init HS
-	HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName); // Create an object of HwAdcDemo
+	HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName, FESTO1); // Create an object of HwAdcDemo
 	//heightSensorController->initRoutine();
 	//start Thread
     std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));

@@ -12,7 +12,7 @@
 
 class Decoder : public I_Decoder {
   public:
-    Decoder(const std::string dispatcherChannelName);
+    Decoder(const std::string dispatcherChannelName, uint8_t festoID);
     virtual ~Decoder();
 
     void handleMsg() override;
@@ -28,6 +28,7 @@ class Decoder : public I_Decoder {
     int32_t channelID;
     SensorISR *sensorISR;
     int32_t dispatcherConnectionID;
+    uint8_t festoNr;
 };
 
 #endif /* HEADER_DECODER_H_ */

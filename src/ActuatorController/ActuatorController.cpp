@@ -20,10 +20,10 @@ int8_t ActuatorController::pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_MOTOR2_FAST,  
 	PULSE_LR1_ON,
     PULSE_LR1_BLINKING, // msg.value int32_t (period [ms])
-    PULSE_LR1_OFF,      
+    PULSE_LR1_OFF,          
 	PULSE_LY1_ON,
     PULSE_LY1_BLINKING, // msg.value int32_t (period [ms])
-    PULSE_LY1_OFF,      
+    PULSE_LY1_OFF,       
 	PULSE_LG1_ON,
     PULSE_LG1_BLINKING, // msg.value int32_t (period [ms])
     PULSE_LG1_OFF,      
@@ -40,6 +40,10 @@ int8_t ActuatorController::pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
 	PULSE_Q11_OFF,     
 	PULSE_Q12_ON,      
 	PULSE_Q12_OFF,
+    PULSE_Q21_ON,      
+	PULSE_Q21_OFF,     
+	PULSE_Q22_ON,      
+	PULSE_Q22_OFF,
     PULSE_SM1_ACTIVE,   
 	PULSE_SM1_RESTING, 
 	PULSE_SM2_ACTIVE,  
@@ -133,7 +137,6 @@ void ActuatorController::handleMsg() {
                 break;
             case PULSE_LG1_OFF:
                 Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Green off...", "ActuatorController");
-                std::cout << "ACTUATORCONTROLLER: LED GREEN OFF" << std::endl;
                 lgblinking = false;
                 actuators->greenLampLightOff();
                 break;
@@ -144,6 +147,21 @@ void ActuatorController::handleMsg() {
                 break;
             case PULSE_LR1_OFF:
                 Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Red off...", "ActuatorController");
+                lrblinking = false;
+                actuators->redLampLightOff();
+                break;
+            case PULSE_LG2_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Green off...", "ActuatorController");std::cout << "ACTUATORCONTROLLER: LED GREEN OFF" << std::endl;
+                lgblinking = false;
+                actuators->greenLampLightOff();
+                break;
+            case PULSE_LY2_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Yellow off...", "ActuatorController");
+                lyblinking = false;
+                actuators->yellowLampLightOff();
+                break;
+            case PULSE_LR2_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Red off...", "ActuatorController");
                 lrblinking = false;
                 actuators->redLampLightOff();
                 break;
@@ -162,6 +180,21 @@ void ActuatorController::handleMsg() {
                 lrblinking = true;
                 startRedLampBlinkingThread(msgVal);
                 break;
+            case PULSE_LG2_BLINKING:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Green blinking...", "ActuatorController");
+                lgblinking = true;
+                startGreenLampBlinkingThread(msgVal);
+                break;
+            case PULSE_LY2_BLINKING:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Yellow blinking......", "ActuatorController");
+                lyblinking = true;
+                startYellowLampBlinkingThread(msgVal);
+                break;
+            case PULSE_LR2_BLINKING:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Red blinking......", "ActuatorController");
+                lrblinking = true;
+                startRedLampBlinkingThread(msgVal);
+                break;
             case PULSE_LG1_ON:
                 Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Green on......", "ActuatorController");
                 lgblinking = false;
@@ -177,10 +210,67 @@ void ActuatorController::handleMsg() {
                 lrblinking = false;
                 actuators->redLampLightOn();
                 break;
+            case PULSE_LG2_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Green on......", "ActuatorController");
+                lgblinking = false;
+                actuators->greenLampLightOn();
+                break;
+            case PULSE_LY2_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Yellow on......", "ActuatorController");
+                lyblinking = false;
+                actuators->yellowLampLightOn();
+                break;
+            case PULSE_LR2_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Red on......", "ActuatorController");
+                lrblinking = false;
+                actuators->redLampLightOn();
+                break;
+            case PULSE_Q11_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Q1 on......", "ActuatorController");
+                actuators->Q1LightOn();
+                break;
+            case PULSE_Q11_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Q1 off......", "ActuatorController");
+                actuators->Q1LightOff();
+                break;
+            case PULSE_Q12_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Q1 on......", "ActuatorController");
+                actuators->Q1LightOn();
+                break;
+            case PULSE_Q12_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Q1 off......", "ActuatorController");
+                actuators->Q1LightOff();
+                break;
+            case PULSE_Q21_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Q2 on......", "ActuatorController");
+                actuators->Q2LightOn();
+                break;
+            case PULSE_Q21_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Q2 off......", "ActuatorController");
+                actuators->Q2LightOff();
+                break;
+            case PULSE_Q22_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Q2 on......", "ActuatorController");
+                actuators->Q2LightOn();
+                break;
+            case PULSE_Q22_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Q2 off......", "ActuatorController");
+                actuators->Q2LightOff();
+                break;
 			case PULSE_SM1_ACTIVE:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 SM Active......", "ActuatorController");
 				actuators->closeSortingModule();
 				break;
 			case PULSE_SM1_RESTING:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 SM Resting......", "ActuatorController");
+				actuators->openSortingModule();
+				break;
+            case PULSE_SM2_ACTIVE:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 SM Active......", "ActuatorController");
+				actuators->closeSortingModule();
+				break;
+			case PULSE_SM2_RESTING:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 SM Resting......", "ActuatorController");
 				actuators->openSortingModule();
 				break;
 			default:

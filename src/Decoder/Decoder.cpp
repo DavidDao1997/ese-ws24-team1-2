@@ -12,7 +12,7 @@
 
 #define LONG_PRESS_DURATION 1000
 
-Decoder::Decoder(const std::string dispatcherChannelName) {
+Decoder::Decoder(const std::string dispatcherChannelName, uint8_t festoID) {
     running = false;
 
     channelID = createChannel();
@@ -43,6 +43,11 @@ Decoder::Decoder(const std::string dispatcherChannelName) {
     dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
 
     // TODO check if festo 1 or festo 2 in parameter list
+    if ((festoID == FESTO1) || (festoID == FESTO2)){
+        festoNr = festoID;
+    } else {
+        Logger::getInstance().log(LogLevel::ERROR, "Wrong Festo Nr in Constructor...", "Decoder");
+    }
 }
 
 Decoder::~Decoder() {
@@ -100,7 +105,7 @@ void Decoder::handleMsg() {
 }
 
 void Decoder::decode() {
-    int32_t festoId = 0;
+    uint8_t festoId = festoNr;
 
     uint32_t flippedValues = sensorISR->getFlippedValues();
     uint32_t currentValues = sensorISR->getCurrentValues();
@@ -129,7 +134,7 @@ void Decoder::decode() {
         // char buffer[100];
         // sprintf(buffer, "DECODER: current level %d\n", current_level);
         // std::cout << buffer << std::endl;
-        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
+        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
 
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
@@ -142,7 +147,7 @@ void Decoder::decode() {
         // PULSE_LBF_INTERRUPTED
         int32_t code = current_level ? PULSE_LBF_OPEN : PULSE_LBF_INTERRUPTED;
         Logger::getInstance().log(LogLevel::DEBUG, "LBF erkannt", "Decoder");
-        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
+        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
@@ -152,7 +157,7 @@ void Decoder::decode() {
         int8_t current_level = (currentValues >> LBE_PIN) & 0x1;
         int32_t code = current_level ? PULSE_LBE_OPEN : PULSE_LBE_INTERRUPTED;
         Logger::getInstance().log(LogLevel::DEBUG, "LBE erkannt", "Decoder");
-        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
+        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
@@ -162,7 +167,7 @@ void Decoder::decode() {
         int8_t current_level = (currentValues >> LBR_PIN) & 0x1;
         int32_t code = current_level ? PULSE_LBR_OPEN : PULSE_LBR_INTERRUPTED;
         Logger::getInstance().log(LogLevel::DEBUG, "LBR erkannt", "Decoder");
-        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
+        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
@@ -172,7 +177,7 @@ void Decoder::decode() {
         int8_t current_level = (currentValues >> LBM_PIN) & 0x1;
         int32_t code = current_level ? PULSE_LBM_OPEN : PULSE_LBM_INTERRUPTED;
         Logger::getInstance().log(LogLevel::DEBUG, "LBM erkannt", "Decoder");
-        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
+        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
@@ -261,7 +266,7 @@ void Decoder::decode() {
         int8_t current_level = (currentValues >> MS_PIN) & 0x1;
         int32_t code = current_level ? PULSE_MS_TRUE : PULSE_MS_FALSE;
         Logger::getInstance().log(LogLevel::DEBUG, "MS erkannt", "Decoder");
-        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, 0)) {
+        if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
