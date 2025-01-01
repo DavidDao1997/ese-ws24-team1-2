@@ -44,6 +44,9 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
 
     logger.log(LogLevel::INFO, "GNS must Be Running...", "Main");
 
+
+
+
     if (argc < 2) {
         if (argc <= 1) {
             logger.log(LogLevel::ERROR, "No argument given...", "Main");
@@ -52,23 +55,45 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         }
         logger.log(LogLevel::INFO, std::string("Usage: ") + argv[0] + " -s | -c", "Main");
         ret = EXIT_FAILURE;
-    } else if (std::strcmp(argv[1], "-c") == 0) {
-        logger.log(LogLevel::INFO, "Running as Client ...", "Main");
-       
-        // TODO run as Client
-
-
-
-
-
     } else if (std::strcmp(argv[1], "-s") == 0) {
-        logger.log(LogLevel::INFO, "Running as Server ...", "Main");
-       
-        // TODO run as Server
+        logger.log(LogLevel::INFO, "Running as Server -> FESTO1...", "Main");
+
+        // TODO run as Server TO BE TESTED
+        std::string dispatcherChannelName = "dispatcher";
+        Dispatcher *dispatcher = new Dispatcher(dispatcherChannelName);
+        Decoder *decoder = new Decoder(dispatcherChannelName, FESTO1);
+        std::string actuatorControllerChannelName = "actuatorController";
+        Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
+        ActuatorController *actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
+        dispatcher->addSubscriber(
+            actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
+        );
+
+        HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl1", dispatcherChannelName, FESTO1);
+        std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
+        FSMController *fsmController = new FSMController(dispatcherChannelName);
+        dispatcher->addSubscriber(
+            fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
+        );
+        std::thread dispatcherThread(std::bind(&Dispatcher::handleMsg, dispatcher));
+        std::thread fsmControllerHandleMsgThread(std::bind(&FSMController::handleMsg, fsmController));
+        std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
+        std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
 
 
+    } else if (std::strcmp(argv[1], "-c") == 0) {
+        logger.log(LogLevel::INFO, "Running as Client -> FESTO2...", "Main");
 
-
+        // TODO run as Client TO BE TESTED
+        std::string dispatcherChannelName = "dispatcher";
+        Decoder *decoder = new Decoder(dispatcherChannelName, FESTO2);
+        std::string actuatorControllerChannelName = "actuatorController";
+        Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
+        ActuatorController *actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
+        HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl2", dispatcherChannelName, FESTO2);
+        std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
+        std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
+        std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
 
 
     } else {
