@@ -15,7 +15,7 @@ int stableCount = 0;
 int countSample = 0; // Zähler für Samples
 
 // Constructor
-HeightSensorControl::HeightSensorControl(const std::string channelName, const std::string dispatcherName, const uint8_t festoID) {
+HeightSensorControl::HeightSensorControl(const std::string channelName, const std::string dispatcherName, const uint8_t festoID, TSCADC* tscadc, ADC* hsadc) {
     hsControllerChannel = createNamedChannel(channelName);
     channelID = hsControllerChannel->chid;
     running = false;
@@ -26,8 +26,8 @@ HeightSensorControl::HeightSensorControl(const std::string channelName, const st
         Logger::getInstance().log(LogLevel::ERROR, "Wrong Festo Nr in Constructor...", "HeightSensorControl");
     }
 
-    tsc = new TSCADC();
-    adc = new ADC(*tsc);
+    tsc = tscadc; //new TSCADC();
+    adc = hsadc; //new ADC(*tsc);
     adc->registerAdcISR(ConnectAttach(0, 0, channelID, _NTO_SIDE_CHANNEL, 0), PULSE_ADC_SAMPLE);
     adc->sample();
 }

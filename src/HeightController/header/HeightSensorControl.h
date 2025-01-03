@@ -68,7 +68,7 @@ struct SampleData {
 class HeightSensorControl: public PulseMsgHandler {
 public:
     // Constructor and Destructor
-    HeightSensorControl(const std::string channelName, const std::string dispatcherName, uint8_t festoID);
+    HeightSensorControl(const std::string channelName, const std::string dispatcherName, uint8_t festoID, TSCADC* tscadc, ADC* hsadc);
     virtual ~HeightSensorControl();
 
     void initHS();

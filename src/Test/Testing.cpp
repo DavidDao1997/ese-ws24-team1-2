@@ -39,7 +39,9 @@ protected:
             actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
         );
 
-        heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName, FESTO1); // Create an object of HwAdcDemo
+        TSCADC* tsc = new TSCADC();
+        ADC* adc = new ADC(tsc);
+        heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName, FESTO1, tsc, adc); // Create an object of HwAdcDemo
 
 
         heightSensorControllerThread = std::thread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));

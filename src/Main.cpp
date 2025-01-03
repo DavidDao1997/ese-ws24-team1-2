@@ -7,6 +7,8 @@
 #include "Dispatcher/headers/Dispatcher.h"
 #include "Logik/headers/FSM.h"
 #include "Util/headers/Util.h"
+#include "HAL/headers/ADC.h"
+#include "HAL/headers/TSCADC.h"
 #include "HeightController/header/HeightSensorControl.h"
 #include "Decoder/headers/Decoder.h"
 #include "Logik/FSM/headers/FSMController.h"
@@ -14,8 +16,8 @@
 
 #include <gtest/gtest.h>
 
-#define TESTING 0
-#define LOGLEVEL INFO
+#define TESTING 1
+#define LOGLEVEL CRITICAL
 
 
 int main(int argc, char **argv) {
@@ -69,7 +71,9 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
             actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
         );
 
-        HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl1", dispatcherChannelName, FESTO1);
+        TSCADC* tsc = new TSCADC();
+        ADC* adc = new ADC(tsc);
+        HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl1", dispatcherChannelName, FESTO1, tsc, adc);
         std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
         FSMController *fsmController = new FSMController(dispatcherChannelName);
         dispatcher->addSubscriber(
