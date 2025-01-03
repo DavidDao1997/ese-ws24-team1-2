@@ -72,7 +72,7 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         );
 
         TSCADC* tsc = new TSCADC();
-        ADC* adc = new ADC(tsc);
+        ADC* adc = new ADC(*tsc);
         HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl1", dispatcherChannelName, FESTO1, tsc, adc);
         std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
         FSMController *fsmController = new FSMController(dispatcherChannelName);

@@ -17,6 +17,8 @@
 #include "../Dispatcher/headers/Dispatcher.h"
 #include "../Logik/headers/FSM.h"
 #include "../Util/headers/Util.h"
+#include "../HAL/headers/ADC.h"
+#include "../HAL/headers/TSCADC.h"
 #include "../HeightController/header/HeightSensorControl.h"
 #include "../Decoder/headers/Decoder.h"
 #include "../Logik/FSM/headers/FSMController.h"
@@ -40,7 +42,7 @@ protected:
         );
 
         TSCADC* tsc = new TSCADC();
-        ADC* adc = new ADC(tsc);
+        ADC* adc = new ADC(*tsc);
         heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName, FESTO1, tsc, adc); // Create an object of HwAdcDemo
 
 
