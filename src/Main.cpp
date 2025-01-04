@@ -17,7 +17,7 @@
 #include <gtest/gtest.h>
 
 #define TESTING 1
-#define LOGLEVEL CRITICAL
+#define LOGLEVEL DEBUG
 
 
 int main(int argc, char **argv) {

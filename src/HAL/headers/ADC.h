@@ -17,32 +17,33 @@
 #ifndef ADC_H_
 #define ADC_H_
 
-#include "TSCADC.h"
-#include <sys/siginfo.h>
+
+
+#include "../interfaces/I_ADC.h"
 
 #include "../../Logging/headers/Logger.h"
 
 #define ADC_TYPE   16
 
-class ADC{
+class ADC : public I_ADC{
 public:
 	ADC(void) = delete;
 	ADC(TSCADC& tscadc);
 	virtual ~ADC();
 
-	void registerAdcISR(int connectionID, char msgType);
-	void unregisterAdcISR(void);
-	void sample(void);
-	void adcDisable(void);
+	void registerAdcISR(int connectionID, char msgType) override;
+	void unregisterAdcISR(void) override;
+	void sample(void) override;
+	void adcDisable(void) override;
 
 private:
 	static const struct sigevent* adcISR(void* arg, int id);
 
-	void init(void);
+	void init(void) override;
 	void initInterrupts(void);
-	void stepConfigure(unsigned int stepSel, Fifo fifo, PositiveInput positiveInpChannel);
+	void stepConfigure(unsigned int stepSel, Fifo fifo, PositiveInput positiveInpChannel) override;
 	void cleanUpInterrupts(void);
-	void adcEnableSequence(unsigned int steps);
+	void adcEnableSequence(unsigned int steps) override;
 private:
 	TSCADC* tscadc;
 	struct sigevent event;

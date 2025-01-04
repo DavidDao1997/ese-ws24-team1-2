@@ -15,7 +15,7 @@ int stableCount = 0;
 int countSample = 0; // Zähler für Samples
 
 // Constructor
-HeightSensorControl::HeightSensorControl(const std::string channelName, const std::string dispatcherName, const uint8_t festoID, TSCADC* tscadc, ADC* hsadc) {
+HeightSensorControl::HeightSensorControl(const std::string channelName, const std::string dispatcherName, const uint8_t festoID, TSCADC* tscadc, I_ADC* hsadc) {
     hsControllerChannel = createNamedChannel(channelName);
     channelID = hsControllerChannel->chid;
     running = false;
@@ -29,7 +29,6 @@ HeightSensorControl::HeightSensorControl(const std::string channelName, const st
     tsc = tscadc; //new TSCADC();
     adc = hsadc; //new ADC(*tsc);
     adc->registerAdcISR(ConnectAttach(0, 0, channelID, _NTO_SIDE_CHANNEL, 0), PULSE_ADC_SAMPLE);
-    adc->sample();
 }
 
 // Destructor
@@ -122,6 +121,8 @@ void HeightSensorControl::handleMsg() {
 
     int32_t previousValue;
     bool candidatesSend = false;
+    // getting first sample
+    adc->sample();
     // need to switch to a switch case variant if more pulse msg are available
     while (receivingRunning) {
         // printf("Iam into Routine\n");
@@ -130,6 +131,7 @@ void HeightSensorControl::handleMsg() {
             //exit(EXIT_FAILURE);
         }
 
+        
         // printf("Iam into Routine HeightPulse with Code: %d\n", msg.code );
         if (msg.code == PULSE_ADC_SAMPLE) {
             int32_t currentValue = msg.value.sival_int;
@@ -154,9 +156,10 @@ int32_t HeightSensorControl::getChannel() { return channelID; }
 
 // Evaluate sample
 void HeightSensorControl::processSample(
-    int currentValue, bool &secondChance, bool &candidatesSend, int &candidateValue, ADC *adc
+    int currentValue, bool &secondChance, bool &candidatesSend, int &candidateValue, I_ADC *adc
 ) { //, ADC *adc) {
     if (!firstValue) {
+        Logger::getInstance().log(LogLevel::DEBUG, "setting first Value...", "HeightSensorControl");
         bandHeight = currentValue;
         firstValue = true;
     }
