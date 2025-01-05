@@ -15,6 +15,7 @@
 #include <sys/mman.h>
 #include <sys/neutrino.h>
 
+#include "../../Logging/headers/Logger.h"
 #include "../../Dispatcher/headers/PulseMsgConfig.h"
 #include "HALConfig.h"
 

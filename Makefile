@@ -24,6 +24,8 @@ LD = $(CXX)
 #LIBS += -L/path/to/my/lib/$(PLATFORM)/usr/lib -lmylib
 #LIBS += -L../mylib/$(OUTPUT_DIR) -lmylib
 
+LIBS += -lgtest
+
 #Compiler flags for build profiles
 CCFLAGS_release += -O2
 CCFLAGS_debug += -g -O0 -fno-builtin

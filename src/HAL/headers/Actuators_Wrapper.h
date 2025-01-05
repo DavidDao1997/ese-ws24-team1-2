@@ -2,46 +2,46 @@
 #ifndef ACTUATORS_WRAPPER_H
 #define ACTUATORS_WRAPPER_H
 
-#include "HALConfig.h"
+
+#include "../interfaces/I_Actuators_Wrapper.h"
 
 
-
-class Actuators_Wrapper {
+class Actuators_Wrapper : public I_Actuators_Wrapper {
 public:
 	
 	Actuators_Wrapper();
 	~Actuators_Wrapper();
-	bool init();
+	bool init() override;
 
 	// Actors
-	void redLampLightOn();
-	void redLampLightOff();
-	void yellowLampLightOn();
-	void yellowLampLightOff();
-	void greenLampLightOn();
-	void greenLampLightOff();
+	void redLampLightOn() override;
+	void redLampLightOff() override;
+	void yellowLampLightOn() override;
+	void yellowLampLightOff() override;
+	void greenLampLightOn() override;
+	void greenLampLightOff() override;
 
-	void startButtonLightOn();
-	void startButtonLightOff();
-	void resetButtonLightOn();
-	void resetButtonLightOff();
-	void Q1LightOn();
-	void Q1LightOff();
-	void Q2LightOn();
-	void Q2LightOff();
+	void startButtonLightOn() override;
+	void startButtonLightOff() override;
+	void resetButtonLightOn() override;
+	void resetButtonLightOff() override;
+	void Q1LightOn() override;
+	void Q1LightOff() override;
+	void Q2LightOn() override;
+	void Q2LightOff() override;
 
 // Motor
-	void runRight();
-	void runLeft();
-	void runSlow();
-	void runFast();
-	void motorStop();
+	void runRight() override;
+	void runLeft() override;
+	void runSlow() override;
+	void runFast() override;
+	void motorStop() override;
 
 
 //Sorting Module
-	uint8_t readSortingModule();
-	void openSortingModule();
-	void closeSortingModule();
+	uint8_t readSortingModule() override;
+	void openSortingModule() override;
+	void closeSortingModule() override;
 
 	
 

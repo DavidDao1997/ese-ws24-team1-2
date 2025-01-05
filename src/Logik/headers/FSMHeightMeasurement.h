@@ -4,6 +4,8 @@
 #include <iostream>
 #include <stdint.h>
 
+#include "../../Logging/headers/Logger.h"
+
 enum class FSMHeightMeasurementStates { Paused, Idle, PukPresent, Measuring };
 
 class FSMHeightMeasurement {

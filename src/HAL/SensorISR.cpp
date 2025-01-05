@@ -11,7 +11,7 @@
 SensorISR::SensorISR() {
 
     if (!initializeGPIOBaseAddr(GPIO_BANK_0)) {
-        throw std::runtime_error("Failed to initialize GPIO base address!");
+        Logger::getInstance().log(LogLevel::CRITICAL, "Failed to initialize GPIO base address...", "SensorISR");
     }
 }
 
@@ -25,7 +25,7 @@ bool SensorISR::registerInterrupt(int32_t decoderChannelID) {
      ThreadCtl(_NTO_TCTL_IO, 0); // Request IO privileges
     int connectionID = ConnectAttach(0, 0, decoderChannelID, _NTO_SIDE_CHANNEL, 0);
     if (connectionID < 0) {
-        perror("Could not connect to Decoder!");
+        Logger::getInstance().log(LogLevel::CRITICAL, "Could not connect to Decoder...", "SensorISR");
         return false;
     }
 
@@ -34,7 +34,7 @@ bool SensorISR::registerInterrupt(int32_t decoderChannelID) {
 
     interruptID = InterruptAttachEvent(INTR_GPIO_PORT0, &intr_event, 0);
     if (interruptID < 0) {
-        perror("Interrupt was not able to be attached!");
+        Logger::getInstance().log(LogLevel::CRITICAL, "Interrupt was not able to be attached...", "SensorISR");
         return false;
     }
     return true;
@@ -50,7 +50,7 @@ uint32_t SensorISR::getCurrentValues() { return in32((uintptr_t)gpioBase + GPIO_
 bool SensorISR::initializeGPIOBaseAddr(uintptr_t portAddr) {
     gpioBase = mmap_device_io(IO_MEM_LEN, portAddr);
     if (gpioBase == MAP_DEVICE_FAILED) {
-        perror("Failed to map GPIO base address!");
+        Logger::getInstance().log(LogLevel::CRITICAL, "Failed to map GPIO base address...", "SensorISR");
         return false;
     }
     return true;

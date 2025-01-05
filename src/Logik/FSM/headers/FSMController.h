@@ -23,7 +23,9 @@
 #include "../../headers/FSMSystem.h"
 #include "../../headers/FSMSorting.h"
 
-#define FSM_CONTROLLER_NUM_OF_PULSES 20
+#include "../../../Logging/headers/Logger.h"
+
+#define FSM_CONTROLLER_NUM_OF_PULSES 21
 
 class FSMController : public PulseMsgHandler {
   public:
@@ -36,6 +38,7 @@ class FSMController : public PulseMsgHandler {
 
     int8_t *getPulses();
     int8_t getNumOfPulses();
+    bool stop();
 
   private:
     // FSM System

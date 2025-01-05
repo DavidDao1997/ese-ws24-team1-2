@@ -1,6 +1,8 @@
 #ifndef FSM_SYSTEM_H
 #define FSM_SYSTEM_H
 
+#include "../../Logging/headers/Logger.h"
+
 enum SystemState { Start, ServiceMode, Ready, Operational, ESTOP, ESTOP_RESET };
 
 class FSMSystem {

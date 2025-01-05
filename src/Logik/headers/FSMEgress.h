@@ -1,6 +1,8 @@
 #ifndef FSMEGRESS_H
 #define FSMEGRESS_H
 
+#include "../../Logging/headers/Logger.h"
+
 enum class FSMEgressStates { Paused, Idle, Transfer, PukPresent };
 
 class FSMEgress {

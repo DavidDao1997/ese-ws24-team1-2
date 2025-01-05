@@ -12,14 +12,16 @@
 
 #include "../../Dispatcher/headers/PulseMsgConfig.h"
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
+#include "../../HAL/interfaces/I_Actuators_Wrapper.h"
 #include "../../HAL/headers/Actuators_Wrapper.h"
+#include "../../Logging/headers/Logger.h"
 
-#define ACTUATOR_CONTROLLER_NUM_OF_PULSES 32
+#define ACTUATOR_CONTROLLER_NUM_OF_PULSES 36
 
 class ActuatorController : public PulseMsgHandler {
   public:
     // TODO check if festo 1 or festo 2 in parameter list
-    ActuatorController(const std::string name, Actuators_Wrapper *actuators);
+    ActuatorController(const std::string name, I_Actuators_Wrapper *actuators);
     virtual ~ActuatorController();
 
     void handleMsg() override;
@@ -28,11 +30,12 @@ class ActuatorController : public PulseMsgHandler {
 
     int8_t* getPulses();
     int8_t getNumOfPulses();
+    bool stop();
 
   private:
     int32_t channelID;
     name_attach_t *actuatorControllerChannel;
-    Actuators_Wrapper *actuators;
+    I_Actuators_Wrapper *actuators;
 
     bool running;
     static int8_t numOfPulses;

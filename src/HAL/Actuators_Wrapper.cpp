@@ -10,11 +10,7 @@
  */
 
 #include "headers/Actuators_Wrapper.h"
-#include "hw/inout.h"
-#include "sys/mman.h"
-#include "sys/neutrino.h"
-#include <iostream>
-#include <stdint.h>
+
 
 Actuators_Wrapper::Actuators_Wrapper() {
     gpio_bank_0 = MAP_DEVICE_FAILED;
@@ -22,7 +18,7 @@ Actuators_Wrapper::Actuators_Wrapper() {
     gpio_bank_1 = MAP_DEVICE_FAILED;
 
     if (!init()){
-        perror("Init actuator Wrapper Failed");
+        Logger::getInstance().log(LogLevel::INFO, "Init actuator Wrapper Failed...", "Actuators_Wrapper");
     }
 }
 
@@ -73,7 +69,7 @@ void Actuators_Wrapper::resetButtonLightOff() { out32((uintptr_t)(gpio_bank_2 + 
 
 // set/clear SignalLed's help tools
 //Signal Light 1
-void Actuators_Wrapper::Q1LightOn() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), BIT_MASK(Q1_PIN)); }
+void Actuators_Wrapper::Q1LightOn() { out32((uintptr_t)(gpio_bank_2 + GPIO_SET), BIT_MASK(Q1_PIN)); }
 void Actuators_Wrapper::Q1LightOff() { out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), BIT_MASK(Q1_PIN)); }
 
 //Signal Light 2

@@ -36,14 +36,14 @@ void FSMIngress::raisePukDistanceValid() {
 void FSMIngress::raiseSystemOperationalIn() {
     if (currentState == FSMIngressStates::Paused) {
         // setState(historyState);
-        std::cout << "FSMINGRESS: System Operational in" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "System Operational in...", "FSMIngress");
         setState(FSMIngressStates::Idle);
     }
 }
 
 void FSMIngress::raiseSystemOperationalOut() {
     // historyState = currentState;
-    std::cout << "FSMINGRESS: System Operational out" << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "System Operational out...", "FSMIngress");
     setState(FSMIngressStates::Paused);
 }
 // callback function/exit
@@ -82,16 +82,16 @@ void FSMIngress::setState(FSMIngressStates nextState) {
 
     // entry
     if (nextState == FSMIngressStates::Idle && currentState != FSMIngressStates::Idle) {
-        std::cout << "FSMIngresss: entry idle " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry idle...", "FSMIngress");
         callbackIngressOut(dispConnectionId);
         currentState = nextState;
     } else if (nextState == FSMIngressStates::PukPresent && currentState != FSMIngressStates::PukPresent) {
         // entry PukPresent
-        std::cout << "FSMIngresss: entry PukPresent " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry PukPresent...", "FSMIngress");
         callbackPukPresentIn(dispConnectionId); // MotorForward++;
         currentState = FSMIngressStates::PukPresent;
     } else if (nextState == FSMIngressStates::CreatingDistance && currentState != FSMIngressStates::CreatingDistance) {
-        std::cout << "FSMIngresss: entry CreatingDistance " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry CreatingDistance...", "FSMIngress");
         currentState = nextState;
     } else {
         currentState = nextState;

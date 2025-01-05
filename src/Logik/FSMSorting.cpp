@@ -18,7 +18,7 @@ FSMSorting::~FSMSorting() {}
 
 // TODO got a motorFOrward++
 void FSMSorting::raisePukEntrySorting() {
-    std::cout << "FOOOOOOOOOO" << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "FOOOOOOOOOO...", "FSMSorting");
     if (currentState == FSMSortingStates::Idle) {
         setState(FSMSortingStates::PukPresent);
     }
@@ -64,15 +64,15 @@ void FSMSorting::raiseBGR1Interrupted() {
 }
 
 void FSMSorting::raiseSystemOperationalIn() {
-    std::cout << "BARRRRRRRRRR" << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "BARRRRRRRRRR...", "FSMSorting");
     if (currentState == FSMSortingStates::Paused) {
-        std::cout << "FSMSORTING: System Operational in 3" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "System Operational in 3...", "FSMSorting");
         setState(FSMSortingStates::Idle);
     }
 }
 void FSMSorting::raiseSystemOperationalOut() {
     setState(FSMSortingStates::Paused);
-    std::cout << "FSMSORTING: System Operational out" << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "System Operational out...", "FSMSorting");
 }
 
 // callback's method's
@@ -143,13 +143,13 @@ void FSMSorting::setState(FSMSortingStates nextState) {
         // callbackPukPresentOut(dispConnectionId);
     }
 
-    std::cout << "ALMOST EEEEEEEEEEEJJJJJECTIIIIINNNNNNNNNGGGGGGGGGGG " << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "ALMOST EEEEEEEEEEEJJJJJECTIIIIINNNNNNNNNGGGGGGGGGGG...", "FSMSorting");
     /*TRANSFER Block*/
     if(currentState == FSMSortingStates::Passthrough && nextState == FSMSortingStates::Idle) {
-        std::cout << "EEEEEEEEEEEJJJJJECTIIIIINNNNNNNNNGGGGGGGGGGG " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "EEEEEEEEEEEJJJJJECTIIIIINNNNNNNNNGGGGGGGGGGG...", "FSMSorting");
         callbackPassthroughOut(dispConnectionId);
     } else if(currentState == FSMSortingStates::Ejecting && nextState == FSMSortingStates::Idle) {
-        std::cout << "EEEEEEEEEEEJJJJJECTIIIIINNNNNNNNNGGGGGGGGGGG " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "EEEEEEEEEEEJJJJJECTIIIIINNNNNNNNNGGGGGGGGGGG...", "FSMSorting");
         callbackEjectingOut(dispConnectionId);
     } else if (currentState == FSMSortingStates::PukPresent && nextState == FSMSortingStates::Passthrough) {
         callbackPukEntryEgress(dispConnectionId);
@@ -165,27 +165,27 @@ void FSMSorting::setState(FSMSortingStates nextState) {
 
     /*ENTRY Block*/
     if (currentState != FSMSortingStates::RampFull && nextState == FSMSortingStates::RampFull) {
-        std::cout << "FSMSorting: entry RampFull " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry RampFull...", "FSMSorting");
         callbackRampFullIn(dispConnectionId); // MotorForward++
         currentState = nextState;
     } else if (currentState != FSMSortingStates::MetalMeasurement && nextState == FSMSortingStates::MetalMeasurement) {
-        std::cout << "FSMSorting: entry metalMeasurement " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry metalMeasurement...", "FSMSorting");
         // callbackPukEntryEgress(dispConnectionId);
         // callbackMetalMeasurementIn(dispConnectionId);
         currentState = nextState;
     } else if (currentState != FSMSortingStates::Ejecting && nextState == FSMSortingStates::Ejecting) {
-        std::cout << "FSMSorting: entry ejecting " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry ejecting...", "FSMSorting");
         // callbackPukEjectorDistanceValid(dispConnectionId);
         currentState = nextState;
     } else if (currentState != FSMSortingStates::Idle && nextState == FSMSortingStates::Idle) {
-        std::cout << "FSMSorting: entry idle " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry idle...", "FSMSorting");
         currentState = nextState;
     } else if (currentState != FSMSortingStates::PukPresent && nextState == FSMSortingStates::PukPresent) {
-        std::cout << "FSMSorting: entry pukPresent " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry pukPresent...", "FSMSorting");
         callbackPukPresentIn(dispConnectionId);
         currentState = nextState;
     } else if (currentState != FSMSortingStates::Passthrough && nextState == FSMSortingStates::Passthrough) {
-        std::cout << "FSMSorting: entry passthrough " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry passthrough...", "FSMSorting");
         currentState = nextState;
     } else {
         currentState = nextState;

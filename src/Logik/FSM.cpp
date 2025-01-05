@@ -40,6 +40,7 @@ void FSM::handleMsg() {
     std::string dispatcherChannelName = "dispatcher"; // FIXME hardcoded
     int dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
     if (dispatcherConnectionID == -1) {
+        Logger::getInstance().log(LogLevel::ERROR, "name_open failed...", "FSM");
         perror("FSM: name_open failed");
         return;
     }
@@ -48,7 +49,7 @@ void FSM::handleMsg() {
     while (1) {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
         if (recvid < 0) {
-            perror("MsgReceivePulse failed!");
+            Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "FSM");
             exit(EXIT_FAILURE);
         }
 
@@ -56,16 +57,16 @@ void FSM::handleMsg() {
         {
         case PULSE_LBF_INTERRUPTED:
             if(0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_MOTOR1_FAST, 0)) {
-                perror("FSM: MsgSendPulse failed");
+                Logger::getInstance().log(LogLevel::ERROR, "MsgSendPulse failed...", "FSM");
             }
             break;
         case PULSE_LBE_INTERRUPTED:
             if(0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_MOTOR1_STOP, 0)) {
-                perror("FSM: MsgSendPulse failed");
+                Logger::getInstance().log(LogLevel::ERROR, "MsgSendPulse failed...", "FSM");
             }
             break;
         default:
-            perror("should not happen");
+            Logger::getInstance().log(LogLevel::CRITICAL, "should not happen...", "FSM");
             break;
         }
 

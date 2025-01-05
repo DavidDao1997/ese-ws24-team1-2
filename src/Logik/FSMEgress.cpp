@@ -17,7 +17,7 @@ FSMEgress::FSMEgress(int32_t dispatcherConnectionId) {
 FSMEgress::~FSMEgress() {}
 
 void FSMEgress::raisePukEntryEgress() {
-    std::cout << "BAZZZZZZZZZZZZZZZZZZZZZZZz" << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "BAZZZZZZZZZZZZZZZZZZZZZZZz...", "FSMEgress");
     if (currentState == FSMEgressStates::Idle) {
         setState(FSMEgressStates::PukPresent);
     }
@@ -38,16 +38,14 @@ void FSMEgress::raiseSystemOperationalIn() {
     if (currentState == FSMEgressStates::Paused) {
         // setState(historyState);
         setState(FSMEgressStates::Idle);
-        std::cout << "FSMEGRESS: System Operational in" << std::endl;
-
+        Logger::getInstance().log(LogLevel::DEBUG, "System Operational in...", "FSMEgress");
     }
 }
 void FSMEgress::raiseSystemOperationalOut() {
     if (currentState != FSMEgressStates::Paused) {
         // historyState = currentState;
         setState(FSMEgressStates::Paused);
-        std::cout << "FSMEGRESS: System Operational out" << std::endl;
-
+        Logger::getInstance().log(LogLevel::DEBUG, "System Operational out...", "FSMEgress");
     }
 }
 
@@ -74,16 +72,16 @@ void FSMEgress::setState(FSMEgressStates nextState) {
 
     // block Entry
     if (currentState != FSMEgressStates::Transfer && nextState == FSMEgressStates::Transfer) {
-        std::cout << "FSMEgress: entry Transfer state " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry Transfer state...", "FSMEgress");
         callbackEgressTransferIn(dispConnectionId);
         currentState = nextState;
     } else if(currentState != FSMEgressStates::PukPresent && nextState == FSMEgressStates::PukPresent){
-         std::cout << "FSMEgress: entry PukPresent state " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry PukPresent state...", "FSMEgress");
         currentState = nextState;
 
         callbackEgressPukPresentIn(dispConnectionId);
     }else if(currentState != FSMEgressStates::Idle && nextState == FSMEgressStates::Idle){
-         std::cout << "FSMEgress: entry idle " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry idle...", "FSMEgress");
         currentState = nextState;
     }else{
         currentState = nextState;

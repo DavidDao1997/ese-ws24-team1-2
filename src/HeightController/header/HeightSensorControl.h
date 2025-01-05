@@ -33,6 +33,9 @@ using namespace std;
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
 
 
+#include "../../Logging/headers/Logger.h"
+
+
 
 /* GPIO port addresses (spruh73l.pdf S.177 ff.) */
 #define ADC_BASE 0x44E0D000
@@ -65,7 +68,7 @@ struct SampleData {
 class HeightSensorControl: public PulseMsgHandler {
 public:
     // Constructor and Destructor
-    HeightSensorControl(const std::string channelName, const std::string dispatcherName);
+    HeightSensorControl(const std::string channelName, const std::string dispatcherName, uint8_t festoID, TSCADC* tscadc, I_ADC* hsadc);
     virtual ~HeightSensorControl();
 
     void initHS();
@@ -84,14 +87,17 @@ public:
     void sendMsg() override;
     int32_t getChannel() override;
 
+    bool stop();
+
 private:
     int32_t channelID;
     name_attach_t *hsControllerChannel;
     int32_t dispatcherConnectionID;
     bool running;
+    uint8_t festoNr;
 
     TSCADC *tsc;
-    ADC *adc;
+    I_ADC *adc;
 
 
     //static int8_t numOfPulses;
@@ -130,7 +136,7 @@ private:
         bool &secondChance,
         bool  &candidatesSend,
         int &candidateValue,
-        ADC * adc
+        I_ADC * adc
     );
 
     void handleBandHeightReached(

@@ -44,13 +44,13 @@ void FSMSystem::raiseBGS1Long() {
 
 void FSMSystem::raiseEStop1Low() {
     if (currentState != ESTOP) {
-        std::cout << "FSMSYSTEM: set to EStop" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry set to EStop...", "FSMSystem");
         setState(ESTOP);
     }
 }
 void FSMSystem::raiseEStop1High() {
     if (currentState == ESTOP) {
-        std::cout << "FSMSYSTEM: set to EStop Reset" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "set to EStop Reset...", "FSMSystem");
         setState(ESTOP_RESET);
     }
 }
@@ -96,7 +96,7 @@ void FSMSystem::setState(SystemState nextState) {
     /*ENTRY BLOCKS*/
     // Entry for EStop
     if (nextState == ESTOP && currentState != ESTOP) {
-        std::cout << "FSMSYSTEM: entry eStop " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry eStop...", "FSMSystem");
         // entry eStop
         // motorstop++
         callbackEStopIn(dispConnectionId);
@@ -104,14 +104,14 @@ void FSMSystem::setState(SystemState nextState) {
     }
     // Entry for ServiceMode
     else if (nextState == ServiceMode && currentState != ServiceMode) {
-        std::cout << "FSMSYSTEM: entry serviceMode " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry serviceMode...", "FSMSystem");
         // entry servicemode
         currentState = ServiceMode;
         callbackSystemServiceIn(dispConnectionId);
     }
     // Entry for ServiceMode
     else if (nextState == Operational && currentState != Operational) {
-        std::cout << "FSMSYSTEM: entry operational " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry operational...", "FSMSystem");
         currentState = nextState;
         callbackSystemOperationalIn(dispConnectionId);
     } else if (currentState == Ready && nextState == ServiceMode) {
@@ -119,9 +119,9 @@ void FSMSystem::setState(SystemState nextState) {
         currentState = ServiceMode;
         callbackSystemServiceIn(dispConnectionId);
     } else if (currentState == ESTOP_RESET && nextState != ESTOP_RESET ) {
-            std::cout << "FSMSYSTEM: E Stop out" << std::endl;
-            currentState = nextState;
-            callbackEStopOut(dispConnectionId);
+        Logger::getInstance().log(LogLevel::DEBUG, "E Stop out...", "FSMSystem");
+        currentState = nextState;
+        callbackEStopOut(dispConnectionId);
 
     } else { 
         currentState = nextState;

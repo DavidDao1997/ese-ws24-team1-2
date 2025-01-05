@@ -20,10 +20,10 @@ int8_t ActuatorController::pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_MOTOR2_FAST,  
 	PULSE_LR1_ON,
     PULSE_LR1_BLINKING, // msg.value int32_t (period [ms])
-    PULSE_LR1_OFF,      
+    PULSE_LR1_OFF,          
 	PULSE_LY1_ON,
     PULSE_LY1_BLINKING, // msg.value int32_t (period [ms])
-    PULSE_LY1_OFF,      
+    PULSE_LY1_OFF,       
 	PULSE_LG1_ON,
     PULSE_LG1_BLINKING, // msg.value int32_t (period [ms])
     PULSE_LG1_OFF,      
@@ -40,6 +40,10 @@ int8_t ActuatorController::pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
 	PULSE_Q11_OFF,     
 	PULSE_Q12_ON,      
 	PULSE_Q12_OFF,
+    PULSE_Q21_ON,      
+	PULSE_Q21_OFF,     
+	PULSE_Q22_ON,      
+	PULSE_Q22_OFF,
     PULSE_SM1_ACTIVE,   
 	PULSE_SM1_RESTING, 
 	PULSE_SM2_ACTIVE,  
@@ -50,7 +54,7 @@ bool ActuatorController::lgblinking = false; // TODO make thread save
 bool ActuatorController::lrblinking = false;
 bool ActuatorController::lyblinking = false;
 
-ActuatorController::ActuatorController(const std::string name, Actuators_Wrapper *actuatorsWrapper) {
+ActuatorController::ActuatorController(const std::string name, I_Actuators_Wrapper *actuatorsWrapper) {
     actuatorControllerChannel = createNamedChannel(name);
     channelID = actuatorControllerChannel->chid;
     actuators = actuatorsWrapper;
@@ -59,10 +63,23 @@ ActuatorController::ActuatorController(const std::string name, Actuators_Wrapper
 
 ActuatorController::~ActuatorController() {
     // thread löschen
-    running = false;
-    // attach löschen
-    destroyNamedChannel(channelID, actuatorControllerChannel);
+    Logger::getInstance().log(LogLevel::INFO, "destroying own channel...", "ActuatorController");
+    destroyNamedChannel(channelID, actuatorControllerChannel); 
 };
+
+bool ActuatorController::stop(){
+	int coid = connectToChannel(channelID);
+    if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
+            Logger::getInstance().log(LogLevel::ERROR, "shutting down MsgReceiver failed...", "ActuatorController");
+            return false;
+    }
+    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down PULSE send...", "ActuatorController");
+    if (0 > ConnectDetach(coid)){
+        Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "ActuatorController");
+        return false;
+    }
+    return true;
+}
 
 int8_t *ActuatorController::getPulses() { return pulses; };
 int8_t ActuatorController::getNumOfPulses() { return numOfPulses; };
@@ -78,95 +95,186 @@ void ActuatorController::handleMsg() {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
 
         if (recvid < 0) {
-            perror("MsgReceivePulse failed!");
-            exit(EXIT_FAILURE);
+            Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "ActuatorController");
+            //exit(EXIT_FAILURE);
         }
 
         if (recvid == 0) { // Pulse received^
             int32_t msgVal = msg.value.sival_int;
             // std::cout << "MSG VAL: " << msgVal << std::endl;
             switch (msg.code) {
+            case PULSE_STOP_RECV_THREAD:
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_STOP_RECV_THREAD...", "ActuatorController");
+                running = false;
+                break;
             case PULSE_MOTOR1_STOP:
-                std::cout << "ACTUATORCONTROLLER: Motor will be stopped" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Festo 1 will be stopped...", "ActuatorController");
                 actuators->motorStop();
                 break;
             case PULSE_MOTOR1_SLOW:
-                std::cout << "ACTUATORCONTROLLER: Motor will be slow running" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Festo 1 will be slow running...", "ActuatorController");
                 actuators->runSlow();
                 actuators->runRight(); // TODO test is toggle button is not needed
                 break;
             case PULSE_MOTOR1_FAST:
-                std::cout << "ACTUATORCONTROLLER: Motor will be fast running" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Festo 1 will be fast running...", "ActuatorController");
                 actuators->runFast();
                 actuators->runRight();
                 break;
             case PULSE_MOTOR2_STOP:
-                std::cout << "ACTUATORCONTROLLER: Motor will be stopped" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Festo 2 will be stopped...", "ActuatorController");
                 actuators->motorStop();
                 break;
             case PULSE_MOTOR2_SLOW:
-                std::cout << "ACTUATORCONTROLLER: Motor will be slow running" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Festo 2 will be slow running...", "ActuatorController");
                 actuators->runSlow();
                 actuators->runRight(); // TODO test is toggle button is not needed
                 break;
             case PULSE_MOTOR2_FAST:
-                std::cout << "ACTUATORCONTROLLER: Motor will be fast running" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Festo 2 will be fast running...", "ActuatorController");
                 actuators->runFast();
                 actuators->runRight();
                 break;
             case PULSE_LG1_OFF:
-                std::cout << "ACTUATORCONTROLLER: LED GREEN OFF" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Green off...", "ActuatorController");
                 lgblinking = false;
                 actuators->greenLampLightOff();
                 break;
             case PULSE_LY1_OFF:
-                std::cout << "ACTUATORCONTROLLER: LED YELLOW OFF" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Yellow off...", "ActuatorController");
                 lyblinking = false;
                 actuators->yellowLampLightOff();
                 break;
             case PULSE_LR1_OFF:
-                std::cout << "ACTUATORCONTROLLER: LED RED OFF" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Red off...", "ActuatorController");
+                lrblinking = false;
+                actuators->redLampLightOff();
+                break;
+            case PULSE_LG2_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Green off...", "ActuatorController");std::cout << "ACTUATORCONTROLLER: LED GREEN OFF" << std::endl;
+                lgblinking = false;
+                actuators->greenLampLightOff();
+                break;
+            case PULSE_LY2_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Yellow off...", "ActuatorController");
+                lyblinking = false;
+                actuators->yellowLampLightOff();
+                break;
+            case PULSE_LR2_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Red off...", "ActuatorController");
                 lrblinking = false;
                 actuators->redLampLightOff();
                 break;
             case PULSE_LG1_BLINKING:
-                std::cout << "ACTUATORCONTROLLER: LED GREEN BLINKING" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Green blinking...", "ActuatorController");
                 lgblinking = true;
                 startGreenLampBlinkingThread(msgVal);
                 break;
             case PULSE_LY1_BLINKING:
-                std::cout << "ACTUATORCONTROLLER: LED YELLOW BLINKING" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Yellow blinking......", "ActuatorController");
                 lyblinking = true;
                 startYellowLampBlinkingThread(msgVal);
                 break;
             case PULSE_LR1_BLINKING:
-                std::cout << "ACTUATORCONTROLLER: LED RED BLINKING" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Red blinking......", "ActuatorController");
+                lrblinking = true;
+                startRedLampBlinkingThread(msgVal);
+                break;
+            case PULSE_LG2_BLINKING:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Green blinking...", "ActuatorController");
+                lgblinking = true;
+                startGreenLampBlinkingThread(msgVal);
+                break;
+            case PULSE_LY2_BLINKING:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Yellow blinking......", "ActuatorController");
+                lyblinking = true;
+                startYellowLampBlinkingThread(msgVal);
+                break;
+            case PULSE_LR2_BLINKING:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Red blinking......", "ActuatorController");
                 lrblinking = true;
                 startRedLampBlinkingThread(msgVal);
                 break;
             case PULSE_LG1_ON:
-                std::cout << "ACTUATORCONTROLLER: LED GREEN ON" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Green on......", "ActuatorController");
                 lgblinking = false;
                 actuators->greenLampLightOn();
                 break;
             case PULSE_LY1_ON:
-                std::cout << "ACTUATORCONTROLLER: LED YELLOW ON" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Yellow on......", "ActuatorController");
                 lyblinking = false;
                 actuators->yellowLampLightOn();
                 break;
             case PULSE_LR1_ON:
-                std::cout << "ACTUATORCONTROLLER: LED RED ON" << std::endl;
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Red on......", "ActuatorController");
                 lrblinking = false;
                 actuators->redLampLightOn();
                 break;
+            case PULSE_LG2_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Green on......", "ActuatorController");
+                lgblinking = false;
+                actuators->greenLampLightOn();
+                break;
+            case PULSE_LY2_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Yellow on......", "ActuatorController");
+                lyblinking = false;
+                actuators->yellowLampLightOn();
+                break;
+            case PULSE_LR2_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Red on......", "ActuatorController");
+                lrblinking = false;
+                actuators->redLampLightOn();
+                break;
+            case PULSE_Q11_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Q1 on......", "ActuatorController");
+                actuators->Q1LightOn();
+                break;
+            case PULSE_Q11_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Q1 off......", "ActuatorController");
+                actuators->Q1LightOff();
+                break;
+            case PULSE_Q12_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Q1 on......", "ActuatorController");
+                actuators->Q1LightOn();
+                break;
+            case PULSE_Q12_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Q1 off......", "ActuatorController");
+                actuators->Q1LightOff();
+                break;
+            case PULSE_Q21_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Q2 on......", "ActuatorController");
+                actuators->Q2LightOn();
+                break;
+            case PULSE_Q21_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED Q2 off......", "ActuatorController");
+                actuators->Q2LightOff();
+                break;
+            case PULSE_Q22_ON:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Q2 on......", "ActuatorController");
+                actuators->Q2LightOn();
+                break;
+            case PULSE_Q22_OFF:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 LED Q2 off......", "ActuatorController");
+                actuators->Q2LightOff();
+                break;
 			case PULSE_SM1_ACTIVE:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 SM Active......", "ActuatorController");
 				actuators->closeSortingModule();
 				break;
 			case PULSE_SM1_RESTING:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 SM Resting......", "ActuatorController");
+				actuators->openSortingModule();
+				break;
+            case PULSE_SM2_ACTIVE:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 SM Active......", "ActuatorController");
+				actuators->closeSortingModule();
+				break;
+			case PULSE_SM2_RESTING:
+                Logger::getInstance().log(LogLevel::DEBUG, "Festo 2 SM Resting......", "ActuatorController");
 				actuators->openSortingModule();
 				break;
 			default:
-				std::cout << "ACTUATORCONTROLLER: UNKNOW PULSE" << std::endl;
+                Logger::getInstance().log(LogLevel::WARNING, "Unknown Pulse.....", "ActuatorController");
             }
         }
     }
@@ -201,7 +309,7 @@ void ActuatorController::greenlampBlinking(bool *blink, int32_t frequency) {
         actuators->greenLampLightOn();
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
     }
-    std::cout << "green blinking stopped" << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "green blinking stopped......", "ActuatorController");
 }
 
 void ActuatorController::yellowlampBlinking(bool *blink, int32_t frequency) {
@@ -212,7 +320,7 @@ void ActuatorController::yellowlampBlinking(bool *blink, int32_t frequency) {
         actuators->yellowLampLightOn();
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
     }
-    std::cout << "yellow blinking stopped" << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "yellow blinking stopped......", "ActuatorController");
 }
 
 void ActuatorController::redlampBlinking(bool *blink, int32_t frequency) {
@@ -223,7 +331,7 @@ void ActuatorController::redlampBlinking(bool *blink, int32_t frequency) {
         actuators->redLampLightOn();
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
     }
-    std::cout << "red blinking stopped" << std::endl;
+    Logger::getInstance().log(LogLevel::DEBUG, "red blinking stopped......", "ActuatorController");
 }
 
 int32_t ActuatorController::getChannel() { return channelID; }

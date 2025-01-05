@@ -14,11 +14,8 @@ Dispatcher::Dispatcher(const std::string name) {
 }
 
 Dispatcher::~Dispatcher() {
-    // Send stop pulse to terminate any dispatch thread
-    running = false;
-
     for (int32_t coid : connections) {
-        ConnectDetach(coid);
+         ConnectDetach(coid);
     }
 
     // Destroy the channel
@@ -28,7 +25,7 @@ Dispatcher::~Dispatcher() {
 void Dispatcher::addSubscriber(int32_t chid, int8_t pulses[], int8_t numOfPulses) {
     int coid = ConnectAttach(0, 0, chid, _NTO_SIDE_CHANNEL, 0);
     if (coid < 0) {
-        perror("Failed to connect!");
+        Logger::getInstance().log(LogLevel::ERROR, "Failed to connect!...", "Dispatcher");
         return;
     }
     connections.push_back(coid);
@@ -36,6 +33,21 @@ void Dispatcher::addSubscriber(int32_t chid, int8_t pulses[], int8_t numOfPulses
         uint8_t pulse = pulses[i];
         connectionsByPulse[pulse].push_back(coid);
     }
+}
+
+bool Dispatcher::stop(){
+	int coid = connectToChannel(channelID);
+    if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
+            Logger::getInstance().log(LogLevel::CRITICAL, "Shutting down Msg Receiver failed...", "Dispatcher");
+            return false;
+    }
+    // disconnect the connection to own channel
+    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down PULSE send...", "Dispatcher");
+    if (0 > ConnectDetach(coid)){
+        Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "Dispatcher");
+        return false;
+    }
+    return true;
 }
 
 void Dispatcher::handleMsg() {
@@ -47,12 +59,16 @@ void Dispatcher::handleMsg() {
     while (running) {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
         if (recvid < 0) {
-            perror("MsgReceivePulse failed!");
+            Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "Dispatcher");
             //exit(EXIT_FAILURE); // TODO exit??? was passiert wenn der dispatcher stirbt. fehlerbhandlung?
         }
 
         if (recvid == 0) { // Pulse received
             switch (msg.code) {
+            case PULSE_STOP_RECV_THREAD:
+                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_STOP_RECV_THREAD...", "Dispatcher");
+                running = false;
+                break;
                 // case PULSE_DISPATCHER_SUBSCRIBE:
                 // std::cout << "subscribing" << std::endl;
                 //  coids add msg.coid;
@@ -77,7 +93,7 @@ void Dispatcher::handleMsg() {
                         // std::cout << buffer << std::flush;
                         int err = MsgSendPulse(coid, -1, msg.code, msg.value.sival_int);
                         if (err == -1) {
-                            perror("DISPACHER: MsgSendPulse failed");
+                            Logger::getInstance().log(LogLevel::ERROR, "MsgSendPulse failed...", "Dispatcher");
                         }
                     }
                 }

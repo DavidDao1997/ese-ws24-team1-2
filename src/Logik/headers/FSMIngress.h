@@ -1,6 +1,8 @@
 #ifndef FSMINGRESS_H
 #define FSMINGRESS_H
 
+#include "../../Logging/headers/Logger.h"
+
 enum class FSMIngressStates { Paused, Idle, CreatingDistance, PukPresent };
 
 class FSMIngress {

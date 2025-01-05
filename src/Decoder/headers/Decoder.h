@@ -8,33 +8,27 @@
 #ifndef HEADER_DECODER_H_
 #define HEADER_DECODER_H_
 
-#include <iostream>
-#include <stdexcept>
-#include <sys/neutrino.h>
-#include <sys/procmgr.h>
-#include <thread>
+#include "../interfaces/I_Decoder.h"
 
-#include "../../Dispatcher/headers/PulseMsgConfig.h"
-#include "../../Dispatcher/headers/PulseMsgHandler.h"
-#include "../../HAL/headers/SensorISR.h"
-
-class Decoder : public PulseMsgHandler {
+class Decoder : public I_Decoder {
   public:
-    Decoder(const std::string dispatcherChannelName);
-    ~Decoder();
+    Decoder(const std::string dispatcherChannelName, uint8_t festoID);
+    virtual ~Decoder();
 
     void handleMsg() override;
     void sendMsg() override;
     int32_t getChannel() override;
+    bool stop();
 
   private:
-    void decode();
+    void decode() override;
 
   private:
     bool running;
     int32_t channelID;
     SensorISR *sensorISR;
     int32_t dispatcherConnectionID;
+    uint8_t festoNr;
 };
 
 #endif /* HEADER_DECODER_H_ */

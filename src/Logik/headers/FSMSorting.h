@@ -1,6 +1,8 @@
 #ifndef FSMSORTING_H
 #define FSMSORTING_H
 
+#include "../../Logging/headers/Logger.h"
+
 enum class FSMSortingStates { Paused, Idle, Passthrough, PukPresent, MetalMeasurement, Ejecting, RampFull };
 
 class FSMSorting {

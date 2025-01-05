@@ -4,6 +4,8 @@
 #include <iostream>
 #include <stdint.h>
 
+#include "../../Logging/headers/Logger.h"
+
 enum MotorState { Fast, Slow, Stop };
 
 class FSMMotor {

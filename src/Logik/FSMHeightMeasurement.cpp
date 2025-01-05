@@ -57,13 +57,14 @@ void FSMHeightMeasurement::raiseHS1SamplingDone() {
 
 void FSMHeightMeasurement::raiseSystemOperationalIn() {
     if (currentState == FSMHeightMeasurementStates::Paused) {
-        std::cout << "FSMHEIGHTMEASUREMENT: System Operational in" << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "System Operational in...", "FSMHeightMeasurement");
         setState(FSMHeightMeasurementStates::Idle);
     }
 }
 void FSMHeightMeasurement::raiseSystemOperationalOut() { 
     setState(FSMHeightMeasurementStates::Paused); 
-     std::cout << "FSMHEIGHTMEASUREMENT: System Operational out" << std::endl;}
+    Logger::getInstance().log(LogLevel::DEBUG, "System Operational out...", "FSMHeightMeasurement");
+}
 
 void FSMHeightMeasurement::setState(FSMHeightMeasurementStates nextState) {
 
@@ -74,9 +75,9 @@ void FSMHeightMeasurement::setState(FSMHeightMeasurementStates nextState) {
     }
     // Exit for Measuring
     else if (currentState == FSMHeightMeasurementStates::Measuring &&
-             nextState != FSMHeightMeasurementStates::Measuring) {
-        std::cout << "FSMHeightMeasurement: exit measurement " << std::endl;
-            callbackMeasurementOut(dispConnectionId);
+        nextState != FSMHeightMeasurementStates::Measuring) {
+        Logger::getInstance().log(LogLevel::DEBUG, "exit measurement...", "FSMHeightMeasurement");
+        callbackMeasurementOut(dispConnectionId);
             
     }
 
@@ -90,20 +91,20 @@ void FSMHeightMeasurement::setState(FSMHeightMeasurementStates nextState) {
     /*Entry Block's*/
     // Entry for PunkPresent
     if (currentState != FSMHeightMeasurementStates::PukPresent && nextState == FSMHeightMeasurementStates::PukPresent) {
-        std::cout << "FSMHeightMeasurement: entry PukPresent " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry PukPresent...", "FSMHeightMeasurement");
         callbackPukPresentIn(dispConnectionId); // MotorForward++
         currentState = FSMHeightMeasurementStates::PukPresent;
     }
     // Entry for Measuring
     else if (currentState != FSMHeightMeasurementStates::Measuring &&
              nextState == FSMHeightMeasurementStates::Measuring) {
-        std::cout << "FSMHeightMeasurement: entry Measuring " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry Measuring...", "FSMHeightMeasurement");
         callbackMeasurementIn(dispConnectionId); // MotorForward++
         currentState = FSMHeightMeasurementStates::Measuring;
     }
     // Entry for Idle
     else if (currentState != FSMHeightMeasurementStates::Idle && nextState == FSMHeightMeasurementStates::Idle) {
-        std::cout << "FSMHeightMeasurement: entry Idle " << std::endl;
+        Logger::getInstance().log(LogLevel::DEBUG, "entry Idle...", "FSMHeightMeasurement");
   
         //callbackPukPresentIn(dispConnectionId);
         currentState = FSMHeightMeasurementStates::Idle;

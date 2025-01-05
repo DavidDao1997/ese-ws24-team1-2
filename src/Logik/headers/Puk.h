@@ -10,6 +10,8 @@
 
 #include <stdint>
 
+#include "../../Logging/headers/Logger.h"
+
 class Puk {
 public:
     Puk();

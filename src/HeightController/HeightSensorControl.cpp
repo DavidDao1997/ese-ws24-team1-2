@@ -15,20 +15,32 @@ int stableCount = 0;
 int countSample = 0; // Zähler für Samples
 
 // Constructor
-HeightSensorControl::HeightSensorControl(const std::string channelName, const std::string dispatcherName) {
+HeightSensorControl::HeightSensorControl(const std::string channelName, const std::string dispatcherName, const uint8_t festoID, TSCADC* tscadc, I_ADC* hsadc) {
     hsControllerChannel = createNamedChannel(channelName);
     channelID = hsControllerChannel->chid;
     running = false;
     dispatcherConnectionID = name_open(dispatcherName.c_str(), 0);
+    if ((festoID == FESTO1) || (festoID == FESTO2)){
+        festoNr = festoID;
+    } else {
+        Logger::getInstance().log(LogLevel::ERROR, "Wrong Festo Nr in Constructor...", "HeightSensorControl");
+    }
 
-    tsc = new TSCADC();
-    adc = new ADC(*tsc);
+    tsc = tscadc; //new TSCADC();
+    adc = hsadc; //new ADC(*tsc);
     adc->registerAdcISR(ConnectAttach(0, 0, channelID, _NTO_SIDE_CHANNEL, 0), PULSE_ADC_SAMPLE);
-    adc->sample();
 }
 
 // Destructor
-HeightSensorControl::~HeightSensorControl() { std::cout << "HwAdcDemo object destroyed." << std::endl; }
+HeightSensorControl::~HeightSensorControl() { 
+    // TODO disconnect from dispatcher
+    if (0 > ConnectDetach(dispatcherConnectionID)){
+        Logger::getInstance().log(LogLevel::ERROR, "Disconnection from Dispatcher failed...", "HeightSensorControl");
+    }
+    // TODO How to end thread if blocked in MsgReveivePulse and return avlue?
+    Logger::getInstance().log(LogLevel::DEBUG, "destroying own channel...", "HeightSensorControl");
+    destroyNamedChannel(channelID, hsControllerChannel); 
+}
 
 // global to store Height information into a array
 // std::vector<SampleData> HeightSensorControl::heightData;
@@ -79,6 +91,21 @@ HeightSensorControl::~HeightSensorControl() { std::cout << "HwAdcDemo object des
 //    if (ChannelDestroy(chanID) != EOK) perror("Destroying channel failed!");
 //}
 
+bool HeightSensorControl::stop(){
+	int coid = connectToChannel(channelID);
+    if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
+        Logger::getInstance().log(LogLevel::ERROR, "Shutting down Msg Receiver failed...", "HeightSensorControl");
+        return false;
+    }
+    // disconnect the connection to own channel
+    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down PULSE send...", "HeightSensorControl");
+    if (0 > ConnectDetach(coid)){
+        Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "HeightSensorControl");
+        return false;
+    }
+    return true;
+}
+
 // thread that received msg
 void HeightSensorControl::handleMsg() {
 
@@ -94,14 +121,17 @@ void HeightSensorControl::handleMsg() {
 
     int32_t previousValue;
     bool candidatesSend = false;
+    // getting first sample
+    adc->sample();
     // need to switch to a switch case variant if more pulse msg are available
     while (receivingRunning) {
         // printf("Iam into Routine\n");
         if (MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr) < 0) {
-            perror("MsgReceivePulse failed!");
-            exit(EXIT_FAILURE);
+            Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "HeightSensorControl");
+            //exit(EXIT_FAILURE);
         }
 
+        
         // printf("Iam into Routine HeightPulse with Code: %d\n", msg.code );
         if (msg.code == PULSE_ADC_SAMPLE) {
             int32_t currentValue = msg.value.sival_int;
@@ -110,11 +140,14 @@ void HeightSensorControl::handleMsg() {
 
             // this_thread::sleep_for(chrono::milliseconds(10));
             // adc->sample();
+        } else if(msg.code == PULSE_STOP_RECV_THREAD) {
+            Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_STOP_RECV_THREAD...", "HeightSensorControl");
+            receivingRunning = false;  
         }
 
         // processSample(currentValue, secondChance, candidateValue, adc);
     }
-    printf("Message thread stops...\n");
+    Logger::getInstance().log(LogLevel::DEBUG, "Message thread stops...", "HeightSensorControl");
 }
 
 void HeightSensorControl::sendMsg() {}
@@ -123,9 +156,10 @@ int32_t HeightSensorControl::getChannel() { return channelID; }
 
 // Evaluate sample
 void HeightSensorControl::processSample(
-    int currentValue, bool &secondChance, bool &candidatesSend, int &candidateValue, ADC *adc
+    int currentValue, bool &secondChance, bool &candidatesSend, int &candidateValue, I_ADC *adc
 ) { //, ADC *adc) {
     if (!firstValue) {
+        Logger::getInstance().log(LogLevel::DEBUG, "setting first Value to " + std::to_string(currentValue), "HeightSensorControl");
         bandHeight = currentValue;
         firstValue = true;
     }
@@ -133,16 +167,34 @@ void HeightSensorControl::processSample(
     if ((abs(currentValue - bandHeight) <= THRESHOLD)) {
         handleBandHeightReached(secondChance);
         if (candidatesSend) {
-            if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS_SAMPLING_DONE, currentValue)) {
-                perror("Send failed.");
+            if (festoNr == FESTO1){
+                Logger::getInstance().log(LogLevel::DEBUG, "sending Value in candidates send..." + std::to_string(currentValue), "HeightSensorControl");
+                if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS1_SAMPLING_DONE, currentValue)) {
+                    Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
+                }
+            } else if (festoNr == FESTO2) {
+                if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS2_SAMPLING_DONE, currentValue)) {
+                    Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
+                }
+            } else {
+                Logger::getInstance().log(LogLevel::ERROR, "Festo Setup Wrong...", "HeightSensorControl");
             }
             candidatesSend = false;
         }
     } else if (abs(currentValue - lastValue) <= THRESHOLD) {
         // std::cout << "HSCONTROL: value is: " << currentValue << std::endl;
-        // std::cout << "HSCONTROL: CounterValue is: " << countSample << std::endl;
-        if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS_SAMPLE, currentValue)) {
-            perror("Send failed.");
+        // std::cout << "HSCONT
+        if (festoNr == FESTO1){
+            Logger::getInstance().log(LogLevel::DEBUG, "sending Value in not candidates send..." + std::to_string(currentValue), "HeightSensorControl");
+            if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS1_SAMPLE, currentValue)) {
+                Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
+            }
+        } else if (festoNr == FESTO2) {
+            if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS2_SAMPLE, currentValue)) {
+                Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
+            }
+        } else {
+            Logger::getInstance().log(LogLevel::ERROR, "Festo Setup Wrong...", "HeightSensorControl");
         }
         candidatesSend = true;
     } else {
@@ -164,7 +216,7 @@ void HeightSensorControl::handleBandHeightReached(bool &secondChance) {
     */
 
     secondChance = false;
-    countSample = 0;
+    //countSample = 0;
 }
 
 // Wenn ein neuer Wert erkannt wird
@@ -175,10 +227,10 @@ void HeightSensorControl::handleNewValue(int currentValue, bool &secondChance, i
     } else if (abs(currentValue - candidateValue) <= THRESHOLD) {
         lastValue = currentValue;
         secondChance = false;
-        countSample += 1; // Sample wird gezählt
+       // countSample += 1; // Sample wird gezählt
     } else {
         secondChance = false;
-        countSample = 0;
+       // countSample = 0;
     }
 }
 

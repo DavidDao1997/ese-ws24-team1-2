@@ -1,0 +1,15 @@
+/*
+ * I_HeightController.h
+ *
+ *  Created on: 20.12.2024
+ *      Author: Marc
+ */
+
+#ifndef HEIGHTCONTROLLER_INTERFACES_I_HEIGHTCONTROLLER_H_
+#define HEIGHTCONTROLLER_INTERFACES_I_HEIGHTCONTROLLER_H_
+
+#include "../../Logging/headers/Logger.h"
+
+
+
+#endif /* HEIGHTCONTROLLER_INTERFACES_I_HEIGHTCONTROLLER_H_ */
