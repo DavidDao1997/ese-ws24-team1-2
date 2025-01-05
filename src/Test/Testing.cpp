@@ -128,7 +128,7 @@ protected:
 //EXPECT_EQ(actuatorsWrapper->getActuators(0),0x00); // 0 for whole bank
 
 /*
-* TODO Aenderungen vom Mock Actuator Controller in den ActuatorController uebernehemn!!!!!
+* TODO Aenderungen vom Mock Actuator Controller in den ActuatorController uebernehemn!!!!! am besten als init im actuator controller
 */
 TEST_F(DISABLED_SystemTest, startupWithoutUsingServiceModeOnFESTO1) {
     //EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1); // TODO Explizit Setzen Bei Startup
@@ -204,6 +204,50 @@ TEST_F(DISABLED_SystemTest, eStopAfterServiceModeOnFESTO1) {
     // EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
 }
 
+TEST_F(DISABLED_SystemTest, errorWhenPukDistanceTooShortAtFront) {
+	startupSequenceNoServiceMode();
+	// Puk in Front
+	decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+	WAIT(500);
+	decoder->sendPulse(PULSE_LBF_OPEN, 0);
+	WAIT(100);
+	decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+	EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
+	EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
+	EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+	EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),1);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
+
+}
+
+TEST_F(DISABLED_SystemTest, mototrStopsWhenPukAtEnd) {
+	startupSequenceNoServiceMode();
+	// Puk in Front
+	decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+	WAIT(500);
+	decoder->sendPulse(PULSE_LBF_OPEN, 0);
+	WAIT(500);
+
+
+
+	EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
+	EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
+	EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+	EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
+	EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
+
+}
+
 
 class ModuleTest : public ::testing::Test {
 protected:
@@ -250,8 +294,11 @@ TEST_F(ModuleTest, hsContollerReceivesPulses) {
     Mock_ADC* adc = new Mock_ADC();
     heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName, FESTO1, tsc, adc); 
     adc->mockInit(heightSensorController->getChannel());
+    adc->setSample(2000, 2500, 2700, 2500);
+    adc->setSampleCnt(10,3,2,3);
     heightSensorControllerThread = std::thread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
-    WAIT(1000);
+    
+    WAIT(3000);
 
     // TODO add class to receive Pulses and its values from hscontroller, and check if as expected; e.g. MOCK_HSCNTRL_RECEIVER
 

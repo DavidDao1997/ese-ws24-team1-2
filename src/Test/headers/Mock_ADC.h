@@ -25,7 +25,8 @@ public:
 	void adcDisable(void) override;
 
     void mockInit(int32_t hscChannelId);
-
+	void setSample(int32_t band, int32_t first, int32_t second, int32_t third);
+	void setSampleCnt(int32_t bandCnt, int32_t firstCnt, int32_t secondCnt, int32_t thirdCnt);
 
 
     void handleMsg() override;
@@ -38,6 +39,18 @@ private:
 	void adcEnableSequence(unsigned int steps) override;
 private:
 	int32_t hsCoid;
+	int32_t sampleVal;
+	int32_t sampleCnt;
+
+	int32_t bandHeight;
+	int32_t firstHeight;
+	int32_t secondHeight;
+	int32_t thirdHeight;
+
+	int32_t bandHeightCnt;
+	int32_t firstHeightCnt;
+	int32_t secondHeightCnt;
+	int32_t thirdHeightCnt;
 };
 
 

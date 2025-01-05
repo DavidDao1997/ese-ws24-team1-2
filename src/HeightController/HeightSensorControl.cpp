@@ -159,7 +159,7 @@ void HeightSensorControl::processSample(
     int currentValue, bool &secondChance, bool &candidatesSend, int &candidateValue, I_ADC *adc
 ) { //, ADC *adc) {
     if (!firstValue) {
-        Logger::getInstance().log(LogLevel::DEBUG, "setting first Value...", "HeightSensorControl");
+        Logger::getInstance().log(LogLevel::DEBUG, "setting first Value to " + std::to_string(currentValue), "HeightSensorControl");
         bandHeight = currentValue;
         firstValue = true;
     }
@@ -168,6 +168,7 @@ void HeightSensorControl::processSample(
         handleBandHeightReached(secondChance);
         if (candidatesSend) {
             if (festoNr == FESTO1){
+                Logger::getInstance().log(LogLevel::DEBUG, "sending Value in candidates send..." + std::to_string(currentValue), "HeightSensorControl");
                 if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS1_SAMPLING_DONE, currentValue)) {
                     Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
                 }
@@ -182,8 +183,9 @@ void HeightSensorControl::processSample(
         }
     } else if (abs(currentValue - lastValue) <= THRESHOLD) {
         // std::cout << "HSCONTROL: value is: " << currentValue << std::endl;
-        // std::cout << "HSCONTROL: CounterValue is: " << countSample << std::endl;
+        // std::cout << "HSCONT
         if (festoNr == FESTO1){
+            Logger::getInstance().log(LogLevel::DEBUG, "sending Value in not candidates send..." + std::to_string(currentValue), "HeightSensorControl");
             if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS1_SAMPLE, currentValue)) {
                 Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
             }
@@ -214,7 +216,7 @@ void HeightSensorControl::handleBandHeightReached(bool &secondChance) {
     */
 
     secondChance = false;
-    countSample = 0;
+    //countSample = 0;
 }
 
 // Wenn ein neuer Wert erkannt wird
@@ -225,10 +227,10 @@ void HeightSensorControl::handleNewValue(int currentValue, bool &secondChance, i
     } else if (abs(currentValue - candidateValue) <= THRESHOLD) {
         lastValue = currentValue;
         secondChance = false;
-        countSample += 1; // Sample wird gezählt
+       // countSample += 1; // Sample wird gezählt
     } else {
         secondChance = false;
-        countSample = 0;
+       // countSample = 0;
     }
 }
 
