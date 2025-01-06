@@ -5,19 +5,21 @@
 
 #include "Actuatorcontroller/headers/ActuatorController.h"
 #include "Dispatcher/headers/Dispatcher.h"
-#include "Logik/headers/FSM.h"
+//#include "Logik/headers/FSM.h"
 #include "Util/headers/Util.h"
 #include "HAL/headers/ADC.h"
 #include "HAL/headers/TSCADC.h"
 #include "HeightController/header/HeightSensorControl.h"
 #include "Decoder/headers/Decoder.h"
-#include "Logik/FSM/headers/FSMController.h"
+//Here is the FSM QualityGate and new FSM Controller
+#include "FSM/FSMController.h"
+// #include "FSM/src-gen/FSM_QualityGate.h"
 #include "Logging/headers/Logger.h"
 
 #include <gtest/gtest.h>
 
 #define TESTING 1
-#define LOGLEVEL DEBUG
+#define LOGLEVEL INFO
 
 
 int main(int argc, char **argv) {
@@ -28,7 +30,7 @@ Logger& logger = Logger::getInstance();
 
 logger.setLogLevel(LogLevel::LOGLEVEL);    // Log-Level setzen
 // Log-Level für verschiedene Klassen individuell festlegen
-// logger.setLogLevelForClass("ClassA", LogLevel::INFO); // Standardmodus
+// logger.setLogLevelForClass("Mock_ADC", LogLevel::DEBUG); // Standardmodus
 // logger.setLogLevelForClass("ClassB", LogLevel::ERROR, true); // Nur ERROR loggen
 
 //logger.setLogFile("tmp/loggingFile.log");   // Log-Datei festlegen INFO: FILE IS ON TARGET

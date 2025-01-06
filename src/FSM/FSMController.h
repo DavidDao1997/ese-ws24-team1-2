@@ -5,7 +5,7 @@
 
 #include "../Dispatcher/headers/PulseMsgConfig.h"
 #include "../Dispatcher/headers/PulseMsgHandler.h"
-#include "src-gen/FSM_QualityGate.h"
+#include "gen/src-gen/FSM_QualityGate.h"
 
 #include "../Logging/headers/Logger.h"
 
