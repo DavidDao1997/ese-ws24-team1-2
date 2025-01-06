@@ -25,7 +25,7 @@
 class HeartBeat : public PulseMsgHandler {
   public:
     HeartBeat(uint8_t festoNrOfOtherFesto);
-    ~HeartBeat();
+    virtual ~HeartBeat();
 
     bool stop();
     int32_t getChannel() override;
@@ -33,10 +33,12 @@ class HeartBeat : public PulseMsgHandler {
     void handleMsg() override;
 
   private:
-    void handleDisconnect();
+    void handleDisconnect(bool disconnect);
     bool running;
+    bool eStopPressed;
     int32_t channelID;
     int32_t otherFesto;
+    int32_t dispatcherChannel
     name_attach_t* heartBeatChannel;
     std::mutex heartbeatMutex;
     std::chrono::steady_clock::time_point lastHeartbeatReceived;
@@ -44,7 +46,7 @@ class HeartBeat : public PulseMsgHandler {
 
 /*
     Master als auch Slave senden synchrone Pulsemsgs in einem definierten Zeitraum
-    Wenn Nachricht angekommen sleep for weitere 300 ms (?) dann neue Nachricht.
+    Wenn Nachricht angekommen sleep for weitere 100 ms (?) dann neue Nachricht.
     Wenn nicht erfolgreiche antwort, dann E-Stop verhalten.
 
  */

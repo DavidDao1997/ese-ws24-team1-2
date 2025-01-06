@@ -135,9 +135,9 @@ void Decoder::decode() {
         // sprintf(buffer, "DECODER: current level %d\n", current_level);
         // std::cout << buffer << std::endl;
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
-            Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
-
-        } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+            Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed, send to heartbeat", "Decoder");
+            
+        } // TODO 
     }
     // Light Barrier Front
     if ((flippedValues & (uint32_t)BIT_MASK(LBF_PIN)) != 0) {

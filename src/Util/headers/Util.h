@@ -10,5 +10,7 @@
 #define FESTO1 0
 #define FESTO2 1
 
+#define DISPATCHERNAME "dispatcher"
+
 
 #endif

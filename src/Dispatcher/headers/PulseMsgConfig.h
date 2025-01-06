@@ -18,6 +18,8 @@ enum PulseCode {
     PULSE_STOP_RECV_THREAD,
     // Heartbeath
     PULSE_HEARTBEAT,
+    PULSE_E_STOP_HEARTBEAT_FESTO1,
+    PULSE_E_STOP_HEARTBEAT_FESTO2,    
 
     // EStop
     PULSE_ESTOP_HIGH, // msg.value int32_t (festoID)
