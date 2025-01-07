@@ -28,7 +28,7 @@
 #include "../FSM/gen/src/sc_rxcpp.h"
 
 
-class DISABLED_SystemTest : public ::testing::Test {
+class SystemTest : public ::testing::Test {
 protected:
     void SetUp() override {
         Logger::getInstance().log(LogLevel::INFO, "Setup SystemTests...", "SystemTest");
@@ -51,14 +51,14 @@ protected:
 
         heightSensorControllerThread = std::thread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
 
-        // fsmController = new FSMController(dispatcherChannelName);
-        // dispatcher->addSubscriber(
-        //     fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
-        // );
+        fsmController = new FSMController(dispatcherChannelName);
+        dispatcher->addSubscriber(
+            fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
+        );
 
         dispatcherThread = std::thread(std::bind(&Dispatcher::handleMsg, dispatcher));
         WAIT(1000);
-        // fsmControllerHandleMsgThread = std::thread(std::bind(&FSMController::handleMsg, fsmController));
+        fsmControllerHandleMsgThread = std::thread(std::bind(&FSMController::handleMsg, fsmController));
         actuatorControllerThread = std::thread(std::bind(&Mock_ActuatorController::handleMsg, actuatorController));
         decoderThread = std::thread(std::bind(&Mock_Decoder::handleMsg, decoder));
         WAIT(1000);
@@ -66,8 +66,8 @@ protected:
 
     void TearDown() override {
         Logger::getInstance().log(LogLevel::INFO, "Tear Down Tests...", "Testing");
-        //if (!fsmController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop fsmControllerHandleMsgThread has not ended...", "SystemTest");}
-        //if (!decoder->stop()) {std::cout << "loop decoderThread has ended" << std::endl;} // MOCK DOESNT HAVE A MSGHANDLER
+        if (!fsmController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop fsmControllerHandleMsgThread has not ended...", "SystemTest");}
+        // if (!decoder->stop()) {std::cout << "loop decoderThread has ended" << std::endl;} // MOCK DOESNT HAVE A MSGHANDLER
         if (!actuatorController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop actuatorControllerThread has not ended...", "SystemTest");}
         if (!heightSensorController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop heightSensorControllerThread has not ended...", "SystemTest");}
         if (!dispatcher->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop dispatcherThread has not ended...", "SystemTest");}
@@ -171,191 +171,154 @@ protected:
 /*
 * TODO Aenderungen vom Mock Actuator Controller in den ActuatorController uebernehemn!!!!! am besten als init im actuator controller
 */
-// TEST_F(DISABLED_SystemTest, startupWithoutUsingServiceModeOnFESTO1) {
-//     //EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1); // TODO Explizit Setzen Bei Startup
-//     decoder->sendPulse(PULSE_BGS_LONG, 0);
-//     WAIT(2000);
-//     EXPECT_EQ(actuatorsWrapper->greenBlinking(),true);
-//     EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
-//     // EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
-//     decoder->sendPulse(PULSE_BRS_SHORT, 0);
-//     WAIT(500);
-//     EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),0);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
-//     // EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
-//     decoder->sendPulse(PULSE_BGS_SHORT, 0);
-//     WAIT(500);
-//     EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
-//     // EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
-// }
+TEST_F(SystemTest, startupWithoutUsingServiceModeOnFESTO1) {
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1); // TODO Explizit Setzen Bei Startup
+    
+    // Entry Service Mode
+    decoder->sendPulse(PULSE_BGS_LONG, 0);
+    WAIT(2000);
 
+    EXPECT_EQ(actuatorsWrapper->greenBlinking(),true);
+    EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
+    
+    // Enbtry Ready
+    decoder->sendPulse(PULSE_BRS_SHORT, 0);
+    WAIT(500);
 
+    EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
 
-// TEST_F(DISABLED_SystemTest, motorsStartWhenLBFInterruptOnFESTO1) {
-//     startupSequenceNoServiceMode();
-//     decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
-//     WAIT(2000);
-//     EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->yellowBlinking(),true);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),1);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),0);
-//     decoder->sendPulse(PULSE_LBF_OPEN, 0);
-//     WAIT(500);
-//     EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->yellowBlinking(),true);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),1);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),0);
-// }
+    // Entry Operational
+    decoder->sendPulse(PULSE_BGS_SHORT, 0);
+    WAIT(500);
 
+    EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
+}
 
-// TEST_F(DISABLED_SystemTest, eStopAfterServiceModeOnFESTO1) {
-//     startupSequenceNoServiceMode();
-//     decoder->sendPulse(PULSE_ESTOP_LOW, 0);
-//     WAIT(500);
-//     EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),1);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),1);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),0);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
-//     EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
-//     // EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
-// }
+TEST_F(SystemTest, motorsStartWhenLBFInterruptOnFESTO1) {
+    startupSequenceNoServiceMode();
+    decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+    WAIT(2000);
+    EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->yellowBlinking(),true);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),1);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),0);
+    decoder->sendPulse(PULSE_LBF_OPEN, 0);
+    WAIT(500);
+    EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->yellowBlinking(),true);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),1);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),0);
+}
 
-// TEST_F(DISABLED_SystemTest, errorWhenPukDistanceTooShortAtFront) {
-// 	startupSequenceNoServiceMode();
-// 	// Puk in Front
-// 	decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
-// 	WAIT(500);
-// 	decoder->sendPulse(PULSE_LBF_OPEN, 0);
-// 	WAIT(100);
-// 	decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
-// 	EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-// 	EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-// 	EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),0);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),1);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),0);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
+TEST_F(SystemTest, eStopAfterServiceModeOnFESTO1) {
+    startupSequenceNoServiceMode();
+    decoder->sendPulse(PULSE_ESTOP_LOW, 0);
+    WAIT(3000);
+    EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),1);
+    EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),1);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
+}
 
-// }
+TEST_F(SystemTest, errorWhenPukDistanceTooShortAtFront) {
+	startupSequenceNoServiceMode();
+	// Puk in Front
+	decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+	WAIT(500);
+	decoder->sendPulse(PULSE_LBF_OPEN, 0);
+	WAIT(100);
+	decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+	EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
+	EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
+	EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+	EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),1);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
+}
 
-// TEST_F(DISABLED_SystemTest, mototrStopsWhenPukAtEnd) {
-// 	startupSequenceNoServiceMode();
-// 	// Puk in Front
-// 	decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
-// 	WAIT(500);
-// 	decoder->sendPulse(PULSE_LBF_OPEN, 0);
-// 	WAIT(500);
-
-
-
-// 	EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-// 	EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-// 	EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),0);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
-// 	EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
-
-// }
-
-
-TEST_F(ModuleTest, hsContollerReceivesPulses) {
-    TSCADC* tsc = new TSCADC();
-    Mock_ADC* adc = new Mock_ADC();
-    heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName, FESTO1, tsc, adc);
-    adc->mockInit(heightSensorController->getChannel());
-    adc->setSample(2000, 2500, 2700, 2500);
-    adc->setSampleCnt(10,3,3,3);
-    heightSensorControllerThread = std::thread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
-
+TEST_F(SystemTest, mototrStopsWhenPukAtEnd) {
+	startupSequenceNoServiceMode();
+	// Puk in Front
+	decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+	WAIT(500);
+	decoder->sendPulse(PULSE_LBF_OPEN, 0);
+	WAIT(500);
+    decoder->sendPulse(PULSE_HS1_SAMPLE, 0);
+    WAIT(500);
+    decoder->sendPulse(PULSE_HS1_SAMPLING_DONE, 0);
+    WAIT(500);
+    decoder->sendPulse(PULSE_LBM_INTERRUPTED, 0);
+    WAIT(500);
+    decoder->sendPulse(PULSE_LBM_OPEN, 0);
+    WAIT(500);
+    decoder->sendPulse(PULSE_LBE_INTERRUPTED, 0);
     WAIT(3000);
 
-    // TODO add class to receive Pulses and its values from hscontroller, and check if as expected; e.g. MOCK_HSCNTRL_RECEIVER
-
-    // TODO add methods to Mock_ADC to be able to send different Heights
-
-    if (!heightSensorController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop heightSensorControllerThread has not ended...", "ModuleTest");}
-    heightSensorControllerThread.join();
+	EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
+	EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
+	EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+	EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
+	EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
+	EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
 
 }
 
-// class VoidObserver public sc::rx::Observer<void> {
-// public:
-//     virtual void next() override {
-//         callback();
-//     }
+
+// TEST_F(ModuleTest, hsContollerReceivesPulses) {
+//     TSCADC* tsc = new TSCADC();
+//     Mock_ADC* adc = new Mock_ADC();
+//     heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName, FESTO1, tsc, adc);
+//     adc->mockInit(heightSensorController->getChannel());
+//     adc->setSample(2000, 2500, 2700, 2500);
+//     adc->setSampleCnt(10,3,3,3);
+//     heightSensorControllerThread = std::thread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
+
+//     WAIT(3000);
+
+//     // // TODO add class to receive Pulses and its values from hscontroller, and check if as expected; e.g. MOCK_HSCNTRL_RECEIVER
+
+//     // // TODO add methods to Mock_ADC to be able to send different Heights
+
+//     if (!heightSensorController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop heightSensorControllerThread has not ended...", "ModuleTest");}
+//     // heightSensorControllerThread.join();
+
 // }
-
-// class VoidObserver {
-    
-//     VoidObserver(conId, someNumber, PULSECODE, PULSEVALUE) {
-//         // save the values
-//     }
-
-//     void next() {
-        
-//     }
-// }
-
-class VoidObserver : public sc::rx::Observer<void> {
-public:
-    virtual void next() override {
-        Logger::getInstance().log(LogLevel::INFO, "FOOOOOOOOO", "ModuleTest");
-    }
-};
-// class MotorStartObserver : public sc::rx::Observer<void> {
-// public:
-//     virtual void next() override {
-//         Logger::getInstance().log(LogLevel::INFO, "Sending LG1_Blinking to actuatorController", "ModuleTest");
-//         //MsgSendbulse Bling
-//     }
-// };
-
-TEST_F(ModuleTest, fsmDoesStuff) {
-    FSM_QualityGate* fsm = new FSM_QualityGate();
-
-    VoidObserver observer;
-    fsm->getMOTOR_FAST().subscribe(*new sc::rx::subscription<void>(observer));
-
-    fsm->enter();
-
-
-    // decoder->sendPulse(PULSE_BGS_LONG, 0);
-    fsm->raiseBGS_1_LONG_PRESSED();
-    fsm->raiseBRS_1_INTERRUPTED();
-    fsm->raiseBGS_1_INTERRUPTED();
-    Logger::getInstance().log(LogLevel::INFO, "No FOOO yet", "ModuleTest");
-    fsm->raiseLBF_1_INTERRUPTED();
-    Logger::getInstance().log(LogLevel::INFO, "FOOO has been printed", "ModuleTest");
-}

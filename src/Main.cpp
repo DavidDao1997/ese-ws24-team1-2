@@ -19,7 +19,7 @@
 #include <gtest/gtest.h>
 
 #define TESTING 1
-#define LOGLEVEL INFO
+#define LOGLEVEL ERROR
 
 
 int main(int argc, char **argv) {
@@ -96,7 +96,9 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         std::string actuatorControllerChannelName = "actuatorController";
         Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
         ActuatorController *actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
-        HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl2", dispatcherChannelName, FESTO2);
+        TSCADC* tsc = new TSCADC();
+        ADC* adc = new ADC(*tsc);
+        HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl2", dispatcherChannelName, FESTO2, tsc, adc);
         std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
         std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
         std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
@@ -122,7 +124,9 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         );
         std::cout << "3" << std::endl;
         //init HS
-        HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName, FESTO1); // Create an object of HwAdcDemo
+        TSCADC* tsc = new TSCADC();
+        ADC* adc = new ADC(*tsc);
+        HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName, FESTO1, tsc, adc); // Create an object of HwAdcDemo
         //heightSensorController->initRoutine();
         //start Thread
         std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
