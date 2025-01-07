@@ -1,0 +1,15 @@
+GeneratorModel for create::cpp {
+
+	const PROJECT : string = "FSM"
+
+	const FOLDER : string = "src-gen"
+
+	statechart FSM {
+
+		feature Outlet {
+			targetProject = PROJECT
+			targetFolder = FOLDER
+			libraryTargetFolder = "src"
+		}
+	}
+}

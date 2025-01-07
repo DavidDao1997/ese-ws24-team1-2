@@ -5,7 +5,7 @@
 
 #include "../Dispatcher/headers/PulseMsgConfig.h"
 #include "../Dispatcher/headers/PulseMsgHandler.h"
-#include "gen/src-gen/FSM_QualityGate.h"
+#include "gen/src-gen/FSM.h"
 
 #include "../Logging/headers/Logger.h"
 
@@ -25,7 +25,7 @@ class FSMController : public PulseMsgHandler {
     bool stop();
 
   private:
-    FSM_QualityGate *fsm;
+    FSM *fsm;
   
     int32_t channelID;
     int32_t dispatcherConnectionID;

@@ -51,8 +51,9 @@ class Mock_ActuatorController : public PulseMsgHandler {
     // static bool lgblinking;
     // static bool lrblinking;
     // static bool lyblinking;
-
-
+    std::thread *greenBlinkThread;
+    std::thread *yellowBlinkThread;
+    std::thread *redBlinkThread;
 
     void startYellowLampBlinkingThread(int frequency);
     void startGreenLampBlinkingThread(int frequency);

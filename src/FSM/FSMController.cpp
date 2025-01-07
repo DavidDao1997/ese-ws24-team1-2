@@ -61,7 +61,7 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
 
     dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
 
-    fsm = new FSM_QualityGate();
+    fsm = new FSM();
 
     // fsm->getLG1_ON().subscribe(
     //     *new sc::rx::subscription<void>(
@@ -80,19 +80,19 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     // );
 
     // PULSE_MOTOR1_STOP  
-    fsm->getMOTOR_STOP().subscribe(
+    fsm->getMOTOR_1_STOP().subscribe(
         *new sc::rx::subscription<void>(
             *new VoidObserver(dispatcherConnectionID, PULSE_MOTOR1_STOP, 0, "PULSE_MOTOR1_STOP")
         )
     );
     // PULSE_MOTOR1_SLOW 
-    fsm->getMOTOR_SLOW().subscribe(
+    fsm->getMOTOR_1_SLOW().subscribe(
         *new sc::rx::subscription<void>(
             *new VoidObserver(dispatcherConnectionID, PULSE_MOTOR1_SLOW, 0, "PULSE_MOTOR1_SLOW")
         )
     );
     // PULSE_MOTOR1_FAST 
-    fsm->getMOTOR_FAST().subscribe(
+    fsm->getMOTOR_1_FAST().subscribe(
         *new sc::rx::subscription<void>(
             *new VoidObserver(dispatcherConnectionID, PULSE_MOTOR1_FAST, 0, "PULSE_MOTOR1_FAST")
         )
@@ -272,13 +272,13 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     //     )
     // );
     // PULSE_SM1_ACTIVE   
-    fsm->getSORTING_MODULE_ACTIVE().subscribe(
+    fsm->getFST_1_SORTING_MODULE_ACTIVE().subscribe(
         *new sc::rx::subscription<void>(
             *new VoidObserver(dispatcherConnectionID, PULSE_SM1_ACTIVE, 0, "PULSE_SM1_ACTIVE")
         )
     );
     // PULSE_SM1_RESTING 
-    fsm->getSORTING_MODULE_RESTING().subscribe(
+    fsm->getFST_1_SORTING_MODULE_RESTING().subscribe(
         *new sc::rx::subscription<void>(
             *new VoidObserver(dispatcherConnectionID, PULSE_SM1_RESTING, 0, "PULSE_SM1_RESTING")
         )
@@ -410,13 +410,13 @@ void FSMController::handleMsg() {
                 //     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBE_INTERRUPTED...", "FSMController");
                 //     break;
                 case PULSE_MS_TRUE:
-                    fsm->raiseMS_TRUE();
+                    fsm->raiseMS_1_TRUE();
                     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_MS_TRUE...", "FSMController");
                     break;
-                case PULSE_MS_FALSE:
-                    fsm->raiseMS_FALSE();    
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_MS_FALSE...", "FSMController");
-                    break;   
+                // case PULSE_MS_FALSE:
+                //     fsm->raiseMS_1_FALSE();    
+                //     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_MS_FALSE...", "FSMController");
+                //     break;   
                 default:
                     break;
             }
