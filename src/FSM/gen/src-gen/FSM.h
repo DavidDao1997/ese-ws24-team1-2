@@ -44,6 +44,13 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo1_HeightMeasurement_HeightMeasurement,
 			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle,
 			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring,
+			_0,
+			A,
+			B,
+			C,
+			Error,
+			Evaluate,
+			_final_,
 			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent,
 			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected,
 			FSM_Festo1_HeightMeasurement_Paused,
@@ -139,7 +146,7 @@ class FSM : public sc::EventDrivenInterface
 		};
 		
 		/*! The number of states. */
-		static constexpr const sc::integer numStates {102};
+		static constexpr const sc::integer numStates {109};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_Ingress {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_Ingress_Ingress_Idle {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_Ingress_Ingress_PukPresent {0};
@@ -150,6 +157,13 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement {1};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle {1};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0 {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_ {1};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent {1};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected {1};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_Paused {1};
@@ -255,7 +269,6 @@ class FSM : public sc::EventDrivenInterface
 			LBF_1_OPEN,
 			HS_1_SAMPLE,
 			HS_1_SAMPLING_DONE,
-			TIMEOUT_200,
 			LBM_1_INTERRUPTED,
 			LBM_1_OPEN,
 			MS_1_TRUE,
@@ -384,8 +397,12 @@ class FSM : public sc::EventDrivenInterface
 		void raiseHS_1_SAMPLING_DONE();
 		/*! Get observable for event 'FST_1_PUK_ENTRY_SORTING' of default interface scope. */
 		sc::rx::Observable<void>& getFST_1_PUK_ENTRY_SORTING() noexcept;
-		/*! Raises the in event 'TIMEOUT_200' of default interface scope. */
-		void raiseTIMEOUT_200();
+		/*! Get observable for event 'FST_1_HeightMeasurement_Counter' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_HeightMeasurement_Counter() noexcept;
+		/*! Get observable for event 'FST_1_PUK_HEIGHT_IS_VALID' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_PUK_HEIGHT_IS_VALID() noexcept;
+		/*! Get observable for event 'FST_1_PUK_HEIGHT_IS_NOT_VALID' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_PUK_HEIGHT_IS_NOT_VALID() noexcept;
 		/*! Raises the in event 'LBM_1_INTERRUPTED' of default interface scope. */
 		void raiseLBM_1_INTERRUPTED();
 		/*! Raises the in event 'LBM_1_OPEN' of default interface scope. */
@@ -576,6 +593,46 @@ class FSM : public sc::EventDrivenInterface
 		bool getEStopActive() const noexcept;
 		/*! Sets the value of the variable 'eStopActive' that is defined in the default interface scope. */
 		void setEStopActive(bool eStopActive) noexcept;
+		/*! Gets the value of the variable 'AReferenceValue' that is defined in the default interface scope. */
+		sc::integer getAReferenceValue() const noexcept;
+		/*! Sets the value of the variable 'AReferenceValue' that is defined in the default interface scope. */
+		void setAReferenceValue(sc::integer AReferenceValue) noexcept;
+		/*! Gets the value of the variable 'BReferenceValue' that is defined in the default interface scope. */
+		sc::integer getBReferenceValue() const noexcept;
+		/*! Sets the value of the variable 'BReferenceValue' that is defined in the default interface scope. */
+		void setBReferenceValue(sc::integer BReferenceValue) noexcept;
+		/*! Gets the value of the variable 'CReferenceValue' that is defined in the default interface scope. */
+		sc::integer getCReferenceValue() const noexcept;
+		/*! Sets the value of the variable 'CReferenceValue' that is defined in the default interface scope. */
+		void setCReferenceValue(sc::integer CReferenceValue) noexcept;
+		/*! Gets the value of the variable 'ASampleCount' that is defined in the default interface scope. */
+		sc::integer getASampleCount() const noexcept;
+		/*! Sets the value of the variable 'ASampleCount' that is defined in the default interface scope. */
+		void setASampleCount(sc::integer ASampleCount) noexcept;
+		/*! Gets the value of the variable 'BSampleCount' that is defined in the default interface scope. */
+		sc::integer getBSampleCount() const noexcept;
+		/*! Sets the value of the variable 'BSampleCount' that is defined in the default interface scope. */
+		void setBSampleCount(sc::integer BSampleCount) noexcept;
+		/*! Gets the value of the variable 'CSampleCount' that is defined in the default interface scope. */
+		sc::integer getCSampleCount() const noexcept;
+		/*! Sets the value of the variable 'CSampleCount' that is defined in the default interface scope. */
+		void setCSampleCount(sc::integer CSampleCount) noexcept;
+		/*! Gets the value of the variable 'currentValue' that is defined in the default interface scope. */
+		sc::integer getCurrentValue() const noexcept;
+		/*! Sets the value of the variable 'currentValue' that is defined in the default interface scope. */
+		void setCurrentValue(sc::integer currentValue) noexcept;
+		/*! Gets the value of the variable 'heightCounter' that is defined in the default interface scope. */
+		sc::integer getHeightCounter() const noexcept;
+		/*! Sets the value of the variable 'heightCounter' that is defined in the default interface scope. */
+		void setHeightCounter(sc::integer heightCounter) noexcept;
+		/*! Gets the value of the variable 'threshholdValue' that is defined in the default interface scope. */
+		sc::integer getThreshholdValue() const noexcept;
+		/*! Sets the value of the variable 'threshholdValue' that is defined in the default interface scope. */
+		void setThreshholdValue(sc::integer threshholdValue) noexcept;
+		/*! Gets the value of the variable 'threshholdCounter' that is defined in the default interface scope. */
+		sc::integer getThreshholdCounter() const noexcept;
+		/*! Sets the value of the variable 'threshholdCounter' that is defined in the default interface scope. */
+		void setThreshholdCounter(sc::integer threshholdCounter) noexcept;
 		/*! Gets the value of the variable 'FST1RampFull' that is defined in the default interface scope. */
 		bool getFST1RampFull() const noexcept;
 		/*! Sets the value of the variable 'FST1RampFull' that is defined in the default interface scope. */
@@ -678,6 +735,16 @@ class FSM : public sc::EventDrivenInterface
 		bool isEStop1High {false};
 		bool isEStop2High {false};
 		bool eStopActive {false};
+		sc::integer AReferenceValue {0};
+		sc::integer BReferenceValue {0};
+		sc::integer CReferenceValue {0};
+		sc::integer ASampleCount {0};
+		sc::integer BSampleCount {0};
+		sc::integer CSampleCount {0};
+		sc::integer currentValue {0};
+		sc::integer heightCounter {0};
+		sc::integer threshholdValue {0};
+		sc::integer threshholdCounter {0};
 		bool FST1RampFull {false};
 		sc::integer timePassed {0};
 		sc::integer motor1Stop {0};
@@ -698,7 +765,7 @@ class FSM : public sc::EventDrivenInterface
 		//! the maximum number of orthogonal states defines the dimension of the state configuration vector.
 		static const sc::ushort maxOrthogonalStates {17};
 		//! dimension of the state configuration vector for history states
-		static const sc::ushort maxHistoryStates {8};
+		static const sc::ushort maxHistoryStates {9};
 		
 		
 		
@@ -716,6 +783,9 @@ class FSM : public sc::EventDrivenInterface
 		// prototypes of all internal functions
 		
 		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
+		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
+		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
+		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
 		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent();
 		void enact_FSM_Festo1__Sorting_RampFull();
 		void enact_FSM_Festo1__Egress_Egress_Egress_Transfer();
@@ -775,6 +845,13 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_default();
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_default();
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__default();
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_default();
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected_default();
 		void enseq_FSM_Festo1_HeightMeasurement_Paused_default();
@@ -873,6 +950,8 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo1_HeightMeasurement_default();
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_default();
 		void shenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_default();
+		void shenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
 		void enseq_FSM_Festo1__Sorting_default();
 		void enseq_FSM_Festo1__Sorting_Sorting_Sorting_default();
 		void shenseq_FSM_Festo1__Sorting_Sorting_Sorting();
@@ -917,6 +996,13 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement();
 		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle();
 		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_();
 		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent();
 		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected();
 		void exseq_FSM_Festo1_HeightMeasurement_Paused();
@@ -1009,6 +1095,7 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo1_Ingress_Ingress_Ingress();
 		void exseq_FSM_Festo1_HeightMeasurement();
 		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
 		void exseq_FSM_Festo1__Sorting();
 		void exseq_FSM_Festo1__Sorting_Sorting_Sorting();
 		void exseq_FSM_Festo1__Egress();
@@ -1033,6 +1120,8 @@ class FSM : public sc::EventDrivenInterface
 		void react_FSM_Festo1_Ingress_Ingress_Ingress_History();
 		void react_FSM_Festo1_Ingress__entry_Default();
 		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s__entry_Default();
+		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__entry_Default();
+		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_History();
 		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_History();
 		void react_FSM_Festo1_HeightMeasurement__entry_Default();
 		void react_FSM_Festo1__Sorting_Sorting_Sorting_History();
@@ -1080,6 +1169,13 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_Paused_react(const sc::integer transitioned_before);
@@ -1266,8 +1362,14 @@ class FSM : public sc::EventDrivenInterface
 		/*! Observable for event 'FST_1_PUK_ENTRY_SORTING' of default interface scope. */
 		sc::rx::Observable<void> FST_1_PUK_ENTRY_SORTING_observable = sc::rx::Observable<void>{};
 		
-		/*! Indicates event 'TIMEOUT_200' of default interface scope is active. */
-		bool TIMEOUT_200_raised {false};
+		/*! Observable for event 'FST_1_HeightMeasurement_Counter' of default interface scope. */
+		sc::rx::Observable<void> FST_1_HeightMeasurement_Counter_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'FST_1_PUK_HEIGHT_IS_VALID' of default interface scope. */
+		sc::rx::Observable<void> FST_1_PUK_HEIGHT_IS_VALID_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'FST_1_PUK_HEIGHT_IS_NOT_VALID' of default interface scope. */
+		sc::rx::Observable<void> FST_1_PUK_HEIGHT_IS_NOT_VALID_observable = sc::rx::Observable<void>{};
 		
 		/*! Indicates event 'LBM_1_INTERRUPTED' of default interface scope is active. */
 		bool LBM_1_INTERRUPTED_raised {false};
