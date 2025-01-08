@@ -18,6 +18,7 @@
 
 // LogLevel Definition
 enum class LogLevel {
+    TRACE,
     DEBUG,
     INFO,
     WARNING,

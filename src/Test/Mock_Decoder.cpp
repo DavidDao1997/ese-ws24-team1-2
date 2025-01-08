@@ -214,3 +214,5 @@ void Mock_Decoder::sendPulse(PulseCode code, uint8_t festoNr){
         Logger::getInstance().log(LogLevel::ERROR, "Sending Pulse failed...", "Mock_Decoder");
     }
 }
+
+bool Mock_Decoder::stop() { return true; }

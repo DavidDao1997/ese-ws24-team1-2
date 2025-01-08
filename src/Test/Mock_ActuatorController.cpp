@@ -57,6 +57,9 @@ Mock_ActuatorController::Mock_ActuatorController(const std::string name, Mock_Ac
     channelID = actuatorControllerChannel->chid;
     actuators = actuatorsWrapper;
     running = false;
+    greenBlinkThread = nullptr;
+    yellowBlinkThread = nullptr;
+    redBlinkThread = nullptr;
 };
 
 Mock_ActuatorController::~Mock_ActuatorController() {
@@ -66,7 +69,13 @@ Mock_ActuatorController::~Mock_ActuatorController() {
 };
 
 bool Mock_ActuatorController::stop(){
-	int coid = connectToChannel(channelID);
+    Mock_ActuatorController::lgblinking = false;
+    Mock_ActuatorController::lyblinking = false;
+    Mock_ActuatorController::lrblinking = false;
+    if (greenBlinkThread != nullptr && greenBlinkThread->joinable()) greenBlinkThread->join();
+    if (yellowBlinkThread != nullptr && yellowBlinkThread->joinable()) yellowBlinkThread->join();
+    if (redBlinkThread != nullptr && redBlinkThread->joinable()) redBlinkThread->join();
+    int coid = connectToChannel(channelID);
     if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
             Logger::getInstance().log(LogLevel::ERROR, "shutting down Msg Receiver failed...", "Mock_ActuatorController");
             return false;
@@ -156,7 +165,7 @@ void Mock_ActuatorController::handleMsg() {
                 break;
             case PULSE_LG1_BLINKING:
                 Logger::getInstance().log(LogLevel::DEBUG, "Festo 1 LED GREEN BLINKING...", "Mock_ActuatorController");
-                lgblinking = true;
+                // lgblinking = true;
                 Mock_ActuatorController::lgblinking = true;
                 startGreenLampBlinkingThread(msgVal);
                 break;
@@ -205,32 +214,31 @@ void Mock_ActuatorController::handleMsg() {
 
 void Mock_ActuatorController::startRedLampBlinkingThread(int frequency) {
     // Hier wird der Thread außerhalb des Switch-Blocks gestartet
-    std::thread redBlinkThread([this, frequency]() { this->redlampBlinking(&lrblinking, frequency); });
+    redBlinkThread = new std::thread([this, frequency]() { this->redlampBlinking(&lrblinking, frequency); });
 
-    redBlinkThread.detach(); // Thread im Hintergrund ausführen lassen
+    redBlinkThread->detach(); // Thread im Hintergrund ausführen lassen
 }
 
 void Mock_ActuatorController::startGreenLampBlinkingThread(int frequency) {
     // Hier wird der Thread außerhalb des Switch-Blocks gestartet
-    std::thread greenBlinkThread([this, frequency]() { this->greenlampBlinking(&lgblinking, frequency); });
+    greenBlinkThread = new std::thread([this, frequency]() { this->greenlampBlinking(&lgblinking, frequency); });
 
-    greenBlinkThread.detach(); // Thread im Hintergrund ausführen lassen
+    greenBlinkThread->detach(); // Thread im Hintergrund ausführen lassen
 }
 
 void Mock_ActuatorController::startYellowLampBlinkingThread(int frequency) {
     // Hier wird der Thread außerhalb des Switch-Blocks gestartet
-    std::thread yellowBlinkThread([this, frequency]() { this->yellowlampBlinking(&lyblinking, frequency); });
+    yellowBlinkThread = new std::thread([this, frequency]() { this->yellowlampBlinking(&lyblinking, frequency); });
 
-    yellowBlinkThread.detach(); // Thread im Hintergrund ausführen lassen
+    yellowBlinkThread->detach(); // Thread im Hintergrund ausführen lassen
 }
 
 void Mock_ActuatorController::greenlampBlinking(std::atomic<bool> *blink, int32_t frequency) {
     actuators->toggleGreenBlinking();
     while (*blink && (frequency > 0)) {
-
-        actuators->greenLampLightOff();
+        if (*blink) actuators->greenLampLightOff();
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
-        actuators->greenLampLightOn();
+        if (*blink) actuators->greenLampLightOn();
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
     }
     actuators->toggleGreenBlinking();
@@ -240,10 +248,9 @@ void Mock_ActuatorController::greenlampBlinking(std::atomic<bool> *blink, int32_
 void Mock_ActuatorController::yellowlampBlinking(std::atomic<bool> *blink, int32_t frequency) {
     actuators->toggleYellowBlinking();
     while (*blink && (frequency > 0)) {
-
-        actuators->yellowLampLightOff();
+        if (*blink) actuators->yellowLampLightOff();
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
-        actuators->yellowLampLightOn();
+        if (*blink) actuators->yellowLampLightOn();
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
     }
     actuators->toggleYellowBlinking();
@@ -253,10 +260,9 @@ void Mock_ActuatorController::yellowlampBlinking(std::atomic<bool> *blink, int32
 void Mock_ActuatorController::redlampBlinking(std::atomic<bool> *blink, int32_t frequency) {
     actuators->toggleRedBlinking();
     while (*blink && (frequency > 0)) {
-
-        actuators->redLampLightOff();
+        if (*blink) actuators->redLampLightOff();
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
-        actuators->redLampLightOn();
+        if (*blink) actuators->redLampLightOn();
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
     }
     actuators->toggleRedBlinking();
