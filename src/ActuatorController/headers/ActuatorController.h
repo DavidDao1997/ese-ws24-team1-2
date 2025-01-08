@@ -13,7 +13,7 @@
 #include "../../Dispatcher/headers/PulseMsgConfig.h"
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
 #include "../../HAL/interfaces/I_Actuators_Wrapper.h"
-#include "../../HAL/headers/Actuators_Wrapper.h"
+// #include "../../HAL/headers/Actuators_Wrapper.h"
 #include "../../Logging/headers/Logger.h"
 
 #define ACTUATOR_CONTROLLER_NUM_OF_PULSES 36
@@ -32,6 +32,14 @@ class ActuatorController : public PulseMsgHandler {
     int8_t getNumOfPulses();
     bool stop();
 
+    bool getGreenBlinking();  
+    bool getYellowBlinking();  
+    bool getRedBlinking(); 
+    
+    static std::atomic<bool> lgblinking;
+    static std::atomic<bool> lyblinking;
+    static std::atomic<bool> lrblinking; 
+
   private:
     int32_t channelID;
     name_attach_t *actuatorControllerChannel;
@@ -41,16 +49,18 @@ class ActuatorController : public PulseMsgHandler {
     static int8_t numOfPulses;
     static int8_t pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES];
 
-    static bool lgblinking;
-    static bool lrblinking;
-    static bool lyblinking;
+    
+
+    std::thread *greenBlinkThread;
+    std::thread *yellowBlinkThread;
+    std::thread *redBlinkThread;
 
     void startYellowLampBlinkingThread(int frequency);
     void startGreenLampBlinkingThread(int frequency);
     void startRedLampBlinkingThread(int frequency);
-    void greenlampBlinking(bool* blink, int32_t frequency);
-    void yellowlampBlinking(bool* blink, int32_t frequency);
-    void redlampBlinking(bool* blink, int32_t frequency);
+    void greenlampBlinking(std::atomic<bool> * blink, int32_t frequency);
+    void yellowlampBlinking(std::atomic<bool> * blink, int32_t frequency);
+    void redlampBlinking(std::atomic<bool> * blink, int32_t frequency);
 };
 
 #endif /* ACTUATORCONTROLLER_H_ */

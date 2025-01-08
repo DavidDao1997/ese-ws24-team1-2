@@ -12,7 +12,6 @@
 
 #include "headers/Mock_Actuators_Wrapper.h"
 #include "headers/Mock_Decoder.h"
-#include "headers/Mock_ActuatorController.h"
 #include "headers/Mock_ADC.h"
 
 #include "../Dispatcher/headers/Dispatcher.h"
@@ -20,6 +19,7 @@
 #include "../Util/headers/Util.h"
 #include "../HAL/headers/ADC.h"
 #include "../HAL/headers/TSCADC.h"
+#include "../ActuatorController/headers/ActuatorController.h"
 #include "../HeightController/header/HeightSensorControl.h"
 #include "../Decoder/headers/Decoder.h"
 #include "../FSM/FSMController.h"
@@ -39,7 +39,7 @@ protected:
         std::string actuatorControllerChannelName = "actuatorController";
         actuatorsWrapper = new Mock_Actuators_Wrapper();
         
-        actuatorController = new Mock_ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
+        actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
         dispatcher->addSubscriber(
             actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
         );
@@ -59,7 +59,7 @@ protected:
         dispatcherThread = std::thread(std::bind(&Dispatcher::handleMsg, dispatcher));
         WAIT(1000);
         fsmControllerHandleMsgThread = std::thread(std::bind(&FSMController::handleMsg, fsmController));
-        actuatorControllerThread = std::thread(std::bind(&Mock_ActuatorController::handleMsg, actuatorController));
+        actuatorControllerThread = std::thread(std::bind(&ActuatorController::handleMsg, actuatorController));
         decoderThread = std::thread(std::bind(&Mock_Decoder::handleMsg, decoder));
         WAIT(1000);
     }
@@ -116,7 +116,7 @@ protected:
 
 
     Dispatcher* dispatcher;
-    Mock_ActuatorController* actuatorController;
+    ActuatorController* actuatorController;
     HeightSensorControl* heightSensorController;
     FSMController* fsmController;
     Mock_Decoder* decoder;
@@ -154,7 +154,7 @@ protected:
 
 
     Dispatcher* dispatcher;
-    Mock_ActuatorController* actuatorController;
+    ActuatorController* actuatorController;
     HeightSensorControl* heightSensorController;
     FSMController* fsmController;
     Mock_Decoder* decoder;
@@ -175,18 +175,18 @@ TEST_F(SystemTest, startupWithoutUsingServiceModeOnFESTO1) {
     decoder->sendPulse(PULSE_BGS_LONG, 0);
     WAIT(2000);
 
-    EXPECT_EQ(actuatorsWrapper->greenBlinking(),true);
-    EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+    EXPECT_EQ(actuatorController->getGreenBlinking(),true);
+    EXPECT_EQ(actuatorController->getYellowBlinking(),false);
+    EXPECT_EQ(actuatorController->getRedBlinking(),false);
     EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
     
     // Enbtry Ready
     decoder->sendPulse(PULSE_BRS_SHORT, 0);
     WAIT(500);
 
-    EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+    EXPECT_EQ(actuatorController->getGreenBlinking(),false);
+    EXPECT_EQ(actuatorController->getYellowBlinking(),false);
+    EXPECT_EQ(actuatorController->getRedBlinking(),false);
     EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),0);
     EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
     EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
@@ -196,9 +196,9 @@ TEST_F(SystemTest, startupWithoutUsingServiceModeOnFESTO1) {
     decoder->sendPulse(PULSE_BGS_SHORT, 0);
     WAIT(500);
 
-    EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+    EXPECT_EQ(actuatorController->getGreenBlinking(),false);
+    EXPECT_EQ(actuatorController->getYellowBlinking(),false);
+    EXPECT_EQ(actuatorController->getRedBlinking(),false);
     EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
     EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
     EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
@@ -210,9 +210,9 @@ TEST_F(SystemTest, motorsStartWhenLBFInterruptOnFESTO1) {
     startupSequenceNoServiceMode();
     decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
     WAIT(2000);
-    EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper->yellowBlinking(),true);
+    EXPECT_EQ(actuatorController->getGreenBlinking(),false);
+    EXPECT_EQ(actuatorController->getYellowBlinking(),true);
+    EXPECT_EQ(actuatorController->getRedBlinking(),false);
     EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
     EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
     EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),1);
@@ -221,9 +221,9 @@ TEST_F(SystemTest, motorsStartWhenLBFInterruptOnFESTO1) {
     EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),0);
     decoder->sendPulse(PULSE_LBF_OPEN, 0);
     WAIT(2000);
-    EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper->yellowBlinking(),true);
+    EXPECT_EQ(actuatorController->getGreenBlinking(),false);
+    EXPECT_EQ(actuatorController->getYellowBlinking(),true);
+    EXPECT_EQ(actuatorController->getRedBlinking(),false);
     EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
     EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);
     EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),1);
@@ -236,9 +236,9 @@ TEST_F(SystemTest, eStopAfterServiceModeOnFESTO1) {
     startupSequenceNoServiceMode();
     decoder->sendPulse(PULSE_ESTOP_LOW, 0);
     WAIT(3000);
-    EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+    EXPECT_EQ(actuatorController->getGreenBlinking(),false);
+    EXPECT_EQ(actuatorController->getYellowBlinking(),false);
+    EXPECT_EQ(actuatorController->getRedBlinking(),false);
     EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
     EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),1);
     EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),1);
@@ -256,9 +256,9 @@ TEST_F(SystemTest, eStopAfterServiceModeOnFESTO1) {
 // 	decoder->sendPulse(PULSE_LBF_OPEN, 0);
 // 	WAIT(100);
 // 	decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
-// 	EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-// 	EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-// 	EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+// 	EXPECT_EQ(actuatorController->getGreenBlinking(),false);
+//  EXPECT_EQ(actuatorController->getYellowBlinking(),false);
+//  EXPECT_EQ(actuatorController->getRedBlinking(),false);
 // 	EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),0);
 // 	EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
 // 	EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),1);
@@ -286,9 +286,9 @@ TEST_F(SystemTest, eStopAfterServiceModeOnFESTO1) {
 //     decoder->sendPulse(PULSE_LBE_INTERRUPTED, 0);
 //     WAIT(3000);
 
-// 	EXPECT_EQ(actuatorsWrapper->greenBlinking(),false);
-// 	EXPECT_EQ(actuatorsWrapper->redBlinking(),false);
-// 	EXPECT_EQ(actuatorsWrapper->yellowBlinking(),false);
+//  EXPECT_EQ(actuatorController->getGreenBlinking(),false);
+//  EXPECT_EQ(actuatorController->getYellowBlinking(),false);
+//  EXPECT_EQ(actuatorController->getRedBlinking(),false);
 // 	EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
 // 	EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),0);
 // 	EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),0);

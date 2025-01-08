@@ -5,22 +5,22 @@
  *      Author: Marc
  */
 
+#include "headers/FestoSystem.h"
 
-
-FestoSystem::FestoSystem(unit8_t festo){
-    festoID = festo;
+FestoSystem::FestoSystem(uint8_t festo){
+    festoId = festo;
     dispatcher = new Dispatcher(DISPATCHERNAME);
-    decoder = new Decoder(dispatcherChannelName, festoID);
+    decoder = new Decoder(DISPATCHERNAME, festoId);
     
 
 
 }
 
-FestoSystem::startUp(){
+void FestoSystem::startUp(){
 
 }
 
-FestoSystem::stop(){
+void FestoSystem::stop(){
 
 }
 

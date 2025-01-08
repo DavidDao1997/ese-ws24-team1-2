@@ -24,7 +24,7 @@
 #include "../../Logging/headers/Logger.h"
 class HeartBeat : public PulseMsgHandler {
   public:
-    HeartBeat(uint8_t festoNrOfOtherFesto);
+    HeartBeat(uint8_t festoNrOfOtherFesto, std::string dispatcherName);
     virtual ~HeartBeat();
 
     bool stop();
@@ -37,8 +37,9 @@ class HeartBeat : public PulseMsgHandler {
     bool running;
     bool eStopPressed;
     int32_t channelID;
+    int32_t festoId;
     int32_t otherFesto;
-    int32_t dispatcherChannel
+    int32_t dispatcherChannel;
     name_attach_t* heartBeatChannel;
     std::mutex heartbeatMutex;
     std::chrono::steady_clock::time_point lastHeartbeatReceived;

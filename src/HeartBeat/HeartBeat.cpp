@@ -10,7 +10,8 @@
 HeartBeat::HeartBeat(uint8_t festoNr, std::string dispatcherName) {
     running = false;
     // check if festo 1 or festo 2 in parameter list // TODO What happens if named Channel not created yet? create namedChannels in main on qnx level. who creates it then? 
-    dispatcherChannel = name_open(dispatcherName);
+    dispatcherChannel = name_open(dispatcherName.c_str(),0);
+    festoId = festoNr;
     
     if (festoNr == FESTO1){
         heartBeatChannel = createNamedChannel("Festo1HeartBeat");
@@ -127,7 +128,7 @@ void HeartBeat::handleDisconnect(bool disconnect) {
     // TODO
     Logger::getInstance().log(LogLevel::CRITICAL, "Connection to other Festo LOST...", "HeartBeat");
     // when FESTO 1: send PULSE_E_STOP_HEARTBEAT_FESTO1 to Dispatcher ONCE and if E_STOP Button pressend, send this also als value == 1, else value == 0
-    if (festoNr == FESTO1){
+    if (festoId == FESTO1){
         if (!disconnect){
             if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_E_STOP_HEARTBEAT_FESTO1, eStopPressed)) {
                 Logger::getInstance().log(LogLevel::WARNING, "PulseCouldnotBeSent...", "HeartBeat");
@@ -136,7 +137,7 @@ void HeartBeat::handleDisconnect(bool disconnect) {
         
     }
     // when FESTO 2: send PULSE_E_STOP_HEARTBEAT_FESTO2 to Dispatcher until reachable and manually set Actuators, when E_STOP Button pressend, send this also als value == 1, else value == 0
-    if (festoNr == FESTO2){
+    if (festoId == FESTO2){
         if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_E_STOP_HEARTBEAT_FESTO2, eStopPressed)) {
             Logger::getInstance().log(LogLevel::WARNING, "PulseCouldnotBeSent...", "HeartBeat");
         }
