@@ -547,6 +547,13 @@ void FSM::raiseLBF_1_OPEN() {
 	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::LBF_1_OPEN))
 	;
 	runCycle();
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_POSITION_INGRESS_DISTANCE_VALID))
+	;
+	runCycle();
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED))
+	;
+	runCycle();
+	
 }
 
 
