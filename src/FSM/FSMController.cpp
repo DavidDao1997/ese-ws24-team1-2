@@ -295,6 +295,14 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     //         *new VoidObserver(dispatcherConnectionID, PULSE_SM2_RESTING, 0, "PULSE_SM2_RESTING")
     //     )
     // );
+    fsm->setAReferenceValue(2280);
+    fsm->setBReferenceValue(3220);
+    fsm->setCReferenceValue(2280);
+    fsm->setThreshholdValue(150);
+    fsm->setASampleCount(10);
+    fsm->setBSampleCount(35);
+    fsm->setCSampleCount(20);
+    fsm->setThreshholdCounter(5);
     fsm->enter();
 }
 
