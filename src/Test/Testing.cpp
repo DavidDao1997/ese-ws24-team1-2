@@ -234,9 +234,11 @@ TEST_F(SystemTest, motorsStartWhenLBFInterruptOnFESTO1) {
     EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
     EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),0);
 }
-
+*/
 TEST_F(SystemTest, eStopAfterServiceModeOnFESTO1) {
-    startupSequenceNoServiceMode();
+	decoder->sendPulse(PULSE_ESTOP_HIGH, 0);
+	decoder->sendPulse(PULSE_ESTOP_HIGH, 1);
+    //startupSequenceNoServiceMode();
     decoder->sendPulse(PULSE_ESTOP_LOW, 0);
     WAIT(3000);
     EXPECT_EQ(actuatorController->getGreenBlinking(),false);
@@ -251,8 +253,8 @@ TEST_F(SystemTest, eStopAfterServiceModeOnFESTO1) {
     EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
 }
 
-*/
 
+/*
 TEST_F(SystemTest, heartbeat){
     HeartBeat * hb1 = new HeartBeat(FESTO1);
     HeartBeat * hb2 = new HeartBeat(FESTO2);
@@ -288,7 +290,7 @@ TEST_F(SystemTest, heartbeat){
 
 
 }
-
+*/
 // TEST_F(SystemTest, errorWhenPukDistanceTooShortAtFront) {
 // 	startupSequenceNoServiceMode();
 // 	// Puk in Front

@@ -303,6 +303,9 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     fsm->setBSampleCount(35);
     fsm->setCSampleCount(20);
     fsm->setThreshholdCounter(5);
+    fsm->setEStopCalibratedReturn(false);
+    fsm->setServiceModeReturn(false);
+    fsm->setReadyReturn(false);
     fsm->enter();
 }
 
@@ -342,12 +345,13 @@ void FSMController::handleMsg() {
             int32_t msgVal = msg.value.sival_int;
             switch (msg.code) {
                 case PULSE_ESTOP_HIGH:
-                    fsm->raiseESTOP_1_HIGH();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_ESTOP_HIGH...", "FSMController");
+                	(msgVal == 0)?fsm->raiseESTOP_1_HIGH():fsm->raiseESTOP_2_HIGH();
+
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_ESTOP_HIGH..." + std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_ESTOP_LOW:
-                    fsm->raiseESTOP_1_LOW();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_ESTOP_LOW...", "FSMController");
+                	(msgVal == 0)?fsm->raiseESTOP_1_LOW():fsm->raiseESTOP_2_LOW();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_ESTOP_LOW..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_STOP_RECV_THREAD:
                     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_STOP_RECV_THREAD...", "FSMController");
@@ -355,71 +359,73 @@ void FSMController::handleMsg() {
                     subThreadsRunning = false;             
                     break;
                 case PULSE_LBF_INTERRUPTED:
-                    fsm->raiseLBF_1_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBF_INTERRUPTED LBF_1...", "FSMController");
+                	(msgVal == 0)?fsm->raiseLBF_1_INTERRUPTED():fsm->raiseLBF_2_INTERRUPTED();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBF_INTERRUPTED LBF_1..."+ std::to_string(msgVal), "FSMController");
                     break;              
                 case PULSE_LBF_OPEN:
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBF_OPEN...", "FSMController");
-                    fsm->raiseLBF_1_OPEN();
+                	(msgVal == 0)?fsm->raiseLBF_1_OPEN():fsm->raiseLBF_2_OPEN();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBF_OPEN..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_LBE_INTERRUPTED:
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBE_INTERRUPTED...", "FSMController");
-                    fsm->raiseLBE_1_INTERRUPTED();
+                	(msgVal == 0)?fsm->raiseLBE_1_INTERRUPTED():fsm->raiseLBE_2_INTERRUPTED();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBE_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_LBE_OPEN:
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBE_OPEN...", "FSMController");
-                    fsm->raiseLBE_1_OPEN();
+                	(msgVal == 0)?fsm->raiseLBE_1_OPEN():fsm->raiseLBE_2_OPEN();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBE_OPEN..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_LBR_INTERRUPTED:
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBR_INTERRUPTED...", "FSMController");
-                    fsm->raiseLBR_1_INTERRUPTED();
+                	(msgVal == 0)?fsm->raiseLBR_1_INTERRUPTED():fsm->raiseLBR_2_INTERRUPTED();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBR_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_LBR_OPEN:
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBR_OPEN...", "FSMController");
-                    fsm->raiseLBR_1_OPEN();
+                	(msgVal == 0)?fsm->raiseLBR_1_OPEN():fsm->raiseLBR_2_OPEN();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBR_OPEN..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_LBM_INTERRUPTED:
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBM_INTERRUPTED...", "FSMController");
-                    fsm->raiseLBM_1_INTERRUPTED();
+                	(msgVal == 0)?fsm->raiseLBM_1_INTERRUPTED():fsm->raiseLBM_2_INTERRUPTED();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBM_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_LBM_OPEN:
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBM_OPEN...", "FSMController");
-                    fsm->raiseLBM_1_OPEN();
+                	(msgVal == 0)?fsm->raiseLBM_1_OPEN():fsm->raiseLBM_2_OPEN();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBM_OPEN..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_BGS_SHORT:
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BGS_SHORT...", "FSMController");
-                    fsm->raiseBGS_1_INTERRUPTED();
+                	(msgVal == 0)?fsm->raiseBGS_1_INTERRUPTED():fsm->raiseBGS_2_INTERRUPTED();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BGS_SHORT..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_BGS_LONG:
-                    fsm->raiseBGS_1_LONG_PRESSED();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BGS_LONG...", "FSMController");
+                	(msgVal == 0)?fsm->raiseBGS_1_LONG_PRESSED():fsm->raiseBGS_2_LONG_PRESSED();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BGS_LONG..."+ std::to_string(msgVal), "FSMController");
                     break;  
                 case PULSE_BRS_SHORT:
-                    fsm->raiseBRS_1_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BRS_SHORT...", "FSMController");
+                	(msgVal == 0)?fsm->raiseBRS_1_INTERRUPTED():fsm->raiseBRS_2_INTERRUPTED();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BRS_SHORT..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_BGR_SHORT:
-                    fsm->raiseBGR_1_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BGR_SHORT...", "FSMController");
+                	(msgVal == 0)?fsm->raiseBGR_1_INTERRUPTED():fsm->raiseBGR_2_INTERRUPTED();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BGR_SHORT..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_HS1_SAMPLE:
+                	fsm->setCurrentValue(msgVal);
                     fsm-> raiseHS_1_SAMPLE();
                     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS1_SAMPLE...", "FSMController");
                     break;
                 case PULSE_HS2_SAMPLE:
-                    
+                    fsm->raiseHS_2_SAMPLE();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS2_SAMPLE...", "FSMController");
                     break;
                 case PULSE_HS1_SAMPLING_DONE:
                     fsm-> raiseHS_1_SAMPLING_DONE();
                     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS1_SAMPLING_DONE...", "FSMController");
                     break; 
-                //  case PULSE_HS2_SAMPLING_DONE:
-                //     fsm-> raiseHS_2_SAMPLING_DONE();
-                //     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBE_INTERRUPTED...", "FSMController");
-                //     break;
+                case PULSE_HS2_SAMPLING_DONE:
+                    fsm-> raiseHS_2_SAMPLING_DONE();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS2_INTERRUPTED...", "FSMController");
+                    break;
                 case PULSE_MS_TRUE:
-                    fsm->raiseMS_1_TRUE();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_MS_TRUE...", "FSMController");
+                	(msgVal == 0)?fsm->raiseMS_1_TRUE():fsm->raiseMS_2_TRUE();
+                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_MS_TRUE..."+ std::to_string(msgVal), "FSMController");
                     break;
                 // case PULSE_MS_FALSE:
                 //     fsm->raiseMS_1_FALSE();    

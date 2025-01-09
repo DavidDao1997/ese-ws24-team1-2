@@ -70,6 +70,8 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo1__Egress_Egress_Egress_PukPresent,
 			FSM_Festo1__Egress_Egress_Egress_Transfer,
 			FSM_Festo1__Egress_Egress_Egress_PukExpected,
+			FSM_Festo1__Egress_Egress_Egress_Waiting,
+			FSM_Festo1__Egress_Egress_Egress_PukinLBE1,
 			FSM_Festo1__Egress_Paused,
 			FSM_Festo1__Egress_E_STOP,
 			FSM_Festo1__Egress_Start,
@@ -78,13 +80,14 @@ class FSM : public sc::EventDrivenInterface
 			FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward,
 			FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow,
 			FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop,
-			FSM_System_Operational,
-			FSM_System_EStop,
-			FSM_System_EStop_EStop_AwaitingEStopResolve,
-			FSM_System_EStop_EStop__final_,
-			FSM_System_Start,
-			FSM_System_Ready,
-			FSM_System_ServiceMode,
+			__Operational,
+			__Start,
+			__Ready,
+			__ServiceMode,
+			__EStopCalibration,
+			__EStopReceived,
+			__EStopCleared,
+			__ReveivedReset,
 			FSM_Festo1_Signaling_FSM_LAMP,
 			FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp,
 			FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off,
@@ -100,6 +103,7 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance,
 			FSM_Festo2__Ingress_Ingress_Ingress_PukPresent,
 			FSM_Festo2__Ingress_Ingress_Ingress_PukExpected,
+			FSM_Festo2__Ingress_Ingress_Ingress_PukinLBF2,
 			FSM_Festo2__Ingress_E_STOP,
 			FSM_Festo2__Ingress_Paused,
 			FSM_Festo2__Ingress_Starting,
@@ -142,11 +146,12 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant,
 			FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz,
 			FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off,
-			FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant
+			FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant,
+			TEST_EvaluateTester
 		};
 		
 		/*! The number of states. */
-		static constexpr const sc::integer numStates {109};
+		static constexpr const sc::integer numStates {114};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_Ingress {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_Ingress_Ingress_Idle {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_Ingress_Ingress_PukPresent {0};
@@ -183,6 +188,8 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo1__Egress_Egress_Egress_PukPresent {3};
 		static constexpr const sc::integer scvi_FSM_Festo1__Egress_Egress_Egress_Transfer {3};
 		static constexpr const sc::integer scvi_FSM_Festo1__Egress_Egress_Egress_PukExpected {3};
+		static constexpr const sc::integer scvi_FSM_Festo1__Egress_Egress_Egress_Waiting {3};
+		static constexpr const sc::integer scvi_FSM_Festo1__Egress_Egress_Egress_PukinLBE1 {3};
 		static constexpr const sc::integer scvi_FSM_Festo1__Egress_Paused {3};
 		static constexpr const sc::integer scvi_FSM_Festo1__Egress_E_STOP {3};
 		static constexpr const sc::integer scvi_FSM_Festo1__Egress_Start {3};
@@ -191,13 +198,14 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward {4};
 		static constexpr const sc::integer scvi_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow {4};
 		static constexpr const sc::integer scvi_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop {4};
-		static constexpr const sc::integer scvi_FSM_System_Operational {5};
-		static constexpr const sc::integer scvi_FSM_System_EStop {5};
-		static constexpr const sc::integer scvi_FSM_System_EStop_EStop_AwaitingEStopResolve {5};
-		static constexpr const sc::integer scvi_FSM_System_EStop_EStop__final_ {5};
-		static constexpr const sc::integer scvi_FSM_System_Start {5};
-		static constexpr const sc::integer scvi_FSM_System_Ready {5};
-		static constexpr const sc::integer scvi_FSM_System_ServiceMode {5};
+		static constexpr const sc::integer scvi___Operational {5};
+		static constexpr const sc::integer scvi___Start {5};
+		static constexpr const sc::integer scvi___Ready {5};
+		static constexpr const sc::integer scvi___ServiceMode {5};
+		static constexpr const sc::integer scvi___EStopCalibration {5};
+		static constexpr const sc::integer scvi___EStopReceived {5};
+		static constexpr const sc::integer scvi___EStopCleared {5};
+		static constexpr const sc::integer scvi___ReveivedReset {5};
 		static constexpr const sc::integer scvi_FSM_Festo1_Signaling_FSM_LAMP {6};
 		static constexpr const sc::integer scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp {6};
 		static constexpr const sc::integer scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off {6};
@@ -213,6 +221,7 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance {9};
 		static constexpr const sc::integer scvi_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent {9};
 		static constexpr const sc::integer scvi_FSM_Festo2__Ingress_Ingress_Ingress_PukExpected {9};
+		static constexpr const sc::integer scvi_FSM_Festo2__Ingress_Ingress_Ingress_PukinLBF2 {9};
 		static constexpr const sc::integer scvi_FSM_Festo2__Ingress_E_STOP {9};
 		static constexpr const sc::integer scvi_FSM_Festo2__Ingress_Paused {9};
 		static constexpr const sc::integer scvi_FSM_Festo2__Ingress_Starting {9};
@@ -256,7 +265,8 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz {15};
 		static constexpr const sc::integer scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off {16};
 		static constexpr const sc::integer scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant {16};
-		
+		static constexpr const sc::integer scvi_TEST_EvaluateTester {17};
+
 		/*! Enumeration of all events which are consumed. */
 		enum class Event
 		{
@@ -329,9 +339,10 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_FST_2_PUK_ENTRY_EGRESS,
 			Internal_local_FST_2_POSITION_EGRESS_PUK_EXPECTED,
 			Internal_local_FST_2_YELLOW_LAMP_ON,
-			Internal_local_FST_2_YELLOW_LAMP_OFF
+			Internal_local_FST_2_YELLOW_LAMP_OFF,
+			Internal_local_EVALUATE
 		};
-		
+
 		class EventInstance
 		{
 			public:
@@ -355,6 +366,8 @@ class FSM : public sc::EventDrivenInterface
 		sc::rx::Observable<void>& getSYSTEM_RUNNING() noexcept;
 		/*! Get observable for event 'SYSTEM_STOPPED' of default interface scope. */
 		sc::rx::Observable<void>& getSYSTEM_STOPPED() noexcept;
+		/*! Get observable for event 'EVALUATE' of default interface scope. */
+		sc::rx::Observable<void>& getEVALUATE() noexcept;
 		/*! Raises the in event 'ESTOP_1_HIGH' of default interface scope. */
 		void raiseESTOP_1_HIGH();
 		/*! Raises the in event 'ESTOP_1_LOW' of default interface scope. */
@@ -581,6 +594,18 @@ class FSM : public sc::EventDrivenInterface
 		bool getCalibrated() const noexcept;
 		/*! Sets the value of the variable 'calibrated' that is defined in the default interface scope. */
 		void setCalibrated(bool calibrated) noexcept;
+		/*! Gets the value of the variable 'eStopCalibratedReturn' that is defined in the default interface scope. */
+		bool getEStopCalibratedReturn() const noexcept;
+		/*! Sets the value of the variable 'eStopCalibratedReturn' that is defined in the default interface scope. */
+		void setEStopCalibratedReturn(bool eStopCalibratedReturn) noexcept;
+		/*! Gets the value of the variable 'serviceModeReturn' that is defined in the default interface scope. */
+		bool getServiceModeReturn() const noexcept;
+		/*! Sets the value of the variable 'serviceModeReturn' that is defined in the default interface scope. */
+		void setServiceModeReturn(bool serviceModeReturn) noexcept;
+		/*! Gets the value of the variable 'readyReturn' that is defined in the default interface scope. */
+		bool getReadyReturn() const noexcept;
+		/*! Sets the value of the variable 'readyReturn' that is defined in the default interface scope. */
+		void setReadyReturn(bool readyReturn) noexcept;
 		/*! Gets the value of the variable 'isEStop1High' that is defined in the default interface scope. */
 		bool getIsEStop1High() const noexcept;
 		/*! Sets the value of the variable 'isEStop1High' that is defined in the default interface scope. */
@@ -653,6 +678,10 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer getMotor1Forward() const noexcept;
 		/*! Sets the value of the variable 'motor1Forward' that is defined in the default interface scope. */
 		void setMotor1Forward(sc::integer motor1Forward) noexcept;
+		/*! Gets the value of the variable 'fst_2_ready' that is defined in the default interface scope. */
+		bool getFst_2_ready() const noexcept;
+		/*! Sets the value of the variable 'fst_2_ready' that is defined in the default interface scope. */
+		void setFst_2_ready(bool fst_2_ready) noexcept;
 		/*! Gets the value of the variable 'FST2RampFull' that is defined in the default interface scope. */
 		bool getFST2RampFull() const noexcept;
 		/*! Sets the value of the variable 'FST2RampFull' that is defined in the default interface scope. */
@@ -720,18 +749,21 @@ class FSM : public sc::EventDrivenInterface
 		
 		
 		std::deque<EventInstance*> incomingEventQueue;
-		
+
 		std::deque<EventInstance*> internalEventQueue;
-		
+
 		EventInstance* getNextEvent() noexcept;
-		
+
 		bool dispatchEvent(EventInstance* event) noexcept;
 		
 		
-		
+
 	private:
 		
 		bool calibrated {false};
+		bool eStopCalibratedReturn {false};
+		bool serviceModeReturn {false};
+		bool readyReturn {false};
 		bool isEStop1High {false};
 		bool isEStop2High {false};
 		bool eStopActive {false};
@@ -750,6 +782,7 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer motor1Stop {0};
 		sc::integer motor1Slow {0};
 		sc::integer motor1Forward {0};
+		bool fst_2_ready {false};
 		bool FST2RampFull {false};
 		sc::integer motor2Stop {0};
 		sc::integer motor2Slow {0};
@@ -763,7 +796,7 @@ class FSM : public sc::EventDrivenInterface
 		
 		
 		//! the maximum number of orthogonal states defines the dimension of the state configuration vector.
-		static const sc::ushort maxOrthogonalStates {17};
+		static const sc::ushort maxOrthogonalStates {18};
 		//! dimension of the state configuration vector for history states
 		static const sc::ushort maxHistoryStates {9};
 		
@@ -788,14 +821,11 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
 		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent();
 		void enact_FSM_Festo1__Sorting_RampFull();
-		void enact_FSM_Festo1__Egress_Egress_Egress_Transfer();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop();
-		void enact_FSM_System_Operational();
-		void enact_FSM_System_EStop();
-		void enact_FSM_System_ServiceMode();
+		void enact___ServiceMode();
 		void enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
 		void enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
 		void enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
@@ -823,12 +853,9 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
 		void enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
 		void exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
-		void exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent();
 		void exact_FSM_Festo1__Sorting_RampFull();
-		void exact_FSM_Festo1__Egress_Egress_Egress_Transfer();
-		void exact_FSM_System_Operational();
-		void exact_FSM_System_EStop();
-		void exact_FSM_System_ServiceMode();
+		void exact___ServiceMode();
+		void exact___EStopCleared();
 		void exact_FSM_Festo2__Ingress_Ingress_Ingress_Idle();
 		void exact_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance();
 		void exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
@@ -871,6 +898,8 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo1__Egress_Egress_Egress_PukPresent_default();
 		void enseq_FSM_Festo1__Egress_Egress_Egress_Transfer_default();
 		void enseq_FSM_Festo1__Egress_Egress_Egress_PukExpected_default();
+		void enseq_FSM_Festo1__Egress_Egress_Egress_Waiting_default();
+		void enseq_FSM_Festo1__Egress_Egress_Egress_PukinLBE1_default();
 		void enseq_FSM_Festo1__Egress_Paused_default();
 		void enseq_FSM_Festo1__Egress_E_STOP_default();
 		void enseq_FSM_Festo1__Egress_Start_default();
@@ -879,13 +908,14 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
 		void enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
 		void enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
-		void enseq_FSM_System_Operational_default();
-		void enseq_FSM_System_EStop_default();
-		void enseq_FSM_System_EStop_EStop_AwaitingEStopResolve_default();
-		void enseq_FSM_System_EStop_EStop__final__default();
-		void enseq_FSM_System_Start_default();
-		void enseq_FSM_System_Ready_default();
-		void enseq_FSM_System_ServiceMode_default();
+		void enseq___Operational_default();
+		void enseq___Start_default();
+		void enseq___Ready_default();
+		void enseq___ServiceMode_default();
+		void enseq___EStopCalibration_default();
+		void enseq___EStopReceived_default();
+		void enseq___EStopCleared_default();
+		void enseq___ReveivedReset_default();
 		void enseq_FSM_Festo1_Signaling_FSM_LAMP_default();
 		void enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_default();
 		void enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
@@ -901,6 +931,7 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance_default();
 		void enseq_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent_default();
 		void enseq_FSM_Festo2__Ingress_Ingress_Ingress_PukExpected_default();
+		void enseq_FSM_Festo2__Ingress_Ingress_Ingress_PukinLBF2_default();
 		void enseq_FSM_Festo2__Ingress_E_STOP_default();
 		void enseq_FSM_Festo2__Ingress_Paused_default();
 		void enseq_FSM_Festo2__Ingress_Starting_default();
@@ -944,14 +975,15 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz_default();
 		void enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
 		void enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default();
+		void enseq_TEST_EvaluateTester_default();
 		void enseq_FSM_Festo1_Ingress_default();
 		void enseq_FSM_Festo1_Ingress_Ingress_Ingress_default();
 		void shenseq_FSM_Festo1_Ingress_Ingress_Ingress();
 		void enseq_FSM_Festo1_HeightMeasurement_default();
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_default();
-		void shenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s();
+		void dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s();
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_default();
-		void shenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
+		void dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
 		void enseq_FSM_Festo1__Sorting_default();
 		void enseq_FSM_Festo1__Sorting_Sorting_Sorting_default();
 		void shenseq_FSM_Festo1__Sorting_Sorting_Sorting();
@@ -960,8 +992,7 @@ class FSM : public sc::EventDrivenInterface
 		void shenseq_FSM_Festo1__Egress_Egress_Egress();
 		void enseq_FSM_QualityGate__Motor_default();
 		void enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_default();
-		void enseq_FSM_System_default();
-		void enseq_FSM_System_EStop_EStop_default();
+		void enseq___default();
 		void enseq_FSM_Festo1_Signaling_default();
 		void enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_default();
 		void enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_default();
@@ -986,6 +1017,7 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_default();
 		void enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_default();
 		void enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_default();
+		void enseq_TEST_default();
 		void exseq_FSM_Festo1_Ingress_Ingress();
 		void exseq_FSM_Festo1_Ingress_Ingress_Ingress_Idle();
 		void exseq_FSM_Festo1_Ingress_Ingress_Ingress_PukPresent();
@@ -1022,6 +1054,8 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo1__Egress_Egress_Egress_PukPresent();
 		void exseq_FSM_Festo1__Egress_Egress_Egress_Transfer();
 		void exseq_FSM_Festo1__Egress_Egress_Egress_PukExpected();
+		void exseq_FSM_Festo1__Egress_Egress_Egress_Waiting();
+		void exseq_FSM_Festo1__Egress_Egress_Egress_PukinLBE1();
 		void exseq_FSM_Festo1__Egress_Paused();
 		void exseq_FSM_Festo1__Egress_E_STOP();
 		void exseq_FSM_Festo1__Egress_Start();
@@ -1030,13 +1064,14 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop();
-		void exseq_FSM_System_Operational();
-		void exseq_FSM_System_EStop();
-		void exseq_FSM_System_EStop_EStop_AwaitingEStopResolve();
-		void exseq_FSM_System_EStop_EStop__final_();
-		void exseq_FSM_System_Start();
-		void exseq_FSM_System_Ready();
-		void exseq_FSM_System_ServiceMode();
+		void exseq___Operational();
+		void exseq___Start();
+		void exseq___Ready();
+		void exseq___ServiceMode();
+		void exseq___EStopCalibration();
+		void exseq___EStopReceived();
+		void exseq___EStopCleared();
+		void exseq___ReveivedReset();
 		void exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
 		void exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
 		void exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
@@ -1050,6 +1085,7 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance();
 		void exseq_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent();
 		void exseq_FSM_Festo2__Ingress_Ingress_Ingress_PukExpected();
+		void exseq_FSM_Festo2__Ingress_Ingress_Ingress_PukinLBF2();
 		void exseq_FSM_Festo2__Ingress_E_STOP();
 		void exseq_FSM_Festo2__Ingress_Paused();
 		void exseq_FSM_Festo2__Ingress_Starting();
@@ -1091,6 +1127,7 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz();
 		void exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
 		void exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
+		void exseq_TEST_EvaluateTester();
 		void exseq_FSM_Festo1_Ingress();
 		void exseq_FSM_Festo1_Ingress_Ingress_Ingress();
 		void exseq_FSM_Festo1_HeightMeasurement();
@@ -1102,8 +1139,7 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo1__Egress_Egress_Egress();
 		void exseq_FSM_QualityGate__Motor();
 		void exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor();
-		void exseq_FSM_System();
-		void exseq_FSM_System_EStop_EStop();
+		void exseq__();
 		void exseq_FSM_Festo1_Signaling();
 		void exseq_FSM_Festo2__Ingress();
 		void exseq_FSM_Festo2__Ingress_Ingress_Ingress();
@@ -1116,12 +1152,12 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo2__Motor();
 		void exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor();
 		void exseq_FSM_Festo2__Signaling();
+		void exseq_TEST();
 		void react_FSM_Festo1_Ingress_Ingress_Ingress__entry_Default();
 		void react_FSM_Festo1_Ingress_Ingress_Ingress_History();
 		void react_FSM_Festo1_Ingress__entry_Default();
 		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s__entry_Default();
 		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__entry_Default();
-		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_History();
 		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_History();
 		void react_FSM_Festo1_HeightMeasurement__entry_Default();
 		void react_FSM_Festo1__Sorting_Sorting_Sorting_History();
@@ -1132,8 +1168,7 @@ class FSM : public sc::EventDrivenInterface
 		void react_FSM_Festo1__Egress__entry_Default();
 		void react_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor__entry_Default();
 		void react_FSM_QualityGate__Motor__entry_Default();
-		void react_FSM_System_EStop_EStop__entry_Default();
-		void react_FSM_System__entry_Default();
+		void react____entry_Default();
 		void react_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green__entry_Default();
 		void react_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow__entry_Default();
 		void react_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red__entry_Default();
@@ -1158,6 +1193,7 @@ class FSM : public sc::EventDrivenInterface
 		void react_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red__entry_Default();
 		void react_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP__entry_Default();
 		void react_FSM_Festo2__Signaling__entry_Default();
+		void react_TEST__entry_Default();
 		sc::integer react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_Ingress_Ingress_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_Ingress_Ingress_Ingress_Idle_react(const sc::integer transitioned_before);
@@ -1195,6 +1231,8 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo1__Egress_Egress_Egress_PukPresent_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Egress_Egress_Egress_Transfer_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Egress_Egress_Egress_PukExpected_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1__Egress_Egress_Egress_Waiting_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1__Egress_Egress_Egress_PukinLBE1_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Egress_Paused_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Egress_E_STOP_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Egress_Start_react(const sc::integer transitioned_before);
@@ -1203,13 +1241,14 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_react(const sc::integer transitioned_before);
 		sc::integer FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow_react(const sc::integer transitioned_before);
 		sc::integer FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_react(const sc::integer transitioned_before);
-		sc::integer FSM_System_Operational_react(const sc::integer transitioned_before);
-		sc::integer FSM_System_EStop_react(const sc::integer transitioned_before);
-		sc::integer FSM_System_EStop_EStop_AwaitingEStopResolve_react(const sc::integer transitioned_before);
-		sc::integer FSM_System_EStop_EStop__final__react(const sc::integer transitioned_before);
-		sc::integer FSM_System_Start_react(const sc::integer transitioned_before);
-		sc::integer FSM_System_Ready_react(const sc::integer transitioned_before);
-		sc::integer FSM_System_ServiceMode_react(const sc::integer transitioned_before);
+		sc::integer __Operational_react(const sc::integer transitioned_before);
+		sc::integer __Start_react(const sc::integer transitioned_before);
+		sc::integer __Ready_react(const sc::integer transitioned_before);
+		sc::integer __ServiceMode_react(const sc::integer transitioned_before);
+		sc::integer __EStopCalibration_react(const sc::integer transitioned_before);
+		sc::integer __EStopReceived_react(const sc::integer transitioned_before);
+		sc::integer __EStopCleared_react(const sc::integer transitioned_before);
+		sc::integer __ReveivedReset_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_Signaling_FSM_LAMP_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_react(const sc::integer transitioned_before);
@@ -1225,6 +1264,7 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Ingress_Ingress_Ingress_PukPresent_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Ingress_Ingress_Ingress_PukExpected_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__Ingress_Ingress_Ingress_PukinLBF2_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Ingress_E_STOP_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Ingress_Paused_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Ingress_Starting_react(const sc::integer transitioned_before);
@@ -1268,6 +1308,7 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_react(const sc::integer transitioned_before);
+		sc::integer TEST_EvaluateTester_react(const sc::integer transitioned_before);
 		void clearInEvents() noexcept;
 		void clearInternalEvents() noexcept;
 		void microStep();
@@ -1299,6 +1340,9 @@ class FSM : public sc::EventDrivenInterface
 		/*! Observable for event 'SYSTEM_STOPPED' of default interface scope. */
 		sc::rx::Observable<void> SYSTEM_STOPPED_observable = sc::rx::Observable<void>{};
 		
+		/*! Observable for event 'EVALUATE' of default interface scope. */
+		sc::rx::Observable<void> EVALUATE_observable = sc::rx::Observable<void>{};
+
 		/*! Indicates event 'ESTOP_1_HIGH' of default interface scope is active. */
 		bool ESTOP_1_HIGH_raised {false};
 		
@@ -1785,6 +1829,12 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_2_YELLOW_LAMP_OFF' of internal scope as a local event. */
 		void raiseLocal_FST_2_YELLOW_LAMP_OFF();
 		
+		/*! Indicates event 'local_EVALUATE' of internal scope is active. */
+		bool local_EVALUATE_raised {false};
+
+		/*! Raises the out event 'local_EVALUATE' of internal scope as a local event. */
+		void raiseLocal_EVALUATE();
+
 		
 		
 };
