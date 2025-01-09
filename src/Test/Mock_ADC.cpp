@@ -88,4 +88,4 @@ void Mock_ADC::adcDisable(void){}
 void Mock_ADC::stepConfigure(unsigned int stepSel, Fifo fifo, PositiveInput positiveInpChannel){}
 void Mock_ADC::handleMsg() {}
 void Mock_ADC::sendMsg() {}
-int32_t Mock_ADC::getChannel() {}
+int32_t Mock_ADC::getChannel() {return 0;}

@@ -7,26 +7,26 @@
 
 #include "headers/HeartBeat.h"
 
-HeartBeat::HeartBeat(uint8_t festoNr, std::string dispatcherName) {
+int8_t HeartBeat::numOfPulses = HEARTBEAT_NUM_OF_PULSES;
+int8_t HeartBeat::pulses[HEARTBEAT_NUM_OF_PULSES] = {
+    PULSE_ESTOP_LOW,
+    PULSE_ESTOP_HIGH
+};
+
+HeartBeat::HeartBeat(uint8_t festoNr) {
     running = false;
     // check if festo 1 or festo 2 in parameter list // TODO What happens if named Channel not created yet? create namedChannels in main on qnx level. who creates it then? 
-    dispatcherChannel = name_open(dispatcherName.c_str(),0);
+    dispatcherChannel = name_open(std::string(DISPATCHERNAME).c_str(),0);
     festoId = festoNr;
     
     if (festoNr == FESTO1){
         heartBeatChannel = createNamedChannel("Festo1HeartBeat");
-        otherFesto = name_open("Festo2HeartBeat", 0);
     } else if (festoNr == FESTO2) {
         heartBeatChannel = createNamedChannel("Festo2HeartBeat");
-        otherFesto = name_open("Festo1HeartBeat", 0);
     } else {
         Logger::getInstance().log(LogLevel::ERROR, "Wrong ", "HeartBeat");
     }
-
     channelID = heartBeatChannel->chid;
-    if (0 > otherFesto) {
-        Logger::getInstance().log(LogLevel::CRITICAL, "Could not connect to other Festo...", "HeartBeat");
-    }
 }
 
 HeartBeat::~HeartBeat(){
@@ -36,6 +36,20 @@ HeartBeat::~HeartBeat(){
     destroyChannel(channelID);
 }
 
+void HeartBeat::connectToFesto(){
+    if (festoId == FESTO1){
+        otherFesto = name_open("Festo2HeartBeat", 0);
+    } else if (festoId == FESTO2) {
+        otherFesto = name_open("Festo1HeartBeat", 0);
+    } else {
+        Logger::getInstance().log(LogLevel::ERROR, "Wrong ", "HeartBeat");
+    }
+    
+    if (0 > otherFesto) {
+        Logger::getInstance().log(LogLevel::CRITICAL, std::to_string(festoId) + " Could not connect to other Festo...", "HeartBeat");
+    }
+}
+
 bool HeartBeat::stop(){
     int coid = connectToChannel(channelID);
     if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
@@ -43,7 +57,7 @@ bool HeartBeat::stop(){
             return false;
     }
     // disconnect the connection to own channel
-    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down PULSE send...", "HeartBeat");
+    Logger::getInstance().log(LogLevel::TRACE, "Shutting down PULSE send...", "HeartBeat");
     if (0 > ConnectDetach(coid)){
         Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "HeartBeat");
         return false;
@@ -59,6 +73,7 @@ void HeartBeat::sendMsg() {
     bool disconnect = false;
 
     while (running) {
+        Logger::getInstance().log(LogLevel::DEBUG,std::to_string(festoId) + "Sending Heartbeat...", "HeartBeat");
         if (0 > MsgSendPulse(otherFesto, -1, PULSE_HEARTBEAT, 0)) {
             Logger::getInstance().log(LogLevel::WARNING, "PulseCouldnotBeSent...", "HeartBeat");
         }
@@ -109,16 +124,16 @@ void HeartBeat::handleMsg() {
                 }        
 
             } else if (msg.code == PULSE_STOP_RECV_THREAD) {
-                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_STOP_RECV_THREAD...", "HeartBeat");
+                Logger::getInstance().log(LogLevel::TRACE, "received PULSE_STOP_RECV_THREAD...", "HeartBeat");
                 running = false;
             } else if (msg.code == PULSE_ESTOP_LOW) {
-                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_ESTOP_LOW...", "HeartBeat");
+                Logger::getInstance().log(LogLevel::TRACE, "received PULSE_ESTOP_LOW...", "HeartBeat");
                 eStopPressed = true;     
             } else if (msg.code == PULSE_ESTOP_HIGH) {
-                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_ESTOP_HIGH...", "HeartBeat");
+                Logger::getInstance().log(LogLevel::TRACE, "received PULSE_ESTOP_HIGH...", "HeartBeat");
                 eStopPressed = false;                   
             } else {
-                Logger::getInstance().log(LogLevel::WARNING, "Unexpected Pulse received...", "HeartBeat");
+                Logger::getInstance().log(LogLevel::ERROR, "Unexpected Pulse received: " + std::to_string(msg.code), "HeartBeat");
             }
         }
     }

@@ -119,7 +119,7 @@ void HeightSensorControl::handleMsg() {
     _pulse msg;
     receivingRunning = true;
 
-    int32_t previousValue;
+    //int32_t previousValue;
     bool candidatesSend = false;
     // getting first sample
     adc->sample();

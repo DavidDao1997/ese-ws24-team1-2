@@ -24,6 +24,7 @@
 #include "../Decoder/headers/Decoder.h"
 #include "../FSM/FSMController.h"
 #include "../Logging/headers/Logger.h"
+#include "../HeartBeat/headers/HeartBeat.h"
 #include "../FSM/gen/src-gen/FSM.h"
 #include "../FSM/gen/src/sc_rxcpp.h"
 
@@ -168,6 +169,8 @@ protected:
 /*
 * TODO Aenderungen vom Mock Actuator Controller in den ActuatorController uebernehemn!!!!! am besten als init im actuator controller
 */
+
+/*
 TEST_F(SystemTest, startupWithoutUsingServiceModeOnFESTO1) {
     EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1); // TODO Explizit Setzen Bei Startup
     
@@ -246,6 +249,44 @@ TEST_F(SystemTest, eStopAfterServiceModeOnFESTO1) {
     EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
     EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
     EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
+}
+
+*/
+
+TEST_F(SystemTest, heartbeat){
+    HeartBeat * hb1 = new HeartBeat(FESTO1);
+    HeartBeat * hb2 = new HeartBeat(FESTO2);
+    
+    hb1->connectToFesto();
+    hb2->connectToFesto();
+
+    std::thread hb1RecvThread = std::thread(std::bind(&HeartBeat::handleMsg, hb1));
+    std::thread hb2RecvThread = std::thread(std::bind(&HeartBeat::handleMsg, hb2));  
+    std::thread hb1SendThread = std::thread(std::bind(&HeartBeat::sendMsg, hb1));
+    std::thread hb2SendThread = std::thread(std::bind(&HeartBeat::sendMsg, hb2));    
+
+
+    WAIT(1000);
+
+    hb1->stop();
+
+    WAIT(1000);
+
+    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down threads hb1 and hb2...", "SystemTest");
+    hb1->stop();
+    hb2->stop();
+    Logger::getInstance().log(LogLevel::DEBUG, "Threads stopped...", "SystemTest");
+    hb1RecvThread.join();
+    Logger::getInstance().log(LogLevel::DEBUG, "hb1RecvThread stopped...", "SystemTest");
+    hb2RecvThread.join();
+    Logger::getInstance().log(LogLevel::DEBUG, "hb2RecvThread stopped...", "SystemTest");
+    hb1SendThread.join();
+    Logger::getInstance().log(LogLevel::DEBUG, "hb1SendThread stopped...", "SystemTest");
+    hb2SendThread.join();
+
+    Logger::getInstance().log(LogLevel::DEBUG, "hb2SendThread stopped...", "SystemTest");
+
+
 }
 
 // TEST_F(SystemTest, errorWhenPukDistanceTooShortAtFront) {

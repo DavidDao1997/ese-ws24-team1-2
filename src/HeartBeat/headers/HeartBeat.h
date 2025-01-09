@@ -21,11 +21,15 @@
 #include "../../HAL/headers/HALConfig.h"
 #include "../../Util/headers/Util.h"
 
+#define HEARTBEAT_NUM_OF_PULSES 2
+
 #include "../../Logging/headers/Logger.h"
 class HeartBeat : public PulseMsgHandler {
   public:
-    HeartBeat(uint8_t festoNrOfOtherFesto, std::string dispatcherName);
+    HeartBeat(uint8_t festoNr);
     virtual ~HeartBeat();
+
+    void connectToFesto();
 
     bool stop();
     int32_t getChannel() override;
@@ -43,6 +47,10 @@ class HeartBeat : public PulseMsgHandler {
     name_attach_t* heartBeatChannel;
     std::mutex heartbeatMutex;
     std::chrono::steady_clock::time_point lastHeartbeatReceived;
+
+
+    static int8_t numOfPulses;
+    static int8_t pulses[HEARTBEAT_NUM_OF_PULSES];
 };
 
 /*
