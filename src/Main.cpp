@@ -19,11 +19,11 @@
 #include <gtest/gtest.h>
 
 #define TESTING 1
-#define LOGLEVEL ERROR
+#define LOGLEVEL TRACE
 
 
 int main(int argc, char **argv) {
-int ret = 0;
+auto ret = 0;
 
 Logger& logger = Logger::getInstance();
 
@@ -42,7 +42,7 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
 
     logger.log(LogLevel::INFO, "Testing starting...", "Main");
 	::testing::InitGoogleTest(&argc, argv);
-	auto result = RUN_ALL_TESTS();
+	ret = RUN_ALL_TESTS();
 
 #else
 
