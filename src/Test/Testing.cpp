@@ -253,24 +253,25 @@ TEST_F(SystemTest, eStopAfterServiceModeOnFESTO1) {
 
 */
 
-TEST_F(SystemTest, heartbeat){
+/*Heartbeat works from Startup tp Teardown for 500 ms*/
+TEST_F(SystemTest, heartbeatEstablishedOnOneMaschineSuccess){
     HeartBeat * hb1 = new HeartBeat(FESTO1);
     HeartBeat * hb2 = new HeartBeat(FESTO2);
     
     hb1->connectToFesto();
     hb2->connectToFesto();
 
+    
+    
     std::thread hb1RecvThread = std::thread(std::bind(&HeartBeat::handleMsg, hb1));
     std::thread hb2RecvThread = std::thread(std::bind(&HeartBeat::handleMsg, hb2));  
+
+
     std::thread hb1SendThread = std::thread(std::bind(&HeartBeat::sendMsg, hb1));
-    std::thread hb2SendThread = std::thread(std::bind(&HeartBeat::sendMsg, hb2));    
+    std::thread hb2SendThread = std::thread(std::bind(&HeartBeat::sendMsg, hb2));   
 
 
-    WAIT(1000);
-
-    hb1->stop();
-
-    WAIT(1000);
+    WAIT(500);
 
     Logger::getInstance().log(LogLevel::DEBUG, "Shutting down threads hb1 and hb2...", "SystemTest");
     hb1->stop();
@@ -286,7 +287,76 @@ TEST_F(SystemTest, heartbeat){
 
     Logger::getInstance().log(LogLevel::DEBUG, "hb2SendThread stopped...", "SystemTest");
 
+    delete hb1;
+    delete hb2;
+}
 
+/*Heartbeat fails from Startup tp Teardown after 500 ms*/
+TEST_F(SystemTest, heartbeatEstablishedOnOneMaschineFailedAfter500){
+    HeartBeat * hb1 = new HeartBeat(FESTO1);
+    HeartBeat * hb2 = new HeartBeat(FESTO2);
+    
+    hb1->connectToFesto();
+    hb2->connectToFesto();
+
+    
+    
+    std::thread hb1RecvThread = std::thread(std::bind(&HeartBeat::handleMsg, hb1));
+    std::thread hb2RecvThread = std::thread(std::bind(&HeartBeat::handleMsg, hb2));  
+
+
+    std::thread hb1SendThread = std::thread(std::bind(&HeartBeat::sendMsg, hb1));
+    std::thread hb2SendThread = std::thread(std::bind(&HeartBeat::sendMsg, hb2));   
+ 
+    WAIT(500);
+
+    hb1->stop();
+
+    WAIT(500);
+
+    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down threads hb1 and hb2...", "SystemTest");
+    hb1->stop();
+    hb2->stop();
+    Logger::getInstance().log(LogLevel::DEBUG, "Threads stopped...", "SystemTest");
+    hb1RecvThread.join();
+    Logger::getInstance().log(LogLevel::DEBUG, "hb1RecvThread stopped...", "SystemTest");
+    hb2RecvThread.join();
+    Logger::getInstance().log(LogLevel::DEBUG, "hb2RecvThread stopped...", "SystemTest");
+    hb1SendThread.join();
+    Logger::getInstance().log(LogLevel::DEBUG, "hb1SendThread stopped...", "SystemTest");
+    hb2SendThread.join();
+
+    delete hb1;
+    delete hb2;
+
+    Logger::getInstance().log(LogLevel::DEBUG, "hb2SendThread stopped...", "SystemTest");
+}
+
+
+/*Heartbeat fails from Startup after 10 s, there was never a connection*/
+TEST_F(SystemTest, heartbeatEstablishedOnOneMaschineFailedAfterNoInitSuccess){
+    HeartBeat * hb1 = new HeartBeat(FESTO1);
+        
+    hb1->connectToFesto();
+    
+    std::thread hb1RecvThread = std::thread(std::bind(&HeartBeat::handleMsg, hb1));
+
+
+    std::thread hb1SendThread = std::thread(std::bind(&HeartBeat::sendMsg, hb1)); 
+ 
+    WAIT(10010);
+
+    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down threads hb1...", "SystemTest");
+    hb1->stop();
+
+    Logger::getInstance().log(LogLevel::DEBUG, "Threads stopped...", "SystemTest");
+    hb1RecvThread.join();
+    Logger::getInstance().log(LogLevel::DEBUG, "hb1RecvThread stopped...", "SystemTest");
+    hb1SendThread.join();
+    Logger::getInstance().log(LogLevel::DEBUG, "hb1SendThread stopped...", "SystemTest");
+    
+
+    delete hb1;
 }
 
 // TEST_F(SystemTest, errorWhenPukDistanceTooShortAtFront) {

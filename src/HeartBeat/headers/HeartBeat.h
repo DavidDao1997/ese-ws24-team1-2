@@ -39,6 +39,7 @@ class HeartBeat : public PulseMsgHandler {
   private:
     void handleDisconnect(bool disconnect);
     bool running;
+    bool messageReceivedOnce;
     bool eStopPressed;
     int32_t channelID;
     int32_t festoId;
