@@ -118,6 +118,10 @@ enum PulseCode {
     PULSE_MS_TRUE,
     PULSE_MS_FALSE,
 
+    // TODO Remove these events once sorting is implemented and can be used for testing instead of these events.
+	//PukStatus
+	FST_1_PUK_HEIGHT_VALID,
+	FST_1_PUK_HEIGHT_NOT_VALID,
     /* FSM pulses */
     PULSE_FSM // msg.value int32_t (FsmEvent)
 };

@@ -13,6 +13,7 @@
 #define LONG_PRESS_DURATION 1000
 
 Decoder::Decoder(const std::string dispatcherChannelName, uint8_t festoID) {
+    Logger::getInstance().log(LogLevel::DEBUG, "Initializing Decoder", "Decoder");
     running = false;
 
     channelID = createChannel();
@@ -40,7 +41,9 @@ Decoder::Decoder(const std::string dispatcherChannelName, uint8_t festoID) {
     sensorISR->initializeGPIOInterrupt(MS_PIN);
 
     // create a connection to Dispatcher
-    dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
+    dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), NAME_FLAG_ATTACH_GLOBAL);
+    Logger::getInstance().log(LogLevel::DEBUG, "NAME_FLAG_ATTACH_GLOBAL: " + std::to_string(NAME_FLAG_ATTACH_GLOBAL), "Decoder");
+    Logger::getInstance().log(LogLevel::DEBUG, "dispatcherConnectionID: " + std::to_string(dispatcherConnectionID), "Decoder");
 
     // TODO check if festo 1 or festo 2 in parameter list
     if ((festoID == FESTO1) || (festoID == FESTO2)){

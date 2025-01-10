@@ -3,6 +3,7 @@
 #include <string>
 #include <thread>
 
+#include "HAL/headers/Actuators_Wrapper.h"
 #include "Actuatorcontroller/headers/ActuatorController.h"
 #include "Dispatcher/headers/Dispatcher.h"
 //#include "Logik/headers/FSM.h"
@@ -18,7 +19,7 @@
 
 #include <gtest/gtest.h>
 
-#define TESTING 1
+#define TESTING 0
 #define LOGLEVEL TRACE
 
 
@@ -61,12 +62,12 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         ret = EXIT_FAILURE;
     } else if (std::strcmp(argv[1], "-s") == 0) {
         logger.log(LogLevel::INFO, "Running as Server -> FESTO1...", "Main");
-
+        system("gns -s");
         // TODO run as Server TO BE TESTED
         std::string dispatcherChannelName = "dispatcher";
         Dispatcher *dispatcher = new Dispatcher(dispatcherChannelName);
         Decoder *decoder = new Decoder(dispatcherChannelName, FESTO1);
-        std::string actuatorControllerChannelName = "actuatorController";
+        std::string actuatorControllerChannelName = "actuatorController1";
         Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
         ActuatorController *actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
         dispatcher->addSubscriber(
@@ -85,25 +86,45 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         std::thread fsmControllerHandleMsgThread(std::bind(&FSMController::handleMsg, fsmController));
         std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
         std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
+        dispatcherThread.join();
+        // fsmThread.join();
+        fsmControllerHandleMsgThread.join();
+        //fsmControllerSendMsgThread.join();
+        actuatorControllerThread.join();
+        decoderThread.join();
+
 
 
     } else if (std::strcmp(argv[1], "-c") == 0) {
         logger.log(LogLevel::INFO, "Running as Client -> FESTO2...", "Main");
-
+        system("gns");
         // TODO run as Client TO BE TESTED
+        logger.log(LogLevel::DEBUG, "1", "Main");
         std::string dispatcherChannelName = "dispatcher";
+        logger.log(LogLevel::DEBUG, "2", "Main");
         Decoder *decoder = new Decoder(dispatcherChannelName, FESTO2);
-        std::string actuatorControllerChannelName = "actuatorController";
+        logger.log(LogLevel::DEBUG, "3", "Main");
+        std::string actuatorControllerChannelName = "actuatorController2";
+        logger.log(LogLevel::DEBUG, "4", "Main");
         Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
+        logger.log(LogLevel::DEBUG, "5", "Main");
         ActuatorController *actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
+        logger.log(LogLevel::DEBUG, "6", "Main");
         TSCADC* tsc = new TSCADC();
+        logger.log(LogLevel::DEBUG, "7", "Main");
         ADC* adc = new ADC(*tsc);
+        logger.log(LogLevel::DEBUG, "8", "Main");
         HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl2", dispatcherChannelName, FESTO2, tsc, adc);
+        logger.log(LogLevel::DEBUG, "9", "Main");
         std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
+        logger.log(LogLevel::DEBUG, "10", "Main");
         std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
+        logger.log(LogLevel::DEBUG, "11", "Main");
         std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
 
-
+        heightSensorControllerThread.join();
+        actuatorControllerThread.join();
+        decoderThread.join();
     } else {
         logger.log(LogLevel::INFO, "Running Fake Setup as Server ...", "Main");
         logger.log(LogLevel::INFO, std::string("Usage: ") + argv[0] + " -s | -c", "Main");

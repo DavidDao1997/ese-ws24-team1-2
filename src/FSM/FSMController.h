@@ -6,6 +6,7 @@
 #include "../Dispatcher/headers/PulseMsgConfig.h"
 #include "../Dispatcher/headers/PulseMsgHandler.h"
 #include "gen/src-gen/FSM.h"
+#include "../Util/headers/Util.h"
 
 #include "../Logging/headers/Logger.h"
 

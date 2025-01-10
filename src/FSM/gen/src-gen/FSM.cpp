@@ -49,21 +49,26 @@ FSM::EventInstance* FSM::getNextEvent() noexcept
 		nextEvent = incomingEventQueue.front();
 		incomingEventQueue.pop_front();
 	}
-
+	
 	return nextEvent;
+	
+}					
 
-}
 
-
-
+	
 bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 {
 	if(event == nullptr) {
 		return false;
 	}
-
+								
 	switch(event->eventId)
 	{
+		case FSM::Event::SYSTEM_OPERATIONAL_IN:
+		{
+			SYSTEM_OPERATIONAL_IN_raised = true;
+			break;
+		}
 		case FSM::Event::ESTOP_1_HIGH:
 		{
 			ESTOP_1_HIGH_raised = true;
@@ -84,6 +89,46 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			ESTOP_2_LOW_raised = true;
 			break;
 		}
+		case FSM::Event::FST_1_POSITION_INGRESS_NEW_PUK:
+		{
+			FST_1_POSITION_INGRESS_NEW_PUK_raised = true;
+			break;
+		}
+		case FSM::Event::FST_1_POSITION_INGRESS_DISTANCE_VALID:
+		{
+			FST_1_POSITION_INGRESS_DISTANCE_VALID_raised = true;
+			break;
+		}
+		case FSM::Event::FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK:
+		{
+			FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_raised = true;
+			break;
+		}
+		case FSM::Event::FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED:
+		{
+			FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised = true;
+			break;
+		}
+		case FSM::Event::FST_1_POSITION_SORTING_NEW_PUK:
+		{
+			FST_1_POSITION_SORTING_NEW_PUK_raised = true;
+			break;
+		}
+		case FSM::Event::FST_1_POSITION_SORTING_PUK_EXPECTED:
+		{
+			FST_1_POSITION_SORTING_PUK_EXPECTED_raised = true;
+			break;
+		}
+		case FSM::Event::FST_1_POSITION_EGRESS_NEW_PUK:
+		{
+			FST_1_POSITION_EGRESS_NEW_PUK_raised = true;
+			break;
+		}
+		case FSM::Event::FST_1_POSITION_EGRESS_PUK_EXPECTED:
+		{
+			FST_1_POSITION_EGRESS_PUK_EXPECTED_raised = true;
+			break;
+		}
 		case FSM::Event::LBF_1_INTERRUPTED:
 		{
 			LBF_1_INTERRUPTED_raised = true;
@@ -92,6 +137,11 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 		case FSM::Event::LBF_1_OPEN:
 		{
 			LBF_1_OPEN_raised = true;
+			break;
+		}
+		case FSM::Event::FST_1_PUK_ENTRY_HeightMeasurement:
+		{
+			FST_1_PUK_ENTRY_HeightMeasurement_raised = true;
 			break;
 		}
 		case FSM::Event::HS_1_SAMPLE:
@@ -289,29 +339,9 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			local_ESTOP_RECEIVED_raised = true;
 			break;
 		}
-		case FSM::Event::Internal_local_FST_1_POSITION_INGRESS_DISTANCE_VALID:
-		{
-			local_FST_1_POSITION_INGRESS_DISTANCE_VALID_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_SYSTEM_OPERATIONAL_IN:
-		{
-			local_SYSTEM_OPERATIONAL_IN_raised = true;
-			break;
-		}
 		case FSM::Event::Internal_local_ESTOP_CLEARED:
 		{
 			local_ESTOP_CLEARED_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_1_PUK_ENTRY_HeightMeasurement:
-		{
-			local_FST_1_PUK_ENTRY_HeightMeasurement_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED:
-		{
-			local_FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised = true;
 			break;
 		}
 		case FSM::Event::Internal_local_FST_1_PUK_ENTRY_SORTING:
@@ -319,19 +349,9 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			local_FST_1_PUK_ENTRY_SORTING_raised = true;
 			break;
 		}
-		case FSM::Event::Internal_local_FST_1_POSITION_SORTING_PUK_EXPECTED:
-		{
-			local_FST_1_POSITION_SORTING_PUK_EXPECTED_raised = true;
-			break;
-		}
 		case FSM::Event::Internal_local_FST_1_PUK_ENTRY_EGRESS:
 		{
 			local_FST_1_PUK_ENTRY_EGRESS_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_1_POSITION_EGRESS_PUK_EXPECTED:
-		{
-			local_FST_1_POSITION_EGRESS_PUK_EXPECTED_raised = true;
 			break;
 		}
 		case FSM::Event::Internal_local_SYSTEM_SERVICE_IN:
@@ -364,9 +384,9 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			local_FST_2_POSITION_INGRESS_DISTANCE_VALID_raised = true;
 			break;
 		}
-		case FSM::Event::Internal_local_FST_2_POSITION_INGRESS_EXPECTED:
+		case FSM::Event::Internal_local_FST_2_POSITION_INGRESS_PUK_EXPECTED:
 		{
-			local_FST_2_POSITION_INGRESS_EXPECTED_raised = true;
+			local_FST_2_POSITION_INGRESS_PUK_EXPECTED_raised = true;
 			break;
 		}
 		case FSM::Event::Internal_local_FST_2_PUK_ENTRY_HeightMeasurement:
@@ -414,8 +434,8 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			local_EVALUATE_raised = true;
 			break;
 		}
-
-
+		
+		
 		default:
 			//pointer got out of scope
 			delete event;
@@ -427,8 +447,11 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 }
 
 
-sc::rx::Observable<void>& FSM::getSYSTEM_OPERATIONAL_IN() noexcept {
-	return this->SYSTEM_OPERATIONAL_IN_observable;
+/*! Raises the in event 'SYSTEM_OPERATIONAL_IN' of default interface scope. */
+void FSM::raiseSYSTEM_OPERATIONAL_IN() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::SYSTEM_OPERATIONAL_IN))
+	;
+	runCycle();
 }
 
 
@@ -504,43 +527,67 @@ void FSM::raiseESTOP_2_LOW() {
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_1_POSITION_INGRESS_NEW_PUK() noexcept {
-	return this->FST_1_POSITION_INGRESS_NEW_PUK_observable;
+/*! Raises the in event 'FST_1_POSITION_INGRESS_NEW_PUK' of default interface scope. */
+void FSM::raiseFST_1_POSITION_INGRESS_NEW_PUK() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_INGRESS_NEW_PUK))
+	;
+	runCycle();
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_1_POSITION_INGRESS_DISTANCE_VALID() noexcept {
-	return this->FST_1_POSITION_INGRESS_DISTANCE_VALID_observable;
+/*! Raises the in event 'FST_1_POSITION_INGRESS_DISTANCE_VALID' of default interface scope. */
+void FSM::raiseFST_1_POSITION_INGRESS_DISTANCE_VALID() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_INGRESS_DISTANCE_VALID))
+	;
+	runCycle();
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK() noexcept {
-	return this->FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable;
+/*! Raises the in event 'FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope. */
+void FSM::raiseFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK))
+	;
+	runCycle();
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED() noexcept {
-	return this->FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_observable;
+/*! Raises the in event 'FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of default interface scope. */
+void FSM::raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED))
+	;
+	runCycle();
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_1_POSITION_SORTING_NEW_PUK() noexcept {
-	return this->FST_1_POSITION_SORTING_NEW_PUK_observable;
+/*! Raises the in event 'FST_1_POSITION_SORTING_NEW_PUK' of default interface scope. */
+void FSM::raiseFST_1_POSITION_SORTING_NEW_PUK() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_SORTING_NEW_PUK))
+	;
+	runCycle();
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_1_POSITION_SORTING_PUK_EXPECTED() noexcept {
-	return this->FST_1_POSITION_SORTING_PUK_EXPECTED_observable;
+/*! Raises the in event 'FST_1_POSITION_SORTING_PUK_EXPECTED' of default interface scope. */
+void FSM::raiseFST_1_POSITION_SORTING_PUK_EXPECTED() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_SORTING_PUK_EXPECTED))
+	;
+	runCycle();
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_1_POSITION_EGRESS_NEW_PUK() noexcept {
-	return this->FST_1_POSITION_EGRESS_NEW_PUK_observable;
+/*! Raises the in event 'FST_1_POSITION_EGRESS_NEW_PUK' of default interface scope. */
+void FSM::raiseFST_1_POSITION_EGRESS_NEW_PUK() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_EGRESS_NEW_PUK))
+	;
+	runCycle();
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_1_POSITION_EGRESS_PUK_EXPECTED() noexcept {
-	return this->FST_1_POSITION_EGRESS_PUK_EXPECTED_observable;
+/*! Raises the in event 'FST_1_POSITION_EGRESS_PUK_EXPECTED' of default interface scope. */
+void FSM::raiseFST_1_POSITION_EGRESS_PUK_EXPECTED() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_EGRESS_PUK_EXPECTED))
+	;
+	runCycle();
 }
 
 
@@ -560,8 +607,11 @@ void FSM::raiseLBF_1_OPEN() {
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_1_PUK_ENTRY_HeightMeasurement() noexcept {
-	return this->FST_1_PUK_ENTRY_HeightMeasurement_observable;
+/*! Raises the in event 'FST_1_PUK_ENTRY_HeightMeasurement' of default interface scope. */
+void FSM::raiseFST_1_PUK_ENTRY_HeightMeasurement() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_PUK_ENTRY_HeightMeasurement))
+	;
+	runCycle();
 }
 
 
@@ -789,6 +839,16 @@ sc::rx::Observable<void>& FSM::getLR1_OFF() noexcept {
 }
 
 
+sc::rx::Observable<void>& FSM::getQ11_ON() noexcept {
+	return this->Q11_ON_observable;
+}
+
+
+sc::rx::Observable<void>& FSM::getQ12_ON() noexcept {
+	return this->Q12_ON_observable;
+}
+
+
 sc::rx::Observable<void>& FSM::getFST_2_POSITION_INGRESS_NEW_PUK() noexcept {
 	return this->FST_2_POSITION_INGRESS_NEW_PUK_observable;
 }
@@ -799,8 +859,8 @@ sc::rx::Observable<void>& FSM::getFST_2_POSITION_INGRESS_DISTANCE_VALID() noexce
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_2_POSITION_INGRESS_EXPECTED() noexcept {
-	return this->FST_2_POSITION_INGRESS_EXPECTED_observable;
+sc::rx::Observable<void>& FSM::getFST_2_POSITION_INGRESS_PUK_EXPECTED() noexcept {
+	return this->FST_2_POSITION_INGRESS_PUK_EXPECTED_observable;
 }
 
 
@@ -1163,32 +1223,8 @@ void FSM::raiseLocal_ESTOP_RECEIVED() {
 }
 
 
-void FSM::raiseLocal_FST_1_POSITION_INGRESS_DISTANCE_VALID() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_POSITION_INGRESS_DISTANCE_VALID))
-	;
-}
-
-
-void FSM::raiseLocal_SYSTEM_OPERATIONAL_IN() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_SYSTEM_OPERATIONAL_IN))
-	;
-}
-
-
 void FSM::raiseLocal_ESTOP_CLEARED() {
 	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_ESTOP_CLEARED))
-	;
-}
-
-
-void FSM::raiseLocal_FST_1_PUK_ENTRY_HeightMeasurement() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_PUK_ENTRY_HeightMeasurement))
-	;
-}
-
-
-void FSM::raiseLocal_FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED))
 	;
 }
 
@@ -1199,20 +1235,8 @@ void FSM::raiseLocal_FST_1_PUK_ENTRY_SORTING() {
 }
 
 
-void FSM::raiseLocal_FST_1_POSITION_SORTING_PUK_EXPECTED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_POSITION_SORTING_PUK_EXPECTED))
-	;
-}
-
-
 void FSM::raiseLocal_FST_1_PUK_ENTRY_EGRESS() {
 	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_PUK_ENTRY_EGRESS))
-	;
-}
-
-
-void FSM::raiseLocal_FST_1_POSITION_EGRESS_PUK_EXPECTED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_POSITION_EGRESS_PUK_EXPECTED))
 	;
 }
 
@@ -1253,8 +1277,8 @@ void FSM::raiseLocal_FST_2_POSITION_INGRESS_DISTANCE_VALID() {
 }
 
 
-void FSM::raiseLocal_FST_2_POSITION_INGRESS_EXPECTED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_POSITION_INGRESS_EXPECTED))
+void FSM::raiseLocal_FST_2_POSITION_INGRESS_PUK_EXPECTED() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_POSITION_INGRESS_PUK_EXPECTED))
 	;
 }
 
@@ -1319,7 +1343,7 @@ bool FSM::isActive() const noexcept
 	return stateConfVector[0] != FSM::State::NO_STATE||stateConfVector[1] != FSM::State::NO_STATE||stateConfVector[2] != FSM::State::NO_STATE||stateConfVector[3] != FSM::State::NO_STATE||stateConfVector[4] != FSM::State::NO_STATE||stateConfVector[5] != FSM::State::NO_STATE||stateConfVector[6] != FSM::State::NO_STATE||stateConfVector[7] != FSM::State::NO_STATE||stateConfVector[8] != FSM::State::NO_STATE||stateConfVector[9] != FSM::State::NO_STATE||stateConfVector[10] != FSM::State::NO_STATE||stateConfVector[11] != FSM::State::NO_STATE||stateConfVector[12] != FSM::State::NO_STATE||stateConfVector[13] != FSM::State::NO_STATE||stateConfVector[14] != FSM::State::NO_STATE||stateConfVector[15] != FSM::State::NO_STATE||stateConfVector[16] != FSM::State::NO_STATE||stateConfVector[17] != FSM::State::NO_STATE;
 }
 
-/*
+/* 
  * Always returns 'false' since this state machine can never become final.
  */
 bool FSM::isFinal() const noexcept
@@ -1386,11 +1410,6 @@ bool FSM::isStateActive(State state) const noexcept
 			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring] >= FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring && stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring] <= FSM::State::_final_);
 			break;
 		}
-		case FSM::State::_0 :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0] == FSM::State::_0);
-			break;
-		}
 		case FSM::State::A :
 		{
 			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A] == FSM::State::A);
@@ -1448,7 +1467,7 @@ bool FSM::isStateActive(State state) const noexcept
 		}
 		case FSM::State::FSM_Festo1__Sorting_Sorting :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1__Sorting_Sorting] >= FSM::State::FSM_Festo1__Sorting_Sorting && stateConfVector[scvi_FSM_Festo1__Sorting_Sorting] <= FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_PukExpected);
+			return  (stateConfVector[scvi_FSM_Festo1__Sorting_Sorting] >= FSM::State::FSM_Festo1__Sorting_Sorting && stateConfVector[scvi_FSM_Festo1__Sorting_Sorting] <= FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull);
 			break;
 		}
 		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_Idle :
@@ -1471,9 +1490,9 @@ bool FSM::isStateActive(State state) const noexcept
 			return  (stateConfVector[scvi_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected] == FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_PukExpected);
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_RampFull :
+		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1__Sorting_RampFull] == FSM::State::FSM_Festo1__Sorting_RampFull);
+			return  (stateConfVector[scvi_FSM_Festo1__Sorting_Sorting_Sorting_RampFull] == FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull);
 			break;
 		}
 		case FSM::State::FSM_Festo1__Sorting_Paused :
@@ -1493,7 +1512,7 @@ bool FSM::isStateActive(State state) const noexcept
 		}
 		case FSM::State::FSM_Festo1__Egress_Egress :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1__Egress_Egress] >= FSM::State::FSM_Festo1__Egress_Egress && stateConfVector[scvi_FSM_Festo1__Egress_Egress] <= FSM::State::FSM_Festo1__Egress_Egress_Egress_PukinLBE1);
+			return  (stateConfVector[scvi_FSM_Festo1__Egress_Egress] >= FSM::State::FSM_Festo1__Egress_Egress && stateConfVector[scvi_FSM_Festo1__Egress_Egress] <= FSM::State::FSM_Festo1__Egress_Egress_Egress_Waiting);
 			break;
 		}
 		case FSM::State::FSM_Festo1__Egress_Egress_Egress_IDLE :
@@ -1521,11 +1540,6 @@ bool FSM::isStateActive(State state) const noexcept
 			return  (stateConfVector[scvi_FSM_Festo1__Egress_Egress_Egress_Waiting] == FSM::State::FSM_Festo1__Egress_Egress_Egress_Waiting);
 			break;
 		}
-		case FSM::State::FSM_Festo1__Egress_Egress_Egress_PukinLBE1 :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1__Egress_Egress_Egress_PukinLBE1] == FSM::State::FSM_Festo1__Egress_Egress_Egress_PukinLBE1);
-			break;
-		}
 		case FSM::State::FSM_Festo1__Egress_Paused :
 		{
 			return  (stateConfVector[scvi_FSM_Festo1__Egress_Paused] == FSM::State::FSM_Festo1__Egress_Paused);
@@ -1544,11 +1558,6 @@ bool FSM::isStateActive(State state) const noexcept
 		case FSM::State::FSM_QualityGate__Motor_SystemMotor :
 		{
 			return  (stateConfVector[scvi_FSM_QualityGate__Motor_SystemMotor] >= FSM::State::FSM_QualityGate__Motor_SystemMotor && stateConfVector[scvi_FSM_QualityGate__Motor_SystemMotor] <= FSM::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop);
-			break;
-		}
-		case FSM::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle :
-		{
-			return  (stateConfVector[scvi_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle] == FSM::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle);
 			break;
 		}
 		case FSM::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward :
@@ -1604,6 +1613,11 @@ bool FSM::isStateActive(State state) const noexcept
 		case FSM::State::__ReveivedReset :
 		{
 			return  (stateConfVector[scvi___ReveivedReset] == FSM::State::__ReveivedReset);
+			break;
+		}
+		case FSM::State::__Paused :
+		{
+			return  (stateConfVector[scvi___Paused] == FSM::State::__Paused);
 			break;
 		}
 		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP :
@@ -1703,17 +1717,12 @@ bool FSM::isStateActive(State state) const noexcept
 		}
 		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement :
 		{
-			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement] >= FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement && stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement] <= FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected);
+			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement] >= FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement && stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement] <= FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring);
 			break;
 		}
 		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle :
 		{
 			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle);
-			break;
-		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring);
 			break;
 		}
 		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent :
@@ -1724,6 +1733,11 @@ bool FSM::isStateActive(State state) const noexcept
 		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected :
 		{
 			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected);
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
+		{
+			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring);
 			break;
 		}
 		case FSM::State::FSM_Festo2__HeightMeasurement_Paused :
@@ -1985,105 +1999,145 @@ void FSM::setEStopActive(bool eStopActive_) noexcept
 {
 	this->eStopActive = eStopActive_;
 }
-sc::integer FSM::getAReferenceValue() const noexcept
+sc::integer FSM::getAReferenceMinCount() const noexcept
 {
-	return AReferenceValue
+	return AReferenceMinCount
 	;
 }
 
-void FSM::setAReferenceValue(sc::integer AReferenceValue_) noexcept
+void FSM::setAReferenceMinCount(sc::integer AReferenceMinCount_) noexcept
 {
-	this->AReferenceValue = AReferenceValue_;
+	this->AReferenceMinCount = AReferenceMinCount_;
 }
-sc::integer FSM::getBReferenceValue() const noexcept
+sc::integer FSM::getAReferenceMaxCount() const noexcept
 {
-	return BReferenceValue
+	return AReferenceMaxCount
 	;
 }
 
-void FSM::setBReferenceValue(sc::integer BReferenceValue_) noexcept
+void FSM::setAReferenceMaxCount(sc::integer AReferenceMaxCount_) noexcept
 {
-	this->BReferenceValue = BReferenceValue_;
+	this->AReferenceMaxCount = AReferenceMaxCount_;
 }
-sc::integer FSM::getCReferenceValue() const noexcept
+sc::integer FSM::getBReferenceMinCount() const noexcept
 {
-	return CReferenceValue
+	return BReferenceMinCount
 	;
 }
 
-void FSM::setCReferenceValue(sc::integer CReferenceValue_) noexcept
+void FSM::setBReferenceMinCount(sc::integer BReferenceMinCount_) noexcept
 {
-	this->CReferenceValue = CReferenceValue_;
+	this->BReferenceMinCount = BReferenceMinCount_;
 }
-sc::integer FSM::getASampleCount() const noexcept
+sc::integer FSM::getBReferenceMaxCount() const noexcept
 {
-	return ASampleCount
+	return BReferenceMaxCount
 	;
 }
 
-void FSM::setASampleCount(sc::integer ASampleCount_) noexcept
+void FSM::setBReferenceMaxCount(sc::integer BReferenceMaxCount_) noexcept
 {
-	this->ASampleCount = ASampleCount_;
+	this->BReferenceMaxCount = BReferenceMaxCount_;
 }
-sc::integer FSM::getBSampleCount() const noexcept
+sc::integer FSM::getCReferenceMinCount() const noexcept
 {
-	return BSampleCount
+	return CReferenceMinCount
 	;
 }
 
-void FSM::setBSampleCount(sc::integer BSampleCount_) noexcept
+void FSM::setCReferenceMinCount(sc::integer CReferenceMinCount_) noexcept
 {
-	this->BSampleCount = BSampleCount_;
+	this->CReferenceMinCount = CReferenceMinCount_;
 }
-sc::integer FSM::getCSampleCount() const noexcept
+sc::integer FSM::getCReferenceMaxCount() const noexcept
 {
-	return CSampleCount
+	return CReferenceMaxCount
 	;
 }
 
-void FSM::setCSampleCount(sc::integer CSampleCount_) noexcept
+void FSM::setCReferenceMaxCount(sc::integer CReferenceMaxCount_) noexcept
 {
-	this->CSampleCount = CSampleCount_;
+	this->CReferenceMaxCount = CReferenceMaxCount_;
 }
-sc::integer FSM::getCurrentValue() const noexcept
+sc::integer FSM::getAReferenceHeight() const noexcept
 {
-	return currentValue
+	return AReferenceHeight
 	;
 }
 
-void FSM::setCurrentValue(sc::integer currentValue_) noexcept
+void FSM::setAReferenceHeight(sc::integer AReferenceHeight_) noexcept
 {
-	this->currentValue = currentValue_;
+	this->AReferenceHeight = AReferenceHeight_;
 }
-sc::integer FSM::getHeightCounter() const noexcept
+sc::integer FSM::getBReferenceHeight() const noexcept
 {
-	return heightCounter
+	return BReferenceHeight
 	;
 }
 
-void FSM::setHeightCounter(sc::integer heightCounter_) noexcept
+void FSM::setBReferenceHeight(sc::integer BReferenceHeight_) noexcept
 {
-	this->heightCounter = heightCounter_;
+	this->BReferenceHeight = BReferenceHeight_;
 }
-sc::integer FSM::getThreshholdValue() const noexcept
+sc::integer FSM::getCReferenceHeight() const noexcept
 {
-	return threshholdValue
+	return CReferenceHeight
 	;
 }
 
-void FSM::setThreshholdValue(sc::integer threshholdValue_) noexcept
+void FSM::setCReferenceHeight(sc::integer CReferenceHeight_) noexcept
 {
-	this->threshholdValue = threshholdValue_;
+	this->CReferenceHeight = CReferenceHeight_;
 }
-sc::integer FSM::getThreshholdCounter() const noexcept
+sc::integer FSM::getHeightThreshhold() const noexcept
 {
-	return threshholdCounter
+	return HeightThreshhold
 	;
 }
 
-void FSM::setThreshholdCounter(sc::integer threshholdCounter_) noexcept
+void FSM::setHeightThreshhold(sc::integer HeightThreshhold_) noexcept
 {
-	this->threshholdCounter = threshholdCounter_;
+	this->HeightThreshhold = HeightThreshhold_;
+}
+sc::integer FSM::getMaxSampleCount() const noexcept
+{
+	return MaxSampleCount
+	;
+}
+
+void FSM::setMaxSampleCount(sc::integer MaxSampleCount_) noexcept
+{
+	this->MaxSampleCount = MaxSampleCount_;
+}
+sc::integer FSM::getFST_1_currentValue() const noexcept
+{
+	return FST_1_currentValue
+	;
+}
+
+void FSM::setFST_1_currentValue(sc::integer FST_1_currentValue_) noexcept
+{
+	this->FST_1_currentValue = FST_1_currentValue_;
+}
+sc::integer FSM::getFST_1_sampleCount() const noexcept
+{
+	return FST_1_sampleCount
+	;
+}
+
+void FSM::setFST_1_sampleCount(sc::integer FST_1_sampleCount_) noexcept
+{
+	this->FST_1_sampleCount = FST_1_sampleCount_;
+}
+sc::integer FSM::getFST_1_generalCount() const noexcept
+{
+	return FST_1_generalCount
+	;
+}
+
+void FSM::setFST_1_generalCount(sc::integer FST_1_generalCount_) noexcept
+{
+	this->FST_1_generalCount = FST_1_generalCount_;
 }
 bool FSM::getFST1RampFull() const noexcept
 {
@@ -2144,6 +2198,16 @@ bool FSM::getFst_2_ready() const noexcept
 void FSM::setFst_2_ready(bool fst_2_ready_) noexcept
 {
 	this->fst_2_ready = fst_2_ready_;
+}
+sc::integer FSM::getFST_2_currentValue() const noexcept
+{
+	return FST_2_currentValue
+	;
+}
+
+void FSM::setFST_2_currentValue(sc::integer FST_2_currentValue_) noexcept
+{
+	this->FST_2_currentValue = FST_2_currentValue_;
 }
 bool FSM::getFST2RampFull() const noexcept
 {
@@ -2217,53 +2281,18 @@ void FSM::setWarning_lamp_active(bool warning_lamp_active_) noexcept
 }
 
 // implementations of all internal functions
-/* Entry action for state 'Measuring'. */
-void FSM::enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring()
+void FSM::enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_()
 {
-	/* Entry action for state 'Measuring'. */
-	motor1Slow++;
-}
-
-/* Entry action for state 'A'. */
-void FSM::enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A()
-{
-	/* Entry action for state 'A'. */
-	setHeightCounter(0);
-}
-
-/* Entry action for state 'B'. */
-void FSM::enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B()
-{
-	/* Entry action for state 'B'. */
-	setHeightCounter(0);
-}
-
-/* Entry action for state 'C'. */
-void FSM::enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C()
-{
-	/* Entry action for state 'C'. */
-	setHeightCounter(0);
-}
-
-/* Entry action for state 'PukPresent'. */
-void FSM::enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent()
-{
-	/* Entry action for state 'PukPresent'. */
-	motor1Forward++;
+	completed = true;
 }
 
 /* Entry action for state 'RampFull'. */
-void FSM::enact_FSM_Festo1__Sorting_RampFull()
+void FSM::enact_FSM_Festo1__Sorting_Sorting_Sorting_RampFull()
 {
 	/* Entry action for state 'RampFull'. */
 	motor1Stop++;
-}
-
-/* Entry action for state 'Idle'. */
-void FSM::enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle()
-{
-	/* Entry action for state 'Idle'. */
-	MOTOR_1_STOP_observable.next();
+	EVALUATE_observable.next();
+	raiseLocal_EVALUATE();
 }
 
 /* Entry action for state 'Forward'. */
@@ -2351,15 +2380,8 @@ void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Con
 	LR1_ON_observable.next();
 }
 
-/* Entry action for state 'CreatingDistance'. */
-void FSM::enact_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance()
-{
-	/* Entry action for state 'CreatingDistance'. */
-	motor1Forward--;
-}
-
 /* Entry action for state 'PukPresent'. */
-void FSM::enact_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent()
+void FSM::enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent()
 {
 	/* Entry action for state 'PukPresent'. */
 	motor2Forward++;
@@ -2369,14 +2391,7 @@ void FSM::enact_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent()
 void FSM::enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring()
 {
 	/* Entry action for state 'Measuring'. */
-	motor2Slow++;
-}
-
-/* Entry action for state 'PukPresent'. */
-void FSM::enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent()
-{
-	/* Entry action for state 'PukPresent'. */
-	motor2Forward++;
+	motor1Slow++;
 }
 
 /* Entry action for state 'RampFull'. */
@@ -2384,6 +2399,8 @@ void FSM::enact_FSM_Festo2__Sorting_RampFull()
 {
 	/* Entry action for state 'RampFull'. */
 	motor2Stop++;
+	EVALUATE_observable.next();
+	raiseLocal_EVALUATE();
 }
 
 /* Entry action for state 'Transfer'. */
@@ -2391,6 +2408,8 @@ void FSM::enact_FSM_Festo2__Egress_Egress_Egress_Transfer()
 {
 	/* Entry action for state 'Transfer'. */
 	motor2Stop++;
+	EVALUATE_observable.next();
+	raiseLocal_EVALUATE();
 }
 
 /* Entry action for state 'Idle'. */
@@ -2477,20 +2496,14 @@ void FSM::enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Co
 	LR2_ON_observable.next();
 }
 
-/* Exit action for state 'Measuring'. */
-void FSM::exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring()
-{
-	/* Exit action for state 'Measuring'. */
-	motor1Slow--;
-	motor1Forward--;
-}
-
 /* Exit action for state 'RampFull'. */
-void FSM::exact_FSM_Festo1__Sorting_RampFull()
+void FSM::exact_FSM_Festo1__Sorting_Sorting_Sorting_RampFull()
 {
 	/* Exit action for state 'RampFull'. */
 	motor1Stop--;
 	setFST1RampFull(false);
+	EVALUATE_observable.next();
+	raiseLocal_EVALUATE();
 }
 
 /* Exit action for state 'ServiceMode'. */
@@ -2511,6 +2524,8 @@ void FSM::exact___EStopCleared()
 	setMotor2Stop(0);
 	setMotor2Slow(0);
 	setMotor2Forward(0);
+	EVALUATE_observable.next();
+	raiseLocal_EVALUATE();
 }
 
 /* Exit action for state 'Idle'. */
@@ -2521,10 +2536,10 @@ void FSM::exact_FSM_Festo2__Ingress_Ingress_Ingress_Idle()
 	raiseLocal_FST_2_YELLOW_LAMP_ON();
 }
 
-/* Exit action for state 'CreatingDistance'. */
-void FSM::exact_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance()
+/* Exit action for state 'PukPresent'. */
+void FSM::exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent()
 {
-	/* Exit action for state 'CreatingDistance'. */
+	/* Exit action for state 'PukPresent'. */
 	motor2Forward--;
 }
 
@@ -2532,14 +2547,7 @@ void FSM::exact_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance()
 void FSM::exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring()
 {
 	/* Exit action for state 'Measuring'. */
-	motor2Slow--;
-}
-
-/* Exit action for state 'PukPresent'. */
-void FSM::exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent()
-{
-	/* Exit action for state 'PukPresent'. */
-	motor2Forward--;
+	motor1Slow--;
 }
 
 /* Exit action for state 'RampFull'. */
@@ -2548,6 +2556,8 @@ void FSM::exact_FSM_Festo2__Sorting_RampFull()
 	/* Exit action for state 'RampFull'. */
 	motor2Stop--;
 	setFST2RampFull(false);
+	EVALUATE_observable.next();
+	raiseLocal_EVALUATE();
 }
 
 /* Exit action for state 'Transfer'. */
@@ -2637,25 +2647,14 @@ void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_default()
 void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_default()
 {
 	/* 'default' enter sequence for state Measuring */
-	enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 	enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_default();
 	historyVector[1] = stateConfVector[1];
-}
-
-/* 'default' enter sequence for state 0 */
-void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0_default()
-{
-	/* 'default' enter sequence for state 0 */
-	stateConfVector[1] = FSM::State::_0;
-	stateConfVectorPosition = 1;
-	historyVector[2] = stateConfVector[1];
 }
 
 /* 'default' enter sequence for state A */
 void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_default()
 {
 	/* 'default' enter sequence for state A */
-	enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
 	stateConfVector[1] = FSM::State::A;
 	stateConfVectorPosition = 1;
 	historyVector[2] = stateConfVector[1];
@@ -2665,7 +2664,6 @@ void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heigh
 void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_default()
 {
 	/* 'default' enter sequence for state B */
-	enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
 	stateConfVector[1] = FSM::State::B;
 	stateConfVectorPosition = 1;
 	historyVector[2] = stateConfVector[1];
@@ -2675,7 +2673,6 @@ void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heigh
 void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_default()
 {
 	/* 'default' enter sequence for state C */
-	enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
 	stateConfVector[1] = FSM::State::C;
 	stateConfVectorPosition = 1;
 	historyVector[2] = stateConfVector[1];
@@ -2703,6 +2700,7 @@ void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heigh
 void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__default()
 {
 	/* Default enter sequence for final state */
+	enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_();
 	stateConfVector[1] = FSM::State::_final_;
 	stateConfVectorPosition = 1;
 }
@@ -2711,7 +2709,6 @@ void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heigh
 void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_default()
 {
 	/* 'default' enter sequence for state PukPresent */
-	enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent();
 	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent;
 	stateConfVectorPosition = 1;
 	historyVector[1] = stateConfVector[1];
@@ -2794,12 +2791,13 @@ void FSM::enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_default()
 }
 
 /* 'default' enter sequence for state RampFull */
-void FSM::enseq_FSM_Festo1__Sorting_RampFull_default()
+void FSM::enseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull_default()
 {
 	/* 'default' enter sequence for state RampFull */
-	enact_FSM_Festo1__Sorting_RampFull();
-	stateConfVector[2] = FSM::State::FSM_Festo1__Sorting_RampFull;
+	enact_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
+	stateConfVector[2] = FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull;
 	stateConfVectorPosition = 2;
+	historyVector[3] = stateConfVector[2];
 }
 
 /* 'default' enter sequence for state Paused */
@@ -2878,15 +2876,6 @@ void FSM::enseq_FSM_Festo1__Egress_Egress_Egress_Waiting_default()
 	historyVector[4] = stateConfVector[3];
 }
 
-/* 'default' enter sequence for state PukinLBE1 */
-void FSM::enseq_FSM_Festo1__Egress_Egress_Egress_PukinLBE1_default()
-{
-	/* 'default' enter sequence for state PukinLBE1 */
-	stateConfVector[3] = FSM::State::FSM_Festo1__Egress_Egress_Egress_PukinLBE1;
-	stateConfVectorPosition = 3;
-	historyVector[4] = stateConfVector[3];
-}
-
 /* 'default' enter sequence for state Paused */
 void FSM::enseq_FSM_Festo1__Egress_Paused_default()
 {
@@ -2916,15 +2905,6 @@ void FSM::enseq_FSM_QualityGate__Motor_SystemMotor_default()
 {
 	/* 'default' enter sequence for state SystemMotor */
 	enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_default();
-}
-
-/* 'default' enter sequence for state Idle */
-void FSM::enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle_default()
-{
-	/* 'default' enter sequence for state Idle */
-	enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle();
-	stateConfVector[4] = FSM::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle;
-	stateConfVectorPosition = 4;
 }
 
 /* 'default' enter sequence for state Forward */
@@ -3016,6 +2996,14 @@ void FSM::enseq___ReveivedReset_default()
 {
 	/* 'default' enter sequence for state ReveivedReset */
 	stateConfVector[5] = FSM::State::__ReveivedReset;
+	stateConfVectorPosition = 5;
+}
+
+/* 'default' enter sequence for state Paused */
+void FSM::enseq___Paused_default()
+{
+	/* 'default' enter sequence for state Paused */
+	stateConfVector[5] = FSM::State::__Paused;
 	stateConfVectorPosition = 5;
 }
 
@@ -3127,7 +3115,6 @@ void FSM::enseq_FSM_Festo2__Ingress_Ingress_Ingress_Idle_default()
 void FSM::enseq_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance_default()
 {
 	/* 'default' enter sequence for state CreatingDistance */
-	enact_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance();
 	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance;
 	stateConfVectorPosition = 9;
 	historyVector[5] = stateConfVector[9];
@@ -3137,7 +3124,6 @@ void FSM::enseq_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance_default()
 void FSM::enseq_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent_default()
 {
 	/* 'default' enter sequence for state PukPresent */
-	enact_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent();
 	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_Ingress_Ingress_PukPresent;
 	stateConfVectorPosition = 9;
 	historyVector[5] = stateConfVector[9];
@@ -3201,16 +3187,6 @@ void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasuremen
 	historyVector[6] = stateConfVector[10];
 }
 
-/* 'default' enter sequence for state Measuring */
-void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default()
-{
-	/* 'default' enter sequence for state Measuring */
-	enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring;
-	stateConfVectorPosition = 10;
-	historyVector[6] = stateConfVector[10];
-}
-
 /* 'default' enter sequence for state PukPresent */
 void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_default()
 {
@@ -3226,6 +3202,16 @@ void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasuremen
 {
 	/* 'default' enter sequence for state PukExpected */
 	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected;
+	stateConfVectorPosition = 10;
+	historyVector[6] = stateConfVector[10];
+}
+
+/* 'default' enter sequence for state Measuring */
+void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default()
+{
+	/* 'default' enter sequence for state Measuring */
+	enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring;
 	stateConfVectorPosition = 10;
 	historyVector[6] = stateConfVector[10];
 }
@@ -3606,52 +3592,39 @@ void FSM::dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s()
 			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_default();
 			break;
 		}
-		case FSM::State::_0 :
-		{
-			/* enterSequence with history in child Measuring for leaf 0 */
-			enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
-			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
-			break;
-		}
 		case FSM::State::A :
 		{
 			/* enterSequence with history in child Measuring for leaf A */
-			enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
 			break;
 		}
 		case FSM::State::B :
 		{
 			/* enterSequence with history in child Measuring for leaf B */
-			enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
 			break;
 		}
 		case FSM::State::C :
 		{
 			/* enterSequence with history in child Measuring for leaf C */
-			enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
 			break;
 		}
 		case FSM::State::Error :
 		{
 			/* enterSequence with history in child Measuring for leaf Error */
-			enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
 			break;
 		}
 		case FSM::State::Evaluate :
 		{
 			/* enterSequence with history in child Measuring for leaf Evaluate */
-			enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
 			break;
 		}
 		case FSM::State::_final_ :
 		{
 			/* enterSequence with history in child Measuring for leaf null */
-			enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
 			break;
 		}
@@ -3687,12 +3660,6 @@ void FSM::dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Hei
 	/* Handle deep history entry of HeightFSM */
 	switch(historyVector[ 2 ])
 	{
-		case FSM::State::_0 :
-		{
-			/* enterSequence with history in child 0 for leaf 0 */
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0_default();
-			break;
-		}
 		case FSM::State::A :
 		{
 			/* enterSequence with history in child A for leaf A */
@@ -3770,6 +3737,11 @@ void FSM::shenseq_FSM_Festo1__Sorting_Sorting_Sorting()
 			enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_default();
 			break;
 		}
+		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull :
+		{
+			enseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull_default();
+			break;
+		}
 		default:
 			/* do nothing */
 			break;
@@ -3820,11 +3792,6 @@ void FSM::shenseq_FSM_Festo1__Egress_Egress_Egress()
 		case FSM::State::FSM_Festo1__Egress_Egress_Egress_Waiting :
 		{
 			enseq_FSM_Festo1__Egress_Egress_Egress_Waiting_default();
-			break;
-		}
-		case FSM::State::FSM_Festo1__Egress_Egress_Egress_PukinLBE1 :
-		{
-			enseq_FSM_Festo1__Egress_Egress_Egress_PukinLBE1_default();
 			break;
 		}
 		default:
@@ -3967,11 +3934,6 @@ void FSM::shenseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurem
 			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_default();
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
-		{
-			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default();
-			break;
-		}
 		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent :
 		{
 			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_default();
@@ -3980,6 +3942,11 @@ void FSM::shenseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurem
 		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected :
 		{
 			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_default();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
+		{
+			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default();
 			break;
 		}
 		default:
@@ -4219,15 +4186,6 @@ void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring()
 	exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
 	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement;
 	stateConfVectorPosition = 1;
-	exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
-}
-
-/* Default exit sequence for state 0 */
-void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0()
-{
-	/* Default exit sequence for state 0 */
-	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring;
-	stateConfVectorPosition = 1;
 }
 
 /* Default exit sequence for state A */
@@ -4360,12 +4318,12 @@ void FSM::exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected()
 }
 
 /* Default exit sequence for state RampFull */
-void FSM::exseq_FSM_Festo1__Sorting_RampFull()
+void FSM::exseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull()
 {
 	/* Default exit sequence for state RampFull */
-	stateConfVector[2] = FSM::State::NO_STATE;
+	stateConfVector[2] = FSM::State::FSM_Festo1__Sorting_Sorting;
 	stateConfVectorPosition = 2;
-	exact_FSM_Festo1__Sorting_RampFull();
+	exact_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
 }
 
 /* Default exit sequence for state Paused */
@@ -4441,14 +4399,6 @@ void FSM::exseq_FSM_Festo1__Egress_Egress_Egress_Waiting()
 	stateConfVectorPosition = 3;
 }
 
-/* Default exit sequence for state PukinLBE1 */
-void FSM::exseq_FSM_Festo1__Egress_Egress_Egress_PukinLBE1()
-{
-	/* Default exit sequence for state PukinLBE1 */
-	stateConfVector[3] = FSM::State::FSM_Festo1__Egress_Egress;
-	stateConfVectorPosition = 3;
-}
-
 /* Default exit sequence for state Paused */
 void FSM::exseq_FSM_Festo1__Egress_Paused()
 {
@@ -4479,14 +4429,6 @@ void FSM::exseq_FSM_QualityGate__Motor_SystemMotor()
 	/* Default exit sequence for state SystemMotor */
 	exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor();
 	stateConfVector[4] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 4;
-}
-
-/* Default exit sequence for state Idle */
-void FSM::exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle()
-{
-	/* Default exit sequence for state Idle */
-	stateConfVector[4] = FSM::State::FSM_QualityGate__Motor_SystemMotor;
 	stateConfVectorPosition = 4;
 }
 
@@ -4580,6 +4522,14 @@ void FSM::exseq___ReveivedReset()
 	stateConfVectorPosition = 5;
 }
 
+/* Default exit sequence for state Paused */
+void FSM::exseq___Paused()
+{
+	/* Default exit sequence for state Paused */
+	stateConfVector[5] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 5;
+}
+
 /* Default exit sequence for state Off */
 void FSM::exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off()
 {
@@ -4668,7 +4618,6 @@ void FSM::exseq_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance()
 	/* Default exit sequence for state CreatingDistance */
 	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_Ingress;
 	stateConfVectorPosition = 9;
-	exact_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance();
 }
 
 /* Default exit sequence for state PukPresent */
@@ -4736,15 +4685,6 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasuremen
 	stateConfVectorPosition = 10;
 }
 
-/* Default exit sequence for state Measuring */
-void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring()
-{
-	/* Default exit sequence for state Measuring */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement;
-	stateConfVectorPosition = 10;
-	exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
-}
-
 /* Default exit sequence for state PukPresent */
 void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent()
 {
@@ -4760,6 +4700,15 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasuremen
 	/* Default exit sequence for state PukExpected */
 	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement;
 	stateConfVectorPosition = 10;
+}
+
+/* Default exit sequence for state Measuring */
+void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring()
+{
+	/* Default exit sequence for state Measuring */
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement;
+	stateConfVectorPosition = 10;
+	exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
 }
 
 /* Default exit sequence for state Paused */
@@ -5137,46 +5086,34 @@ void FSM::exseq_FSM_Festo1_HeightMeasurement()
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
-		case FSM::State::_0 :
-		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
-			break;
-		}
 		case FSM::State::A :
 		{
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
 		case FSM::State::B :
 		{
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
 		case FSM::State::C :
 		{
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
 		case FSM::State::Error :
 		{
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
 		case FSM::State::Evaluate :
 		{
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
 		case FSM::State::_final_ :
 		{
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
 		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent :
@@ -5227,46 +5164,34 @@ void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s()
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
-		case FSM::State::_0 :
-		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
-			break;
-		}
 		case FSM::State::A :
 		{
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
 		case FSM::State::B :
 		{
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
 		case FSM::State::C :
 		{
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
 		case FSM::State::Error :
 		{
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
 		case FSM::State::Evaluate :
 		{
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
 		case FSM::State::_final_ :
 		{
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_();
-			exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
 			break;
 		}
 		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent :
@@ -5292,11 +5217,6 @@ void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heigh
 	/* Handle exit of all possible states (of FSM.FSM_Festo1_HeightMeasurement.HeightMeasurement.s.Measuring.HeightFSM) at position 1... */
 	switch(stateConfVector[ 1 ])
 	{
-		case FSM::State::_0 :
-		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0();
-			break;
-		}
 		case FSM::State::A :
 		{
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
@@ -5365,9 +5285,9 @@ void FSM::exseq_FSM_Festo1__Sorting()
 			exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected();
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_RampFull :
+		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull :
 		{
-			exseq_FSM_Festo1__Sorting_RampFull();
+			exseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
 			break;
 		}
 		case FSM::State::FSM_Festo1__Sorting_Paused :
@@ -5418,6 +5338,11 @@ void FSM::exseq_FSM_Festo1__Sorting_Sorting_Sorting()
 			exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected();
 			break;
 		}
+		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull :
+		{
+			exseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
+			break;
+		}
 		default:
 			/* do nothing */
 			break;
@@ -5459,11 +5384,6 @@ void FSM::exseq_FSM_Festo1__Egress()
 		case FSM::State::FSM_Festo1__Egress_Egress_Egress_Waiting :
 		{
 			exseq_FSM_Festo1__Egress_Egress_Egress_Waiting();
-			break;
-		}
-		case FSM::State::FSM_Festo1__Egress_Egress_Egress_PukinLBE1 :
-		{
-			exseq_FSM_Festo1__Egress_Egress_Egress_PukinLBE1();
 			break;
 		}
 		case FSM::State::FSM_Festo1__Egress_Paused :
@@ -5519,11 +5439,6 @@ void FSM::exseq_FSM_Festo1__Egress_Egress_Egress()
 			exseq_FSM_Festo1__Egress_Egress_Egress_Waiting();
 			break;
 		}
-		case FSM::State::FSM_Festo1__Egress_Egress_Egress_PukinLBE1 :
-		{
-			exseq_FSM_Festo1__Egress_Egress_Egress_PukinLBE1();
-			break;
-		}
 		default:
 			/* do nothing */
 			break;
@@ -5540,11 +5455,6 @@ void FSM::exseq_FSM_QualityGate__Motor()
 		case FSM::State::FSM_QualityGate__Motor_SystemMotor :
 		{
 			exseq_FSM_QualityGate__Motor_SystemMotor();
-			break;
-		}
-		case FSM::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle :
-		{
-			exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle();
 			break;
 		}
 		case FSM::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward :
@@ -5575,11 +5485,6 @@ void FSM::exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor()
 	/* Handle exit of all possible states (of FSM.FSM_QualityGate__Motor.SystemMotor.FSM_SystemMotor) at position 4... */
 	switch(stateConfVector[ 4 ])
 	{
-		case FSM::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle :
-		{
-			exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle();
-			break;
-		}
 		case FSM::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward :
 		{
 			exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
@@ -5646,6 +5551,11 @@ void FSM::exseq__()
 		case FSM::State::__ReveivedReset :
 		{
 			exseq___ReveivedReset();
+			break;
+		}
+		case FSM::State::__Paused :
+		{
+			exseq___Paused();
 			break;
 		}
 		default:
@@ -5834,11 +5744,6 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement()
 			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle();
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
-		{
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
-			break;
-		}
 		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent :
 		{
 			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
@@ -5847,6 +5752,11 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement()
 		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected :
 		{
 			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
 			break;
 		}
 		case FSM::State::FSM_Festo2__HeightMeasurement_Paused :
@@ -5882,11 +5792,6 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasuremen
 			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle();
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
-		{
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
-			break;
-		}
 		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent :
 		{
 			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
@@ -5895,6 +5800,11 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasuremen
 		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected :
 		{
 			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
 			break;
 		}
 		default:
@@ -6275,7 +6185,7 @@ void FSM::react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s__entry_Default(
 void FSM::react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__entry_Default()
 {
 	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0_default();
+	enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_default();
 }
 
 /* Default react sequence for deep history entry History */
@@ -6359,7 +6269,7 @@ void FSM::react_FSM_Festo1__Egress__entry_Default()
 void FSM::react_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor__entry_Default()
 {
 	/* Default react sequence for initial entry  */
-	enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
+	enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
 }
 
 /* Default react sequence for initial entry  */
@@ -6587,22 +6497,25 @@ sc::integer FSM::react(const sc::integer transitioned_before) {
 sc::integer FSM::FSM_Festo1_Ingress_Ingress_react(const sc::integer transitioned_before) {
 	/* The reactions of state Ingress. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (0))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_OUT_raised)
+		if ((transitioned_after) < (0))
 		{ 
-			exseq_FSM_Festo1_Ingress_Ingress();
-			enseq_FSM_Festo1_Ingress_Paused_default();
-			transitioned_after = 0;
-		}  else
-		{
-			if (local_ESTOP_RECEIVED_raised)
+			if (local_SYSTEM_OPERATIONAL_OUT_raised)
 			{ 
 				exseq_FSM_Festo1_Ingress_Ingress();
-				enseq_FSM_Festo1_Ingress_E_STOP_default();
+				enseq_FSM_Festo1_Ingress_Paused_default();
 				transitioned_after = 0;
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo1_Ingress_Ingress();
+					enseq_FSM_Festo1_Ingress_E_STOP_default();
+					transitioned_after = 0;
+				} 
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -6610,88 +6523,109 @@ sc::integer FSM::FSM_Festo1_Ingress_Ingress_react(const sc::integer transitioned
 sc::integer FSM::FSM_Festo1_Ingress_Ingress_Ingress_Idle_react(const sc::integer transitioned_before) {
 	/* The reactions of state Idle. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (0))
+	if (!(doCompletion))
 	{ 
-		if (LBF_1_INTERRUPTED_raised)
+		if ((transitioned_after) < (0))
 		{ 
-			exseq_FSM_Festo1_Ingress_Ingress_Ingress_Idle();
-			FST_1_INGRESS_IN_observable.next();
-			raiseLocal_FST_1_INGRESS_IN();
-			motor1Forward++;
-			enseq_FSM_Festo1_Ingress_Ingress_Ingress_PukPresent_default();
-			FSM_Festo1_Ingress_Ingress_react(0);
-			transitioned_after = 0;
+			if (LBF_1_INTERRUPTED_raised)
+			{ 
+				exseq_FSM_Festo1_Ingress_Ingress_Ingress_Idle();
+				motor1Forward++;
+				FST_1_INGRESS_IN_observable.next();
+				raiseLocal_FST_1_INGRESS_IN();
+				enseq_FSM_Festo1_Ingress_Ingress_Ingress_PukPresent_default();
+				FSM_Festo1_Ingress_Ingress_react(0);
+				transitioned_after = 0;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_Ingress_Ingress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_Ingress_Ingress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1_Ingress_Ingress_Ingress_PukPresent_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukPresent. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (0))
+	if (!(doCompletion))
 	{ 
-		if (LBF_1_OPEN_raised)
+		if ((transitioned_after) < (0))
 		{ 
-			exseq_FSM_Festo1_Ingress_Ingress_Ingress_PukPresent();
-			FST_1_POSITION_INGRESS_NEW_PUK_observable.next();
-			enseq_FSM_Festo1_Ingress_Ingress_Ingress_CreatingDistance_default();
-			FSM_Festo1_Ingress_Ingress_react(0);
-			transitioned_after = 0;
+			if (LBF_1_OPEN_raised)
+			{ 
+				exseq_FSM_Festo1_Ingress_Ingress_Ingress_PukPresent();
+				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_INGRESS_NEW_PUK))
+				;
+				enseq_FSM_Festo1_Ingress_Ingress_Ingress_CreatingDistance_default();
+				FSM_Festo1_Ingress_Ingress_react(0);
+				transitioned_after = 0;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_Ingress_Ingress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_Ingress_Ingress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1_Ingress_Ingress_Ingress_CreatingDistance_react(const sc::integer transitioned_before) {
 	/* The reactions of state CreatingDistance. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (0))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_1_POSITION_INGRESS_DISTANCE_VALID_raised)
+		if ((transitioned_after) < (0))
 		{ 
-			exseq_FSM_Festo1_Ingress_Ingress_Ingress_CreatingDistance();
-			FST_1_PUK_ENTRY_HeightMeasurement_observable.next();
-			raiseLocal_FST_1_PUK_ENTRY_HeightMeasurement();
-			FST_1_INGRESS_OUT_observable.next();
-			raiseLocal_FST_1_INGRESS_OUT();
-			motor1Forward--;
-			enseq_FSM_Festo1_Ingress_Ingress_Ingress_Idle_default();
-			FSM_Festo1_Ingress_Ingress_react(0);
-			transitioned_after = 0;
+			if (FST_1_POSITION_INGRESS_DISTANCE_VALID_raised)
+			{ 
+				exseq_FSM_Festo1_Ingress_Ingress_Ingress_CreatingDistance();
+				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_PUK_ENTRY_HeightMeasurement))
+				;
+				motor1Forward--;
+				FST_1_INGRESS_OUT_observable.next();
+				raiseLocal_FST_1_INGRESS_OUT();
+				enseq_FSM_Festo1_Ingress_Ingress_Ingress_Idle_default();
+				FSM_Festo1_Ingress_Ingress_react(0);
+				transitioned_after = 0;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_Ingress_Ingress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_Ingress_Ingress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1_Ingress_Paused_react(const sc::integer transitioned_before) {
 	/* The reactions of state Paused. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (0))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (0))
 		{ 
-			exseq_FSM_Festo1_Ingress_Paused();
-			react_FSM_Festo1_Ingress_Ingress_Ingress_History();
-			transitioned_after = 0;
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo1_Ingress_Paused();
+				react_FSM_Festo1_Ingress_Ingress_Ingress_History();
+				transitioned_after = 0;
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo1_Ingress_Paused();
+					enseq_FSM_Festo1_Ingress_E_STOP_default();
+					transitioned_after = 0;
+				} 
+			}
 		} 
 	} 
 	return transitioned_after;
@@ -6700,13 +6634,16 @@ sc::integer FSM::FSM_Festo1_Ingress_Paused_react(const sc::integer transitioned_
 sc::integer FSM::FSM_Festo1_Ingress_E_STOP_react(const sc::integer transitioned_before) {
 	/* The reactions of state E_STOP. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (0))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_CLEARED_raised)
+		if ((transitioned_after) < (0))
 		{ 
-			exseq_FSM_Festo1_Ingress_E_STOP();
-			enseq_FSM_Festo1_Ingress_Start_default();
-			transitioned_after = 0;
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_FSM_Festo1_Ingress_E_STOP();
+				enseq_FSM_Festo1_Ingress_Start_default();
+				transitioned_after = 0;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -6715,13 +6652,16 @@ sc::integer FSM::FSM_Festo1_Ingress_E_STOP_react(const sc::integer transitioned_
 sc::integer FSM::FSM_Festo1_Ingress_Start_react(const sc::integer transitioned_before) {
 	/* The reactions of state Start. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (0))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (0))
 		{ 
-			exseq_FSM_Festo1_Ingress_Start();
-			enseq_FSM_Festo1_Ingress_Ingress_default();
-			transitioned_after = 0;
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo1_Ingress_Start();
+				enseq_FSM_Festo1_Ingress_Ingress_default();
+				transitioned_after = 0;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -6730,22 +6670,25 @@ sc::integer FSM::FSM_Festo1_Ingress_Start_react(const sc::integer transitioned_b
 sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_react(const sc::integer transitioned_before) {
 	/* The reactions of state HeightMeasurement. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_OUT_raised)
+		if ((transitioned_after) < (1))
 		{ 
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement();
-			enseq_FSM_Festo1_HeightMeasurement_Paused_default();
-			transitioned_after = 1;
-		}  else
-		{
-			if (local_ESTOP_RECEIVED_raised)
+			if (local_SYSTEM_OPERATIONAL_OUT_raised)
 			{ 
 				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement();
-				enseq_FSM_Festo1_HeightMeasurement_E_STOP_default();
+				enseq_FSM_Festo1_HeightMeasurement_Paused_default();
 				transitioned_after = 1;
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement();
+					enseq_FSM_Festo1_HeightMeasurement_E_STOP_default();
+					transitioned_after = 1;
+				} 
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -6753,111 +6696,76 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_react(const sc::
 sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_react(const sc::integer transitioned_before) {
 	/* The reactions of state Idle. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_1_PUK_ENTRY_HeightMeasurement_raised)
+		if ((transitioned_after) < (1))
 		{ 
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle();
-			FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_default();
-			FSM_Festo1_HeightMeasurement_HeightMeasurement_react(1);
-			transitioned_after = 1;
+			if (FST_1_PUK_ENTRY_HeightMeasurement_raised)
+			{ 
+				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle();
+				motor1Forward++;
+				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK))
+				;
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_default();
+				FSM_Festo1_HeightMeasurement_HeightMeasurement_react(1);
+				transitioned_after = 1;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(const sc::integer transitioned_before) {
 	/* The reactions of state Measuring. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
+	if ((isStateActive(FSM::State::_final_)) && (doCompletion))
 	{ 
-		if (BGS_1_INTERRUPTED_raised)
-		{ 
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_default();
-			FSM_Festo1_HeightMeasurement_HeightMeasurement_react(1);
-			transitioned_after = 1;
-		}
-	}
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
+		/* Default exit sequence for state Measuring */
+		exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
+		stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement;
+		stateConfVectorPosition = 1;
+		/* 'default' enter sequence for state Idle */
+		stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle;
+		stateConfVectorPosition = 1;
+		historyVector[1] = stateConfVector[1];
+		FSM_Festo1_HeightMeasurement_HeightMeasurement_react(1);
+	}  else
 	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_react(transitioned_before);
-	}
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0_react(const sc::integer transitioned_before) {
-	/* The reactions of state 0. */
-	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
-	{ 
-		if ((((AReferenceValue + threshholdValue)) > (currentValue)) && (((AReferenceValue - threshholdValue)) < (currentValue)))
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
 		{ 
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0();
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_default();
-			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
-			transitioned_after = 1;
-		}  else
-		{
-			if ((((AReferenceValue + threshholdValue)) < (currentValue)) && (((AReferenceValue - threshholdValue)) > (currentValue)))
-			{ 
-				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0();
-				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
-				FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
-				transitioned_after = 1;
-			}  else
-			{
-				if (HS_1_SAMPLE_raised)
-				{
-					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0();
-					heightCounter++;
-					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0_default();
-					FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
-					transitioned_after = 1;
-				}
-			}
-		}
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_react(transitioned_before);
+		} 
 	}
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
-	} 
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_react(const sc::integer transitioned_before) {
 	/* The reactions of state A. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
+	if (!(doCompletion))
 	{ 
-		if ((((((ASampleCount + threshholdCounter)) > (heightCounter)) && (((ASampleCount - threshholdCounter)) < (heightCounter)))) && (((((BReferenceValue + threshholdValue)) > (currentValue)) && (((BReferenceValue - threshholdValue)) < (currentValue)))))
+		if ((transitioned_after) < (1))
 		{ 
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_default();
-			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
-			transitioned_after = 1;
-		}  else
-		{
-			if ((((BReferenceValue + threshholdValue)) < (currentValue)) && (((BReferenceValue - threshholdValue)) > (currentValue)))
+			if ((((AReferenceMinCount) <= (FST_1_sampleCount)) && (((BReferenceHeight + HeightThreshhold)) > (FST_1_currentValue))) && (((BReferenceHeight - HeightThreshhold)) < (FST_1_currentValue)))
 			{ 
 				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
-				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
+				setFST_1_sampleCount(0);
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_default();
 				FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
 				transitioned_after = 1;
 			}  else
 			{
-				if ((heightCounter) > ((ASampleCount + threshholdCounter)))
+				if ((((AReferenceHeight + HeightThreshhold)) < (FST_1_currentValue)) || ((FST_1_currentValue) < ((AReferenceHeight - HeightThreshhold))))
 				{ 
 					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
 					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
@@ -6865,90 +6773,135 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 					transitioned_after = 1;
 				}  else
 				{
-					if (HS_1_SAMPLE_raised)
-					{
+					if ((AReferenceMaxCount) < (FST_1_sampleCount))
+					{ 
 						exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
-						heightCounter++;
-						enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_default();
+						enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
 						FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
 						transitioned_after = 1;
+					}  else
+					{
+						if (HS_1_SAMPLE_raised)
+						{ 
+							exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
+							FST_1_sampleCount++;
+							FST_1_generalCount++;
+							EVALUATE_observable.next();
+							raiseLocal_EVALUATE();
+							enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_default();
+							FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+							transitioned_after = 1;
+						}  else
+						{
+							if ((FST_1_generalCount) > (MaxSampleCount))
+							{ 
+								exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
+								enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
+								FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+								transitioned_after = 1;
+							} 
+						}
 					}
 				}
 			}
-		}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
+		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_react(const sc::integer transitioned_before) {
 	/* The reactions of state B. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
+	if (!(doCompletion))
 	{ 
-		if ((((((BSampleCount + threshholdCounter)) > (heightCounter)) && (((BSampleCount - threshholdCounter)) < (heightCounter)))) && (((((CReferenceValue + threshholdValue)) > (currentValue)) && (((CReferenceValue - threshholdValue)) < (currentValue)))))
+		if ((transitioned_after) < (1))
 		{ 
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_default();
-			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
-			transitioned_after = 1;
-		}  else
-		{
-			if ((heightCounter) > ((BSampleCount + threshholdCounter)))
+			if ((((BReferenceMinCount) <= (FST_1_sampleCount)) && (((CReferenceHeight + HeightThreshhold)) > (FST_1_currentValue))) && (((CReferenceHeight - HeightThreshhold)) < (FST_1_currentValue)))
 			{ 
 				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
-				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
+				setFST_1_sampleCount(0);
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_default();
 				FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
 				transitioned_after = 1;
 			}  else
 			{
-				if (HS_1_SAMPLE_raised)
-				{
+				if ((((BReferenceHeight + HeightThreshhold)) < (FST_1_currentValue)) || ((FST_1_currentValue) < ((BReferenceHeight - HeightThreshhold))))
+				{ 
 					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
-					heightCounter++;
-					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_default();
+					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
 					FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
 					transitioned_after = 1;
+				}  else
+				{
+					if (HS_1_SAMPLE_raised)
+					{ 
+						exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
+						FST_1_sampleCount++;
+						FST_1_generalCount++;
+						EVALUATE_observable.next();
+						raiseLocal_EVALUATE();
+						enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_default();
+						FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+						transitioned_after = 1;
+					}  else
+					{
+						if ((BReferenceMaxCount) < (FST_1_sampleCount))
+						{ 
+							exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
+							enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
+							FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+							transitioned_after = 1;
+						}  else
+						{
+							if ((FST_1_generalCount) > (MaxSampleCount))
+							{ 
+								exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
+								enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
+								FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+								transitioned_after = 1;
+							} 
+						}
+					}
 				}
 			}
-		}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
+		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_react(const sc::integer transitioned_before) {
 	/* The reactions of state C. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
+	if (!(doCompletion))
 	{ 
-		if (HS_1_SAMPLING_DONE_raised)
+		if ((transitioned_after) < (1))
 		{ 
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate_default();
-			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
-			transitioned_after = 1;
-		}  else
-		{
-			if ((((CReferenceValue + threshholdValue)) < (currentValue)) && (((CReferenceValue - threshholdValue)) > (currentValue)))
+			if (HS_1_SAMPLING_DONE_raised)
 			{ 
 				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
-				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
+				motor1Slow--;
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate_default();
 				FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
 				transitioned_after = 1;
 			}  else
 			{
-				if ((heightCounter) > ((CSampleCount + threshholdCounter)))
+				if ((((CReferenceHeight + HeightThreshhold)) < (FST_1_currentValue)) || ((FST_1_currentValue) < ((CReferenceHeight - HeightThreshhold))))
 				{ 
 					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
 					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
@@ -6956,91 +6909,123 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 					transitioned_after = 1;
 				}  else
 				{
-					if (HS_1_SAMPLE_raised)
-					{
+					if ((CReferenceMaxCount) < (FST_1_sampleCount))
+					{ 
 						exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
-						heightCounter++;
-						enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_default();
+						enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
 						FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
 						transitioned_after = 1;
+					}  else
+					{
+						if (HS_1_SAMPLE_raised)
+						{ 
+							exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
+							FST_1_sampleCount++;
+							FST_1_generalCount++;
+							EVALUATE_observable.next();
+							raiseLocal_EVALUATE();
+							enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_default();
+							FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+							transitioned_after = 1;
+						}  else
+						{
+							if ((FST_1_generalCount) > (MaxSampleCount))
+							{ 
+								exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
+								enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
+								FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+								transitioned_after = 1;
+							} 
+						}
 					}
 				}
 			}
-		}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
+		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_react(const sc::integer transitioned_before) {
 	/* The reactions of state Error. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
+	if (!(doCompletion))
 	{ 
-		if (HS_1_SAMPLING_DONE_raised)
+		if ((transitioned_after) < (1))
 		{ 
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error();
-			FST_1_PUK_HEIGHT_IS_NOT_VALID_observable.next();
-			FST_1_PUK_ENTRY_SORTING_observable.next();
-			raiseLocal_FST_1_PUK_ENTRY_SORTING();
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__default();
-			transitioned_after = 1;
+			if (HS_1_SAMPLING_DONE_raised)
+			{ 
+				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error();
+				setFST_1_generalCount(0);
+				setFST_1_sampleCount(0);
+				motor1Slow--;
+				motor1Forward--;
+				FST_1_PUK_HEIGHT_IS_NOT_VALID_observable.next();
+				Q12_ON_observable.next();
+				FST_1_PUK_ENTRY_SORTING_observable.next();
+				raiseLocal_FST_1_PUK_ENTRY_SORTING();
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__default();
+				transitioned_after = 1;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate_react(const sc::integer transitioned_before) {
 	/* The reactions of state Evaluate. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
+	if (!(doCompletion))
 	{ 
-		if ((heightCounter) > ((CSampleCount + threshholdCounter)))
+		if ((transitioned_after) < (1))
 		{ 
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate();
-			FST_1_PUK_HEIGHT_IS_VALID_observable.next();
-			FST_1_PUK_ENTRY_SORTING_observable.next();
-			raiseLocal_FST_1_PUK_ENTRY_SORTING();
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__default();
-			transitioned_after = 1;
-		}  else
-		{
-			if ((heightCounter) > ((CSampleCount + threshholdCounter)))
-			{
+			if ((CReferenceMinCount) <= (FST_1_sampleCount))
+			{ 
 				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate();
-				FST_1_PUK_HEIGHT_IS_NOT_VALID_observable.next();
+				setFST_1_generalCount(0);
+				setFST_1_sampleCount(0);
+				motor1Forward--;
+				FST_1_PUK_HEIGHT_IS_VALID_observable.next();
+				Q11_ON_observable.next();
+				FST_1_PUK_ENTRY_SORTING_observable.next();
+				raiseLocal_FST_1_PUK_ENTRY_SORTING();
 				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__default();
 				transitioned_after = 1;
 			}  else
 			{
-				if (HS_1_SAMPLE_raised)
-				{
+				if ((CReferenceMinCount) > (FST_1_sampleCount))
+				{ 
 					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate();
-					heightCounter++;
-					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate_default();
-					FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+					setFST_1_generalCount(0);
+					setFST_1_sampleCount(0);
+					motor1Forward--;
+					FST_1_PUK_HEIGHT_IS_NOT_VALID_observable.next();
+					Q12_ON_observable.next();
+					FST_1_PUK_ENTRY_SORTING_observable.next();
+					raiseLocal_FST_1_PUK_ENTRY_SORTING();
+					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__default();
 					transitioned_after = 1;
-				}
+				} 
 			}
-		}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
+		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
@@ -7052,57 +7037,77 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukPresent. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised)
+		if ((transitioned_after) < (1))
 		{ 
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent();
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected_default();
-			FSM_Festo1_HeightMeasurement_HeightMeasurement_react(1);
-			transitioned_after = 1;
+			if (FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised)
+			{ 
+				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent();
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected_default();
+				FSM_Festo1_HeightMeasurement_HeightMeasurement_react(1);
+				transitioned_after = 1;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukExpected. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
+	if (!(doCompletion))
 	{ 
-		if (HS_1_SAMPLE_raised)
+		if ((transitioned_after) < (1))
 		{ 
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected();
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_default();
-			FSM_Festo1_HeightMeasurement_HeightMeasurement_react(1);
-			transitioned_after = 1;
+			if (HS_1_SAMPLE_raised)
+			{ 
+				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected();
+				motor1Slow++;
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_default();
+				FSM_Festo1_HeightMeasurement_HeightMeasurement_react(1);
+				transitioned_after = 1;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1_HeightMeasurement_Paused_react(const sc::integer transitioned_before) {
 	/* The reactions of state Paused. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (1))
 		{ 
-			exseq_FSM_Festo1_HeightMeasurement_Paused();
-			react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_History();
-			transitioned_after = 1;
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo1_HeightMeasurement_Paused();
+				react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_History();
+				transitioned_after = 1;
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo1_HeightMeasurement_Paused();
+					enseq_FSM_Festo1_HeightMeasurement_E_STOP_default();
+					transitioned_after = 1;
+				} 
+			}
 		} 
 	} 
 	return transitioned_after;
@@ -7111,13 +7116,16 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_Paused_react(const sc::integer tra
 sc::integer FSM::FSM_Festo1_HeightMeasurement_E_STOP_react(const sc::integer transitioned_before) {
 	/* The reactions of state E_STOP. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_CLEARED_raised)
+		if ((transitioned_after) < (1))
 		{ 
-			exseq_FSM_Festo1_HeightMeasurement_E_STOP();
-			enseq_FSM_Festo1_HeightMeasurement_Start_default();
-			transitioned_after = 1;
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_FSM_Festo1_HeightMeasurement_E_STOP();
+				enseq_FSM_Festo1_HeightMeasurement_Start_default();
+				transitioned_after = 1;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -7126,13 +7134,16 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_E_STOP_react(const sc::integer tra
 sc::integer FSM::FSM_Festo1_HeightMeasurement_Start_react(const sc::integer transitioned_before) {
 	/* The reactions of state Start. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (1))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (1))
 		{ 
-			exseq_FSM_Festo1_HeightMeasurement_Start();
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_default();
-			transitioned_after = 1;
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo1_HeightMeasurement_Start();
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_default();
+				transitioned_after = 1;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -7141,40 +7152,45 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_Start_react(const sc::integer tran
 sc::integer FSM::FSM_Festo1__Sorting_Sorting_react(const sc::integer transitioned_before) {
 	/* The reactions of state Sorting. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (2))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_OUT_raised)
+		if ((transitioned_after) < (2))
 		{ 
-			exseq_FSM_Festo1__Sorting_Sorting();
-			enseq_FSM_Festo1__Sorting_Paused_default();
-			transitioned_after = 2;
-		}  else
-		{
-			if (LBR_1_INTERRUPTED_raised)
+			if (local_SYSTEM_OPERATIONAL_OUT_raised)
 			{ 
 				exseq_FSM_Festo1__Sorting_Sorting();
-				setFST1RampFull(true);
-				react_FSM_Festo1__Sorting_Sorting_Sorting_History();
+				enseq_FSM_Festo1__Sorting_Paused_default();
 				transitioned_after = 2;
 			}  else
 			{
-				if (LBR_1_OPEN_raised)
+				if (LBR_1_INTERRUPTED_raised)
 				{ 
 					exseq_FSM_Festo1__Sorting_Sorting();
-					setFST1RampFull(false);
+					setFST1RampFull(true);
 					react_FSM_Festo1__Sorting_Sorting_Sorting_History();
 					transitioned_after = 2;
 				}  else
 				{
-					if (local_ESTOP_RECEIVED_raised)
+					if (LBR_1_OPEN_raised)
 					{ 
 						exseq_FSM_Festo1__Sorting_Sorting();
-						enseq_FSM_Festo1__Sorting_E_STOP_default();
+						setFST1RampFull(false);
+						EVALUATE_observable.next();
+						raiseLocal_EVALUATE();
+						react_FSM_Festo1__Sorting_Sorting_Sorting_History();
 						transitioned_after = 2;
+					}  else
+					{
+						if (local_ESTOP_RECEIVED_raised)
+						{ 
+							exseq_FSM_Festo1__Sorting_Sorting();
+							enseq_FSM_Festo1__Sorting_E_STOP_default();
+							transitioned_after = 2;
+						} 
 					}
 				}
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -7182,136 +7198,152 @@ sc::integer FSM::FSM_Festo1__Sorting_Sorting_react(const sc::integer transitione
 sc::integer FSM::FSM_Festo1__Sorting_Sorting_Sorting_Idle_react(const sc::integer transitioned_before) {
 	/* The reactions of state Idle. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (2))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_1_PUK_ENTRY_SORTING_raised)
+		if ((transitioned_after) < (2))
 		{ 
-			exseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle();
-			motor1Forward++;
-			FST_1_POSITION_SORTING_NEW_PUK_observable.next();
-			enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent_default();
-			FSM_Festo1__Sorting_Sorting_react(2);
-			transitioned_after = 2;
+			if (local_FST_1_PUK_ENTRY_SORTING_raised)
+			{ 
+				exseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle();
+				motor1Forward++;
+				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_SORTING_NEW_PUK))
+				;
+				enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent_default();
+				FSM_Festo1__Sorting_Sorting_react(2);
+				transitioned_after = 2;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1__Sorting_Sorting_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1__Sorting_Sorting_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement_react(const sc::integer transitioned_before) {
 	/* The reactions of state MetalMeasurement. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (2))
+	if (!(doCompletion))
 	{ 
-		if (LBM_1_OPEN_raised)
+		if ((transitioned_after) < (2))
 		{ 
-			exseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement();
-			FST_1_PUK_ENTRY_EGRESS_observable.next();
-			raiseLocal_FST_1_PUK_ENTRY_EGRESS();
-			motor1Forward--;
-			enseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle_default();
-			FSM_Festo1__Sorting_Sorting_react(2);
-			transitioned_after = 2;
-		}  else
-		{
-			if ((MS_1_TRUE_raised) && (FST1RampFull))
+			if (LBM_1_OPEN_raised)
 			{ 
-				exseq_FSM_Festo1__Sorting_Sorting();
-				enseq_FSM_Festo1__Sorting_RampFull_default();
+				exseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement();
+				motor1Forward--;
+				FST_1_PUK_ENTRY_EGRESS_observable.next();
+				raiseLocal_FST_1_PUK_ENTRY_EGRESS();
+				enseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle_default();
+				FSM_Festo1__Sorting_Sorting_react(2);
 				transitioned_after = 2;
 			}  else
 			{
-				if ((MS_1_TRUE_raised) && (!(FST1RampFull)))
+				if ((MS_1_TRUE_raised) && (FST1RampFull))
 				{ 
 					exseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement();
-					FST_1_SORTING_MODULE_ACTIVE_observable.next();
-					FST_1_SORTING_MODULE_RESTING_observable.next();
-					enseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle_default();
+					enseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull_default();
 					FSM_Festo1__Sorting_Sorting_react(2);
 					transitioned_after = 2;
+				}  else
+				{
+					if ((MS_1_TRUE_raised) && (!(FST1RampFull)))
+					{ 
+						exseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement();
+						FST_1_SORTING_MODULE_ACTIVE_observable.next();
+						FST_1_SORTING_MODULE_RESTING_observable.next();
+						enseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle_default();
+						FSM_Festo1__Sorting_Sorting_react(2);
+						transitioned_after = 2;
+					} 
 				}
 			}
-		}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1__Sorting_Sorting_react(transitioned_before);
+		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1__Sorting_Sorting_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1__Sorting_Sorting_Sorting_PukPresent_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukPresent. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (2))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_1_POSITION_SORTING_PUK_EXPECTED_raised)
+		if ((transitioned_after) < (2))
 		{ 
-			exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent();
-			enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_default();
-			FSM_Festo1__Sorting_Sorting_react(2);
-			transitioned_after = 2;
+			if (FST_1_POSITION_SORTING_PUK_EXPECTED_raised)
+			{ 
+				exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent();
+				enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_default();
+				FSM_Festo1__Sorting_Sorting_react(2);
+				transitioned_after = 2;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1__Sorting_Sorting_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1__Sorting_Sorting_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukExpected. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (2))
+	if (!(doCompletion))
 	{ 
-		if (LBM_1_INTERRUPTED_raised)
-		{
-			exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected();
-			enseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement_default();
-			FSM_Festo1__Sorting_Sorting_react(2);
-			transitioned_after = 2;
+		if ((transitioned_after) < (2))
+		{ 
+			if (LBM_1_INTERRUPTED_raised)
+			{ 
+				exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected();
+				enseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement_default();
+				FSM_Festo1__Sorting_Sorting_react(2);
+				transitioned_after = 2;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1__Sorting_Sorting_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1__Sorting_Sorting_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo1__Sorting_RampFull_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo1__Sorting_Sorting_Sorting_RampFull_react(const sc::integer transitioned_before) {
 	/* The reactions of state RampFull. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (2))
+	if (!(doCompletion))
 	{ 
-		if (BGR_1_INTERRUPTED_raised)
+		if ((transitioned_after) < (2))
 		{ 
-			exseq_FSM_Festo1__Sorting_RampFull();
-			FST_1_SORTING_MODULE_ACTIVE_observable.next();
-			FST_1_SORTING_MODULE_RESTING_observable.next();
-			enseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle_default();
-			transitioned_after = 2;
-		}  else
-		{
-			if (local_ESTOP_RECEIVED_raised)
+			if (BGR_1_INTERRUPTED_raised)
 			{ 
-				exseq_FSM_Festo1__Sorting_RampFull();
-				enseq_FSM_Festo1__Sorting_E_STOP_default();
+				exseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
+				FST_1_SORTING_MODULE_ACTIVE_observable.next();
+				FST_1_SORTING_MODULE_RESTING_observable.next();
+				enseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle_default();
+				FSM_Festo1__Sorting_Sorting_react(2);
 				transitioned_after = 2;
-			}
-		}
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1__Sorting_Sorting_react(transitioned_before);
+		} 
 	} 
 	return transitioned_after;
 }
@@ -7319,13 +7351,24 @@ sc::integer FSM::FSM_Festo1__Sorting_RampFull_react(const sc::integer transition
 sc::integer FSM::FSM_Festo1__Sorting_Paused_react(const sc::integer transitioned_before) {
 	/* The reactions of state Paused. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (2))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (2))
 		{ 
-			exseq_FSM_Festo1__Sorting_Paused();
-			react_FSM_Festo1__Sorting_Sorting_Sorting_History();
-			transitioned_after = 2;
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo1__Sorting_Paused();
+				react_FSM_Festo1__Sorting_Sorting_Sorting_History();
+				transitioned_after = 2;
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo1__Sorting_Paused();
+					enseq_FSM_Festo1__Sorting_E_STOP_default();
+					transitioned_after = 2;
+				} 
+			}
 		} 
 	} 
 	return transitioned_after;
@@ -7334,13 +7377,16 @@ sc::integer FSM::FSM_Festo1__Sorting_Paused_react(const sc::integer transitioned
 sc::integer FSM::FSM_Festo1__Sorting_E_STOP_react(const sc::integer transitioned_before) {
 	/* The reactions of state E_STOP. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (2))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_CLEARED_raised)
+		if ((transitioned_after) < (2))
 		{ 
-			exseq_FSM_Festo1__Sorting_E_STOP();
-			enseq_FSM_Festo1__Sorting_Start_default();
-			transitioned_after = 2;
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_FSM_Festo1__Sorting_E_STOP();
+				enseq_FSM_Festo1__Sorting_Start_default();
+				transitioned_after = 2;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -7349,13 +7395,16 @@ sc::integer FSM::FSM_Festo1__Sorting_E_STOP_react(const sc::integer transitioned
 sc::integer FSM::FSM_Festo1__Sorting_Start_react(const sc::integer transitioned_before) {
 	/* The reactions of state Start. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (2))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (2))
 		{ 
-			exseq_FSM_Festo1__Sorting_Start();
-			enseq_FSM_Festo1__Sorting_Sorting_default();
-			transitioned_after = 2;
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo1__Sorting_Start();
+				enseq_FSM_Festo1__Sorting_Sorting_default();
+				transitioned_after = 2;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -7364,22 +7413,25 @@ sc::integer FSM::FSM_Festo1__Sorting_Start_react(const sc::integer transitioned_
 sc::integer FSM::FSM_Festo1__Egress_Egress_react(const sc::integer transitioned_before) {
 	/* The reactions of state Egress. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (3))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_OUT_raised)
+		if ((transitioned_after) < (3))
 		{ 
-			exseq_FSM_Festo1__Egress_Egress();
-			enseq_FSM_Festo1__Egress_Paused_default();
-			transitioned_after = 3;
-		}  else
-		{
-			if (local_ESTOP_RECEIVED_raised)
+			if (local_SYSTEM_OPERATIONAL_OUT_raised)
 			{ 
 				exseq_FSM_Festo1__Egress_Egress();
-				enseq_FSM_Festo1__Egress_E_STOP_default();
+				enseq_FSM_Festo1__Egress_Paused_default();
 				transitioned_after = 3;
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo1__Egress_Egress();
+					enseq_FSM_Festo1__Egress_E_STOP_default();
+					transitioned_after = 3;
+				} 
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -7387,148 +7439,145 @@ sc::integer FSM::FSM_Festo1__Egress_Egress_react(const sc::integer transitioned_
 sc::integer FSM::FSM_Festo1__Egress_Egress_Egress_IDLE_react(const sc::integer transitioned_before) {
 	/* The reactions of state IDLE. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (3))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_1_PUK_ENTRY_EGRESS_raised)
+		if ((transitioned_after) < (3))
 		{ 
-			exseq_FSM_Festo1__Egress_Egress_Egress_IDLE();
-			motor1Forward++;
-			FST_1_POSITION_EGRESS_NEW_PUK_observable.next();
-			enseq_FSM_Festo1__Egress_Egress_Egress_PukPresent_default();
-			FSM_Festo1__Egress_Egress_react(3);
-			transitioned_after = 3;
+			if (local_FST_1_PUK_ENTRY_EGRESS_raised)
+			{ 
+				exseq_FSM_Festo1__Egress_Egress_Egress_IDLE();
+				motor1Forward++;
+				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_EGRESS_NEW_PUK))
+				;
+				enseq_FSM_Festo1__Egress_Egress_Egress_PukPresent_default();
+				FSM_Festo1__Egress_Egress_react(3);
+				transitioned_after = 3;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1__Egress_Egress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1__Egress_Egress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1__Egress_Egress_Egress_PukPresent_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukPresent. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (3))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_1_POSITION_EGRESS_PUK_EXPECTED_raised)
+		if ((transitioned_after) < (3))
 		{ 
-			exseq_FSM_Festo1__Egress_Egress_Egress_PukPresent();
-			enseq_FSM_Festo1__Egress_Egress_Egress_PukExpected_default();
-			FSM_Festo1__Egress_Egress_react(3);
-			transitioned_after = 3;
+			if (FST_1_POSITION_EGRESS_PUK_EXPECTED_raised)
+			{ 
+				exseq_FSM_Festo1__Egress_Egress_Egress_PukPresent();
+				enseq_FSM_Festo1__Egress_Egress_Egress_PukExpected_default();
+				FSM_Festo1__Egress_Egress_react(3);
+				transitioned_after = 3;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1__Egress_Egress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1__Egress_Egress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1__Egress_Egress_Egress_Transfer_react(const sc::integer transitioned_before) {
 	/* The reactions of state Transfer. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (3))
+	if (!(doCompletion))
 	{ 
-		if (LBE_1_OPEN_raised)
+		if ((transitioned_after) < (3))
 		{ 
-			exseq_FSM_Festo1__Egress_Egress_Egress_Transfer();
-			enseq_FSM_Festo1__Egress_Egress_Egress_IDLE_default();
-			FSM_Festo1__Egress_Egress_react(3);
-			transitioned_after = 3;
+			if (LBE_1_OPEN_raised)
+			{ 
+				exseq_FSM_Festo1__Egress_Egress_Egress_Transfer();
+				enseq_FSM_Festo1__Egress_Egress_Egress_IDLE_default();
+				FSM_Festo1__Egress_Egress_react(3);
+				transitioned_after = 3;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1__Egress_Egress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1__Egress_Egress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1__Egress_Egress_Egress_PukExpected_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukExpected. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (3))
+	if (!(doCompletion))
 	{ 
-		if (LBE_1_INTERRUPTED_raised)
+		if ((transitioned_after) < (3))
 		{ 
-			exseq_FSM_Festo1__Egress_Egress_Egress_PukExpected();
-			enseq_FSM_Festo1__Egress_Egress_Egress_PukinLBE1_default();
-			FSM_Festo1__Egress_Egress_react(3);
-			transitioned_after = 3;
+			if ((LBE_1_INTERRUPTED_raised) && (((fst_2_ready) == (false))))
+			{ 
+				exseq_FSM_Festo1__Egress_Egress_Egress_PukExpected();
+				motor1Stop++;
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_Festo1__Egress_Egress_Egress_Waiting_default();
+				FSM_Festo1__Egress_Egress_react(3);
+				transitioned_after = 3;
+			}  else
+			{
+				if ((LBE_1_INTERRUPTED_raised) && (((fst_2_ready) == (true))))
+				{ 
+					exseq_FSM_Festo1__Egress_Egress_Egress_PukExpected();
+					motor1Stop++;
+					EVALUATE_observable.next();
+					raiseLocal_EVALUATE();
+					enseq_FSM_Festo1__Egress_Egress_Egress_Transfer_default();
+					FSM_Festo1__Egress_Egress_react(3);
+					transitioned_after = 3;
+				} 
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1__Egress_Egress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1__Egress_Egress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1__Egress_Egress_Egress_Waiting_react(const sc::integer transitioned_before) {
 	/* The reactions of state Waiting. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (3))
+	if (!(doCompletion))
 	{ 
-		if ((fst_2_ready) == (true))
+		if ((transitioned_after) < (3))
 		{ 
-			exseq_FSM_Festo1__Egress_Egress_Egress_Waiting();
-			motor1Stop--;
-			FST_2_PUK_ENTRY_INGRESS_observable.next();
-			raiseLocal_FST_2_PUK_ENTRY_INGRESS();
-			enseq_FSM_Festo1__Egress_Egress_Egress_Transfer_default();
-			FSM_Festo1__Egress_Egress_react(3);
-			transitioned_after = 3;
-		} 
-	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1__Egress_Egress_react(transitioned_before);
-	}
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1__Egress_Egress_Egress_PukinLBE1_react(const sc::integer transitioned_before) {
-	/* The reactions of state PukinLBE1. */
-	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (3))
-	{ 
-		if ((fst_2_ready) == (false))
-		{ 
-			exseq_FSM_Festo1__Egress_Egress_Egress_PukinLBE1();
-			motor1Stop++;
-			enseq_FSM_Festo1__Egress_Egress_Egress_Waiting_default();
-			FSM_Festo1__Egress_Egress_react(3);
-			transitioned_after = 3;
-		}  else
-		{
 			if ((fst_2_ready) == (true))
-			{
-				exseq_FSM_Festo1__Egress_Egress_Egress_PukinLBE1();
+			{ 
+				exseq_FSM_Festo1__Egress_Egress_Egress_Waiting();
+				motor1Stop--;
 				FST_2_PUK_ENTRY_INGRESS_observable.next();
 				raiseLocal_FST_2_PUK_ENTRY_INGRESS();
 				enseq_FSM_Festo1__Egress_Egress_Egress_Transfer_default();
 				FSM_Festo1__Egress_Egress_react(3);
 				transitioned_after = 3;
-			}
-		}
-	}
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1__Egress_Egress_react(transitioned_before);
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1__Egress_Egress_react(transitioned_before);
+		} 
 	} 
 	return transitioned_after;
 }
@@ -7536,43 +7585,60 @@ sc::integer FSM::FSM_Festo1__Egress_Egress_Egress_PukinLBE1_react(const sc::inte
 sc::integer FSM::FSM_Festo1__Egress_Paused_react(const sc::integer transitioned_before) {
 	/* The reactions of state Paused. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (3))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (3))
 		{ 
-			exseq_FSM_Festo1__Egress_Paused();
-			react_FSM_Festo1__Egress_Egress_Egress_History();
-			transitioned_after = 3;
-		}
-	}
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo1__Egress_Paused();
+				react_FSM_Festo1__Egress_Egress_Egress_History();
+				transitioned_after = 3;
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo1__Egress_Paused();
+					enseq_FSM_Festo1__Egress_E_STOP_default();
+					transitioned_after = 3;
+				} 
+			}
+		} 
+	} 
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1__Egress_E_STOP_react(const sc::integer transitioned_before) {
 	/* The reactions of state E_STOP. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (3))
-	{
-		if (local_ESTOP_CLEARED_raised)
-		{
-			exseq_FSM_Festo1__Egress_E_STOP();
-			enseq_FSM_Festo1__Egress_Start_default();
-			transitioned_after = 3;
-		}
-	}
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (3))
+		{ 
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_FSM_Festo1__Egress_E_STOP();
+				enseq_FSM_Festo1__Egress_Start_default();
+				transitioned_after = 3;
+			} 
+		} 
+	} 
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1__Egress_Start_react(const sc::integer transitioned_before) {
 	/* The reactions of state Start. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (3))
-	{
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
-		{
-			exseq_FSM_Festo1__Egress_Start();
-			enseq_FSM_Festo1__Egress_Egress_default();
-			transitioned_after = 3;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (3))
+		{ 
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo1__Egress_Start();
+				enseq_FSM_Festo1__Egress_Egress_default();
+				transitioned_after = 3;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -7583,82 +7649,36 @@ sc::integer FSM::FSM_QualityGate__Motor_SystemMotor_react(const sc::integer tran
 	return transitioned_before;
 }
 
-sc::integer FSM::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle_react(const sc::integer transitioned_before) {
-	/* The reactions of state Idle. */
+sc::integer FSM::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_react(const sc::integer transitioned_before) {
+	/* The reactions of state Forward. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (4))
+	if (!(doCompletion))
 	{ 
-		if ((motor1Stop) > (0))
+		if ((transitioned_after) < (4))
 		{ 
-			exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle();
-			enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
-			FSM_QualityGate__Motor_SystemMotor_react(4);
-			transitioned_after = 4;
-		}  else
-		{
-			if ((((motor1Stop) == (0)) && ((motor1Slow) == (0))) && ((motor1Forward) > (0)))
+			if (((motor1Stop) > (0)) || ((((motor1Forward) == (0)) && ((motor1Slow) == (0)))))
 			{ 
-				exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle();
-				enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
+				exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
+				enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
 				FSM_QualityGate__Motor_SystemMotor_react(4);
 				transitioned_after = 4;
 			}  else
 			{
 				if (((motor1Stop) == (0)) && ((motor1Slow) > (0)))
 				{ 
-					exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle();
+					exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
 					enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
 					FSM_QualityGate__Motor_SystemMotor_react(4);
 					transitioned_after = 4;
-				}
+				} 
 			}
-		}
-	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_QualityGate__Motor_SystemMotor_react(transitioned_before);
-	}
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_react(const sc::integer transitioned_before) {
-	/* The reactions of state Forward. */
-	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (4))
-	{ 
-		if ((motor1Stop) > (0))
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
 		{ 
-			exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
-			enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
-			FSM_QualityGate__Motor_SystemMotor_react(4);
-			transitioned_after = 4;
-		}  else
-		{
-			if (((motor1Stop) == (0)) && ((motor1Slow) > (0)))
-			{ 
-				exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
-				enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
-				FSM_QualityGate__Motor_SystemMotor_react(4);
-				transitioned_after = 4;
-			}  else
-			{
-				if ((((motor1Stop) == (0)) && ((motor1Slow) == (0))) && ((motor1Forward) == (0)))
-				{ 
-					exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
-					enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
-					FSM_QualityGate__Motor_SystemMotor_react(4);
-					transitioned_after = 4;
-				}
-			}
-		}
-	}
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_QualityGate__Motor_SystemMotor_react(transitioned_before);
+			/* then execute local reactions. */
+			transitioned_after = FSM_QualityGate__Motor_SystemMotor_react(transitioned_before);
+		} 
 	} 
 	return transitioned_after;
 }
@@ -7666,56 +7686,44 @@ sc::integer FSM::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_reac
 sc::integer FSM::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow_react(const sc::integer transitioned_before) {
 	/* The reactions of state Slow. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (4))
+	if (!(doCompletion))
 	{ 
-		if ((motor1Stop) > (0))
+		if ((transitioned_after) < (4))
 		{ 
-			exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
-			enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
-			FSM_QualityGate__Motor_SystemMotor_react(4);
-			transitioned_after = 4;
-		}  else
-		{
-			if ((((motor1Stop) == (0)) && ((motor1Slow) == (0))) && ((motor1Forward) > (0)))
+			if (((motor1Stop) > (0)) || ((((motor1Forward) == (0)) && ((motor1Slow) == (0)))))
 			{ 
 				exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
-				enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
+				enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
 				FSM_QualityGate__Motor_SystemMotor_react(4);
 				transitioned_after = 4;
 			}  else
 			{
-				if ((((motor1Stop) == (0)) && ((motor1Slow) == (0))) && ((motor1Forward) == (0)))
+				if ((((motor1Stop) == (0)) && ((motor1Slow) == (0))) && ((motor1Forward) > (0)))
 				{ 
 					exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
-					enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
+					enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
 					FSM_QualityGate__Motor_SystemMotor_react(4);
 					transitioned_after = 4;
-				}
+				} 
 			}
-		}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_QualityGate__Motor_SystemMotor_react(transitioned_before);
+		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_QualityGate__Motor_SystemMotor_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_react(const sc::integer transitioned_before) {
 	/* The reactions of state Stop. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (4))
+	if (!(doCompletion))
 	{ 
-		if ((((motor1Stop) == (0)) && ((motor1Slow) == (0))) && ((motor1Forward) == (0)))
+		if ((transitioned_after) < (4))
 		{ 
-			exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop();
-			enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
-			FSM_QualityGate__Motor_SystemMotor_react(4);
-			transitioned_after = 4;
-		}  else
-		{
 			if (((motor1Stop) == (0)) && ((motor1Slow) > (0)))
 			{ 
 				exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop();
@@ -7730,70 +7738,77 @@ sc::integer FSM::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_react(c
 					enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
 					FSM_QualityGate__Motor_SystemMotor_react(4);
 					transitioned_after = 4;
-				}
+				} 
 			}
-		}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_QualityGate__Motor_SystemMotor_react(transitioned_before);
+		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_QualityGate__Motor_SystemMotor_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::__Operational_react(const sc::integer transitioned_before) {
 	/* The reactions of state Operational. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (5))
+	if (!(doCompletion))
 	{ 
-		if (BRS_1_INTERRUPTED_raised)
-		{
-			exseq___Operational();
-			SYSTEM_OPERATIONAL_OUT_observable.next();
-			raiseLocal_SYSTEM_OPERATIONAL_OUT();
-			enseq___Ready_default();
-			transitioned_after = 5;
-		}  else
-		{
-			if (ESTOP_1_LOW_raised)
-			{
+		if ((transitioned_after) < (5))
+		{ 
+			if (BRS_1_INTERRUPTED_raised)
+			{ 
 				exseq___Operational();
-				setIsEStop1High(false);
 				motor1Stop++;
 				motor2Stop++;
-				ESTOP_RECEIVED_observable.next();
-				raiseLocal_ESTOP_RECEIVED();
-				setReadyReturn(true);
-				enseq___EStopReceived_default();
+				SYSTEM_OPERATIONAL_OUT_observable.next();
+				raiseLocal_SYSTEM_OPERATIONAL_OUT();
+				enseq___Paused_default();
 				transitioned_after = 5;
 			}  else
 			{
-				if (ESTOP_2_LOW_raised)
-				{
+				if (ESTOP_1_LOW_raised)
+				{ 
 					exseq___Operational();
-					setIsEStop2High(false);
+					setIsEStop1High(false);
 					motor1Stop++;
 					motor2Stop++;
+					setReadyReturn(true);
 					ESTOP_RECEIVED_observable.next();
 					raiseLocal_ESTOP_RECEIVED();
-					setReadyReturn(true);
 					enseq___EStopReceived_default();
 					transitioned_after = 5;
 				}  else
 				{
-					if (BRS_2_INTERRUPTED_raised)
-					{
+					if (ESTOP_2_LOW_raised)
+					{ 
 						exseq___Operational();
-						SYSTEM_OPERATIONAL_OUT_observable.next();
-						raiseLocal_SYSTEM_OPERATIONAL_OUT();
-						enseq___Ready_default();
+						setIsEStop2High(false);
+						motor1Stop++;
+						motor2Stop++;
+						setReadyReturn(true);
+						ESTOP_RECEIVED_observable.next();
+						raiseLocal_ESTOP_RECEIVED();
+						enseq___EStopReceived_default();
 						transitioned_after = 5;
+					}  else
+					{
+						if (BRS_2_INTERRUPTED_raised)
+						{ 
+							exseq___Operational();
+							motor1Stop++;
+							motor2Stop++;
+							SYSTEM_OPERATIONAL_OUT_observable.next();
+							raiseLocal_SYSTEM_OPERATIONAL_OUT();
+							enseq___Paused_default();
+							transitioned_after = 5;
+						} 
 					}
 				}
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -7801,35 +7816,29 @@ sc::integer FSM::__Operational_react(const sc::integer transitioned_before) {
 sc::integer FSM::__Start_react(const sc::integer transitioned_before) {
 	/* The reactions of state Start. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (5))
+	if (!(doCompletion))
 	{ 
-		if (((isEStop1High) == (true)) && ((isEStop2High) == (true)))
+		if ((transitioned_after) < (5))
 		{ 
-			exseq___Start();
-			enseq___EStopCalibration_default();
-			transitioned_after = 5;
-		}  else
-		{
-			if (ESTOP_2_HIGH_raised)
+			if (((isEStop1High) == (true)) && ((isEStop2High) == (true)))
 			{ 
 				exseq___Start();
-				setIsEStop2High(true);
-				EVALUATE_observable.next();
-				raiseLocal_EVALUATE();
-				enseq___Start_default();
+				enseq___EStopCalibration_default();
 				transitioned_after = 5;
 			}  else
 			{
-				if (ESTOP_1_LOW_raised)
+				if (ESTOP_2_HIGH_raised)
 				{ 
 					exseq___Start();
-					setIsEStop1High(false);
+					setIsEStop2High(true);
+					EVALUATE_observable.next();
+					raiseLocal_EVALUATE();
 					enseq___Start_default();
 					transitioned_after = 5;
 				}  else
 				{
 					if (ESTOP_2_LOW_raised)
-					{
+					{ 
 						exseq___Start();
 						setIsEStop2High(false);
 						EVALUATE_observable.next();
@@ -7839,7 +7848,7 @@ sc::integer FSM::__Start_react(const sc::integer transitioned_before) {
 					}  else
 					{
 						if (ESTOP_1_HIGH_raised)
-						{
+						{ 
 							exseq___Start();
 							setIsEStop1High(true);
 							EVALUATE_observable.next();
@@ -7849,19 +7858,19 @@ sc::integer FSM::__Start_react(const sc::integer transitioned_before) {
 						}  else
 						{
 							if (ESTOP_1_LOW_raised)
-							{
+							{ 
 								exseq___Start();
 								setIsEStop1High(false);
 								EVALUATE_observable.next();
 								raiseLocal_EVALUATE();
 								enseq___Start_default();
 								transitioned_after = 5;
-							}
+							} 
 						}
 					}
 				}
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -7869,62 +7878,77 @@ sc::integer FSM::__Start_react(const sc::integer transitioned_before) {
 sc::integer FSM::__Ready_react(const sc::integer transitioned_before) {
 	/* The reactions of state Ready. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (5))
+	if (!(doCompletion))
 	{ 
-		if (BGS_1_LONG_PRESSED_raised)
+		if ((transitioned_after) < (5))
 		{ 
-			exseq___Ready();
-			setCalibrated(false);
-			enseq___ServiceMode_default();
-			transitioned_after = 5;
-		}  else
-		{
-			if (BGS_1_INTERRUPTED_raised)
+			if (BGS_1_LONG_PRESSED_raised)
 			{ 
 				exseq___Ready();
-				SYSTEM_OPERATIONAL_IN_observable.next();
-				raiseLocal_SYSTEM_OPERATIONAL_IN();
-				enseq___Operational_default();
+				setCalibrated(false);
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq___ServiceMode_default();
 				transitioned_after = 5;
 			}  else
 			{
-				if (ESTOP_2_LOW_raised)
+				if (BGS_1_INTERRUPTED_raised)
 				{ 
 					exseq___Ready();
-					setIsEStop2High(false);
-					setEStopCalibratedReturn(true);
-					ESTOP_RECEIVED_observable.next();
-					raiseLocal_ESTOP_RECEIVED();
-					setReadyReturn(true);
-					enseq___EStopReceived_default();
+					incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::SYSTEM_OPERATIONAL_IN))
+					;
+					enseq___Operational_default();
 					transitioned_after = 5;
 				}  else
 				{
-					if (ESTOP_1_LOW_raised)
+					if (ESTOP_2_LOW_raised)
 					{ 
 						exseq___Ready();
-						setIsEStop1High(false);
-						motor1Stop++;
-						motor2Stop++;
+						setIsEStop2High(false);
+						setReadyReturn(true);
 						ESTOP_RECEIVED_observable.next();
 						raiseLocal_ESTOP_RECEIVED();
-						setReadyReturn(true);
 						enseq___EStopReceived_default();
 						transitioned_after = 5;
 					}  else
 					{
-						if (BGS_2_INTERRUPTED_raised)
+						if (ESTOP_1_LOW_raised)
 						{ 
 							exseq___Ready();
-							SYSTEM_OPERATIONAL_IN_observable.next();
-							raiseLocal_SYSTEM_OPERATIONAL_IN();
-							enseq___Operational_default();
+							setIsEStop1High(false);
+							motor1Stop++;
+							motor2Stop++;
+							setReadyReturn(true);
+							ESTOP_RECEIVED_observable.next();
+							raiseLocal_ESTOP_RECEIVED();
+							enseq___EStopReceived_default();
 							transitioned_after = 5;
+						}  else
+						{
+							if (BGS_2_INTERRUPTED_raised)
+							{ 
+								exseq___Ready();
+								incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::SYSTEM_OPERATIONAL_IN))
+								;
+								enseq___Operational_default();
+								transitioned_after = 5;
+							}  else
+							{
+								if (BGS_2_LONG_PRESSED_raised)
+								{ 
+									exseq___Ready();
+									setCalibrated(false);
+									EVALUATE_observable.next();
+									raiseLocal_EVALUATE();
+									enseq___ServiceMode_default();
+									transitioned_after = 5;
+								} 
+							}
 						}
 					}
 				}
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -7932,41 +7956,57 @@ sc::integer FSM::__Ready_react(const sc::integer transitioned_before) {
 sc::integer FSM::__ServiceMode_react(const sc::integer transitioned_before) {
 	/* The reactions of state ServiceMode. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (5))
+	if (!(doCompletion))
 	{ 
-		if (BRS_1_INTERRUPTED_raised)
+		if ((transitioned_after) < (5))
 		{ 
-			exseq___ServiceMode();
-			setCalibrated(true);
-			enseq___Ready_default();
-			transitioned_after = 5;
-		}  else
-		{
-			if (ESTOP_1_LOW_raised)
-			{
+			if (BRS_1_INTERRUPTED_raised)
+			{ 
 				exseq___ServiceMode();
-				setIsEStop1High(false);
-				motor1Stop++;
-				motor2Stop++;
-				ESTOP_RECEIVED_observable.next();
-				raiseLocal_ESTOP_RECEIVED();
-				setServiceModeReturn(true);
-				enseq___EStopReceived_default();
+				setCalibrated(true);
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq___Ready_default();
 				transitioned_after = 5;
 			}  else
 			{
-				if (ESTOP_2_LOW_raised)
-				{
+				if (ESTOP_1_LOW_raised)
+				{ 
 					exseq___ServiceMode();
-					setIsEStop2High(false);
+					setIsEStop1High(false);
+					motor1Stop++;
+					motor2Stop++;
+					setServiceModeReturn(true);
 					ESTOP_RECEIVED_observable.next();
 					raiseLocal_ESTOP_RECEIVED();
-					setServiceModeReturn(true);
 					enseq___EStopReceived_default();
 					transitioned_after = 5;
+				}  else
+				{
+					if (ESTOP_2_LOW_raised)
+					{ 
+						exseq___ServiceMode();
+						setIsEStop2High(false);
+						setServiceModeReturn(true);
+						ESTOP_RECEIVED_observable.next();
+						raiseLocal_ESTOP_RECEIVED();
+						enseq___EStopReceived_default();
+						transitioned_after = 5;
+					}  else
+					{
+						if (BRS_2_INTERRUPTED_raised)
+						{ 
+							exseq___ServiceMode();
+							setCalibrated(true);
+							EVALUATE_observable.next();
+							raiseLocal_EVALUATE();
+							enseq___Ready_default();
+							transitioned_after = 5;
+						} 
+					}
 				}
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -7974,32 +8014,23 @@ sc::integer FSM::__ServiceMode_react(const sc::integer transitioned_before) {
 sc::integer FSM::__EStopCalibration_react(const sc::integer transitioned_before) {
 	/* The reactions of state EStopCalibration. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (5))
+	if (!(doCompletion))
 	{ 
-		if (BGS_1_LONG_PRESSED_raised)
-		{
-			exseq___EStopCalibration();
-			enseq___ServiceMode_default();
-			transitioned_after = 5;
-		}  else
-		{
-			if (ESTOP_1_LOW_raised)
-			{
+		if ((transitioned_after) < (5))
+		{ 
+			if (BGS_1_LONG_PRESSED_raised)
+			{ 
 				exseq___EStopCalibration();
-				setIsEStop1High(false);
-				motor1Stop++;
-				motor2Stop++;
-				setEStopCalibratedReturn(true);
-				ESTOP_RECEIVED_observable.next();
-				raiseLocal_ESTOP_RECEIVED();
-				enseq___EStopReceived_default();
+				enseq___ServiceMode_default();
 				transitioned_after = 5;
 			}  else
 			{
-				if (ESTOP_2_LOW_raised)
-				{
+				if (ESTOP_1_LOW_raised)
+				{ 
 					exseq___EStopCalibration();
-					setIsEStop2High(false);
+					setIsEStop1High(false);
+					motor1Stop++;
+					motor2Stop++;
 					setEStopCalibratedReturn(true);
 					ESTOP_RECEIVED_observable.next();
 					raiseLocal_ESTOP_RECEIVED();
@@ -8007,15 +8038,27 @@ sc::integer FSM::__EStopCalibration_react(const sc::integer transitioned_before)
 					transitioned_after = 5;
 				}  else
 				{
-					if (BGS_2_LONG_PRESSED_raised)
-					{
+					if (ESTOP_2_LOW_raised)
+					{ 
 						exseq___EStopCalibration();
-						enseq___ServiceMode_default();
+						setIsEStop2High(false);
+						setEStopCalibratedReturn(true);
+						ESTOP_RECEIVED_observable.next();
+						raiseLocal_ESTOP_RECEIVED();
+						enseq___EStopReceived_default();
 						transitioned_after = 5;
+					}  else
+					{
+						if (BGS_2_LONG_PRESSED_raised)
+						{ 
+							exseq___EStopCalibration();
+							enseq___ServiceMode_default();
+							transitioned_after = 5;
+						} 
 					}
 				}
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -8023,32 +8066,61 @@ sc::integer FSM::__EStopCalibration_react(const sc::integer transitioned_before)
 sc::integer FSM::__EStopReceived_react(const sc::integer transitioned_before) {
 	/* The reactions of state EStopReceived. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (5))
+	if (!(doCompletion))
 	{ 
-		if (ESTOP_1_HIGH_raised)
+		if ((transitioned_after) < (5))
 		{ 
-			exseq___EStopReceived();
-			setIsEStop1High(true);
-			enseq___EStopReceived_default();
-			transitioned_after = 5;
-		}  else
-		{
-			if (ESTOP_2_HIGH_raised)
+			if (ESTOP_1_HIGH_raised)
 			{ 
 				exseq___EStopReceived();
-				setIsEStop2High(true);
+				setIsEStop1High(true);
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
 				enseq___EStopReceived_default();
 				transitioned_after = 5;
 			}  else
 			{
-				if (((isEStop1High) == (true)) && ((isEStop2High) == (true)))
+				if (ESTOP_2_HIGH_raised)
 				{ 
 					exseq___EStopReceived();
-					enseq___EStopCleared_default();
+					setIsEStop2High(true);
+					EVALUATE_observable.next();
+					raiseLocal_EVALUATE();
+					enseq___EStopReceived_default();
 					transitioned_after = 5;
+				}  else
+				{
+					if (((isEStop1High) == (true)) && ((isEStop2High) == (true)))
+					{ 
+						exseq___EStopReceived();
+						enseq___EStopCleared_default();
+						transitioned_after = 5;
+					}  else
+					{
+						if (ESTOP_1_LOW_raised)
+						{ 
+							exseq___EStopReceived();
+							setIsEStop1High(false);
+							EVALUATE_observable.next();
+							raiseLocal_EVALUATE();
+							enseq___EStopReceived_default();
+							transitioned_after = 5;
+						}  else
+						{
+							if (ESTOP_2_LOW_raised)
+							{ 
+								exseq___EStopReceived();
+								setIsEStop2High(false);
+								EVALUATE_observable.next();
+								raiseLocal_EVALUATE();
+								enseq___EStopReceived_default();
+								transitioned_after = 5;
+							} 
+						}
+					}
 				}
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -8056,18 +8128,11 @@ sc::integer FSM::__EStopReceived_react(const sc::integer transitioned_before) {
 sc::integer FSM::__EStopCleared_react(const sc::integer transitioned_before) {
 	/* The reactions of state EStopCleared. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (5))
+	if (!(doCompletion))
 	{ 
-		if (BGR_1_INTERRUPTED_raised)
+		if ((transitioned_after) < (5))
 		{ 
-			exseq___EStopCleared();
-			ESTOP_CLEARED_observable.next();
-			raiseLocal_ESTOP_CLEARED();
-			enseq___ReveivedReset_default();
-			transitioned_after = 5;
-		}  else
-		{
-			if (BGR_2_INTERRUPTED_raised)
+			if (BGR_1_INTERRUPTED_raised)
 			{ 
 				exseq___EStopCleared();
 				ESTOP_CLEARED_observable.next();
@@ -8076,24 +8141,34 @@ sc::integer FSM::__EStopCleared_react(const sc::integer transitioned_before) {
 				transitioned_after = 5;
 			}  else
 			{
-				if (ESTOP_1_LOW_raised)
+				if (BGR_2_INTERRUPTED_raised)
 				{ 
 					exseq___EStopCleared();
-					setIsEStop1High(false);
-					enseq___EStopReceived_default();
+					ESTOP_CLEARED_observable.next();
+					raiseLocal_ESTOP_CLEARED();
+					enseq___ReveivedReset_default();
 					transitioned_after = 5;
 				}  else
 				{
-					if (ESTOP_2_LOW_raised)
+					if (ESTOP_1_LOW_raised)
 					{ 
 						exseq___EStopCleared();
-						setIsEStop2High(false);
+						setIsEStop1High(false);
 						enseq___EStopReceived_default();
 						transitioned_after = 5;
+					}  else
+					{
+						if (ESTOP_2_LOW_raised)
+						{ 
+							exseq___EStopCleared();
+							setIsEStop2High(false);
+							enseq___EStopReceived_default();
+							transitioned_after = 5;
+						} 
 					}
 				}
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -8101,33 +8176,115 @@ sc::integer FSM::__EStopCleared_react(const sc::integer transitioned_before) {
 sc::integer FSM::__ReveivedReset_react(const sc::integer transitioned_before) {
 	/* The reactions of state ReveivedReset. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (5))
+	if (!(doCompletion))
 	{ 
-		if ((eStopCalibratedReturn) == (true))
+		if ((transitioned_after) < (5))
 		{ 
-			exseq___ReveivedReset();
-			setEStopCalibratedReturn(false);
-			enseq___EStopCalibration_default();
-			transitioned_after = 5;
-		}  else
-		{
-			if ((serviceModeReturn) == (true))
+			if ((eStopCalibratedReturn) == (true))
 			{ 
 				exseq___ReveivedReset();
-				setServiceModeReturn(false);
-				enseq___ServiceMode_default();
+				setEStopCalibratedReturn(false);
+				enseq___EStopCalibration_default();
 				transitioned_after = 5;
 			}  else
 			{
-				if ((readyReturn) == (true))
+				if ((serviceModeReturn) == (true))
 				{ 
 					exseq___ReveivedReset();
-					setReadyReturn(false);
-					enseq___Ready_default();
+					setServiceModeReturn(false);
+					enseq___ServiceMode_default();
 					transitioned_after = 5;
+				}  else
+				{
+					if ((readyReturn) == (true))
+					{ 
+						exseq___ReveivedReset();
+						setReadyReturn(false);
+						enseq___Ready_default();
+						transitioned_after = 5;
+					} 
 				}
 			}
-		}
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::__Paused_react(const sc::integer transitioned_before) {
+	/* The reactions of state Paused. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (5))
+		{ 
+			if (BGS_1_INTERRUPTED_raised)
+			{ 
+				exseq___Paused();
+				motor1Stop--;
+				motor2Stop--;
+				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::SYSTEM_OPERATIONAL_IN))
+				;
+				enseq___Operational_default();
+				transitioned_after = 5;
+			}  else
+			{
+				if (BGS_2_INTERRUPTED_raised)
+				{ 
+					exseq___Paused();
+					motor1Stop--;
+					motor2Stop--;
+					incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::SYSTEM_OPERATIONAL_IN))
+					;
+					enseq___Operational_default();
+					transitioned_after = 5;
+				}  else
+				{
+					if (ESTOP_1_LOW_raised)
+					{ 
+						exseq___Paused();
+						setIsEStop1High(false);
+						motor1Stop++;
+						motor2Stop++;
+						setReadyReturn(true);
+						ESTOP_RECEIVED_observable.next();
+						raiseLocal_ESTOP_RECEIVED();
+						enseq___EStopReceived_default();
+						transitioned_after = 5;
+					}  else
+					{
+						if (ESTOP_2_LOW_raised)
+						{ 
+							exseq___Paused();
+							motor1Stop++;
+							motor2Stop++;
+							setIsEStop2High(false);
+							setReadyReturn(true);
+							ESTOP_RECEIVED_observable.next();
+							raiseLocal_ESTOP_RECEIVED();
+							enseq___EStopReceived_default();
+							transitioned_after = 5;
+						}  else
+						{
+							if ((BGS_1_LONG_PRESSED_raised) || (BGS_2_LONG_PRESSED_raised))
+							{ 
+								exseq___Paused();
+								setMotor1Stop(0);
+								setMotor1Slow(0);
+								setMotor1Forward(0);
+								setMotor2Stop(0);
+								setMotor2Slow(0);
+								setMotor2Forward(0);
+								setCalibrated(false);
+								EVALUATE_observable.next();
+								raiseLocal_EVALUATE();
+								enseq___ServiceMode_default();
+								transitioned_after = 5;
+							} 
+						}
+					}
+				}
+			}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -8140,38 +8297,44 @@ sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_react(const sc::integer transitio
 sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(const sc::integer transitioned_before) {
 	/* The reactions of state FSM_Lamp. */
 	sc::integer transitioned_after = transitioned_before;
-	/* Always execute local reactions. */
-	transitioned_after = FSM_Festo1_Signaling_FSM_LAMP_react(transitioned_before);
+	if (!(doCompletion))
+	{ 
+		/* Always execute local reactions. */
+		transitioned_after = FSM_Festo1_Signaling_FSM_LAMP_react(transitioned_before);
+	} 
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_react(const sc::integer transitioned_before) {
 	/* The reactions of state Off. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (6))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (6))
 		{ 
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-			enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
-			transitioned_after = 6;
-		}  else
-		{
-			if (local_ESTOP_RECEIVED_raised)
+			if (SYSTEM_OPERATIONAL_IN_raised)
 			{ 
 				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
 				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
 				transitioned_after = 6;
 			}  else
 			{
-				if (local_SYSTEM_SERVICE_IN_raised)
+				if (local_ESTOP_RECEIVED_raised)
 				{ 
 					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_default();
+					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
 					transitioned_after = 6;
+				}  else
+				{
+					if (local_SYSTEM_SERVICE_IN_raised)
+					{ 
+						exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
+						enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_default();
+						transitioned_after = 6;
+					} 
 				}
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -8179,22 +8342,25 @@ sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_
 sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_react(const sc::integer transitioned_before) {
 	/* The reactions of state Constant. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (6))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_OUT_raised)
+		if ((transitioned_after) < (6))
 		{ 
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
-			enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
-			transitioned_after = 6;
-		}  else
-		{
-			if (local_ESTOP_CLEARED_raised)
+			if (local_SYSTEM_OPERATIONAL_OUT_raised)
 			{ 
 				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
 				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
 				transitioned_after = 6;
+			}  else
+			{
+				if (local_ESTOP_CLEARED_raised)
+				{ 
+					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
+					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
+					transitioned_after = 6;
+				} 
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -8202,13 +8368,16 @@ sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_
 sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_react(const sc::integer transitioned_before) {
 	/* The reactions of state Blinking 1Hz. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (6))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_SERVICE_OUT_raised)
+		if ((transitioned_after) < (6))
 		{ 
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
-			enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
-			transitioned_after = 6;
+			if (local_SYSTEM_SERVICE_OUT_raised)
+			{ 
+				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
+				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
+				transitioned_after = 6;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -8217,22 +8386,25 @@ sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_
 sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_react(const sc::integer transitioned_before) {
 	/* The reactions of state Off. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (7))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_RECEIVED_raised)
+		if ((transitioned_after) < (7))
 		{ 
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
-			enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default();
-			transitioned_after = 7;
-		}  else
-		{
-			if (local_FST_1_INGRESS_IN_raised)
+			if (local_ESTOP_RECEIVED_raised)
 			{ 
 				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz_default();
+				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default();
 				transitioned_after = 7;
+			}  else
+			{
+				if (local_FST_1_INGRESS_IN_raised)
+				{ 
+					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
+					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz_default();
+					transitioned_after = 7;
+				} 
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -8240,13 +8412,16 @@ sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow
 sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_react(const sc::integer transitioned_before) {
 	/* The reactions of state Constant. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (7))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_CLEARED_raised)
+		if ((transitioned_after) < (7))
 		{ 
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant();
-			enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
-			transitioned_after = 7;
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant();
+				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
+				transitioned_after = 7;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -8255,22 +8430,25 @@ sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow
 sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz_react(const sc::integer transitioned_before) {
 	/* The reactions of state Blinking 1Hz. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (7))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_1_INGRESS_OUT_raised)
+		if ((transitioned_after) < (7))
 		{ 
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz();
-			enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
-			transitioned_after = 7;
-		}  else
-		{
-			if (local_ESTOP_RECEIVED_raised)
+			if (local_FST_1_INGRESS_OUT_raised)
 			{ 
 				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz();
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default();
+				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
 				transitioned_after = 7;
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz();
+					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default();
+					transitioned_after = 7;
+				} 
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -8278,66 +8456,75 @@ sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow
 sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_react(const sc::integer transitioned_before) {
 	/* The reactions of state Off. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (8))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_RECEIVED_raised)
+		if ((transitioned_after) < (8))
 		{ 
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-			enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default();
-			FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-			transitioned_after = 8;
+			if (local_ESTOP_RECEIVED_raised)
+			{ 
+				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
+				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default();
+				FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
+				transitioned_after = 8;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_react(const sc::integer transitioned_before) {
 	/* The reactions of state Constant. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (8))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_CLEARED_raised)
+		if ((transitioned_after) < (8))
 		{ 
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-			enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
-			FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-			transitioned_after = 8;
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
+				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
+				FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
+				transitioned_after = 8;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Ingress_Ingress_react(const sc::integer transitioned_before) {
 	/* The reactions of state Ingress. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (9))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_RECEIVED_raised)
+		if ((transitioned_after) < (9))
 		{ 
-			exseq_FSM_Festo2__Ingress_Ingress();
-			enseq_FSM_Festo2__Ingress_E_STOP_default();
-			transitioned_after = 9;
-		}  else
-		{
-			if (local_SYSTEM_OPERATIONAL_OUT_raised)
+			if (local_ESTOP_RECEIVED_raised)
 			{ 
 				exseq_FSM_Festo2__Ingress_Ingress();
-				enseq_FSM_Festo2__Ingress_Paused_default();
+				enseq_FSM_Festo2__Ingress_E_STOP_default();
 				transitioned_after = 9;
+			}  else
+			{
+				if (local_SYSTEM_OPERATIONAL_OUT_raised)
+				{ 
+					exseq_FSM_Festo2__Ingress_Ingress();
+					enseq_FSM_Festo2__Ingress_Paused_default();
+					transitioned_after = 9;
+				} 
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -8345,142 +8532,168 @@ sc::integer FSM::FSM_Festo2__Ingress_Ingress_react(const sc::integer transitione
 sc::integer FSM::FSM_Festo2__Ingress_Ingress_Ingress_Idle_react(const sc::integer transitioned_before) {
 	/* The reactions of state Idle. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (9))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_2_PUK_ENTRY_INGRESS_raised)
+		if ((transitioned_after) < (9))
 		{ 
-			exseq_FSM_Festo2__Ingress_Ingress_Ingress_Idle();
-			FST_2_POSITION_INGRESS_NEW_PUK_observable.next();
-			enseq_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent_default();
-			FSM_Festo2__Ingress_Ingress_react(9);
-			transitioned_after = 9;
+			if (local_FST_2_PUK_ENTRY_INGRESS_raised)
+			{ 
+				exseq_FSM_Festo2__Ingress_Ingress_Ingress_Idle();
+				motor2Forward++;
+				FST_2_POSITION_INGRESS_NEW_PUK_observable.next();
+				enseq_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent_default();
+				FSM_Festo2__Ingress_Ingress_react(9);
+				transitioned_after = 9;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Ingress_Ingress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Ingress_Ingress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance_react(const sc::integer transitioned_before) {
 	/* The reactions of state CreatingDistance. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (9))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_2_POSITION_INGRESS_DISTANCE_VALID_raised)
+		if ((transitioned_after) < (9))
 		{ 
-			exseq_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance();
-			FST_2_PUK_ENTRY_HeightMeasurement_observable.next();
-			raiseLocal_FST_2_PUK_ENTRY_HeightMeasurement();
-			enseq_FSM_Festo2__Ingress_Ingress_Ingress_Idle_default();
-			FSM_Festo2__Ingress_Ingress_react(9);
-			transitioned_after = 9;
-		}
+			if (local_FST_2_POSITION_INGRESS_DISTANCE_VALID_raised)
+			{ 
+				exseq_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance();
+				motor2Forward--;
+				FST_2_PUK_ENTRY_HeightMeasurement_observable.next();
+				raiseLocal_FST_2_PUK_ENTRY_HeightMeasurement();
+				enseq_FSM_Festo2__Ingress_Ingress_Ingress_Idle_default();
+				FSM_Festo2__Ingress_Ingress_react(9);
+				transitioned_after = 9;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Ingress_Ingress_react(transitioned_before);
+		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Ingress_Ingress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Ingress_Ingress_Ingress_PukPresent_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukPresent. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (9))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_2_POSITION_INGRESS_EXPECTED_raised)
+		if ((transitioned_after) < (9))
 		{ 
-			exseq_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent();
-			enseq_FSM_Festo2__Ingress_Ingress_Ingress_PukExpected_default();
-			FSM_Festo2__Ingress_Ingress_react(9);
-			transitioned_after = 9;
+			if (local_FST_2_POSITION_INGRESS_PUK_EXPECTED_raised)
+			{ 
+				exseq_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent();
+				enseq_FSM_Festo2__Ingress_Ingress_Ingress_PukExpected_default();
+				FSM_Festo2__Ingress_Ingress_react(9);
+				transitioned_after = 9;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Ingress_Ingress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Ingress_Ingress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Ingress_Ingress_Ingress_PukExpected_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukExpected. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (9))
+	if (!(doCompletion))
 	{ 
-		if (LBF_2_INTERRUPTED_raised)
+		if ((transitioned_after) < (9))
 		{ 
-			exseq_FSM_Festo2__Ingress_Ingress_Ingress_PukExpected();
-			enseq_FSM_Festo2__Ingress_Ingress_Ingress_PukinLBF2_default();
-			FSM_Festo2__Ingress_Ingress_react(9);
-			transitioned_after = 9;
+			if (LBF_2_INTERRUPTED_raised)
+			{ 
+				exseq_FSM_Festo2__Ingress_Ingress_Ingress_PukExpected();
+				enseq_FSM_Festo2__Ingress_Ingress_Ingress_PukinLBF2_default();
+				FSM_Festo2__Ingress_Ingress_react(9);
+				transitioned_after = 9;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Ingress_Ingress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Ingress_Ingress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Ingress_Ingress_Ingress_PukinLBF2_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukinLBF2. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (9))
+	if (!(doCompletion))
 	{ 
-		if (LBF_2_OPEN_raised)
+		if ((transitioned_after) < (9))
 		{ 
-			exseq_FSM_Festo2__Ingress_Ingress_Ingress_PukinLBF2();
-			setFst_2_ready(false);
-			enseq_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance_default();
-			FSM_Festo2__Ingress_Ingress_react(9);
-			transitioned_after = 9;
+			if (LBF_2_OPEN_raised)
+			{ 
+				exseq_FSM_Festo2__Ingress_Ingress_Ingress_PukinLBF2();
+				setFst_2_ready(false);
+				motor1Forward--;
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance_default();
+				FSM_Festo2__Ingress_Ingress_react(9);
+				transitioned_after = 9;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Ingress_Ingress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Ingress_Ingress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Ingress_E_STOP_react(const sc::integer transitioned_before) {
 	/* The reactions of state E_STOP. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (9))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_CLEARED_raised)
+		if ((transitioned_after) < (9))
 		{ 
-			exseq_FSM_Festo2__Ingress_E_STOP();
-			enseq_FSM_Festo2__Ingress_Starting_default();
-			transitioned_after = 9;
-		}
-	}
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_FSM_Festo2__Ingress_E_STOP();
+				enseq_FSM_Festo2__Ingress_Starting_default();
+				transitioned_after = 9;
+			} 
+		} 
+	} 
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Ingress_Paused_react(const sc::integer transitioned_before) {
 	/* The reactions of state Paused. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (9))
-	{
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
-		{
-			exseq_FSM_Festo2__Ingress_Paused();
-			react_FSM_Festo2__Ingress_Ingress_Ingress_History();
-			transitioned_after = 9;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (9))
+		{ 
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo2__Ingress_Paused();
+				react_FSM_Festo2__Ingress_Ingress_Ingress_History();
+				transitioned_after = 9;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -8489,13 +8702,16 @@ sc::integer FSM::FSM_Festo2__Ingress_Paused_react(const sc::integer transitioned
 sc::integer FSM::FSM_Festo2__Ingress_Starting_react(const sc::integer transitioned_before) {
 	/* The reactions of state Starting. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (9))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (9))
 		{ 
-			exseq_FSM_Festo2__Ingress_Starting();
-			enseq_FSM_Festo2__Ingress_Ingress_default();
-			transitioned_after = 9;
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo2__Ingress_Starting();
+				enseq_FSM_Festo2__Ingress_Ingress_default();
+				transitioned_after = 9;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -8504,22 +8720,25 @@ sc::integer FSM::FSM_Festo2__Ingress_Starting_react(const sc::integer transition
 sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_react(const sc::integer transitioned_before) {
 	/* The reactions of state HeightMeasurement. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (10))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_OUT_raised)
+		if ((transitioned_after) < (10))
 		{ 
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement();
-			enseq_FSM_Festo2__HeightMeasurement_Paused_default();
-			transitioned_after = 10;
-		}  else
-		{
-			if (local_ESTOP_RECEIVED_raised)
+			if (local_SYSTEM_OPERATIONAL_OUT_raised)
 			{ 
 				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement();
-				enseq_FSM_Festo2__HeightMeasurement_E_STOP_default();
+				enseq_FSM_Festo2__HeightMeasurement_Paused_default();
 				transitioned_after = 10;
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement();
+					enseq_FSM_Festo2__HeightMeasurement_E_STOP_default();
+					transitioned_after = 10;
+				} 
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -8527,113 +8746,122 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_react(const sc:
 sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_react(const sc::integer transitioned_before) {
 	/* The reactions of state Idle. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (10))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_2_PUK_ENTRY_HeightMeasurement_raised)
+		if ((transitioned_after) < (10))
 		{ 
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle();
-			FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
-			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_default();
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_react(10);
-			transitioned_after = 10;
-		} 
-	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_react(transitioned_before);
-	}
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_react(const sc::integer transitioned_before) {
-	/* The reactions of state Measuring. */
-	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (10))
-	{ 
-		if (HS_2_SAMPLING_DONE_raised)
-		{ 
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
-			FST_2_PUK_ENTRY_SORTING_observable.next();
-			raiseLocal_FST_2_PUK_ENTRY_SORTING();
-			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_default();
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_react(10);
-			transitioned_after = 10;
-		}  else
-		{
-			if (HS_2_SAMPLE_raised)
-			{
-				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
-				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default();
+			if (local_FST_2_PUK_ENTRY_HeightMeasurement_raised)
+			{ 
+				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle();
+				FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
+				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_default();
 				FSM_Festo2__HeightMeasurement_HeightMeasurement_react(10);
 				transitioned_after = 10;
-			}
-		}
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_react(transitioned_before);
+		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukPresent. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (10))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised)
+		if ((transitioned_after) < (10))
 		{ 
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
-			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_default();
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_react(10);
-			transitioned_after = 10;
+			if (local_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised)
+			{ 
+				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
+				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_default();
+				FSM_Festo2__HeightMeasurement_HeightMeasurement_react(10);
+				transitioned_after = 10;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukExpected. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (10))
+	if (!(doCompletion))
 	{ 
-		if (HS_2_SAMPLE_raised)
+		if ((transitioned_after) < (10))
 		{ 
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected();
-			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default();
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_react(10);
-			transitioned_after = 10;
+			if (HS_2_SAMPLE_raised)
+			{ 
+				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected();
+				motor2Slow++;
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default();
+				FSM_Festo2__HeightMeasurement_HeightMeasurement_react(10);
+				transitioned_after = 10;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_react(transitioned_before);
-	}
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_react(const sc::integer transitioned_before) {
+	/* The reactions of state Measuring. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (10))
+		{ 
+			if (HS_2_SAMPLING_DONE_raised)
+			{ 
+				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
+				FST_2_PUK_ENTRY_SORTING_observable.next();
+				raiseLocal_FST_2_PUK_ENTRY_SORTING();
+				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_default();
+				FSM_Festo2__HeightMeasurement_HeightMeasurement_react(10);
+				transitioned_after = 10;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_react(transitioned_before);
+		} 
+	} 
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__HeightMeasurement_Paused_react(const sc::integer transitioned_before) {
 	/* The reactions of state Paused. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (10))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (10))
 		{ 
-			exseq_FSM_Festo2__HeightMeasurement_Paused();
-			react_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_History();
-			transitioned_after = 10;
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo2__HeightMeasurement_Paused();
+				react_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_History();
+				transitioned_after = 10;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -8642,13 +8870,16 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_Paused_react(const sc::integer tr
 sc::integer FSM::FSM_Festo2__HeightMeasurement_E_STOP_react(const sc::integer transitioned_before) {
 	/* The reactions of state E_STOP. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (10))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_CLEARED_raised)
+		if ((transitioned_after) < (10))
 		{ 
-			exseq_FSM_Festo2__HeightMeasurement_E_STOP();
-			enseq_FSM_Festo2__HeightMeasurement_Start_default();
-			transitioned_after = 10;
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_FSM_Festo2__HeightMeasurement_E_STOP();
+				enseq_FSM_Festo2__HeightMeasurement_Start_default();
+				transitioned_after = 10;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -8657,13 +8888,16 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_E_STOP_react(const sc::integer tr
 sc::integer FSM::FSM_Festo2__HeightMeasurement_Start_react(const sc::integer transitioned_before) {
 	/* The reactions of state Start. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (10))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (10))
 		{ 
-			exseq_FSM_Festo2__HeightMeasurement_Start();
-			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_default();
-			transitioned_after = 10;
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo2__HeightMeasurement_Start();
+				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_default();
+				transitioned_after = 10;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -8672,40 +8906,45 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_Start_react(const sc::integer tra
 sc::integer FSM::FSM_Festo2__Sorting_Sorting_react(const sc::integer transitioned_before) {
 	/* The reactions of state Sorting. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (11))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_OUT_raised)
+		if ((transitioned_after) < (11))
 		{ 
-			exseq_FSM_Festo2__Sorting_Sorting();
-			enseq_FSM_Festo2__Sorting_Paused_default();
-			transitioned_after = 11;
-		}  else
-		{
-			if (LBR_2_INTERRUPTED_raised)
+			if (local_SYSTEM_OPERATIONAL_OUT_raised)
 			{ 
 				exseq_FSM_Festo2__Sorting_Sorting();
-				setFST2RampFull(true);
-				react_FSM_Festo2__Sorting_Sorting_Sorting_History();
+				enseq_FSM_Festo2__Sorting_Paused_default();
 				transitioned_after = 11;
 			}  else
 			{
-				if (LBR_2_OPEN_raised)
+				if (LBR_2_INTERRUPTED_raised)
 				{ 
 					exseq_FSM_Festo2__Sorting_Sorting();
-					setFST2RampFull(false);
+					setFST2RampFull(true);
+					EVALUATE_observable.next();
+					raiseLocal_EVALUATE();
 					react_FSM_Festo2__Sorting_Sorting_Sorting_History();
 					transitioned_after = 11;
 				}  else
 				{
-					if (local_ESTOP_RECEIVED_raised)
+					if (LBR_2_OPEN_raised)
 					{ 
 						exseq_FSM_Festo2__Sorting_Sorting();
-						enseq_FSM_Festo2__Sorting_E_STOP_default();
+						setFST2RampFull(false);
+						react_FSM_Festo2__Sorting_Sorting_Sorting_History();
 						transitioned_after = 11;
+					}  else
+					{
+						if (local_ESTOP_RECEIVED_raised)
+						{ 
+							exseq_FSM_Festo2__Sorting_Sorting();
+							enseq_FSM_Festo2__Sorting_E_STOP_default();
+							transitioned_after = 11;
+						} 
 					}
 				}
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -8713,127 +8952,142 @@ sc::integer FSM::FSM_Festo2__Sorting_Sorting_react(const sc::integer transitione
 sc::integer FSM::FSM_Festo2__Sorting_Sorting_Sorting_Idle_react(const sc::integer transitioned_before) {
 	/* The reactions of state Idle. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (11))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_2_PUK_ENTRY_SORTING_raised)
+		if ((transitioned_after) < (11))
 		{ 
-			exseq_FSM_Festo2__Sorting_Sorting_Sorting_Idle();
-			motor2Forward++;
-			FST_2_POSITION_SORTING_NEW_PUK_observable.next();
-			enseq_FSM_Festo2__Sorting_Sorting_Sorting_PukPresent_default();
-			FSM_Festo2__Sorting_Sorting_react(11);
-			transitioned_after = 11;
+			if (local_FST_2_PUK_ENTRY_SORTING_raised)
+			{ 
+				exseq_FSM_Festo2__Sorting_Sorting_Sorting_Idle();
+				motor2Forward++;
+				FST_2_POSITION_SORTING_NEW_PUK_observable.next();
+				enseq_FSM_Festo2__Sorting_Sorting_Sorting_PukPresent_default();
+				FSM_Festo2__Sorting_Sorting_react(11);
+				transitioned_after = 11;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Sorting_Sorting_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Sorting_Sorting_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement_react(const sc::integer transitioned_before) {
 	/* The reactions of state MetalMeasurement. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (11))
+	if (!(doCompletion))
 	{ 
-		if (LBM_2_OPEN_raised)
+		if ((transitioned_after) < (11))
 		{ 
-			exseq_FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement();
-			FST_2_PUK_ENTRY_EGRESS_observable.next();
-			raiseLocal_FST_2_PUK_ENTRY_EGRESS();
-			motor2Forward--;
-			enseq_FSM_Festo2__Sorting_Sorting_Sorting_Idle_default();
-			FSM_Festo2__Sorting_Sorting_react(11);
-			transitioned_after = 11;
-		}  else
-		{
-			if ((MS_2_TRUE_raised) && (FST2RampFull))
-			{
-				exseq_FSM_Festo2__Sorting_Sorting();
-				enseq_FSM_Festo2__Sorting_RampFull_default();
+			if (LBM_2_OPEN_raised)
+			{ 
+				exseq_FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement();
+				motor2Forward--;
+				FST_2_PUK_ENTRY_EGRESS_observable.next();
+				raiseLocal_FST_2_PUK_ENTRY_EGRESS();
+				enseq_FSM_Festo2__Sorting_Sorting_Sorting_Idle_default();
+				FSM_Festo2__Sorting_Sorting_react(11);
 				transitioned_after = 11;
 			}  else
 			{
-				if ((MS_2_TRUE_raised) && (!(FST2RampFull)))
+				if ((MS_2_TRUE_raised) && (FST2RampFull))
 				{ 
-					exseq_FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement();
-					FST_2_SORTING_MODULE_ACTIVE_observable.next();
-					FST_2_SORTING_MODULE_RESTING_observable.next();
-					enseq_FSM_Festo2__Sorting_Sorting_Sorting_Idle_default();
-					FSM_Festo2__Sorting_Sorting_react(11);
+					exseq_FSM_Festo2__Sorting_Sorting();
+					enseq_FSM_Festo2__Sorting_RampFull_default();
 					transitioned_after = 11;
+				}  else
+				{
+					if ((MS_2_TRUE_raised) && (!(FST2RampFull)))
+					{ 
+						exseq_FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement();
+						FST_2_SORTING_MODULE_ACTIVE_observable.next();
+						FST_2_SORTING_MODULE_RESTING_observable.next();
+						enseq_FSM_Festo2__Sorting_Sorting_Sorting_Idle_default();
+						FSM_Festo2__Sorting_Sorting_react(11);
+						transitioned_after = 11;
+					} 
 				}
 			}
-		}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Sorting_Sorting_react(transitioned_before);
+		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Sorting_Sorting_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Sorting_Sorting_Sorting_PukPresent_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukPresent. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (11))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_2_POSITION_SORTING_PUK_EXPECTED_raised)
+		if ((transitioned_after) < (11))
 		{ 
-			exseq_FSM_Festo2__Sorting_Sorting_Sorting_PukPresent();
-			enseq_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected_default();
-			FSM_Festo2__Sorting_Sorting_react(11);
-			transitioned_after = 11;
+			if (local_FST_2_POSITION_SORTING_PUK_EXPECTED_raised)
+			{ 
+				exseq_FSM_Festo2__Sorting_Sorting_Sorting_PukPresent();
+				enseq_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected_default();
+				FSM_Festo2__Sorting_Sorting_react(11);
+				transitioned_after = 11;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Sorting_Sorting_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Sorting_Sorting_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Sorting_Sorting_Sorting_PukExpected_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukExpected. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (11))
+	if (!(doCompletion))
 	{ 
-		if (LBM_2_INTERRUPTED_raised)
+		if ((transitioned_after) < (11))
 		{ 
-			exseq_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected();
-			enseq_FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement_default();
-			FSM_Festo2__Sorting_Sorting_react(11);
-			transitioned_after = 11;
+			if (LBM_2_INTERRUPTED_raised)
+			{ 
+				exseq_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected();
+				enseq_FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement_default();
+				FSM_Festo2__Sorting_Sorting_react(11);
+				transitioned_after = 11;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Sorting_Sorting_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Sorting_Sorting_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Sorting_RampFull_react(const sc::integer transitioned_before) {
 	/* The reactions of state RampFull. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (11))
+	if (!(doCompletion))
 	{ 
-		if (BGR_2_INTERRUPTED_raised)
+		if ((transitioned_after) < (11))
 		{ 
-			exseq_FSM_Festo2__Sorting_RampFull();
-			FST_2_SORTING_MODULE_ACTIVE_observable.next();
-			FST_2_SORTING_MODULE_RESTING_observable.next();
-			enseq_FSM_Festo2__Sorting_Sorting_Sorting_Idle_default();
-			transitioned_after = 11;
+			if (BGR_2_INTERRUPTED_raised)
+			{ 
+				exseq_FSM_Festo2__Sorting_RampFull();
+				FST_2_SORTING_MODULE_ACTIVE_observable.next();
+				FST_2_SORTING_MODULE_RESTING_observable.next();
+				enseq_FSM_Festo2__Sorting_Sorting_Sorting_Idle_default();
+				transitioned_after = 11;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -8842,13 +9096,16 @@ sc::integer FSM::FSM_Festo2__Sorting_RampFull_react(const sc::integer transition
 sc::integer FSM::FSM_Festo2__Sorting_Paused_react(const sc::integer transitioned_before) {
 	/* The reactions of state Paused. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (11))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (11))
 		{ 
-			exseq_FSM_Festo2__Sorting_Paused();
-			react_FSM_Festo2__Sorting_Sorting_Sorting_History();
-			transitioned_after = 11;
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo2__Sorting_Paused();
+				react_FSM_Festo2__Sorting_Sorting_Sorting_History();
+				transitioned_after = 11;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -8857,13 +9114,16 @@ sc::integer FSM::FSM_Festo2__Sorting_Paused_react(const sc::integer transitioned
 sc::integer FSM::FSM_Festo2__Sorting_E_STOP_react(const sc::integer transitioned_before) {
 	/* The reactions of state E_STOP. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (11))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_CLEARED_raised)
+		if ((transitioned_after) < (11))
 		{ 
-			exseq_FSM_Festo2__Sorting_E_STOP();
-			enseq_FSM_Festo2__Sorting_Start_default();
-			transitioned_after = 11;
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_FSM_Festo2__Sorting_E_STOP();
+				enseq_FSM_Festo2__Sorting_Start_default();
+				transitioned_after = 11;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -8872,13 +9132,16 @@ sc::integer FSM::FSM_Festo2__Sorting_E_STOP_react(const sc::integer transitioned
 sc::integer FSM::FSM_Festo2__Sorting_Start_react(const sc::integer transitioned_before) {
 	/* The reactions of state Start. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (11))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (11))
 		{ 
-			exseq_FSM_Festo2__Sorting_Start();
-			enseq_FSM_Festo2__Sorting_Sorting_default();
-			transitioned_after = 11;
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo2__Sorting_Start();
+				enseq_FSM_Festo2__Sorting_Sorting_default();
+				transitioned_after = 11;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -8887,22 +9150,25 @@ sc::integer FSM::FSM_Festo2__Sorting_Start_react(const sc::integer transitioned_
 sc::integer FSM::FSM_Festo2__Egress_Egress_react(const sc::integer transitioned_before) {
 	/* The reactions of state Egress. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (12))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_OUT_raised)
+		if ((transitioned_after) < (12))
 		{ 
-			exseq_FSM_Festo2__Egress_Egress();
-			enseq_FSM_Festo2__Egress_Paused_default();
-			transitioned_after = 12;
-		}  else
-		{
-			if (local_ESTOP_RECEIVED_raised)
+			if (local_SYSTEM_OPERATIONAL_OUT_raised)
 			{ 
 				exseq_FSM_Festo2__Egress_Egress();
-				enseq_FSM_Festo2__Egress_E_STOP_default();
+				enseq_FSM_Festo2__Egress_Paused_default();
 				transitioned_after = 12;
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo2__Egress_Egress();
+					enseq_FSM_Festo2__Egress_E_STOP_default();
+					transitioned_after = 12;
+				} 
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -8910,105 +9176,122 @@ sc::integer FSM::FSM_Festo2__Egress_Egress_react(const sc::integer transitioned_
 sc::integer FSM::FSM_Festo2__Egress_Egress_Egress_IDLE_react(const sc::integer transitioned_before) {
 	/* The reactions of state IDLE. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (12))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_2_PUK_ENTRY_EGRESS_raised)
-		{
-			exseq_FSM_Festo2__Egress_Egress_Egress_IDLE();
-			motor2Forward++;
-			FST_2_POSITION_EGRESS_NEW_PUK_observable.next();
-			enseq_FSM_Festo2__Egress_Egress_Egress_PukPresent_default();
-			FSM_Festo2__Egress_Egress_react(12);
-			transitioned_after = 12;
+		if ((transitioned_after) < (12))
+		{ 
+			if (local_FST_2_PUK_ENTRY_EGRESS_raised)
+			{ 
+				exseq_FSM_Festo2__Egress_Egress_Egress_IDLE();
+				motor2Forward++;
+				FST_2_POSITION_EGRESS_NEW_PUK_observable.next();
+				enseq_FSM_Festo2__Egress_Egress_Egress_PukPresent_default();
+				FSM_Festo2__Egress_Egress_react(12);
+				transitioned_after = 12;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Egress_Egress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Egress_Egress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Egress_Egress_Egress_PukPresent_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukPresent. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (12))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_2_POSITION_EGRESS_PUK_EXPECTED_raised)
+		if ((transitioned_after) < (12))
 		{ 
-			exseq_FSM_Festo2__Egress_Egress_Egress_PukPresent();
-			enseq_FSM_Festo2__Egress_Egress_Egress_PukExpected_default();
-			FSM_Festo2__Egress_Egress_react(12);
-			transitioned_after = 12;
+			if (local_FST_2_POSITION_EGRESS_PUK_EXPECTED_raised)
+			{ 
+				exseq_FSM_Festo2__Egress_Egress_Egress_PukPresent();
+				enseq_FSM_Festo2__Egress_Egress_Egress_PukExpected_default();
+				FSM_Festo2__Egress_Egress_react(12);
+				transitioned_after = 12;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Egress_Egress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Egress_Egress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Egress_Egress_Egress_Transfer_react(const sc::integer transitioned_before) {
 	/* The reactions of state Transfer. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (12))
+	if (!(doCompletion))
 	{ 
-		if (LBE_2_OPEN_raised)
+		if ((transitioned_after) < (12))
 		{ 
-			exseq_FSM_Festo2__Egress_Egress_Egress_Transfer();
-			setFst_2_ready(true);
-			enseq_FSM_Festo2__Egress_Egress_Egress_IDLE_default();
-			FSM_Festo2__Egress_Egress_react(12);
-			transitioned_after = 12;
+			if (LBE_2_OPEN_raised)
+			{ 
+				exseq_FSM_Festo2__Egress_Egress_Egress_Transfer();
+				setFst_2_ready(true);
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_Festo2__Egress_Egress_Egress_IDLE_default();
+				FSM_Festo2__Egress_Egress_react(12);
+				transitioned_after = 12;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Egress_Egress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Egress_Egress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Egress_Egress_Egress_PukExpected_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukExpected. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (12))
+	if (!(doCompletion))
 	{ 
-		if (LBF_2_INTERRUPTED_raised)
+		if ((transitioned_after) < (12))
 		{ 
-			exseq_FSM_Festo2__Egress_Egress_Egress_PukExpected();
-			motor2Forward--;
-			enseq_FSM_Festo2__Egress_Egress_Egress_Transfer_default();
-			FSM_Festo2__Egress_Egress_react(12);
-			transitioned_after = 12;
+			if (LBF_2_INTERRUPTED_raised)
+			{ 
+				exseq_FSM_Festo2__Egress_Egress_Egress_PukExpected();
+				motor2Forward--;
+				enseq_FSM_Festo2__Egress_Egress_Egress_Transfer_default();
+				FSM_Festo2__Egress_Egress_react(12);
+				transitioned_after = 12;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Egress_Egress_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Egress_Egress_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Egress_Paused_react(const sc::integer transitioned_before) {
 	/* The reactions of state Paused. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (12))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (12))
 		{ 
-			exseq_FSM_Festo2__Egress_Paused();
-			react_FSM_Festo2__Egress_Egress_Egress_History();
-			transitioned_after = 12;
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo2__Egress_Paused();
+				react_FSM_Festo2__Egress_Egress_Egress_History();
+				transitioned_after = 12;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -9017,13 +9300,16 @@ sc::integer FSM::FSM_Festo2__Egress_Paused_react(const sc::integer transitioned_
 sc::integer FSM::FSM_Festo2__Egress_E_STOP_react(const sc::integer transitioned_before) {
 	/* The reactions of state E_STOP. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (12))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_CLEARED_raised)
+		if ((transitioned_after) < (12))
 		{ 
-			exseq_FSM_Festo2__Egress_E_STOP();
-			enseq_FSM_Festo2__Egress_Start_default();
-			transitioned_after = 12;
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_FSM_Festo2__Egress_E_STOP();
+				enseq_FSM_Festo2__Egress_Start_default();
+				transitioned_after = 12;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -9032,13 +9318,16 @@ sc::integer FSM::FSM_Festo2__Egress_E_STOP_react(const sc::integer transitioned_
 sc::integer FSM::FSM_Festo2__Egress_Start_react(const sc::integer transitioned_before) {
 	/* The reactions of state Start. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (12))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (12))
 		{ 
-			exseq_FSM_Festo2__Egress_Start();
-			enseq_FSM_Festo2__Egress_Egress_default();
-			transitioned_after = 12;
+			if (SYSTEM_OPERATIONAL_IN_raised)
+			{ 
+				exseq_FSM_Festo2__Egress_Start();
+				enseq_FSM_Festo2__Egress_Egress_default();
+				transitioned_after = 12;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -9052,160 +9341,172 @@ sc::integer FSM::FSM_Festo2__Motor_SystemMotor_react(const sc::integer transitio
 sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_react(const sc::integer transitioned_before) {
 	/* The reactions of state Idle. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (13))
+	if (!(doCompletion))
 	{ 
-		if ((motor2Stop) > (0))
+		if ((transitioned_after) < (13))
 		{ 
-			exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
-			enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
-			FSM_Festo2__Motor_SystemMotor_react(13);
-			transitioned_after = 13;
-		}  else
-		{
-			if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) > (0)))
+			if ((motor2Stop) > (0))
 			{ 
 				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
-				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
-				FSM_Festo2__Motor_SystemMotor_react(13);
-				transitioned_after = 13;
-			}  else
-			{
-				if (((motor2Stop) == (0)) && ((motor2Slow) > (0)))
-				{ 
-					exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
-					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
-					FSM_Festo2__Motor_SystemMotor_react(13);
-					transitioned_after = 13;
-				}
-			}
-		}
-	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Motor_SystemMotor_react(transitioned_before);
-	}
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_react(const sc::integer transitioned_before) {
-	/* The reactions of state Forward. */
-	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (13))
-	{ 
-		if ((motor1Stop) > (0))
-		{ 
-			exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
-			enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
-			FSM_Festo2__Motor_SystemMotor_react(13);
-			transitioned_after = 13;
-		}  else
-		{
-			if (((motor2Stop) == (0)) && ((motor2Slow) > (0)))
-			{ 
-				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
-				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
-				FSM_Festo2__Motor_SystemMotor_react(13);
-				transitioned_after = 13;
-			}  else
-			{
-				if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) == (0)))
-				{ 
-					exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
-					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
-					FSM_Festo2__Motor_SystemMotor_react(13);
-					transitioned_after = 13;
-				}
-			}
-		}
-	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Motor_SystemMotor_react(transitioned_before);
-	}
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_react(const sc::integer transitioned_before) {
-	/* The reactions of state Slow. */
-	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (13))
-	{ 
-		if ((motor2Stop) > (0))
-		{ 
-			exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
-			enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
-			FSM_Festo2__Motor_SystemMotor_react(13);
-			transitioned_after = 13;
-		}  else
-		{
-			if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) > (0)))
-			{ 
-				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
-				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
-				FSM_Festo2__Motor_SystemMotor_react(13);
-				transitioned_after = 13;
-			}  else
-			{
-				if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) == (0)))
-				{ 
-					exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
-					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
-					FSM_Festo2__Motor_SystemMotor_react(13);
-					transitioned_after = 13;
-				}
-			}
-		}
-	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Motor_SystemMotor_react(transitioned_before);
-	}
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_react(const sc::integer transitioned_before) {
-	/* The reactions of state Stop. */
-	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (13))
-	{ 
-		if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) == (0)))
-		{ 
-			exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
-			enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
-			FSM_Festo2__Motor_SystemMotor_react(13);
-			transitioned_after = 13;
-		}  else
-		{
-			if (((motor2Stop) == (0)) && ((motor2Slow) > (0)))
-			{ 
-				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
-				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
+				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
 				FSM_Festo2__Motor_SystemMotor_react(13);
 				transitioned_after = 13;
 			}  else
 			{
 				if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) > (0)))
 				{ 
-					exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
+					exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
 					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
 					FSM_Festo2__Motor_SystemMotor_react(13);
 					transitioned_after = 13;
+				}  else
+				{
+					if (((motor2Stop) == (0)) && ((motor2Slow) > (0)))
+					{ 
+						exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
+						enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
+						FSM_Festo2__Motor_SystemMotor_react(13);
+						transitioned_after = 13;
+					} 
 				}
 			}
-		}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Motor_SystemMotor_react(transitioned_before);
+		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Motor_SystemMotor_react(transitioned_before);
-	}
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_react(const sc::integer transitioned_before) {
+	/* The reactions of state Forward. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (13))
+		{ 
+			if ((motor1Stop) > (0))
+			{ 
+				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
+				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
+				FSM_Festo2__Motor_SystemMotor_react(13);
+				transitioned_after = 13;
+			}  else
+			{
+				if (((motor2Stop) == (0)) && ((motor2Slow) > (0)))
+				{ 
+					exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
+					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
+					FSM_Festo2__Motor_SystemMotor_react(13);
+					transitioned_after = 13;
+				}  else
+				{
+					if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) == (0)))
+					{ 
+						exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
+						enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
+						FSM_Festo2__Motor_SystemMotor_react(13);
+						transitioned_after = 13;
+					} 
+				}
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Motor_SystemMotor_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_react(const sc::integer transitioned_before) {
+	/* The reactions of state Slow. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (13))
+		{ 
+			if ((motor2Stop) > (0))
+			{ 
+				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
+				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
+				FSM_Festo2__Motor_SystemMotor_react(13);
+				transitioned_after = 13;
+			}  else
+			{
+				if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) > (0)))
+				{ 
+					exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
+					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
+					FSM_Festo2__Motor_SystemMotor_react(13);
+					transitioned_after = 13;
+				}  else
+				{
+					if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) == (0)))
+					{ 
+						exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
+						enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
+						FSM_Festo2__Motor_SystemMotor_react(13);
+						transitioned_after = 13;
+					} 
+				}
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Motor_SystemMotor_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_react(const sc::integer transitioned_before) {
+	/* The reactions of state Stop. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (13))
+		{ 
+			if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) == (0)))
+			{ 
+				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
+				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
+				FSM_Festo2__Motor_SystemMotor_react(13);
+				transitioned_after = 13;
+			}  else
+			{
+				if (((motor2Stop) == (0)) && ((motor2Slow) > (0)))
+				{ 
+					exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
+					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
+					FSM_Festo2__Motor_SystemMotor_react(13);
+					transitioned_after = 13;
+				}  else
+				{
+					if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) > (0)))
+					{ 
+						exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
+						enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
+						FSM_Festo2__Motor_SystemMotor_react(13);
+						transitioned_after = 13;
+					} 
+				}
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Motor_SystemMotor_react(transitioned_before);
+		} 
+	} 
 	return transitioned_after;
 }
 
@@ -9217,38 +9518,44 @@ sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_react(const sc::integer transiti
 sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(const sc::integer transitioned_before) {
 	/* The reactions of state FSM_Lamp. */
 	sc::integer transitioned_after = transitioned_before;
-	/* Always execute local reactions. */
-	transitioned_after = FSM_Festo2__Signaling_FSM_LAMP_react(transitioned_before);
+	if (!(doCompletion))
+	{ 
+		/* Always execute local reactions. */
+		transitioned_after = FSM_Festo2__Signaling_FSM_LAMP_react(transitioned_before);
+	} 
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_react(const sc::integer transitioned_before) {
 	/* The reactions of state Off. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (14))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_IN_raised)
+		if ((transitioned_after) < (14))
 		{ 
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-			enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
-			transitioned_after = 14;
-		}  else
-		{
-			if (local_ESTOP_RECEIVED_raised)
+			if (SYSTEM_OPERATIONAL_IN_raised)
 			{ 
 				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
 				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
 				transitioned_after = 14;
 			}  else
 			{
-				if (local_SYSTEM_SERVICE_IN_raised)
+				if (local_ESTOP_RECEIVED_raised)
 				{ 
 					exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-					enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_default();
+					enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
 					transitioned_after = 14;
+				}  else
+				{
+					if (local_SYSTEM_SERVICE_IN_raised)
+					{ 
+						exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
+						enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_default();
+						transitioned_after = 14;
+					} 
 				}
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -9256,22 +9563,25 @@ sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green
 sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_react(const sc::integer transitioned_before) {
 	/* The reactions of state Constant. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (14))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_OPERATIONAL_OUT_raised)
+		if ((transitioned_after) < (14))
 		{ 
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
-			enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
-			transitioned_after = 14;
-		}  else
-		{
-			if (local_ESTOP_CLEARED_raised)
+			if (local_SYSTEM_OPERATIONAL_OUT_raised)
 			{ 
 				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
 				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
 				transitioned_after = 14;
+			}  else
+			{
+				if (local_ESTOP_CLEARED_raised)
+				{ 
+					exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
+					enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
+					transitioned_after = 14;
+				} 
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -9279,13 +9589,16 @@ sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green
 sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_react(const sc::integer transitioned_before) {
 	/* The reactions of state Blinking 1Hz. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (14))
+	if (!(doCompletion))
 	{ 
-		if (local_SYSTEM_SERVICE_OUT_raised)
+		if ((transitioned_after) < (14))
 		{ 
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
-			enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
-			transitioned_after = 14;
+			if (local_SYSTEM_SERVICE_OUT_raised)
+			{ 
+				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
+				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
+				transitioned_after = 14;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -9294,22 +9607,25 @@ sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green
 sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_react(const sc::integer transitioned_before) {
 	/* The reactions of state Off. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (15))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_RECEIVED_raised)
+		if ((transitioned_after) < (15))
 		{ 
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
-			enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default();
-			transitioned_after = 15;
-		}  else
-		{
-			if (local_FST_2_YELLOW_LAMP_ON_raised)
+			if (local_ESTOP_RECEIVED_raised)
 			{ 
 				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
-				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz_default();
+				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default();
 				transitioned_after = 15;
+			}  else
+			{
+				if (local_FST_2_YELLOW_LAMP_ON_raised)
+				{ 
+					exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
+					enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz_default();
+					transitioned_after = 15;
+				} 
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -9317,13 +9633,16 @@ sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yello
 sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_react(const sc::integer transitioned_before) {
 	/* The reactions of state Constant. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (15))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_CLEARED_raised)
+		if ((transitioned_after) < (15))
 		{ 
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant();
-			enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
-			transitioned_after = 15;
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant();
+				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
+				transitioned_after = 15;
+			} 
 		} 
 	} 
 	return transitioned_after;
@@ -9332,22 +9651,25 @@ sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yello
 sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz_react(const sc::integer transitioned_before) {
 	/* The reactions of state Blinking 1Hz. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (15))
+	if (!(doCompletion))
 	{ 
-		if (local_FST_2_YELLOW_LAMP_OFF_raised)
+		if ((transitioned_after) < (15))
 		{ 
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz();
-			enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
-			transitioned_after = 15;
-		}  else
-		{
-			if (local_ESTOP_RECEIVED_raised)
+			if (local_FST_2_YELLOW_LAMP_OFF_raised)
 			{ 
 				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz();
-				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default();
+				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
 				transitioned_after = 15;
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz();
+					enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default();
+					transitioned_after = 15;
+				} 
 			}
-		}
+		} 
 	} 
 	return transitioned_after;
 }
@@ -9355,76 +9677,95 @@ sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yello
 sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_react(const sc::integer transitioned_before) {
 	/* The reactions of state Off. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (16))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_RECEIVED_raised)
+		if ((transitioned_after) < (16))
 		{ 
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-			enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default();
-			FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(14);
-			transitioned_after = 16;
+			if (local_ESTOP_RECEIVED_raised)
+			{ 
+				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
+				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default();
+				FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(14);
+				transitioned_after = 16;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_react(const sc::integer transitioned_before) {
 	/* The reactions of state Constant. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (16))
+	if (!(doCompletion))
 	{ 
-		if (local_ESTOP_CLEARED_raised)
+		if ((transitioned_after) < (16))
 		{ 
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-			enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
-			FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(14);
-			transitioned_after = 16;
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
+				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
+				FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(14);
+				transitioned_after = 16;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
 		} 
 	} 
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
-	}
 	return transitioned_after;
 }
 
 sc::integer FSM::TEST_EvaluateTester_react(const sc::integer transitioned_before) {
 	/* The reactions of state EvaluateTester. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((transitioned_after) < (17))
-	{
-		if (local_EVALUATE_raised)
-		{
-			exseq_TEST_EvaluateTester();
-			enseq_TEST_EvaluateTester_default();
-			react(0);
-			transitioned_after = 17;
-		}
-	}
-	/* If no transition was taken */
-	if ((transitioned_after) == (transitioned_before))
-	{
-		/* then execute local reactions. */
-		transitioned_after = react(transitioned_before);
-	}
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (17))
+		{ 
+			if (local_EVALUATE_raised)
+			{ 
+				exseq_TEST_EvaluateTester();
+				enseq_TEST_EvaluateTester_default();
+				react(0);
+				transitioned_after = 17;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = react(transitioned_before);
+		} 
+	} 
 	return transitioned_after;
 }
 
 void FSM::clearInEvents() noexcept {
+	SYSTEM_OPERATIONAL_IN_raised = false;
 	ESTOP_1_HIGH_raised = false;
 	ESTOP_1_LOW_raised = false;
 	ESTOP_2_HIGH_raised = false;
 	ESTOP_2_LOW_raised = false;
+	FST_1_POSITION_INGRESS_NEW_PUK_raised = false;
+	FST_1_POSITION_INGRESS_DISTANCE_VALID_raised = false;
+	FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_raised = false;
+	FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised = false;
+	FST_1_POSITION_SORTING_NEW_PUK_raised = false;
+	FST_1_POSITION_SORTING_PUK_EXPECTED_raised = false;
+	FST_1_POSITION_EGRESS_NEW_PUK_raised = false;
+	FST_1_POSITION_EGRESS_PUK_EXPECTED_raised = false;
 	LBF_1_INTERRUPTED_raised = false;
 	LBF_1_OPEN_raised = false;
+	FST_1_PUK_ENTRY_HeightMeasurement_raised = false;
 	HS_1_SAMPLE_raised = false;
 	HS_1_SAMPLING_DONE_raised = false;
 	LBM_1_INTERRUPTED_raised = false;
@@ -9467,22 +9808,16 @@ void FSM::clearInEvents() noexcept {
 void FSM::clearInternalEvents() noexcept {
 	local_SYSTEM_OPERATIONAL_OUT_raised = false;
 	local_ESTOP_RECEIVED_raised = false;
-	local_FST_1_POSITION_INGRESS_DISTANCE_VALID_raised = false;
-	local_SYSTEM_OPERATIONAL_IN_raised = false;
 	local_ESTOP_CLEARED_raised = false;
-	local_FST_1_PUK_ENTRY_HeightMeasurement_raised = false;
-	local_FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised = false;
 	local_FST_1_PUK_ENTRY_SORTING_raised = false;
-	local_FST_1_POSITION_SORTING_PUK_EXPECTED_raised = false;
 	local_FST_1_PUK_ENTRY_EGRESS_raised = false;
-	local_FST_1_POSITION_EGRESS_PUK_EXPECTED_raised = false;
 	local_SYSTEM_SERVICE_IN_raised = false;
 	local_SYSTEM_SERVICE_OUT_raised = false;
 	local_FST_1_INGRESS_IN_raised = false;
 	local_FST_1_INGRESS_OUT_raised = false;
 	local_FST_2_PUK_ENTRY_INGRESS_raised = false;
 	local_FST_2_POSITION_INGRESS_DISTANCE_VALID_raised = false;
-	local_FST_2_POSITION_INGRESS_EXPECTED_raised = false;
+	local_FST_2_POSITION_INGRESS_PUK_EXPECTED_raised = false;
 	local_FST_2_PUK_ENTRY_HeightMeasurement_raised = false;
 	local_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised = false;
 	local_FST_2_PUK_ENTRY_SORTING_raised = false;
@@ -9540,11 +9875,6 @@ void FSM::microStep() {
 			case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle :
 			{
 				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_react(transitioned);
-				break;
-			}
-			case FSM::State::_0 :
-			{
-				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0_react(transitioned);
 				break;
 			}
 			case FSM::State::A :
@@ -9631,9 +9961,9 @@ void FSM::microStep() {
 				transitioned = FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_react(transitioned);
 				break;
 			}
-			case FSM::State::FSM_Festo1__Sorting_RampFull :
+			case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull :
 			{
-				transitioned = FSM_Festo1__Sorting_RampFull_react(transitioned);
+				transitioned = FSM_Festo1__Sorting_Sorting_Sorting_RampFull_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo1__Sorting_Paused :
@@ -9685,11 +10015,6 @@ void FSM::microStep() {
 				transitioned = FSM_Festo1__Egress_Egress_Egress_Waiting_react(transitioned);
 				break;
 			}
-			case FSM::State::FSM_Festo1__Egress_Egress_Egress_PukinLBE1 :
-			{
-				transitioned = FSM_Festo1__Egress_Egress_Egress_PukinLBE1_react(transitioned);
-				break;
-			}
 			case FSM::State::FSM_Festo1__Egress_Paused :
 			{
 				transitioned = FSM_Festo1__Egress_Paused_react(transitioned);
@@ -9714,11 +10039,6 @@ void FSM::microStep() {
 	{ 
 		switch(stateConfVector[ 4 ])
 		{
-			case FSM::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle :
-			{
-				transitioned = FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle_react(transitioned);
-				break;
-			}
 			case FSM::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward :
 			{
 				transitioned = FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_react(transitioned);
@@ -9781,6 +10101,11 @@ void FSM::microStep() {
 			case FSM::State::__ReveivedReset :
 			{
 				transitioned = __ReveivedReset_react(transitioned);
+				break;
+			}
+			case FSM::State::__Paused :
+			{
+				transitioned = __Paused_react(transitioned);
 				break;
 			}
 			default:
@@ -9913,11 +10238,6 @@ void FSM::microStep() {
 				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_react(transitioned);
 				break;
 			}
-			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
-			{
-				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_react(transitioned);
-				break;
-			}
 			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent :
 			{
 				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_react(transitioned);
@@ -9926,6 +10246,11 @@ void FSM::microStep() {
 			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected :
 			{
 				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_react(transitioned);
+				break;
+			}
+			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
+			{
+				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__HeightMeasurement_Paused :
@@ -10136,9 +10461,9 @@ void FSM::microStep() {
 				/* do nothing */
 				break;
 		}
-	}
+	} 
 	if ((stateConfVectorPosition) < (17))
-	{
+	{ 
 		switch(stateConfVector[ 17 ])
 		{
 			case FSM::State::TEST_EvaluateTester :
@@ -10163,7 +10488,17 @@ void FSM::runCycle() {
 	dispatchEvent(getNextEvent());
 	do
 	{ 
-		microStep();
+		doCompletion = false;
+		do
+		{ 
+			if (completed)
+			{ 
+				doCompletion = true;
+			} 
+			completed = false;
+			microStep();
+			doCompletion = false;
+		} while (completed);
 		clearInEvents();
 		clearInternalEvents();
 	} while (dispatchEvent(getNextEvent()));
@@ -10192,6 +10527,17 @@ void FSM::enter() {
 	enseq_FSM_Festo2__Motor_default();
 	enseq_FSM_Festo2__Signaling_default();
 	enseq_TEST_default();
+	doCompletion = false;
+	do
+	{ 
+		if (completed)
+		{ 
+			doCompletion = true;
+		} 
+		completed = false;
+		microStep();
+		doCompletion = false;
+	} while (completed);
 	isExecuting = false;
 }
 

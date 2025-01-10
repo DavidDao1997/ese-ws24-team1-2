@@ -44,7 +44,6 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo1_HeightMeasurement_HeightMeasurement,
 			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle,
 			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring,
-			_0,
 			A,
 			B,
 			C,
@@ -61,7 +60,7 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement,
 			FSM_Festo1__Sorting_Sorting_Sorting_PukPresent,
 			FSM_Festo1__Sorting_Sorting_Sorting_PukExpected,
-			FSM_Festo1__Sorting_RampFull,
+			FSM_Festo1__Sorting_Sorting_Sorting_RampFull,
 			FSM_Festo1__Sorting_Paused,
 			FSM_Festo1__Sorting_E_STOP,
 			FSM_Festo1__Sorting_Start,
@@ -71,12 +70,10 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo1__Egress_Egress_Egress_Transfer,
 			FSM_Festo1__Egress_Egress_Egress_PukExpected,
 			FSM_Festo1__Egress_Egress_Egress_Waiting,
-			FSM_Festo1__Egress_Egress_Egress_PukinLBE1,
 			FSM_Festo1__Egress_Paused,
 			FSM_Festo1__Egress_E_STOP,
 			FSM_Festo1__Egress_Start,
 			FSM_QualityGate__Motor_SystemMotor,
-			FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle,
 			FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward,
 			FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow,
 			FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop,
@@ -88,6 +85,7 @@ class FSM : public sc::EventDrivenInterface
 			__EStopReceived,
 			__EStopCleared,
 			__ReveivedReset,
+			__Paused,
 			FSM_Festo1_Signaling_FSM_LAMP,
 			FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp,
 			FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off,
@@ -109,9 +107,9 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo2__Ingress_Starting,
 			FSM_Festo2__HeightMeasurement_HeightMeasurement,
 			FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle,
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring,
 			FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent,
 			FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring,
 			FSM_Festo2__HeightMeasurement_Paused,
 			FSM_Festo2__HeightMeasurement_E_STOP,
 			FSM_Festo2__HeightMeasurement_Start,
@@ -151,7 +149,7 @@ class FSM : public sc::EventDrivenInterface
 		};
 		
 		/*! The number of states. */
-		static constexpr const sc::integer numStates {114};
+		static constexpr const sc::integer numStates {112};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_Ingress {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_Ingress_Ingress_Idle {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_Ingress_Ingress_PukPresent {0};
@@ -162,7 +160,6 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement {1};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle {1};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring {1};
-		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0 {1};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A {1};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B {1};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C {1};
@@ -179,7 +176,7 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected {2};
-		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_RampFull {2};
+		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Sorting_Sorting_RampFull {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Paused {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_E_STOP {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Start {2};
@@ -189,12 +186,10 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo1__Egress_Egress_Egress_Transfer {3};
 		static constexpr const sc::integer scvi_FSM_Festo1__Egress_Egress_Egress_PukExpected {3};
 		static constexpr const sc::integer scvi_FSM_Festo1__Egress_Egress_Egress_Waiting {3};
-		static constexpr const sc::integer scvi_FSM_Festo1__Egress_Egress_Egress_PukinLBE1 {3};
 		static constexpr const sc::integer scvi_FSM_Festo1__Egress_Paused {3};
 		static constexpr const sc::integer scvi_FSM_Festo1__Egress_E_STOP {3};
 		static constexpr const sc::integer scvi_FSM_Festo1__Egress_Start {3};
 		static constexpr const sc::integer scvi_FSM_QualityGate__Motor_SystemMotor {4};
-		static constexpr const sc::integer scvi_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle {4};
 		static constexpr const sc::integer scvi_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward {4};
 		static constexpr const sc::integer scvi_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow {4};
 		static constexpr const sc::integer scvi_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop {4};
@@ -206,6 +201,7 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi___EStopReceived {5};
 		static constexpr const sc::integer scvi___EStopCleared {5};
 		static constexpr const sc::integer scvi___ReveivedReset {5};
+		static constexpr const sc::integer scvi___Paused {5};
 		static constexpr const sc::integer scvi_FSM_Festo1_Signaling_FSM_LAMP {6};
 		static constexpr const sc::integer scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp {6};
 		static constexpr const sc::integer scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off {6};
@@ -227,9 +223,9 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo2__Ingress_Starting {9};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle {10};
-		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_Paused {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_E_STOP {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_Start {10};
@@ -266,17 +262,27 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off {16};
 		static constexpr const sc::integer scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant {16};
 		static constexpr const sc::integer scvi_TEST_EvaluateTester {17};
-
+		
 		/*! Enumeration of all events which are consumed. */
 		enum class Event
 		{
 			NO_EVENT,
+			SYSTEM_OPERATIONAL_IN,
 			ESTOP_1_HIGH,
 			ESTOP_1_LOW,
 			ESTOP_2_HIGH,
 			ESTOP_2_LOW,
+			FST_1_POSITION_INGRESS_NEW_PUK,
+			FST_1_POSITION_INGRESS_DISTANCE_VALID,
+			FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK,
+			FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED,
+			FST_1_POSITION_SORTING_NEW_PUK,
+			FST_1_POSITION_SORTING_PUK_EXPECTED,
+			FST_1_POSITION_EGRESS_NEW_PUK,
+			FST_1_POSITION_EGRESS_PUK_EXPECTED,
 			LBF_1_INTERRUPTED,
 			LBF_1_OPEN,
+			FST_1_PUK_ENTRY_HeightMeasurement,
 			HS_1_SAMPLE,
 			HS_1_SAMPLING_DONE,
 			LBM_1_INTERRUPTED,
@@ -316,22 +322,16 @@ class FSM : public sc::EventDrivenInterface
 			ERROR_SIGNAL,
 			Internal_local_SYSTEM_OPERATIONAL_OUT,
 			Internal_local_ESTOP_RECEIVED,
-			Internal_local_FST_1_POSITION_INGRESS_DISTANCE_VALID,
-			Internal_local_SYSTEM_OPERATIONAL_IN,
 			Internal_local_ESTOP_CLEARED,
-			Internal_local_FST_1_PUK_ENTRY_HeightMeasurement,
-			Internal_local_FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED,
 			Internal_local_FST_1_PUK_ENTRY_SORTING,
-			Internal_local_FST_1_POSITION_SORTING_PUK_EXPECTED,
 			Internal_local_FST_1_PUK_ENTRY_EGRESS,
-			Internal_local_FST_1_POSITION_EGRESS_PUK_EXPECTED,
 			Internal_local_SYSTEM_SERVICE_IN,
 			Internal_local_SYSTEM_SERVICE_OUT,
 			Internal_local_FST_1_INGRESS_IN,
 			Internal_local_FST_1_INGRESS_OUT,
 			Internal_local_FST_2_PUK_ENTRY_INGRESS,
 			Internal_local_FST_2_POSITION_INGRESS_DISTANCE_VALID,
-			Internal_local_FST_2_POSITION_INGRESS_EXPECTED,
+			Internal_local_FST_2_POSITION_INGRESS_PUK_EXPECTED,
 			Internal_local_FST_2_PUK_ENTRY_HeightMeasurement,
 			Internal_local_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED,
 			Internal_local_FST_2_PUK_ENTRY_SORTING,
@@ -342,7 +342,7 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_FST_2_YELLOW_LAMP_OFF,
 			Internal_local_EVALUATE
 		};
-
+		
 		class EventInstance
 		{
 			public:
@@ -350,8 +350,8 @@ class FSM : public sc::EventDrivenInterface
 				virtual ~EventInstance() = default;
 				const Event eventId;
 		};
-		/*! Get observable for event 'SYSTEM_OPERATIONAL_IN' of default interface scope. */
-		sc::rx::Observable<void>& getSYSTEM_OPERATIONAL_IN() noexcept;
+		/*! Raises the in event 'SYSTEM_OPERATIONAL_IN' of default interface scope. */
+		void raiseSYSTEM_OPERATIONAL_IN();
 		/*! Get observable for event 'SYSTEM_OPERATIONAL_OUT' of default interface scope. */
 		sc::rx::Observable<void>& getSYSTEM_OPERATIONAL_OUT() noexcept;
 		/*! Get observable for event 'SYSTEM_SERVICE_IN' of default interface scope. */
@@ -376,28 +376,28 @@ class FSM : public sc::EventDrivenInterface
 		void raiseESTOP_2_HIGH();
 		/*! Raises the in event 'ESTOP_2_LOW' of default interface scope. */
 		void raiseESTOP_2_LOW();
-		/*! Get observable for event 'FST_1_POSITION_INGRESS_NEW_PUK' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_POSITION_INGRESS_NEW_PUK() noexcept;
-		/*! Get observable for event 'FST_1_POSITION_INGRESS_DISTANCE_VALID' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_POSITION_INGRESS_DISTANCE_VALID() noexcept;
-		/*! Get observable for event 'FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK() noexcept;
-		/*! Get observable for event 'FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED() noexcept;
-		/*! Get observable for event 'FST_1_POSITION_SORTING_NEW_PUK' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_POSITION_SORTING_NEW_PUK() noexcept;
-		/*! Get observable for event 'FST_1_POSITION_SORTING_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_POSITION_SORTING_PUK_EXPECTED() noexcept;
-		/*! Get observable for event 'FST_1_POSITION_EGRESS_NEW_PUK' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_POSITION_EGRESS_NEW_PUK() noexcept;
-		/*! Get observable for event 'FST_1_POSITION_EGRESS_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_POSITION_EGRESS_PUK_EXPECTED() noexcept;
+		/*! Raises the in event 'FST_1_POSITION_INGRESS_NEW_PUK' of default interface scope. */
+		void raiseFST_1_POSITION_INGRESS_NEW_PUK();
+		/*! Raises the in event 'FST_1_POSITION_INGRESS_DISTANCE_VALID' of default interface scope. */
+		void raiseFST_1_POSITION_INGRESS_DISTANCE_VALID();
+		/*! Raises the in event 'FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope. */
+		void raiseFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK();
+		/*! Raises the in event 'FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of default interface scope. */
+		void raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
+		/*! Raises the in event 'FST_1_POSITION_SORTING_NEW_PUK' of default interface scope. */
+		void raiseFST_1_POSITION_SORTING_NEW_PUK();
+		/*! Raises the in event 'FST_1_POSITION_SORTING_PUK_EXPECTED' of default interface scope. */
+		void raiseFST_1_POSITION_SORTING_PUK_EXPECTED();
+		/*! Raises the in event 'FST_1_POSITION_EGRESS_NEW_PUK' of default interface scope. */
+		void raiseFST_1_POSITION_EGRESS_NEW_PUK();
+		/*! Raises the in event 'FST_1_POSITION_EGRESS_PUK_EXPECTED' of default interface scope. */
+		void raiseFST_1_POSITION_EGRESS_PUK_EXPECTED();
 		/*! Raises the in event 'LBF_1_INTERRUPTED' of default interface scope. */
 		void raiseLBF_1_INTERRUPTED();
 		/*! Raises the in event 'LBF_1_OPEN' of default interface scope. */
 		void raiseLBF_1_OPEN();
-		/*! Get observable for event 'FST_1_PUK_ENTRY_HeightMeasurement' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_PUK_ENTRY_HeightMeasurement() noexcept;
+		/*! Raises the in event 'FST_1_PUK_ENTRY_HeightMeasurement' of default interface scope. */
+		void raiseFST_1_PUK_ENTRY_HeightMeasurement();
 		/*! Get observable for event 'FST_1_INGRESS_IN' of default interface scope. */
 		sc::rx::Observable<void>& getFST_1_INGRESS_IN() noexcept;
 		/*! Get observable for event 'FST_1_INGRESS_OUT' of default interface scope. */
@@ -472,12 +472,16 @@ class FSM : public sc::EventDrivenInterface
 		sc::rx::Observable<void>& getLR1_ON() noexcept;
 		/*! Get observable for event 'LR1_OFF' of default interface scope. */
 		sc::rx::Observable<void>& getLR1_OFF() noexcept;
+		/*! Get observable for event 'Q11_ON' of default interface scope. */
+		sc::rx::Observable<void>& getQ11_ON() noexcept;
+		/*! Get observable for event 'Q12_ON' of default interface scope. */
+		sc::rx::Observable<void>& getQ12_ON() noexcept;
 		/*! Get observable for event 'FST_2_POSITION_INGRESS_NEW_PUK' of default interface scope. */
 		sc::rx::Observable<void>& getFST_2_POSITION_INGRESS_NEW_PUK() noexcept;
 		/*! Get observable for event 'FST_2_POSITION_INGRESS_DISTANCE_VALID' of default interface scope. */
 		sc::rx::Observable<void>& getFST_2_POSITION_INGRESS_DISTANCE_VALID() noexcept;
-		/*! Get observable for event 'FST_2_POSITION_INGRESS_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void>& getFST_2_POSITION_INGRESS_EXPECTED() noexcept;
+		/*! Get observable for event 'FST_2_POSITION_INGRESS_PUK_EXPECTED' of default interface scope. */
+		sc::rx::Observable<void>& getFST_2_POSITION_INGRESS_PUK_EXPECTED() noexcept;
 		/*! Get observable for event 'FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope. */
 		sc::rx::Observable<void>& getFST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK() noexcept;
 		/*! Get observable for event 'FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of default interface scope. */
@@ -618,46 +622,62 @@ class FSM : public sc::EventDrivenInterface
 		bool getEStopActive() const noexcept;
 		/*! Sets the value of the variable 'eStopActive' that is defined in the default interface scope. */
 		void setEStopActive(bool eStopActive) noexcept;
-		/*! Gets the value of the variable 'AReferenceValue' that is defined in the default interface scope. */
-		sc::integer getAReferenceValue() const noexcept;
-		/*! Sets the value of the variable 'AReferenceValue' that is defined in the default interface scope. */
-		void setAReferenceValue(sc::integer AReferenceValue) noexcept;
-		/*! Gets the value of the variable 'BReferenceValue' that is defined in the default interface scope. */
-		sc::integer getBReferenceValue() const noexcept;
-		/*! Sets the value of the variable 'BReferenceValue' that is defined in the default interface scope. */
-		void setBReferenceValue(sc::integer BReferenceValue) noexcept;
-		/*! Gets the value of the variable 'CReferenceValue' that is defined in the default interface scope. */
-		sc::integer getCReferenceValue() const noexcept;
-		/*! Sets the value of the variable 'CReferenceValue' that is defined in the default interface scope. */
-		void setCReferenceValue(sc::integer CReferenceValue) noexcept;
-		/*! Gets the value of the variable 'ASampleCount' that is defined in the default interface scope. */
-		sc::integer getASampleCount() const noexcept;
-		/*! Sets the value of the variable 'ASampleCount' that is defined in the default interface scope. */
-		void setASampleCount(sc::integer ASampleCount) noexcept;
-		/*! Gets the value of the variable 'BSampleCount' that is defined in the default interface scope. */
-		sc::integer getBSampleCount() const noexcept;
-		/*! Sets the value of the variable 'BSampleCount' that is defined in the default interface scope. */
-		void setBSampleCount(sc::integer BSampleCount) noexcept;
-		/*! Gets the value of the variable 'CSampleCount' that is defined in the default interface scope. */
-		sc::integer getCSampleCount() const noexcept;
-		/*! Sets the value of the variable 'CSampleCount' that is defined in the default interface scope. */
-		void setCSampleCount(sc::integer CSampleCount) noexcept;
-		/*! Gets the value of the variable 'currentValue' that is defined in the default interface scope. */
-		sc::integer getCurrentValue() const noexcept;
-		/*! Sets the value of the variable 'currentValue' that is defined in the default interface scope. */
-		void setCurrentValue(sc::integer currentValue) noexcept;
-		/*! Gets the value of the variable 'heightCounter' that is defined in the default interface scope. */
-		sc::integer getHeightCounter() const noexcept;
-		/*! Sets the value of the variable 'heightCounter' that is defined in the default interface scope. */
-		void setHeightCounter(sc::integer heightCounter) noexcept;
-		/*! Gets the value of the variable 'threshholdValue' that is defined in the default interface scope. */
-		sc::integer getThreshholdValue() const noexcept;
-		/*! Sets the value of the variable 'threshholdValue' that is defined in the default interface scope. */
-		void setThreshholdValue(sc::integer threshholdValue) noexcept;
-		/*! Gets the value of the variable 'threshholdCounter' that is defined in the default interface scope. */
-		sc::integer getThreshholdCounter() const noexcept;
-		/*! Sets the value of the variable 'threshholdCounter' that is defined in the default interface scope. */
-		void setThreshholdCounter(sc::integer threshholdCounter) noexcept;
+		/*! Gets the value of the variable 'AReferenceMinCount' that is defined in the default interface scope. */
+		sc::integer getAReferenceMinCount() const noexcept;
+		/*! Sets the value of the variable 'AReferenceMinCount' that is defined in the default interface scope. */
+		void setAReferenceMinCount(sc::integer AReferenceMinCount) noexcept;
+		/*! Gets the value of the variable 'AReferenceMaxCount' that is defined in the default interface scope. */
+		sc::integer getAReferenceMaxCount() const noexcept;
+		/*! Sets the value of the variable 'AReferenceMaxCount' that is defined in the default interface scope. */
+		void setAReferenceMaxCount(sc::integer AReferenceMaxCount) noexcept;
+		/*! Gets the value of the variable 'BReferenceMinCount' that is defined in the default interface scope. */
+		sc::integer getBReferenceMinCount() const noexcept;
+		/*! Sets the value of the variable 'BReferenceMinCount' that is defined in the default interface scope. */
+		void setBReferenceMinCount(sc::integer BReferenceMinCount) noexcept;
+		/*! Gets the value of the variable 'BReferenceMaxCount' that is defined in the default interface scope. */
+		sc::integer getBReferenceMaxCount() const noexcept;
+		/*! Sets the value of the variable 'BReferenceMaxCount' that is defined in the default interface scope. */
+		void setBReferenceMaxCount(sc::integer BReferenceMaxCount) noexcept;
+		/*! Gets the value of the variable 'CReferenceMinCount' that is defined in the default interface scope. */
+		sc::integer getCReferenceMinCount() const noexcept;
+		/*! Sets the value of the variable 'CReferenceMinCount' that is defined in the default interface scope. */
+		void setCReferenceMinCount(sc::integer CReferenceMinCount) noexcept;
+		/*! Gets the value of the variable 'CReferenceMaxCount' that is defined in the default interface scope. */
+		sc::integer getCReferenceMaxCount() const noexcept;
+		/*! Sets the value of the variable 'CReferenceMaxCount' that is defined in the default interface scope. */
+		void setCReferenceMaxCount(sc::integer CReferenceMaxCount) noexcept;
+		/*! Gets the value of the variable 'AReferenceHeight' that is defined in the default interface scope. */
+		sc::integer getAReferenceHeight() const noexcept;
+		/*! Sets the value of the variable 'AReferenceHeight' that is defined in the default interface scope. */
+		void setAReferenceHeight(sc::integer AReferenceHeight) noexcept;
+		/*! Gets the value of the variable 'BReferenceHeight' that is defined in the default interface scope. */
+		sc::integer getBReferenceHeight() const noexcept;
+		/*! Sets the value of the variable 'BReferenceHeight' that is defined in the default interface scope. */
+		void setBReferenceHeight(sc::integer BReferenceHeight) noexcept;
+		/*! Gets the value of the variable 'CReferenceHeight' that is defined in the default interface scope. */
+		sc::integer getCReferenceHeight() const noexcept;
+		/*! Sets the value of the variable 'CReferenceHeight' that is defined in the default interface scope. */
+		void setCReferenceHeight(sc::integer CReferenceHeight) noexcept;
+		/*! Gets the value of the variable 'HeightThreshhold' that is defined in the default interface scope. */
+		sc::integer getHeightThreshhold() const noexcept;
+		/*! Sets the value of the variable 'HeightThreshhold' that is defined in the default interface scope. */
+		void setHeightThreshhold(sc::integer HeightThreshhold) noexcept;
+		/*! Gets the value of the variable 'MaxSampleCount' that is defined in the default interface scope. */
+		sc::integer getMaxSampleCount() const noexcept;
+		/*! Sets the value of the variable 'MaxSampleCount' that is defined in the default interface scope. */
+		void setMaxSampleCount(sc::integer MaxSampleCount) noexcept;
+		/*! Gets the value of the variable 'FST_1_currentValue' that is defined in the default interface scope. */
+		sc::integer getFST_1_currentValue() const noexcept;
+		/*! Sets the value of the variable 'FST_1_currentValue' that is defined in the default interface scope. */
+		void setFST_1_currentValue(sc::integer FST_1_currentValue) noexcept;
+		/*! Gets the value of the variable 'FST_1_sampleCount' that is defined in the default interface scope. */
+		sc::integer getFST_1_sampleCount() const noexcept;
+		/*! Sets the value of the variable 'FST_1_sampleCount' that is defined in the default interface scope. */
+		void setFST_1_sampleCount(sc::integer FST_1_sampleCount) noexcept;
+		/*! Gets the value of the variable 'FST_1_generalCount' that is defined in the default interface scope. */
+		sc::integer getFST_1_generalCount() const noexcept;
+		/*! Sets the value of the variable 'FST_1_generalCount' that is defined in the default interface scope. */
+		void setFST_1_generalCount(sc::integer FST_1_generalCount) noexcept;
 		/*! Gets the value of the variable 'FST1RampFull' that is defined in the default interface scope. */
 		bool getFST1RampFull() const noexcept;
 		/*! Sets the value of the variable 'FST1RampFull' that is defined in the default interface scope. */
@@ -682,6 +702,10 @@ class FSM : public sc::EventDrivenInterface
 		bool getFst_2_ready() const noexcept;
 		/*! Sets the value of the variable 'fst_2_ready' that is defined in the default interface scope. */
 		void setFst_2_ready(bool fst_2_ready) noexcept;
+		/*! Gets the value of the variable 'FST_2_currentValue' that is defined in the default interface scope. */
+		sc::integer getFST_2_currentValue() const noexcept;
+		/*! Sets the value of the variable 'FST_2_currentValue' that is defined in the default interface scope. */
+		void setFST_2_currentValue(sc::integer FST_2_currentValue) noexcept;
 		/*! Gets the value of the variable 'FST2RampFull' that is defined in the default interface scope. */
 		bool getFST2RampFull() const noexcept;
 		/*! Sets the value of the variable 'FST2RampFull' that is defined in the default interface scope. */
@@ -749,15 +773,15 @@ class FSM : public sc::EventDrivenInterface
 		
 		
 		std::deque<EventInstance*> incomingEventQueue;
-
+		
 		std::deque<EventInstance*> internalEventQueue;
-
+		
 		EventInstance* getNextEvent() noexcept;
-
+		
 		bool dispatchEvent(EventInstance* event) noexcept;
 		
 		
-
+		
 	private:
 		
 		bool calibrated {false};
@@ -767,22 +791,27 @@ class FSM : public sc::EventDrivenInterface
 		bool isEStop1High {false};
 		bool isEStop2High {false};
 		bool eStopActive {false};
-		sc::integer AReferenceValue {0};
-		sc::integer BReferenceValue {0};
-		sc::integer CReferenceValue {0};
-		sc::integer ASampleCount {0};
-		sc::integer BSampleCount {0};
-		sc::integer CSampleCount {0};
-		sc::integer currentValue {0};
-		sc::integer heightCounter {0};
-		sc::integer threshholdValue {0};
-		sc::integer threshholdCounter {0};
+		sc::integer AReferenceMinCount {0};
+		sc::integer AReferenceMaxCount {0};
+		sc::integer BReferenceMinCount {0};
+		sc::integer BReferenceMaxCount {0};
+		sc::integer CReferenceMinCount {0};
+		sc::integer CReferenceMaxCount {0};
+		sc::integer AReferenceHeight {0};
+		sc::integer BReferenceHeight {0};
+		sc::integer CReferenceHeight {0};
+		sc::integer HeightThreshhold {0};
+		sc::integer MaxSampleCount {0};
+		sc::integer FST_1_currentValue {0};
+		sc::integer FST_1_sampleCount {0};
+		sc::integer FST_1_generalCount {0};
 		bool FST1RampFull {false};
 		sc::integer timePassed {0};
 		sc::integer motor1Stop {0};
 		sc::integer motor1Slow {0};
 		sc::integer motor1Forward {0};
 		bool fst_2_ready {false};
+		sc::integer FST_2_currentValue {0};
 		bool FST2RampFull {false};
 		sc::integer motor2Stop {0};
 		sc::integer motor2Slow {0};
@@ -808,6 +837,8 @@ class FSM : public sc::EventDrivenInterface
 		
 		
 		
+		bool completed {false};
+		bool doCompletion {false};
 		bool isExecuting {false};
 		sc::integer stateConfVectorPosition {0};
 		
@@ -815,13 +846,8 @@ class FSM : public sc::EventDrivenInterface
 		
 		// prototypes of all internal functions
 		
-		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
-		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
-		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
-		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
-		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent();
-		void enact_FSM_Festo1__Sorting_RampFull();
-		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle();
+		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_();
+		void enact_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop();
@@ -834,10 +860,8 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz();
 		void enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
 		void enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-		void enact_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance();
-		void enact_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent();
-		void enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
 		void enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
+		void enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
 		void enact_FSM_Festo2__Sorting_RampFull();
 		void enact_FSM_Festo2__Egress_Egress_Egress_Transfer();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
@@ -852,14 +876,12 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz();
 		void enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
 		void enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-		void exact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
-		void exact_FSM_Festo1__Sorting_RampFull();
+		void exact_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
 		void exact___ServiceMode();
 		void exact___EStopCleared();
 		void exact_FSM_Festo2__Ingress_Ingress_Ingress_Idle();
-		void exact_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance();
-		void exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
 		void exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
+		void exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
 		void exact_FSM_Festo2__Sorting_RampFull();
 		void exact_FSM_Festo2__Egress_Egress_Egress_Transfer();
 		void enseq_FSM_Festo1_Ingress_Ingress_default();
@@ -872,7 +894,6 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_default();
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_default();
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_default();
-		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0_default();
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_default();
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_default();
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_default();
@@ -889,7 +910,7 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement_default();
 		void enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent_default();
 		void enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_default();
-		void enseq_FSM_Festo1__Sorting_RampFull_default();
+		void enseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull_default();
 		void enseq_FSM_Festo1__Sorting_Paused_default();
 		void enseq_FSM_Festo1__Sorting_E_STOP_default();
 		void enseq_FSM_Festo1__Sorting_Start_default();
@@ -899,12 +920,10 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo1__Egress_Egress_Egress_Transfer_default();
 		void enseq_FSM_Festo1__Egress_Egress_Egress_PukExpected_default();
 		void enseq_FSM_Festo1__Egress_Egress_Egress_Waiting_default();
-		void enseq_FSM_Festo1__Egress_Egress_Egress_PukinLBE1_default();
 		void enseq_FSM_Festo1__Egress_Paused_default();
 		void enseq_FSM_Festo1__Egress_E_STOP_default();
 		void enseq_FSM_Festo1__Egress_Start_default();
 		void enseq_FSM_QualityGate__Motor_SystemMotor_default();
-		void enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
 		void enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
 		void enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
 		void enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
@@ -916,6 +935,7 @@ class FSM : public sc::EventDrivenInterface
 		void enseq___EStopReceived_default();
 		void enseq___EStopCleared_default();
 		void enseq___ReveivedReset_default();
+		void enseq___Paused_default();
 		void enseq_FSM_Festo1_Signaling_FSM_LAMP_default();
 		void enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_default();
 		void enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
@@ -937,9 +957,9 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo2__Ingress_Starting_default();
 		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_default();
 		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_default();
-		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default();
 		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_default();
 		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default();
 		void enseq_FSM_Festo2__HeightMeasurement_Paused_default();
 		void enseq_FSM_Festo2__HeightMeasurement_E_STOP_default();
 		void enseq_FSM_Festo2__HeightMeasurement_Start_default();
@@ -1028,7 +1048,6 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement();
 		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle();
 		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
-		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0();
 		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
 		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
 		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
@@ -1045,7 +1064,7 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement();
 		void exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent();
 		void exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected();
-		void exseq_FSM_Festo1__Sorting_RampFull();
+		void exseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
 		void exseq_FSM_Festo1__Sorting_Paused();
 		void exseq_FSM_Festo1__Sorting_E_STOP();
 		void exseq_FSM_Festo1__Sorting_Start();
@@ -1055,12 +1074,10 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo1__Egress_Egress_Egress_Transfer();
 		void exseq_FSM_Festo1__Egress_Egress_Egress_PukExpected();
 		void exseq_FSM_Festo1__Egress_Egress_Egress_Waiting();
-		void exseq_FSM_Festo1__Egress_Egress_Egress_PukinLBE1();
 		void exseq_FSM_Festo1__Egress_Paused();
 		void exseq_FSM_Festo1__Egress_E_STOP();
 		void exseq_FSM_Festo1__Egress_Start();
 		void exseq_FSM_QualityGate__Motor_SystemMotor();
-		void exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle();
 		void exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop();
@@ -1072,6 +1089,7 @@ class FSM : public sc::EventDrivenInterface
 		void exseq___EStopReceived();
 		void exseq___EStopCleared();
 		void exseq___ReveivedReset();
+		void exseq___Paused();
 		void exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
 		void exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
 		void exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
@@ -1091,9 +1109,9 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo2__Ingress_Starting();
 		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement();
 		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle();
-		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
 		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
 		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
 		void exseq_FSM_Festo2__HeightMeasurement_Paused();
 		void exseq_FSM_Festo2__HeightMeasurement_E_STOP();
 		void exseq_FSM_Festo2__HeightMeasurement_Start();
@@ -1205,7 +1223,6 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__0_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_react(const sc::integer transitioned_before);
@@ -1222,7 +1239,7 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_Sorting_Sorting_PukPresent_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1__Sorting_RampFull_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1__Sorting_Sorting_Sorting_RampFull_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_Paused_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_E_STOP_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_Start_react(const sc::integer transitioned_before);
@@ -1232,12 +1249,10 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo1__Egress_Egress_Egress_Transfer_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Egress_Egress_Egress_PukExpected_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Egress_Egress_Egress_Waiting_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1__Egress_Egress_Egress_PukinLBE1_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Egress_Paused_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Egress_E_STOP_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Egress_Start_react(const sc::integer transitioned_before);
 		sc::integer FSM_QualityGate__Motor_SystemMotor_react(const sc::integer transitioned_before);
-		sc::integer FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Idle_react(const sc::integer transitioned_before);
 		sc::integer FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward_react(const sc::integer transitioned_before);
 		sc::integer FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow_react(const sc::integer transitioned_before);
 		sc::integer FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_react(const sc::integer transitioned_before);
@@ -1249,6 +1264,7 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer __EStopReceived_react(const sc::integer transitioned_before);
 		sc::integer __EStopCleared_react(const sc::integer transitioned_before);
 		sc::integer __ReveivedReset_react(const sc::integer transitioned_before);
+		sc::integer __Paused_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_Signaling_FSM_LAMP_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_react(const sc::integer transitioned_before);
@@ -1270,9 +1286,9 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo2__Ingress_Starting_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_Paused_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_E_STOP_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_Start_react(const sc::integer transitioned_before);
@@ -1316,8 +1332,8 @@ class FSM : public sc::EventDrivenInterface
 		
 		
 		
-		/*! Observable for event 'SYSTEM_OPERATIONAL_IN' of default interface scope. */
-		sc::rx::Observable<void> SYSTEM_OPERATIONAL_IN_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'SYSTEM_OPERATIONAL_IN' of default interface scope is active. */
+		bool SYSTEM_OPERATIONAL_IN_raised {false};
 		
 		/*! Observable for event 'SYSTEM_OPERATIONAL_OUT' of default interface scope. */
 		sc::rx::Observable<void> SYSTEM_OPERATIONAL_OUT_observable = sc::rx::Observable<void>{};
@@ -1342,7 +1358,7 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Observable for event 'EVALUATE' of default interface scope. */
 		sc::rx::Observable<void> EVALUATE_observable = sc::rx::Observable<void>{};
-
+		
 		/*! Indicates event 'ESTOP_1_HIGH' of default interface scope is active. */
 		bool ESTOP_1_HIGH_raised {false};
 		
@@ -1355,29 +1371,29 @@ class FSM : public sc::EventDrivenInterface
 		/*! Indicates event 'ESTOP_2_LOW' of default interface scope is active. */
 		bool ESTOP_2_LOW_raised {false};
 		
-		/*! Observable for event 'FST_1_POSITION_INGRESS_NEW_PUK' of default interface scope. */
-		sc::rx::Observable<void> FST_1_POSITION_INGRESS_NEW_PUK_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_1_POSITION_INGRESS_NEW_PUK' of default interface scope is active. */
+		bool FST_1_POSITION_INGRESS_NEW_PUK_raised {false};
 		
-		/*! Observable for event 'FST_1_POSITION_INGRESS_DISTANCE_VALID' of default interface scope. */
-		sc::rx::Observable<void> FST_1_POSITION_INGRESS_DISTANCE_VALID_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_1_POSITION_INGRESS_DISTANCE_VALID' of default interface scope is active. */
+		bool FST_1_POSITION_INGRESS_DISTANCE_VALID_raised {false};
 		
-		/*! Observable for event 'FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope. */
-		sc::rx::Observable<void> FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope is active. */
+		bool FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_raised {false};
 		
-		/*! Observable for event 'FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void> FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of default interface scope is active. */
+		bool FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised {false};
 		
-		/*! Observable for event 'FST_1_POSITION_SORTING_NEW_PUK' of default interface scope. */
-		sc::rx::Observable<void> FST_1_POSITION_SORTING_NEW_PUK_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_1_POSITION_SORTING_NEW_PUK' of default interface scope is active. */
+		bool FST_1_POSITION_SORTING_NEW_PUK_raised {false};
 		
-		/*! Observable for event 'FST_1_POSITION_SORTING_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void> FST_1_POSITION_SORTING_PUK_EXPECTED_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_1_POSITION_SORTING_PUK_EXPECTED' of default interface scope is active. */
+		bool FST_1_POSITION_SORTING_PUK_EXPECTED_raised {false};
 		
-		/*! Observable for event 'FST_1_POSITION_EGRESS_NEW_PUK' of default interface scope. */
-		sc::rx::Observable<void> FST_1_POSITION_EGRESS_NEW_PUK_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_1_POSITION_EGRESS_NEW_PUK' of default interface scope is active. */
+		bool FST_1_POSITION_EGRESS_NEW_PUK_raised {false};
 		
-		/*! Observable for event 'FST_1_POSITION_EGRESS_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void> FST_1_POSITION_EGRESS_PUK_EXPECTED_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_1_POSITION_EGRESS_PUK_EXPECTED' of default interface scope is active. */
+		bool FST_1_POSITION_EGRESS_PUK_EXPECTED_raised {false};
 		
 		/*! Indicates event 'LBF_1_INTERRUPTED' of default interface scope is active. */
 		bool LBF_1_INTERRUPTED_raised {false};
@@ -1385,8 +1401,8 @@ class FSM : public sc::EventDrivenInterface
 		/*! Indicates event 'LBF_1_OPEN' of default interface scope is active. */
 		bool LBF_1_OPEN_raised {false};
 		
-		/*! Observable for event 'FST_1_PUK_ENTRY_HeightMeasurement' of default interface scope. */
-		sc::rx::Observable<void> FST_1_PUK_ENTRY_HeightMeasurement_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_1_PUK_ENTRY_HeightMeasurement' of default interface scope is active. */
+		bool FST_1_PUK_ENTRY_HeightMeasurement_raised {false};
 		
 		/*! Observable for event 'FST_1_INGRESS_IN' of default interface scope. */
 		sc::rx::Observable<void> FST_1_INGRESS_IN_observable = sc::rx::Observable<void>{};
@@ -1499,14 +1515,20 @@ class FSM : public sc::EventDrivenInterface
 		/*! Observable for event 'LR1_OFF' of default interface scope. */
 		sc::rx::Observable<void> LR1_OFF_observable = sc::rx::Observable<void>{};
 		
+		/*! Observable for event 'Q11_ON' of default interface scope. */
+		sc::rx::Observable<void> Q11_ON_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'Q12_ON' of default interface scope. */
+		sc::rx::Observable<void> Q12_ON_observable = sc::rx::Observable<void>{};
+		
 		/*! Observable for event 'FST_2_POSITION_INGRESS_NEW_PUK' of default interface scope. */
 		sc::rx::Observable<void> FST_2_POSITION_INGRESS_NEW_PUK_observable = sc::rx::Observable<void>{};
 		
 		/*! Observable for event 'FST_2_POSITION_INGRESS_DISTANCE_VALID' of default interface scope. */
 		sc::rx::Observable<void> FST_2_POSITION_INGRESS_DISTANCE_VALID_observable = sc::rx::Observable<void>{};
 		
-		/*! Observable for event 'FST_2_POSITION_INGRESS_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void> FST_2_POSITION_INGRESS_EXPECTED_observable = sc::rx::Observable<void>{};
+		/*! Observable for event 'FST_2_POSITION_INGRESS_PUK_EXPECTED' of default interface scope. */
+		sc::rx::Observable<void> FST_2_POSITION_INGRESS_PUK_EXPECTED_observable = sc::rx::Observable<void>{};
 		
 		/*! Observable for event 'FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope. */
 		sc::rx::Observable<void> FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable = sc::rx::Observable<void>{};
@@ -1685,35 +1707,11 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_ESTOP_RECEIVED' of internal scope as a local event. */
 		void raiseLocal_ESTOP_RECEIVED();
 		
-		/*! Indicates event 'local_FST_1_POSITION_INGRESS_DISTANCE_VALID' of internal scope is active. */
-		bool local_FST_1_POSITION_INGRESS_DISTANCE_VALID_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_POSITION_INGRESS_DISTANCE_VALID' of internal scope as a local event. */
-		void raiseLocal_FST_1_POSITION_INGRESS_DISTANCE_VALID();
-		
-		/*! Indicates event 'local_SYSTEM_OPERATIONAL_IN' of internal scope is active. */
-		bool local_SYSTEM_OPERATIONAL_IN_raised {false};
-		
-		/*! Raises the out event 'local_SYSTEM_OPERATIONAL_IN' of internal scope as a local event. */
-		void raiseLocal_SYSTEM_OPERATIONAL_IN();
-		
 		/*! Indicates event 'local_ESTOP_CLEARED' of internal scope is active. */
 		bool local_ESTOP_CLEARED_raised {false};
 		
 		/*! Raises the out event 'local_ESTOP_CLEARED' of internal scope as a local event. */
 		void raiseLocal_ESTOP_CLEARED();
-		
-		/*! Indicates event 'local_FST_1_PUK_ENTRY_HeightMeasurement' of internal scope is active. */
-		bool local_FST_1_PUK_ENTRY_HeightMeasurement_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_PUK_ENTRY_HeightMeasurement' of internal scope as a local event. */
-		void raiseLocal_FST_1_PUK_ENTRY_HeightMeasurement();
-		
-		/*! Indicates event 'local_FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of internal scope is active. */
-		bool local_FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of internal scope as a local event. */
-		void raiseLocal_FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
 		
 		/*! Indicates event 'local_FST_1_PUK_ENTRY_SORTING' of internal scope is active. */
 		bool local_FST_1_PUK_ENTRY_SORTING_raised {false};
@@ -1721,23 +1719,11 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_1_PUK_ENTRY_SORTING' of internal scope as a local event. */
 		void raiseLocal_FST_1_PUK_ENTRY_SORTING();
 		
-		/*! Indicates event 'local_FST_1_POSITION_SORTING_PUK_EXPECTED' of internal scope is active. */
-		bool local_FST_1_POSITION_SORTING_PUK_EXPECTED_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_POSITION_SORTING_PUK_EXPECTED' of internal scope as a local event. */
-		void raiseLocal_FST_1_POSITION_SORTING_PUK_EXPECTED();
-		
 		/*! Indicates event 'local_FST_1_PUK_ENTRY_EGRESS' of internal scope is active. */
 		bool local_FST_1_PUK_ENTRY_EGRESS_raised {false};
 		
 		/*! Raises the out event 'local_FST_1_PUK_ENTRY_EGRESS' of internal scope as a local event. */
 		void raiseLocal_FST_1_PUK_ENTRY_EGRESS();
-		
-		/*! Indicates event 'local_FST_1_POSITION_EGRESS_PUK_EXPECTED' of internal scope is active. */
-		bool local_FST_1_POSITION_EGRESS_PUK_EXPECTED_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_POSITION_EGRESS_PUK_EXPECTED' of internal scope as a local event. */
-		void raiseLocal_FST_1_POSITION_EGRESS_PUK_EXPECTED();
 		
 		/*! Indicates event 'local_SYSTEM_SERVICE_IN' of internal scope is active. */
 		bool local_SYSTEM_SERVICE_IN_raised {false};
@@ -1775,11 +1761,11 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_2_POSITION_INGRESS_DISTANCE_VALID' of internal scope as a local event. */
 		void raiseLocal_FST_2_POSITION_INGRESS_DISTANCE_VALID();
 		
-		/*! Indicates event 'local_FST_2_POSITION_INGRESS_EXPECTED' of internal scope is active. */
-		bool local_FST_2_POSITION_INGRESS_EXPECTED_raised {false};
+		/*! Indicates event 'local_FST_2_POSITION_INGRESS_PUK_EXPECTED' of internal scope is active. */
+		bool local_FST_2_POSITION_INGRESS_PUK_EXPECTED_raised {false};
 		
-		/*! Raises the out event 'local_FST_2_POSITION_INGRESS_EXPECTED' of internal scope as a local event. */
-		void raiseLocal_FST_2_POSITION_INGRESS_EXPECTED();
+		/*! Raises the out event 'local_FST_2_POSITION_INGRESS_PUK_EXPECTED' of internal scope as a local event. */
+		void raiseLocal_FST_2_POSITION_INGRESS_PUK_EXPECTED();
 		
 		/*! Indicates event 'local_FST_2_PUK_ENTRY_HeightMeasurement' of internal scope is active. */
 		bool local_FST_2_PUK_ENTRY_HeightMeasurement_raised {false};
@@ -1831,10 +1817,10 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Indicates event 'local_EVALUATE' of internal scope is active. */
 		bool local_EVALUATE_raised {false};
-
+		
 		/*! Raises the out event 'local_EVALUATE' of internal scope as a local event. */
 		void raiseLocal_EVALUATE();
-
+		
 		
 		
 };

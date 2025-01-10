@@ -131,8 +131,17 @@ protected:
         dispatcherChannelName = "dispatcher";
         dispatcher = new Dispatcher(dispatcherChannelName);     
         dispatcherThread = std::thread(std::bind(&Dispatcher::handleMsg, dispatcher));
+        //from Systemtest
+        decoder = new Mock_Decoder(dispatcherChannelName);
 
+        std::string actuatorControllerChannelName = "actuatorController";
+        actuatorsWrapper = new Mock_Actuators_Wrapper();
 
+        actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
+        dispatcher->addSubscriber(
+            actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
+        );
+        //end of SystemTest
 
     }
 
@@ -340,6 +349,43 @@ TEST_F(SystemTest, heartbeat){
 // 	EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
 // 	EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
 // }
+
+TEST_F(ModuleTest, HeightFSMTestValidPuk) {
+	decoder->sendPulse(PULSE_ESTOP_HIGH, 0);
+	WAIT(500);
+	decoder->sendPulse(PULSE_ESTOP_HIGH, 1);
+	WAIT(500);
+	decoder->sendPulse(PULSE_BGS_LONG,0);
+	WAIT(500);
+	decoder->sendPulse(PULSE_BRS_SHORT, 0);
+	WAIT(500);
+	decoder->sendPulse(PULSE_BGS_SHORT, 0);
+	WAIT(500);
+	decoder->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+	WAIT(500);
+	decoder->sendPulse(PULSE_LBF_OPEN, 0);
+	WAIT(500);
+
+   TSCADC* tsc = new TSCADC();
+   Mock_ADC* adc = new Mock_ADC();
+   heightSensorController = new HeightSensorControl("HSControl", "dispatcher", FESTO1, tsc, adc);
+   adc->mockInit(heightSensorController->getChannel());
+   adc->setSample(1000, 2200, 3150, 2200);
+   adc->setSampleCnt(10,6,35,33);
+   heightSensorControllerThread = std::thread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
+
+   WAIT(3000);
+   EXPECT_EQ(actuatorsWrapper->getActuators(Q1_PIN),1);
+   //EXPECT_EQ(actuatorsWrapper->getActuators(Q2_PIN),1);
+
+    // // TODO add class to receive Pulses and its values from hscontroller, and check if as expected; e.g. MOCK_HSCNTRL_RECEIVER
+
+    // // TODO add methods to Mock_ADC to be able to send different Heights
+
+    if (!heightSensorController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop heightSensorControllerThread has not ended...", "ModuleTest");}
+    // heightSensorControllerThread.join();
+
+};
 
 
 // TEST_F(ModuleTest, hsContollerReceivesPulses) {

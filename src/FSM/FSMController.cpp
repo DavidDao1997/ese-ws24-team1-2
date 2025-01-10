@@ -26,7 +26,6 @@ int8_t FSMController::pulses[FSM_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_HS1_SAMPLING_DONE,
     PULSE_HS2_SAMPLING_DONE,
     PULSE_MS_TRUE,
-    PULSE_MS_FALSE
 };
 
 class VoidObserver : public sc::rx::Observer<void> {
@@ -169,6 +168,18 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
             *new VoidObserver(dispatcherConnectionID, PULSE_LG1_OFF, 0, "PULSE_LG1_OFF")
         )
     );
+    // PUK Height is Valid
+    fsm->getFST_1_PUK_HEIGHT_IS_VALID().subscribe(
+            *new sc::rx::subscription<void>(
+                *new VoidObserver(dispatcherConnectionID, PULSE_FSM, FST_1_PUK_HEIGHT_VALID, "PULSE_FST_1_PUK_HEIGHT_VALID")
+            )
+        );
+    // PUK Height is NOT Valid
+    fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID().subscribe(
+    		*new sc::rx::subscription<void>(
+    			*new VoidObserver(dispatcherConnectionID, PULSE_FSM, FST_1_PUK_HEIGHT_NOT_VALID, "PULSE_FST_1_PUK_HEIGHT_NOT_VALID")
+		   )
+	   );
     // // PULSE_LR2_ON
     // fsm->getLR2_ON().subscribe(
     //     *new sc::rx::subscription<void>(
@@ -224,23 +235,23 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     //     )
     // );
     // // PULSE_Q11_ON      
-    // fsm->getQ11_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_Q11_ON, 0, "PULSE_Q11_ON")
-    //     )
-    // );
+     fsm->getQ11_ON().subscribe(
+         *new sc::rx::subscription<void>(
+             *new VoidObserver(dispatcherConnectionID, PULSE_Q11_ON, 0, "PULSE_Q11_ON")
+         )
+     );
     // // PULSE_Q11_OFF     
     // fsm->getQ11_OFF().subscribe(
     //     *new sc::rx::subscription<void>(
     //         *new VoidObserver(dispatcherConnectionID, PULSE_Q11_OFF, 0, "PULSE_Q11_OFF")
     //     )
     // );
-    // // PULSE_Q12_ON      
-    // fsm->getQ12_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_Q12_ON, 0, "PULSE_Q12_ON")
-    //     )
-    // );
+     // PULSE_Q12_ON
+     fsm->getQ12_ON().subscribe(
+         *new sc::rx::subscription<void>(
+             *new VoidObserver(dispatcherConnectionID, PULSE_Q12_ON, 0, "PULSE_Q12_ON")
+         )
+     );
     // // PULSE_Q12_OFF
     // fsm->getQ12_OFF().subscribe(
     //     *new sc::rx::subscription<void>(
@@ -295,18 +306,23 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     //         *new VoidObserver(dispatcherConnectionID, PULSE_SM2_RESTING, 0, "PULSE_SM2_RESTING")
     //     )
     // );
-    fsm->setAReferenceValue(2280);
-    fsm->setBReferenceValue(3220);
-    fsm->setCReferenceValue(2280);
-    fsm->setThreshholdValue(150);
-    fsm->setASampleCount(10);
-    fsm->setBSampleCount(35);
-    fsm->setCSampleCount(20);
-    fsm->setThreshholdCounter(5);
+
+    fsm->enter();
+    // fsm->setFst_2_ready(true);
+    fsm->setAReferenceHeight(2200);
+    fsm->setBReferenceHeight(3150);
+    fsm->setCReferenceHeight(2200);
+    fsm->setAReferenceMinCount(4);
+    fsm->setAReferenceMaxCount(35);
+    fsm->setBReferenceMinCount(20);
+    fsm->setBReferenceMaxCount(60);
+    fsm->setCReferenceMinCount(10);
+    fsm->setCReferenceMaxCount(45);
+    fsm->setHeightThreshhold(150);
+    fsm->setMaxSampleCount(130);
     fsm->setEStopCalibratedReturn(false);
     fsm->setServiceModeReturn(false);
     fsm->setReadyReturn(false);
-    fsm->enter();
 }
 
 //         // Similarly, you can subscribe to other Observables:
@@ -346,7 +362,8 @@ void FSMController::handleMsg() {
             switch (msg.code) {
                 case PULSE_ESTOP_HIGH:
                 	(msgVal == 0)?fsm->raiseESTOP_1_HIGH():fsm->raiseESTOP_2_HIGH();
-
+                   // fsm->raiseESTOP_1_HIGH();
+                   // fsm->raiseESTOP_2_HIGH();
                     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_ESTOP_HIGH..." + std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_ESTOP_LOW:
@@ -365,6 +382,14 @@ void FSMController::handleMsg() {
                 case PULSE_LBF_OPEN:
                 	(msgVal == 0)?fsm->raiseLBF_1_OPEN():fsm->raiseLBF_2_OPEN();
                     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBF_OPEN..."+ std::to_string(msgVal), "FSMController");
+                    // FIXME hacked
+                    if (msgVal == 0) {
+                        fsm->raiseFST_1_POSITION_INGRESS_DISTANCE_VALID();
+                        fsm->raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
+                    } else {
+                        // fsm->raiseFST_2_POSITION_INGRESS_DISTANCE_VALID();
+                        // fsm->raiseFST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
+                    }
                     break;
                 case PULSE_LBE_INTERRUPTED:
                 	(msgVal == 0)?fsm->raiseLBE_1_INTERRUPTED():fsm->raiseLBE_2_INTERRUPTED();
@@ -389,6 +414,7 @@ void FSMController::handleMsg() {
                 case PULSE_LBM_OPEN:
                 	(msgVal == 0)?fsm->raiseLBM_1_OPEN():fsm->raiseLBM_2_OPEN();
                     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBM_OPEN..."+ std::to_string(msgVal), "FSMController");
+                    fsm->raiseFST_1_POSITION_EGRESS_PUK_EXPECTED();
                     break;
                 case PULSE_BGS_SHORT:
                 	(msgVal == 0)?fsm->raiseBGS_1_INTERRUPTED():fsm->raiseBGS_2_INTERRUPTED();
@@ -407,7 +433,7 @@ void FSMController::handleMsg() {
                     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BGR_SHORT..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_HS1_SAMPLE:
-                	fsm->setCurrentValue(msgVal);
+                	fsm->setFST_1_currentValue(msgVal);
                     fsm-> raiseHS_1_SAMPLE();
                     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS1_SAMPLE...", "FSMController");
                     break;
@@ -418,6 +444,8 @@ void FSMController::handleMsg() {
                 case PULSE_HS1_SAMPLING_DONE:
                     fsm-> raiseHS_1_SAMPLING_DONE();
                     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS1_SAMPLING_DONE...", "FSMController");
+                    //FIXME hacked
+                    fsm->raiseFST_1_POSITION_SORTING_PUK_EXPECTED();
                     break; 
                 case PULSE_HS2_SAMPLING_DONE:
                     fsm-> raiseHS_2_SAMPLING_DONE();
@@ -434,6 +462,34 @@ void FSMController::handleMsg() {
                 default:
                     break;
             }
+
+            if (fsm->isStateActive(FSM::State::A)) {
+                Logger::getInstance().log(LogLevel::DEBUG, "Active State: " + stateToString(FSM::State::A), "FSMController");
+            }
+            if (fsm->isStateActive(FSM::State::B)) {
+                Logger::getInstance().log(LogLevel::DEBUG, "Active State: " + stateToString(FSM::State::B), "FSMController");
+            }
+            if (fsm->isStateActive(FSM::State::C)) {
+                Logger::getInstance().log(LogLevel::DEBUG, "Active State: " + stateToString(FSM::State::C), "FSMController");
+            }
+            if (fsm->isStateActive(FSM::State::Evaluate)) {
+                Logger::getInstance().log(LogLevel::DEBUG, "Active State: " + stateToString(FSM::State::Evaluate), "FSMController");
+            }
+            if (fsm->isStateActive(FSM::State::Error)) {
+                Logger::getInstance().log(LogLevel::DEBUG, "Active State: " + stateToString(FSM::State::Error), "FSMController");
+            }
+            if (fsm->isStateActive(FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement)) {
+                Logger::getInstance().log(LogLevel::DEBUG, "Active State: " + stateToString(FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement), "FSMController");
+            }
+            if (fsm->isStateActive(FSM::State::FSM_Festo1__Egress_Egress_Egress_Waiting)) {
+                Logger::getInstance().log(LogLevel::DEBUG, "Active State: " + stateToString(FSM::State::FSM_Festo1__Egress_Egress_Egress_Waiting), "FSMController");
+            }
+            // for (int i = static_cast<int>(FSM::State::NO_STATE); i < static_cast<int>(FSM::State::TEST_EvaluateTester); ++i) {
+            //     FSM::State state = static_cast<FSM::State>(i);
+            //     if (fsm->isStateActive(state) ) {
+            //         Logger::getInstance().log(LogLevel::DEBUG, "Active State: " + stateToString(state), "FSMController");
+            //     }
+            // }
         }
     }
 }
