@@ -15,13 +15,10 @@ std::atomic<bool> ActuatorController::lrblinking{false};
 std::atomic<bool> ActuatorController::lyblinking{false};
 
 int8_t ActuatorController::numOfPulses = ACTUATOR_CONTROLLER_NUM_OF_PULSES;
-int8_t ActuatorController::pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
+int8_t ActuatorController::pulses_FESTO1[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_MOTOR1_STOP,  
 	PULSE_MOTOR1_SLOW, 
 	PULSE_MOTOR1_FAST, 
-	PULSE_MOTOR2_STOP, 
-	PULSE_MOTOR2_SLOW,
-    PULSE_MOTOR2_FAST,  
 	PULSE_LR1_ON,
     PULSE_LR1_BLINKING, // msg.value int32_t (period [ms])
     PULSE_LR1_OFF,          
@@ -31,6 +28,18 @@ int8_t ActuatorController::pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
 	PULSE_LG1_ON,
     PULSE_LG1_BLINKING, // msg.value int32_t (period [ms])
     PULSE_LG1_OFF,      
+	PULSE_Q11_ON,      
+	PULSE_Q11_OFF,     
+    PULSE_Q21_ON,      
+	PULSE_Q21_OFF,     
+    PULSE_SM1_ACTIVE,   
+	PULSE_SM1_RESTING, 
+};
+
+int8_t ActuatorController::pulses_FESTO2[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
+	PULSE_MOTOR2_STOP, 
+	PULSE_MOTOR2_SLOW,
+    PULSE_MOTOR2_FAST,  
 	PULSE_LR2_ON,
     PULSE_LR2_BLINKING, // msg.value int32_t (period [ms])
     PULSE_LR2_OFF,      
@@ -40,16 +49,10 @@ int8_t ActuatorController::pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
 	PULSE_LG2_ON,
     PULSE_LG2_BLINKING, // msg.value int32_t (period [ms])
     PULSE_LG2_OFF,      
-	PULSE_Q11_ON,      
-	PULSE_Q11_OFF,     
 	PULSE_Q12_ON,      
 	PULSE_Q12_OFF,
-    PULSE_Q21_ON,      
-	PULSE_Q21_OFF,     
 	PULSE_Q22_ON,      
 	PULSE_Q22_OFF,
-    PULSE_SM1_ACTIVE,   
-	PULSE_SM1_RESTING, 
 	PULSE_SM2_ACTIVE,  
 	PULSE_SM2_RESTING,
 };
@@ -112,8 +115,8 @@ bool ActuatorController::stop(){
     return true;
 }
 
-int8_t *ActuatorController::getPulses() { return pulses; };
-int8_t ActuatorController::getNumOfPulses() { return numOfPulses; };
+// int8_t *ActuatorController::getPulses() { return pulses; };
+// int8_t ActuatorController::getNumOfPulses() { return numOfPulses; };
 
 void ActuatorController::handleMsg() {
     ThreadCtl(_NTO_TCTL_IO, 0); // Request IO privileges
@@ -315,6 +318,7 @@ void ActuatorController::handleMsg() {
 
 void ActuatorController::startRedLampBlinkingThread(int frequency) {
     // Hier wird der Thread außerhalb des Switch-Blocks gestartet
+    frequency = frequency >> 1;
     redBlinkThread = new std::thread([this, frequency]() { this->redlampBlinking(&lrblinking, frequency); });
 
     redBlinkThread->detach(); // Thread im Hintergrund ausführen lassen
@@ -322,6 +326,7 @@ void ActuatorController::startRedLampBlinkingThread(int frequency) {
 
 void ActuatorController::startGreenLampBlinkingThread(int frequency) {
     // Hier wird der Thread außerhalb des Switch-Blocks gestartet
+    frequency = frequency >> 1;
     greenBlinkThread = new std::thread([this, frequency]() { this->greenlampBlinking(&lgblinking, frequency); });
 
     greenBlinkThread->detach(); // Thread im Hintergrund ausführen lassen
@@ -329,6 +334,7 @@ void ActuatorController::startGreenLampBlinkingThread(int frequency) {
 
 void ActuatorController::startYellowLampBlinkingThread(int frequency) {
     // Hier wird der Thread außerhalb des Switch-Blocks gestartet
+    frequency = frequency >> 1;
     yellowBlinkThread = new std::thread([this, frequency]() { this->yellowlampBlinking(&lyblinking, frequency); });
 
     yellowBlinkThread->detach(); // Thread im Hintergrund ausführen lassen

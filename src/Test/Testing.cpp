@@ -140,7 +140,7 @@ protected:
 
         actuatorController = new ActuatorController(FESTO1,actuatorControllerChannelName, actuatorsWrapper);
         dispatcher->addSubscriber(
-            actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
+            actuatorController->getChannel(), ActuatorController::pulses_FESTO1, ActuatorController::numOfPulses
         );
         //end of SystemTest
 
@@ -499,7 +499,168 @@ protected:
         delete dispatcher;
     }
 
+    // Simulates userInput to navigate from System.Start to System.Operational
+    void mockInitializationEvents() {
+        decoder1->sendPulse(PULSE_ESTOP_HIGH, 0);
+        WAIT(500);
+        decoder2->sendPulse(PULSE_ESTOP_HIGH, 1);
+        WAIT(500);
+        decoder1->sendPulse(PULSE_BGS_LONG,0);
+        WAIT(500);
+        decoder1->sendPulse(PULSE_BRS_SHORT, 0);
+        WAIT(500);
+        decoder1->sendPulse(PULSE_BGS_SHORT, 0);
+        WAIT(500);
+    }
 
+    // Asserts expected actuatorState. Use when entering System.Operational
+    void assertSystemEntryOperational() {
+        // FESTO1
+        EXPECT_EQ(actuatorController1->getGreenBlinking(),false);
+        EXPECT_EQ(actuatorController1->getYellowBlinking(),false);
+        EXPECT_EQ(actuatorController1->getRedBlinking(),false);
+        EXPECT_EQ(actuatorsWrapper1->getActuators(LG_PIN),1);
+        EXPECT_EQ(actuatorsWrapper1->getActuators(LY_PIN),0);
+        EXPECT_EQ(actuatorsWrapper1->getActuators(LR_PIN),0);
+        EXPECT_EQ(actuatorsWrapper1->getActuators(M_FORWARD_PIN),0);
+        EXPECT_EQ(actuatorsWrapper1->getActuators(M_SLOW_PIN),0);
+        EXPECT_EQ(actuatorsWrapper1->getActuators(M_BACKWARD_PIN),0);
+        EXPECT_EQ(actuatorsWrapper1->getActuators(M_STOP_PIN),1);
+
+        // FESTO2
+        EXPECT_EQ(actuatorController2->getGreenBlinking(),false);
+        EXPECT_EQ(actuatorController2->getYellowBlinking(),false);
+        EXPECT_EQ(actuatorController2->getRedBlinking(),false);
+        EXPECT_EQ(actuatorsWrapper2->getActuators(LG_PIN),1);
+        EXPECT_EQ(actuatorsWrapper2->getActuators(LY_PIN),0);
+        EXPECT_EQ(actuatorsWrapper2->getActuators(LR_PIN),0);
+        EXPECT_EQ(actuatorsWrapper2->getActuators(M_FORWARD_PIN),0);
+        EXPECT_EQ(actuatorsWrapper2->getActuators(M_SLOW_PIN),0);
+        EXPECT_EQ(actuatorsWrapper2->getActuators(M_BACKWARD_PIN),0);
+        EXPECT_EQ(actuatorsWrapper2->getActuators(M_STOP_PIN),1);
+    }
+
+    enum MotorState {
+        MOTOR_STATE_OFF,
+        MOTOR_STATE_FAST,
+        MOTOR_STATE_SLOW
+    };
+    // enum Light {
+    //     Light_Green,
+    //     Light_Yellow,
+    //     Light_Red,
+    //     Light_Q1,
+    //     Light_Q2
+    // };
+    enum LightState {
+        LIGHT_STATE_OFF,
+        LIGHT_STATE_ON,
+        LIGHT_STATE_BLINKING
+    };
+
+    // Type aliases for better readabilty
+    using GreenLightState = LightState;
+    using YellowLightState = LightState;
+    using RedLightState = LightState;
+    using StartBtnLightState = LightState;
+    using StopBtnLightState = LightState;
+    using ResetBtnLightState = LightState;
+    using Q1BtnLightState = LightState;
+    using Q2BtnLightState = LightState;
+
+
+
+
+    void assertActuatorState(
+        uint8_t FestoId,
+
+        MotorState motorState,
+
+        GreenLightState lightStateGreen = LightState::LIGHT_STATE_OFF,
+        YellowLightState lightStateYellow = LightState::LIGHT_STATE_OFF,
+        RedLightState lightStateRed = LightState::LIGHT_STATE_OFF,
+
+        StartBtnLightState lightStateBGS = LightState::LIGHT_STATE_OFF,
+        StopBtnLightState lightStateBRS = LightState::LIGHT_STATE_OFF,
+        ResetBtnLightState lightStateBGR = LightState::LIGHT_STATE_OFF,
+        Q1BtnLightState lightStateQ1 = LightState::LIGHT_STATE_OFF,
+        Q2BtnLightState lightStateQ2 = LightState::LIGHT_STATE_OFF
+    ) {
+        ActuatorController* actuatorController = (FestoId == FESTO1) ? actuatorController1 : actuatorController2;
+        Mock_Actuators_Wrapper* actuatorsWrapper = (FestoId == FESTO1) ? actuatorsWrapper1 : actuatorsWrapper2;
+        std::string festoName = "FST" + std::to_string(FestoId+1);
+        checkMotorState(
+            festoName + ".motor", 
+            motorState,
+            actuatorsWrapper->getActuators(M_FORWARD_PIN),
+            actuatorsWrapper->getActuators(M_SLOW_PIN),
+            actuatorsWrapper->getActuators(M_BACKWARD_PIN),
+            actuatorsWrapper->getActuators(M_STOP_PIN)
+        );
+    
+        checkLightState(festoName + ".greenLight", lightStateGreen, actuatorController->getGreenBlinking(), actuatorsWrapper->getActuators(LG_PIN));
+        checkLightState(festoName + ".yellowLight", lightStateYellow, actuatorController->getYellowBlinking(), actuatorsWrapper->getActuators(LY_PIN));
+        checkLightState(festoName + ".redLight", lightStateRed, actuatorController->getRedBlinking(), actuatorsWrapper->getActuators(LR_PIN));
+        checkLightState(festoName + ".startBtnLight", lightStateBGS, false /* can never be blinking since it is not implemented */, actuatorsWrapper->getActuators(BGS_PIN));
+        checkLightState(festoName + ".stopBtnLight", lightStateBRS, false /* can never be blinking since it is not implemented */, actuatorsWrapper->getActuators(BGS_PIN));
+        checkLightState(festoName + ".resetBtnLight", lightStateBGR, false /* can never be blinking since it is not implemented */, actuatorsWrapper->getActuators(BGR_PIN));
+        checkLightState(festoName + ".q1BtnLight", lightStateQ1, false /* can never be blinking since it is not implemented */, actuatorsWrapper->getActuators(Q1_PIN));
+        checkLightState(festoName + ".q2BtnLight", lightStateQ2, false /* can never be blinking since it is not implemented */, actuatorsWrapper->getActuators(Q2_PIN));
+    }
+
+    void checkMotorState(
+        std::string name ,
+        MotorState motorState,
+        int forwardPin,
+        int slowPin,
+        int backwardPin,
+        int stopPin
+    ) {
+        int expectedForwardPin = 0;
+        int expectedSlowPin = 0;
+        int expectedBackwardPin = 0;
+        int expectedStopPin = 0;
+        if (motorState == MotorState::MOTOR_STATE_OFF) {
+            expectedStopPin = 1;
+        } else if (motorState == MotorState::MOTOR_STATE_FAST) {
+            expectedForwardPin = 1;
+        } else if (motorState == MotorState::MOTOR_STATE_SLOW) {
+            expectedForwardPin = 1;
+            expectedSlowPin = 1;
+        } else {
+            FAIL() << "Unexpected motorState";
+        }
+        EXPECT_EQ(forwardPin,expectedForwardPin) << name << ": forwardPin is " << std::to_string(forwardPin) << ", expected " << std::to_string(expectedForwardPin);
+        EXPECT_EQ(slowPin,expectedSlowPin) << name << ": slowPin is " << std::to_string(slowPin) << ", expected " << std::to_string(expectedSlowPin);
+        EXPECT_EQ(backwardPin,expectedBackwardPin) << name << ": backwardPin is " << std::to_string(backwardPin) << ", expected " << std::to_string(expectedBackwardPin);
+        EXPECT_EQ(stopPin,expectedStopPin) << name << ": stopPin is " << std::to_string(stopPin) << ", expected " << std::to_string(expectedStopPin);
+    }
+
+    void checkLightState(
+        std::string name ,
+        LightState lightState, 
+        bool blinking, 
+        int pin
+    ) {
+        bool blinkingExpected;
+        int pinExpected;
+        if (lightState == LightState::LIGHT_STATE_OFF) {
+            blinkingExpected = false;
+            pinExpected = 0;
+        } else if (lightState == LightState::LIGHT_STATE_ON) {
+            blinkingExpected = false;
+            pinExpected = 1;
+        } else if (lightState == LightState::LIGHT_STATE_BLINKING) {
+            blinkingExpected = true;
+            pinExpected = 0;
+        } else {
+            FAIL() << "Unexpected light state!";
+        }
+        EXPECT_EQ(blinking, blinkingExpected)  << name << ": blinking is " << std::to_string(blinking) << ", expected " << std::to_string(blinkingExpected);
+        EXPECT_EQ(pin, pinExpected) << name << ": pin is " << std::to_string(pin) << ", expected " << std::to_string(pinExpected) ;
+    }
+
+    
     std::thread dispatcherThread;
     std::thread heightSensorControllerThread1;
     std::thread heightSensorControllerThread2;
@@ -524,50 +685,43 @@ protected:
 
 };
 
-
 TEST_F(SystemTestTwoFesto, eStopAfterServiceModeOnFESTO1) {
 	decoder1->sendPulse(PULSE_ESTOP_HIGH, 0);
 	decoder2->sendPulse(PULSE_ESTOP_HIGH, 1);
     
     decoder1->sendPulse(PULSE_ESTOP_LOW, 0);
     WAIT(500);
-    // FESTO1
-    EXPECT_EQ(actuatorController1->getGreenBlinking(),false);
-    EXPECT_EQ(actuatorController1->getYellowBlinking(),false);
-    EXPECT_EQ(actuatorController1->getRedBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(LG_PIN),1);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(LY_PIN),1);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(LR_PIN),1);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(M_FORWARD_PIN),0);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(M_SLOW_PIN),0);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(M_BACKWARD_PIN),0);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(M_STOP_PIN),1);
 
-    // FESTO2
-    EXPECT_EQ(actuatorController2->getGreenBlinking(),false);
-    EXPECT_EQ(actuatorController2->getYellowBlinking(),false);
-    EXPECT_EQ(actuatorController2->getRedBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(LG_PIN),1);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(LY_PIN),1);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(LR_PIN),1);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(M_FORWARD_PIN),0);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(M_SLOW_PIN),0);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(M_BACKWARD_PIN),0);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(M_STOP_PIN),1);
-    
+    // expecting to be in System.EStop 
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_OFF,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_ON,
+        RedLightState::LIGHT_STATE_ON
+    );
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_OFF,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_ON,
+        RedLightState::LIGHT_STATE_ON
+    );
 }
 
 TEST_F(SystemTestTwoFesto, motorStartOnFESTO1WhenLBFInterrupted) {
-	decoder1->sendPulse(PULSE_ESTOP_HIGH, 0);
+    decoder1->sendPulse(PULSE_ESTOP_HIGH, 0);
     WAIT(500);
-	decoder2->sendPulse(PULSE_ESTOP_HIGH, 1);
-	WAIT(500);
+    decoder2->sendPulse(PULSE_ESTOP_HIGH, 1);
+    WAIT(500);
     decoder1->sendPulse(PULSE_BGS_LONG,0);
     WAIT(500);
-	decoder1->sendPulse(PULSE_BRS_SHORT, 0);
-	WAIT(500);
-	decoder1->sendPulse(PULSE_BGS_SHORT, 0);
-	WAIT(500);
+    decoder1->sendPulse(PULSE_BRS_SHORT, 0);
+    WAIT(500);
+    decoder1->sendPulse(PULSE_BGS_SHORT, 0);
+    WAIT(500);
+	// mockInitializationEvents();
+    
     // FESTO1
     EXPECT_EQ(actuatorController1->getGreenBlinking(),false);
     EXPECT_EQ(actuatorController1->getYellowBlinking(),false);

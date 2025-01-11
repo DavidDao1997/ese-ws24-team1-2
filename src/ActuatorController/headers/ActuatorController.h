@@ -16,7 +16,7 @@
 // #include "../../HAL/headers/Actuators_Wrapper.h"
 #include "../../Logging/headers/Logger.h"
 
-#define ACTUATOR_CONTROLLER_NUM_OF_PULSES 36
+#define ACTUATOR_CONTROLLER_NUM_OF_PULSES 18
 
 class ActuatorController : public PulseMsgHandler {
   public:
@@ -30,8 +30,8 @@ class ActuatorController : public PulseMsgHandler {
     int32_t getChannel() override;
     void sendMsg() override;
 
-    int8_t* getPulses();
-    int8_t getNumOfPulses();
+    // int8_t* getPulses();
+    // int8_t getNumOfPulses();
     bool stop();
 
     bool getGreenBlinking();  
@@ -43,7 +43,8 @@ class ActuatorController : public PulseMsgHandler {
     static std::atomic<bool> lrblinking; 
 
     static int8_t numOfPulses;
-    static int8_t pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES];
+    static int8_t pulses_FESTO1[ACTUATOR_CONTROLLER_NUM_OF_PULSES];
+    static int8_t pulses_FESTO2[ACTUATOR_CONTROLLER_NUM_OF_PULSES];
 
   private:
     int32_t channelID;

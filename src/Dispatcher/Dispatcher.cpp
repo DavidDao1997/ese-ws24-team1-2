@@ -42,9 +42,17 @@ void Dispatcher::addKnownSubscriber(std::string channelName){
         Logger::getInstance().log(LogLevel::DEBUG, "Connecting ActuatorController..." + channelName, "Dispatcher");
         int32_t connectionID = name_open(channelName.c_str(), NAME_FLAG_ATTACH_GLOBAL);
         connections.push_back(connectionID);
-        for (uint8_t i = 0; i <  ActuatorController::numOfPulses; ++i) {
-            uint8_t pulse = ActuatorController::pulses[i];
-            connectionsByPulse[pulse].push_back(connectionID);
+
+        if ((0 == strcmp(channelName.c_str(), "actuatorController1"))){
+            for (uint8_t i = 0; i <  ActuatorController::numOfPulses; ++i) {
+                uint8_t pulse = ActuatorController::pulses_FESTO1[i];
+                connectionsByPulse[pulse].push_back(connectionID);
+            }
+        } else {
+            for (uint8_t i = 0; i <  ActuatorController::numOfPulses; ++i) {
+                uint8_t pulse = ActuatorController::pulses_FESTO2[i];
+                connectionsByPulse[pulse].push_back(connectionID);
+            }
         }
     }
 }

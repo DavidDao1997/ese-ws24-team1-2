@@ -19,7 +19,7 @@
 
 #include <gtest/gtest.h>
 
-#define TESTING 0
+#define TESTING 1
 #define LOGLEVEL TRACE
 
 

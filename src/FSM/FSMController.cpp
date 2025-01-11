@@ -62,22 +62,6 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
 
     fsm = new FSM();
 
-    // fsm->getLG1_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_LG1_ON, 0, "PULSE_LG1_ON")
-    //     )
-    // );
-    // fsm->getLG1_BLINKING_1HZ().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_LG1_BLINKING, 1000, "PULSE_LG1_BLINKING(1000)")
-    //     )
-    // );
-    // fsm->getCAPITAL().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_CAPITAL, 0, "PULSE_CAPITAL(1000)")
-    //     )
-    // );
-
     // PULSE_MOTOR1_STOP  
     fsm->getMOTOR_1_STOP().subscribe(
         *new sc::rx::subscription<void>(
@@ -96,24 +80,24 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
             *new VoidObserver(dispatcherConnectionID, PULSE_MOTOR1_FAST, 0, "PULSE_MOTOR1_FAST")
         )
     );
-    // // PULSE_MOTOR2_STOP 
-    // fsm->getMOTOR_STOP().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_MOTOR2_STOP, 0, "PULSE_MOTOR2_STOP")
-    //     )
-    // );
-    // // PULSE_MOTOR2_SLOW
-    // fsm->getMOTOR_SLOW().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_MOTOR2_SLOW, 0, "PULSE_MOTOR2_SLOW")
-    //     )
-    // );
-    // // PULSE_MOTOR2_FAST  
-    // fsm->getMOTOR_FAST().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_MOTOR2_FAST, 0, "PULSE_MOTOR2_FAST")
-    //     )
-    // );
+    // PULSE_MOTOR2_STOP 
+    fsm->getMOTOR_2_STOP().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_MOTOR2_STOP, 0, "PULSE_MOTOR2_STOP")
+        )
+    );
+    // PULSE_MOTOR2_SLOW
+    fsm->getMOTOR_2_SLOW().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_MOTOR2_SLOW, 0, "PULSE_MOTOR2_SLOW")
+        )
+    );
+    // PULSE_MOTOR2_FAST  
+    fsm->getMOTOR_2_FAST().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_MOTOR2_FAST, 0, "PULSE_MOTOR2_FAST")
+        )
+    );
     // PULSE_LR1_ON
     fsm->getLR1_ON().subscribe(
         *new sc::rx::subscription<void>(
@@ -180,61 +164,61 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     			*new VoidObserver(dispatcherConnectionID, PULSE_FSM, FST_1_PUK_HEIGHT_NOT_VALID, "PULSE_FST_1_PUK_HEIGHT_NOT_VALID")
 		   )
 	   );
-    // // PULSE_LR2_ON
-    // fsm->getLR2_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_LR2_ON, 0, "PULSE_LR2_ON")
-    //     )
-    // );
+    // PULSE_LR2_ON
+    fsm->getLR2_ON().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LR2_ON, 0, "PULSE_LR2_ON")
+        )
+    );
     // // PULSE_LR2_BLINKING // msg.value int32_t (period [ms])
     // fsm->getLR2_BLINKING().subscribe(
     //     *new sc::rx::subscription<void>(
     //         *new VoidObserver(dispatcherConnectionID, PULSE_LR2_BLINKING, 0, "PULSE_LR2_BLINKING")
     //     )
     // );
-    // // PULSE_LR2_OFF      
-    // fsm->getLR2_OFF().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_LR2_OFF, 0, "PULSE_LR2_OFF")
-    //     )
-    // );
-    // // PULSE_LY2_ON
-    // fsm->getLY2_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_LY2_ON, 0, "PULSE_LY2_ON")
-    //     )
-    // );
-    // // PULSE_LY2_BLINKING // msg.value int32_t (period [ms])
-    // fsm->getLY2_BLINKING().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_LY2_BLINKING, 0, "PULSE_LY2_BLINKING")
-    //     )
-    // );
-    // // PULSE_LY2_OFF      
-    // fsm->getLY2_OFF().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_LY2_OFF, 0, "PULSE_LY2_OFF")
-    //     )
-    // );
-    // // PULSE_LG2_ON
-    // fsm->getLG2_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_LG2_ON, 0, "PULSE_LG2_ON")
-    //     )
-    // );
-    // // PULSE_LG2_BLINKING // msg.value int32_t (period [ms])
-    // fsm->getLG2_BLINKING().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_LG2_BLINKING, 0, "PULSE_LG2_BLINKING")
-    //     )
-    // );
-    // // PULSE_LG2_OFF      
-    // fsm->getLG2_OFF().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_LG2_OFF, 0, "PULSE_LG2_OFF")
-    //     )
-    // );
-    // // PULSE_Q11_ON      
+    // PULSE_LR2_OFF      
+    fsm->getLR2_OFF().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LR2_OFF, 0, "PULSE_LR2_OFF")
+        )
+    );
+    // PULSE_LY2_ON
+    fsm->getLY2_ON().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LY2_ON, 0, "PULSE_LY2_ON")
+        )
+    );
+    // PULSE_LY2_BLINKING // msg.value int32_t (period [ms])
+    fsm->getLY2_BLINKING_1HZ().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LY2_BLINKING, 0, "PULSE_LY2_BLINKING")
+        )
+    );
+    // PULSE_LY2_OFF      
+    fsm->getLY2_OFF().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LY2_OFF, 0, "PULSE_LY2_OFF")
+        )
+    );
+    // PULSE_LG2_ON
+    fsm->getLG2_ON().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LG2_ON, 0, "PULSE_LG2_ON")
+        )
+    );
+    // PULSE_LG2_BLINKING // msg.value int32_t (period [ms])
+    fsm->getLY2_BLINKING_1HZ().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LG2_BLINKING, 0, "PULSE_LG2_BLINKING")
+        )
+    );
+    // PULSE_LG2_OFF      
+    fsm->getLG2_OFF().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LG2_OFF, 0, "PULSE_LG2_OFF")
+        )
+    );
+    // PULSE_Q11_ON      
      fsm->getQ11_ON().subscribe(
          *new sc::rx::subscription<void>(
              *new VoidObserver(dispatcherConnectionID, PULSE_Q11_ON, 0, "PULSE_Q11_ON")
@@ -384,8 +368,8 @@ void FSMController::handleMsg() {
                     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBF_OPEN..."+ std::to_string(msgVal), "FSMController");
                     // FIXME hacked
                     if (msgVal == 0) {
-                        fsm->raiseFST_1_POSITION_INGRESS_DISTANCE_VALID();
-                        fsm->raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
+                        // fsm->raiseFST_1_POSITION_INGRESS_DISTANCE_VALID();
+                        // fsm->raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
                     } else {
                         // fsm->raiseFST_2_POSITION_INGRESS_DISTANCE_VALID();
                         // fsm->raiseFST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
@@ -483,6 +467,15 @@ void FSMController::handleMsg() {
             }
             if (fsm->isStateActive(FSM::State::FSM_Festo1__Egress_Egress_Egress_Waiting)) {
                 Logger::getInstance().log(LogLevel::DEBUG, "Active State: " + stateToString(FSM::State::FSM_Festo1__Egress_Egress_Egress_Waiting), "FSMController");
+            }
+            if (fsm->isStateActive(FSM::State::FSM_Festo1_Ingress_Ingress_Ingress_PukPresent)) {
+                Logger::getInstance().log(LogLevel::DEBUG, "Active State: " + stateToString(FSM::State::FSM_Festo1_Ingress_Ingress_Ingress_PukPresent), "FSMController");
+            }
+            if (fsm->isStateActive(FSM::State::FSM_Festo1_Ingress_Ingress_Ingress_CreatingDistance)) {
+                Logger::getInstance().log(LogLevel::DEBUG, "Active State: " + stateToString(FSM::State::FSM_Festo1_Ingress_Ingress_Ingress_CreatingDistance), "FSMController");
+            }
+            if (fsm->isStateActive(FSM::State::FSM_Festo2__Ingress_Ingress_Ingress_Idle)) {
+                Logger::getInstance().log(LogLevel::DEBUG, "Active State: " + stateToString(FSM::State::FSM_Festo2__Ingress_Ingress_Ingress_Idle), "FSMController");
             }
             // for (int i = static_cast<int>(FSM::State::NO_STATE); i < static_cast<int>(FSM::State::TEST_EvaluateTester); ++i) {
             //     FSM::State state = static_cast<FSM::State>(i);
