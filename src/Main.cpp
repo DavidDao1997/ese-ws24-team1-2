@@ -19,7 +19,7 @@
 
 #include <gtest/gtest.h>
 
-#define TESTING 1
+#define TESTING 0
 #define LOGLEVEL TRACE
 
 
@@ -66,13 +66,15 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         // TODO run as Server TO BE TESTED
         std::string dispatcherChannelName = "dispatcher";
         Dispatcher *dispatcher = new Dispatcher(dispatcherChannelName);
+        std::thread dispatcherThread(std::bind(&Dispatcher::handleMsg, dispatcher));
+
+
         Decoder *decoder = new Decoder(dispatcherChannelName, FESTO1);
         std::string actuatorControllerChannelName = "actuatorController1";
         Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
-        ActuatorController *actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
-        dispatcher->addSubscriber(
-            actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
-        );
+        ActuatorController *actuatorController = new ActuatorController(FESTO1, actuatorControllerChannelName, actuatorsWrapper);
+         std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
+        actuatorController->subscribeToDispatcher();
 
         TSCADC* tsc = new TSCADC();
         ADC* adc = new ADC(*tsc);
@@ -82,9 +84,9 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         dispatcher->addSubscriber(
             fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
         );
-        std::thread dispatcherThread(std::bind(&Dispatcher::handleMsg, dispatcher));
+        
         std::thread fsmControllerHandleMsgThread(std::bind(&FSMController::handleMsg, fsmController));
-        std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
+       
         std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
         dispatcherThread.join();
         // fsmThread.join();
@@ -99,32 +101,45 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         logger.log(LogLevel::INFO, "Running as Client -> FESTO2...", "Main");
         system("gns");
         // TODO run as Client TO BE TESTED
-        logger.log(LogLevel::DEBUG, "1", "Main");
+        
         std::string dispatcherChannelName = "dispatcher";
-        logger.log(LogLevel::DEBUG, "2", "Main");
+        
         Decoder *decoder = new Decoder(dispatcherChannelName, FESTO2);
-        logger.log(LogLevel::DEBUG, "3", "Main");
+        logger.log(LogLevel::DEBUG, "Decoder created", "Main");
         std::string actuatorControllerChannelName = "actuatorController2";
-        logger.log(LogLevel::DEBUG, "4", "Main");
+      
         Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
-        logger.log(LogLevel::DEBUG, "5", "Main");
-        ActuatorController *actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
-        logger.log(LogLevel::DEBUG, "6", "Main");
-        TSCADC* tsc = new TSCADC();
-        logger.log(LogLevel::DEBUG, "7", "Main");
-        ADC* adc = new ADC(*tsc);
-        logger.log(LogLevel::DEBUG, "8", "Main");
-        HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl2", dispatcherChannelName, FESTO2, tsc, adc);
-        logger.log(LogLevel::DEBUG, "9", "Main");
-        std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
-        logger.log(LogLevel::DEBUG, "10", "Main");
+   
+        ActuatorController *actuatorController = new ActuatorController(FESTO2,actuatorControllerChannelName, actuatorsWrapper);
+        logger.log(LogLevel::DEBUG, "ActuatorController created", "Main");
         std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
-        logger.log(LogLevel::DEBUG, "11", "Main");
+        actuatorController->subscribeToDispatcher();
+        
+        TSCADC* tsc = new TSCADC();
+        ADC* adc = new ADC(*tsc);
+        logger.log(LogLevel::DEBUG, "ActuatorController init done", "Main");
+        HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl2", dispatcherChannelName, FESTO2, tsc, adc);
+        std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
+        
         std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
 
         heightSensorControllerThread.join();
         actuatorControllerThread.join();
         decoderThread.join();
+
+
+
+
+        // TODO wenn Client viel später als der Server an ist, also die fsm schon im wartezusatnd bekommet der client die actuator-
+        // Befehler für die lampe und motor aus nicht mit. also muss das wahrscheinlich erst passieren wenn der erste 
+        // e-stop check durch ist!
+
+
+
+
+
+
+
     } else {
         logger.log(LogLevel::INFO, "Running Fake Setup as Server ...", "Main");
         logger.log(LogLevel::INFO, std::string("Usage: ") + argv[0] + " -s | -c", "Main");
@@ -139,7 +154,7 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
 
         std::string actuatorControllerChannelName = "actuatorController";
         Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
-        ActuatorController *actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
+        ActuatorController *actuatorController = new ActuatorController(FESTO1,actuatorControllerChannelName, actuatorsWrapper);
         dispatcher->addSubscriber(
             actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
         );

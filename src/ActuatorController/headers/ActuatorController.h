@@ -21,8 +21,10 @@
 class ActuatorController : public PulseMsgHandler {
   public:
     // TODO check if festo 1 or festo 2 in parameter list
-    ActuatorController(const std::string name, I_Actuators_Wrapper *actuators);
+    ActuatorController(uint8_t festo, const std::string name, I_Actuators_Wrapper *actuators);
     virtual ~ActuatorController();
+
+    void subscribeToDispatcher();
 
     void handleMsg() override;
     int32_t getChannel() override;
@@ -40,14 +42,17 @@ class ActuatorController : public PulseMsgHandler {
     static std::atomic<bool> lyblinking;
     static std::atomic<bool> lrblinking; 
 
+    static int8_t numOfPulses;
+    static int8_t pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES];
+
   private:
     int32_t channelID;
+    uint8_t festoID;
     name_attach_t *actuatorControllerChannel;
     I_Actuators_Wrapper *actuators;
 
     bool running;
-    static int8_t numOfPulses;
-    static int8_t pulses[ACTUATOR_CONTROLLER_NUM_OF_PULSES];
+    
 
     
 

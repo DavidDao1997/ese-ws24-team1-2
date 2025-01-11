@@ -39,13 +39,15 @@ protected:
 
         decoder = new Mock_Decoder(dispatcherChannelName);
         
-        std::string actuatorControllerChannelName = "actuatorController";
+        std::string actuatorControllerChannelName = "actuatorController1";
         actuatorsWrapper = new Mock_Actuators_Wrapper();
         
-        actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
-        dispatcher->addSubscriber(
-            actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
-        );
+        actuatorController = new ActuatorController(FESTO1, actuatorControllerChannelName, actuatorsWrapper);
+        actuatorControllerThread = std::thread(std::bind(&ActuatorController::handleMsg, actuatorController));
+        actuatorController->subscribeToDispatcher();
+        // dispatcher->addSubscriber(
+        //     actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
+        // );
 
         TSCADC* tsc = new TSCADC();
         ADC* adc = new ADC(*tsc);
@@ -60,7 +62,6 @@ protected:
         );
         WAIT(1000);
         fsmControllerHandleMsgThread = std::thread(std::bind(&FSMController::handleMsg, fsmController));
-        actuatorControllerThread = std::thread(std::bind(&ActuatorController::handleMsg, actuatorController));
         decoderThread = std::thread(std::bind(&Mock_Decoder::handleMsg, decoder));
         WAIT(1000);
     }
@@ -134,10 +135,10 @@ protected:
         //from Systemtest
         decoder = new Mock_Decoder(dispatcherChannelName);
 
-        std::string actuatorControllerChannelName = "actuatorController";
+        std::string actuatorControllerChannelName = "actuatorController1";
         actuatorsWrapper = new Mock_Actuators_Wrapper();
 
-        actuatorController = new ActuatorController(actuatorControllerChannelName, actuatorsWrapper);
+        actuatorController = new ActuatorController(FESTO1,actuatorControllerChannelName, actuatorsWrapper);
         dispatcher->addSubscriber(
             actuatorController->getChannel(), actuatorController->getPulses(), actuatorController->getNumOfPulses()
         );
@@ -244,23 +245,23 @@ TEST_F(SystemTest, motorsStartWhenLBFInterruptOnFESTO1) {
     EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),0);
 }
 */
-TEST_F(SystemTest, eStopAfterServiceModeOnFESTO1) {
-	decoder->sendPulse(PULSE_ESTOP_HIGH, 0);
-	decoder->sendPulse(PULSE_ESTOP_HIGH, 1);
-    //startupSequenceNoServiceMode();
-    decoder->sendPulse(PULSE_ESTOP_LOW, 0);
-    WAIT(3000);
-    EXPECT_EQ(actuatorController->getGreenBlinking(),false);
-    EXPECT_EQ(actuatorController->getYellowBlinking(),false);
-    EXPECT_EQ(actuatorController->getRedBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
-    EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),1);
-    EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),1);
-    EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),0);
-    EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
-    EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
-    EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
-}
+// TEST_F(SystemTest, eStopAfterServiceModeOnFESTO1) {
+// 	decoder->sendPulse(PULSE_ESTOP_HIGH, 0);
+// 	decoder->sendPulse(PULSE_ESTOP_HIGH, 1);
+//     //startupSequenceNoServiceMode();
+//     decoder->sendPulse(PULSE_ESTOP_LOW, 0);
+//     WAIT(3000);
+//     EXPECT_EQ(actuatorController->getGreenBlinking(),false);
+//     EXPECT_EQ(actuatorController->getYellowBlinking(),false);
+//     EXPECT_EQ(actuatorController->getRedBlinking(),false);
+//     EXPECT_EQ(actuatorsWrapper->getActuators(LG_PIN),1);
+//     EXPECT_EQ(actuatorsWrapper->getActuators(LY_PIN),1);
+//     EXPECT_EQ(actuatorsWrapper->getActuators(LR_PIN),1);
+//     EXPECT_EQ(actuatorsWrapper->getActuators(M_FORWARD_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper->getActuators(M_SLOW_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper->getActuators(M_BACKWARD_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper->getActuators(M_STOP_PIN),1);
+// }
 
 
 /*
@@ -407,3 +408,216 @@ TEST_F(SystemTest, heartbeat){
 //     // heightSensorControllerThread.join();
 
 // }
+
+
+class SystemTestTwoFesto : public ::testing::Test {
+protected:
+    void SetUp() override {
+        Logger::getInstance().log(LogLevel::INFO, "Setup SystemTests...", "SystemTestTwoFesto");
+        std::string dispatcherChannelName = "dispatcher";
+        dispatcher = new Dispatcher(dispatcherChannelName);
+        dispatcherThread = std::thread(std::bind(&Dispatcher::handleMsg, dispatcher));
+
+        decoder1 = new Mock_Decoder(dispatcherChannelName);
+        decoder2 = new Mock_Decoder(dispatcherChannelName);
+        
+        std::string actuatorControllerChannelName1 = "actuatorController1";
+        std::string actuatorControllerChannelName2 = "actuatorController2";
+        actuatorsWrapper1 = new Mock_Actuators_Wrapper();
+        actuatorsWrapper2 = new Mock_Actuators_Wrapper();
+        
+        actuatorController1 = new ActuatorController(FESTO1, actuatorControllerChannelName1, actuatorsWrapper1);
+        actuatorController2 = new ActuatorController(FESTO2, actuatorControllerChannelName2, actuatorsWrapper2);
+        actuatorControllerThread1 = std::thread(std::bind(&ActuatorController::handleMsg, actuatorController1));
+        actuatorControllerThread2 = std::thread(std::bind(&ActuatorController::handleMsg, actuatorController2));
+        actuatorController1->subscribeToDispatcher();
+        actuatorController2->subscribeToDispatcher();
+        
+        TSCADC* tsc1 = new TSCADC();
+        TSCADC* tsc2 = new TSCADC();
+        ADC* adc1 = new ADC(*tsc1);
+        ADC* adc2 = new ADC(*tsc2);
+        heightSensorController1 = new HeightSensorControl("HSControl1", dispatcherChannelName, FESTO1, tsc1, adc1); 
+        heightSensorController2 = new HeightSensorControl("HSControl2", dispatcherChannelName, FESTO2, tsc2, adc2); 
+
+
+        heightSensorControllerThread1 = std::thread(std::bind(&HeightSensorControl::handleMsg, heightSensorController1));
+        heightSensorControllerThread2 = std::thread(std::bind(&HeightSensorControl::handleMsg, heightSensorController2));
+
+        fsmController = new FSMController(dispatcherChannelName);
+        dispatcher->addSubscriber(
+            fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
+        );
+        WAIT(1000);
+        Logger::getInstance().log(LogLevel::DEBUG, "Starting fsmController...", "SystemTestTwoFesto");
+        fsmControllerHandleMsgThread = std::thread(std::bind(&FSMController::handleMsg, fsmController));
+        Logger::getInstance().log(LogLevel::DEBUG, "Starting DECODER...", "SystemTestTwoFesto");
+        decoderThread1 = std::thread(std::bind(&Mock_Decoder::handleMsg, decoder1));
+        decoderThread2 = std::thread(std::bind(&Mock_Decoder::handleMsg, decoder2));
+        WAIT(1000);
+    }
+
+    void TearDown() override {
+        Logger::getInstance().log(LogLevel::INFO, "Tear Down Tests...", "SystemTestTwoFesto");
+        if (!fsmController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop fsmControllerHandleMsgThread has not ended...", "SystemTestTwoFesto");}
+        // if (!decoder->stop()) {std::cout << "loop decoderThread has ended" << std::endl;} // MOCK DOESNT HAVE A MSGHANDLER
+        if (!actuatorController1->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop actuatorControllerThread1 has not ended...", "SystemTestTwoFesto");}
+        if (!actuatorController2->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop actuatorControllerThread1 has not ended...", "SystemTestTwoFesto");}
+        if (!heightSensorController1->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop heightSensorControllerThread1 has not ended...", "SystemTestTwoFesto");}
+        if (!heightSensorController2->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop heightSensorControllerThread2 has not ended...", "SystemTestTwoFesto");}
+        if (!dispatcher->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop dispatcherThread has not ended...", "SystemTestTwoFesto");}
+
+        Logger::getInstance().log(LogLevel::INFO, "ENDING TREADS...", "SystemTestTwoFesto");
+        // if (fsmControllerHandleMsgThread.joinable()) 
+        fsmControllerHandleMsgThread.join();
+        Logger::getInstance().log(LogLevel::INFO, "Thread fsmControllerHandleMsgThread Ended...", "SystemTestTwoFesto");
+        // if (decoderThread.joinable()) 
+        decoderThread1.join();
+        decoderThread2.join();
+        Logger::getInstance().log(LogLevel::INFO, "Thread decoderThread Ended...", "SystemTestTwoFesto");
+        // if (actuatorControllerThread.joinable()) 
+        actuatorControllerThread1.join();
+        actuatorControllerThread2.join();
+        Logger::getInstance().log(LogLevel::INFO, "Thread actuatorControllerThread Ended...", "SystemTestTwoFesto");
+        // if (heightSensorControllerThread.joinable()) 
+        heightSensorControllerThread1.join();  
+        heightSensorControllerThread2.join();  
+        Logger::getInstance().log(LogLevel::INFO, "Thread heightSensorControllerThread Ended...", "SystemTestTwoFesto"); 
+        // if (dispatcherThread.joinable()) 
+        dispatcherThread.join();
+        Logger::getInstance().log(LogLevel::INFO, "Thread dispatcherThread Ended...", "SystemTestTwoFesto");
+
+        delete heightSensorController1;
+        delete heightSensorController2;
+		delete decoder1;
+        delete decoder2;
+		delete fsmController;
+		delete actuatorController1;
+        delete actuatorController2;
+		delete actuatorsWrapper1;
+        delete actuatorsWrapper2;
+        delete dispatcher;
+    }
+
+
+    std::thread dispatcherThread;
+    std::thread heightSensorControllerThread1;
+    std::thread heightSensorControllerThread2;
+    std::thread fsmControllerHandleMsgThread;
+    std::thread actuatorControllerThread1;
+    std::thread actuatorControllerThread2;
+    std::thread decoderThread1;
+    std::thread decoderThread2;
+
+
+    Dispatcher* dispatcher;
+    ActuatorController* actuatorController1;
+    ActuatorController* actuatorController2;
+    HeightSensorControl* heightSensorController1;
+    HeightSensorControl* heightSensorController2;
+    FSMController* fsmController;
+    Mock_Decoder* decoder1;
+    Mock_Decoder* decoder2;
+    Mock_Actuators_Wrapper* actuatorsWrapper1;
+    Mock_Actuators_Wrapper* actuatorsWrapper2;
+
+
+};
+
+
+TEST_F(SystemTestTwoFesto, eStopAfterServiceModeOnFESTO1) {
+	decoder1->sendPulse(PULSE_ESTOP_HIGH, 0);
+	decoder2->sendPulse(PULSE_ESTOP_HIGH, 1);
+    
+    decoder1->sendPulse(PULSE_ESTOP_LOW, 0);
+    WAIT(500);
+    // FESTO1
+    EXPECT_EQ(actuatorController1->getGreenBlinking(),false);
+    EXPECT_EQ(actuatorController1->getYellowBlinking(),false);
+    EXPECT_EQ(actuatorController1->getRedBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(LG_PIN),1);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(LY_PIN),1);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(LR_PIN),1);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(M_FORWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(M_SLOW_PIN),0);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(M_BACKWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(M_STOP_PIN),1);
+
+    // FESTO2
+    EXPECT_EQ(actuatorController2->getGreenBlinking(),false);
+    EXPECT_EQ(actuatorController2->getYellowBlinking(),false);
+    EXPECT_EQ(actuatorController2->getRedBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(LG_PIN),1);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(LY_PIN),1);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(LR_PIN),1);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(M_FORWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(M_SLOW_PIN),0);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(M_BACKWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(M_STOP_PIN),1);
+    
+}
+
+TEST_F(SystemTestTwoFesto, motorStartOnFESTO1WhenLBFInterrupted) {
+	decoder1->sendPulse(PULSE_ESTOP_HIGH, 0);
+    WAIT(500);
+	decoder2->sendPulse(PULSE_ESTOP_HIGH, 1);
+	WAIT(500);
+    decoder1->sendPulse(PULSE_BGS_LONG,0);
+    WAIT(500);
+	decoder1->sendPulse(PULSE_BRS_SHORT, 0);
+	WAIT(500);
+	decoder1->sendPulse(PULSE_BGS_SHORT, 0);
+	WAIT(500);
+    // FESTO1
+    EXPECT_EQ(actuatorController1->getGreenBlinking(),false);
+    EXPECT_EQ(actuatorController1->getYellowBlinking(),false);
+    EXPECT_EQ(actuatorController1->getRedBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(LG_PIN),1);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(LY_PIN),0);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(LR_PIN),0);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(M_FORWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(M_SLOW_PIN),0);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(M_BACKWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(M_STOP_PIN),1);
+
+    // FESTO2
+    EXPECT_EQ(actuatorController2->getGreenBlinking(),false);
+    EXPECT_EQ(actuatorController2->getYellowBlinking(),false);
+    EXPECT_EQ(actuatorController2->getRedBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(LG_PIN),1);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(LY_PIN),0);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(LR_PIN),0);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(M_FORWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(M_SLOW_PIN),0);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(M_BACKWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(M_STOP_PIN),1);
+    WAIT(500);
+	decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+	WAIT(500);
+	decoder1->sendPulse(PULSE_LBF_OPEN, 0); // TODO -> FSM CONTROLLER SENDS YELLOW LAMP OFF AFTER SI SENDS YELLOW BLINKING????????????
+    WAIT(2000);
+    // FESTO1
+    EXPECT_EQ(actuatorController1->getGreenBlinking(),false);
+    EXPECT_EQ(actuatorController1->getYellowBlinking(),true);
+    EXPECT_EQ(actuatorController1->getRedBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(LG_PIN),1);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(LY_PIN),0);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(LR_PIN),0);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(M_FORWARD_PIN),1);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(M_SLOW_PIN),0);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(M_BACKWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper1->getActuators(M_STOP_PIN),0);
+
+    // FESTO2
+    EXPECT_EQ(actuatorController2->getGreenBlinking(),false);
+    EXPECT_EQ(actuatorController2->getYellowBlinking(),true);
+    EXPECT_EQ(actuatorController2->getRedBlinking(),false);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(LG_PIN),1);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(LY_PIN),0);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(LR_PIN),0);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(M_FORWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(M_SLOW_PIN),0);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(M_BACKWARD_PIN),0);
+    EXPECT_EQ(actuatorsWrapper2->getActuators(M_STOP_PIN),1);
+
+}
