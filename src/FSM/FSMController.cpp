@@ -1,4 +1,4 @@
-#include "FSMController.h"
+#include "headers/FsmController.h"
 #include <string>
 
 #define FESTO1 0
@@ -464,9 +464,9 @@ void FSMController::handleMsg() {
                     break;
             }
 
-            if (fsm->isStateActive(FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A)) {
-                Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A", "FSMController");
-            }
+            // if (fsm->isStateActive(FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A)) {
+            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A", "FSMController");
+            // }
             // if (fsm->isStateActive(FSM::State::B)) {
             //     Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::B", "FSMController");
             // }

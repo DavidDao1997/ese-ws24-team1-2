@@ -16,9 +16,9 @@
 #include "../../Util/headers/Util.h"
 #include "../../HAL/headers/ADC.h"
 #include "../../HAL/headers/TSCADC.h"
-#include "../../HeightController/header/HeightSensorControl.h"
+#include "../../HeightController/headers/HeightSensorControl.h"
 #include "../../Decoder/headers/Decoder.h"
-#include "../../FSM/FSMController.h" // TODO put in headers Folder
+#include "../../FSM/headers/FsmController.h" // TODO put in headers Folder
 
 // TODO main in here. this is the startup for both festos
 class FestoSystem {

@@ -3,12 +3,11 @@
 
 #include <functional> // For std::bind
 
-#include "../Dispatcher/headers/PulseMsgConfig.h"
-#include "../Dispatcher/headers/PulseMsgHandler.h"
-#include "gen/src-gen/FSM.h"
-#include "../Util/headers/Util.h"
-
-#include "../Logging/headers/Logger.h"
+#include "../../Dispatcher/headers/PulseMsgConfig.h"
+#include "../../Dispatcher/headers/PulseMsgHandler.h"
+#include "../gen/src-gen/FSM.h"
+#include "../../Util/headers/Util.h"
+#include "../../Logging/headers/Logger.h"
 
 #define FSM_CONTROLLER_NUM_OF_PULSES 21
 

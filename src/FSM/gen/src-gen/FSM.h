@@ -109,11 +109,11 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent,
 			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected,
 			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring,
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_AA,
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_BB,
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_CC,
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error2,
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate2,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate,
 			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_,
 			FSM_Festo2__HeightMeasurement_Paused,
 			FSM_Festo2__HeightMeasurement_E_STOP,
@@ -229,11 +229,11 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring {10};
-		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_AA {10};
-		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_BB {10};
-		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_CC {10};
-		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error2 {10};
-		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate2 {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_ {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_Paused {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_E_STOP {10};
@@ -920,7 +920,6 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz();
 		void enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
 		void enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-		void enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent();
 		void enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_();
 		void enact_FSM_Festo2__Sorting_Sorting_Sorting_RampFull();
 		void enact_FSM_Festo2__Egress_Egress_Egress_Transfer();
@@ -937,7 +936,6 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
 		void exact___ServiceMode();
 		void exact_FSM_Festo2__Ingress_Ingress_Ingress_Idle();
-		void exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent();
 		void exact_FSM_Festo2__Sorting_Sorting_Sorting_RampFull();
 		void exact_FSM_Festo2__Egress_Egress_Egress_Transfer();
 		void enseq_FSM_Festo1_Ingress_Ingress_default();
@@ -1015,11 +1013,11 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent_default();
 		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected_default();
 		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_default();
-		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_AA_default();
-		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_BB_default();
-		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_CC_default();
-		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error2_default();
-		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate2_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate_default();
 		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final__default();
 		void enseq_FSM_Festo2__HeightMeasurement_Paused_default();
 		void enseq_FSM_Festo2__HeightMeasurement_E_STOP_default();
@@ -1172,11 +1170,11 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent();
 		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected();
 		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring();
-		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_AA();
-		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_BB();
-		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_CC();
-		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error2();
-		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate2();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate();
 		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_();
 		void exseq_FSM_Festo2__HeightMeasurement_Paused();
 		void exseq_FSM_Festo2__HeightMeasurement_E_STOP();
@@ -1355,11 +1353,11 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_AA_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_BB_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_CC_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error2_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate2_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final__react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_Paused_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_E_STOP_react(const sc::integer transitioned_before);

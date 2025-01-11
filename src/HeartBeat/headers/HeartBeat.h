@@ -37,13 +37,14 @@ class HeartBeat : public PulseMsgHandler {
     void handleMsg() override;
 
   private:
-    void handleDisconnect(bool disconnect);
+    void handleDisconnect();
     bool running;
     bool eStopPressed;
     int32_t channelID;
     int32_t festoId;
     int32_t otherFesto;
     int32_t dispatcherChannel;
+    bool messageReceivedOnce;
     name_attach_t* heartBeatChannel;
     std::mutex heartbeatMutex;
     std::chrono::steady_clock::time_point lastHeartbeatReceived;

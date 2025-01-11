@@ -10,16 +10,16 @@
 #include "Util/headers/Util.h"
 #include "HAL/headers/ADC.h"
 #include "HAL/headers/TSCADC.h"
-#include "HeightController/header/HeightSensorControl.h"
+#include "HeightController/headers/HeightSensorControl.h"
 #include "Decoder/headers/Decoder.h"
 //Here is the FSM QualityGate and new FSM Controller
-#include "FSM/FSMController.h"
+#include "FSM/headers/FsmController.h"
 // #include "FSM/src-gen/FSM_QualityGate.h"
 #include "Logging/headers/Logger.h"
 
 #include <gtest/gtest.h>
 
-#define TESTING 0
+#define TESTING 1
 #define LOGLEVEL TRACE
 
 

@@ -18,6 +18,7 @@ HeartBeat::HeartBeat(uint8_t festoNr) {
     // check if festo 1 or festo 2 in parameter list // TODO What happens if named Channel not created yet? create namedChannels in main on qnx level. who creates it then? 
     dispatcherChannel = name_open(std::string(DISPATCHERNAME).c_str(),NAME_FLAG_ATTACH_GLOBAL);
     festoId = festoNr;
+    messageReceivedOnce = false;
     
     if (festoNr == FESTO1){
         heartBeatChannel = createNamedChannel("Festo1HeartBeat");
@@ -86,7 +87,7 @@ void HeartBeat::sendMsg() {
 
             if (timeSinceLastHeartbeat > 100 && messageReceivedOnce) { // Adjust threshold as necessary
                 Logger::getInstance().log(LogLevel::WARNING, "Heartbeat overdue. Disconnecting...", "HeartBeat");
-                handleDisconnect(disconnect); // Handle disconnection
+                handleDisconnect(); // Handle disconnection
                 disconnect = true;
             } else {
                 disconnect = false;
