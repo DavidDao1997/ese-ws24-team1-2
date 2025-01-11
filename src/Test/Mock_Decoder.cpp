@@ -13,8 +13,7 @@ Mock_Decoder::Mock_Decoder(const std::string dispatcherChannelName){
     channelID = createChannel();
 
     // create a connection to Dispatcher
-    dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
-
+    dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), NAME_FLAG_ATTACH_GLOBAL);
 }
 
 Mock_Decoder::~Mock_Decoder() {

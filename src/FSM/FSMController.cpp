@@ -58,7 +58,7 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     running = false;
     subThreadsRunning = false;
 
-    dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), 0);
+    dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), NAME_FLAG_ATTACH_GLOBAL);
 
     fsm = new FSM();
 

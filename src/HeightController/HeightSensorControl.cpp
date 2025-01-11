@@ -19,7 +19,7 @@ HeightSensorControl::HeightSensorControl(const std::string channelName, const st
     hsControllerChannel = createNamedChannel(channelName);
     channelID = hsControllerChannel->chid;
     running = false;
-    dispatcherConnectionID = name_open(dispatcherName.c_str(), 0);
+    dispatcherConnectionID = name_open(dispatcherName.c_str(), NAME_FLAG_ATTACH_GLOBAL);
     if ((festoID == FESTO1) || (festoID == FESTO2)){
         festoNr = festoID;
     } else {

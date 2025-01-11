@@ -57,7 +57,7 @@ void Dispatcher::handleMsg() {
     running = true;
 
     while (running) {
-        int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
+        int recvid = MsgReceive(channelID, &msg, sizeof(_pulse), nullptr);
         if (recvid < 0) {
             Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "Dispatcher");
             //exit(EXIT_FAILURE); // TODO exit??? was passiert wenn der dispatcher stirbt. fehlerbhandlung?
@@ -66,21 +66,11 @@ void Dispatcher::handleMsg() {
         if (recvid == 0) { // Pulse received
             switch (msg.code) {
             case PULSE_STOP_RECV_THREAD:
-                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_STOP_RECV_THREAD...", "Dispatcher");
+                Logger::getInstance().log(LogLevel::TRACE, "received PULSE_STOP_RECV_THREAD...", "Dispatcher");
                 running = false;
                 break;
-                // case PULSE_DISPATCHER_SUBSCRIBE:
-                // std::cout << "subscribing" << std::endl;
-                //  coids add msg.coid;
-                //  events = msg.events;
-                /*
-                map[key]value
-                {
-                        "10234": PULSE_DISPATCHER_SUBSCRIBE, PULSE_DISPATCHER_SUBSCRIBE,PULSE_DISPATCHER_SUBSCRIBE
-                }
-                */
-                // break;
             default:
+                Logger::getInstance().log(LogLevel::TRACE, "Dispatcher forwarding messages", "Dispatcher");
                 // char buffer[100];
                 // sprintf(buffer, "DISPATCHER: Revieved pulse %d\n", msg.code);
                 // std::cout << buffer << std::flush;
@@ -98,6 +88,9 @@ void Dispatcher::handleMsg() {
                     }
                 }
             }
+        } else if (msg.type == _IO_CONNECT) {
+            Logger::getInstance().log(LogLevel::TRACE, "Replying to connection...", "Dispatcher");
+            MsgReply( recvid, EOK, NULL, 0 );
         }
     }
 }
