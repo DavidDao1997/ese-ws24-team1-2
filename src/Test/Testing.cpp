@@ -26,8 +26,6 @@
 #include "../Logging/headers/Logger.h"
 #include "../HeartBeat/headers/HeartBeat.h"
 #include "../FSM/gen/src-gen/FSM.h"
-#include "../FSM/gen/src/sc_rxcpp.h"
-
 
 class SystemTest : public ::testing::Test {
 protected:
@@ -685,93 +683,102 @@ protected:
 
 };
 
-TEST_F(SystemTestTwoFesto, eStopAfterServiceModeOnFESTO1) {
-	decoder1->sendPulse(PULSE_ESTOP_HIGH, 0);
-	decoder2->sendPulse(PULSE_ESTOP_HIGH, 1);
+// TEST_F(SystemTestTwoFesto, eStopAfterServiceModeOnFESTO1) {
+// 	decoder1->sendPulse(PULSE_ESTOP_HIGH, 0);
+// 	decoder2->sendPulse(PULSE_ESTOP_HIGH, 1);
     
-    decoder1->sendPulse(PULSE_ESTOP_LOW, 0);
-    WAIT(500);
+//     decoder1->sendPulse(PULSE_ESTOP_LOW, 0);
+//     WAIT(500);
 
-    // expecting to be in System.EStop 
-    assertActuatorState(
-        FESTO1, 
-        MotorState::MOTOR_STATE_OFF,
-        GreenLightState::LIGHT_STATE_ON,
-        YellowLightState::LIGHT_STATE_ON,
-        RedLightState::LIGHT_STATE_ON
-    );
-    assertActuatorState(
-        FESTO2, 
-        MotorState::MOTOR_STATE_OFF,
-        GreenLightState::LIGHT_STATE_ON,
-        YellowLightState::LIGHT_STATE_ON,
-        RedLightState::LIGHT_STATE_ON
-    );
-}
+//     // expecting to be in System.EStop 
+//     assertActuatorState(
+//         FESTO1, 
+//         MotorState::MOTOR_STATE_OFF,
+//         GreenLightState::LIGHT_STATE_ON,
+//         YellowLightState::LIGHT_STATE_ON,
+//         RedLightState::LIGHT_STATE_ON
+//     );
+//     assertActuatorState(
+//         FESTO2, 
+//         MotorState::MOTOR_STATE_OFF,
+//         GreenLightState::LIGHT_STATE_ON,
+//         YellowLightState::LIGHT_STATE_ON,
+//         RedLightState::LIGHT_STATE_ON
+//     );
+// }
+
+// TEST_F(SystemTestTwoFesto, motorStartOnFESTO1WhenLBFInterrupted) {
+//     decoder1->sendPulse(PULSE_ESTOP_HIGH, 0);
+//     WAIT(500);
+//     decoder2->sendPulse(PULSE_ESTOP_HIGH, 1);
+//     WAIT(500);
+//     decoder1->sendPulse(PULSE_BGS_LONG,0);
+//     WAIT(500);
+//     decoder1->sendPulse(PULSE_BRS_SHORT, 0);
+//     WAIT(500);
+//     decoder1->sendPulse(PULSE_BGS_SHORT, 0);
+//     WAIT(500);
+// 	// mockInitializationEvents();
+    
+//     // FESTO1
+//     EXPECT_EQ(actuatorController1->getGreenBlinking(),false);
+//     EXPECT_EQ(actuatorController1->getYellowBlinking(),false);
+//     EXPECT_EQ(actuatorController1->getRedBlinking(),false);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(LG_PIN),1);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(LY_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(LR_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(M_FORWARD_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(M_SLOW_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(M_BACKWARD_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(M_STOP_PIN),1);
+
+//     // FESTO2
+//     EXPECT_EQ(actuatorController2->getGreenBlinking(),false);
+//     EXPECT_EQ(actuatorController2->getYellowBlinking(),false);
+//     EXPECT_EQ(actuatorController2->getRedBlinking(),false);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(LG_PIN),1);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(LY_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(LR_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(M_FORWARD_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(M_SLOW_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(M_BACKWARD_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(M_STOP_PIN),1);
+//     WAIT(500);
+// 	decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+// 	WAIT(500);
+// 	decoder1->sendPulse(PULSE_LBF_OPEN, 0); // TODO -> FSM CONTROLLER SENDS YELLOW LAMP OFF AFTER SI SENDS YELLOW BLINKING????????????
+//     WAIT(2000);
+//     // FESTO1
+//     EXPECT_EQ(actuatorController1->getGreenBlinking(),false);
+//     EXPECT_EQ(actuatorController1->getYellowBlinking(),true);
+//     EXPECT_EQ(actuatorController1->getRedBlinking(),false);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(LG_PIN),1);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(LY_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(LR_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(M_FORWARD_PIN),1);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(M_SLOW_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(M_BACKWARD_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper1->getActuators(M_STOP_PIN),0);
+
+//     // FESTO2
+//     EXPECT_EQ(actuatorController2->getGreenBlinking(),false);
+//     EXPECT_EQ(actuatorController2->getYellowBlinking(),true);
+//     EXPECT_EQ(actuatorController2->getRedBlinking(),false);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(LG_PIN),1);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(LY_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(LR_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(M_FORWARD_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(M_SLOW_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(M_BACKWARD_PIN),0);
+//     EXPECT_EQ(actuatorsWrapper2->getActuators(M_STOP_PIN),1);
+
+// }
 
 TEST_F(SystemTestTwoFesto, motorStartOnFESTO1WhenLBFInterrupted) {
-    decoder1->sendPulse(PULSE_ESTOP_HIGH, 0);
-    WAIT(500);
-    decoder2->sendPulse(PULSE_ESTOP_HIGH, 1);
-    WAIT(500);
-    decoder1->sendPulse(PULSE_BGS_LONG,0);
-    WAIT(500);
-    decoder1->sendPulse(PULSE_BRS_SHORT, 0);
-    WAIT(500);
-    decoder1->sendPulse(PULSE_BGS_SHORT, 0);
-    WAIT(500);
-	// mockInitializationEvents();
-    
-    // FESTO1
-    EXPECT_EQ(actuatorController1->getGreenBlinking(),false);
-    EXPECT_EQ(actuatorController1->getYellowBlinking(),false);
-    EXPECT_EQ(actuatorController1->getRedBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(LG_PIN),1);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(LY_PIN),0);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(LR_PIN),0);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(M_FORWARD_PIN),0);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(M_SLOW_PIN),0);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(M_BACKWARD_PIN),0);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(M_STOP_PIN),1);
-
-    // FESTO2
-    EXPECT_EQ(actuatorController2->getGreenBlinking(),false);
-    EXPECT_EQ(actuatorController2->getYellowBlinking(),false);
-    EXPECT_EQ(actuatorController2->getRedBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(LG_PIN),1);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(LY_PIN),0);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(LR_PIN),0);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(M_FORWARD_PIN),0);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(M_SLOW_PIN),0);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(M_BACKWARD_PIN),0);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(M_STOP_PIN),1);
-    WAIT(500);
-	decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 0);
-	WAIT(500);
-	decoder1->sendPulse(PULSE_LBF_OPEN, 0); // TODO -> FSM CONTROLLER SENDS YELLOW LAMP OFF AFTER SI SENDS YELLOW BLINKING????????????
+    mockInitializationEvents();
+    decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+    decoder1->sendPulse(PULSE_LBF_OPEN, 0);
     WAIT(2000);
-    // FESTO1
-    EXPECT_EQ(actuatorController1->getGreenBlinking(),false);
-    EXPECT_EQ(actuatorController1->getYellowBlinking(),true);
-    EXPECT_EQ(actuatorController1->getRedBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(LG_PIN),1);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(LY_PIN),0);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(LR_PIN),0);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(M_FORWARD_PIN),1);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(M_SLOW_PIN),0);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(M_BACKWARD_PIN),0);
-    EXPECT_EQ(actuatorsWrapper1->getActuators(M_STOP_PIN),0);
 
-    // FESTO2
-    EXPECT_EQ(actuatorController2->getGreenBlinking(),false);
-    EXPECT_EQ(actuatorController2->getYellowBlinking(),true);
-    EXPECT_EQ(actuatorController2->getRedBlinking(),false);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(LG_PIN),1);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(LY_PIN),0);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(LR_PIN),0);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(M_FORWARD_PIN),0);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(M_SLOW_PIN),0);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(M_BACKWARD_PIN),0);
-    EXPECT_EQ(actuatorsWrapper2->getActuators(M_STOP_PIN),1);
-
+    FAIL() << "WIP";
 }

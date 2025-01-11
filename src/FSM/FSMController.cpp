@@ -61,6 +61,7 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), NAME_FLAG_ATTACH_GLOBAL);
 
     fsm = new FSM();
+    PositionTracker* positionTracker = new PositionTracker(fsm);
 
     // PULSE_MOTOR1_STOP  
     fsm->getMOTOR_1_STOP().subscribe(

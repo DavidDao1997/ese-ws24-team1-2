@@ -8,6 +8,8 @@
 #include "../gen/src-gen/FSM.h"
 #include "../../Util/headers/Util.h"
 #include "../../Logging/headers/Logger.h"
+#include "../PositionTracker/headers/PositionTracker.h"
+#include "../gen/src/sc_rxcpp.h"
 
 #define FSM_CONTROLLER_NUM_OF_PULSES 21
 
