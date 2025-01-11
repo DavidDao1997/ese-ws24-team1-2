@@ -89,19 +89,9 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			ESTOP_2_LOW_raised = true;
 			break;
 		}
-		case FSM::Event::FST_1_POSITION_INGRESS_NEW_PUK:
-		{
-			FST_1_POSITION_INGRESS_NEW_PUK_raised = true;
-			break;
-		}
 		case FSM::Event::FST_1_POSITION_INGRESS_DISTANCE_VALID:
 		{
 			FST_1_POSITION_INGRESS_DISTANCE_VALID_raised = true;
-			break;
-		}
-		case FSM::Event::FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK:
-		{
-			FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_raised = true;
 			break;
 		}
 		case FSM::Event::FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED:
@@ -109,9 +99,9 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised = true;
 			break;
 		}
-		case FSM::Event::FST_1_POSITION_SORTING_NEW_PUK:
+		case FSM::Event::FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED:
 		{
-			FST_1_POSITION_SORTING_NEW_PUK_raised = true;
+			FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED_raised = true;
 			break;
 		}
 		case FSM::Event::FST_1_POSITION_SORTING_PUK_EXPECTED:
@@ -119,14 +109,19 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			FST_1_POSITION_SORTING_PUK_EXPECTED_raised = true;
 			break;
 		}
-		case FSM::Event::FST_1_POSITION_EGRESS_NEW_PUK:
+		case FSM::Event::FST_1_POSITION_SORTING_PUK_EXPIRED:
 		{
-			FST_1_POSITION_EGRESS_NEW_PUK_raised = true;
+			FST_1_POSITION_SORTING_PUK_EXPIRED_raised = true;
 			break;
 		}
 		case FSM::Event::FST_1_POSITION_EGRESS_PUK_EXPECTED:
 		{
 			FST_1_POSITION_EGRESS_PUK_EXPECTED_raised = true;
+			break;
+		}
+		case FSM::Event::FST_1_POSITION_EGRESS_PUK_EXPIRED:
+		{
+			FST_1_POSITION_EGRESS_PUK_EXPIRED_raised = true;
 			break;
 		}
 		case FSM::Event::LBF_1_INTERRUPTED:
@@ -164,9 +159,14 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			LBM_1_OPEN_raised = true;
 			break;
 		}
-		case FSM::Event::MS_1_TRUE:
+		case FSM::Event::MS_1_HIGH:
 		{
-			MS_1_TRUE_raised = true;
+			MS_1_HIGH_raised = true;
+			break;
+		}
+		case FSM::Event::MS_1_LOW:
+		{
+			MS_1_LOW_raised = true;
 			break;
 		}
 		case FSM::Event::LBR_1_INTERRUPTED:
@@ -177,6 +177,16 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 		case FSM::Event::LBR_1_OPEN:
 		{
 			LBR_1_OPEN_raised = true;
+			break;
+		}
+		case FSM::Event::FST_1_PUK_SORTING_PASSTHROUGH:
+		{
+			FST_1_PUK_SORTING_PASSTHROUGH_raised = true;
+			break;
+		}
+		case FSM::Event::FST_1_PUK_SORTING_EJECT:
+		{
+			FST_1_PUK_SORTING_EJECT_raised = true;
 			break;
 		}
 		case FSM::Event::LBE_1_OPEN:
@@ -207,6 +217,36 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 		case FSM::Event::BGR_1_INTERRUPTED:
 		{
 			BGR_1_INTERRUPTED_raised = true;
+			break;
+		}
+		case FSM::Event::FST_2_POSITION_INGRESS_NEW_PUK:
+		{
+			FST_2_POSITION_INGRESS_NEW_PUK_raised = true;
+			break;
+		}
+		case FSM::Event::FST_2_POSITION_INGRESS_DISTANCE_VALID:
+		{
+			FST_2_POSITION_INGRESS_DISTANCE_VALID_raised = true;
+			break;
+		}
+		case FSM::Event::FST_2_POSITION_INGRESS_PUK_EXPECTED:
+		{
+			FST_2_POSITION_INGRESS_PUK_EXPECTED_raised = true;
+			break;
+		}
+		case FSM::Event::FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED:
+		{
+			FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised = true;
+			break;
+		}
+		case FSM::Event::FST_2_POSITION_SORTING_PUK_EXPECTED:
+		{
+			FST_2_POSITION_SORTING_PUK_EXPECTED_raised = true;
+			break;
+		}
+		case FSM::Event::FST_2_POSITION_EGRESS_PUK_EXPECTED:
+		{
+			FST_2_POSITION_EGRESS_PUK_EXPECTED_raised = true;
 			break;
 		}
 		case FSM::Event::LBF_2_INTERRUPTED:
@@ -379,24 +419,9 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			local_FST_2_PUK_ENTRY_INGRESS_raised = true;
 			break;
 		}
-		case FSM::Event::Internal_local_FST_2_POSITION_INGRESS_DISTANCE_VALID:
-		{
-			local_FST_2_POSITION_INGRESS_DISTANCE_VALID_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_2_POSITION_INGRESS_PUK_EXPECTED:
-		{
-			local_FST_2_POSITION_INGRESS_PUK_EXPECTED_raised = true;
-			break;
-		}
 		case FSM::Event::Internal_local_FST_2_PUK_ENTRY_HeightMeasurement:
 		{
 			local_FST_2_PUK_ENTRY_HeightMeasurement_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED:
-		{
-			local_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised = true;
 			break;
 		}
 		case FSM::Event::Internal_local_FST_2_PUK_ENTRY_SORTING:
@@ -404,19 +429,9 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			local_FST_2_PUK_ENTRY_SORTING_raised = true;
 			break;
 		}
-		case FSM::Event::Internal_local_FST_2_POSITION_SORTING_PUK_EXPECTED:
-		{
-			local_FST_2_POSITION_SORTING_PUK_EXPECTED_raised = true;
-			break;
-		}
 		case FSM::Event::Internal_local_FST_2_PUK_ENTRY_EGRESS:
 		{
 			local_FST_2_PUK_ENTRY_EGRESS_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_2_POSITION_EGRESS_PUK_EXPECTED:
-		{
-			local_FST_2_POSITION_EGRESS_PUK_EXPECTED_raised = true;
 			break;
 		}
 		case FSM::Event::Internal_local_FST_2_YELLOW_LAMP_ON:
@@ -527,11 +542,8 @@ void FSM::raiseESTOP_2_LOW() {
 }
 
 
-/*! Raises the in event 'FST_1_POSITION_INGRESS_NEW_PUK' of default interface scope. */
-void FSM::raiseFST_1_POSITION_INGRESS_NEW_PUK() {
-	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_INGRESS_NEW_PUK))
-	;
-	runCycle();
+sc::rx::Observable<void>& FSM::getFST_1_POSITION_INGRESS_NEW_PUK() noexcept {
+	return this->FST_1_POSITION_INGRESS_NEW_PUK_observable;
 }
 
 
@@ -543,11 +555,8 @@ void FSM::raiseFST_1_POSITION_INGRESS_DISTANCE_VALID() {
 }
 
 
-/*! Raises the in event 'FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope. */
-void FSM::raiseFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK() {
-	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK))
-	;
-	runCycle();
+sc::rx::Observable<void>& FSM::getFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK() noexcept {
+	return this->FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable;
 }
 
 
@@ -559,11 +568,16 @@ void FSM::raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED() {
 }
 
 
-/*! Raises the in event 'FST_1_POSITION_SORTING_NEW_PUK' of default interface scope. */
-void FSM::raiseFST_1_POSITION_SORTING_NEW_PUK() {
-	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_SORTING_NEW_PUK))
+/*! Raises the in event 'FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED' of default interface scope. */
+void FSM::raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED))
 	;
 	runCycle();
+}
+
+
+sc::rx::Observable<void>& FSM::getFST_1_POSITION_SORTING_NEW_PUK() noexcept {
+	return this->FST_1_POSITION_SORTING_NEW_PUK_observable;
 }
 
 
@@ -575,17 +589,30 @@ void FSM::raiseFST_1_POSITION_SORTING_PUK_EXPECTED() {
 }
 
 
-/*! Raises the in event 'FST_1_POSITION_EGRESS_NEW_PUK' of default interface scope. */
-void FSM::raiseFST_1_POSITION_EGRESS_NEW_PUK() {
-	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_EGRESS_NEW_PUK))
+/*! Raises the in event 'FST_1_POSITION_SORTING_PUK_EXPIRED' of default interface scope. */
+void FSM::raiseFST_1_POSITION_SORTING_PUK_EXPIRED() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_SORTING_PUK_EXPIRED))
 	;
 	runCycle();
+}
+
+
+sc::rx::Observable<void>& FSM::getFST_1_POSITION_EGRESS_NEW_PUK() noexcept {
+	return this->FST_1_POSITION_EGRESS_NEW_PUK_observable;
 }
 
 
 /*! Raises the in event 'FST_1_POSITION_EGRESS_PUK_EXPECTED' of default interface scope. */
 void FSM::raiseFST_1_POSITION_EGRESS_PUK_EXPECTED() {
 	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_EGRESS_PUK_EXPECTED))
+	;
+	runCycle();
+}
+
+
+/*! Raises the in event 'FST_1_POSITION_EGRESS_PUK_EXPIRED' of default interface scope. */
+void FSM::raiseFST_1_POSITION_EGRESS_PUK_EXPIRED() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_EGRESS_PUK_EXPIRED))
 	;
 	runCycle();
 }
@@ -682,9 +709,17 @@ void FSM::raiseLBM_1_OPEN() {
 }
 
 
-/*! Raises the in event 'MS_1_TRUE' of default interface scope. */
-void FSM::raiseMS_1_TRUE() {
-	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::MS_1_TRUE))
+/*! Raises the in event 'MS_1_HIGH' of default interface scope. */
+void FSM::raiseMS_1_HIGH() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::MS_1_HIGH))
+	;
+	runCycle();
+}
+
+
+/*! Raises the in event 'MS_1_LOW' of default interface scope. */
+void FSM::raiseMS_1_LOW() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::MS_1_LOW))
 	;
 	runCycle();
 }
@@ -703,6 +738,32 @@ void FSM::raiseLBR_1_OPEN() {
 	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::LBR_1_OPEN))
 	;
 	runCycle();
+}
+
+
+/*! Raises the in event 'FST_1_PUK_SORTING_PASSTHROUGH' of default interface scope. */
+void FSM::raiseFST_1_PUK_SORTING_PASSTHROUGH() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_PUK_SORTING_PASSTHROUGH))
+	;
+	runCycle();
+}
+
+
+/*! Raises the in event 'FST_1_PUK_SORTING_EJECT' of default interface scope. */
+void FSM::raiseFST_1_PUK_SORTING_EJECT() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_PUK_SORTING_EJECT))
+	;
+	runCycle();
+}
+
+
+sc::rx::Observable<void>& FSM::getFST_1_PUK_IS_METAL() noexcept {
+	return this->FST_1_PUK_IS_METAL_observable;
+}
+
+
+sc::rx::Observable<void>& FSM::getFST_1_PUK_IS_NOT_METAL() noexcept {
+	return this->FST_1_PUK_IS_NOT_METAL_observable;
 }
 
 
@@ -849,18 +910,27 @@ sc::rx::Observable<void>& FSM::getQ12_ON() noexcept {
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_2_POSITION_INGRESS_NEW_PUK() noexcept {
-	return this->FST_2_POSITION_INGRESS_NEW_PUK_observable;
+/*! Raises the in event 'FST_2_POSITION_INGRESS_NEW_PUK' of default interface scope. */
+void FSM::raiseFST_2_POSITION_INGRESS_NEW_PUK() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_POSITION_INGRESS_NEW_PUK))
+	;
+	runCycle();
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_2_POSITION_INGRESS_DISTANCE_VALID() noexcept {
-	return this->FST_2_POSITION_INGRESS_DISTANCE_VALID_observable;
+/*! Raises the in event 'FST_2_POSITION_INGRESS_DISTANCE_VALID' of default interface scope. */
+void FSM::raiseFST_2_POSITION_INGRESS_DISTANCE_VALID() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_POSITION_INGRESS_DISTANCE_VALID))
+	;
+	runCycle();
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_2_POSITION_INGRESS_PUK_EXPECTED() noexcept {
-	return this->FST_2_POSITION_INGRESS_PUK_EXPECTED_observable;
+/*! Raises the in event 'FST_2_POSITION_INGRESS_PUK_EXPECTED' of default interface scope. */
+void FSM::raiseFST_2_POSITION_INGRESS_PUK_EXPECTED() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_POSITION_INGRESS_PUK_EXPECTED))
+	;
+	runCycle();
 }
 
 
@@ -869,8 +939,11 @@ sc::rx::Observable<void>& FSM::getFST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK() noe
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED() noexcept {
-	return this->FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_observable;
+/*! Raises the in event 'FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of default interface scope. */
+void FSM::raiseFST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED))
+	;
+	runCycle();
 }
 
 
@@ -879,8 +952,11 @@ sc::rx::Observable<void>& FSM::getFST_2_POSITION_SORTING_NEW_PUK() noexcept {
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_2_POSITION_SORTING_PUK_EXPECTED() noexcept {
-	return this->FST_2_POSITION_SORTING_PUK_EXPECTED_observable;
+/*! Raises the in event 'FST_2_POSITION_SORTING_PUK_EXPECTED' of default interface scope. */
+void FSM::raiseFST_2_POSITION_SORTING_PUK_EXPECTED() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_POSITION_SORTING_PUK_EXPECTED))
+	;
+	runCycle();
 }
 
 
@@ -889,8 +965,11 @@ sc::rx::Observable<void>& FSM::getFST_2_POSITION_EGRESS_NEW_PUK() noexcept {
 }
 
 
-sc::rx::Observable<void>& FSM::getFST_2_POSITION_EGRESS_PUK_EXPECTED() noexcept {
-	return this->FST_2_POSITION_EGRESS_PUK_EXPECTED_observable;
+/*! Raises the in event 'FST_2_POSITION_EGRESS_PUK_EXPECTED' of default interface scope. */
+void FSM::raiseFST_2_POSITION_EGRESS_PUK_EXPECTED() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_POSITION_EGRESS_PUK_EXPECTED))
+	;
+	runCycle();
 }
 
 
@@ -958,6 +1037,16 @@ void FSM::raiseHS_2_SAMPLING_DONE() {
 
 sc::rx::Observable<void>& FSM::getFST_2_PUK_ENTRY_SORTING() noexcept {
 	return this->FST_2_PUK_ENTRY_SORTING_observable;
+}
+
+
+sc::rx::Observable<void>& FSM::getFST_2_PUK_HEIGHT_IS_VALID() noexcept {
+	return this->FST_2_PUK_HEIGHT_IS_VALID_observable;
+}
+
+
+sc::rx::Observable<void>& FSM::getFST_2_PUK_HEIGHT_IS_NOT_VALID() noexcept {
+	return this->FST_2_PUK_HEIGHT_IS_NOT_VALID_observable;
 }
 
 
@@ -1271,26 +1360,8 @@ void FSM::raiseLocal_FST_2_PUK_ENTRY_INGRESS() {
 }
 
 
-void FSM::raiseLocal_FST_2_POSITION_INGRESS_DISTANCE_VALID() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_POSITION_INGRESS_DISTANCE_VALID))
-	;
-}
-
-
-void FSM::raiseLocal_FST_2_POSITION_INGRESS_PUK_EXPECTED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_POSITION_INGRESS_PUK_EXPECTED))
-	;
-}
-
-
 void FSM::raiseLocal_FST_2_PUK_ENTRY_HeightMeasurement() {
 	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_PUK_ENTRY_HeightMeasurement))
-	;
-}
-
-
-void FSM::raiseLocal_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED))
 	;
 }
 
@@ -1301,20 +1372,8 @@ void FSM::raiseLocal_FST_2_PUK_ENTRY_SORTING() {
 }
 
 
-void FSM::raiseLocal_FST_2_POSITION_SORTING_PUK_EXPECTED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_POSITION_SORTING_PUK_EXPECTED))
-	;
-}
-
-
 void FSM::raiseLocal_FST_2_PUK_ENTRY_EGRESS() {
 	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_PUK_ENTRY_EGRESS))
-	;
-}
-
-
-void FSM::raiseLocal_FST_2_POSITION_EGRESS_PUK_EXPECTED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_POSITION_EGRESS_PUK_EXPECTED))
 	;
 }
 
@@ -1397,57 +1456,57 @@ bool FSM::isStateActive(State state) const noexcept
 		}
 		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement] >= FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement && stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement] <= FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected);
+			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement] >= FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement && stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement] <= FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected);
 			break;
 		}
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle] == FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle);
+			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle] == FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle);
 			break;
 		}
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring] >= FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring && stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring] <= FSM::State::_final_);
+			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring] >= FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring && stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring] <= FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_);
 			break;
 		}
-		case FSM::State::A :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A] == FSM::State::A);
+			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A] == FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A);
 			break;
 		}
-		case FSM::State::B :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B] == FSM::State::B);
+			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B] == FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B);
 			break;
 		}
-		case FSM::State::C :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C] == FSM::State::C);
+			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C] == FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C);
 			break;
 		}
-		case FSM::State::Error :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error] == FSM::State::Error);
+			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error] == FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error);
 			break;
 		}
-		case FSM::State::Evaluate :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate] == FSM::State::Evaluate);
+			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate] == FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate);
 			break;
 		}
-		case FSM::State::_final_ :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_ :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_] == FSM::State::_final_);
+			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_] == FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_);
 			break;
 		}
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent] == FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent);
+			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent] == FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent);
 			break;
 		}
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected] == FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected);
+			return  (stateConfVector[scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected] == FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected);
 			break;
 		}
 		case FSM::State::FSM_Festo1_HeightMeasurement_Paused :
@@ -1467,17 +1526,12 @@ bool FSM::isStateActive(State state) const noexcept
 		}
 		case FSM::State::FSM_Festo1__Sorting_Sorting :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1__Sorting_Sorting] >= FSM::State::FSM_Festo1__Sorting_Sorting && stateConfVector[scvi_FSM_Festo1__Sorting_Sorting] <= FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull);
+			return  (stateConfVector[scvi_FSM_Festo1__Sorting_Sorting] >= FSM::State::FSM_Festo1__Sorting_Sorting && stateConfVector[scvi_FSM_Festo1__Sorting_Sorting] <= FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_Evaluate);
 			break;
 		}
 		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_Idle :
 		{
 			return  (stateConfVector[scvi_FSM_Festo1__Sorting_Sorting_Sorting_Idle] == FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_Idle);
-			break;
-		}
-		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement] == FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement);
 			break;
 		}
 		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_PukPresent :
@@ -1490,9 +1544,9 @@ bool FSM::isStateActive(State state) const noexcept
 			return  (stateConfVector[scvi_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected] == FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_PukExpected);
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull :
+		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_Evaluate :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1__Sorting_Sorting_Sorting_RampFull] == FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull);
+			return  (stateConfVector[scvi_FSM_Festo1__Sorting_Sorting_Sorting_Evaluate] == FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_Evaluate);
 			break;
 		}
 		case FSM::State::FSM_Festo1__Sorting_Paused :
@@ -1717,27 +1771,57 @@ bool FSM::isStateActive(State state) const noexcept
 		}
 		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement :
 		{
-			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement] >= FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement && stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement] <= FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring);
+			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement] >= FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement && stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement] <= FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_);
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle :
 		{
-			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle);
+			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle);
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent :
 		{
-			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent);
+			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent);
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected :
 		{
-			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected);
+			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected);
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring :
 		{
-			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring);
+			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring] >= FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring && stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring] <= FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_);
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A :
+		{
+			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A);
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B :
+		{
+			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B);
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C :
+		{
+			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C);
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error :
+		{
+			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error);
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate :
+		{
+			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate);
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_ :
+		{
+			return  (stateConfVector[scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_] == FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_);
 			break;
 		}
 		case FSM::State::FSM_Festo2__HeightMeasurement_Paused :
@@ -1757,7 +1841,7 @@ bool FSM::isStateActive(State state) const noexcept
 		}
 		case FSM::State::FSM_Festo2__Sorting_Sorting :
 		{
-			return  (stateConfVector[scvi_FSM_Festo2__Sorting_Sorting] >= FSM::State::FSM_Festo2__Sorting_Sorting && stateConfVector[scvi_FSM_Festo2__Sorting_Sorting] <= FSM::State::FSM_Festo2__Sorting_Sorting_Sorting_PukExpected);
+			return  (stateConfVector[scvi_FSM_Festo2__Sorting_Sorting] >= FSM::State::FSM_Festo2__Sorting_Sorting && stateConfVector[scvi_FSM_Festo2__Sorting_Sorting] <= FSM::State::FSM_Festo2__Sorting_Sorting_Sorting_RampFull);
 			break;
 		}
 		case FSM::State::FSM_Festo2__Sorting_Sorting_Sorting_Idle :
@@ -1780,9 +1864,9 @@ bool FSM::isStateActive(State state) const noexcept
 			return  (stateConfVector[scvi_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected] == FSM::State::FSM_Festo2__Sorting_Sorting_Sorting_PukExpected);
 			break;
 		}
-		case FSM::State::FSM_Festo2__Sorting_RampFull :
+		case FSM::State::FSM_Festo2__Sorting_Sorting_Sorting_RampFull :
 		{
-			return  (stateConfVector[scvi_FSM_Festo2__Sorting_RampFull] == FSM::State::FSM_Festo2__Sorting_RampFull);
+			return  (stateConfVector[scvi_FSM_Festo2__Sorting_Sorting_Sorting_RampFull] == FSM::State::FSM_Festo2__Sorting_Sorting_Sorting_RampFull);
 			break;
 		}
 		case FSM::State::FSM_Festo2__Sorting_Paused :
@@ -1843,11 +1927,6 @@ bool FSM::isStateActive(State state) const noexcept
 		case FSM::State::FSM_Festo2__Motor_SystemMotor :
 		{
 			return  (stateConfVector[scvi_FSM_Festo2__Motor_SystemMotor] >= FSM::State::FSM_Festo2__Motor_SystemMotor && stateConfVector[scvi_FSM_Festo2__Motor_SystemMotor] <= FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle] == FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle);
 			break;
 		}
 		case FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward :
@@ -1989,6 +2068,26 @@ void FSM::setIsEStop2High(bool isEStop2High_) noexcept
 {
 	this->isEStop2High = isEStop2High_;
 }
+bool FSM::getIsBGR1Pressed() const noexcept
+{
+	return isBGR1Pressed
+	;
+}
+
+void FSM::setIsBGR1Pressed(bool isBGR1Pressed_) noexcept
+{
+	this->isBGR1Pressed = isBGR1Pressed_;
+}
+bool FSM::getIsBGR2Pressed() const noexcept
+{
+	return isBGR2Pressed
+	;
+}
+
+void FSM::setIsBGR2Pressed(bool isBGR2Pressed_) noexcept
+{
+	this->isBGR2Pressed = isBGR2Pressed_;
+}
 bool FSM::getEStopActive() const noexcept
 {
 	return eStopActive
@@ -1998,6 +2097,16 @@ bool FSM::getEStopActive() const noexcept
 void FSM::setEStopActive(bool eStopActive_) noexcept
 {
 	this->eStopActive = eStopActive_;
+}
+sc::integer FSM::getFST_1_HM_Counter() const noexcept
+{
+	return FST_1_HM_Counter
+	;
+}
+
+void FSM::setFST_1_HM_Counter(sc::integer FST_1_HM_Counter_) noexcept
+{
+	this->FST_1_HM_Counter = FST_1_HM_Counter_;
 }
 sc::integer FSM::getAReferenceMinCount() const noexcept
 {
@@ -2139,6 +2248,16 @@ void FSM::setFST_1_generalCount(sc::integer FST_1_generalCount_) noexcept
 {
 	this->FST_1_generalCount = FST_1_generalCount_;
 }
+bool FSM::getFST_1_is_Ejector() const noexcept
+{
+	return FST_1_is_Ejector
+	;
+}
+
+void FSM::setFST_1_is_Ejector(bool FST_1_is_Ejector_) noexcept
+{
+	this->FST_1_is_Ejector = FST_1_is_Ejector_;
+}
 bool FSM::getFST1RampFull() const noexcept
 {
 	return FST1RampFull
@@ -2149,15 +2268,15 @@ void FSM::setFST1RampFull(bool FST1RampFull_) noexcept
 {
 	this->FST1RampFull = FST1RampFull_;
 }
-sc::integer FSM::getTimePassed() const noexcept
+bool FSM::getFST1isMetal() const noexcept
 {
-	return timePassed
+	return FST1isMetal
 	;
 }
 
-void FSM::setTimePassed(sc::integer timePassed_) noexcept
+void FSM::setFST1isMetal(bool FST1isMetal_) noexcept
 {
-	this->timePassed = timePassed_;
+	this->FST1isMetal = FST1isMetal_;
 }
 sc::integer FSM::getMotor1Stop() const noexcept
 {
@@ -2208,6 +2327,26 @@ sc::integer FSM::getFST_2_currentValue() const noexcept
 void FSM::setFST_2_currentValue(sc::integer FST_2_currentValue_) noexcept
 {
 	this->FST_2_currentValue = FST_2_currentValue_;
+}
+sc::integer FSM::getFST_2_sampleCount() const noexcept
+{
+	return FST_2_sampleCount
+	;
+}
+
+void FSM::setFST_2_sampleCount(sc::integer FST_2_sampleCount_) noexcept
+{
+	this->FST_2_sampleCount = FST_2_sampleCount_;
+}
+sc::integer FSM::getFST_2_generalCount() const noexcept
+{
+	return FST_2_generalCount
+	;
+}
+
+void FSM::setFST_2_generalCount(sc::integer FST_2_generalCount_) noexcept
+{
+	this->FST_2_generalCount = FST_2_generalCount_;
 }
 bool FSM::getFST2RampFull() const noexcept
 {
@@ -2281,18 +2420,9 @@ void FSM::setWarning_lamp_active(bool warning_lamp_active_) noexcept
 }
 
 // implementations of all internal functions
-void FSM::enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_()
+void FSM::enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_()
 {
 	completed = true;
-}
-
-/* Entry action for state 'RampFull'. */
-void FSM::enact_FSM_Festo1__Sorting_Sorting_Sorting_RampFull()
-{
-	/* Entry action for state 'RampFull'. */
-	motor1Stop++;
-	EVALUATE_observable.next();
-	raiseLocal_EVALUATE();
 }
 
 /* Entry action for state 'Forward'. */
@@ -2380,22 +2510,13 @@ void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Con
 	LR1_ON_observable.next();
 }
 
-/* Entry action for state 'PukPresent'. */
-void FSM::enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent()
+void FSM::enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_()
 {
-	/* Entry action for state 'PukPresent'. */
-	motor2Forward++;
-}
-
-/* Entry action for state 'Measuring'. */
-void FSM::enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring()
-{
-	/* Entry action for state 'Measuring'. */
-	motor1Slow++;
+	completed = true;
 }
 
 /* Entry action for state 'RampFull'. */
-void FSM::enact_FSM_Festo2__Sorting_RampFull()
+void FSM::enact_FSM_Festo2__Sorting_Sorting_Sorting_RampFull()
 {
 	/* Entry action for state 'RampFull'. */
 	motor2Stop++;
@@ -2410,13 +2531,6 @@ void FSM::enact_FSM_Festo2__Egress_Egress_Egress_Transfer()
 	motor2Stop++;
 	EVALUATE_observable.next();
 	raiseLocal_EVALUATE();
-}
-
-/* Entry action for state 'Idle'. */
-void FSM::enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle()
-{
-	/* Entry action for state 'Idle'. */
-	MOTOR_2_STOP_observable.next();
 }
 
 /* Entry action for state 'Forward'. */
@@ -2496,36 +2610,12 @@ void FSM::enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Co
 	LR2_ON_observable.next();
 }
 
-/* Exit action for state 'RampFull'. */
-void FSM::exact_FSM_Festo1__Sorting_Sorting_Sorting_RampFull()
-{
-	/* Exit action for state 'RampFull'. */
-	motor1Stop--;
-	setFST1RampFull(false);
-	EVALUATE_observable.next();
-	raiseLocal_EVALUATE();
-}
-
 /* Exit action for state 'ServiceMode'. */
 void FSM::exact___ServiceMode()
 {
 	/* Exit action for state 'ServiceMode'. */
 	SYSTEM_SERVICE_OUT_observable.next();
 	raiseLocal_SYSTEM_SERVICE_OUT();
-}
-
-/* Exit action for state 'EStopCleared'. */
-void FSM::exact___EStopCleared()
-{
-	/* Exit action for state 'EStopCleared'. */
-	setMotor1Stop(0);
-	setMotor1Slow(0);
-	setMotor1Forward(0);
-	setMotor2Stop(0);
-	setMotor2Slow(0);
-	setMotor2Forward(0);
-	EVALUATE_observable.next();
-	raiseLocal_EVALUATE();
 }
 
 /* Exit action for state 'Idle'. */
@@ -2536,22 +2626,8 @@ void FSM::exact_FSM_Festo2__Ingress_Ingress_Ingress_Idle()
 	raiseLocal_FST_2_YELLOW_LAMP_ON();
 }
 
-/* Exit action for state 'PukPresent'. */
-void FSM::exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent()
-{
-	/* Exit action for state 'PukPresent'. */
-	motor2Forward--;
-}
-
-/* Exit action for state 'Measuring'. */
-void FSM::exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring()
-{
-	/* Exit action for state 'Measuring'. */
-	motor1Slow--;
-}
-
 /* Exit action for state 'RampFull'. */
-void FSM::exact_FSM_Festo2__Sorting_RampFull()
+void FSM::exact_FSM_Festo2__Sorting_Sorting_Sorting_RampFull()
 {
 	/* Exit action for state 'RampFull'. */
 	motor2Stop--;
@@ -2631,94 +2707,94 @@ void FSM::enseq_FSM_Festo1_Ingress_Start_default()
 void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_default()
 {
 	/* 'default' enter sequence for state HeightMeasurement */
-	enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_default();
+	enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_default();
 }
 
 /* 'default' enter sequence for state Idle */
-void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_default()
+void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle_default()
 {
 	/* 'default' enter sequence for state Idle */
-	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle;
 	stateConfVectorPosition = 1;
 	historyVector[1] = stateConfVector[1];
 }
 
 /* 'default' enter sequence for state Measuring */
-void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_default()
+void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_default()
 {
 	/* 'default' enter sequence for state Measuring */
-	enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_default();
+	enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_default();
 	historyVector[1] = stateConfVector[1];
 }
 
 /* 'default' enter sequence for state A */
-void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_default()
+void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A_default()
 {
 	/* 'default' enter sequence for state A */
-	stateConfVector[1] = FSM::State::A;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A;
 	stateConfVectorPosition = 1;
 	historyVector[2] = stateConfVector[1];
 }
 
 /* 'default' enter sequence for state B */
-void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_default()
+void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B_default()
 {
 	/* 'default' enter sequence for state B */
-	stateConfVector[1] = FSM::State::B;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B;
 	stateConfVectorPosition = 1;
 	historyVector[2] = stateConfVector[1];
 }
 
 /* 'default' enter sequence for state C */
-void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_default()
+void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C_default()
 {
 	/* 'default' enter sequence for state C */
-	stateConfVector[1] = FSM::State::C;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C;
 	stateConfVectorPosition = 1;
 	historyVector[2] = stateConfVector[1];
 }
 
 /* 'default' enter sequence for state Error */
-void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default()
+void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_default()
 {
 	/* 'default' enter sequence for state Error */
-	stateConfVector[1] = FSM::State::Error;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error;
 	stateConfVectorPosition = 1;
 	historyVector[2] = stateConfVector[1];
 }
 
 /* 'default' enter sequence for state Evaluate */
-void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate_default()
+void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate_default()
 {
 	/* 'default' enter sequence for state Evaluate */
-	stateConfVector[1] = FSM::State::Evaluate;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate;
 	stateConfVectorPosition = 1;
 	historyVector[2] = stateConfVector[1];
 }
 
 /* Default enter sequence for final state */
-void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__default()
+void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final__default()
 {
 	/* Default enter sequence for final state */
-	enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_();
-	stateConfVector[1] = FSM::State::_final_;
+	enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_();
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_;
 	stateConfVectorPosition = 1;
 }
 
 /* 'default' enter sequence for state PukPresent */
-void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_default()
+void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent_default()
 {
 	/* 'default' enter sequence for state PukPresent */
-	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent;
 	stateConfVectorPosition = 1;
 	historyVector[1] = stateConfVector[1];
 }
 
 /* 'default' enter sequence for state PukExpected */
-void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected_default()
+void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected_default()
 {
 	/* 'default' enter sequence for state PukExpected */
-	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected;
 	stateConfVectorPosition = 1;
 	historyVector[1] = stateConfVector[1];
 }
@@ -2763,15 +2839,6 @@ void FSM::enseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle_default()
 	historyVector[3] = stateConfVector[2];
 }
 
-/* 'default' enter sequence for state MetalMeasurement */
-void FSM::enseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement_default()
-{
-	/* 'default' enter sequence for state MetalMeasurement */
-	stateConfVector[2] = FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement;
-	stateConfVectorPosition = 2;
-	historyVector[3] = stateConfVector[2];
-}
-
 /* 'default' enter sequence for state PukPresent */
 void FSM::enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent_default()
 {
@@ -2790,12 +2857,11 @@ void FSM::enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_default()
 	historyVector[3] = stateConfVector[2];
 }
 
-/* 'default' enter sequence for state RampFull */
-void FSM::enseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull_default()
+/* 'default' enter sequence for state Evaluate */
+void FSM::enseq_FSM_Festo1__Sorting_Sorting_Sorting_Evaluate_default()
 {
-	/* 'default' enter sequence for state RampFull */
-	enact_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
-	stateConfVector[2] = FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull;
+	/* 'default' enter sequence for state Evaluate */
+	stateConfVector[2] = FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_Evaluate;
 	stateConfVectorPosition = 2;
 	historyVector[3] = stateConfVector[2];
 }
@@ -3175,45 +3241,91 @@ void FSM::enseq_FSM_Festo2__Ingress_Starting_default()
 void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_default()
 {
 	/* 'default' enter sequence for state HeightMeasurement */
-	enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_default();
+	enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_default();
 }
 
 /* 'default' enter sequence for state Idle */
-void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_default()
+void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle_default()
 {
 	/* 'default' enter sequence for state Idle */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle;
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle;
 	stateConfVectorPosition = 10;
 	historyVector[6] = stateConfVector[10];
 }
 
 /* 'default' enter sequence for state PukPresent */
-void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_default()
+void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent_default()
 {
 	/* 'default' enter sequence for state PukPresent */
-	enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent;
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent;
 	stateConfVectorPosition = 10;
 	historyVector[6] = stateConfVector[10];
 }
 
 /* 'default' enter sequence for state PukExpected */
-void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_default()
+void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected_default()
 {
 	/* 'default' enter sequence for state PukExpected */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected;
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected;
 	stateConfVectorPosition = 10;
 	historyVector[6] = stateConfVector[10];
 }
 
 /* 'default' enter sequence for state Measuring */
-void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default()
+void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_default()
 {
 	/* 'default' enter sequence for state Measuring */
-	enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring;
-	stateConfVectorPosition = 10;
+	enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_default();
 	historyVector[6] = stateConfVector[10];
+}
+
+/* 'default' enter sequence for state A */
+void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A_default()
+{
+	/* 'default' enter sequence for state A */
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A;
+	stateConfVectorPosition = 10;
+}
+
+/* 'default' enter sequence for state B */
+void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B_default()
+{
+	/* 'default' enter sequence for state B */
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B;
+	stateConfVectorPosition = 10;
+}
+
+/* 'default' enter sequence for state C */
+void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C_default()
+{
+	/* 'default' enter sequence for state C */
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C;
+	stateConfVectorPosition = 10;
+}
+
+/* 'default' enter sequence for state Error */
+void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_default()
+{
+	/* 'default' enter sequence for state Error */
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error;
+	stateConfVectorPosition = 10;
+}
+
+/* 'default' enter sequence for state Evaluate */
+void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate_default()
+{
+	/* 'default' enter sequence for state Evaluate */
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate;
+	stateConfVectorPosition = 10;
+}
+
+/* Default enter sequence for final state */
+void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final__default()
+{
+	/* Default enter sequence for final state */
+	enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_();
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state Paused */
@@ -3284,12 +3396,13 @@ void FSM::enseq_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected_default()
 }
 
 /* 'default' enter sequence for state RampFull */
-void FSM::enseq_FSM_Festo2__Sorting_RampFull_default()
+void FSM::enseq_FSM_Festo2__Sorting_Sorting_Sorting_RampFull_default()
 {
 	/* 'default' enter sequence for state RampFull */
-	enact_FSM_Festo2__Sorting_RampFull();
-	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_RampFull;
+	enact_FSM_Festo2__Sorting_Sorting_Sorting_RampFull();
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_Sorting_Sorting_RampFull;
 	stateConfVectorPosition = 11;
+	historyVector[7] = stateConfVector[11];
 }
 
 /* 'default' enter sequence for state Paused */
@@ -3389,15 +3502,6 @@ void FSM::enseq_FSM_Festo2__Motor_SystemMotor_default()
 {
 	/* 'default' enter sequence for state SystemMotor */
 	enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_default();
-}
-
-/* 'default' enter sequence for state Idle */
-void FSM::enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_default()
-{
-	/* 'default' enter sequence for state Idle */
-	enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
-	stateConfVector[13] = FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle;
-	stateConfVectorPosition = 13;
 }
 
 /* 'default' enter sequence for state Forward */
@@ -3572,72 +3676,72 @@ void FSM::enseq_FSM_Festo1_HeightMeasurement_default()
 	react_FSM_Festo1_HeightMeasurement__entry_Default();
 }
 
-/* 'default' enter sequence for region s */
-void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_default()
+/* 'default' enter sequence for region FST1_HM */
+void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_default()
 {
-	/* 'default' enter sequence for region s */
-	react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s__entry_Default();
+	/* 'default' enter sequence for region FST1_HM */
+	react_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM__entry_Default();
 }
 
-/* deep enterSequence with history in child s */
-void FSM::dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s()
+/* deep enterSequence with history in child FST1_HM */
+void FSM::dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM()
 {
-	/* deep enterSequence with history in child s */
-	/* Handle deep history entry of s */
+	/* deep enterSequence with history in child FST1_HM */
+	/* Handle deep history entry of FST1_HM */
 	switch(historyVector[ 1 ])
 	{
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle :
 		{
 			/* enterSequence with history in child Idle for leaf Idle */
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_default();
+			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle_default();
 			break;
 		}
-		case FSM::State::A :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A :
 		{
 			/* enterSequence with history in child Measuring for leaf A */
-			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
+			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1();
 			break;
 		}
-		case FSM::State::B :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B :
 		{
 			/* enterSequence with history in child Measuring for leaf B */
-			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
+			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1();
 			break;
 		}
-		case FSM::State::C :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C :
 		{
 			/* enterSequence with history in child Measuring for leaf C */
-			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
+			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1();
 			break;
 		}
-		case FSM::State::Error :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error :
 		{
 			/* enterSequence with history in child Measuring for leaf Error */
-			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
+			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1();
 			break;
 		}
-		case FSM::State::Evaluate :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate :
 		{
 			/* enterSequence with history in child Measuring for leaf Evaluate */
-			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
+			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1();
 			break;
 		}
-		case FSM::State::_final_ :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_ :
 		{
 			/* enterSequence with history in child Measuring for leaf null */
-			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
+			dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1();
 			break;
 		}
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent :
 		{
 			/* enterSequence with history in child PukPresent for leaf PukPresent */
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_default();
+			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent_default();
 			break;
 		}
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected :
 		{
 			/* enterSequence with history in child PukExpected for leaf PukExpected */
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected_default();
+			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected_default();
 			break;
 		}
 		default:
@@ -3646,48 +3750,48 @@ void FSM::dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s()
 	}
 }
 
-/* 'default' enter sequence for region HeightFSM */
-void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_default()
+/* 'default' enter sequence for region HeightFSM_Festo1 */
+void FSM::enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_default()
 {
-	/* 'default' enter sequence for region HeightFSM */
-	react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__entry_Default();
+	/* 'default' enter sequence for region HeightFSM_Festo1 */
+	react_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__entry_Default();
 }
 
-/* deep enterSequence with history in child HeightFSM */
-void FSM::dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM()
+/* deep enterSequence with history in child HeightFSM_Festo1 */
+void FSM::dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1()
 {
-	/* deep enterSequence with history in child HeightFSM */
-	/* Handle deep history entry of HeightFSM */
+	/* deep enterSequence with history in child HeightFSM_Festo1 */
+	/* Handle deep history entry of HeightFSM_Festo1 */
 	switch(historyVector[ 2 ])
 	{
-		case FSM::State::A :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A :
 		{
 			/* enterSequence with history in child A for leaf A */
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_default();
+			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A_default();
 			break;
 		}
-		case FSM::State::B :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B :
 		{
 			/* enterSequence with history in child B for leaf B */
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_default();
+			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B_default();
 			break;
 		}
-		case FSM::State::C :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C :
 		{
 			/* enterSequence with history in child C for leaf C */
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_default();
+			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C_default();
 			break;
 		}
-		case FSM::State::Error :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error :
 		{
 			/* enterSequence with history in child Error for leaf Error */
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
+			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_default();
 			break;
 		}
-		case FSM::State::Evaluate :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate :
 		{
 			/* enterSequence with history in child Evaluate for leaf Evaluate */
-			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate_default();
+			enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate_default();
 			break;
 		}
 		default:
@@ -3722,11 +3826,6 @@ void FSM::shenseq_FSM_Festo1__Sorting_Sorting_Sorting()
 			enseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle_default();
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement :
-		{
-			enseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement_default();
-			break;
-		}
 		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_PukPresent :
 		{
 			enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent_default();
@@ -3737,9 +3836,9 @@ void FSM::shenseq_FSM_Festo1__Sorting_Sorting_Sorting()
 			enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_default();
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull :
+		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_Evaluate :
 		{
-			enseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull_default();
+			enseq_FSM_Festo1__Sorting_Sorting_Sorting_Evaluate_default();
 			break;
 		}
 		default:
@@ -3915,44 +4014,76 @@ void FSM::enseq_FSM_Festo2__HeightMeasurement_default()
 	react_FSM_Festo2__HeightMeasurement__entry_Default();
 }
 
-/* 'default' enter sequence for region HeightMeasurement */
-void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_default()
+/* 'default' enter sequence for region FST2_HM */
+void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_default()
 {
-	/* 'default' enter sequence for region HeightMeasurement */
-	react_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement__entry_Default();
+	/* 'default' enter sequence for region FST2_HM */
+	react_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM__entry_Default();
 }
 
-/* shallow enterSequence with history in child HeightMeasurement */
-void FSM::shenseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement()
+/* shallow enterSequence with history in child FST2_HM */
+void FSM::shenseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM()
 {
-	/* shallow enterSequence with history in child HeightMeasurement */
-	/* Handle shallow history entry of HeightMeasurement */
+	/* shallow enterSequence with history in child FST2_HM */
+	/* Handle shallow history entry of FST2_HM */
 	switch(historyVector[ 6 ])
 	{
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle :
 		{
-			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_default();
+			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle_default();
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent :
 		{
-			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_default();
+			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent_default();
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected :
 		{
-			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_default();
+			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected_default();
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A :
 		{
-			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default();
+			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_default();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B :
+		{
+			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_default();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C :
+		{
+			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_default();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error :
+		{
+			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_default();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate :
+		{
+			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_default();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_ :
+		{
+			enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_default();
 			break;
 		}
 		default:
 			/* do nothing */
 			break;
 	}
+}
+
+/* 'default' enter sequence for region HeightFSM_Festo2 */
+void FSM::enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_default()
+{
+	/* 'default' enter sequence for region HeightFSM_Festo2 */
+	react_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__entry_Default();
 }
 
 /* 'default' enter sequence for region FSM_Festo2: Sorting */
@@ -3994,6 +4125,11 @@ void FSM::shenseq_FSM_Festo2__Sorting_Sorting_Sorting()
 		case FSM::State::FSM_Festo2__Sorting_Sorting_Sorting_PukExpected :
 		{
 			enseq_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected_default();
+			break;
+		}
+		case FSM::State::FSM_Festo2__Sorting_Sorting_Sorting_RampFull :
+		{
+			enseq_FSM_Festo2__Sorting_Sorting_Sorting_RampFull_default();
 			break;
 		}
 		default:
@@ -4166,13 +4302,13 @@ void FSM::exseq_FSM_Festo1_Ingress_Start()
 void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement()
 {
 	/* Default exit sequence for state HeightMeasurement */
-	exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s();
+	exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM();
 	stateConfVector[1] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 1;
 }
 
 /* Default exit sequence for state Idle */
-void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle()
+void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle()
 {
 	/* Default exit sequence for state Idle */
 	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement;
@@ -4180,64 +4316,64 @@ void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle()
 }
 
 /* Default exit sequence for state Measuring */
-void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring()
+void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring()
 {
 	/* Default exit sequence for state Measuring */
-	exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
+	exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1();
 	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement;
 	stateConfVectorPosition = 1;
 }
 
 /* Default exit sequence for state A */
-void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A()
+void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A()
 {
 	/* Default exit sequence for state A */
-	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring;
 	stateConfVectorPosition = 1;
 }
 
 /* Default exit sequence for state B */
-void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B()
+void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B()
 {
 	/* Default exit sequence for state B */
-	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring;
 	stateConfVectorPosition = 1;
 }
 
 /* Default exit sequence for state C */
-void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C()
+void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C()
 {
 	/* Default exit sequence for state C */
-	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring;
 	stateConfVectorPosition = 1;
 }
 
 /* Default exit sequence for state Error */
-void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error()
+void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error()
 {
 	/* Default exit sequence for state Error */
-	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring;
 	stateConfVectorPosition = 1;
 }
 
 /* Default exit sequence for state Evaluate */
-void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate()
+void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate()
 {
 	/* Default exit sequence for state Evaluate */
-	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring;
 	stateConfVectorPosition = 1;
 }
 
 /* Default exit sequence for final state. */
-void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_()
+void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_()
 {
 	/* Default exit sequence for final state. */
-	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring;
+	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring;
 	stateConfVectorPosition = 1;
 }
 
 /* Default exit sequence for state PukPresent */
-void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent()
+void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent()
 {
 	/* Default exit sequence for state PukPresent */
 	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement;
@@ -4245,7 +4381,7 @@ void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent()
 }
 
 /* Default exit sequence for state PukExpected */
-void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected()
+void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected()
 {
 	/* Default exit sequence for state PukExpected */
 	stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement;
@@ -4293,14 +4429,6 @@ void FSM::exseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle()
 	stateConfVectorPosition = 2;
 }
 
-/* Default exit sequence for state MetalMeasurement */
-void FSM::exseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement()
-{
-	/* Default exit sequence for state MetalMeasurement */
-	stateConfVector[2] = FSM::State::FSM_Festo1__Sorting_Sorting;
-	stateConfVectorPosition = 2;
-}
-
 /* Default exit sequence for state PukPresent */
 void FSM::exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent()
 {
@@ -4317,13 +4445,12 @@ void FSM::exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected()
 	stateConfVectorPosition = 2;
 }
 
-/* Default exit sequence for state RampFull */
-void FSM::exseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull()
+/* Default exit sequence for state Evaluate */
+void FSM::exseq_FSM_Festo1__Sorting_Sorting_Sorting_Evaluate()
 {
-	/* Default exit sequence for state RampFull */
+	/* Default exit sequence for state Evaluate */
 	stateConfVector[2] = FSM::State::FSM_Festo1__Sorting_Sorting;
 	stateConfVectorPosition = 2;
-	exact_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
 }
 
 /* Default exit sequence for state Paused */
@@ -4511,7 +4638,6 @@ void FSM::exseq___EStopCleared()
 	/* Default exit sequence for state EStopCleared */
 	stateConfVector[5] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 5;
-	exact___EStopCleared();
 }
 
 /* Default exit sequence for state ReveivedReset */
@@ -4672,13 +4798,13 @@ void FSM::exseq_FSM_Festo2__Ingress_Starting()
 void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement()
 {
 	/* Default exit sequence for state HeightMeasurement */
-	exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement();
+	exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM();
 	stateConfVector[10] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state Idle */
-void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle()
+void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle()
 {
 	/* Default exit sequence for state Idle */
 	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement;
@@ -4686,16 +4812,15 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasuremen
 }
 
 /* Default exit sequence for state PukPresent */
-void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent()
+void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent()
 {
 	/* Default exit sequence for state PukPresent */
 	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement;
 	stateConfVectorPosition = 10;
-	exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
 }
 
 /* Default exit sequence for state PukExpected */
-void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected()
+void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected()
 {
 	/* Default exit sequence for state PukExpected */
 	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement;
@@ -4703,12 +4828,60 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasuremen
 }
 
 /* Default exit sequence for state Measuring */
-void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring()
+void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring()
 {
 	/* Default exit sequence for state Measuring */
+	exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2();
 	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement;
 	stateConfVectorPosition = 10;
-	exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
+}
+
+/* Default exit sequence for state A */
+void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A()
+{
+	/* Default exit sequence for state A */
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring;
+	stateConfVectorPosition = 10;
+}
+
+/* Default exit sequence for state B */
+void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B()
+{
+	/* Default exit sequence for state B */
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring;
+	stateConfVectorPosition = 10;
+}
+
+/* Default exit sequence for state C */
+void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C()
+{
+	/* Default exit sequence for state C */
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring;
+	stateConfVectorPosition = 10;
+}
+
+/* Default exit sequence for state Error */
+void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error()
+{
+	/* Default exit sequence for state Error */
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring;
+	stateConfVectorPosition = 10;
+}
+
+/* Default exit sequence for state Evaluate */
+void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate()
+{
+	/* Default exit sequence for state Evaluate */
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring;
+	stateConfVectorPosition = 10;
+}
+
+/* Default exit sequence for final state. */
+void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_()
+{
+	/* Default exit sequence for final state. */
+	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state Paused */
@@ -4777,12 +4950,12 @@ void FSM::exseq_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected()
 }
 
 /* Default exit sequence for state RampFull */
-void FSM::exseq_FSM_Festo2__Sorting_RampFull()
+void FSM::exseq_FSM_Festo2__Sorting_Sorting_Sorting_RampFull()
 {
 	/* Default exit sequence for state RampFull */
-	stateConfVector[11] = FSM::State::NO_STATE;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_Sorting;
 	stateConfVectorPosition = 11;
-	exact_FSM_Festo2__Sorting_RampFull();
+	exact_FSM_Festo2__Sorting_Sorting_Sorting_RampFull();
 }
 
 /* Default exit sequence for state Paused */
@@ -4881,14 +5054,6 @@ void FSM::exseq_FSM_Festo2__Motor_SystemMotor()
 	/* Default exit sequence for state SystemMotor */
 	exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor();
 	stateConfVector[13] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 13;
-}
-
-/* Default exit sequence for state Idle */
-void FSM::exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle()
-{
-	/* Default exit sequence for state Idle */
-	stateConfVector[13] = FSM::State::FSM_Festo2__Motor_SystemMotor;
 	stateConfVectorPosition = 13;
 }
 
@@ -5076,54 +5241,54 @@ void FSM::exseq_FSM_Festo1_HeightMeasurement()
 			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement();
 			break;
 		}
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle();
 			break;
 		}
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring();
 			break;
 		}
-		case FSM::State::A :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A();
 			break;
 		}
-		case FSM::State::B :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B();
 			break;
 		}
-		case FSM::State::C :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C();
 			break;
 		}
-		case FSM::State::Error :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error();
 			break;
 		}
-		case FSM::State::Evaluate :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate();
 			break;
 		}
-		case FSM::State::_final_ :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_ :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_();
 			break;
 		}
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent();
 			break;
 		}
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected();
 			break;
 		}
 		case FSM::State::FSM_Festo1_HeightMeasurement_Paused :
@@ -5147,61 +5312,61 @@ void FSM::exseq_FSM_Festo1_HeightMeasurement()
 	}
 }
 
-/* Default exit sequence for region s */
-void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s()
+/* Default exit sequence for region FST1_HM */
+void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM()
 {
-	/* Default exit sequence for region s */
-	/* Handle exit of all possible states (of FSM.FSM_Festo1_HeightMeasurement.HeightMeasurement.s) at position 1... */
+	/* Default exit sequence for region FST1_HM */
+	/* Handle exit of all possible states (of FSM.FSM_Festo1_HeightMeasurement.HeightMeasurement.FST1_HM) at position 1... */
 	switch(stateConfVector[ 1 ])
 	{
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle();
 			break;
 		}
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring();
 			break;
 		}
-		case FSM::State::A :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A();
 			break;
 		}
-		case FSM::State::B :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B();
 			break;
 		}
-		case FSM::State::C :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C();
 			break;
 		}
-		case FSM::State::Error :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error();
 			break;
 		}
-		case FSM::State::Evaluate :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate();
 			break;
 		}
-		case FSM::State::_final_ :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_ :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_();
 			break;
 		}
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent();
 			break;
 		}
-		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected();
 			break;
 		}
 		default:
@@ -5210,41 +5375,41 @@ void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s()
 	}
 }
 
-/* Default exit sequence for region HeightFSM */
-void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM()
+/* Default exit sequence for region HeightFSM_Festo1 */
+void FSM::exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1()
 {
-	/* Default exit sequence for region HeightFSM */
-	/* Handle exit of all possible states (of FSM.FSM_Festo1_HeightMeasurement.HeightMeasurement.s.Measuring.HeightFSM) at position 1... */
+	/* Default exit sequence for region HeightFSM_Festo1 */
+	/* Handle exit of all possible states (of FSM.FSM_Festo1_HeightMeasurement.HeightMeasurement.FST1_HM.Measuring.HeightFSM_Festo1) at position 1... */
 	switch(stateConfVector[ 1 ])
 	{
-		case FSM::State::A :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A();
 			break;
 		}
-		case FSM::State::B :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B();
 			break;
 		}
-		case FSM::State::C :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C();
 			break;
 		}
-		case FSM::State::Error :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error();
 			break;
 		}
-		case FSM::State::Evaluate :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate();
 			break;
 		}
-		case FSM::State::_final_ :
+		case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_ :
 		{
-			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_();
+			exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_();
 			break;
 		}
 		default:
@@ -5270,11 +5435,6 @@ void FSM::exseq_FSM_Festo1__Sorting()
 			exseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle();
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement :
-		{
-			exseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement();
-			break;
-		}
 		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_PukPresent :
 		{
 			exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent();
@@ -5285,9 +5445,9 @@ void FSM::exseq_FSM_Festo1__Sorting()
 			exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected();
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull :
+		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_Evaluate :
 		{
-			exseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
+			exseq_FSM_Festo1__Sorting_Sorting_Sorting_Evaluate();
 			break;
 		}
 		case FSM::State::FSM_Festo1__Sorting_Paused :
@@ -5323,11 +5483,6 @@ void FSM::exseq_FSM_Festo1__Sorting_Sorting_Sorting()
 			exseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle();
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement :
-		{
-			exseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement();
-			break;
-		}
 		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_PukPresent :
 		{
 			exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent();
@@ -5338,9 +5493,9 @@ void FSM::exseq_FSM_Festo1__Sorting_Sorting_Sorting()
 			exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected();
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull :
+		case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_Evaluate :
 		{
-			exseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
+			exseq_FSM_Festo1__Sorting_Sorting_Sorting_Evaluate();
 			break;
 		}
 		default:
@@ -5739,24 +5894,54 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement()
 			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement();
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle :
 		{
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle();
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle();
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent :
 		{
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent();
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected :
 		{
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected();
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected();
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring :
 		{
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_ :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_();
 			break;
 		}
 		case FSM::State::FSM_Festo2__HeightMeasurement_Paused :
@@ -5780,31 +5965,104 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement()
 	}
 }
 
-/* Default exit sequence for region HeightMeasurement */
-void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement()
+/* Default exit sequence for region FST2_HM */
+void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM()
 {
-	/* Default exit sequence for region HeightMeasurement */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__HeightMeasurement.HeightMeasurement.HeightMeasurement) at position 10... */
+	/* Default exit sequence for region FST2_HM */
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__HeightMeasurement.HeightMeasurement.FST2_HM) at position 10... */
 	switch(stateConfVector[ 10 ])
 	{
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle :
 		{
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle();
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle();
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent :
 		{
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent();
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected :
 		{
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected();
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected();
 			break;
 		}
-		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring :
 		{
-			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_ :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region HeightFSM_Festo2 */
+void FSM::exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2()
+{
+	/* Default exit sequence for region HeightFSM_Festo2 */
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__HeightMeasurement.HeightMeasurement.FST2_HM.Measuring.HeightFSM_Festo2) at position 10... */
+	switch(stateConfVector[ 10 ])
+	{
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate();
+			break;
+		}
+		case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_ :
+		{
+			exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_();
 			break;
 		}
 		default:
@@ -5845,9 +6103,9 @@ void FSM::exseq_FSM_Festo2__Sorting()
 			exseq_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected();
 			break;
 		}
-		case FSM::State::FSM_Festo2__Sorting_RampFull :
+		case FSM::State::FSM_Festo2__Sorting_Sorting_Sorting_RampFull :
 		{
-			exseq_FSM_Festo2__Sorting_RampFull();
+			exseq_FSM_Festo2__Sorting_Sorting_Sorting_RampFull();
 			break;
 		}
 		case FSM::State::FSM_Festo2__Sorting_Paused :
@@ -5896,6 +6154,11 @@ void FSM::exseq_FSM_Festo2__Sorting_Sorting_Sorting()
 		case FSM::State::FSM_Festo2__Sorting_Sorting_Sorting_PukExpected :
 		{
 			exseq_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected();
+			break;
+		}
+		case FSM::State::FSM_Festo2__Sorting_Sorting_Sorting_RampFull :
+		{
+			exseq_FSM_Festo2__Sorting_Sorting_Sorting_RampFull();
 			break;
 		}
 		default:
@@ -6002,11 +6265,6 @@ void FSM::exseq_FSM_Festo2__Motor()
 			exseq_FSM_Festo2__Motor_SystemMotor();
 			break;
 		}
-		case FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle :
-		{
-			exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
-			break;
-		}
 		case FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward :
 		{
 			exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
@@ -6035,11 +6293,6 @@ void FSM::exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor()
 	/* Handle exit of all possible states (of FSM.FSM_Festo2__Motor.SystemMotor.FSM_SystemMotor) at position 13... */
 	switch(stateConfVector[ 13 ])
 	{
-		case FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle :
-		{
-			exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
-			break;
-		}
 		case FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward :
 		{
 			exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
@@ -6175,30 +6428,30 @@ void FSM::react_FSM_Festo1_Ingress__entry_Default()
 }
 
 /* Default react sequence for initial entry  */
-void FSM::react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s__entry_Default()
+void FSM::react_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM__entry_Default()
 {
 	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_default();
+	enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle_default();
 }
 
 /* Default react sequence for initial entry  */
-void FSM::react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__entry_Default()
+void FSM::react_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__entry_Default()
 {
 	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_default();
+	enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A_default();
 }
 
 /* Default react sequence for deep history entry History */
-void FSM::react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_History()
+void FSM::react_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_History()
 {
 	/* Default react sequence for deep history entry History */
 	/* Enter the region with deep history */
 	if (historyVector[1] != FSM::State::NO_STATE)
 	{
-		dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s();
+		dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM();
 	} else
 	{
-		enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_default();
+		enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle_default();
 	} 
 }
 
@@ -6350,24 +6603,31 @@ void FSM::react_FSM_Festo2__Ingress__entry_Default()
 }
 
 /* Default react sequence for initial entry  */
-void FSM::react_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement__entry_Default()
+void FSM::react_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM__entry_Default()
 {
 	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_default();
+	enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle_default();
 }
 
 /* Default react sequence for shallow history entry History */
-void FSM::react_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_History()
+void FSM::react_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_History()
 {
 	/* Default react sequence for shallow history entry History */
 	/* Enter the region with shallow history */
 	if (historyVector[6] != FSM::State::NO_STATE)
 	{
-		shenseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement();
+		shenseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM();
 	} else
 	{
-		enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_default();
+		enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle_default();
 	} 
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A_default();
 }
 
 /* Default react sequence for initial entry  */
@@ -6437,7 +6697,7 @@ void FSM::react_FSM_Festo2__Egress__entry_Default()
 void FSM::react_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor__entry_Default()
 {
 	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
+	enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
 }
 
 /* Default react sequence for initial entry  */
@@ -6558,8 +6818,7 @@ sc::integer FSM::FSM_Festo1_Ingress_Ingress_Ingress_PukPresent_react(const sc::i
 			if (LBF_1_OPEN_raised)
 			{ 
 				exseq_FSM_Festo1_Ingress_Ingress_Ingress_PukPresent();
-				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_INGRESS_NEW_PUK))
-				;
+				FST_1_POSITION_INGRESS_NEW_PUK_observable.next();
 				enseq_FSM_Festo1_Ingress_Ingress_Ingress_CreatingDistance_default();
 				FSM_Festo1_Ingress_Ingress_react(0);
 				transitioned_after = 0;
@@ -6585,9 +6844,9 @@ sc::integer FSM::FSM_Festo1_Ingress_Ingress_Ingress_CreatingDistance_react(const
 			if (FST_1_POSITION_INGRESS_DISTANCE_VALID_raised)
 			{ 
 				exseq_FSM_Festo1_Ingress_Ingress_Ingress_CreatingDistance();
+				motor1Forward--;
 				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_PUK_ENTRY_HeightMeasurement))
 				;
-				motor1Forward--;
 				FST_1_INGRESS_OUT_observable.next();
 				raiseLocal_FST_1_INGRESS_OUT();
 				enseq_FSM_Festo1_Ingress_Ingress_Ingress_Idle_default();
@@ -6693,7 +6952,7 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_react(const sc::
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle_react(const sc::integer transitioned_before) {
 	/* The reactions of state Idle. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
@@ -6702,11 +6961,10 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_react(con
 		{ 
 			if (FST_1_PUK_ENTRY_HeightMeasurement_raised)
 			{ 
-				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle();
+				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle();
 				motor1Forward++;
-				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK))
-				;
-				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_default();
+				FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent_default();
 				FSM_Festo1_HeightMeasurement_HeightMeasurement_react(1);
 				transitioned_after = 1;
 			} 
@@ -6721,17 +6979,17 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_react(con
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(const sc::integer transitioned_before) {
 	/* The reactions of state Measuring. */
 	sc::integer transitioned_after = transitioned_before;
-	if ((isStateActive(FSM::State::_final_)) && (doCompletion))
+	if ((isStateActive(FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_)) && (doCompletion))
 	{ 
 		/* Default exit sequence for state Measuring */
-		exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
+		exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1();
 		stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement;
 		stateConfVectorPosition = 1;
 		/* 'default' enter sequence for state Idle */
-		stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle;
+		stateConfVector[1] = FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle;
 		stateConfVectorPosition = 1;
 		historyVector[1] = stateConfVector[1];
 		FSM_Festo1_HeightMeasurement_HeightMeasurement_react(1);
@@ -6747,7 +7005,7 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_reac
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A_react(const sc::integer transitioned_before) {
 	/* The reactions of state A. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
@@ -6756,48 +7014,48 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 		{ 
 			if ((((AReferenceMinCount) <= (FST_1_sampleCount)) && (((BReferenceHeight + HeightThreshhold)) > (FST_1_currentValue))) && (((BReferenceHeight - HeightThreshhold)) < (FST_1_currentValue)))
 			{ 
-				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
+				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A();
 				setFST_1_sampleCount(0);
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
-				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_default();
-				FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B_default();
+				FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 				transitioned_after = 1;
 			}  else
 			{
 				if ((((AReferenceHeight + HeightThreshhold)) < (FST_1_currentValue)) || ((FST_1_currentValue) < ((AReferenceHeight - HeightThreshhold))))
 				{ 
-					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
-					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
-					FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A();
+					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_default();
+					FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 					transitioned_after = 1;
 				}  else
 				{
 					if ((AReferenceMaxCount) < (FST_1_sampleCount))
 					{ 
-						exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
-						enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
-						FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+						exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A();
+						enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_default();
+						FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 						transitioned_after = 1;
 					}  else
 					{
 						if (HS_1_SAMPLE_raised)
 						{ 
-							exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
+							exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A();
 							FST_1_sampleCount++;
 							FST_1_generalCount++;
 							EVALUATE_observable.next();
 							raiseLocal_EVALUATE();
-							enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_default();
-							FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+							enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A_default();
+							FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 							transitioned_after = 1;
 						}  else
 						{
 							if ((FST_1_generalCount) > (MaxSampleCount))
 							{ 
-								exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
-								enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
-								FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+								exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A();
+								enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_default();
+								FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 								transitioned_after = 1;
 							} 
 						}
@@ -6809,13 +7067,13 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 		if ((transitioned_after) == (transitioned_before))
 		{ 
 			/* then execute local reactions. */
-			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(transitioned_before);
 		} 
 	} 
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B_react(const sc::integer transitioned_before) {
 	/* The reactions of state B. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
@@ -6824,48 +7082,48 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 		{ 
 			if ((((BReferenceMinCount) <= (FST_1_sampleCount)) && (((CReferenceHeight + HeightThreshhold)) > (FST_1_currentValue))) && (((CReferenceHeight - HeightThreshhold)) < (FST_1_currentValue)))
 			{ 
-				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
+				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B();
 				setFST_1_sampleCount(0);
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
-				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_default();
-				FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C_default();
+				FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 				transitioned_after = 1;
 			}  else
 			{
 				if ((((BReferenceHeight + HeightThreshhold)) < (FST_1_currentValue)) || ((FST_1_currentValue) < ((BReferenceHeight - HeightThreshhold))))
 				{ 
-					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
-					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
-					FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B();
+					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_default();
+					FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 					transitioned_after = 1;
 				}  else
 				{
 					if (HS_1_SAMPLE_raised)
 					{ 
-						exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
+						exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B();
 						FST_1_sampleCount++;
 						FST_1_generalCount++;
 						EVALUATE_observable.next();
 						raiseLocal_EVALUATE();
-						enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_default();
-						FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+						enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B_default();
+						FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 						transitioned_after = 1;
 					}  else
 					{
 						if ((BReferenceMaxCount) < (FST_1_sampleCount))
 						{ 
-							exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
-							enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
-							FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+							exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B();
+							enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_default();
+							FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 							transitioned_after = 1;
 						}  else
 						{
 							if ((FST_1_generalCount) > (MaxSampleCount))
 							{ 
-								exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
-								enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
-								FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+								exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B();
+								enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_default();
+								FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 								transitioned_after = 1;
 							} 
 						}
@@ -6877,13 +7135,13 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 		if ((transitioned_after) == (transitioned_before))
 		{ 
 			/* then execute local reactions. */
-			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(transitioned_before);
 		} 
 	} 
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C_react(const sc::integer transitioned_before) {
 	/* The reactions of state C. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
@@ -6892,48 +7150,48 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 		{ 
 			if (HS_1_SAMPLING_DONE_raised)
 			{ 
-				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
+				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C();
 				motor1Slow--;
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
-				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate_default();
-				FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate_default();
+				FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 				transitioned_after = 1;
 			}  else
 			{
 				if ((((CReferenceHeight + HeightThreshhold)) < (FST_1_currentValue)) || ((FST_1_currentValue) < ((CReferenceHeight - HeightThreshhold))))
 				{ 
-					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
-					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
-					FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C();
+					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_default();
+					FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 					transitioned_after = 1;
 				}  else
 				{
 					if ((CReferenceMaxCount) < (FST_1_sampleCount))
 					{ 
-						exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
-						enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
-						FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+						exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C();
+						enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_default();
+						FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 						transitioned_after = 1;
 					}  else
 					{
 						if (HS_1_SAMPLE_raised)
 						{ 
-							exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
+							exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C();
 							FST_1_sampleCount++;
 							FST_1_generalCount++;
 							EVALUATE_observable.next();
 							raiseLocal_EVALUATE();
-							enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_default();
-							FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+							enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C_default();
+							FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 							transitioned_after = 1;
 						}  else
 						{
 							if ((FST_1_generalCount) > (MaxSampleCount))
 							{ 
-								exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
-								enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
-								FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(1);
+								exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C();
+								enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_default();
+								FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(1);
 								transitioned_after = 1;
 							} 
 						}
@@ -6945,13 +7203,13 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 		if ((transitioned_after) == (transitioned_before))
 		{ 
 			/* then execute local reactions. */
-			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(transitioned_before);
 		} 
 	} 
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_react(const sc::integer transitioned_before) {
 	/* The reactions of state Error. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
@@ -6960,7 +7218,7 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 		{ 
 			if (HS_1_SAMPLING_DONE_raised)
 			{ 
-				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error();
+				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error();
 				setFST_1_generalCount(0);
 				setFST_1_sampleCount(0);
 				motor1Slow--;
@@ -6969,7 +7227,7 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 				Q12_ON_observable.next();
 				FST_1_PUK_ENTRY_SORTING_observable.next();
 				raiseLocal_FST_1_PUK_ENTRY_SORTING();
-				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__default();
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final__default();
 				transitioned_after = 1;
 			} 
 		} 
@@ -6977,13 +7235,13 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 		if ((transitioned_after) == (transitioned_before))
 		{ 
 			/* then execute local reactions. */
-			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(transitioned_before);
 		} 
 	} 
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate_react(const sc::integer transitioned_before) {
 	/* The reactions of state Evaluate. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
@@ -6992,7 +7250,7 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 		{ 
 			if ((CReferenceMinCount) <= (FST_1_sampleCount))
 			{ 
-				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate();
+				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate();
 				setFST_1_generalCount(0);
 				setFST_1_sampleCount(0);
 				motor1Forward--;
@@ -7000,13 +7258,13 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 				Q11_ON_observable.next();
 				FST_1_PUK_ENTRY_SORTING_observable.next();
 				raiseLocal_FST_1_PUK_ENTRY_SORTING();
-				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__default();
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final__default();
 				transitioned_after = 1;
 			}  else
 			{
 				if ((CReferenceMinCount) > (FST_1_sampleCount))
 				{ 
-					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate();
+					exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate();
 					setFST_1_generalCount(0);
 					setFST_1_sampleCount(0);
 					motor1Forward--;
@@ -7014,7 +7272,7 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 					Q12_ON_observable.next();
 					FST_1_PUK_ENTRY_SORTING_observable.next();
 					raiseLocal_FST_1_PUK_ENTRY_SORTING();
-					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__default();
+					enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final__default();
 					transitioned_after = 1;
 				} 
 			}
@@ -7023,18 +7281,18 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_Heig
 		if ((transitioned_after) == (transitioned_before))
 		{ 
 			/* then execute local reactions. */
-			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
+			transitioned_after = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(transitioned_before);
 		} 
 	} 
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final__react(const sc::integer transitioned_before) {
 	/* The reactions of state null. */
-	return FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(transitioned_before);
+	return FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(transitioned_before);
 }
 
-sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukPresent. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
@@ -7043,8 +7301,8 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_rea
 		{ 
 			if (FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised)
 			{ 
-				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent();
-				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected_default();
+				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent();
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected_default();
 				FSM_Festo1_HeightMeasurement_HeightMeasurement_react(1);
 				transitioned_after = 1;
 			} 
@@ -7059,7 +7317,7 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_rea
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukExpected. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
@@ -7068,11 +7326,11 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected_re
 		{ 
 			if (HS_1_SAMPLE_raised)
 			{ 
-				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected();
+				exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected();
 				motor1Slow++;
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
-				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_default();
+				enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_default();
 				FSM_Festo1_HeightMeasurement_HeightMeasurement_react(1);
 				transitioned_after = 1;
 			} 
@@ -7097,7 +7355,7 @@ sc::integer FSM::FSM_Festo1_HeightMeasurement_Paused_react(const sc::integer tra
 			if (SYSTEM_OPERATIONAL_IN_raised)
 			{ 
 				exseq_FSM_Festo1_HeightMeasurement_Paused();
-				react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_History();
+				react_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_History();
 				transitioned_after = 1;
 			}  else
 			{
@@ -7167,6 +7425,8 @@ sc::integer FSM::FSM_Festo1__Sorting_Sorting_react(const sc::integer transitione
 				{ 
 					exseq_FSM_Festo1__Sorting_Sorting();
 					setFST1RampFull(true);
+					EVALUATE_observable.next();
+					raiseLocal_EVALUATE();
 					react_FSM_Festo1__Sorting_Sorting_Sorting_History();
 					transitioned_after = 2;
 				}  else
@@ -7186,7 +7446,29 @@ sc::integer FSM::FSM_Festo1__Sorting_Sorting_react(const sc::integer transitione
 							exseq_FSM_Festo1__Sorting_Sorting();
 							enseq_FSM_Festo1__Sorting_E_STOP_default();
 							transitioned_after = 2;
-						} 
+						}  else
+						{
+							if (MS_1_HIGH_raised)
+							{ 
+								exseq_FSM_Festo1__Sorting_Sorting();
+								setFST1isMetal(true);
+								EVALUATE_observable.next();
+								raiseLocal_EVALUATE();
+								react_FSM_Festo1__Sorting_Sorting_Sorting_History();
+								transitioned_after = 2;
+							}  else
+							{
+								if (MS_1_LOW_raised)
+								{ 
+									exseq_FSM_Festo1__Sorting_Sorting();
+									setFST1isMetal(false);
+									EVALUATE_observable.next();
+									raiseLocal_EVALUATE();
+									react_FSM_Festo1__Sorting_Sorting_Sorting_History();
+									transitioned_after = 2;
+								} 
+							}
+						}
 					}
 				}
 			}
@@ -7206,60 +7488,11 @@ sc::integer FSM::FSM_Festo1__Sorting_Sorting_Sorting_Idle_react(const sc::intege
 			{ 
 				exseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle();
 				motor1Forward++;
-				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_SORTING_NEW_PUK))
-				;
+				FST_1_POSITION_SORTING_NEW_PUK_observable.next();
 				enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent_default();
 				FSM_Festo1__Sorting_Sorting_react(2);
 				transitioned_after = 2;
 			} 
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_Festo1__Sorting_Sorting_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement_react(const sc::integer transitioned_before) {
-	/* The reactions of state MetalMeasurement. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (2))
-		{ 
-			if (LBM_1_OPEN_raised)
-			{ 
-				exseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement();
-				motor1Forward--;
-				FST_1_PUK_ENTRY_EGRESS_observable.next();
-				raiseLocal_FST_1_PUK_ENTRY_EGRESS();
-				enseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle_default();
-				FSM_Festo1__Sorting_Sorting_react(2);
-				transitioned_after = 2;
-			}  else
-			{
-				if ((MS_1_TRUE_raised) && (FST1RampFull))
-				{ 
-					exseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement();
-					enseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull_default();
-					FSM_Festo1__Sorting_Sorting_react(2);
-					transitioned_after = 2;
-				}  else
-				{
-					if ((MS_1_TRUE_raised) && (!(FST1RampFull)))
-					{ 
-						exseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement();
-						FST_1_SORTING_MODULE_ACTIVE_observable.next();
-						FST_1_SORTING_MODULE_RESTING_observable.next();
-						enseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle_default();
-						FSM_Festo1__Sorting_Sorting_react(2);
-						transitioned_after = 2;
-					} 
-				}
-			}
 		} 
 		/* If no transition was taken */
 		if ((transitioned_after) == (transitioned_before))
@@ -7303,13 +7536,24 @@ sc::integer FSM::FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_react(const sc:
 	{ 
 		if ((transitioned_after) < (2))
 		{ 
-			if (LBM_1_INTERRUPTED_raised)
+			if ((LBM_1_INTERRUPTED_raised) && ((FST1isMetal) == (true)))
 			{ 
 				exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected();
-				enseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement_default();
+				FST_1_PUK_IS_METAL_observable.next();
+				enseq_FSM_Festo1__Sorting_Sorting_Sorting_Evaluate_default();
 				FSM_Festo1__Sorting_Sorting_react(2);
 				transitioned_after = 2;
-			} 
+			}  else
+			{
+				if ((LBM_1_INTERRUPTED_raised) && ((FST1isMetal) == (false)))
+				{ 
+					exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected();
+					FST_1_PUK_IS_NOT_METAL_observable.next();
+					enseq_FSM_Festo1__Sorting_Sorting_Sorting_Evaluate_default();
+					FSM_Festo1__Sorting_Sorting_react(2);
+					transitioned_after = 2;
+				} 
+			}
 		} 
 		/* If no transition was taken */
 		if ((transitioned_after) == (transitioned_before))
@@ -7321,18 +7565,19 @@ sc::integer FSM::FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_react(const sc:
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo1__Sorting_Sorting_Sorting_RampFull_react(const sc::integer transitioned_before) {
-	/* The reactions of state RampFull. */
+sc::integer FSM::FSM_Festo1__Sorting_Sorting_Sorting_Evaluate_react(const sc::integer transitioned_before) {
+	/* The reactions of state Evaluate. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
 		if ((transitioned_after) < (2))
 		{ 
-			if (BGR_1_INTERRUPTED_raised)
+			if (FST_1_PUK_SORTING_PASSTHROUGH_raised)
 			{ 
-				exseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
-				FST_1_SORTING_MODULE_ACTIVE_observable.next();
-				FST_1_SORTING_MODULE_RESTING_observable.next();
+				exseq_FSM_Festo1__Sorting_Sorting_Sorting_Evaluate();
+				motor1Forward--;
+				FST_1_PUK_ENTRY_EGRESS_observable.next();
+				raiseLocal_FST_1_PUK_ENTRY_EGRESS();
 				enseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle_default();
 				FSM_Festo1__Sorting_Sorting_react(2);
 				transitioned_after = 2;
@@ -7447,8 +7692,7 @@ sc::integer FSM::FSM_Festo1__Egress_Egress_Egress_IDLE_react(const sc::integer t
 			{ 
 				exseq_FSM_Festo1__Egress_Egress_Egress_IDLE();
 				motor1Forward++;
-				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_EGRESS_NEW_PUK))
-				;
+				FST_1_POSITION_EGRESS_NEW_PUK_observable.next();
 				enseq_FSM_Festo1__Egress_Egress_Egress_PukPresent_default();
 				FSM_Festo1__Egress_Egress_react(3);
 				transitioned_after = 3;
@@ -7535,7 +7779,8 @@ sc::integer FSM::FSM_Festo1__Egress_Egress_Egress_PukExpected_react(const sc::in
 				if ((LBE_1_INTERRUPTED_raised) && (((fst_2_ready) == (true))))
 				{ 
 					exseq_FSM_Festo1__Egress_Egress_Egress_PukExpected();
-					motor1Stop++;
+					FST_2_PUK_ENTRY_INGRESS_observable.next();
+					raiseLocal_FST_2_PUK_ENTRY_INGRESS();
 					EVALUATE_observable.next();
 					raiseLocal_EVALUATE();
 					enseq_FSM_Festo1__Egress_Egress_Egress_Transfer_default();
@@ -8135,18 +8380,20 @@ sc::integer FSM::__EStopCleared_react(const sc::integer transitioned_before) {
 			if (BGR_1_INTERRUPTED_raised)
 			{ 
 				exseq___EStopCleared();
-				ESTOP_CLEARED_observable.next();
-				raiseLocal_ESTOP_CLEARED();
-				enseq___ReveivedReset_default();
+				setIsBGR1Pressed(true);
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq___EStopCleared_default();
 				transitioned_after = 5;
 			}  else
 			{
 				if (BGR_2_INTERRUPTED_raised)
 				{ 
 					exseq___EStopCleared();
-					ESTOP_CLEARED_observable.next();
-					raiseLocal_ESTOP_CLEARED();
-					enseq___ReveivedReset_default();
+					setIsBGR2Pressed(true);
+					EVALUATE_observable.next();
+					raiseLocal_EVALUATE();
+					enseq___EStopCleared_default();
 					transitioned_after = 5;
 				}  else
 				{
@@ -8154,6 +8401,8 @@ sc::integer FSM::__EStopCleared_react(const sc::integer transitioned_before) {
 					{ 
 						exseq___EStopCleared();
 						setIsEStop1High(false);
+						setIsBGR1Pressed(false);
+						setIsBGR2Pressed(false);
 						enseq___EStopReceived_default();
 						transitioned_after = 5;
 					}  else
@@ -8162,9 +8411,29 @@ sc::integer FSM::__EStopCleared_react(const sc::integer transitioned_before) {
 						{ 
 							exseq___EStopCleared();
 							setIsEStop2High(false);
+							setIsBGR1Pressed(false);
+							setIsBGR2Pressed(false);
 							enseq___EStopReceived_default();
 							transitioned_after = 5;
-						} 
+						}  else
+						{
+							if (((isBGR1Pressed) == (true)) && ((isBGR2Pressed) == (true)))
+							{ 
+								exseq___EStopCleared();
+								setIsBGR1Pressed(false);
+								setIsBGR2Pressed(false);
+								setMotor1Stop(0);
+								setMotor1Slow(0);
+								setMotor1Forward(0);
+								setMotor2Stop(0);
+								setMotor2Slow(0);
+								setMotor2Forward(0);
+								ESTOP_CLEARED_observable.next();
+								raiseLocal_ESTOP_CLEARED();
+								enseq___ReveivedReset_default();
+								transitioned_after = 5;
+							} 
+						}
 					}
 				}
 			}
@@ -8540,7 +8809,8 @@ sc::integer FSM::FSM_Festo2__Ingress_Ingress_Ingress_Idle_react(const sc::intege
 			{ 
 				exseq_FSM_Festo2__Ingress_Ingress_Ingress_Idle();
 				motor2Forward++;
-				FST_2_POSITION_INGRESS_NEW_PUK_observable.next();
+				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_POSITION_INGRESS_NEW_PUK))
+				;
 				enseq_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent_default();
 				FSM_Festo2__Ingress_Ingress_react(9);
 				transitioned_after = 9;
@@ -8563,7 +8833,7 @@ sc::integer FSM::FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance_react(cons
 	{ 
 		if ((transitioned_after) < (9))
 		{ 
-			if (local_FST_2_POSITION_INGRESS_DISTANCE_VALID_raised)
+			if (FST_2_POSITION_INGRESS_DISTANCE_VALID_raised)
 			{ 
 				exseq_FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance();
 				motor2Forward--;
@@ -8591,7 +8861,7 @@ sc::integer FSM::FSM_Festo2__Ingress_Ingress_Ingress_PukPresent_react(const sc::
 	{ 
 		if ((transitioned_after) < (9))
 		{ 
-			if (local_FST_2_POSITION_INGRESS_PUK_EXPECTED_raised)
+			if (FST_2_POSITION_INGRESS_PUK_EXPECTED_raised)
 			{ 
 				exseq_FSM_Festo2__Ingress_Ingress_Ingress_PukPresent();
 				enseq_FSM_Festo2__Ingress_Ingress_Ingress_PukExpected_default();
@@ -8693,7 +8963,15 @@ sc::integer FSM::FSM_Festo2__Ingress_Paused_react(const sc::integer transitioned
 				exseq_FSM_Festo2__Ingress_Paused();
 				react_FSM_Festo2__Ingress_Ingress_Ingress_History();
 				transitioned_after = 9;
-			} 
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo2__Ingress_Paused();
+					enseq_FSM_Festo2__Ingress_E_STOP_default();
+					transitioned_after = 9;
+				} 
+			}
 		} 
 	} 
 	return transitioned_after;
@@ -8743,7 +9021,7 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_react(const sc:
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle_react(const sc::integer transitioned_before) {
 	/* The reactions of state Idle. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
@@ -8752,9 +9030,10 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasureme
 		{ 
 			if (local_FST_2_PUK_ENTRY_HeightMeasurement_raised)
 			{ 
-				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle();
+				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle();
+				motor2Forward++;
 				FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
-				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_default();
+				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent_default();
 				FSM_Festo2__HeightMeasurement_HeightMeasurement_react(10);
 				transitioned_after = 10;
 			} 
@@ -8769,17 +9048,17 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasureme
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukPresent. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
 		if ((transitioned_after) < (10))
 		{ 
-			if (local_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised)
+			if (FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised)
 			{ 
-				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
-				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_default();
+				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent();
+				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected_default();
 				FSM_Festo2__HeightMeasurement_HeightMeasurement_react(10);
 				transitioned_after = 10;
 			} 
@@ -8794,7 +9073,7 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasureme
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected_react(const sc::integer transitioned_before) {
 	/* The reactions of state PukExpected. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
@@ -8803,11 +9082,11 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasureme
 		{ 
 			if (HS_2_SAMPLE_raised)
 			{ 
-				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected();
+				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected();
 				motor2Slow++;
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
-				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default();
+				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_default();
 				FSM_Festo2__HeightMeasurement_HeightMeasurement_react(10);
 				transitioned_after = 10;
 			} 
@@ -8822,8 +9101,170 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasureme
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(const sc::integer transitioned_before) {
 	/* The reactions of state Measuring. */
+	sc::integer transitioned_after = transitioned_before;
+	if ((isStateActive(FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_)) && (doCompletion))
+	{ 
+		/* Default exit sequence for state Measuring */
+		exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2();
+		stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement;
+		stateConfVectorPosition = 10;
+		/* 'default' enter sequence for state Idle */
+		stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle;
+		stateConfVectorPosition = 10;
+		historyVector[6] = stateConfVector[10];
+		FSM_Festo2__HeightMeasurement_HeightMeasurement_react(10);
+	}  else
+	{
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_react(transitioned_before);
+		} 
+	}
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A_react(const sc::integer transitioned_before) {
+	/* The reactions of state A. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (10))
+		{ 
+			if ((((AReferenceMinCount) <= (FST_2_sampleCount)) && (((BReferenceHeight + HeightThreshhold)) > (FST_2_currentValue))) && (((BReferenceHeight - HeightThreshhold)) < (FST_2_currentValue)))
+			{ 
+				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A();
+				setFST_2_sampleCount(0);
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B_default();
+				FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+				transitioned_after = 10;
+			}  else
+			{
+				if ((((AReferenceHeight + HeightThreshhold)) < (FST_2_currentValue)) || ((FST_2_currentValue) < ((AReferenceHeight - HeightThreshhold))))
+				{ 
+					exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A();
+					enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_default();
+					FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+					transitioned_after = 10;
+				}  else
+				{
+					if ((AReferenceMaxCount) < (FST_2_sampleCount))
+					{ 
+						exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A();
+						enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_default();
+						FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+						transitioned_after = 10;
+					}  else
+					{
+						if (HS_2_SAMPLE_raised)
+						{ 
+							exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A();
+							FST_2_sampleCount++;
+							FST_2_generalCount++;
+							EVALUATE_observable.next();
+							raiseLocal_EVALUATE();
+							enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A_default();
+							FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+							transitioned_after = 10;
+						}  else
+						{
+							if ((FST_2_generalCount) > (MaxSampleCount))
+							{ 
+								exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A();
+								enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_default();
+								FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+								transitioned_after = 10;
+							} 
+						}
+					}
+				}
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B_react(const sc::integer transitioned_before) {
+	/* The reactions of state B. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (10))
+		{ 
+			if ((((BReferenceMinCount) <= (FST_2_sampleCount)) && (((CReferenceHeight + HeightThreshhold)) > (FST_2_currentValue))) && (((CReferenceHeight - HeightThreshhold)) < (FST_2_currentValue)))
+			{ 
+				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B();
+				setFST_2_sampleCount(0);
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C_default();
+				FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+				transitioned_after = 10;
+			}  else
+			{
+				if ((((BReferenceHeight + HeightThreshhold)) < (FST_2_currentValue)) || ((FST_2_currentValue) < ((BReferenceHeight - HeightThreshhold))))
+				{ 
+					exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B();
+					enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_default();
+					FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+					transitioned_after = 10;
+				}  else
+				{
+					if (HS_2_SAMPLE_raised)
+					{ 
+						exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B();
+						FST_2_sampleCount++;
+						FST_2_generalCount++;
+						EVALUATE_observable.next();
+						raiseLocal_EVALUATE();
+						enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B_default();
+						FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+						transitioned_after = 10;
+					}  else
+					{
+						if ((BReferenceMaxCount) < (FST_2_sampleCount))
+						{ 
+							exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B();
+							enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_default();
+							FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+							transitioned_after = 10;
+						}  else
+						{
+							if ((FST_2_generalCount) > (MaxSampleCount))
+							{ 
+								exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B();
+								enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_default();
+								FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+								transitioned_after = 10;
+							} 
+						}
+					}
+				}
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C_react(const sc::integer transitioned_before) {
+	/* The reactions of state C. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
@@ -8831,11 +9272,83 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasureme
 		{ 
 			if (HS_2_SAMPLING_DONE_raised)
 			{ 
-				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
+				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C();
+				motor2Slow--;
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate_default();
+				FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+				transitioned_after = 10;
+			}  else
+			{
+				if ((((CReferenceHeight + HeightThreshhold)) < (FST_2_currentValue)) || ((FST_2_currentValue) < ((CReferenceHeight - HeightThreshhold))))
+				{ 
+					exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C();
+					enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_default();
+					FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+					transitioned_after = 10;
+				}  else
+				{
+					if ((CReferenceMaxCount) < (FST_2_sampleCount))
+					{ 
+						exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C();
+						enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_default();
+						FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+						transitioned_after = 10;
+					}  else
+					{
+						if (HS_2_SAMPLE_raised)
+						{ 
+							exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C();
+							FST_2_sampleCount++;
+							FST_2_generalCount++;
+							EVALUATE_observable.next();
+							raiseLocal_EVALUATE();
+							enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C_default();
+							FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+							transitioned_after = 10;
+						}  else
+						{
+							if ((FST_2_generalCount) > (MaxSampleCount))
+							{ 
+								exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C();
+								enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_default();
+								FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(10);
+								transitioned_after = 10;
+							} 
+						}
+					}
+				}
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_react(const sc::integer transitioned_before) {
+	/* The reactions of state Error. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (10))
+		{ 
+			if (HS_2_SAMPLING_DONE_raised)
+			{ 
+				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error();
+				setFST_2_generalCount(0);
+				setFST_2_sampleCount(0);
+				motor2Slow--;
+				motor2Forward--;
+				FST_2_PUK_HEIGHT_IS_NOT_VALID_observable.next();
 				FST_2_PUK_ENTRY_SORTING_observable.next();
 				raiseLocal_FST_2_PUK_ENTRY_SORTING();
-				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_default();
-				FSM_Festo2__HeightMeasurement_HeightMeasurement_react(10);
+				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final__default();
 				transitioned_after = 10;
 			} 
 		} 
@@ -8843,10 +9356,59 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasureme
 		if ((transitioned_after) == (transitioned_before))
 		{ 
 			/* then execute local reactions. */
-			transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_react(transitioned_before);
+			transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(transitioned_before);
 		} 
 	} 
 	return transitioned_after;
+}
+
+sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate_react(const sc::integer transitioned_before) {
+	/* The reactions of state Evaluate. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (10))
+		{ 
+			if ((CReferenceMinCount) <= (FST_2_sampleCount))
+			{ 
+				exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate();
+				setFST_2_generalCount(0);
+				setFST_2_sampleCount(0);
+				motor2Forward--;
+				FST_2_PUK_HEIGHT_IS_VALID_observable.next();
+				FST_2_PUK_ENTRY_SORTING_observable.next();
+				raiseLocal_FST_2_PUK_ENTRY_SORTING();
+				enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final__default();
+				transitioned_after = 10;
+			}  else
+			{
+				if ((CReferenceMinCount) > (FST_2_sampleCount))
+				{ 
+					exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate();
+					setFST_2_generalCount(0);
+					setFST_2_sampleCount(0);
+					motor2Forward--;
+					FST_2_PUK_HEIGHT_IS_NOT_VALID_observable.next();
+					FST_2_PUK_ENTRY_SORTING_observable.next();
+					raiseLocal_FST_2_PUK_ENTRY_SORTING();
+					enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final__default();
+					transitioned_after = 10;
+				} 
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final__react(const sc::integer transitioned_before) {
+	/* The reactions of state null. */
+	return FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(transitioned_before);
 }
 
 sc::integer FSM::FSM_Festo2__HeightMeasurement_Paused_react(const sc::integer transitioned_before) {
@@ -8859,9 +9421,17 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_Paused_react(const sc::integer tr
 			if (SYSTEM_OPERATIONAL_IN_raised)
 			{ 
 				exseq_FSM_Festo2__HeightMeasurement_Paused();
-				react_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_History();
+				react_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_History();
 				transitioned_after = 10;
-			} 
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo2__HeightMeasurement_Paused();
+					enseq_FSM_Festo2__HeightMeasurement_E_STOP_default();
+					transitioned_after = 10;
+				} 
+			}
 		} 
 	} 
 	return transitioned_after;
@@ -8996,8 +9566,9 @@ sc::integer FSM::FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement_react(cons
 			{
 				if ((MS_2_TRUE_raised) && (FST2RampFull))
 				{ 
-					exseq_FSM_Festo2__Sorting_Sorting();
-					enseq_FSM_Festo2__Sorting_RampFull_default();
+					exseq_FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement();
+					enseq_FSM_Festo2__Sorting_Sorting_Sorting_RampFull_default();
+					FSM_Festo2__Sorting_Sorting_react(11);
 					transitioned_after = 11;
 				}  else
 				{
@@ -9030,7 +9601,7 @@ sc::integer FSM::FSM_Festo2__Sorting_Sorting_Sorting_PukPresent_react(const sc::
 	{ 
 		if ((transitioned_after) < (11))
 		{ 
-			if (local_FST_2_POSITION_SORTING_PUK_EXPECTED_raised)
+			if (FST_2_POSITION_SORTING_PUK_EXPECTED_raised)
 			{ 
 				exseq_FSM_Festo2__Sorting_Sorting_Sorting_PukPresent();
 				enseq_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected_default();
@@ -9073,7 +9644,7 @@ sc::integer FSM::FSM_Festo2__Sorting_Sorting_Sorting_PukExpected_react(const sc:
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo2__Sorting_RampFull_react(const sc::integer transitioned_before) {
+sc::integer FSM::FSM_Festo2__Sorting_Sorting_Sorting_RampFull_react(const sc::integer transitioned_before) {
 	/* The reactions of state RampFull. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
@@ -9082,12 +9653,19 @@ sc::integer FSM::FSM_Festo2__Sorting_RampFull_react(const sc::integer transition
 		{ 
 			if (BGR_2_INTERRUPTED_raised)
 			{ 
-				exseq_FSM_Festo2__Sorting_RampFull();
+				exseq_FSM_Festo2__Sorting_Sorting_Sorting_RampFull();
 				FST_2_SORTING_MODULE_ACTIVE_observable.next();
 				FST_2_SORTING_MODULE_RESTING_observable.next();
 				enseq_FSM_Festo2__Sorting_Sorting_Sorting_Idle_default();
+				FSM_Festo2__Sorting_Sorting_react(11);
 				transitioned_after = 11;
 			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_Festo2__Sorting_Sorting_react(transitioned_before);
 		} 
 	} 
 	return transitioned_after;
@@ -9105,7 +9683,15 @@ sc::integer FSM::FSM_Festo2__Sorting_Paused_react(const sc::integer transitioned
 				exseq_FSM_Festo2__Sorting_Paused();
 				react_FSM_Festo2__Sorting_Sorting_Sorting_History();
 				transitioned_after = 11;
-			} 
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo2__Sorting_Paused();
+					enseq_FSM_Festo2__Sorting_E_STOP_default();
+					transitioned_after = 11;
+				} 
+			}
 		} 
 	} 
 	return transitioned_after;
@@ -9207,7 +9793,7 @@ sc::integer FSM::FSM_Festo2__Egress_Egress_Egress_PukPresent_react(const sc::int
 	{ 
 		if ((transitioned_after) < (12))
 		{ 
-			if (local_FST_2_POSITION_EGRESS_PUK_EXPECTED_raised)
+			if (FST_2_POSITION_EGRESS_PUK_EXPECTED_raised)
 			{ 
 				exseq_FSM_Festo2__Egress_Egress_Egress_PukPresent();
 				enseq_FSM_Festo2__Egress_Egress_Egress_PukExpected_default();
@@ -9338,49 +9924,6 @@ sc::integer FSM::FSM_Festo2__Motor_SystemMotor_react(const sc::integer transitio
 	return transitioned_before;
 }
 
-sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_react(const sc::integer transitioned_before) {
-	/* The reactions of state Idle. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (13))
-		{ 
-			if ((motor2Stop) > (0))
-			{ 
-				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
-				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
-				FSM_Festo2__Motor_SystemMotor_react(13);
-				transitioned_after = 13;
-			}  else
-			{
-				if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) > (0)))
-				{ 
-					exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
-					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
-					FSM_Festo2__Motor_SystemMotor_react(13);
-					transitioned_after = 13;
-				}  else
-				{
-					if (((motor2Stop) == (0)) && ((motor2Slow) > (0)))
-					{ 
-						exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
-						enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
-						FSM_Festo2__Motor_SystemMotor_react(13);
-						transitioned_after = 13;
-					} 
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_Festo2__Motor_SystemMotor_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
 sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_react(const sc::integer transitioned_before) {
 	/* The reactions of state Forward. */
 	sc::integer transitioned_after = transitioned_before;
@@ -9388,7 +9931,7 @@ sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_react(con
 	{ 
 		if ((transitioned_after) < (13))
 		{ 
-			if ((motor1Stop) > (0))
+			if (((motor2Stop) > (0)) || ((((motor2Forward) == (0)) && ((motor2Slow) == (0)))))
 			{ 
 				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
 				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
@@ -9402,16 +9945,7 @@ sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_react(con
 					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
 					FSM_Festo2__Motor_SystemMotor_react(13);
 					transitioned_after = 13;
-				}  else
-				{
-					if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) == (0)))
-					{ 
-						exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
-						enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
-						FSM_Festo2__Motor_SystemMotor_react(13);
-						transitioned_after = 13;
-					} 
-				}
+				} 
 			}
 		} 
 		/* If no transition was taken */
@@ -9431,7 +9965,7 @@ sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_react(const 
 	{ 
 		if ((transitioned_after) < (13))
 		{ 
-			if ((motor2Stop) > (0))
+			if (((motor2Stop) > (0)) || ((((motor2Slow) == (0)) && ((motor2Forward) == (0)))))
 			{ 
 				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
 				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
@@ -9445,16 +9979,7 @@ sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_react(const 
 					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
 					FSM_Festo2__Motor_SystemMotor_react(13);
 					transitioned_after = 13;
-				}  else
-				{
-					if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) == (0)))
-					{ 
-						exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
-						enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
-						FSM_Festo2__Motor_SystemMotor_react(13);
-						transitioned_after = 13;
-					} 
-				}
+				} 
 			}
 		} 
 		/* If no transition was taken */
@@ -9474,30 +9999,21 @@ sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_react(const 
 	{ 
 		if ((transitioned_after) < (13))
 		{ 
-			if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) == (0)))
+			if (((motor2Stop) == (0)) && ((motor2Slow) > (0)))
 			{ 
 				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
-				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
+				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
 				FSM_Festo2__Motor_SystemMotor_react(13);
 				transitioned_after = 13;
 			}  else
 			{
-				if (((motor2Stop) == (0)) && ((motor2Slow) > (0)))
+				if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) > (0)))
 				{ 
 					exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
-					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
+					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
 					FSM_Festo2__Motor_SystemMotor_react(13);
 					transitioned_after = 13;
-				}  else
-				{
-					if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) > (0)))
-					{ 
-						exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
-						enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
-						FSM_Festo2__Motor_SystemMotor_react(13);
-						transitioned_after = 13;
-					} 
-				}
+				} 
 			}
 		} 
 		/* If no transition was taken */
@@ -9598,7 +10114,15 @@ sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green
 				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
 				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
 				transitioned_after = 14;
-			} 
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
+					enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
+					transitioned_after = 14;
+				} 
+			}
 		} 
 	} 
 	return transitioned_after;
@@ -9755,14 +10279,13 @@ void FSM::clearInEvents() noexcept {
 	ESTOP_1_LOW_raised = false;
 	ESTOP_2_HIGH_raised = false;
 	ESTOP_2_LOW_raised = false;
-	FST_1_POSITION_INGRESS_NEW_PUK_raised = false;
 	FST_1_POSITION_INGRESS_DISTANCE_VALID_raised = false;
-	FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_raised = false;
 	FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised = false;
-	FST_1_POSITION_SORTING_NEW_PUK_raised = false;
+	FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED_raised = false;
 	FST_1_POSITION_SORTING_PUK_EXPECTED_raised = false;
-	FST_1_POSITION_EGRESS_NEW_PUK_raised = false;
+	FST_1_POSITION_SORTING_PUK_EXPIRED_raised = false;
 	FST_1_POSITION_EGRESS_PUK_EXPECTED_raised = false;
+	FST_1_POSITION_EGRESS_PUK_EXPIRED_raised = false;
 	LBF_1_INTERRUPTED_raised = false;
 	LBF_1_OPEN_raised = false;
 	FST_1_PUK_ENTRY_HeightMeasurement_raised = false;
@@ -9770,15 +10293,24 @@ void FSM::clearInEvents() noexcept {
 	HS_1_SAMPLING_DONE_raised = false;
 	LBM_1_INTERRUPTED_raised = false;
 	LBM_1_OPEN_raised = false;
-	MS_1_TRUE_raised = false;
+	MS_1_HIGH_raised = false;
+	MS_1_LOW_raised = false;
 	LBR_1_INTERRUPTED_raised = false;
 	LBR_1_OPEN_raised = false;
+	FST_1_PUK_SORTING_PASSTHROUGH_raised = false;
+	FST_1_PUK_SORTING_EJECT_raised = false;
 	LBE_1_OPEN_raised = false;
 	LBE_1_INTERRUPTED_raised = false;
 	BGS_1_LONG_PRESSED_raised = false;
 	BGS_1_INTERRUPTED_raised = false;
 	BRS_1_INTERRUPTED_raised = false;
 	BGR_1_INTERRUPTED_raised = false;
+	FST_2_POSITION_INGRESS_NEW_PUK_raised = false;
+	FST_2_POSITION_INGRESS_DISTANCE_VALID_raised = false;
+	FST_2_POSITION_INGRESS_PUK_EXPECTED_raised = false;
+	FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised = false;
+	FST_2_POSITION_SORTING_PUK_EXPECTED_raised = false;
+	FST_2_POSITION_EGRESS_PUK_EXPECTED_raised = false;
 	LBF_2_INTERRUPTED_raised = false;
 	LBF_2_OPEN_raised = false;
 	HS_2_SAMPLE_raised = false;
@@ -9816,14 +10348,9 @@ void FSM::clearInternalEvents() noexcept {
 	local_FST_1_INGRESS_IN_raised = false;
 	local_FST_1_INGRESS_OUT_raised = false;
 	local_FST_2_PUK_ENTRY_INGRESS_raised = false;
-	local_FST_2_POSITION_INGRESS_DISTANCE_VALID_raised = false;
-	local_FST_2_POSITION_INGRESS_PUK_EXPECTED_raised = false;
 	local_FST_2_PUK_ENTRY_HeightMeasurement_raised = false;
-	local_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised = false;
 	local_FST_2_PUK_ENTRY_SORTING_raised = false;
-	local_FST_2_POSITION_SORTING_PUK_EXPECTED_raised = false;
 	local_FST_2_PUK_ENTRY_EGRESS_raised = false;
-	local_FST_2_POSITION_EGRESS_PUK_EXPECTED_raised = false;
 	local_FST_2_YELLOW_LAMP_ON_raised = false;
 	local_FST_2_YELLOW_LAMP_OFF_raised = false;
 	local_EVALUATE_raised = false;
@@ -9872,49 +10399,49 @@ void FSM::microStep() {
 	{ 
 		switch(stateConfVector[ 1 ])
 		{
-			case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle :
+			case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle :
 			{
-				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_react(transitioned);
+				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle_react(transitioned);
 				break;
 			}
-			case FSM::State::A :
+			case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A :
 			{
-				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_react(transitioned);
+				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A_react(transitioned);
 				break;
 			}
-			case FSM::State::B :
+			case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B :
 			{
-				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_react(transitioned);
+				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B_react(transitioned);
 				break;
 			}
-			case FSM::State::C :
+			case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C :
 			{
-				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_react(transitioned);
+				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C_react(transitioned);
 				break;
 			}
-			case FSM::State::Error :
+			case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error :
 			{
-				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_react(transitioned);
+				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_react(transitioned);
 				break;
 			}
-			case FSM::State::Evaluate :
+			case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate :
 			{
-				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate_react(transitioned);
+				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate_react(transitioned);
 				break;
 			}
-			case FSM::State::_final_ :
+			case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_ :
 			{
-				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__react(transitioned);
+				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final__react(transitioned);
 				break;
 			}
-			case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent :
+			case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent :
 			{
-				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_react(transitioned);
+				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent_react(transitioned);
 				break;
 			}
-			case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected :
+			case FSM::State::FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected :
 			{
-				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected_react(transitioned);
+				transitioned = FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo1_HeightMeasurement_Paused :
@@ -9946,11 +10473,6 @@ void FSM::microStep() {
 				transitioned = FSM_Festo1__Sorting_Sorting_Sorting_Idle_react(transitioned);
 				break;
 			}
-			case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement :
-			{
-				transitioned = FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement_react(transitioned);
-				break;
-			}
 			case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_PukPresent :
 			{
 				transitioned = FSM_Festo1__Sorting_Sorting_Sorting_PukPresent_react(transitioned);
@@ -9961,9 +10483,9 @@ void FSM::microStep() {
 				transitioned = FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_react(transitioned);
 				break;
 			}
-			case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_RampFull :
+			case FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_Evaluate :
 			{
-				transitioned = FSM_Festo1__Sorting_Sorting_Sorting_RampFull_react(transitioned);
+				transitioned = FSM_Festo1__Sorting_Sorting_Sorting_Evaluate_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo1__Sorting_Paused :
@@ -10233,24 +10755,49 @@ void FSM::microStep() {
 	{ 
 		switch(stateConfVector[ 10 ])
 		{
-			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle :
+			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle :
 			{
-				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_react(transitioned);
+				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle_react(transitioned);
 				break;
 			}
-			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent :
+			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent :
 			{
-				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_react(transitioned);
+				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent_react(transitioned);
 				break;
 			}
-			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected :
+			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected :
 			{
-				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_react(transitioned);
+				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected_react(transitioned);
 				break;
 			}
-			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring :
+			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A :
 			{
-				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_react(transitioned);
+				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A_react(transitioned);
+				break;
+			}
+			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B :
+			{
+				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_B_react(transitioned);
+				break;
+			}
+			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C :
+			{
+				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_C_react(transitioned);
+				break;
+			}
+			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error :
+			{
+				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error_react(transitioned);
+				break;
+			}
+			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate :
+			{
+				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate_react(transitioned);
+				break;
+			}
+			case FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_ :
+			{
+				transitioned = FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final__react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__HeightMeasurement_Paused :
@@ -10297,9 +10844,9 @@ void FSM::microStep() {
 				transitioned = FSM_Festo2__Sorting_Sorting_Sorting_PukExpected_react(transitioned);
 				break;
 			}
-			case FSM::State::FSM_Festo2__Sorting_RampFull :
+			case FSM::State::FSM_Festo2__Sorting_Sorting_Sorting_RampFull :
 			{
-				transitioned = FSM_Festo2__Sorting_RampFull_react(transitioned);
+				transitioned = FSM_Festo2__Sorting_Sorting_Sorting_RampFull_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Sorting_Paused :
@@ -10370,11 +10917,6 @@ void FSM::microStep() {
 	{ 
 		switch(stateConfVector[ 13 ])
 		{
-			case FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle :
-			{
-				transitioned = FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_react(transitioned);
-				break;
-			}
 			case FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward :
 			{
 				transitioned = FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_react(transitioned);

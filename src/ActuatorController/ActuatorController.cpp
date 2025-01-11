@@ -71,6 +71,15 @@ ActuatorController::ActuatorController(uint8_t festo, const std::string name, I_
     redBlinkThread = nullptr;
     festoID = festo;
     
+    actuators->motorStop();
+    actuators->greenLampLightOff();
+    actuators->yellowLampLightOff();
+    actuators->redLampLightOff();
+    actuators->startButtonLightOff();
+    // actuators->stopButtonLightOff();
+    actuators->resetButtonLightOff();
+    actuators->Q1LightOff();
+    actuators->Q2LightOff();
 };
 
 ActuatorController::~ActuatorController() {
@@ -186,6 +195,7 @@ void ActuatorController::handleMsg() {
                 break;
             case PULSE_LG2_OFF:
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Green off...", "ActuatorController");
+                lgblinking = false;
                 actuators->greenLampLightOff();
                 break;
             case PULSE_LY2_OFF:
@@ -199,32 +209,32 @@ void ActuatorController::handleMsg() {
                 actuators->redLampLightOff();
                 break;
             case PULSE_LG1_BLINKING:
-                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 1 LED Green blinking...", "ActuatorController");
+                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 1 LED Green blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
                 lgblinking = true;
                 startGreenLampBlinkingThread(msgVal);
                 break;
             case PULSE_LY1_BLINKING:
-                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 1 LED Yellow blinking......", "ActuatorController");
+                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 1 LED Yellow blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
                 lyblinking = true;
                 startYellowLampBlinkingThread(msgVal);
                 break;
             case PULSE_LR1_BLINKING:
-                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 1 LED Red blinking......", "ActuatorController");
+                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 1 LED Red blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
                 lrblinking = true;
                 startRedLampBlinkingThread(msgVal);
                 break;
             case PULSE_LG2_BLINKING:
-                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Green blinking...", "ActuatorController");
+                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Green blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
                 lgblinking = true;
                 startGreenLampBlinkingThread(msgVal);
                 break;
             case PULSE_LY2_BLINKING:
-                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Yellow blinking......", "ActuatorController");
+                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Yellow blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
                 lyblinking = true;
                 startYellowLampBlinkingThread(msgVal);
                 break;
             case PULSE_LR2_BLINKING:
-                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Red blinking......", "ActuatorController");
+                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Red blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
                 lrblinking = true;
                 startRedLampBlinkingThread(msgVal);
                 break;
@@ -306,6 +316,30 @@ void ActuatorController::handleMsg() {
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 SM Resting......", "ActuatorController");
 				actuators->openSortingModule();
 				break;
+            case _PULSE_CODE_COIDDEATH:
+                Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_COIDDEATH...", "ActuatorController");
+                break;
+            case _PULSE_CODE_DISCONNECT:
+                Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_DISCONNECT...", "ActuatorController");
+                break;
+            case _PULSE_CODE_NET_ACK:
+                Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_NET_ACK...", "ActuatorController");
+                break;
+            case _PULSE_CODE_NET_UNBLOCK:
+                Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_NET_UNBLOCK...", "ActuatorController");
+                break;
+            case _PULSE_CODE_NET_DETACH:
+                Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_NET_DETACH...", "ActuatorController");
+                break;
+            case _PULSE_CODE_RESTART:
+                Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_RESTART...", "ActuatorController");
+                break;
+            case _PULSE_CODE_THREADDEATH:
+                Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_THREADDEATH...", "ActuatorController");
+                break;
+            case _PULSE_CODE_UNBLOCK:
+                Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_UNBLOCK...", "ActuatorController");			
+                break;
 			default:
                 Logger::getInstance().log(LogLevel::ERROR, std::to_string(festoID) + ": Unknown Pulse....." + std::to_string(msg.code), "ActuatorController");
             }

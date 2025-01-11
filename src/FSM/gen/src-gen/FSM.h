@@ -42,25 +42,24 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo1_Ingress_E_STOP,
 			FSM_Festo1_Ingress_Start,
 			FSM_Festo1_HeightMeasurement_HeightMeasurement,
-			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle,
-			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring,
-			A,
-			B,
-			C,
-			Error,
-			Evaluate,
-			_final_,
-			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent,
-			FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected,
+			FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle,
+			FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring,
+			FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A,
+			FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B,
+			FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C,
+			FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error,
+			FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate,
+			FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_,
+			FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent,
+			FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected,
 			FSM_Festo1_HeightMeasurement_Paused,
 			FSM_Festo1_HeightMeasurement_E_STOP,
 			FSM_Festo1_HeightMeasurement_Start,
 			FSM_Festo1__Sorting_Sorting,
 			FSM_Festo1__Sorting_Sorting_Sorting_Idle,
-			FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement,
 			FSM_Festo1__Sorting_Sorting_Sorting_PukPresent,
 			FSM_Festo1__Sorting_Sorting_Sorting_PukExpected,
-			FSM_Festo1__Sorting_Sorting_Sorting_RampFull,
+			FSM_Festo1__Sorting_Sorting_Sorting_Evaluate,
 			FSM_Festo1__Sorting_Paused,
 			FSM_Festo1__Sorting_E_STOP,
 			FSM_Festo1__Sorting_Start,
@@ -106,10 +105,16 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo2__Ingress_Paused,
 			FSM_Festo2__Ingress_Starting,
 			FSM_Festo2__HeightMeasurement_HeightMeasurement,
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle,
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent,
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected,
-			FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_AA,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_BB,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_CC,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error2,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate2,
+			FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_,
 			FSM_Festo2__HeightMeasurement_Paused,
 			FSM_Festo2__HeightMeasurement_E_STOP,
 			FSM_Festo2__HeightMeasurement_Start,
@@ -118,7 +123,7 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement,
 			FSM_Festo2__Sorting_Sorting_Sorting_PukPresent,
 			FSM_Festo2__Sorting_Sorting_Sorting_PukExpected,
-			FSM_Festo2__Sorting_RampFull,
+			FSM_Festo2__Sorting_Sorting_Sorting_RampFull,
 			FSM_Festo2__Sorting_Paused,
 			FSM_Festo2__Sorting_E_STOP,
 			FSM_Festo2__Sorting_Start,
@@ -131,7 +136,6 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo2__Egress_E_STOP,
 			FSM_Festo2__Egress_Start,
 			FSM_Festo2__Motor_SystemMotor,
-			FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle,
 			FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward,
 			FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow,
 			FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop,
@@ -149,7 +153,7 @@ class FSM : public sc::EventDrivenInterface
 		};
 		
 		/*! The number of states. */
-		static constexpr const sc::integer numStates {112};
+		static constexpr const sc::integer numStates {116};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_Ingress {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_Ingress_Ingress_Idle {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_Ingress_Ingress_PukPresent {0};
@@ -158,25 +162,24 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_E_STOP {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_Start {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement {1};
-		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle {1};
-		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring {1};
-		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A {1};
-		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B {1};
-		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C {1};
-		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error {1};
-		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate {1};
-		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_ {1};
-		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent {1};
-		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_ {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent {1};
+		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected {1};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_Paused {1};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_E_STOP {1};
 		static constexpr const sc::integer scvi_FSM_Festo1_HeightMeasurement_Start {1};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Sorting {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Sorting_Sorting_Idle {2};
-		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected {2};
-		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Sorting_Sorting_RampFull {2};
+		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Sorting_Sorting_Evaluate {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Paused {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_E_STOP {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_Start {2};
@@ -222,10 +225,16 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo2__Ingress_Paused {9};
 		static constexpr const sc::integer scvi_FSM_Festo2__Ingress_Starting {9};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement {10};
-		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle {10};
-		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent {10};
-		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected {10};
-		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_AA {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_BB {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_CC {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error2 {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate2 {10};
+		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_ {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_Paused {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_E_STOP {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__HeightMeasurement_Start {10};
@@ -234,7 +243,7 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement {11};
 		static constexpr const sc::integer scvi_FSM_Festo2__Sorting_Sorting_Sorting_PukPresent {11};
 		static constexpr const sc::integer scvi_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected {11};
-		static constexpr const sc::integer scvi_FSM_Festo2__Sorting_RampFull {11};
+		static constexpr const sc::integer scvi_FSM_Festo2__Sorting_Sorting_Sorting_RampFull {11};
 		static constexpr const sc::integer scvi_FSM_Festo2__Sorting_Paused {11};
 		static constexpr const sc::integer scvi_FSM_Festo2__Sorting_E_STOP {11};
 		static constexpr const sc::integer scvi_FSM_Festo2__Sorting_Start {11};
@@ -247,7 +256,6 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo2__Egress_E_STOP {12};
 		static constexpr const sc::integer scvi_FSM_Festo2__Egress_Start {12};
 		static constexpr const sc::integer scvi_FSM_Festo2__Motor_SystemMotor {13};
-		static constexpr const sc::integer scvi_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle {13};
 		static constexpr const sc::integer scvi_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward {13};
 		static constexpr const sc::integer scvi_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow {13};
 		static constexpr const sc::integer scvi_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop {13};
@@ -272,14 +280,13 @@ class FSM : public sc::EventDrivenInterface
 			ESTOP_1_LOW,
 			ESTOP_2_HIGH,
 			ESTOP_2_LOW,
-			FST_1_POSITION_INGRESS_NEW_PUK,
 			FST_1_POSITION_INGRESS_DISTANCE_VALID,
-			FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK,
 			FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED,
-			FST_1_POSITION_SORTING_NEW_PUK,
+			FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED,
 			FST_1_POSITION_SORTING_PUK_EXPECTED,
-			FST_1_POSITION_EGRESS_NEW_PUK,
+			FST_1_POSITION_SORTING_PUK_EXPIRED,
 			FST_1_POSITION_EGRESS_PUK_EXPECTED,
+			FST_1_POSITION_EGRESS_PUK_EXPIRED,
 			LBF_1_INTERRUPTED,
 			LBF_1_OPEN,
 			FST_1_PUK_ENTRY_HeightMeasurement,
@@ -287,15 +294,24 @@ class FSM : public sc::EventDrivenInterface
 			HS_1_SAMPLING_DONE,
 			LBM_1_INTERRUPTED,
 			LBM_1_OPEN,
-			MS_1_TRUE,
+			MS_1_HIGH,
+			MS_1_LOW,
 			LBR_1_INTERRUPTED,
 			LBR_1_OPEN,
+			FST_1_PUK_SORTING_PASSTHROUGH,
+			FST_1_PUK_SORTING_EJECT,
 			LBE_1_OPEN,
 			LBE_1_INTERRUPTED,
 			BGS_1_LONG_PRESSED,
 			BGS_1_INTERRUPTED,
 			BRS_1_INTERRUPTED,
 			BGR_1_INTERRUPTED,
+			FST_2_POSITION_INGRESS_NEW_PUK,
+			FST_2_POSITION_INGRESS_DISTANCE_VALID,
+			FST_2_POSITION_INGRESS_PUK_EXPECTED,
+			FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED,
+			FST_2_POSITION_SORTING_PUK_EXPECTED,
+			FST_2_POSITION_EGRESS_PUK_EXPECTED,
 			LBF_2_INTERRUPTED,
 			LBF_2_OPEN,
 			HS_2_SAMPLE,
@@ -330,14 +346,9 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_FST_1_INGRESS_IN,
 			Internal_local_FST_1_INGRESS_OUT,
 			Internal_local_FST_2_PUK_ENTRY_INGRESS,
-			Internal_local_FST_2_POSITION_INGRESS_DISTANCE_VALID,
-			Internal_local_FST_2_POSITION_INGRESS_PUK_EXPECTED,
 			Internal_local_FST_2_PUK_ENTRY_HeightMeasurement,
-			Internal_local_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED,
 			Internal_local_FST_2_PUK_ENTRY_SORTING,
-			Internal_local_FST_2_POSITION_SORTING_PUK_EXPECTED,
 			Internal_local_FST_2_PUK_ENTRY_EGRESS,
-			Internal_local_FST_2_POSITION_EGRESS_PUK_EXPECTED,
 			Internal_local_FST_2_YELLOW_LAMP_ON,
 			Internal_local_FST_2_YELLOW_LAMP_OFF,
 			Internal_local_EVALUATE
@@ -376,22 +387,28 @@ class FSM : public sc::EventDrivenInterface
 		void raiseESTOP_2_HIGH();
 		/*! Raises the in event 'ESTOP_2_LOW' of default interface scope. */
 		void raiseESTOP_2_LOW();
-		/*! Raises the in event 'FST_1_POSITION_INGRESS_NEW_PUK' of default interface scope. */
-		void raiseFST_1_POSITION_INGRESS_NEW_PUK();
+		/*! Get observable for event 'FST_1_POSITION_INGRESS_NEW_PUK' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_POSITION_INGRESS_NEW_PUK() noexcept;
 		/*! Raises the in event 'FST_1_POSITION_INGRESS_DISTANCE_VALID' of default interface scope. */
 		void raiseFST_1_POSITION_INGRESS_DISTANCE_VALID();
-		/*! Raises the in event 'FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope. */
-		void raiseFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK();
+		/*! Get observable for event 'FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK() noexcept;
 		/*! Raises the in event 'FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of default interface scope. */
 		void raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
-		/*! Raises the in event 'FST_1_POSITION_SORTING_NEW_PUK' of default interface scope. */
-		void raiseFST_1_POSITION_SORTING_NEW_PUK();
+		/*! Raises the in event 'FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED' of default interface scope. */
+		void raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED();
+		/*! Get observable for event 'FST_1_POSITION_SORTING_NEW_PUK' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_POSITION_SORTING_NEW_PUK() noexcept;
 		/*! Raises the in event 'FST_1_POSITION_SORTING_PUK_EXPECTED' of default interface scope. */
 		void raiseFST_1_POSITION_SORTING_PUK_EXPECTED();
-		/*! Raises the in event 'FST_1_POSITION_EGRESS_NEW_PUK' of default interface scope. */
-		void raiseFST_1_POSITION_EGRESS_NEW_PUK();
+		/*! Raises the in event 'FST_1_POSITION_SORTING_PUK_EXPIRED' of default interface scope. */
+		void raiseFST_1_POSITION_SORTING_PUK_EXPIRED();
+		/*! Get observable for event 'FST_1_POSITION_EGRESS_NEW_PUK' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_POSITION_EGRESS_NEW_PUK() noexcept;
 		/*! Raises the in event 'FST_1_POSITION_EGRESS_PUK_EXPECTED' of default interface scope. */
 		void raiseFST_1_POSITION_EGRESS_PUK_EXPECTED();
+		/*! Raises the in event 'FST_1_POSITION_EGRESS_PUK_EXPIRED' of default interface scope. */
+		void raiseFST_1_POSITION_EGRESS_PUK_EXPIRED();
 		/*! Raises the in event 'LBF_1_INTERRUPTED' of default interface scope. */
 		void raiseLBF_1_INTERRUPTED();
 		/*! Raises the in event 'LBF_1_OPEN' of default interface scope. */
@@ -420,12 +437,22 @@ class FSM : public sc::EventDrivenInterface
 		void raiseLBM_1_INTERRUPTED();
 		/*! Raises the in event 'LBM_1_OPEN' of default interface scope. */
 		void raiseLBM_1_OPEN();
-		/*! Raises the in event 'MS_1_TRUE' of default interface scope. */
-		void raiseMS_1_TRUE();
+		/*! Raises the in event 'MS_1_HIGH' of default interface scope. */
+		void raiseMS_1_HIGH();
+		/*! Raises the in event 'MS_1_LOW' of default interface scope. */
+		void raiseMS_1_LOW();
 		/*! Raises the in event 'LBR_1_INTERRUPTED' of default interface scope. */
 		void raiseLBR_1_INTERRUPTED();
 		/*! Raises the in event 'LBR_1_OPEN' of default interface scope. */
 		void raiseLBR_1_OPEN();
+		/*! Raises the in event 'FST_1_PUK_SORTING_PASSTHROUGH' of default interface scope. */
+		void raiseFST_1_PUK_SORTING_PASSTHROUGH();
+		/*! Raises the in event 'FST_1_PUK_SORTING_EJECT' of default interface scope. */
+		void raiseFST_1_PUK_SORTING_EJECT();
+		/*! Get observable for event 'FST_1_PUK_IS_METAL' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_PUK_IS_METAL() noexcept;
+		/*! Get observable for event 'FST_1_PUK_IS_NOT_METAL' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_PUK_IS_NOT_METAL() noexcept;
 		/*! Get observable for event 'FST_1_PUK_DESIRED' of default interface scope. */
 		sc::rx::Observable<void>& getFST_1_PUK_DESIRED() noexcept;
 		/*! Get observable for event 'FST_1_PUK_NOT_DESIRED' of default interface scope. */
@@ -476,24 +503,24 @@ class FSM : public sc::EventDrivenInterface
 		sc::rx::Observable<void>& getQ11_ON() noexcept;
 		/*! Get observable for event 'Q12_ON' of default interface scope. */
 		sc::rx::Observable<void>& getQ12_ON() noexcept;
-		/*! Get observable for event 'FST_2_POSITION_INGRESS_NEW_PUK' of default interface scope. */
-		sc::rx::Observable<void>& getFST_2_POSITION_INGRESS_NEW_PUK() noexcept;
-		/*! Get observable for event 'FST_2_POSITION_INGRESS_DISTANCE_VALID' of default interface scope. */
-		sc::rx::Observable<void>& getFST_2_POSITION_INGRESS_DISTANCE_VALID() noexcept;
-		/*! Get observable for event 'FST_2_POSITION_INGRESS_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void>& getFST_2_POSITION_INGRESS_PUK_EXPECTED() noexcept;
+		/*! Raises the in event 'FST_2_POSITION_INGRESS_NEW_PUK' of default interface scope. */
+		void raiseFST_2_POSITION_INGRESS_NEW_PUK();
+		/*! Raises the in event 'FST_2_POSITION_INGRESS_DISTANCE_VALID' of default interface scope. */
+		void raiseFST_2_POSITION_INGRESS_DISTANCE_VALID();
+		/*! Raises the in event 'FST_2_POSITION_INGRESS_PUK_EXPECTED' of default interface scope. */
+		void raiseFST_2_POSITION_INGRESS_PUK_EXPECTED();
 		/*! Get observable for event 'FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope. */
 		sc::rx::Observable<void>& getFST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK() noexcept;
-		/*! Get observable for event 'FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void>& getFST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED() noexcept;
+		/*! Raises the in event 'FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of default interface scope. */
+		void raiseFST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
 		/*! Get observable for event 'FST_2_POSITION_SORTING_NEW_PUK' of default interface scope. */
 		sc::rx::Observable<void>& getFST_2_POSITION_SORTING_NEW_PUK() noexcept;
-		/*! Get observable for event 'FST_2_POSITION_SORTING_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void>& getFST_2_POSITION_SORTING_PUK_EXPECTED() noexcept;
+		/*! Raises the in event 'FST_2_POSITION_SORTING_PUK_EXPECTED' of default interface scope. */
+		void raiseFST_2_POSITION_SORTING_PUK_EXPECTED();
 		/*! Get observable for event 'FST_2_POSITION_EGRESS_NEW_PUK' of default interface scope. */
 		sc::rx::Observable<void>& getFST_2_POSITION_EGRESS_NEW_PUK() noexcept;
-		/*! Get observable for event 'FST_2_POSITION_EGRESS_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void>& getFST_2_POSITION_EGRESS_PUK_EXPECTED() noexcept;
+		/*! Raises the in event 'FST_2_POSITION_EGRESS_PUK_EXPECTED' of default interface scope. */
+		void raiseFST_2_POSITION_EGRESS_PUK_EXPECTED();
 		/*! Raises the in event 'LBF_2_INTERRUPTED' of default interface scope. */
 		void raiseLBF_2_INTERRUPTED();
 		/*! Raises the in event 'LBF_2_OPEN' of default interface scope. */
@@ -516,6 +543,10 @@ class FSM : public sc::EventDrivenInterface
 		void raiseHS_2_SAMPLING_DONE();
 		/*! Get observable for event 'FST_2_PUK_ENTRY_SORTING' of default interface scope. */
 		sc::rx::Observable<void>& getFST_2_PUK_ENTRY_SORTING() noexcept;
+		/*! Get observable for event 'FST_2_PUK_HEIGHT_IS_VALID' of default interface scope. */
+		sc::rx::Observable<void>& getFST_2_PUK_HEIGHT_IS_VALID() noexcept;
+		/*! Get observable for event 'FST_2_PUK_HEIGHT_IS_NOT_VALID' of default interface scope. */
+		sc::rx::Observable<void>& getFST_2_PUK_HEIGHT_IS_NOT_VALID() noexcept;
 		/*! Raises the in event 'LBM_2_INTERRUPTED' of default interface scope. */
 		void raiseLBM_2_INTERRUPTED();
 		/*! Raises the in event 'LBM_2_OPEN' of default interface scope. */
@@ -618,10 +649,22 @@ class FSM : public sc::EventDrivenInterface
 		bool getIsEStop2High() const noexcept;
 		/*! Sets the value of the variable 'isEStop2High' that is defined in the default interface scope. */
 		void setIsEStop2High(bool isEStop2High) noexcept;
+		/*! Gets the value of the variable 'isBGR1Pressed' that is defined in the default interface scope. */
+		bool getIsBGR1Pressed() const noexcept;
+		/*! Sets the value of the variable 'isBGR1Pressed' that is defined in the default interface scope. */
+		void setIsBGR1Pressed(bool isBGR1Pressed) noexcept;
+		/*! Gets the value of the variable 'isBGR2Pressed' that is defined in the default interface scope. */
+		bool getIsBGR2Pressed() const noexcept;
+		/*! Sets the value of the variable 'isBGR2Pressed' that is defined in the default interface scope. */
+		void setIsBGR2Pressed(bool isBGR2Pressed) noexcept;
 		/*! Gets the value of the variable 'eStopActive' that is defined in the default interface scope. */
 		bool getEStopActive() const noexcept;
 		/*! Sets the value of the variable 'eStopActive' that is defined in the default interface scope. */
 		void setEStopActive(bool eStopActive) noexcept;
+		/*! Gets the value of the variable 'FST_1_HM_Counter' that is defined in the default interface scope. */
+		sc::integer getFST_1_HM_Counter() const noexcept;
+		/*! Sets the value of the variable 'FST_1_HM_Counter' that is defined in the default interface scope. */
+		void setFST_1_HM_Counter(sc::integer FST_1_HM_Counter) noexcept;
 		/*! Gets the value of the variable 'AReferenceMinCount' that is defined in the default interface scope. */
 		sc::integer getAReferenceMinCount() const noexcept;
 		/*! Sets the value of the variable 'AReferenceMinCount' that is defined in the default interface scope. */
@@ -678,14 +721,18 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer getFST_1_generalCount() const noexcept;
 		/*! Sets the value of the variable 'FST_1_generalCount' that is defined in the default interface scope. */
 		void setFST_1_generalCount(sc::integer FST_1_generalCount) noexcept;
+		/*! Gets the value of the variable 'FST_1_is_Ejector' that is defined in the default interface scope. */
+		bool getFST_1_is_Ejector() const noexcept;
+		/*! Sets the value of the variable 'FST_1_is_Ejector' that is defined in the default interface scope. */
+		void setFST_1_is_Ejector(bool FST_1_is_Ejector) noexcept;
 		/*! Gets the value of the variable 'FST1RampFull' that is defined in the default interface scope. */
 		bool getFST1RampFull() const noexcept;
 		/*! Sets the value of the variable 'FST1RampFull' that is defined in the default interface scope. */
 		void setFST1RampFull(bool FST1RampFull) noexcept;
-		/*! Gets the value of the variable 'timePassed' that is defined in the default interface scope. */
-		sc::integer getTimePassed() const noexcept;
-		/*! Sets the value of the variable 'timePassed' that is defined in the default interface scope. */
-		void setTimePassed(sc::integer timePassed) noexcept;
+		/*! Gets the value of the variable 'FST1isMetal' that is defined in the default interface scope. */
+		bool getFST1isMetal() const noexcept;
+		/*! Sets the value of the variable 'FST1isMetal' that is defined in the default interface scope. */
+		void setFST1isMetal(bool FST1isMetal) noexcept;
 		/*! Gets the value of the variable 'motor1Stop' that is defined in the default interface scope. */
 		sc::integer getMotor1Stop() const noexcept;
 		/*! Sets the value of the variable 'motor1Stop' that is defined in the default interface scope. */
@@ -706,6 +753,14 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer getFST_2_currentValue() const noexcept;
 		/*! Sets the value of the variable 'FST_2_currentValue' that is defined in the default interface scope. */
 		void setFST_2_currentValue(sc::integer FST_2_currentValue) noexcept;
+		/*! Gets the value of the variable 'FST_2_sampleCount' that is defined in the default interface scope. */
+		sc::integer getFST_2_sampleCount() const noexcept;
+		/*! Sets the value of the variable 'FST_2_sampleCount' that is defined in the default interface scope. */
+		void setFST_2_sampleCount(sc::integer FST_2_sampleCount) noexcept;
+		/*! Gets the value of the variable 'FST_2_generalCount' that is defined in the default interface scope. */
+		sc::integer getFST_2_generalCount() const noexcept;
+		/*! Sets the value of the variable 'FST_2_generalCount' that is defined in the default interface scope. */
+		void setFST_2_generalCount(sc::integer FST_2_generalCount) noexcept;
 		/*! Gets the value of the variable 'FST2RampFull' that is defined in the default interface scope. */
 		bool getFST2RampFull() const noexcept;
 		/*! Sets the value of the variable 'FST2RampFull' that is defined in the default interface scope. */
@@ -790,7 +845,10 @@ class FSM : public sc::EventDrivenInterface
 		bool readyReturn {false};
 		bool isEStop1High {false};
 		bool isEStop2High {false};
+		bool isBGR1Pressed {false};
+		bool isBGR2Pressed {false};
 		bool eStopActive {false};
+		sc::integer FST_1_HM_Counter {0};
 		sc::integer AReferenceMinCount {0};
 		sc::integer AReferenceMaxCount {0};
 		sc::integer BReferenceMinCount {0};
@@ -805,13 +863,16 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FST_1_currentValue {0};
 		sc::integer FST_1_sampleCount {0};
 		sc::integer FST_1_generalCount {0};
+		bool FST_1_is_Ejector {false};
 		bool FST1RampFull {false};
-		sc::integer timePassed {0};
+		bool FST1isMetal {false};
 		sc::integer motor1Stop {0};
 		sc::integer motor1Slow {0};
 		sc::integer motor1Forward {0};
 		bool fst_2_ready {false};
 		sc::integer FST_2_currentValue {0};
+		sc::integer FST_2_sampleCount {0};
+		sc::integer FST_2_generalCount {0};
 		bool FST2RampFull {false};
 		sc::integer motor2Stop {0};
 		sc::integer motor2Slow {0};
@@ -846,8 +907,7 @@ class FSM : public sc::EventDrivenInterface
 		
 		// prototypes of all internal functions
 		
-		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_();
-		void enact_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
+		void enact_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop();
@@ -860,11 +920,10 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz();
 		void enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
 		void enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-		void enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
-		void enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
-		void enact_FSM_Festo2__Sorting_RampFull();
+		void enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent();
+		void enact_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_();
+		void enact_FSM_Festo2__Sorting_Sorting_Sorting_RampFull();
 		void enact_FSM_Festo2__Egress_Egress_Egress_Transfer();
-		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
@@ -876,13 +935,10 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking_1Hz();
 		void enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
 		void enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-		void exact_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
 		void exact___ServiceMode();
-		void exact___EStopCleared();
 		void exact_FSM_Festo2__Ingress_Ingress_Ingress_Idle();
-		void exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
-		void exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
-		void exact_FSM_Festo2__Sorting_RampFull();
+		void exact_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent();
+		void exact_FSM_Festo2__Sorting_Sorting_Sorting_RampFull();
 		void exact_FSM_Festo2__Egress_Egress_Egress_Transfer();
 		void enseq_FSM_Festo1_Ingress_Ingress_default();
 		void enseq_FSM_Festo1_Ingress_Ingress_Ingress_Idle_default();
@@ -892,25 +948,24 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo1_Ingress_E_STOP_default();
 		void enseq_FSM_Festo1_Ingress_Start_default();
 		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_default();
-		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_default();
-		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_default();
-		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_default();
-		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_default();
-		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_default();
-		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_default();
-		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate_default();
-		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__default();
-		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_default();
-		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final__default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent_default();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected_default();
 		void enseq_FSM_Festo1_HeightMeasurement_Paused_default();
 		void enseq_FSM_Festo1_HeightMeasurement_E_STOP_default();
 		void enseq_FSM_Festo1_HeightMeasurement_Start_default();
 		void enseq_FSM_Festo1__Sorting_Sorting_default();
 		void enseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle_default();
-		void enseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement_default();
 		void enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent_default();
 		void enseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_default();
-		void enseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull_default();
+		void enseq_FSM_Festo1__Sorting_Sorting_Sorting_Evaluate_default();
 		void enseq_FSM_Festo1__Sorting_Paused_default();
 		void enseq_FSM_Festo1__Sorting_E_STOP_default();
 		void enseq_FSM_Festo1__Sorting_Start_default();
@@ -956,10 +1011,16 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo2__Ingress_Paused_default();
 		void enseq_FSM_Festo2__Ingress_Starting_default();
 		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_default();
-		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_default();
-		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_default();
-		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_default();
-		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_AA_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_BB_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_CC_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error2_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate2_default();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final__default();
 		void enseq_FSM_Festo2__HeightMeasurement_Paused_default();
 		void enseq_FSM_Festo2__HeightMeasurement_E_STOP_default();
 		void enseq_FSM_Festo2__HeightMeasurement_Start_default();
@@ -968,7 +1029,7 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement_default();
 		void enseq_FSM_Festo2__Sorting_Sorting_Sorting_PukPresent_default();
 		void enseq_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected_default();
-		void enseq_FSM_Festo2__Sorting_RampFull_default();
+		void enseq_FSM_Festo2__Sorting_Sorting_Sorting_RampFull_default();
 		void enseq_FSM_Festo2__Sorting_Paused_default();
 		void enseq_FSM_Festo2__Sorting_E_STOP_default();
 		void enseq_FSM_Festo2__Sorting_Start_default();
@@ -981,7 +1042,6 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo2__Egress_E_STOP_default();
 		void enseq_FSM_Festo2__Egress_Start_default();
 		void enseq_FSM_Festo2__Motor_SystemMotor_default();
-		void enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_default();
 		void enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
 		void enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
 		void enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
@@ -1000,10 +1060,10 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo1_Ingress_Ingress_Ingress_default();
 		void shenseq_FSM_Festo1_Ingress_Ingress_Ingress();
 		void enseq_FSM_Festo1_HeightMeasurement_default();
-		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_default();
-		void dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s();
-		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_default();
-		void dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_default();
+		void dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM();
+		void enseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_default();
+		void dhenseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1();
 		void enseq_FSM_Festo1__Sorting_default();
 		void enseq_FSM_Festo1__Sorting_Sorting_Sorting_default();
 		void shenseq_FSM_Festo1__Sorting_Sorting_Sorting();
@@ -1022,8 +1082,9 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo2__Ingress_Ingress_Ingress_default();
 		void shenseq_FSM_Festo2__Ingress_Ingress_Ingress();
 		void enseq_FSM_Festo2__HeightMeasurement_default();
-		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_default();
-		void shenseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_default();
+		void shenseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM();
+		void enseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_default();
 		void enseq_FSM_Festo2__Sorting_default();
 		void enseq_FSM_Festo2__Sorting_Sorting_Sorting_default();
 		void shenseq_FSM_Festo2__Sorting_Sorting_Sorting();
@@ -1046,25 +1107,24 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo1_Ingress_E_STOP();
 		void exseq_FSM_Festo1_Ingress_Start();
 		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement();
-		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle();
-		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring();
-		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A();
-		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B();
-		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C();
-		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error();
-		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate();
-		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final_();
-		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent();
-		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final_();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected();
 		void exseq_FSM_Festo1_HeightMeasurement_Paused();
 		void exseq_FSM_Festo1_HeightMeasurement_E_STOP();
 		void exseq_FSM_Festo1_HeightMeasurement_Start();
 		void exseq_FSM_Festo1__Sorting_Sorting();
 		void exseq_FSM_Festo1__Sorting_Sorting_Sorting_Idle();
-		void exseq_FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement();
 		void exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukPresent();
 		void exseq_FSM_Festo1__Sorting_Sorting_Sorting_PukExpected();
-		void exseq_FSM_Festo1__Sorting_Sorting_Sorting_RampFull();
+		void exseq_FSM_Festo1__Sorting_Sorting_Sorting_Evaluate();
 		void exseq_FSM_Festo1__Sorting_Paused();
 		void exseq_FSM_Festo1__Sorting_E_STOP();
 		void exseq_FSM_Festo1__Sorting_Start();
@@ -1108,10 +1168,16 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo2__Ingress_Paused();
 		void exseq_FSM_Festo2__Ingress_Starting();
 		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement();
-		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle();
-		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent();
-		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected();
-		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_AA();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_BB();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_CC();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error2();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate2();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final_();
 		void exseq_FSM_Festo2__HeightMeasurement_Paused();
 		void exseq_FSM_Festo2__HeightMeasurement_E_STOP();
 		void exseq_FSM_Festo2__HeightMeasurement_Start();
@@ -1120,7 +1186,7 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement();
 		void exseq_FSM_Festo2__Sorting_Sorting_Sorting_PukPresent();
 		void exseq_FSM_Festo2__Sorting_Sorting_Sorting_PukExpected();
-		void exseq_FSM_Festo2__Sorting_RampFull();
+		void exseq_FSM_Festo2__Sorting_Sorting_Sorting_RampFull();
 		void exseq_FSM_Festo2__Sorting_Paused();
 		void exseq_FSM_Festo2__Sorting_E_STOP();
 		void exseq_FSM_Festo2__Sorting_Start();
@@ -1133,7 +1199,6 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo2__Egress_E_STOP();
 		void exseq_FSM_Festo2__Egress_Start();
 		void exseq_FSM_Festo2__Motor_SystemMotor();
-		void exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle();
 		void exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
@@ -1149,8 +1214,8 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo1_Ingress();
 		void exseq_FSM_Festo1_Ingress_Ingress_Ingress();
 		void exseq_FSM_Festo1_HeightMeasurement();
-		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s();
-		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM();
+		void exseq_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1();
 		void exseq_FSM_Festo1__Sorting();
 		void exseq_FSM_Festo1__Sorting_Sorting_Sorting();
 		void exseq_FSM_Festo1__Egress();
@@ -1162,7 +1227,8 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo2__Ingress();
 		void exseq_FSM_Festo2__Ingress_Ingress_Ingress();
 		void exseq_FSM_Festo2__HeightMeasurement();
-		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM();
+		void exseq_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2();
 		void exseq_FSM_Festo2__Sorting();
 		void exseq_FSM_Festo2__Sorting_Sorting_Sorting();
 		void exseq_FSM_Festo2__Egress();
@@ -1174,9 +1240,9 @@ class FSM : public sc::EventDrivenInterface
 		void react_FSM_Festo1_Ingress_Ingress_Ingress__entry_Default();
 		void react_FSM_Festo1_Ingress_Ingress_Ingress_History();
 		void react_FSM_Festo1_Ingress__entry_Default();
-		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s__entry_Default();
-		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__entry_Default();
-		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_s_History();
+		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM__entry_Default();
+		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__entry_Default();
+		void react_FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_History();
 		void react_FSM_Festo1_HeightMeasurement__entry_Default();
 		void react_FSM_Festo1__Sorting_Sorting_Sorting_History();
 		void react_FSM_Festo1__Sorting_Sorting_Sorting__entry_Default();
@@ -1195,8 +1261,9 @@ class FSM : public sc::EventDrivenInterface
 		void react_FSM_Festo2__Ingress_Ingress_Ingress__entry_Default();
 		void react_FSM_Festo2__Ingress_Ingress_Ingress_History();
 		void react_FSM_Festo2__Ingress__entry_Default();
-		void react_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement__entry_Default();
-		void react_FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_History();
+		void react_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM__entry_Default();
+		void react_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_History();
+		void react_FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__entry_Default();
 		void react_FSM_Festo2__HeightMeasurement__entry_Default();
 		void react_FSM_Festo2__Sorting_Sorting_Sorting_History();
 		void react_FSM_Festo2__Sorting_Sorting_Sorting__entry_Default();
@@ -1221,25 +1288,24 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo1_Ingress_E_STOP_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_Ingress_Start_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Idle_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_A_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_B_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_C_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Error_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM_Evaluate_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_Measuring_HeightFSM__final__react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukPresent_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_s_PukExpected_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Idle_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_A_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_B_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_C_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Error_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1_Evaluate_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_Measuring_HeightFSM_Festo1__final__react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukPresent_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1_HeightMeasurement_HeightMeasurement_FST1_HM_PukExpected_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_Paused_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_E_STOP_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1_HeightMeasurement_Start_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_Sorting_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_Sorting_Sorting_Idle_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_Sorting_Sorting_PukPresent_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_Sorting_Sorting_PukExpected_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo1__Sorting_Sorting_Sorting_RampFull_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1__Sorting_Sorting_Sorting_Evaluate_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_Paused_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_E_STOP_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_Start_react(const sc::integer transitioned_before);
@@ -1285,10 +1351,16 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo2__Ingress_Paused_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Ingress_Starting_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Idle_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukPresent_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_PukExpected_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_HeightMeasurement_Measuring_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Idle_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukPresent_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_PukExpected_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_AA_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_BB_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_CC_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Error2_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_Evaluate2_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2__final__react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_Paused_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_E_STOP_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__HeightMeasurement_Start_react(const sc::integer transitioned_before);
@@ -1297,7 +1369,7 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo2__Sorting_Sorting_Sorting_MetalMeasurement_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Sorting_Sorting_Sorting_PukPresent_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Sorting_Sorting_Sorting_PukExpected_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo2__Sorting_RampFull_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo2__Sorting_Sorting_Sorting_RampFull_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Sorting_Paused_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Sorting_E_STOP_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Sorting_Start_react(const sc::integer transitioned_before);
@@ -1310,7 +1382,6 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo2__Egress_E_STOP_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Egress_Start_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Motor_SystemMotor_react(const sc::integer transitioned_before);
-		sc::integer FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Idle_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_react(const sc::integer transitioned_before);
@@ -1371,29 +1442,38 @@ class FSM : public sc::EventDrivenInterface
 		/*! Indicates event 'ESTOP_2_LOW' of default interface scope is active. */
 		bool ESTOP_2_LOW_raised {false};
 		
-		/*! Indicates event 'FST_1_POSITION_INGRESS_NEW_PUK' of default interface scope is active. */
-		bool FST_1_POSITION_INGRESS_NEW_PUK_raised {false};
+		/*! Observable for event 'FST_1_POSITION_INGRESS_NEW_PUK' of default interface scope. */
+		sc::rx::Observable<void> FST_1_POSITION_INGRESS_NEW_PUK_observable = sc::rx::Observable<void>{};
 		
 		/*! Indicates event 'FST_1_POSITION_INGRESS_DISTANCE_VALID' of default interface scope is active. */
 		bool FST_1_POSITION_INGRESS_DISTANCE_VALID_raised {false};
 		
-		/*! Indicates event 'FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope is active. */
-		bool FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_raised {false};
+		/*! Observable for event 'FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope. */
+		sc::rx::Observable<void> FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable = sc::rx::Observable<void>{};
 		
 		/*! Indicates event 'FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of default interface scope is active. */
 		bool FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised {false};
 		
-		/*! Indicates event 'FST_1_POSITION_SORTING_NEW_PUK' of default interface scope is active. */
-		bool FST_1_POSITION_SORTING_NEW_PUK_raised {false};
+		/*! Indicates event 'FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED' of default interface scope is active. */
+		bool FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED_raised {false};
+		
+		/*! Observable for event 'FST_1_POSITION_SORTING_NEW_PUK' of default interface scope. */
+		sc::rx::Observable<void> FST_1_POSITION_SORTING_NEW_PUK_observable = sc::rx::Observable<void>{};
 		
 		/*! Indicates event 'FST_1_POSITION_SORTING_PUK_EXPECTED' of default interface scope is active. */
 		bool FST_1_POSITION_SORTING_PUK_EXPECTED_raised {false};
 		
-		/*! Indicates event 'FST_1_POSITION_EGRESS_NEW_PUK' of default interface scope is active. */
-		bool FST_1_POSITION_EGRESS_NEW_PUK_raised {false};
+		/*! Indicates event 'FST_1_POSITION_SORTING_PUK_EXPIRED' of default interface scope is active. */
+		bool FST_1_POSITION_SORTING_PUK_EXPIRED_raised {false};
+		
+		/*! Observable for event 'FST_1_POSITION_EGRESS_NEW_PUK' of default interface scope. */
+		sc::rx::Observable<void> FST_1_POSITION_EGRESS_NEW_PUK_observable = sc::rx::Observable<void>{};
 		
 		/*! Indicates event 'FST_1_POSITION_EGRESS_PUK_EXPECTED' of default interface scope is active. */
 		bool FST_1_POSITION_EGRESS_PUK_EXPECTED_raised {false};
+		
+		/*! Indicates event 'FST_1_POSITION_EGRESS_PUK_EXPIRED' of default interface scope is active. */
+		bool FST_1_POSITION_EGRESS_PUK_EXPIRED_raised {false};
 		
 		/*! Indicates event 'LBF_1_INTERRUPTED' of default interface scope is active. */
 		bool LBF_1_INTERRUPTED_raised {false};
@@ -1437,14 +1517,29 @@ class FSM : public sc::EventDrivenInterface
 		/*! Indicates event 'LBM_1_OPEN' of default interface scope is active. */
 		bool LBM_1_OPEN_raised {false};
 		
-		/*! Indicates event 'MS_1_TRUE' of default interface scope is active. */
-		bool MS_1_TRUE_raised {false};
+		/*! Indicates event 'MS_1_HIGH' of default interface scope is active. */
+		bool MS_1_HIGH_raised {false};
+		
+		/*! Indicates event 'MS_1_LOW' of default interface scope is active. */
+		bool MS_1_LOW_raised {false};
 		
 		/*! Indicates event 'LBR_1_INTERRUPTED' of default interface scope is active. */
 		bool LBR_1_INTERRUPTED_raised {false};
 		
 		/*! Indicates event 'LBR_1_OPEN' of default interface scope is active. */
 		bool LBR_1_OPEN_raised {false};
+		
+		/*! Indicates event 'FST_1_PUK_SORTING_PASSTHROUGH' of default interface scope is active. */
+		bool FST_1_PUK_SORTING_PASSTHROUGH_raised {false};
+		
+		/*! Indicates event 'FST_1_PUK_SORTING_EJECT' of default interface scope is active. */
+		bool FST_1_PUK_SORTING_EJECT_raised {false};
+		
+		/*! Observable for event 'FST_1_PUK_IS_METAL' of default interface scope. */
+		sc::rx::Observable<void> FST_1_PUK_IS_METAL_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'FST_1_PUK_IS_NOT_METAL' of default interface scope. */
+		sc::rx::Observable<void> FST_1_PUK_IS_NOT_METAL_observable = sc::rx::Observable<void>{};
 		
 		/*! Observable for event 'FST_1_PUK_DESIRED' of default interface scope. */
 		sc::rx::Observable<void> FST_1_PUK_DESIRED_observable = sc::rx::Observable<void>{};
@@ -1521,32 +1616,32 @@ class FSM : public sc::EventDrivenInterface
 		/*! Observable for event 'Q12_ON' of default interface scope. */
 		sc::rx::Observable<void> Q12_ON_observable = sc::rx::Observable<void>{};
 		
-		/*! Observable for event 'FST_2_POSITION_INGRESS_NEW_PUK' of default interface scope. */
-		sc::rx::Observable<void> FST_2_POSITION_INGRESS_NEW_PUK_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_2_POSITION_INGRESS_NEW_PUK' of default interface scope is active. */
+		bool FST_2_POSITION_INGRESS_NEW_PUK_raised {false};
 		
-		/*! Observable for event 'FST_2_POSITION_INGRESS_DISTANCE_VALID' of default interface scope. */
-		sc::rx::Observable<void> FST_2_POSITION_INGRESS_DISTANCE_VALID_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_2_POSITION_INGRESS_DISTANCE_VALID' of default interface scope is active. */
+		bool FST_2_POSITION_INGRESS_DISTANCE_VALID_raised {false};
 		
-		/*! Observable for event 'FST_2_POSITION_INGRESS_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void> FST_2_POSITION_INGRESS_PUK_EXPECTED_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_2_POSITION_INGRESS_PUK_EXPECTED' of default interface scope is active. */
+		bool FST_2_POSITION_INGRESS_PUK_EXPECTED_raised {false};
 		
 		/*! Observable for event 'FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK' of default interface scope. */
 		sc::rx::Observable<void> FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable = sc::rx::Observable<void>{};
 		
-		/*! Observable for event 'FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void> FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of default interface scope is active. */
+		bool FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised {false};
 		
 		/*! Observable for event 'FST_2_POSITION_SORTING_NEW_PUK' of default interface scope. */
 		sc::rx::Observable<void> FST_2_POSITION_SORTING_NEW_PUK_observable = sc::rx::Observable<void>{};
 		
-		/*! Observable for event 'FST_2_POSITION_SORTING_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void> FST_2_POSITION_SORTING_PUK_EXPECTED_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_2_POSITION_SORTING_PUK_EXPECTED' of default interface scope is active. */
+		bool FST_2_POSITION_SORTING_PUK_EXPECTED_raised {false};
 		
 		/*! Observable for event 'FST_2_POSITION_EGRESS_NEW_PUK' of default interface scope. */
 		sc::rx::Observable<void> FST_2_POSITION_EGRESS_NEW_PUK_observable = sc::rx::Observable<void>{};
 		
-		/*! Observable for event 'FST_2_POSITION_EGRESS_PUK_EXPECTED' of default interface scope. */
-		sc::rx::Observable<void> FST_2_POSITION_EGRESS_PUK_EXPECTED_observable = sc::rx::Observable<void>{};
+		/*! Indicates event 'FST_2_POSITION_EGRESS_PUK_EXPECTED' of default interface scope is active. */
+		bool FST_2_POSITION_EGRESS_PUK_EXPECTED_raised {false};
 		
 		/*! Indicates event 'LBF_2_INTERRUPTED' of default interface scope is active. */
 		bool LBF_2_INTERRUPTED_raised {false};
@@ -1580,6 +1675,12 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Observable for event 'FST_2_PUK_ENTRY_SORTING' of default interface scope. */
 		sc::rx::Observable<void> FST_2_PUK_ENTRY_SORTING_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'FST_2_PUK_HEIGHT_IS_VALID' of default interface scope. */
+		sc::rx::Observable<void> FST_2_PUK_HEIGHT_IS_VALID_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'FST_2_PUK_HEIGHT_IS_NOT_VALID' of default interface scope. */
+		sc::rx::Observable<void> FST_2_PUK_HEIGHT_IS_NOT_VALID_observable = sc::rx::Observable<void>{};
 		
 		/*! Indicates event 'LBM_2_INTERRUPTED' of default interface scope is active. */
 		bool LBM_2_INTERRUPTED_raised {false};
@@ -1755,29 +1856,11 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_2_PUK_ENTRY_INGRESS' of internal scope as a local event. */
 		void raiseLocal_FST_2_PUK_ENTRY_INGRESS();
 		
-		/*! Indicates event 'local_FST_2_POSITION_INGRESS_DISTANCE_VALID' of internal scope is active. */
-		bool local_FST_2_POSITION_INGRESS_DISTANCE_VALID_raised {false};
-		
-		/*! Raises the out event 'local_FST_2_POSITION_INGRESS_DISTANCE_VALID' of internal scope as a local event. */
-		void raiseLocal_FST_2_POSITION_INGRESS_DISTANCE_VALID();
-		
-		/*! Indicates event 'local_FST_2_POSITION_INGRESS_PUK_EXPECTED' of internal scope is active. */
-		bool local_FST_2_POSITION_INGRESS_PUK_EXPECTED_raised {false};
-		
-		/*! Raises the out event 'local_FST_2_POSITION_INGRESS_PUK_EXPECTED' of internal scope as a local event. */
-		void raiseLocal_FST_2_POSITION_INGRESS_PUK_EXPECTED();
-		
 		/*! Indicates event 'local_FST_2_PUK_ENTRY_HeightMeasurement' of internal scope is active. */
 		bool local_FST_2_PUK_ENTRY_HeightMeasurement_raised {false};
 		
 		/*! Raises the out event 'local_FST_2_PUK_ENTRY_HeightMeasurement' of internal scope as a local event. */
 		void raiseLocal_FST_2_PUK_ENTRY_HeightMeasurement();
-		
-		/*! Indicates event 'local_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of internal scope is active. */
-		bool local_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised {false};
-		
-		/*! Raises the out event 'local_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED' of internal scope as a local event. */
-		void raiseLocal_FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
 		
 		/*! Indicates event 'local_FST_2_PUK_ENTRY_SORTING' of internal scope is active. */
 		bool local_FST_2_PUK_ENTRY_SORTING_raised {false};
@@ -1785,23 +1868,11 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_2_PUK_ENTRY_SORTING' of internal scope as a local event. */
 		void raiseLocal_FST_2_PUK_ENTRY_SORTING();
 		
-		/*! Indicates event 'local_FST_2_POSITION_SORTING_PUK_EXPECTED' of internal scope is active. */
-		bool local_FST_2_POSITION_SORTING_PUK_EXPECTED_raised {false};
-		
-		/*! Raises the out event 'local_FST_2_POSITION_SORTING_PUK_EXPECTED' of internal scope as a local event. */
-		void raiseLocal_FST_2_POSITION_SORTING_PUK_EXPECTED();
-		
 		/*! Indicates event 'local_FST_2_PUK_ENTRY_EGRESS' of internal scope is active. */
 		bool local_FST_2_PUK_ENTRY_EGRESS_raised {false};
 		
 		/*! Raises the out event 'local_FST_2_PUK_ENTRY_EGRESS' of internal scope as a local event. */
 		void raiseLocal_FST_2_PUK_ENTRY_EGRESS();
-		
-		/*! Indicates event 'local_FST_2_POSITION_EGRESS_PUK_EXPECTED' of internal scope is active. */
-		bool local_FST_2_POSITION_EGRESS_PUK_EXPECTED_raised {false};
-		
-		/*! Raises the out event 'local_FST_2_POSITION_EGRESS_PUK_EXPECTED' of internal scope as a local event. */
-		void raiseLocal_FST_2_POSITION_EGRESS_PUK_EXPECTED();
 		
 		/*! Indicates event 'local_FST_2_YELLOW_LAMP_ON' of internal scope is active. */
 		bool local_FST_2_YELLOW_LAMP_ON_raised {false};

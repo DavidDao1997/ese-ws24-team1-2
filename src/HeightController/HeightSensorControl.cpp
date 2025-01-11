@@ -173,6 +173,7 @@ void HeightSensorControl::processSample(
                     Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
                 }
             } else if (festoNr == FESTO2) {
+                Logger::getInstance().log(LogLevel::DEBUG, "sending Value in candidates send..." + std::to_string(currentValue), "HeightSensorControl");
                 if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS2_SAMPLING_DONE, currentValue)) {
                     Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
                 }
