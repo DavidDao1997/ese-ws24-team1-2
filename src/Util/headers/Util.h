@@ -14,8 +14,4 @@
 
 #define DISPATCHERNAME "dispatcher"
 
-const std::string stateToString(FSM::State state);
-
-
-
 #endif
