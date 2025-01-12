@@ -84,7 +84,7 @@ ActuatorController::ActuatorController(uint8_t festo, const std::string name, I_
 
 ActuatorController::~ActuatorController() {
     // thread löschen
-    Logger::getInstance().log(LogLevel::INFO, "destroying own channel...", "ActuatorController");
+    Logger::getInstance().log(LogLevel::TRACE, "destroying own channel...", "ActuatorController");
     destroyNamedChannel(channelID, actuatorControllerChannel); 
 };
 

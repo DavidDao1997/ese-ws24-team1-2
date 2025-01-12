@@ -349,24 +349,24 @@ void FSMController::handleMsg() {
                 	//(msgVal == 0)?fsm->raiseESTOP_1_HIGH():fsm->raiseESTOP_2_HIGH();
                    fsm->raiseESTOP_1_HIGH();
                    fsm->raiseESTOP_2_HIGH();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_ESTOP_HIGH..." + std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_ESTOP_HIGH..." + std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_ESTOP_LOW:
                 	(msgVal == 0)?fsm->raiseESTOP_1_LOW():fsm->raiseESTOP_2_LOW();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_ESTOP_LOW..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_ESTOP_LOW..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_STOP_RECV_THREAD:
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_STOP_RECV_THREAD...", "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_STOP_RECV_THREAD...", "FSMController");
                     running = false;
                     subThreadsRunning = false;             
                     break;
                 case PULSE_LBF_INTERRUPTED:
                 	(msgVal == 0)?fsm->raiseLBF_1_INTERRUPTED():fsm->raiseLBF_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBF_INTERRUPTED LBF_1..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBF_INTERRUPTED LBF_1..."+ std::to_string(msgVal), "FSMController");
                     break;              
                 case PULSE_LBF_OPEN:
                 	(msgVal == 0)?fsm->raiseLBF_1_OPEN():fsm->raiseLBF_2_OPEN();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBF_OPEN..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBF_OPEN..."+ std::to_string(msgVal), "FSMController");
                     // FIXME hacked
                     if (msgVal == 0) {
                         fsm->raiseFST_1_POSITION_INGRESS_DISTANCE_VALID();
@@ -378,29 +378,28 @@ void FSMController::handleMsg() {
                     break;
                 case PULSE_LBE_INTERRUPTED:
                 	(msgVal == 0)?fsm->raiseLBE_1_INTERRUPTED():fsm->raiseLBE_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBE_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBE_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_LBE_OPEN:
                 	(msgVal == 0)?fsm->raiseLBE_1_OPEN():fsm->raiseLBE_2_OPEN();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBE_OPEN..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBE_OPEN..."+ std::to_string(msgVal), "FSMController");
                     // FIXME hacked
                     if (msgVal == 0) {
-                        Logger::getInstance().log(LogLevel::DEBUG, "================================================"+ std::to_string(msgVal), "FSMController");
                         fsm->raiseFST_2_POSITION_INGRESS_PUK_EXPECTED();
                     } else {
                     }
                     break;
                 case PULSE_LBR_INTERRUPTED:
                 	(msgVal == 0)?fsm->raiseLBR_1_INTERRUPTED():fsm->raiseLBR_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBR_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBR_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_LBR_OPEN:
                 	(msgVal == 0)?fsm->raiseLBR_1_OPEN():fsm->raiseLBR_2_OPEN();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBR_OPEN..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBR_OPEN..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_LBM_INTERRUPTED:
                 	(msgVal == 0)?fsm->raiseLBM_1_INTERRUPTED():fsm->raiseLBM_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBM_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBM_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
                     // FIXME hacked
                     if (msgVal == 0) {
                         fsm->raiseFST_1_PUK_SORTING_PASSTHROUGH();
@@ -412,109 +411,61 @@ void FSMController::handleMsg() {
                     break;
                 case PULSE_LBM_OPEN:
                 	(msgVal == 0)?fsm->raiseLBM_1_OPEN():fsm->raiseLBM_2_OPEN();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_LBM_OPEN..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBM_OPEN..."+ std::to_string(msgVal), "FSMController");
                     // fsm->raiseFST_1_POSITION_EGRESS_PUK_EXPECTED();
                     break;
                 case PULSE_BGS_SHORT:
                 	(msgVal == 0)?fsm->raiseBGS_1_INTERRUPTED():fsm->raiseBGS_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BGS_SHORT..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_BGS_SHORT..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_BGS_LONG:
                 	(msgVal == 0)?fsm->raiseBGS_1_LONG_PRESSED():fsm->raiseBGS_2_LONG_PRESSED();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BGS_LONG..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_BGS_LONG..."+ std::to_string(msgVal), "FSMController");
                     break;  
                 case PULSE_BRS_SHORT:
                 	(msgVal == 0)?fsm->raiseBRS_1_INTERRUPTED():fsm->raiseBRS_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BRS_SHORT..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_BRS_SHORT..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_BGR_SHORT:
                 	(msgVal == 0)?fsm->raiseBGR_1_INTERRUPTED():fsm->raiseBGR_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BGR_SHORT..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_BGR_SHORT..."+ std::to_string(msgVal), "FSMController");
                     break;
                 case PULSE_HS1_SAMPLE:
                 	fsm->setFST_1_currentValue(msgVal);
                     fsm-> raiseHS_1_SAMPLE();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS1_SAMPLE...", "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLE...", "FSMController");
                     break;
                 case PULSE_HS2_SAMPLE:
                     fsm->raiseHS_2_SAMPLE();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS2_SAMPLE...", "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLE...", "FSMController");
                     break;
                 case PULSE_HS1_SAMPLING_DONE:
                     fsm-> raiseHS_1_SAMPLING_DONE();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS1_SAMPLING_DONE...", "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLING_DONE...", "FSMController");
                     //FIXME hacked
                     fsm->raiseFST_1_POSITION_SORTING_PUK_EXPECTED();
                     break; 
                 case PULSE_HS2_SAMPLING_DONE:
                     fsm-> raiseHS_2_SAMPLING_DONE();
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_HS2_INTERRUPTED...", "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_INTERRUPTED...", "FSMController");
                     break;
                 case PULSE_MS_TRUE:
                 	// (msgVal == 0)?fsm->raiseMS_1_HIGH():fsm->raiseMS_2_HIGH();
                     if (msgVal == 0) {
                         fsm->raiseMS_1_HIGH();
                     }
-                    Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_MS_TRUE..."+ std::to_string(msgVal), "FSMController");
+                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_MS_TRUE..."+ std::to_string(msgVal), "FSMController");
                     break;
                 // case PULSE_MS_FALSE:
                 //     fsm->raiseMS_1_FALSE();    
-                //     Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_MS_FALSE...", "FSMController");
+                //     Logger::getInstance().log(LogLevel::TRACE, "received PULSE_MS_FALSE...", "FSMController");
                 //     break;   
                 default:
                     break;
             }
 
-            // if (fsm->isStateActive(FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A)) {
-            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::FSM_Festo2__HeightMeasurement_HeightMeasurement_FST2_HM_Measuring_HeightFSM_Festo2_A", "FSMController");
-            // }
-            // if (fsm->isStateActive(FSM::State::B)) {
-            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::B", "FSMController");
-            // }
-            // if (fsm->isStateActive(FSM::State::C)) {
-            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::C", "FSMController");
-            // }
-            // if (fsm->isStateActive(FSM::State::Evaluate)) {
-            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::Evaluate", "FSMController");
-            // }
-            // if (fsm->isStateActive(FSM::State::Error)) {
-            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::Error", "FSMController");
-            // }
-            // if (fsm->isStateActive(FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement)) {
-            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_MetalMeasurement", "FSMController");
-            // }
-            // if (fsm->isStateActive(FSM::State::FSM_Festo1__Egress_Egress_Egress_Waiting)) {
-            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::FSM_Festo1__Egress_Egress_Egress_Waiting", "FSMController");
-            // }
-            // if (fsm->isStateActive(FSM::State::FSM_Festo1_Ingress_Ingress_Ingress_PukPresent)) {
-            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::FSM_Festo1_Ingress_Ingress_Ingress_PukPresent", "FSMController");
-            // }
-            if (fsm->isStateActive(FSM::State::FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance)) {
-                Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::FSM_Festo2__Ingress_Ingress_Ingress_CreatingDistance", "FSMController");
-            }
-            if (fsm->isStateActive(FSM::State::FSM_Festo2__Ingress_Ingress_Ingress_PukExpected)) {
-                Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::FSM_Festo2__Ingress_Ingress_Ingress_PukExpected", "FSMController");
-            }
-            if (fsm->isStateActive(FSM::State::FSM_Festo2__Ingress_Ingress_Ingress_PukPresent)) {
-                Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::FSM_Festo2__Ingress_Ingress_Ingress_PukPresent", "FSMController");
-            }
-            if (fsm->isStateActive(FSM::State::FSM_Festo2__Ingress_Ingress_Ingress_Idle)) {
-                Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::FSM_Festo2__Ingress_Ingress_Ingress_Idle", "FSMController");
-            }
-            // if (fsm->isStateActive(FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_PukPresent)) {
-            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State!!!!!!!!!!: FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_PukPresent", "FSMController");
-            // }
-            // if (fsm->isStateActive(FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_PukExpected)) {
-            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State!!!!!!!!!!: FSM::State::FSM_Festo1__Sorting_Sorting_Sorting_PukExpected", "FSMController");
-            // }
-            // if (fsm->isStateActive(FSM::State::FSM_Festo1__Egress_Egress_Egress_PukExpected)) {
-            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State!!!!!!!!!!: FSM::State::FSM_Festo1__Egress_Egress_Egress_PukExpected", "FSMController");
-            // }
-            // for (int i = static_cast<int>(FSM::State::NO_STATE); i < static_cast<int>(FSM::State::TEST_EvaluateTester); ++i) {
-            //     FSM::State state = static_cast<FSM::State>(i);
-            //     if (fsm->isStateActive(state) ) {
-            //         Logger::getInstance().log(LogLevel::DEBUG, "Active State: " + stateToString(state), "FSMController");
-            //     }
+            // if (fsm->isStateActive(FSM::State::SOME_STATE)) {
+            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::SOME_STATE", "FSMController");
             // }
         }
     }
@@ -527,7 +478,7 @@ bool FSMController::stop(){
         Logger::getInstance().log(LogLevel::ERROR, "shutting down Msg Receiver failed...", "FSMController");
         return false;
     }
-    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down PULSE send...", "FSMController");
+    Logger::getInstance().log(LogLevel::TRACE, "Shutting down PULSE send...", "FSMController");
     if (0 > ConnectDetach(coid)){
         Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "FSMController");
         return false;

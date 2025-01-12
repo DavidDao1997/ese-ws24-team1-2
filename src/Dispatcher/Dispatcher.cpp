@@ -39,7 +39,7 @@ void Dispatcher::addSubscriber(int32_t chid, int8_t pulses[], int8_t numOfPulses
 
 void Dispatcher::addKnownSubscriber(std::string channelName){
     if ((0 == strcmp(channelName.c_str(), "actuatorController1")) || (0 == strcmp(channelName.c_str(), "actuatorController2"))){
-        Logger::getInstance().log(LogLevel::DEBUG, "Connecting ActuatorController..." + channelName, "Dispatcher");
+        Logger::getInstance().log(LogLevel::TRACE, "Connecting ActuatorController... " + channelName, "Dispatcher");
         int32_t connectionID = name_open(channelName.c_str(), NAME_FLAG_ATTACH_GLOBAL);
         connections.push_back(connectionID);
 
@@ -64,7 +64,7 @@ bool Dispatcher::stop(){
             return false;
     }
     // disconnect the connection to own channel
-    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down PULSE send...", "Dispatcher");
+    Logger::getInstance().log(LogLevel::TRACE, "Shutting down PULSE send...", "Dispatcher");
     if (0 > ConnectDetach(coid)){
         Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "Dispatcher");
         return false;

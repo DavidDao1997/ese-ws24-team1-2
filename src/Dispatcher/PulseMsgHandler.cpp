@@ -18,13 +18,13 @@ int32_t PulseMsgHandler::createChannel() {
 }
 
 name_attach_t *PulseMsgHandler::createNamedChannel(const std::string channelName) {
-    Logger::getInstance().log(LogLevel::DEBUG, "Creating GNS channel...", "PulseMsgHandler");
+    Logger::getInstance().log(LogLevel::TRACE, "Creating GNS channel...", "PulseMsgHandler");
     name_attach_t *attach = name_attach(NULL, channelName.c_str(), NAME_FLAG_ATTACH_GLOBAL);
     if (attach == NULL) {
         Logger::getInstance().log(LogLevel::CRITICAL, "Failed to create GNS channel...", "PulseMsgHandler");
         // throw std::runtime_error("Failed to create GNS channel!");
     }
-    Logger::getInstance().log(LogLevel::DEBUG, "Created GNS channel...", "PulseMsgHandler");
+    Logger::getInstance().log(LogLevel::TRACE, "Created GNS channel...", "PulseMsgHandler");
     return attach;
 }
 

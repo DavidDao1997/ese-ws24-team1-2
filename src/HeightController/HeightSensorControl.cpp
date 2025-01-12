@@ -38,7 +38,7 @@ HeightSensorControl::~HeightSensorControl() {
         Logger::getInstance().log(LogLevel::ERROR, "Disconnection from Dispatcher failed...", "HeightSensorControl");
     }
     // TODO How to end thread if blocked in MsgReveivePulse and return avlue?
-    Logger::getInstance().log(LogLevel::DEBUG, "destroying own channel...", "HeightSensorControl");
+    Logger::getInstance().log(LogLevel::TRACE, "destroying own channel...", "HeightSensorControl");
     destroyNamedChannel(channelID, hsControllerChannel); 
 }
 
@@ -98,7 +98,7 @@ bool HeightSensorControl::stop(){
         return false;
     }
     // disconnect the connection to own channel
-    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down PULSE send...", "HeightSensorControl");
+    Logger::getInstance().log(LogLevel::TRACE, "Shutting down PULSE send...", "HeightSensorControl");
     if (0 > ConnectDetach(coid)){
         Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "HeightSensorControl");
         return false;
@@ -141,13 +141,13 @@ void HeightSensorControl::handleMsg() {
             // this_thread::sleep_for(chrono::milliseconds(10));
             // adc->sample();
         } else if(msg.code == PULSE_STOP_RECV_THREAD) {
-            Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_STOP_RECV_THREAD...", "HeightSensorControl");
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_STOP_RECV_THREAD...", "HeightSensorControl");
             receivingRunning = false;  
         }
 
         // processSample(currentValue, secondChance, candidateValue, adc);
     }
-    Logger::getInstance().log(LogLevel::DEBUG, "Message thread stops...", "HeightSensorControl");
+    Logger::getInstance().log(LogLevel::TRACE, "Message thread stops...", "HeightSensorControl");
 }
 
 void HeightSensorControl::sendMsg() {}

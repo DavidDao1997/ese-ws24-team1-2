@@ -69,7 +69,7 @@ bool Decoder::stop(){
             return false;
     }
     // disconnect the connection to own channel
-    Logger::getInstance().log(LogLevel::DEBUG, "Shutting down PULSE send...", "Decoder");
+    Logger::getInstance().log(LogLevel::TRACE, "Shutting down PULSE send...", "Decoder");
     if (0 > ConnectDetach(coid)){
         Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "Decoder");
         return false;
@@ -94,14 +94,14 @@ void Decoder::handleMsg() {
 
         if (recvid == 0) { // Pulse received
             if (msg.code == PULSE_STOP_RECV_THREAD) {
-                Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_STOP_RECV_THREAD...", "Decoder");
+                Logger::getInstance().log(LogLevel::TRACE, "received PULSE_STOP_RECV_THREAD...", "Decoder");
                 running = false;                      
             }
             else if (msg.code != PULSE_INTR_ON_PORT0) {
                 Logger::getInstance().log(LogLevel::WARNING, "Unexpected Pulse received...", "Decoder");
             } else {
                 decode();
-                Logger::getInstance().log(LogLevel::DEBUG, "Interrupt received entpacken und weitergabe an dispatcher...", "Decoder");
+                Logger::getInstance().log(LogLevel::TRACE, "Interrupt received entpacken und weitergabe an dispatcher...", "Decoder");
             }
         }
     }

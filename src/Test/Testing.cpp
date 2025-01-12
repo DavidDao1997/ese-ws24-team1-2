@@ -66,28 +66,28 @@ protected:
 
     void TearDown() override {
         Logger::getInstance().log(LogLevel::INFO, "Tear Down Tests...", "Testing");
-        if (!fsmController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop fsmControllerHandleMsgThread has not ended...", "SystemTest");}
+        if (!fsmController->stop()) {Logger::getInstance().log(LogLevel::WARNING, "loop fsmControllerHandleMsgThread has not ended...", "SystemTest");}
         // if (!decoder->stop()) {std::cout << "loop decoderThread has ended" << std::endl;} // MOCK DOESNT HAVE A MSGHANDLER
-        if (!actuatorController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop actuatorControllerThread has not ended...", "SystemTest");}
-        if (!heightSensorController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop heightSensorControllerThread has not ended...", "SystemTest");}
-        if (!dispatcher->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop dispatcherThread has not ended...", "SystemTest");}
+        if (!actuatorController->stop()) {Logger::getInstance().log(LogLevel::WARNING, "loop actuatorControllerThread has not ended...", "SystemTest");}
+        if (!heightSensorController->stop()) {Logger::getInstance().log(LogLevel::WARNING, "loop heightSensorControllerThread has not ended...", "SystemTest");}
+        if (!dispatcher->stop()) {Logger::getInstance().log(LogLevel::WARNING, "loop dispatcherThread has not ended...", "SystemTest");}
 
-        Logger::getInstance().log(LogLevel::INFO, "ENDING TREADS...", "SystemTest");
+        Logger::getInstance().log(LogLevel::TRACE, "ENDING TREADS...", "SystemTest");
         // if (fsmControllerHandleMsgThread.joinable()) 
         fsmControllerHandleMsgThread.join();
-        Logger::getInstance().log(LogLevel::INFO, "Thread fsmControllerHandleMsgThread Ended...", "SystemTest");
+        Logger::getInstance().log(LogLevel::TRACE, "Thread fsmControllerHandleMsgThread Ended...", "SystemTest");
         // if (decoderThread.joinable()) 
         decoderThread.join();
-        Logger::getInstance().log(LogLevel::INFO, "Thread decoderThread Ended...", "SystemTest");
+        Logger::getInstance().log(LogLevel::TRACE, "Thread decoderThread Ended...", "SystemTest");
         // if (actuatorControllerThread.joinable()) 
         actuatorControllerThread.join();
-        Logger::getInstance().log(LogLevel::INFO, "Thread actuatorControllerThread Ended...", "SystemTest");
+        Logger::getInstance().log(LogLevel::TRACE, "Thread actuatorControllerThread Ended...", "SystemTest");
         // if (heightSensorControllerThread.joinable()) 
         heightSensorControllerThread.join();  
-        Logger::getInstance().log(LogLevel::INFO, "Thread heightSensorControllerThread Ended...", "SystemTest"); 
+        Logger::getInstance().log(LogLevel::TRACE, "Thread heightSensorControllerThread Ended...", "SystemTest"); 
         // if (dispatcherThread.joinable()) 
         dispatcherThread.join();
-        Logger::getInstance().log(LogLevel::INFO, "Thread dispatcherThread Ended...", "SystemTest");
+        Logger::getInstance().log(LogLevel::TRACE, "Thread dispatcherThread Ended...", "SystemTest");
 
         delete heightSensorController;
 		delete decoder;
@@ -447,9 +447,9 @@ protected:
             fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
         );
         WAIT(1000);
-        Logger::getInstance().log(LogLevel::DEBUG, "Starting fsmController...", "SystemTestTwoFesto");
+        Logger::getInstance().log(LogLevel::TRACE, "Starting fsmController...", "SystemTestTwoFesto");
         fsmControllerHandleMsgThread = std::thread(std::bind(&FSMController::handleMsg, fsmController));
-        Logger::getInstance().log(LogLevel::DEBUG, "Starting DECODER...", "SystemTestTwoFesto");
+        Logger::getInstance().log(LogLevel::TRACE, "Starting DECODER...", "SystemTestTwoFesto");
         decoderThread1 = std::thread(std::bind(&Mock_Decoder::handleMsg, decoder1));
         decoderThread2 = std::thread(std::bind(&Mock_Decoder::handleMsg, decoder2));
         WAIT(1000);
@@ -457,33 +457,33 @@ protected:
 
     void TearDown() override {
         Logger::getInstance().log(LogLevel::INFO, "Tear Down Tests...", "SystemTestTwoFesto");
-        if (!fsmController->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop fsmControllerHandleMsgThread has not ended...", "SystemTestTwoFesto");}
+        if (!fsmController->stop()) {Logger::getInstance().log(LogLevel::WARNING, "loop fsmControllerHandleMsgThread has not ended...", "SystemTestTwoFesto");}
         // if (!decoder->stop()) {std::cout << "loop decoderThread has ended" << std::endl;} // MOCK DOESNT HAVE A MSGHANDLER
-        if (!actuatorController1->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop actuatorControllerThread1 has not ended...", "SystemTestTwoFesto");}
-        if (!actuatorController2->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop actuatorControllerThread1 has not ended...", "SystemTestTwoFesto");}
-        if (!heightSensorController1->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop heightSensorControllerThread1 has not ended...", "SystemTestTwoFesto");}
-        if (!heightSensorController2->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop heightSensorControllerThread2 has not ended...", "SystemTestTwoFesto");}
-        if (!dispatcher->stop()) {Logger::getInstance().log(LogLevel::INFO, "loop dispatcherThread has not ended...", "SystemTestTwoFesto");}
+        if (!actuatorController1->stop()) {Logger::getInstance().log(LogLevel::WARNING, "loop actuatorControllerThread1 has not ended...", "SystemTestTwoFesto");}
+        if (!actuatorController2->stop()) {Logger::getInstance().log(LogLevel::WARNING, "loop actuatorControllerThread1 has not ended...", "SystemTestTwoFesto");}
+        if (!heightSensorController1->stop()) {Logger::getInstance().log(LogLevel::WARNING, "loop heightSensorControllerThread1 has not ended...", "SystemTestTwoFesto");}
+        if (!heightSensorController2->stop()) {Logger::getInstance().log(LogLevel::WARNING, "loop heightSensorControllerThread2 has not ended...", "SystemTestTwoFesto");}
+        if (!dispatcher->stop()) {Logger::getInstance().log(LogLevel::WARNING, "loop dispatcherThread has not ended...", "SystemTestTwoFesto");}
 
-        Logger::getInstance().log(LogLevel::INFO, "ENDING TREADS...", "SystemTestTwoFesto");
+        Logger::getInstance().log(LogLevel::TRACE, "ENDING TREADS...", "SystemTestTwoFesto");
         // if (fsmControllerHandleMsgThread.joinable()) 
         fsmControllerHandleMsgThread.join();
-        Logger::getInstance().log(LogLevel::INFO, "Thread fsmControllerHandleMsgThread Ended...", "SystemTestTwoFesto");
+        Logger::getInstance().log(LogLevel::TRACE, "Thread fsmControllerHandleMsgThread Ended...", "SystemTestTwoFesto");
         // if (decoderThread.joinable()) 
         decoderThread1.join();
         decoderThread2.join();
-        Logger::getInstance().log(LogLevel::INFO, "Thread decoderThread Ended...", "SystemTestTwoFesto");
+        Logger::getInstance().log(LogLevel::TRACE, "Thread decoderThread Ended...", "SystemTestTwoFesto");
         // if (actuatorControllerThread.joinable()) 
         actuatorControllerThread1.join();
         actuatorControllerThread2.join();
-        Logger::getInstance().log(LogLevel::INFO, "Thread actuatorControllerThread Ended...", "SystemTestTwoFesto");
+        Logger::getInstance().log(LogLevel::TRACE, "Thread actuatorControllerThread Ended...", "SystemTestTwoFesto");
         // if (heightSensorControllerThread.joinable()) 
         heightSensorControllerThread1.join();  
         heightSensorControllerThread2.join();  
-        Logger::getInstance().log(LogLevel::INFO, "Thread heightSensorControllerThread Ended...", "SystemTestTwoFesto"); 
+        Logger::getInstance().log(LogLevel::TRACE, "Thread heightSensorControllerThread Ended...", "SystemTestTwoFesto"); 
         // if (dispatcherThread.joinable()) 
         dispatcherThread.join();
-        Logger::getInstance().log(LogLevel::INFO, "Thread dispatcherThread Ended...", "SystemTestTwoFesto");
+        Logger::getInstance().log(LogLevel::TRACE, "Thread dispatcherThread Ended...", "SystemTestTwoFesto");
 
         delete heightSensorController1;
         delete heightSensorController2;
