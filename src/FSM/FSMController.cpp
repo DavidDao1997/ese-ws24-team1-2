@@ -28,31 +28,6 @@ int8_t FSMController::pulses[FSM_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_MS_TRUE,
 };
 
-class VoidObserver : public sc::rx::Observer<void> {
-public:
-    // Constructor that accepts a callback of type void() (a function with no parameters and no return value)
-    VoidObserver(
-        int coid,
-        int code,
-        int value,
-        const std::string& name
-    ): coid(coid), code(code), value(value), name(name) {}
-
-    // Override the next() method to invoke the callback
-    virtual void next() override {
-        Logger::getInstance().log(LogLevel::TRACE, "Sending pulse: " + name, "FSMController");
-         if (0 < MsgSendPulse(coid, -1, code, value)) {
-            Logger::getInstance().log(LogLevel::ERROR, "Failed to send pulse: " + name, "FSMController");
-        }
-    }
-
-private:
-    int coid;
-    int code;
-    int value;
-    std::string name;
-};
-
 FSMController::FSMController(const std::string dispatcherChannelName) {
     channelID = createChannel();
     running = false;
@@ -61,9 +36,75 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     dispatcherConnectionID = name_open(dispatcherChannelName.c_str(), NAME_FLAG_ATTACH_GLOBAL);
 
     fsm = new FSM();
+    subscribeToOutEvents();
+
+
+
     PositionTracker* positionTracker = new PositionTracker(fsm);
 
-    // PULSE_MOTOR1_STOP  
+    fsm->enter();
+    fsm->setFst_2_ready(true); // FIXME hacked
+
+    fsm->setAReferenceHeight(2200);
+    fsm->setBReferenceHeight(3150);
+    fsm->setCReferenceHeight(2200);
+    fsm->setAReferenceMinCount(4);
+    fsm->setAReferenceMaxCount(35);
+    fsm->setBReferenceMinCount(20);
+    fsm->setBReferenceMaxCount(60);
+    fsm->setCReferenceMinCount(10);
+    fsm->setCReferenceMaxCount(45);
+    fsm->setHeightThreshhold(150);
+    fsm->setMaxSampleCount(130);
+    
+    fsm->setEStopCalibratedReturn(false);
+    fsm->setServiceModeReturn(false);
+    fsm->setReadyReturn(false);
+}
+
+FSMController::~FSMController() {
+    // TODO WHY DOES DESTROY CHANNEL WONT WORK
+    // std::cout << "FSMCONTROLLER: destroying own channel " << std::endl;
+    // destroyChannel(channelID);   
+    
+}
+
+int8_t *FSMController::getPulses(){ return pulses; }
+int8_t FSMController::getNumOfPulses() { return numOfPulses; };
+int32_t FSMController::getChannel() { return channelID; }
+
+void FSMController::handleMsg() {
+    _pulse msg;
+    running = true;
+     while (running) {
+        int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
+        if (recvid < 0) {
+            Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "FSMController");
+        }
+        
+        if (recvid == 0) handlePulse(msg);
+    }
+}
+
+
+bool FSMController::stop(){
+	int coid = connectToChannel(channelID);
+    if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
+        Logger::getInstance().log(LogLevel::ERROR, "shutting down Msg Receiver failed...", "FSMController");
+        return false;
+    }
+    Logger::getInstance().log(LogLevel::TRACE, "Shutting down PULSE send...", "FSMController");
+    if (0 > ConnectDetach(coid)){
+        Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "FSMController");
+        return false;
+    }
+    return true;
+}
+
+void FSMController::sendMsg() {}
+
+void FSMController::subscribeToOutEvents() {
+        // PULSE_MOTOR1_STOP  
     fsm->getMOTOR_1_STOP().subscribe(
         *new sc::rx::subscription<void>(
             *new VoidObserver(dispatcherConnectionID, PULSE_MOTOR1_STOP, 0, "PULSE_MOTOR1_STOP")
@@ -291,199 +332,129 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     //         *new VoidObserver(dispatcherConnectionID, PULSE_SM2_RESTING, 0, "PULSE_SM2_RESTING")
     //     )
     // );
-
-    fsm->enter();
-    fsm->setFst_2_ready(true);
-    fsm->setAReferenceHeight(2200);
-    fsm->setBReferenceHeight(3150);
-    fsm->setCReferenceHeight(2200);
-    fsm->setAReferenceMinCount(4);
-    fsm->setAReferenceMaxCount(35);
-    fsm->setBReferenceMinCount(20);
-    fsm->setBReferenceMaxCount(60);
-    fsm->setCReferenceMinCount(10);
-    fsm->setCReferenceMaxCount(45);
-    fsm->setHeightThreshhold(150);
-    fsm->setMaxSampleCount(130);
-    fsm->setEStopCalibratedReturn(false);
-    fsm->setServiceModeReturn(false);
-    fsm->setReadyReturn(false);
 }
 
-//         // Similarly, you can subscribe to other Observables:
-//         fsm.getMOTOR_SLOW().subscribe([this](){
-//             std::cout << "FSM says: Motor SLOW" << std::endl;
-//             motorController.setMotorSpeed(50); // Just an example speed
-//         });
-
-//         fsm.getMOTOR_FAST().subscribe([this](){
-//             std::cout << "FSM says: Motor FAST" << std::endl;
-//             motorController.setMotorSpeed(100);
-//         });
-
-FSMController::~FSMController() {
-    // TODO WHY DOES DESTROY CHANNEL WONT WORK
-    // std::cout << "FSMCONTROLLER: destroying own channel " << std::endl;
-    // destroyChannel(channelID);   
-    
-}
-
-int8_t *FSMController::getPulses(){ return pulses; }
-int8_t FSMController::getNumOfPulses() { return numOfPulses; };
-int32_t FSMController::getChannel() { return channelID; }
-
-void FSMController::handleMsg() {
-    _pulse msg;
-    running = true;
-     while (running) {
-        int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
-        if (recvid < 0) {
-            Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "FSMController");
-            //exit(EXIT_FAILURE);
-        }
-        
-        if (recvid == 0) { // Pulse received
-            int32_t msgVal = msg.value.sival_int;
-            switch (msg.code) {
-                case PULSE_ESTOP_HIGH:
-                	//(msgVal == 0)?fsm->raiseESTOP_1_HIGH():fsm->raiseESTOP_2_HIGH();
-                   fsm->raiseESTOP_1_HIGH();
-                   fsm->raiseESTOP_2_HIGH();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_ESTOP_HIGH..." + std::to_string(msgVal), "FSMController");
-                    break;
-                case PULSE_ESTOP_LOW:
-                	(msgVal == 0)?fsm->raiseESTOP_1_LOW():fsm->raiseESTOP_2_LOW();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_ESTOP_LOW..."+ std::to_string(msgVal), "FSMController");
-                    break;
-                case PULSE_STOP_RECV_THREAD:
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_STOP_RECV_THREAD...", "FSMController");
-                    running = false;
-                    subThreadsRunning = false;             
-                    break;
-                case PULSE_LBF_INTERRUPTED:
-                	(msgVal == 0)?fsm->raiseLBF_1_INTERRUPTED():fsm->raiseLBF_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBF_INTERRUPTED LBF_1..."+ std::to_string(msgVal), "FSMController");
-                    break;              
-                case PULSE_LBF_OPEN:
-                	(msgVal == 0)?fsm->raiseLBF_1_OPEN():fsm->raiseLBF_2_OPEN();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBF_OPEN..."+ std::to_string(msgVal), "FSMController");
-                    // FIXME hacked
-                    if (msgVal == 0) {
-                        fsm->raiseFST_1_POSITION_INGRESS_DISTANCE_VALID();
-                        fsm->raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
-                    } else {
-                        fsm->raiseFST_2_POSITION_INGRESS_DISTANCE_VALID();
-                        fsm->raiseFST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
-                    }
-                    break;
-                case PULSE_LBE_INTERRUPTED:
-                	(msgVal == 0)?fsm->raiseLBE_1_INTERRUPTED():fsm->raiseLBE_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBE_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
-                    break;
-                case PULSE_LBE_OPEN:
-                	(msgVal == 0)?fsm->raiseLBE_1_OPEN():fsm->raiseLBE_2_OPEN();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBE_OPEN..."+ std::to_string(msgVal), "FSMController");
-                    // FIXME hacked
-                    if (msgVal == 0) {
-                        fsm->raiseFST_2_POSITION_INGRESS_PUK_EXPECTED();
-                    } else {
-                    }
-                    break;
-                case PULSE_LBR_INTERRUPTED:
-                	(msgVal == 0)?fsm->raiseLBR_1_INTERRUPTED():fsm->raiseLBR_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBR_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
-                    break;
-                case PULSE_LBR_OPEN:
-                	(msgVal == 0)?fsm->raiseLBR_1_OPEN():fsm->raiseLBR_2_OPEN();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBR_OPEN..."+ std::to_string(msgVal), "FSMController");
-                    break;
-                case PULSE_LBM_INTERRUPTED:
-                	(msgVal == 0)?fsm->raiseLBM_1_INTERRUPTED():fsm->raiseLBM_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBM_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
-                    // FIXME hacked
-                    if (msgVal == 0) {
-                        fsm->raiseFST_1_PUK_SORTING_PASSTHROUGH();
-                        fsm->raiseFST_1_POSITION_EGRESS_PUK_EXPECTED();
-                    } else {
-                        // fsm->raiseFST_2_PUK_SORTING_PASSTHROUGH();
-                        // fsm->raiseFST_2_POSITION_EGRESS_PUK_EXPECTED();
-                    }
-                    break;
-                case PULSE_LBM_OPEN:
-                	(msgVal == 0)?fsm->raiseLBM_1_OPEN():fsm->raiseLBM_2_OPEN();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBM_OPEN..."+ std::to_string(msgVal), "FSMController");
-                    // fsm->raiseFST_1_POSITION_EGRESS_PUK_EXPECTED();
-                    break;
-                case PULSE_BGS_SHORT:
-                	(msgVal == 0)?fsm->raiseBGS_1_INTERRUPTED():fsm->raiseBGS_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_BGS_SHORT..."+ std::to_string(msgVal), "FSMController");
-                    break;
-                case PULSE_BGS_LONG:
-                	(msgVal == 0)?fsm->raiseBGS_1_LONG_PRESSED():fsm->raiseBGS_2_LONG_PRESSED();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_BGS_LONG..."+ std::to_string(msgVal), "FSMController");
-                    break;  
-                case PULSE_BRS_SHORT:
-                	(msgVal == 0)?fsm->raiseBRS_1_INTERRUPTED():fsm->raiseBRS_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_BRS_SHORT..."+ std::to_string(msgVal), "FSMController");
-                    break;
-                case PULSE_BGR_SHORT:
-                	(msgVal == 0)?fsm->raiseBGR_1_INTERRUPTED():fsm->raiseBGR_2_INTERRUPTED();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_BGR_SHORT..."+ std::to_string(msgVal), "FSMController");
-                    break;
-                case PULSE_HS1_SAMPLE:
-                	fsm->setFST_1_currentValue(msgVal);
-                    fsm-> raiseHS_1_SAMPLE();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLE...", "FSMController");
-                    break;
-                case PULSE_HS2_SAMPLE:
-                    fsm->raiseHS_2_SAMPLE();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLE...", "FSMController");
-                    break;
-                case PULSE_HS1_SAMPLING_DONE:
-                    fsm-> raiseHS_1_SAMPLING_DONE();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLING_DONE...", "FSMController");
-                    //FIXME hacked
-                    fsm->raiseFST_1_POSITION_SORTING_PUK_EXPECTED();
-                    break; 
-                case PULSE_HS2_SAMPLING_DONE:
-                    fsm-> raiseHS_2_SAMPLING_DONE();
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_INTERRUPTED...", "FSMController");
-                    break;
-                case PULSE_MS_TRUE:
-                	// (msgVal == 0)?fsm->raiseMS_1_HIGH():fsm->raiseMS_2_HIGH();
-                    if (msgVal == 0) {
-                        fsm->raiseMS_1_HIGH();
-                    }
-                    Logger::getInstance().log(LogLevel::TRACE, "received PULSE_MS_TRUE..."+ std::to_string(msgVal), "FSMController");
-                    break;
-                // case PULSE_MS_FALSE:
-                //     fsm->raiseMS_1_FALSE();    
-                //     Logger::getInstance().log(LogLevel::TRACE, "received PULSE_MS_FALSE...", "FSMController");
-                //     break;   
-                default:
-                    break;
+void FSMController::handlePulse(_pulse msg) {
+    int32_t msgVal = msg.value.sival_int;
+    switch (msg.code) {
+        case PULSE_ESTOP_HIGH:
+            (msgVal == 0)?fsm->raiseESTOP_1_HIGH():fsm->raiseESTOP_2_HIGH();
+            // fsm->raiseESTOP_1_HIGH();
+            // fsm->raiseESTOP_2_HIGH();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_ESTOP_HIGH..." + std::to_string(msgVal), "FSMController");
+            break;
+        case PULSE_ESTOP_LOW:
+            (msgVal == 0)?fsm->raiseESTOP_1_LOW():fsm->raiseESTOP_2_LOW();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_ESTOP_LOW..."+ std::to_string(msgVal), "FSMController");
+            break;
+        case PULSE_STOP_RECV_THREAD:
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_STOP_RECV_THREAD...", "FSMController");
+            running = false;
+            subThreadsRunning = false;             
+            break;
+        case PULSE_LBF_INTERRUPTED:
+            (msgVal == 0)?fsm->raiseLBF_1_INTERRUPTED():fsm->raiseLBF_2_INTERRUPTED();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBF_INTERRUPTED LBF_1..."+ std::to_string(msgVal), "FSMController");
+            break;              
+        case PULSE_LBF_OPEN:
+            (msgVal == 0)?fsm->raiseLBF_1_OPEN():fsm->raiseLBF_2_OPEN();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBF_OPEN..."+ std::to_string(msgVal), "FSMController");
+            // FIXME hacked
+            if (msgVal == 0) {
+                fsm->raiseFST_1_POSITION_INGRESS_DISTANCE_VALID();
+                fsm->raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
+            } else {
+                fsm->raiseFST_2_POSITION_INGRESS_DISTANCE_VALID();
+                fsm->raiseFST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
             }
-
-            // if (fsm->isStateActive(FSM::State::SOME_STATE)) {
-            //     Logger::getInstance().log(LogLevel::DEBUG, "Active State: FSM::State::SOME_STATE", "FSMController");
-            // }
-        }
+            break;
+        case PULSE_LBE_INTERRUPTED:
+            (msgVal == 0)?fsm->raiseLBE_1_INTERRUPTED():fsm->raiseLBE_2_INTERRUPTED();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBE_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
+            break;
+        case PULSE_LBE_OPEN:
+            (msgVal == 0)?fsm->raiseLBE_1_OPEN():fsm->raiseLBE_2_OPEN();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBE_OPEN..."+ std::to_string(msgVal), "FSMController");
+            // FIXME hacked
+            if (msgVal == 0) {
+                fsm->raiseFST_2_POSITION_INGRESS_PUK_EXPECTED();
+            } else {
+            }
+            break;
+        case PULSE_LBR_INTERRUPTED:
+            (msgVal == 0)?fsm->raiseLBR_1_INTERRUPTED():fsm->raiseLBR_2_INTERRUPTED();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBR_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
+            break;
+        case PULSE_LBR_OPEN:
+            (msgVal == 0)?fsm->raiseLBR_1_OPEN():fsm->raiseLBR_2_OPEN();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBR_OPEN..."+ std::to_string(msgVal), "FSMController");
+            break;
+        case PULSE_LBM_INTERRUPTED:
+            (msgVal == 0)?fsm->raiseLBM_1_INTERRUPTED():fsm->raiseLBM_2_INTERRUPTED();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBM_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
+            // FIXME hacked
+            if (msgVal == 0) {
+                fsm->raiseFST_1_PUK_SORTING_PASSTHROUGH();
+                fsm->raiseFST_1_POSITION_EGRESS_PUK_EXPECTED();
+            } else {
+                // fsm->raiseFST_2_PUK_SORTING_PASSTHROUGH();
+                // fsm->raiseFST_2_POSITION_EGRESS_PUK_EXPECTED();
+            }
+            break;
+        case PULSE_LBM_OPEN:
+            (msgVal == 0)?fsm->raiseLBM_1_OPEN():fsm->raiseLBM_2_OPEN();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBM_OPEN..."+ std::to_string(msgVal), "FSMController");
+            // fsm->raiseFST_1_POSITION_EGRESS_PUK_EXPECTED();
+            break;
+        case PULSE_BGS_SHORT:
+            (msgVal == 0)?fsm->raiseBGS_1_INTERRUPTED():fsm->raiseBGS_2_INTERRUPTED();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_BGS_SHORT..."+ std::to_string(msgVal), "FSMController");
+            break;
+        case PULSE_BGS_LONG:
+            (msgVal == 0)?fsm->raiseBGS_1_LONG_PRESSED():fsm->raiseBGS_2_LONG_PRESSED();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_BGS_LONG..."+ std::to_string(msgVal), "FSMController");
+            break;  
+        case PULSE_BRS_SHORT:
+            (msgVal == 0)?fsm->raiseBRS_1_INTERRUPTED():fsm->raiseBRS_2_INTERRUPTED();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_BRS_SHORT..."+ std::to_string(msgVal), "FSMController");
+            break;
+        case PULSE_BGR_SHORT:
+            (msgVal == 0)?fsm->raiseBGR_1_INTERRUPTED():fsm->raiseBGR_2_INTERRUPTED();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_BGR_SHORT..."+ std::to_string(msgVal), "FSMController");
+            break;
+        case PULSE_HS1_SAMPLE:
+            fsm->setFST_1_currentValue(msgVal);
+            fsm-> raiseHS_1_SAMPLE();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLE...", "FSMController");
+            break;
+        case PULSE_HS2_SAMPLE:
+            fsm->raiseHS_2_SAMPLE();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLE...", "FSMController");
+            break;
+        case PULSE_HS1_SAMPLING_DONE:
+            fsm-> raiseHS_1_SAMPLING_DONE();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLING_DONE...", "FSMController");
+            //FIXME hacked
+            fsm->raiseFST_1_POSITION_SORTING_PUK_EXPECTED();
+            break; 
+        case PULSE_HS2_SAMPLING_DONE:
+            fsm-> raiseHS_2_SAMPLING_DONE();
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_INTERRUPTED...", "FSMController");
+            break;
+        case PULSE_MS_TRUE:
+            // (msgVal == 0)?fsm->raiseMS_1_HIGH():fsm->raiseMS_2_HIGH();
+            if (msgVal == 0) {
+                fsm->raiseMS_1_HIGH();
+            }
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_MS_TRUE..."+ std::to_string(msgVal), "FSMController");
+            break;
+        // case PULSE_MS_FALSE:
+        //     fsm->raiseMS_1_FALSE();    
+        //     Logger::getInstance().log(LogLevel::TRACE, "received PULSE_MS_FALSE...", "FSMController");
+        //     break;   
+        default:
+            // TODO handle non application messages, for reference see ActuatorController 
+            Logger::getInstance().log(LogLevel::ERROR, "Unknown Pulse....." + std::to_string(msg.code), "FSMController");
+            break;
     }
 }
-
-
-bool FSMController::stop(){
-	int coid = connectToChannel(channelID);
-    if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
-        Logger::getInstance().log(LogLevel::ERROR, "shutting down Msg Receiver failed...", "FSMController");
-        return false;
-    }
-    Logger::getInstance().log(LogLevel::TRACE, "Shutting down PULSE send...", "FSMController");
-    if (0 > ConnectDetach(coid)){
-        Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "FSMController");
-        return false;
-    }
-    return true;
-}
-
-void FSMController::sendMsg() {}

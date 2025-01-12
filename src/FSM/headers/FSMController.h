@@ -27,6 +27,8 @@ class FSMController : public PulseMsgHandler {
     bool stop();
 
   private:
+    void subscribeToOutEvents();
+    void handlePulse(_pulse msg);
     FSM *fsm;
   
     int32_t channelID;
@@ -36,6 +38,31 @@ class FSMController : public PulseMsgHandler {
     bool subThreadsRunning;
     static int8_t numOfPulses;
     static int8_t pulses[FSM_CONTROLLER_NUM_OF_PULSES];
+
+    class VoidObserver : public sc::rx::Observer<void> {
+    public:
+        // Constructor that accepts a callback of type void() (a function with no parameters and no return value)
+        VoidObserver(
+            int coid,
+            int code,
+            int value,
+            const std::string& name
+        ): coid(coid), code(code), value(value), name(name) {}
+
+        // Override the next() method to invoke the callback
+        virtual void next() override {
+            Logger::getInstance().log(LogLevel::TRACE, "Sending pulse: " + name, "FSMController");
+            if (0 < MsgSendPulse(coid, -1, code, value)) {
+                Logger::getInstance().log(LogLevel::ERROR, "Failed to send pulse: " + name, "FSMController");
+            }
+        }
+
+    private:
+        int coid;
+        int code;
+        int value;
+        std::string name;
+    };
 };
 
 #endif /* LOGIK_FSM_FSMCONTROLLER_H_ */
