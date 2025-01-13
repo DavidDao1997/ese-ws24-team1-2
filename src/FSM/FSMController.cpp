@@ -38,8 +38,6 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     fsm = new FSM();
     subscribeToOutEvents();
 
-
-
     PositionTracker* positionTracker = new PositionTracker(fsm);
 
     fsm->enter();
@@ -361,8 +359,8 @@ void FSMController::handlePulse(_pulse msg) {
             Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBF_OPEN..."+ std::to_string(msgVal), "FSMController");
             // FIXME hacked
             if (msgVal == 0) {
-                fsm->raiseFST_1_POSITION_INGRESS_DISTANCE_VALID();
-                fsm->raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
+                // fsm->raiseFST_1_POSITION_INGRESS_DISTANCE_VALID();
+                // fsm->raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
             } else {
                 fsm->raiseFST_2_POSITION_INGRESS_DISTANCE_VALID();
                 fsm->raiseFST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();

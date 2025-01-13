@@ -778,7 +778,16 @@ TEST_F(SystemTestTwoFesto, motorStartOnFESTO1WhenLBFInterrupted) {
     mockInitializationEvents();
     decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 0);
     decoder1->sendPulse(PULSE_LBF_OPEN, 0);
-    WAIT(2000);
+    
 
+    WAIT(1500);
+    // decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+    // decoder1->sendPulse(PULSE_LBF_OPEN, 0);
+    WAIT(2000);
+    decoder1->sendPulse(PULSE_HS1_SAMPLE, 1000);
+    WAIT(1000);
+    decoder1->sendPulse(PULSE_HS1_SAMPLING_DONE, 0);
+
+    WAIT(10000);
     FAIL() << "WIP";
 }

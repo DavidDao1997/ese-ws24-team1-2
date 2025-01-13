@@ -73,7 +73,7 @@ void HeartBeat::sendMsg() {
 
     bool disconnect = false;
 
-    while (running && !disconnect) {
+    while (running) {
         Logger::getInstance().log(LogLevel::DEBUG,std::to_string(festoId) + "Sending Heartbeat...", "HeartBeat");
         if (0 > MsgSendPulse(otherFesto, -1, PULSE_HEARTBEAT, 0)) {
             Logger::getInstance().log(LogLevel::WARNING, "PulseCouldnotBeSent...", "HeartBeat");
@@ -89,9 +89,16 @@ void HeartBeat::sendMsg() {
                 Logger::getInstance().log(LogLevel::WARNING, "Heartbeat overdue. Disconnecting...", "HeartBeat");
                 handleDisconnect(); // Handle disconnection
                 disconnect = true;
+            }else if  (disconnect true){
+                if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_RECONNECT_HEARTBEAT_FESTO, festoId)) {
+                    Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo1...", "HeartBeat");
+                }   
+                disconnect = false;
             } else {
                 disconnect = false;
             }
+
+
         }
 
         WAIT(10);
@@ -148,15 +155,17 @@ void HeartBeat::handleDisconnect() {
     Logger::getInstance().log(LogLevel::CRITICAL, "Connection to other Festo LOST...", "HeartBeat");
     // when FESTO 1: send PULSE_E_STOP_HEARTBEAT_FESTO1 to Dispatcher ONCE and if E_STOP Button pressend, send this also als value == 1, else value == 0
     if (festoId == FESTO1){
-        if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_E_STOP_HEARTBEAT_FESTO1, eStopPressed)) {
+        if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_E_STOP_HEARTBEAT_FESTO, festoId)) {
             Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo1...", "HeartBeat");
         }        
     }
-    // when FESTO 2: send PULSE_E_STOP_HEARTBEAT_FESTO2 to Dispatcher until reachable and manually set Actuators, when E_STOP Button pressend, send this also als value == 1, else value == 0
+    // when FESTO 2: send PULSE_E_STOP_HEARTBEAT_FESTO2 to Dispatcher until reachable and manually set Actuators
     if (festoId == FESTO2){
-        if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_E_STOP_HEARTBEAT_FESTO2, eStopPressed)) {
+        if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_E_STOP_HEARTBEAT_FESTO, festoId)) {
             Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo2...", "HeartBeat");
         }
+
+        // TODO set Actuators
     }
 }
 

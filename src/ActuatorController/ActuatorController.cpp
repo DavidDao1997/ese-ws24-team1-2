@@ -85,7 +85,8 @@ ActuatorController::ActuatorController(uint8_t festo, const std::string name, I_
 ActuatorController::~ActuatorController() {
     // thread löschen
     Logger::getInstance().log(LogLevel::TRACE, "destroying own channel...", "ActuatorController");
-    destroyNamedChannel(channelID, actuatorControllerChannel); 
+    destroyNamedChannel(channelID, actuatorControllerChannel);
+    
 };
 
 
@@ -95,12 +96,29 @@ void ActuatorController::subscribeToDispatcher(){
     if (0 > (dispatcherChannelID = name_open(DISPATCHERNAME, NAME_FLAG_ATTACH_GLOBAL))){
         Logger::getInstance().log(LogLevel::ERROR, "Connection to Dispatcher failed...", "ActuatorController");
     }
+    // Subscribe to Dispatcher 
     if (0 > MsgSendPulse(dispatcherChannelID, -1, PULSE_SUBSCRIBE, festoID)) {
         Logger::getInstance().log(LogLevel::ERROR, "Subscribing to Dispatcher failed...", "ActuatorController");
     }
+    // Send Sorting Module Type
+    // get SM Type
+    uint8_t type = actuators->readSortingModule();
+    Logger::getInstance().log(LogLevel::DEBUG, "SM_TYPE is ..." + std::to_string(type), "ActuatorController");
+    // send Type
+    if (SM_TYPE_EJECTOR == type) {
+        if (0 > MsgSendPulse(dispatcherChannelID, -1, PULSE_SM_TYPE_EJECTOR, festoID)) {
+            Logger::getInstance().log(LogLevel::ERROR, "Sending PULSE_SM_TYPE_EJECTOR to Dispatcher failed...", "ActuatorController");
+        }
+    } else { 
+         if (0 > MsgSendPulse(dispatcherChannelID, -1, PULSE_SM_TYPE_DIVERTER, festoID)) {
+            Logger::getInstance().log(LogLevel::ERROR, "Sending PULSE_SM_TYPE_DIVERTER to Dispatcher failed...", "ActuatorController");
+        }
+    }
+
     if (0 > name_close(dispatcherChannelID)) {
         Logger::getInstance().log(LogLevel::ERROR, "Closing Channel to Dispatcher failed...", "ActuatorController");
     }
+    
 }
 
 
