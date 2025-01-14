@@ -6,90 +6,193 @@
  */
 
 #include "headers/PositionTracker.h"
+#include <map>
+#include <tuple>
 
 PositionTracker::PositionTracker(FSM* _fsm) {
     fsm = _fsm;
     listenThread = new std::thread(std::bind(&PositionTracker::listen, this));
-    motorState1.store(MOTOR_STOP);
-    motorState2.store(MOTOR_STOP);
+    motorState1.store(Timer::MotorState::MOTOR_STOP);
+    motorState2.store(Timer::MotorState::MOTOR_STOP);
 
     fsm->getFST_1_POSITION_INGRESS_NEW_PUK().subscribe(
         *new sc::rx::subscription<void>(
             *new PositionTrackerObserver([this](){
-                
-                
                 uint32_t pukId = nextPukId();
-                Puk * puk = new Puk(pukId);              
+                Puk* puk = new Puk(pukId);              
+                std::lock_guard<std::mutex> lock(heightSensor1Mutex);
                 heightSensor1.push(puk);
-                puk->startNewValidTimer(*new Timer(connectionId, Timer::PulseCode::PULSE_INGRESS_1_DISTANCE_VALID, puk->getPukId(), calcDuration(Timer::PulseCode::PULSE_INGRESS_1_DISTANCE_VALID)));
-                puk->startNewTimer(*new Timer(connectionId, Timer::PulseCode::PULSE_HS_1_PUK_EXPECTED, puk->getPukId(), calcDuration(Timer::PulseCode::PULSE_HS_1_PUK_EXPECTED)));
-                puk->startNewTimer(*new Timer(connectionId, Timer::PulseCode::PULSE_HS_1_PUK_EXPIRED, puk->getPukId(), calcDuration(Timer::PulseCode::PULSE_HS_1_PUK_EXPIRED)));
 
-                Logger::getInstance().log(LogLevel::DEBUG, "PositionTrackerObserver.next was called \n\tpukId: " + std::to_string(puk->getPukId()) + "\n\ttrigger: INGRESS_NEW_PUK", "PositionTrackerObserver");
+                Timer::MotorState motorState = motorState1.load();
+                puk->approachingHS(
+                    motorState,
+                    new Timer(
+                        getDuration(SEGMENT_INGRESS, DURATION_VALID, Timer::MotorState::MOTOR_FAST), 
+                        getDuration(SEGMENT_INGRESS, DURATION_VALID, Timer::MotorState::MOTOR_SLOW), 
+                        connectionId, 
+                        Timer::PulseCode::PULSE_INGRESS_1_DISTANCE_VALID, 
+                        puk->getPukId()
+                    ),
+                    new Timer(
+                        getDuration(SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
+                        getDuration(SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW), 
+                        connectionId, 
+                        Timer::PulseCode::PULSE_HS_1_PUK_EXPECTED, 
+                        puk->getPukId()
+                    ),
+                    new Timer(
+                        getDuration(SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
+                        getDuration(SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW), 
+                        connectionId, 
+                        Timer::PulseCode::PULSE_HS_1_PUK_EXPIRED, 
+                        puk->getPukId()
+                    )
+                );
+                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIngressNewPuk");
             })
         )
     );
-    // TODO fsm->getFST_1_PUK_HEIGHT_IS_VALID()
-    // TODO fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID()
+    fsm->getFST_1_PUK_HEIGHT_IS_VALID().subscribe(
+        *new sc::rx::subscription<void>(
+            *new PositionTrackerObserver([this](){
+                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIsValid");
+            })
+        )
+    );
+    fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID().subscribe(
+        *new sc::rx::subscription<void>(
+            *new PositionTrackerObserver([this](){
+                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIsInvalid");
+            })
+        )
+    );
+    // TODO Puk that disappear or are sorted out
     fsm->getFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK().subscribe(
         *new sc::rx::subscription<void>(
             *new PositionTrackerObserver([this](){
+                Timer::MotorState motorState = motorState1.load();
+                std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
+                std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
                 Puk* puk = heightSensor1.front();
                 heightSensor1.pop();
-                puk->deleteListTimers();
                 sorting1.push(puk);
-                puk->startNewTimer(*new Timer(connectionId, Timer::PulseCode::PULSE_SORTING_1_PUK_EXPECTED, puk->getPukId(), calcDuration(Timer::PulseCode::PULSE_SORTING_1_PUK_EXPECTED)));
-                puk->startNewTimer(*new Timer(connectionId, Timer::PulseCode::PULSE_SORTING_1_PUK_EXPIRED, puk->getPukId(), calcDuration(Timer::PulseCode::PULSE_SORTING_1_PUK_EXPIRED)));
-                Logger::getInstance().log(LogLevel::DEBUG, "PositionTrackerObserver.next was called \n\tpukId: " + std::to_string(puk->getPukId()) + "\n\ttrigger: HEIGHTMEASUREMENT_NEW_PUK", "PositionTrackerObserver");
+
+                puk->approachingSorting(
+                    motorState,
+                    new Timer(
+                        getDuration(SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
+                        getDuration(SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
+                        connectionId, 
+                        Timer::PulseCode::PULSE_SORTING_1_PUK_EXPECTED, 
+                        puk->getPukId()
+                    ),
+                    new Timer(
+                        getDuration(SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
+                        getDuration(SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
+                        connectionId, 
+                        Timer::PulseCode::PULSE_SORTING_1_PUK_EXPIRED, 
+                        puk->getPukId()
+                    )
+                );
+                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onHSNewPuk");
             })
         )
     );
+    fsm->getFST_1_PUK_IS_METAL().subscribe(
+        *new sc::rx::subscription<void>(
+            *new PositionTrackerObserver([this](){
+                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIsMetal");
+            })
+        )
+    );
+    fsm->getFST_1_PUK_IS_NOT_METAL().subscribe(
+        *new sc::rx::subscription<void>(
+            *new PositionTrackerObserver([this](){
+                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIsNotMetal");
+            })
+        )
+    );
+    fsm->getFST_1_POSITION_SORTING_NEW_PUK().subscribe(
+        *new sc::rx::subscription<void>(
+            *new PositionTrackerObserver([this](){
+                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onSortingNewPuk");
+            })
+        )
+    );
+    
 
     
     
     fsm->getMOTOR_1_FAST().subscribe(
         *new sc::rx::subscription<void>(
             *new PositionTrackerObserver([this](){
-                motorState1.store(MOTOR_FAST);
-                // std::queue<Puk*> tempQueue = heightSensor1;
-                // // Iterate over the temporary queue
-                // while (!tempQueue.empty()) {
-                //     Puk* puk = tempQueue.front();
-                //     std::cout << "Processing Puk with ID: " << puk->id << std::endl;
-                //     tempQueue.pop();  // Remove the element from the temporary queue
-                // }
-                // sorting1
-                // egress1
-
-
-                // for each (timer in timers1) { updateTimersToFast } 
-                Logger::getInstance().log(LogLevel::DEBUG, "MOTOR FAST", "PositionTrackerObserver");
+                motorState1.store(Timer::MotorState::MOTOR_FAST);
+                Logger::getInstance().log(LogLevel::TRACE,  "Updating queue egress1", "PositionTracker.onMotorFast");
+                {
+                    std::lock_guard<std::mutex> lock(egress1Mutex);
+                    egress1 = updatePukQueue(egress1, Timer::MotorState::MOTOR_FAST);
+                }
+                Logger::getInstance().log(LogLevel::TRACE,  "Updating queue sorting1", "PositionTracker.onMotorFast");
+                {
+                    std::lock_guard<std::mutex> lock(sorting1Mutex);
+                    sorting1 = updatePukQueue(sorting1, Timer::MotorState::MOTOR_FAST);
+                }
+                Logger::getInstance().log(LogLevel::TRACE,  "Updating queue heightSensor1", "PositionTracker.onMotorFast");
+                {
+                    std::lock_guard<std::mutex> lock(heightSensor1Mutex);
+                    heightSensor1 = updatePukQueue(heightSensor1, Timer::MotorState::MOTOR_FAST);
+                }
+                Logger::getInstance().log(LogLevel::DEBUG, "MotorFast", "PositionTracker.onMotorFast");
             })
         )
     );
     fsm->getMOTOR_1_SLOW().subscribe(
         *new sc::rx::subscription<void>(
             *new PositionTrackerObserver([this](){
-                motorState1.store(MOTOR_SLOW);
-                Logger::getInstance().log(LogLevel::DEBUG,  "Updating queue egress1", "PositionTracker.onMotorSlow");
-                egress1 = updatePukQueue(egress1, MOTOR_SLOW);
-                Logger::getInstance().log(LogLevel::DEBUG,  "Updating queue sorting1", "PositionTracker.onMotorSlow");
-                sorting1 = updatePukQueue(sorting1, MOTOR_SLOW);
-                Logger::getInstance().log(LogLevel::DEBUG,  "Updating queue heightSensor1", "PositionTracker.onMotorSlow");
-                heightSensor1 = updatePukQueue(heightSensor1, MOTOR_SLOW);
+                motorState1.store(Timer::MotorState::MOTOR_SLOW);
+                Logger::getInstance().log(LogLevel::TRACE,  "Updating queue egress1", "PositionTracker.onMotorSlow");
+                {
+                    std::lock_guard<std::mutex> lock(egress1Mutex);
+                    egress1 = updatePukQueue(egress1, Timer::MotorState::MOTOR_SLOW);
+                }
+                Logger::getInstance().log(LogLevel::TRACE,  "Updating queue sorting1", "PositionTracker.onMotorSlow");
+                {
+                    std::lock_guard<std::mutex> lock(sorting1Mutex);
+                    sorting1 = updatePukQueue(sorting1, Timer::MotorState::MOTOR_SLOW);
+                }
+                Logger::getInstance().log(LogLevel::TRACE,  "Updating queue heightSensor1", "PositionTracker.onMotorSlow");
+                {
+                    std::lock_guard<std::mutex> lock(heightSensor1Mutex);
+                    heightSensor1 = updatePukQueue(heightSensor1, Timer::MotorState::MOTOR_SLOW);
+                }
                 // sorting1
                 // egress1
                 // for each (timer in timers1) { updateTimersToFast } 
-                Logger::getInstance().log(LogLevel::DEBUG, "MOTOR SLOW", "PositionTrackerObserver");
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Slow", "PositionTracker.onMotorSlow");
             })
         )
     );
     fsm->getMOTOR_1_STOP().subscribe(
         *new sc::rx::subscription<void>(
             *new PositionTrackerObserver([this](){
-                // motorState1.store(MOTOR_STOP);
+                motorState1.store(Timer::MotorState::MOTOR_STOP);
+                Logger::getInstance().log(LogLevel::TRACE,  "Updating queue egress1", "PositionTracker.onMotorStop");
+                {
+                    std::lock_guard<std::mutex> lock(egress1Mutex);
+                    egress1 = updatePukQueue(egress1, Timer::MotorState::MOTOR_STOP);
+                }
+                Logger::getInstance().log(LogLevel::TRACE,  "Updating queue sorting1", "PositionTracker.onMotorStop");
+                {
+                    std::lock_guard<std::mutex> lock(sorting1Mutex);
+                    sorting1 = updatePukQueue(sorting1, Timer::MotorState::MOTOR_STOP);
+                }
+                Logger::getInstance().log(LogLevel::TRACE,  "Updating queue heightSensor1", "PositionTracker.onMotorStop");
+                {
+                    std::lock_guard<std::mutex> lock(heightSensor1Mutex);
+                    heightSensor1 = updatePukQueue(heightSensor1, Timer::MotorState::MOTOR_STOP);
+                }
                 // for each (timer in timers1) { updateTimersToFast } 
-                // Logger::getInstance().log(LogLevel::DEBUG, "PositionTrackerObserver.next was called \n\tpukId: " + std::to_string(pukId), "PositionTrackerObserver");
+                Logger::getInstance().log(LogLevel::DEBUG, "Motor Stop", "PositionTracker.onMotorStop");
             })
         )
     );
@@ -120,25 +223,12 @@ PositionTracker::PositionTracker(FSM* _fsm) {
 
 }
 
-std::queue<Puk*> PositionTracker::updatePukQueue(std::queue<Puk*> tempQueue, MotorState ms){
+std::queue<Puk*> PositionTracker::updatePukQueue(std::queue<Puk*> tempQueue, Timer::MotorState ms){
     std::queue<Puk*> updatedQueue;// = new std::queue<Puk*>();
     while (!tempQueue.empty()) {
         Puk* puk = tempQueue.front();
-        switch (ms) {
-            case MOTOR_FAST:
-                puk->updateTimersFast();
-                break;
-            case MOTOR_SLOW:
-                Logger::getInstance().log(LogLevel::DEBUG,  "Motorslow", "PositionTracker.updatePukQueue");
-                puk->updateTimersSlow();
-                break;
-            case MOTOR_STOP:
-                puk->updateTimersStop();
-                break;
-            default:
-                Logger::getInstance().log(LogLevel::ERROR,  "OhOh", "PositionTracker.updatePukQueue");
-        }
         Logger::getInstance().log(LogLevel::DEBUG,  "Processing Puk with ID: " + std::to_string(puk->getPukId()), "PositionTracker.updatePukQueue");
+        puk->setTimers(ms);
         tempQueue.pop();  // Remove the element from the temporary queue
         updatedQueue.push(puk);
     }
@@ -158,55 +248,75 @@ void PositionTracker::listen() {
     while (1) {
         // Logger::getInstance().log(LogLevel::DEBUG, "Listening loop", "PositionTracker.listen");
         MsgReceive(channelId, &msg, sizeof(msg), NULL);
+        std::string pulseName = "";
         switch (msg.code) {
             case Timer::PulseCode::PULSE_INGRESS_1_DISTANCE_VALID:
+                pulseName = "PULSE_INGRESS_1_DISTANCE_VALID";
                 fsm->raiseFST_1_POSITION_INGRESS_DISTANCE_VALID();
-                Logger::getInstance().log(LogLevel::DEBUG, "Message recieved\n\tcode: PULSE_INGRESS_DISTANCE_VALID\n\tvalue: " + std::to_string(msg.value.sival_int), "PositionTracker.listen");
                 break;
             case Timer::PulseCode::PULSE_HS_1_PUK_EXPECTED:
-                Logger::getInstance().log(LogLevel::DEBUG, "Message recieved\n\tcode: PULSE_HS_PUK_EXPECTED\n\tvalue: " + std::to_string(msg.value.sival_int), "PositionTracker.listen");
+                pulseName = "PULSE_HS_1_PUK_EXPECTED";
                 fsm->raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
                 break;
             case Timer::PulseCode::PULSE_HS_1_PUK_EXPIRED:
-                Logger::getInstance().log(LogLevel::DEBUG, "Message recieved\n\tcode: PULSE_HS_PUK_EXPIRED\n\tvalue: " + std::to_string(msg.value.sival_int), "PositionTracker.listen");
+                pulseName = "PULSE_HS_1_PUK_EXPIRED";
                 fsm->raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED();
                 break;
+            case Timer::PulseCode::PULSE_SORTING_1_PUK_EXPECTED:
+                pulseName = "PULSE_SORTING_1_PUK_EXPECTED";
+                fsm->raiseFST_1_POSITION_SORTING_PUK_EXPECTED();
+                break;
+            case Timer::PulseCode::PULSE_SORTING_1_PUK_EXPIRED:
+                pulseName = "PULSE_SORTING_1_PUK_EXPIRED";
+                fsm->raiseFST_1_POSITION_SORTING_PUK_EXPIRED();
+                break;
+            // TODO EGRESS1, Festo2.....
             default:
-                Logger::getInstance().log(LogLevel::DEBUG, "Message recieved\n\tcode: " + std::to_string(msg.code) + "\n\tvalue: " + std::to_string(msg.value.sival_int), "PositionTracker.listen");
+                pulseName = std::to_string(msg.code);
+                break;
         }
+        Logger::getInstance().log(LogLevel::DEBUG, "Message recieved\n\tcode: " + pulseName + "\n\tvalue: " + std::to_string(msg.value.sival_int), "PositionTracker.listen");
         // WAIT(1000);
     }
 }
 
-std::chrono::milliseconds PositionTracker::calcDuration(Timer::PulseCode code) {
-    MotorState ms1 = motorState1.load();
-    MotorState ms2 = motorState2.load();
+std::chrono::milliseconds PositionTracker::getDuration(SegmentType segmentType, DurationType durationType, Timer::MotorState motorState) {
     std::chrono::milliseconds duration = std::chrono::milliseconds(0);
-    switch (code) {
-        case Timer::PulseCode::PULSE_INGRESS_1_DISTANCE_VALID:
-            if (ms1 == MOTOR_STOP) return duration;
-            duration = ms1 == MOTOR_FAST ? DURATION_INGRESS_DISTANCE_VALID_FAST : DURATION_INGRESS_DISTANCE_VALID_SLOW;
-            break;
-        case Timer::PulseCode::PULSE_HS_1_PUK_EXPECTED:
-            if (ms1 == MOTOR_STOP) return duration;
-            duration = ms1 == MOTOR_FAST ? DURATION_HS_PUK_EXPECTED_FAST : DURATION_HS_PUK_EXPECTED_SLOW;
-            break;
-        case Timer::PulseCode::PULSE_HS_1_PUK_EXPIRED:
-            if (ms1 == MOTOR_STOP) return duration;
-            duration = ms1 == MOTOR_FAST ? DURATION_HS_PUK_EXPIRED_FAST : DURATION_HS_PUK_EXPIRED_SLOW;
-            break;
-        case Timer::PulseCode::PULSE_SORTING_1_PUK_EXPECTED:
-            if (ms1 == MOTOR_STOP) return duration;
-            duration = ms1 == MOTOR_FAST ? DURATION_SORTING_PUK_EXPECTED_FAST : DURATION_SORTING_PUK_EXPECTED_SLOW;
-            break;
-        case Timer::PulseCode::PULSE_SORTING_1_PUK_EXPIRED:
-            if (ms1 == MOTOR_STOP) return duration;
-            duration = ms1 == MOTOR_FAST ? DURATION_SORTING_PUK_EXPIRED_FAST : DURATION_SORTING_PUK_EXPIRED_SLOW;
-            break;
-        default:
-            Logger::getInstance().log(LogLevel::ERROR, "Unknown PulseCode...", "PositionTracker.calcDuration");
+    if (motorState == Timer::MotorState::MOTOR_STOP) return duration;
+    static const std::map<std::tuple<SegmentType, DurationType, Timer::MotorState>, std::chrono::milliseconds> combination_map = {
+        { {SEGMENT_INGRESS, DURATION_VALID, Timer::MotorState::MOTOR_FAST}, DURATION_INGRESS_DISTANCE_VALID_FAST },
+        { {SEGMENT_INGRESS, DURATION_VALID, Timer::MotorState::MOTOR_SLOW}, DURATION_INGRESS_DISTANCE_VALID_SLOW },
+        { {SEGMENT_INGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST}, DURATION_INGRESS_EXPECTED_FAST },
+        { {SEGMENT_INGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW}, DURATION_INGRESS_EXPECTED_SLOW },
+        { {SEGMENT_INGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST}, DURATION_INGRESS_EXPIRED_FAST },
+        { {SEGMENT_INGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW}, DURATION_INGRESS_EXPIRED_SLOW },
+
+        { {SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST}, DURATION_HS_EXPECTED_FAST },
+        { {SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW}, DURATION_HS_EXPECTED_SLOW },
+        { {SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST}, DURATION_HS_EXPIRED_FAST },
+        { {SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW}, DURATION_HS_EXPIRED_SLOW },
+
+        { {SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_FAST}, DURATION_SORTING_DISTANCE_VALID_FAST },
+        { {SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_SLOW}, DURATION_SORTING_DISTANCE_VALID_SLOW },
+        { {SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST}, DURATION_SORTING_EXPECTED_FAST },
+        { {SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW}, DURATION_SORTING_EXPECTED_SLOW },
+        { {SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST}, DURATION_SORTING_EXPIRED_FAST },
+        { {SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW}, DURATION_SORTING_EXPIRED_SLOW },
+
+        { {SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST}, DURATION_EGRESS_EXPECTED_FAST },
+        { {SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW}, DURATION_EGRESS_EXPECTED_SLOW },
+        { {SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST}, DURATION_EGRESS_EXPIRED_FAST },
+        { {SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW}, DURATION_EGRESS_EXPIRED_SLOW },
+    };
+
+    // Look up the combination and print the result
+    auto it = combination_map.find(std::make_tuple(segmentType, durationType, motorState));
+    if (it != combination_map.end()) {
+        duration = it->second;
+    } else {
+        Logger::getInstance().log(LogLevel::DEBUG, "Uups", "PositionTracker.getDuration");
     }
-    Logger::getInstance().log(LogLevel::DEBUG, "Duration:" + std::to_string(duration.count()), "PositionTracker.calcDuration");
+    // Logger::getInstance().log(LogLevel::DEBUG, "Duration:" + std::to_string(duration.count()), "PositionTracker.getDuration");
     return duration;
 }
 

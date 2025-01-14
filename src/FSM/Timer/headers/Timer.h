@@ -18,54 +18,64 @@ class Timer {
 public:
 
     enum PulseCode {
-        // std::queue<Puk*> heightSensor1;  // LBF_1_OPEN -> HS1_SAMPLE
-        PULSE_INGRESS_1_DISTANCE_VALID = _PULSE_CODE_MINAVAIL + 1,
+        // LBF_1_OPEN -> HS1_SAMPLE
+        PULSE_INGRESS_1_DISTANCE_VALID,
         PULSE_HS_1_PUK_EXPECTED,
         PULSE_HS_1_PUK_EXPIRED,
-        // std::queue<Puk*> sorting1;       // HS1_SAMPLING_DONE -> LBM_1_INTERRUPTED
+        // HS1_SAMPLING_DONE -> LBM_1_INTERRUPTED
         PULSE_SORTING_1_PUK_EXPECTED,
         PULSE_SORTING_1_PUK_EXPIRED,
-        // std::queue<Puk*> egress1;        // LBM_1_OPEN -> LBE_1_INTERRUPTED
+        // LBM_1_OPEN -> LBE_1_INTERRUPTED
         PULSE_SORTING_1_DISTANCE_VALID,
         PULSE_EGRESS_1_PUK_EXPECTED,
         PULSE_EGRESS_1_PUK_EXPIRED,
-        // std::queue<Puk*> ingress2;      // LBE_1_OPEN -> LBF_2_INTERRUPTED
+        // LBE_1_OPEN -> LBF_2_INTERRUPTED
         PULSE_INGRESS_2_PUK_EXPECTED,
         PULSE_INGRESS_2_PUK_EXPIRED,
-        // std::queue<Puk*> heightSensor2;  // LBF_2_OPEN -> HS2_SAMPLE
+        // LBF_2_OPEN -> HS2_SAMPLE
         PULSE_HS_2_PUK_EXPECTED,
         PULSE_HS_2_PUK_EXPIRED,
-        // std::queue<Puk*> sorting2;       // HS2_SAMPLING_DONE -> LBM_2_INTERRUPTED
+        // HS2_SAMPLING_DONE -> LBM_2_INTERRUPTED
         PULSE_SORTING_2_PUK_EXPECTED,
         PULSE_SORTING_2_PUK_EXPIRED,
-        // std::queue<Puk*> egress2;        // LBM_2_OPEN -> LBE_2_INTERRUPTED
+        // LBM_2_OPEN -> LBE_2_INTERRUPTED
+        PULSE_SORTING_2_DISTANCE_VALID,
         PULSE_EGRESS_2_PUK_EXPECTED,
         PULSE_EGRESS_2_PUK_EXPIRED
     };
 
+    enum MotorState {
+        MOTOR_FAST,
+        MOTOR_SLOW,
+        MOTOR_STOP
+    };
+
     Timer();
     Timer(
+        std::chrono::milliseconds fastDuration,
+        std::chrono::milliseconds slowDuration,
         uint32_t connectionId,
         PulseCode pulseCode, 
-        uint32_t pulseValue,
-        std::chrono::milliseconds duration
+        uint32_t pulseValue
     );
     ~Timer();
 
-    // timer_t getTimerId();
-    // struct itimerspec getTimerSpec();
-    uint32_t getProgress();
-    void setNewDuration(std::chrono::milliseconds duration);
-
-    void start();
-    void stop();
-    void resume();
-    void remove();
+    void setMotorState(MotorState motorState);
+    void kill();
 private:
-    timer_t timerId;
-    struct itimerspec timerSpec;
+    // pulse properties
+    uint32_t connectionId;
+    PulseCode pulseCode;
+    uint32_t pulseValue;
 
-    std::chrono::milliseconds fullDuration;
+    // timer properties
+    timer_t timerId;
+    // struct itimerspec timerSpec;
+    MotorState motorState;
+    std::chrono::milliseconds fastDuration;
+    std::chrono::milliseconds slowDuration;
+    // std::chrono::milliseconds currentDuration;
+    uint8_t fractionRemaining; // isnt kept up to date but instead updatend when the timer is paused;
 };
 
 

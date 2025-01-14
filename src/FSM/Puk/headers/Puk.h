@@ -20,23 +20,25 @@ public:
 
     uint32_t getPukId();
 
-    void startNewTimer(Timer timer); // put Timer to List
-    void startNewValidTimer(Timer timer); // do not put this Timer to List
-    void updateTimersFast();
-    void updateTimersSlow();
-    void updateTimersStop(); // ?
-    void deleteListTimers(); // not valid timer
+    void approachingIngress(Timer::MotorState motorState, Timer* expected, Timer* expired); 
+    void approachingHS(Timer::MotorState motorState, Timer* distanceValid, Timer* expected, Timer* expired);
+    void approachingSorting(Timer::MotorState motorState, Timer* expected, Timer* expired);
+    void approachingEgress(Timer::MotorState motorState, Timer* distanceValid, Timer* expected, Timer* expired);
+    void setTimers(Timer::MotorState motorState);
+    void clearSegementTimers();
+    void clearTimers();
 private:
     uint32_t id;
-    Timer valid; //    Valid = nullptr
-    std::list<Timer> timerlist;
+    Timer* ingressDistanceValid = nullptr;
+    Timer* sortingDistanceValid = nullptr; 
+    Timer* nextExpected = nullptr;
+    Timer* nextExpired = nullptr;
     
     bool heightIsValid;
     bool isMetal;
     // bool isValid; // it feals like we should calculate this just in time instead of writing a property that we need to update.
     // func updateTimers(motorState)
 };
-
 
 
 #endif /* FSM_PUK_HEADERS_PUK_H_ */

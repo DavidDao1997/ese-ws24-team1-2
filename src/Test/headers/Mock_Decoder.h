@@ -19,7 +19,7 @@ public:
     void sendMsg() override;
     int32_t getChannel() override;
 
-    void sendPulse(PulseCode code,uint8_t festoNr);
+    void sendPulse(PulseCode code,uint32_t value);
 
     bool stop();
 

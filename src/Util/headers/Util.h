@@ -14,4 +14,7 @@
 
 #define DISPATCHERNAME "dispatcher"
 
+// fires milliseconds after start, i.e. calling it twice in a row witht ehsame values will fire at the same time
+void fireAt(std::chrono::steady_clock::time_point start, int milliseconds);
+
 #endif

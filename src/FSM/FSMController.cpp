@@ -22,7 +22,6 @@ int8_t FSMController::pulses[FSM_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_BGR_SHORT,
     PULSE_HS1_SAMPLE,
     PULSE_HS2_SAMPLE,
-    PULSE_FSM,
     PULSE_HS1_SAMPLING_DONE,
     PULSE_HS2_SAMPLING_DONE,
     PULSE_MS_TRUE,
@@ -193,17 +192,17 @@ void FSMController::subscribeToOutEvents() {
         )
     );
     // PUK Height is Valid
-    fsm->getFST_1_PUK_HEIGHT_IS_VALID().subscribe(
-            *new sc::rx::subscription<void>(
-                *new VoidObserver(dispatcherConnectionID, PULSE_FSM, FST_1_PUK_HEIGHT_VALID, "PULSE_FST_1_PUK_HEIGHT_VALID")
-            )
-        );
-    // PUK Height is NOT Valid
-    fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID().subscribe(
-    		*new sc::rx::subscription<void>(
-    			*new VoidObserver(dispatcherConnectionID, PULSE_FSM, FST_1_PUK_HEIGHT_NOT_VALID, "PULSE_FST_1_PUK_HEIGHT_NOT_VALID")
-		   )
-	   );
+    // fsm->getFST_1_PUK_HEIGHT_IS_VALID().subscribe(
+    //         *new sc::rx::subscription<void>(
+    //             *new VoidObserver(dispatcherConnectionID, PULSE_FSM, FST_1_PUK_HEIGHT_VALID, "PULSE_FST_1_PUK_HEIGHT_VALID")
+    //         )
+    //     );
+    // // PUK Height is NOT Valid
+    // fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID().subscribe(
+    // 		*new sc::rx::subscription<void>(
+    // 			*new VoidObserver(dispatcherConnectionID, PULSE_FSM, FST_1_PUK_HEIGHT_NOT_VALID, "PULSE_FST_1_PUK_HEIGHT_NOT_VALID")
+	// 	   )
+	//    );
     // PULSE_LR2_ON
     fsm->getLR2_ON().subscribe(
         *new sc::rx::subscription<void>(

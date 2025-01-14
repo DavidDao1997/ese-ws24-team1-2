@@ -3,63 +3,106 @@
 
 Timer::Timer() {}
 Timer::Timer(
-    uint32_t connectionId,
-    PulseCode pulseCode, 
-    uint32_t pulseValue,
-    std::chrono::milliseconds duration
+    std::chrono::milliseconds _fastDuration,
+    std::chrono::milliseconds _slowDuration,
+    uint32_t _connectionId,
+    PulseCode _pulseCode,
+    uint32_t _pulseValue
 ) {
-    struct sigevent event;
-    SIGEV_PULSE_INIT(&event, connectionId, SIGEV_PULSE_PRIO_INHERIT, pulseCode, pulseValue);
-    timer_create (CLOCK_REALTIME, &event, &timerId); // Fehlerbehandlung fehlt
-    
-    // Definiere Pulse Event
-   
-    // Erzeuge den Timer
-    // Setup und Start eines periodischen Timers
-    timerSpec.it_value.tv_sec = std::chrono::duration_cast<std::chrono::seconds>(duration).count();
-    timerSpec.it_value.tv_nsec = std::chrono::duration_cast<std::chrono::nanoseconds>(duration % 1000).count();
-    timerSpec.it_interval.tv_sec = 0;
-    timerSpec.it_interval.tv_nsec = 0;
+    fastDuration = _fastDuration;
+    slowDuration = _slowDuration;
+    connectionId = _connectionId;
+    pulseCode = _pulseCode;
+    pulseValue = _pulseValue;
+    motorState = MOTOR_STOP;
+    fractionRemaining = UINT8_MAX;
 
-    fullDuration = duration;
-    // timer_settime (timerProps.timerid, 0, &timerProps.timer, NULL);
-    // timer_delete(timerProps.timerid);
-    // timer_settime (timerProps.timerid, 0, &timerProps.timer, NULL);
+    Logger::getInstance().log(LogLevel::DEBUG, "New Timer", "Timer");
 }
 
 Timer::~Timer() {}
 
-uint32_t Timer::getProgress() {
-    struct itimerspec timerStatus;
-	if(timer_gettime(timerId,&timerStatus) != 0){
-		perror("[Client] Getting timer failed");
-	}
-    std::chrono::milliseconds s = std::chrono::milliseconds(timerStatus.it_value.tv_sec *1000);
-    std::chrono::milliseconds ms = std::chrono::milliseconds(timerStatus.it_value.tv_nsec / MILLION);
-    std::chrono::milliseconds timeLeft = s + ms;
+void Timer::setMotorState(MotorState nextMotorState) {
+    // if (fractionRemaining == 0) return;
+    if (motorState == nextMotorState) {
+        Logger::getInstance().log(LogLevel::DEBUG, "Motor state unchanged, Progress: " + std::to_string(static_cast<uint8_t>(((UINT8_MAX - fractionRemaining) * 100) / 255)) + "%", "Timer");
+        return;
+    };
 
+    // starting
+    if (motorState == MOTOR_STOP) {
+        struct sigevent event;
+        // setup pulse
+        SIGEV_PULSE_INIT(&event, connectionId, SIGEV_PULSE_PRIO_INHERIT, pulseCode, pulseValue);
+        timer_create (CLOCK_REALTIME, &event, &timerId); // Fehlerbehandlung fehlt
+        
+        // setup timer
+        std::chrono::milliseconds fullDuration = nextMotorState == MOTOR_FAST ? fastDuration : slowDuration;
+        uint32_t timeRemaining = fullDuration.count() * fractionRemaining/UINT8_MAX; // in milliseconds
+        struct itimerspec timerSpec = {};
+        timerSpec.it_value.tv_sec = timeRemaining / 1000;
+        timerSpec.it_value.tv_nsec = (timeRemaining % 1000) * MILLION;
+        timerSpec.it_interval.tv_sec = 0;
+        timerSpec.it_interval.tv_nsec = 0;
 
-    if (fullDuration.count() == 0) {
-        // Handle division by zero if fullDuration is zero
-        Logger::getInstance().log(LogLevel::DEBUG, "IS ZERO FullTime:" + std::to_string(fullDuration.count()) + "ms", "Timer");
-        return 0;
+        timer_settime (timerId, 0, &timerSpec, NULL);
+        // TODO catch error
+        motorState = nextMotorState;
+        Logger::getInstance().log(
+            LogLevel::DEBUG, 
+            "Timer started\n\tSpeed: " +
+            std::string(nextMotorState == MOTOR_FAST ? "fast" : "slow") + "\n\tProgress: " +
+            std::to_string(static_cast<uint8_t>(((UINT8_MAX - fractionRemaining) * 100) / 255)) + "%\n\tTime: " +
+            std::to_string(timeRemaining) + "ms\n\tPulse: " +
+            std::to_string(pulseCode),  
+            "Timer" 
+        );
+        return;
     }
 
-    // Calculate the elapsed time
-    auto elapsedTime = fullDuration - timeLeft;  // Time that has passed
-    uint32_t progress = static_cast<uint8_t>((elapsedTime.count() * UINT8_MAX) / fullDuration.count());
-    Logger::getInstance().log(LogLevel::DEBUG, "FullTime:" + std::to_string(fullDuration.count()) + "ms", "Timer");
-    Logger::getInstance().log(LogLevel::DEBUG, "TimeLeft:" + std::to_string(timeLeft.count()) + "ms", "Timer");
-    Logger::getInstance().log(LogLevel::DEBUG, "TimeElapsed:" + std::to_string(elapsedTime.count()) + "ms", "Timer");
-    Logger::getInstance().log(LogLevel::DEBUG, "Progress:" + std::to_string(progress) + "/" + std::to_string(UINT8_MAX), "Timer");
+    struct itimerspec timerSpec = {};
+    if(timer_gettime(timerId,&timerSpec) != 0){
+        // TODO
+    }
+    uint32_t timeRemaining = timerSpec.it_value.tv_sec * 1000 + timerSpec.it_value.tv_nsec / MILLION; // in milliseconds
+    uint32_t timeTotal = motorState == MOTOR_FAST ? fastDuration.count()  : slowDuration.count(); // in milliseconds
+    fractionRemaining = static_cast<uint8_t>(timeRemaining * UINT8_MAX / timeTotal);
+    // if (fractionRemaining == 0) return;
 
-    return progress;   
+    // stopping
+    if (nextMotorState == MOTOR_STOP) {
+        timer_delete(timerId);
+        // TODO catch error
+        timerId  = 0;
+        motorState = nextMotorState;
+        Logger::getInstance().log(
+            LogLevel::DEBUG, 
+            "Timer stopped\n\tProgress: " + 
+            std::to_string(static_cast<uint8_t>(((UINT8_MAX - fractionRemaining) * 100) / 255)) + "%\n\tTime: " +
+            std::to_string(timeRemaining) + "ms\n\tPulse: " +
+            std::to_string(pulseCode), 
+            "Timer" 
+        );
+        return;
+    }
+
+    // changing
+    uint32_t nextTimeTotal = nextMotorState == MOTOR_FAST ? fastDuration.count()  : slowDuration.count(); // in milliseconds
+    uint32_t nextTimeRemaining = fractionRemaining * nextTimeTotal / UINT8_MAX;
+    struct itimerspec nextTimerSpec = {};
+    timerSpec.it_value.tv_sec = nextTimeRemaining / 1000;
+    timerSpec.it_value.tv_nsec = (nextTimeRemaining % 1000) * MILLION;
+    timer_settime (timerId, 0, &nextTimerSpec, NULL);
+    motorState = nextMotorState;
+    Logger::getInstance().log(
+        LogLevel::DEBUG, 
+        "Timer speed updated\n\tspeed: " +
+        std::string(nextMotorState == MOTOR_FAST ? "fast" : "slow") + "\n\tProgress: " + 
+        std::to_string(static_cast<uint8_t>(((UINT8_MAX - fractionRemaining) * 100) / 255)) + "%\n\tTime: " +
+        std::to_string(timeRemaining) + "ms\n\tPulse: " +
+        std::to_string(pulseCode), 
+        "Timer" 
+    );
 }
 
-
-void Timer::setNewDuration(std::chrono::milliseconds duration) {}
-
-void Timer::start() { timer_settime (timerId, 0, &timerSpec, NULL); }
-void Timer::stop() {}
-void Timer::resume() {}
-void Timer::remove(){ timer_delete(timerId); }
+void Timer::kill(){ timer_delete(timerId); }
