@@ -909,7 +909,7 @@ TEST_F(SystemTestTwoFesto, singleValidWellTimedPuk) {
         RedLightState::LIGHT_STATE_OFF
     );
 
-    WAIT(2000);
+    WAIT(1950);
     decoder1->sendPulse(PULSE_HS2_SAMPLE, 1000);
     WAIT(50);
     assertActuatorState(

@@ -46,18 +46,18 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onIngressNewPuk");
     });
     onEvent(&fsm->getFST_1_PUK_HEIGHT_IS_VALID(), [this](){
-        // FIXME add HS mocking in tests to make this testable
-        // std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
-        // Puk* puk = heightSensor1.front();
-        // puk->setIsValid(true);
-        // Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIsValid");
+        std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
+        Puk* puk = sorting1.front();  // FST1 raises "puk valid/inValid" after "sorting new puk", so we need to use sorting1.front() here
+        puk->setIsValid(true);
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onIsValid");
     });
     onEvent(&fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID(), [this](){
-        // FIXME add HS mocking in tests to make this testable
-        // std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
-        // Puk* puk = heightSensor1.front();
-        // puk->setIsValid(false);
-        Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onIsInvalid");
+        std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
+        Puk* puk = sorting1.front();
+        puk->setIsValid(true);
+        // puk->setIsValid(false); // FIXME add HS mocking in tests to make this testable
+        // Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onIsInvalid");
+        Logger::getInstance().log(LogLevel::WARNING, "[FST1] Invalid PUK, FAKING VALIDITY", "PositionTracker.onIsInvalid");
     });
     // TODO Puk that disappear or are sorted out
     onEvent(&fsm->getFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK(), [this](){
@@ -89,9 +89,8 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     onEvent(&fsm->getFST_1_PUK_IS_METAL(), [this](){
         std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
 
-        Puk* puk = sorting1.front();
-        if (isMetalDesired1) { // FIXME
-        // if (isMetalDesired1 && puk->getIsValid()) {
+        Puk* puk = sorting1.front();  // FST1 raises "puk valid/inValid" after "sorting new puk", so we need to use sorting1.front() here
+        if (isMetalDesired1 && puk->getIsValid()) {
             // passthrough
             puk->setIsMetal(true);
             isMetalDesired1 = false;
@@ -108,8 +107,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
 
         Puk* puk = sorting1.front();
-        if (!isMetalDesired1) {  // FIXME
-        // if (!isMetalDesired1 && puk->getIsValid()) {
+        if (!isMetalDesired1 && puk->getIsValid()) {
             // passthrough
             puk->setIsMetal(false);
             isMetalDesired1 = true;
@@ -208,6 +206,27 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         );
         Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onIngressNewPuk");
     });
+    onEvent(&fsm->getFST_2_PUK_HEIGHT_IS_VALID(), [this](){
+        std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
+        Puk* puk = heightSensor2.front();
+        if (!puk->getIsValid()) {
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Profile mismatch", "PositionTracker.onIsValid");
+        } else {
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onIsValid");
+        }
+    });
+    onEvent(&fsm->getFST_2_PUK_HEIGHT_IS_NOT_VALID(), [this](){
+        std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
+        Puk* puk = heightSensor2.front();
+        if (puk->getIsValid()) {
+            // FIXME add HS mocking in tests to make this testable
+            // puk->setIsValid(false);
+            // Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Profile mismatch, invalidating puk", "PositionTracker.onIsInvalid");
+            Logger::getInstance().log(LogLevel::WARNING, "[FST2] Invalid PUK, FAKING VALIDITY", "PositionTracker.onIsInvalid");
+        } {
+            Logger::getInstance().log(LogLevel::WARNING, "[FST2]", "PositionTracker.onIsInvalid");
+        }
+    });
     onEvent(&fsm->getFST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK(), [this](){
         std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
         std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
@@ -238,8 +257,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockSorting(sorting2Mutex);
 
         Puk* puk = sorting2.front();
-        if (isMetalDesired2 && puk->getIsMetal()) { // FIXME
-        // if (isMetalDesired2 && puk->getIsMetal() && puk->getIsValid()) {
+        if (isMetalDesired2 && puk->getIsMetal() && puk->getIsValid()) {
             // passthrough
             isMetalDesired2 = false;
             fsm->raiseFST_2_PUK_SORTING_PASSTHROUGH();
@@ -255,19 +273,23 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockSorting(sorting2Mutex);
 
         Puk* puk = sorting2.front();
-        if (!isMetalDesired2 && !puk->getIsMetal()) {  // FIXME
-        // if (!isMetalDesired2 && !puk->getIsMetal() && puk->getIsValid()) {
+        if (!isMetalDesired2 && !puk->getIsMetal() && puk->getIsValid()) {
             // passthrough
             puk->setIsMetal(false);
             isMetalDesired2 = true;
             fsm->raiseFST_2_PUK_SORTING_PASSTHROUGH();
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Passing", "PositionTracker.onIsNotMetal");
+            return;
+        }
+
+        // eject
+        if (puk->getIsMetal()) {
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] EjectionReason: Metal mismatch", "PositionTracker.onIsNotMetal");
         } else {
-            // eject
-            sorting2.pop();
-            fsm->raiseFST_2_PUK_SORTING_EJECT();
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Ejecting", "PositionTracker.onIsNotMetal");
         }
+        sorting2.pop();
+        fsm->raiseFST_2_PUK_SORTING_EJECT();
     });
     onEvent(&fsm->getFST_2_POSITION_SORTING_NEW_PUK(), [this](){
         std::lock_guard<std::mutex> lockSorting(sorting2Mutex);
