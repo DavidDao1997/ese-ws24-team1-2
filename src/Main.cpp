@@ -20,7 +20,7 @@
 #include <gtest/gtest.h>
 
 #define TESTING 1
-#define LOGLEVEL DEBUG
+#define LOGLEVEL INFO
 
 
 int main(int argc, char **argv) {

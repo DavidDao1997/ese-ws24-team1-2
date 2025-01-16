@@ -17,7 +17,7 @@ Timer::Timer(
     motorState = MOTOR_STOP;
     fractionRemaining = UINT8_MAX;
 
-    Logger::getInstance().log(LogLevel::DEBUG, "New Timer", "Timer");
+    Logger::getInstance().log(LogLevel::TRACE, "New Timer", "Timer");
 }
 
 Timer::~Timer() {}
@@ -25,7 +25,7 @@ Timer::~Timer() {}
 void Timer::setMotorState(MotorState nextMotorState) {
     if (fractionRemaining == 0) return;
     if (motorState == nextMotorState) {
-        Logger::getInstance().log(LogLevel::DEBUG, "Motor state unchanged, Progress: " + std::to_string(static_cast<uint8_t>(((UINT8_MAX - fractionRemaining) * 100) / 255)) + "%", "Timer");
+        Logger::getInstance().log(LogLevel::TRACE, "Motor state unchanged, Progress: " + std::to_string(static_cast<uint8_t>(((UINT8_MAX - fractionRemaining) * 100) / 255)) + "%", "Timer");
         return;
     };
 
@@ -49,7 +49,7 @@ void Timer::setMotorState(MotorState nextMotorState) {
         // TODO catch error
         motorState = nextMotorState;
         Logger::getInstance().log(
-            LogLevel::DEBUG, 
+            LogLevel::TRACE, 
             "Timer started\n\tSpeed: " +
             std::string(nextMotorState == MOTOR_FAST ? "fast" : "slow") + "\n\tProgress: " +
             std::to_string(static_cast<uint8_t>(((UINT8_MAX - fractionRemaining) * 100) / 255)) + "%\n\tTime: " +
@@ -76,7 +76,7 @@ void Timer::setMotorState(MotorState nextMotorState) {
         timerId  = 0;
         motorState = nextMotorState;
         Logger::getInstance().log(
-            LogLevel::DEBUG, 
+            LogLevel::TRACE, 
             "Timer stopped\n\tProgress: " + 
             std::to_string(static_cast<uint8_t>(((UINT8_MAX - fractionRemaining) * 100) / 255)) + "%\n\tTime: " +
             std::to_string(timeRemaining) + "ms\n\tPulse: " +
@@ -95,7 +95,7 @@ void Timer::setMotorState(MotorState nextMotorState) {
     timer_settime (timerId, 0, &nextTimerSpec, NULL);
     motorState = nextMotorState;
     Logger::getInstance().log(
-        LogLevel::DEBUG, 
+        LogLevel::TRACE, 
         "Timer speed updated\n\tspeed: " +
         std::string(nextMotorState == MOTOR_FAST ? "fast" : "slow") + "\n\tProgress: " + 
         std::to_string(static_cast<uint8_t>(((UINT8_MAX - fractionRemaining) * 100) / 255)) + "%\n\ttimeRemaining: " +

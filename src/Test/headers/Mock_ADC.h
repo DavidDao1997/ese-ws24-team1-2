@@ -8,6 +8,9 @@
 #ifndef TEST_HEADERS_MOCK_ADC_H_
 #define TEST_HEADERS_MOCK_ADC_H_
 
+#include <mutex>
+#include <condition_variable>
+
 #include "../../HAL/interfaces/I_ADC.h"
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
 #include "../../Dispatcher/headers/PulseMsgConfig.h"
@@ -16,7 +19,7 @@
 class Mock_ADC : public I_ADC, PulseMsgHandler{
 public:
 	
-	Mock_ADC();
+	Mock_ADC(uint32_t bandheight, std::function<void()> onSamplingDone);
 	virtual ~Mock_ADC();
 
 	void registerAdcISR(int connectionID, char msgType) override;
@@ -25,9 +28,8 @@ public:
 	void adcDisable(void) override;
 
     void mockInit(int32_t hscChannelId);
-	void setSample(int32_t band, int32_t first, int32_t second, int32_t third);
-	void setSampleCnt(int32_t bandCnt, int32_t firstCnt, int32_t secondCnt, int32_t thirdCnt);
-
+	void setSample(int32_t first, int32_t second, int32_t third, int32_t firstCnt, int32_t secondCnt, int32_t thirdCnt);
+	void blockUntilSamplingDone();
 
     void handleMsg() override;
     void sendMsg() override;
@@ -39,6 +41,10 @@ private:
 	void adcEnableSequence(unsigned int steps) override;
 private:
 	int32_t hsCoid;
+
+	std::mutex mutex;
+	std::condition_variable cv;
+	bool sampling;
 	int32_t sampleVal;
 	int32_t sampleCnt;
 
@@ -47,10 +53,11 @@ private:
 	int32_t secondHeight;
 	int32_t thirdHeight;
 
-	int32_t bandHeightCnt;
 	int32_t firstHeightCnt;
 	int32_t secondHeightCnt;
 	int32_t thirdHeightCnt;
+
+	std::function<void()> onSamplingDone;
 };
 
 

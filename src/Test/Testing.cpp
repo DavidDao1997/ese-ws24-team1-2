@@ -433,8 +433,13 @@ protected:
         
         TSCADC* tsc1 = new TSCADC();
         TSCADC* tsc2 = new TSCADC();
-        ADC* adc1 = new ADC(*tsc1);
-        ADC* adc2 = new ADC(*tsc2);
+        adc1 = new Mock_ADC(69, [this](){
+            decoder1->sendPulse(PULSE_HS1_SAMPLING_DONE, 0);
+        });
+        adc2 = new Mock_ADC(69, [this](){
+            decoder1->sendPulse(PULSE_HS2_SAMPLING_DONE, 0);
+        });
+
         heightSensorController1 = new HeightSensorControl("HSControl1", dispatcherChannelName, FESTO1, tsc1, adc1); 
         heightSensorController2 = new HeightSensorControl("HSControl2", dispatcherChannelName, FESTO2, tsc2, adc2); 
 
@@ -509,6 +514,20 @@ protected:
         WAIT(500);
         decoder1->sendPulse(PULSE_BGS_SHORT, 0);
         WAIT(500);
+    }
+
+    void mockValidProfile(Mock_ADC* adc) {
+        adc->setSample(
+            2200,   3150,   2200, 
+            10,     30,     20
+        );
+    }
+
+    void mockInValidProfile(Mock_ADC* adc) {
+        adc->setSample(
+            2200,   2500,   2200, 
+            10,     30,     20
+        );
     }
 
     // Asserts expected actuatorState. Use when entering System.Operational
@@ -672,6 +691,8 @@ protected:
     Dispatcher* dispatcher;
     ActuatorController* actuatorController1;
     ActuatorController* actuatorController2;
+    Mock_ADC* adc1;
+    Mock_ADC* adc2;
     HeightSensorControl* heightSensorController1;
     HeightSensorControl* heightSensorController2;
     FSMController* fsmController;
@@ -774,48 +795,24 @@ protected:
 
 // }
 
-
-
-TEST_F(SystemTestTwoFesto, singleValidWellTimedPuk) {
+TEST_F(SystemTestTwoFesto, validProfile) {
     mockInitializationEvents();
-    // TSCADC* tsc = new TSCADC();
-    // Mock_ADC* adc = new Mock_ADC();
-    // heightSensorController = new HeightSensorControl("HSControl", dispatcherChannelName, FESTO1, tsc, adc);
-    // adc->mockInit(heightSensorController->getChannel());
-    // adc->setSample(2000, 2500, 2700, 2500);
-    // adc->setSampleCnt(10,3,3,3);
-    // heightSensorControllerThread = std::thread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
 
+    // LBF1
     decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 0);
     decoder1->sendPulse(PULSE_LBF_OPEN, 0);
-    auto start = std::chrono::steady_clock::now();
-    int timeStopped = 0;
-
-    // fireAt(start, 50);
-    // decoder1->sendPulse(PULSE_BRS_SHORT, 0);
-    // timeStopped += 250;
-    // WAIT(250);
-    // TODO what is the expected actuatorState for a paused system
-    // // assertActuatorState(
-    // //     FESTO1, 
-    // //     MotorState::MOTOR_STATE_OFF,
-    // //     GreenLightState::LIGHT_STATE_OFF,
-    // //     YellowLightState::LIGHT_STATE_OFF,
-    // //     RedLightState::LIGHT_STATE_OFF
-    // // );
-    // // assertActuatorState(
-    // //     FESTO2, 
-    // //     MotorState::MOTOR_STATE_OFF,
-    // //     GreenLightState::LIGHT_STATE_OFF,
-    // //     YellowLightState::LIGHT_STATE_OFF,
-    // //     RedLightState::LIGHT_STATE_OFF
-    // // );
-    // decoder1->sendPulse(PULSE_BGS_SHORT, 0);
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_BLINKING,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
     
-
-
-    fireAt(start, TESTING_HS_FAST + timeStopped);
-    decoder1->sendPulse(PULSE_HS1_SAMPLE, 1000);
+    // HS1
+    WAIT(TESTING_HS_FAST + 50);
+    mockValidProfile(adc1); // timer end
     WAIT(50);
     assertActuatorState(
         FESTO1, 
@@ -825,9 +822,8 @@ TEST_F(SystemTestTwoFesto, singleValidWellTimedPuk) {
         RedLightState::LIGHT_STATE_OFF
     );
     
-    // TODO mock HS sampling
-    decoder1->sendPulse(PULSE_HS1_SAMPLING_DONE, 0);
-    WAIT(50);
+    adc1->blockUntilSamplingDone(); //timer start
+    WAIT(50); // subtract from TESTING_SORTING_FAST
     assertActuatorState(
         FESTO1, 
         MotorState::MOTOR_STATE_FAST,
@@ -836,28 +832,9 @@ TEST_F(SystemTestTwoFesto, singleValidWellTimedPuk) {
         RedLightState::LIGHT_STATE_OFF
     );
     
-    // WAIT(250);
-    // decoder1->sendPulse(PULSE_BRS_SHORT, 0);
-    // timeStopped += 250;
-    // WAIT(250);
-    // // assertActuatorState(
-    // //     FESTO1, 
-    // //     MotorState::MOTOR_STATE_OFF,
-    // //     GreenLightState::LIGHT_STATE_OFF,
-    // //     YellowLightState::LIGHT_STATE_OFF,
-    // //     RedLightState::LIGHT_STATE_OFF
-    // // );
-    // // assertActuatorState(
-    // //     FESTO2, 
-    // //     MotorState::MOTOR_STATE_OFF,
-    // //     GreenLightState::LIGHT_STATE_OFF,
-    // //     YellowLightState::LIGHT_STATE_OFF,
-    // //     RedLightState::LIGHT_STATE_OFF
-    // // );
-    // decoder1->sendPulse(PULSE_BGS_SHORT, 0);
-    WAIT(950);
+    // LBM1
+    WAIT(TESTING_SORTING_FAST - 50);
     decoder1->sendPulse(PULSE_LBM_INTERRUPTED, 0);
-
     WAIT(50);
     decoder1->sendPulse(PULSE_LBM_OPEN, 0);
     assertActuatorState(
@@ -868,9 +845,9 @@ TEST_F(SystemTestTwoFesto, singleValidWellTimedPuk) {
         RedLightState::LIGHT_STATE_OFF
     );
 
+    // LBE1
     WAIT(2000);
     decoder1->sendPulse(PULSE_LBE_INTERRUPTED, 0);
-
     WAIT(50);
     decoder1->sendPulse(PULSE_LBE_OPEN, 0);
     assertActuatorState(
@@ -888,9 +865,9 @@ TEST_F(SystemTestTwoFesto, singleValidWellTimedPuk) {
         RedLightState::LIGHT_STATE_OFF
     );
 
+    // LBF2
     WAIT(1000);
     decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 1);
-
     WAIT(50);
     assertActuatorState(
         FESTO1, 
@@ -909,8 +886,9 @@ TEST_F(SystemTestTwoFesto, singleValidWellTimedPuk) {
         RedLightState::LIGHT_STATE_OFF
     );
 
+    // HS2
     WAIT(1950);
-    decoder1->sendPulse(PULSE_HS2_SAMPLE, 1000);
+    mockValidProfile(adc2); // timer end
     WAIT(50);
     assertActuatorState(
         FESTO2, 
@@ -919,10 +897,8 @@ TEST_F(SystemTestTwoFesto, singleValidWellTimedPuk) {
         YellowLightState::LIGHT_STATE_OFF,
         RedLightState::LIGHT_STATE_OFF
     );
-    
-    // TODO mock HS sampling
-    decoder1->sendPulse(PULSE_HS2_SAMPLING_DONE, 0);
-    WAIT(50);
+    adc2->blockUntilSamplingDone(); //timer start
+    WAIT(50); // subtract from TESTING_SORTING_FAST
     assertActuatorState(
         FESTO2, 
         MotorState::MOTOR_STATE_FAST,
@@ -931,13 +907,22 @@ TEST_F(SystemTestTwoFesto, singleValidWellTimedPuk) {
         RedLightState::LIGHT_STATE_OFF
     );
 
-    WAIT(950);
+    // LBM2
+    WAIT(TESTING_SORTING_FAST - 50);
     decoder1->sendPulse(PULSE_LBM_INTERRUPTED, 1);
-
     WAIT(50);
     decoder1->sendPulse(PULSE_LBM_OPEN, 1);
+    WAIT(100);
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
 
-    WAIT(2000);
+    // LBE2
+    WAIT(TESTING_EGRESS_FAST - 100);
     decoder1->sendPulse(PULSE_LBE_INTERRUPTED, 1);
     WAIT(50);
     assertActuatorState(
@@ -956,6 +941,316 @@ TEST_F(SystemTestTwoFesto, singleValidWellTimedPuk) {
         YellowLightState::LIGHT_STATE_OFF,
         RedLightState::LIGHT_STATE_OFF
     );
+}
 
-    WAIT(5000);
+// FIXME Failing Test, motor not stopping on ejection
+TEST_F(SystemTestTwoFesto, invalidProfile) {
+    mockInitializationEvents();
+    decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+    decoder1->sendPulse(PULSE_LBF_OPEN, 0); // timer start
+
+    WAIT(TESTING_HS_FAST);
+    mockInValidProfile(adc1); // timer end
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_SLOW,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    
+    adc1->blockUntilSamplingDone(); //timer start
+    WAIT(50); // subtract from TESTING_SORTING_FAST
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    
+    WAIT(TESTING_SORTING_FAST - 50);
+    decoder1->sendPulse(PULSE_LBM_INTERRUPTED, 0); // timer end
+    WAIT(50);
+    decoder1->sendPulse(PULSE_LBM_OPEN, 0);
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_OFF,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+}
+
+TEST_F(SystemTestTwoFesto, mismatch1Profile) {
+    mockInitializationEvents();
+
+    // LBF1
+    decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+    decoder1->sendPulse(PULSE_LBF_OPEN, 0);
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_BLINKING,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    
+    // HS1
+    WAIT(TESTING_HS_FAST + 50);
+    mockValidProfile(adc1); // timer end
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_SLOW,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    
+    adc1->blockUntilSamplingDone(); //timer start
+    WAIT(50); // subtract from TESTING_SORTING_FAST
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    
+    // LBM1
+    WAIT(TESTING_SORTING_FAST - 50);
+    decoder1->sendPulse(PULSE_LBM_INTERRUPTED, 0);
+    WAIT(50);
+    decoder1->sendPulse(PULSE_LBM_OPEN, 0);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+
+    // LBE1
+    WAIT(2000);
+    decoder1->sendPulse(PULSE_LBE_INTERRUPTED, 0);
+    WAIT(50);
+    decoder1->sendPulse(PULSE_LBE_OPEN, 0);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+
+    // LBF2
+    WAIT(1000);
+    decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 1);
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    decoder1->sendPulse(PULSE_LBF_OPEN, 1);
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_OFF,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+
+    // HS2
+    WAIT(1950);
+    mockInValidProfile(adc2); // timer end
+    WAIT(50);
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_SLOW,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    adc2->blockUntilSamplingDone(); //timer start
+    WAIT(50); // subtract from TESTING_SORTING_FAST
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+
+    // LBM2
+    WAIT(TESTING_SORTING_FAST - 50);
+    decoder1->sendPulse(PULSE_LBM_INTERRUPTED, 1);
+    WAIT(50);
+    decoder1->sendPulse(PULSE_LBM_OPEN, 1);
+    WAIT(2000);
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_OFF,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+}
+
+TEST_F(SystemTestTwoFesto, pauseBothFestos) {
+    mockInitializationEvents();
+
+    // LBF1
+    Logger::getInstance().log(LogLevel::INFO, "[Puk1] entering LBF_1", "SystemTestTwoFesto.pauseBothFestos");
+    decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+    decoder1->sendPulse(PULSE_LBF_OPEN, 0);
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_BLINKING,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    
+    // HS1
+    WAIT(TESTING_HS_FAST - 50);
+    Logger::getInstance().log(LogLevel::INFO, "[Puk1] entering HS_1", "SystemTestTwoFesto.pauseBothFestos");
+    mockValidProfile(adc1); // timer end
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_SLOW,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    
+    adc1->blockUntilSamplingDone(); //timer start
+    WAIT(50); // subtract from TESTING_SORTING_FAST
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    
+    // LBM1
+    WAIT(TESTING_SORTING_FAST - 50);
+    Logger::getInstance().log(LogLevel::INFO, "[Puk1] entering LBM_1", "SystemTestTwoFesto.pauseBothFestos");
+    decoder1->sendPulse(PULSE_LBM_INTERRUPTED, 0);
+    WAIT(50);
+    decoder1->sendPulse(PULSE_LBM_OPEN, 0);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+
+    // LBE1
+    WAIT(2000);
+    Logger::getInstance().log(LogLevel::INFO, "[Puk1] entering LBE_1", "SystemTestTwoFesto.pauseBothFestos");
+    decoder1->sendPulse(PULSE_LBE_INTERRUPTED, 0);
+    WAIT(50);
+    decoder1->sendPulse(PULSE_LBE_OPEN, 0);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+
+    // LBF2
+    WAIT(1000);
+    Logger::getInstance().log(LogLevel::INFO, "[Puk1] entering LBF_2", "SystemTestTwoFesto.pauseBothFestos");
+    decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 1);
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+
+    decoder1->sendPulse(PULSE_LBF_OPEN, 1);
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_OFF,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+
+    // LBF1 2nd puk
+    Logger::getInstance().log(LogLevel::INFO, "[Puk2] entering LBF_1", "SystemTestTwoFesto.pauseBothFestos");
+    decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 0);
+    decoder1->sendPulse(PULSE_LBF_OPEN, 0);
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_BLINKING,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+
+    // Pausing
+    decoder1->sendPulse(PULSE_BRS_SHORT, 0);
+    WAIT(500);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_OFF,
+        GreenLightState::LIGHT_STATE_OFF,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_OFF,
+        GreenLightState::LIGHT_STATE_OFF,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    decoder1->sendPulse(PULSE_BGS_SHORT, 0);
+    // TODO assert that motors have restarted
+
+    // HS2
+    WAIT(TESTING_HS_FAST - 100);
+    Logger::getInstance().log(LogLevel::INFO, "[Puk1] entering HS_2", "SystemTestTwoFesto.pauseBothFestos");
+    decoder1->sendPulse(PULSE_HS2_SAMPLE,1000);
+    WAIT(100);
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_SLOW,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
 }
