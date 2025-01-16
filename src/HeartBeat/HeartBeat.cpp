@@ -43,7 +43,7 @@ void HeartBeat::connectToFesto(){
     } else if (festoId == FESTO2) {
         otherFesto = name_open("Festo1HeartBeat", NAME_FLAG_ATTACH_GLOBAL);
     } else {
-        Logger::getInstance().log(LogLevel::ERROR, "Wrong ", "HeartBeat");
+        Logger::getInstance().log(LogLevel::ERROR, "Wrong Festo ID set " + std::to_string(festoId), "HeartBeat");
     }
     
     if (0 > otherFesto) {
@@ -129,8 +129,8 @@ void HeartBeat::handleMsg() {
                 {
                     std::lock_guard<std::mutex> lock(heartbeatMutex); // Protect shared data
                     lastHeartbeatReceived = std::chrono::steady_clock::now(); // Update heartbeat timestamp
-                }        
-
+                    messageReceivedOnce = true;
+                }      
             } else if (msg.code == PULSE_STOP_RECV_THREAD) {
                 Logger::getInstance().log(LogLevel::TRACE, "received PULSE_STOP_RECV_THREAD...", "HeartBeat");
                 running = false;
@@ -151,22 +151,21 @@ void HeartBeat::handleMsg() {
 }
 
 void HeartBeat::handleDisconnect() {
-    // TODO
-    // Logger::getInstance().log(LogLevel::CRITICAL, "Connection to other Festo LOST...", "HeartBeat");
-    // // when FESTO 1: send PULSE_E_STOP_HEARTBEAT_FESTO1 to Dispatcher ONCE and if E_STOP Button pressend, send this also als value == 1, else value == 0
-    // if (festoId == FESTO1){
-    //     if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_E_STOP_HEARTBEAT_FESTO, festoId)) {
-    //         Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo1...", "HeartBeat");
-    //     }        
-    // }
-    // // when FESTO 2: send PULSE_E_STOP_HEARTBEAT_FESTO2 to Dispatcher until reachable and manually set Actuators
-    // if (festoId == FESTO2){
-    //     if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_E_STOP_HEARTBEAT_FESTO, festoId)) {
-    //         Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo2...", "HeartBeat");
-    //     }
+    Logger::getInstance().log(LogLevel::CRITICAL, "Connection to other Festo LOST...", "HeartBeat");
+    // when FESTO 1: send PULSE_E_STOP_HEARTBEAT_FESTO1 to Dispatcher ONCE and if E_STOP Button pressend, send this also als value == 1, else value == 0
+    if (festoId == FESTO1){
+        if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_E_STOP_HEARTBEAT_FESTO1, festoId)) {
+            Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo1...", "HeartBeat");
+        }        
+    }
+    // when FESTO 2: send PULSE_E_STOP_HEARTBEAT_FESTO2 to Dispatcher until reachable and manually set Actuators
+    if (festoId == FESTO2){
+        if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_E_STOP_HEARTBEAT_FESTO2, festoId)) {
+            Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo2...", "HeartBeat");
+        }
 
-    //     // TODO set Actuators
-    // }
+        // TODO set Actuators
+    }
 }
 
 int32_t HeartBeat::getChannel() { return channelID; }

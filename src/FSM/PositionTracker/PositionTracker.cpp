@@ -12,7 +12,8 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     listenThread = new std::thread(std::bind(&PositionTracker::listen, this));
     motorState1.store(Timer::MotorState::MOTOR_STOP);
     motorState2.store(Timer::MotorState::MOTOR_STOP);
-
+    isMetalDesired1 = false;
+    isMetalDesired2 = false;
     onEvent(&fsm->getFST_1_POSITION_INGRESS_NEW_PUK(), [this](){
         std::lock_guard<std::mutex> lock(heightSensor1Mutex);
 
@@ -49,13 +50,13 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
         Puk* puk = sorting1.front();  // FST1 raises "puk valid/inValid" after "sorting new puk", so we need to use sorting1.front() here
         puk->setIsValid(true);
-        Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onIsValid");
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] HEIGHT_IS_VALID", "PositionTracker.onIsValid");
     });
     onEvent(&fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID(), [this](){
         std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
         Puk* puk = sorting1.front();
         puk->setIsValid(false); // FIXME add HS mocking in tests to make this testable
-        Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onIsInvalid");
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] HEIGHT_IS_NOT_VALID", "PositionTracker.onIs_NOT_Valid");
     });
     // TODO Puk that disappear or are sorted out
     onEvent(&fsm->getFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK(), [this](){
@@ -185,7 +186,16 @@ PositionTracker::PositionTracker(FSM* _fsm) {
 
         Puk* puk = queuePop(&ingress2);
         heightSensor2.push(puk);
-
+        
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2] " 
+            + std::to_string(heightSensor1.size())
+            + std::to_string(sorting1.size())
+            + std::to_string(egress1.size())
+            + std::to_string(ingress2.size())
+            + std::to_string(heightSensor2.size())
+            + std::to_string(sorting2.size())
+            + std::to_string(egress2.size()),
+            "PositionTracker.onIngressNewPuk");
         puk->approachingHS(
             motorState2.load(),
             nullptr,
@@ -210,7 +220,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
         Puk* puk = heightSensor2.front();
         if (!puk->getIsValid()) {
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Profile mismatch", "PositionTracker.onIsValid");
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Profile mismatch", "PositionTracker.onIs_Valid");
         } else {
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onIsValid");
         }
@@ -221,13 +231,14 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         if (puk->getIsValid()) {
             // FIXME add HS mocking in tests to make this testable
             puk->setIsValid(false);
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Profile mismatch, invalidating puk", "PositionTracker.onIsInvalid");
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Profile mismatch, invalidating puk", "PositionTracker.onIs_NOT_Valid");
 
         } {
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onIsInvalid");
         }
     });
     onEvent(&fsm->getFST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK(), [this](){
+        Logger::getInstance().log(LogLevel::DEBUG, "ENTRY HS [FST2]", "PositionTracker.onHSNewPuk");
         std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
         std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
 
@@ -325,6 +336,50 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             )
         );
         Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onSortingNewPuk");
+    });
+    onEvent(&fsm->getFST_1_POSITION_HEIGHTMEASUREMENT_PUK_REMOVED(), [this](){
+        Puk* puk = queuePop(&heightSensor1);
+        puk->setTimers(Timer::MotorState::MOTOR_STOP);
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onHSPukRemoved");
+    });
+    onEvent(&fsm->getFST_1_POSITION_SORTING_PUK_REMOVED(), [this](){
+        Puk* puk = queuePop(&sorting1);
+        puk->setTimers(Timer::MotorState::MOTOR_STOP);
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onSortingPukRemoved");
+    });
+    onEvent(&fsm->getFST_1_POSITION_EGRESS_PUK_REMOVED(), [this](){
+        Puk* puk = queuePop(&egress1);
+        puk->setTimers(Timer::MotorState::MOTOR_STOP);
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onEgressPukRemoved");
+    });
+    onEvent(&fsm->getFST_2_POSITION_INGRESS_PUK_REMOVED(), [this](){
+        Puk* puk = queuePop(&ingress2);
+        puk->setTimers(Timer::MotorState::MOTOR_STOP);
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onIngressPukRemoved");
+    });
+    onEvent(&fsm->getFST_2_POSITION_HEIGHTMEASUREMENT_PUK_REMOVED(), [this](){
+        Puk* puk = queuePop(&heightSensor2);
+        puk->setTimers(Timer::MotorState::MOTOR_STOP);
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onHSPukRemoved");
+    });
+    onEvent(&fsm->getFST_2_POSITION_SORTING_PUK_REMOVED(), [this](){
+        Puk* puk = queuePop(&sorting2);
+        puk->setTimers(Timer::MotorState::MOTOR_STOP);
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onSortingPukRemoved");
+    });
+    // onEvent(&fst->getFST_2_POSITION_EGRESS_PUK_REMOVED(), [this](){
+    //     Puk* puk = popQueue(&egress2);
+    //     puk->setTimers(Timer::MotorState::MOTOR_STOP);
+    //     Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onEgressPukRemoved");
+    // });
+    onEvent(&fsm->getFST_2_POSITION_EGRESS_PUK_REMOVED(), [this](){
+        Puk* puk = queuePop(&egress2);
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK is NULLPTR", "PositionTracker.onEgressPukRemoved");
+        } else {
+            puk->setTimers(Timer::MotorState::MOTOR_STOP);
+            Logger::getInstance().log(LogLevel::TRACE, "[FST2]", "PositionTracker.onEgressPukRemoved");
+        }
     });
     onEvent(&fsm->getMOTOR_1_FAST(), [this](){
         motorState1.store(Timer::MotorState::MOTOR_FAST);
@@ -425,7 +480,8 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     });
 }
 
-PositionTracker::~PositionTracker() {}
+PositionTracker::~PositionTracker() {
+}
 
 std::queue<Puk*> PositionTracker::updatePukQueue(std::queue<Puk*> tempQueue, Timer::MotorState ms){
     std::queue<Puk*> updatedQueue;// = new std::queue<Puk*>();
@@ -442,12 +498,19 @@ std::queue<Puk*> PositionTracker::updatePukQueue(std::queue<Puk*> tempQueue, Tim
 
 Puk* PositionTracker::queuePop(std::queue<Puk*>* queue){
     if (queue->empty()) {
+        Logger::getInstance().log(LogLevel::DEBUG,  "Queue ist EMPTY!", "PositionTracker.queuePop");
         return nullptr;
     }
     Puk* puk = queue->front();
     queue->pop();
     return puk;
 }
+
+// void PositionTracker::reset() {
+//     isMetalDesired1 = false;
+//     isMetalDesired2 = false;
+//     updatePukQueue(heightSensor1, Timer::MotorStaTe::MOTOR_STOP)
+// }
 
 void PositionTracker::listen() {
     // Connection ID für Pulse Message
@@ -481,7 +544,7 @@ void PositionTracker::listen() {
                 break;
             case Timer::PulseCode::PULSE_SORTING_1_DISTANCE_VALID:
                 pulseName = "PULSE_SORTING_1_DISTANCE_VALID";
-                fsm->raiseFST_1_POSITION_DIVIDER_DISTANCE_VALID();
+                fsm->raiseFST_1_POSITION_DIVERTER_DISTANCE_VALID();
                 break;
             case Timer::PulseCode::PULSE_EGRESS_1_PUK_EXPECTED:
                 pulseName = "PULSE_EGRESS_1_PUK_EXPECTED";
@@ -517,7 +580,7 @@ void PositionTracker::listen() {
                 break;
             case Timer::PulseCode::PULSE_SORTING_2_DISTANCE_VALID:
                 pulseName = "PULSE_SORTING_2_DISTANCE_VALID";
-                fsm->raiseFST_2_POSITION_DIVIDER_DISTANCE_VALID();
+                fsm->raiseFST_2_POSITION_DIVERTER_DISTANCE_VALID();
                 break;
             case Timer::PulseCode::PULSE_EGRESS_2_PUK_EXPECTED:
                 pulseName = "PULSE_EGRESS_2_PUK_EXPECTED";
@@ -531,7 +594,7 @@ void PositionTracker::listen() {
                 pulseName = std::to_string(msg.code);
                 break;
         }
-        Logger::getInstance().log(LogLevel::TRACE, "Message recieved\n\tcode: " + pulseName + "\n\tvalue: " + std::to_string(msg.value.sival_int), "PositionTracker.listen");
+        Logger::getInstance().log(LogLevel::DEBUG, "Message recieved\n\tcode: " + pulseName + "\n\tvalue: " + std::to_string(msg.value.sival_int), "PositionTracker.listen");
     }
 }
 

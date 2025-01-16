@@ -321,19 +321,19 @@ void ActuatorController::handleMsg() {
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Q2 off......", "ActuatorController");
                 actuators->Q2LightOff();
                 break;
-			case PULSE_SM1_ACTIVE:
+			case PULSE_SM1_ACTIVE: // set Bit 1
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 1 SM Active......", "ActuatorController");
 				actuators->closeSortingModule();
 				break;
-			case PULSE_SM1_RESTING:
+			case PULSE_SM1_RESTING: // set Bit 0
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 1 SM Resting......", "ActuatorController");
 				actuators->openSortingModule();
 				break;
-            case PULSE_SM2_ACTIVE:
+            case PULSE_SM2_ACTIVE: //set Bit 1
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 SM Active......", "ActuatorController");
 				actuators->closeSortingModule();
 				break;
-			case PULSE_SM2_RESTING:
+			case PULSE_SM2_RESTING: // set Bit 0
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 SM Resting......", "ActuatorController");
 				actuators->openSortingModule();
 				break;

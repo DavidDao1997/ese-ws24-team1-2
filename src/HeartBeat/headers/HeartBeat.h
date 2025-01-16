@@ -20,6 +20,7 @@
 #include "../../Dispatcher/headers/PulseMsgHandler.h"
 #include "../../HAL/headers/HALConfig.h"
 #include "../../Util/headers/Util.h"
+#include "../../HAL/headers/Actuators_Wrapper.h"
 
 #define HEARTBEAT_NUM_OF_PULSES 2
 

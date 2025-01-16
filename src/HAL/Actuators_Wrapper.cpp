@@ -112,5 +112,5 @@ uint8_t Actuators_Wrapper::readSortingModule() {
 }
 
 // Set/clear pin for sorting Module -> depends which sorting Module it is
-void Actuators_Wrapper::openSortingModule() { out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(SM_PIN)); }
-void Actuators_Wrapper::closeSortingModule() { out32((uintptr_t)(gpio_bank_1 + GPIO_SET), BIT_MASK(SM_PIN)); }
+void Actuators_Wrapper::openSortingModule() { out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(SM_PIN)); } // set Bit 0
+void Actuators_Wrapper::closeSortingModule() { out32((uintptr_t)(gpio_bank_1 + GPIO_SET), BIT_MASK(SM_PIN)); }  //set Bit 1

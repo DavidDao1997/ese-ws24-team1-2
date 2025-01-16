@@ -134,9 +134,9 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			FST_1_POSITION_SORTING_PUK_EXPIRED_raised = true;
 			break;
 		}
-		case FSM::Event::FST_1_POSITION_DIVIDER_DISTANCE_VALID:
+		case FSM::Event::FST_1_POSITION_DIVERTER_DISTANCE_VALID:
 		{
-			FST_1_POSITION_DIVIDER_DISTANCE_VALID_raised = true;
+			FST_1_POSITION_DIVERTER_DISTANCE_VALID_raised = true;
 			break;
 		}
 		case FSM::Event::FST_1_POSITION_EGRESS_PUK_EXPECTED:
@@ -194,9 +194,9 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			FST_2_POSITION_EGRESS_PUK_EXPIRED_raised = true;
 			break;
 		}
-		case FSM::Event::FST_2_POSITION_DIVIDER_DISTANCE_VALID:
+		case FSM::Event::FST_2_POSITION_DIVERTER_DISTANCE_VALID:
 		{
-			FST_2_POSITION_DIVIDER_DISTANCE_VALID_raised = true;
+			FST_2_POSITION_DIVERTER_DISTANCE_VALID_raised = true;
 			break;
 		}
 		case FSM::Event::FST_1_ERROR_SYSTEM_RESOLVED:
@@ -464,69 +464,9 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			local_ESTOP_CLEARED_raised = true;
 			break;
 		}
-		case FSM::Event::Internal_local_SYSTEM_SERVICE_IN:
-		{
-			local_SYSTEM_SERVICE_IN_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_1_INGRESS_IN:
-		{
-			local_FST_1_INGRESS_IN_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_SYSTEM_SERVICE_OUT:
-		{
-			local_SYSTEM_SERVICE_OUT_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_1_INGRESS_OUT:
-		{
-			local_FST_1_INGRESS_OUT_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_1_ERROR_LAMP_UNACKNOWLEDGED:
-		{
-			local_FST_1_ERROR_LAMP_UNACKNOWLEDGED_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED:
-		{
-			local_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_1_ERROR_LAMP_RESOLVED:
-		{
-			local_FST_1_ERROR_LAMP_RESOLVED_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_1_ERROR_ACKNOWLEDGED:
-		{
-			local_FST_1_ERROR_ACKNOWLEDGED_raised = true;
-			break;
-		}
 		case FSM::Event::Internal_local_FST_2_ERROR_SYSTEM:
 		{
 			local_FST_2_ERROR_SYSTEM_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_2_ERROR_UNACKNOWLEDGED:
-		{
-			local_FST_2_ERROR_UNACKNOWLEDGED_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED:
-		{
-			local_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_2_ERROR_LAMP_RESOLVED:
-		{
-			local_FST_2_ERROR_LAMP_RESOLVED_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_2_ERROR_ACKNOWLEDGED:
-		{
-			local_FST_2_ERROR_ACKNOWLEDGED_raised = true;
 			break;
 		}
 		case FSM::Event::Internal_local_EVALUATE:
@@ -584,6 +524,11 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			local_FST_1_ERROR_RAMPFULL_MISSING_PUK_raised = true;
 			break;
 		}
+		case FSM::Event::Internal_local_FST_1_ERROR_IN_READY:
+		{
+			local_FST_1_ERROR_IN_READY_raised = true;
+			break;
+		}
 		case FSM::Event::Internal_local_FST_2_ERROR_HM_UNKNOWNPUK:
 		{
 			local_FST_2_ERROR_HM_UNKNOWNPUK_raised = true;
@@ -632,6 +577,71 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 		case FSM::Event::Internal_local_FST_2_ERROR_RAMPFULL_MISSINGPUK:
 		{
 			local_FST_2_ERROR_RAMPFULL_MISSINGPUK_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_FST_2_ERROR_IN_READY:
+		{
+			local_FST_2_ERROR_IN_READY_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED:
+		{
+			local_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_FST_1_ERROR_LAMP_UNACKNOWLEDGED:
+		{
+			local_FST_1_ERROR_LAMP_UNACKNOWLEDGED_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_FST_1_ERROR_LAMP_RESOLVED:
+		{
+			local_FST_1_ERROR_LAMP_RESOLVED_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_FST_1_ERROR_ACKNOWLEDGED:
+		{
+			local_FST_1_ERROR_ACKNOWLEDGED_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_SYSTEM_SERVICE_IN:
+		{
+			local_SYSTEM_SERVICE_IN_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_SYSTEM_SERVICE_OUT:
+		{
+			local_SYSTEM_SERVICE_OUT_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_FST_1_INGRESS_OUT:
+		{
+			local_FST_1_INGRESS_OUT_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_FST_1_INGRESS_IN:
+		{
+			local_FST_1_INGRESS_IN_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED:
+		{
+			local_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_FST_2_ERROR_UNACKNOWLEDGED:
+		{
+			local_FST_2_ERROR_UNACKNOWLEDGED_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_FST_2_ERROR_LAMP_RESOLVED:
+		{
+			local_FST_2_ERROR_LAMP_RESOLVED_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_FST_2_ERROR_ACKNOWLEDGED:
+		{
+			local_FST_2_ERROR_ACKNOWLEDGED_raised = true;
 			break;
 		}
 		
@@ -714,6 +724,26 @@ sc::rx::Observable<void>& FSM::getESTOP_CLEARED() noexcept {
 
 sc::rx::Observable<void>& FSM::getEVALUATE() noexcept {
 	return this->EVALUATE_observable;
+}
+
+
+sc::rx::Observable<void>& FSM::getFST_1_ERROR_IN_READY() noexcept {
+	return this->FST_1_ERROR_IN_READY_observable;
+}
+
+
+sc::rx::Observable<void>& FSM::getFST_2_ERROR_IN_READY() noexcept {
+	return this->FST_2_ERROR_IN_READY_observable;
+}
+
+
+sc::rx::Observable<void>& FSM::getFST_1_ERROR_IN_READY_CLEARED() noexcept {
+	return this->FST_1_ERROR_IN_READY_CLEARED_observable;
+}
+
+
+sc::rx::Observable<void>& FSM::getFST_2_ERROR_IN_READY_CLEARED() noexcept {
+	return this->FST_2_ERROR_IN_READY_CLEARED_observable;
 }
 
 
@@ -804,9 +834,9 @@ void FSM::raiseFST_1_POSITION_SORTING_PUK_EXPIRED() {
 }
 
 
-/*! Raises the in event 'FST_1_POSITION_DIVIDER_DISTANCE_VALID' of default interface scope. */
-void FSM::raiseFST_1_POSITION_DIVIDER_DISTANCE_VALID() {
-	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_DIVIDER_DISTANCE_VALID))
+/*! Raises the in event 'FST_1_POSITION_DIVERTER_DISTANCE_VALID' of default interface scope. */
+void FSM::raiseFST_1_POSITION_DIVERTER_DISTANCE_VALID() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_POSITION_DIVERTER_DISTANCE_VALID))
 	;
 	runCycle();
 }
@@ -965,9 +995,9 @@ sc::rx::Observable<void>& FSM::getFST_2_POSITION_EGRESS_PUK_REMOVED() noexcept {
 }
 
 
-/*! Raises the in event 'FST_2_POSITION_DIVIDER_DISTANCE_VALID' of default interface scope. */
-void FSM::raiseFST_2_POSITION_DIVIDER_DISTANCE_VALID() {
-	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_POSITION_DIVIDER_DISTANCE_VALID))
+/*! Raises the in event 'FST_2_POSITION_DIVERTER_DISTANCE_VALID' of default interface scope. */
+void FSM::raiseFST_2_POSITION_DIVERTER_DISTANCE_VALID() {
+	incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_POSITION_DIVERTER_DISTANCE_VALID))
 	;
 	runCycle();
 }
@@ -1798,6 +1828,11 @@ sc::rx::Observable<void>& FSM::getLR2_ON() noexcept {
 }
 
 
+sc::rx::Observable<void>& FSM::getLR2_BLINKING2HZ() noexcept {
+	return this->LR2_BLINKING2HZ_observable;
+}
+
+
 sc::rx::Observable<void>& FSM::getLR2_BLINKING1HZ() noexcept {
 	return this->LR2_BLINKING1HZ_observable;
 }
@@ -1934,80 +1969,8 @@ void FSM::raiseLocal_ESTOP_CLEARED() {
 }
 
 
-void FSM::raiseLocal_SYSTEM_SERVICE_IN() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_SYSTEM_SERVICE_IN))
-	;
-}
-
-
-void FSM::raiseLocal_FST_1_INGRESS_IN() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_INGRESS_IN))
-	;
-}
-
-
-void FSM::raiseLocal_SYSTEM_SERVICE_OUT() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_SYSTEM_SERVICE_OUT))
-	;
-}
-
-
-void FSM::raiseLocal_FST_1_INGRESS_OUT() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_INGRESS_OUT))
-	;
-}
-
-
-void FSM::raiseLocal_FST_1_ERROR_LAMP_UNACKNOWLEDGED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_ERROR_LAMP_UNACKNOWLEDGED))
-	;
-}
-
-
-void FSM::raiseLocal_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED))
-	;
-}
-
-
-void FSM::raiseLocal_FST_1_ERROR_LAMP_RESOLVED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_ERROR_LAMP_RESOLVED))
-	;
-}
-
-
-void FSM::raiseLocal_FST_1_ERROR_ACKNOWLEDGED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_ERROR_ACKNOWLEDGED))
-	;
-}
-
-
 void FSM::raiseLocal_FST_2_ERROR_SYSTEM() {
 	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_ERROR_SYSTEM))
-	;
-}
-
-
-void FSM::raiseLocal_FST_2_ERROR_UNACKNOWLEDGED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_ERROR_UNACKNOWLEDGED))
-	;
-}
-
-
-void FSM::raiseLocal_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED))
-	;
-}
-
-
-void FSM::raiseLocal_FST_2_ERROR_LAMP_RESOLVED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_ERROR_LAMP_RESOLVED))
-	;
-}
-
-
-void FSM::raiseLocal_FST_2_ERROR_ACKNOWLEDGED() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_ERROR_ACKNOWLEDGED))
 	;
 }
 
@@ -2078,6 +2041,12 @@ void FSM::raiseLocal_FST_1_ERROR_RAMPFULL_MISSING_PUK() {
 }
 
 
+void FSM::raiseLocal_FST_1_ERROR_IN_READY() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_ERROR_IN_READY))
+	;
+}
+
+
 void FSM::raiseLocal_FST_2_ERROR_HM_UNKNOWNPUK() {
 	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_ERROR_HM_UNKNOWNPUK))
 	;
@@ -2134,6 +2103,84 @@ void FSM::raiseLocal_FST_2_ERROR_EGRESS_MISSING_PUK() {
 
 void FSM::raiseLocal_FST_2_ERROR_RAMPFULL_MISSINGPUK() {
 	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_ERROR_RAMPFULL_MISSINGPUK))
+	;
+}
+
+
+void FSM::raiseLocal_FST_2_ERROR_IN_READY() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_ERROR_IN_READY))
+	;
+}
+
+
+void FSM::raiseLocal_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED))
+	;
+}
+
+
+void FSM::raiseLocal_FST_1_ERROR_LAMP_UNACKNOWLEDGED() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_ERROR_LAMP_UNACKNOWLEDGED))
+	;
+}
+
+
+void FSM::raiseLocal_FST_1_ERROR_LAMP_RESOLVED() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_ERROR_LAMP_RESOLVED))
+	;
+}
+
+
+void FSM::raiseLocal_FST_1_ERROR_ACKNOWLEDGED() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_ERROR_ACKNOWLEDGED))
+	;
+}
+
+
+void FSM::raiseLocal_SYSTEM_SERVICE_IN() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_SYSTEM_SERVICE_IN))
+	;
+}
+
+
+void FSM::raiseLocal_SYSTEM_SERVICE_OUT() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_SYSTEM_SERVICE_OUT))
+	;
+}
+
+
+void FSM::raiseLocal_FST_1_INGRESS_OUT() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_INGRESS_OUT))
+	;
+}
+
+
+void FSM::raiseLocal_FST_1_INGRESS_IN() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_INGRESS_IN))
+	;
+}
+
+
+void FSM::raiseLocal_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED))
+	;
+}
+
+
+void FSM::raiseLocal_FST_2_ERROR_UNACKNOWLEDGED() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_ERROR_UNACKNOWLEDGED))
+	;
+}
+
+
+void FSM::raiseLocal_FST_2_ERROR_LAMP_RESOLVED() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_ERROR_LAMP_RESOLVED))
+	;
+}
+
+
+void FSM::raiseLocal_FST_2_ERROR_ACKNOWLEDGED() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_2_ERROR_ACKNOWLEDGED))
 	;
 }
 
@@ -2301,9 +2348,9 @@ bool FSM::isStateActive(State state) const noexcept
 			return  (stateConfVector[scvi_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate] == FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate);
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider :
+		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter :
 		{
-			return  (stateConfVector[scvi_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider] == FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider);
+			return  (stateConfVector[scvi_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter] == FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter);
 			break;
 		}
 		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferEjector :
@@ -2416,131 +2463,6 @@ bool FSM::isStateActive(State state) const noexcept
 			return  (stateConfVector[scvi_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop] == FSM::State::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop);
 			break;
 		}
-		case FSM::State::FSM_System_FSM_System :
-		{
-			return  (stateConfVector[scvi_FSM_System_FSM_System] >= FSM::State::FSM_System_FSM_System && stateConfVector[scvi_FSM_System_FSM_System] <= FSM::State::Paused);
-			break;
-		}
-		case FSM::State::Start :
-		{
-			return  (stateConfVector[scvi_FSM_System_FSM_System_FSM_System__Internal_FSM_Start] == FSM::State::Start);
-			break;
-		}
-		case FSM::State::EStopCleared :
-		{
-			return  (stateConfVector[scvi_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared] == FSM::State::EStopCleared);
-			break;
-		}
-		case FSM::State::EStopReceived :
-		{
-			return  (stateConfVector[scvi_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived] == FSM::State::EStopReceived);
-			break;
-		}
-		case FSM::State::EStopCalibration :
-		{
-			return  (stateConfVector[scvi_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCalibration] == FSM::State::EStopCalibration);
-			break;
-		}
-		case FSM::State::Operational :
-		{
-			return  (stateConfVector[scvi_FSM_System_FSM_System_FSM_System__Internal_FSM_Operational] == FSM::State::Operational);
-			break;
-		}
-		case FSM::State::ServiceMode :
-		{
-			return  (stateConfVector[scvi_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode] == FSM::State::ServiceMode);
-			break;
-		}
-		case FSM::State::ReceivedReset :
-		{
-			return  (stateConfVector[scvi_FSM_System_FSM_System_FSM_System__Internal_FSM_ReceivedReset] == FSM::State::ReceivedReset);
-			break;
-		}
-		case FSM::State::Ready :
-		{
-			return  (stateConfVector[scvi_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready] == FSM::State::Ready);
-			break;
-		}
-		case FSM::State::Paused :
-		{
-			return  (stateConfVector[scvi_FSM_System_FSM_System_FSM_System__Internal_FSM_Paused] == FSM::State::Paused);
-			break;
-		}
-		case FSM::State::FSM_System_HeartBeatFailed :
-		{
-			return  (stateConfVector[scvi_FSM_System_HeartBeatFailed] == FSM::State::FSM_System_HeartBeatFailed);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP] >= FSM::State::FSM_Festo1_Signaling_FSM_LAMP && stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP] <= FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp] >= FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp && stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp] <= FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off] == FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant] == FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz] == FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ] == FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off] == FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant] == FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ] == FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off] == FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant] == FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ] == FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ] == FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ);
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ :
-		{
-			return  (stateConfVector[scvi_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ] == FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ);
-			break;
-		}
 		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress :
 		{
 			return  (stateConfVector[scvi_FSM_Festo2__Ingress_FSM_Festo2__Ingress] >= FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress && stateConfVector[scvi_FSM_Festo2__Ingress_FSM_Festo2__Ingress] <= FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_ErrorFST2);
@@ -2554,11 +2476,6 @@ bool FSM::isStateActive(State state) const noexcept
 		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle :
 		{
 			return  (stateConfVector[scvi_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle] == FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance] == FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance);
 			break;
 		}
 		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected :
@@ -2724,71 +2641,6 @@ bool FSM::isStateActive(State state) const noexcept
 		case FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop :
 		{
 			return  (stateConfVector[scvi_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop] == FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP] >= FSM::State::FSM_Festo2__Signaling_FSM_LAMP && stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP] <= FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp] >= FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp && stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp] <= FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off] == FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant] == FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz] == FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ] == FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off] == FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant] == FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ] == FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off] == FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant] == FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ] == FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ);
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ :
-		{
-			return  (stateConfVector[scvi_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ] == FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ);
 			break;
 		}
 		case FSM::State::Evaluate_EvaluateTester :
@@ -3066,6 +2918,271 @@ bool FSM::isStateActive(State state) const noexcept
 			return  (stateConfVector[scvi_FSM_Festo2__Errors_Start] == FSM::State::FSM_Festo2__Errors_Start);
 			break;
 		}
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_RED_FSM_Festo1__LR] >= FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR && stateConfVector[scvi_Festo1__FSM_LAMP_RED_FSM_Festo1__LR] <= FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF] == FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk] == FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk] == FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged] == FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_EStop :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_RED_EStop] == FSM::State::Festo1__FSM_LAMP_RED_EStop);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_HeartbeatFailed :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_RED_HeartbeatFailed] == FSM::State::Festo1__FSM_LAMP_RED_HeartbeatFailed);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG] >= FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG && stateConfVector[scvi_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG] <= FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF] == FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode] == FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing] == FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational] == FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_EStop :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_GREEN_EStop] == FSM::State::Festo1__FSM_LAMP_GREEN_EStop);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_HeartBeatFailed :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_GREEN_HeartBeatFailed] == FSM::State::Festo1__FSM_LAMP_GREEN_HeartBeatFailed);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_Error :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_GREEN_Error] == FSM::State::Festo1__FSM_LAMP_GREEN_Error);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG] >= FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG && stateConfVector[scvi_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG] <= FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF] == FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode] == FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing] == FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational] == FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_EStop :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_GREEN_EStop] == FSM::State::Festo2__FSM_LAMP_GREEN_EStop);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_Error :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_GREEN_Error] == FSM::State::Festo2__FSM_LAMP_GREEN_Error);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY] >= FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY && stateConfVector[scvi_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY] <= FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF] == FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull] == FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_YELLOW_EStop :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_YELLOW_EStop] == FSM::State::Festo1__FSM_LAMP_YELLOW_EStop);
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_YELLOW_HeartbeatFailed :
+		{
+			return  (stateConfVector[scvi_Festo1__FSM_LAMP_YELLOW_HeartbeatFailed] == FSM::State::Festo1__FSM_LAMP_YELLOW_HeartbeatFailed);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_RED_FSM_Festo2__LR] >= FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR && stateConfVector[scvi_Festo2__FSM_LAMP_RED_FSM_Festo2__LR] <= FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF] == FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk] == FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk] == FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged] == FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_EStop :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_RED_EStop] == FSM::State::Festo2__FSM_LAMP_RED_EStop);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY] >= FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY && stateConfVector[scvi_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY] <= FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF] == FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull] == FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull);
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_YELLOW_EStop :
+		{
+			return  (stateConfVector[scvi_Festo2__FSM_LAMP_YELLOW_EStop] == FSM::State::Festo2__FSM_LAMP_YELLOW_EStop);
+			break;
+		}
+		case FSM::State::FSM_SystemV2_HeartBeatFailed :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_HeartBeatFailed] == FSM::State::FSM_SystemV2_HeartBeatFailed);
+			break;
+		}
+		case FSM::State::FSM_SystemV2_FSM_System :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System] >= FSM::State::FSM_SystemV2_FSM_System && stateConfVector[scvi_FSM_SystemV2_FSM_System] <= FSM::State::EStopCalibration);
+			break;
+		}
+		case FSM::State::Festo_FSM_System :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System] >= FSM::State::Festo_FSM_System && stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System] <= FSM::State::Error);
+			break;
+		}
+		case FSM::State::Ready :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready] == FSM::State::Ready);
+			break;
+		}
+		case FSM::State::ServiceMode :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode] == FSM::State::ServiceMode);
+			break;
+		}
+		case FSM::State::Operational :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational] == FSM::State::Operational);
+			break;
+		}
+		case FSM::State::Error :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error] == FSM::State::Error);
+			break;
+		}
+		case FSM::State::EStop :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop] >= FSM::State::EStop && stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop] <= FSM::State::EStop_FSM_EStop__final_);
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_EStopReceived :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived] == FSM::State::EStop_FSM_EStop_EStopReceived);
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_EStopCleared :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopCleared] == FSM::State::EStop_FSM_EStop_EStopCleared);
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR1Pressed :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1Pressed] == FSM::State::EStop_FSM_EStop_BGR1Pressed);
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR2Pressed :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2Pressed] == FSM::State::EStop_FSM_EStop_BGR2Pressed);
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR2PressedAfterBGR1 :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1] == FSM::State::EStop_FSM_EStop_BGR2PressedAfterBGR1);
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR1PressedAfterBGR2 :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2] == FSM::State::EStop_FSM_EStop_BGR1PressedAfterBGR2);
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop__final_ :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_] == FSM::State::EStop_FSM_EStop__final_);
+			break;
+		}
+		case FSM::State::EStopCalibration :
+		{
+			return  (stateConfVector[scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration] == FSM::State::EStopCalibration);
+			break;
+		}
 		default:
 		{
 			/* State is not active*/
@@ -3114,6 +3231,36 @@ bool FSM::getReadyReturn() const noexcept
 void FSM::setReadyReturn(bool readyReturn_) noexcept
 {
 	this->readyReturn = readyReturn_;
+}
+bool FSM::getFst_1_Error() const noexcept
+{
+	return fst_1_Error
+	;
+}
+
+void FSM::setFst_1_Error(bool fst_1_Error_) noexcept
+{
+	this->fst_1_Error = fst_1_Error_;
+}
+bool FSM::getFst_2_Error() const noexcept
+{
+	return fst_2_Error
+	;
+}
+
+void FSM::setFst_2_Error(bool fst_2_Error_) noexcept
+{
+	this->fst_2_Error = fst_2_Error_;
+}
+bool FSM::getFirstTimeOperational() const noexcept
+{
+	return firstTimeOperational
+	;
+}
+
+void FSM::setFirstTimeOperational(bool firstTimeOperational_) noexcept
+{
+	this->firstTimeOperational = firstTimeOperational_;
 }
 bool FSM::getFST_1_HeartBeat() const noexcept
 {
@@ -3762,10 +3909,10 @@ void FSM::enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_
 	completed = true;
 }
 
-/* Entry action for state 'EjectingDivider'. */
-void FSM::enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider()
+/* Entry action for state 'EjectingDiverter'. */
+void FSM::enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter()
 {
-	/* Entry action for state 'EjectingDivider'. */
+	/* Entry action for state 'EjectingDiverter'. */
 	EVALUATE_observable.next();
 	raiseLocal_EVALUATE();
 }
@@ -3823,125 +3970,6 @@ void FSM::enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop()
 	MOTOR_1_STOP_observable.next();
 }
 
-/* Entry action for state 'FSM_System'. */
-void FSM::enact_FSM_System_FSM_System()
-{
-	/* Entry action for state 'FSM_System'. */
-	setCalibrated(false);
-	setEStopCalibratedReturn(false);
-	setServiceModeReturn(false);
-	setReadyReturn(false);
-	setFST_1_HeartBeat(false);
-	setFST_2_HeartBeat(false);
-	setIsEStop1High(false);
-	setIsEStop2High(false);
-	setIsBGR1Pressed(false);
-	setIsBGR2Pressed(false);
-	setFST_1_HM_Counter(0);
-	setFST_1_Sorting_Counter(0);
-	setFST_1_Egress_Counter(0);
-}
-
-/* Entry action for state 'ServiceMode'. */
-void FSM::enact_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode()
-{
-	/* Entry action for state 'ServiceMode'. */
-	SYSTEM_SERVICE_IN_observable.next();
-	raiseLocal_SYSTEM_SERVICE_IN();
-}
-
-/* Entry action for state 'HeartBeatFailed'. */
-void FSM::enact_FSM_System_HeartBeatFailed()
-{
-	/* Entry action for state 'HeartBeatFailed'. */
-	EVALUATE_observable.next();
-	raiseLocal_EVALUATE();
-}
-
-/* Entry action for state 'Off'. */
-void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off()
-{
-	/* Entry action for state 'Off'. */
-	LG1_OFF_observable.next();
-}
-
-/* Entry action for state 'Constant'. */
-void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant()
-{
-	/* Entry action for state 'Constant'. */
-	LG1_ON_observable.next();
-}
-
-/* Entry action for state 'Blinking 1Hz'. */
-void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz()
-{
-	/* Entry action for state 'Blinking 1Hz'. */
-	LG1_BLINKING_1HZ_observable.next();
-}
-
-/* Entry action for state 'Blinking2HZ'. */
-void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ()
-{
-	/* Entry action for state 'Blinking2HZ'. */
-	LG1_BLINKING_2HZ_observable.next();
-}
-
-/* Entry action for state 'Off'. */
-void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off()
-{
-	/* Entry action for state 'Off'. */
-	LY1_OFF_observable.next();
-}
-
-/* Entry action for state 'Constant'. */
-void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant()
-{
-	/* Entry action for state 'Constant'. */
-	LY1_ON_observable.next();
-}
-
-/* Entry action for state 'Blinking1HZ'. */
-void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ()
-{
-	/* Entry action for state 'Blinking1HZ'. */
-	LY1_BLINKING_1HZ_observable.next();
-}
-
-/* Entry action for state 'Off'. */
-void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off()
-{
-	/* Entry action for state 'Off'. */
-	LR1_OFF_observable.next();
-}
-
-/* Entry action for state 'Constant'. */
-void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant()
-{
-	/* Entry action for state 'Constant'. */
-	LR1_ON_observable.next();
-}
-
-/* Entry action for state 'Blinking1HZ'. */
-void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ()
-{
-	/* Entry action for state 'Blinking1HZ'. */
-	LR_1_BLINKING_1HZ_observable.next();
-}
-
-/* Entry action for state 'Blinking0_5HZ'. */
-void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ()
-{
-	/* Entry action for state 'Blinking0_5HZ'. */
-	LR_1_BLINKING_05HZ_observable.next();
-}
-
-/* Entry action for state 'Blinking2HZ'. */
-void FSM::enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ()
-{
-	/* Entry action for state 'Blinking2HZ'. */
-	LR_1_BLINKING_2HZ_observable.next();
-}
-
 /* Entry action for state 'Idle'. */
 void FSM::enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle()
 {
@@ -3976,62 +4004,6 @@ void FSM::enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop()
 {
 	/* Entry action for state 'Stop'. */
 	MOTOR_2_STOP_observable.next();
-}
-
-/* Entry action for state 'Off'. */
-void FSM::enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off()
-{
-	/* Entry action for state 'Off'. */
-	LG2_OFF_observable.next();
-}
-
-/* Entry action for state 'Constant'. */
-void FSM::enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant()
-{
-	/* Entry action for state 'Constant'. */
-	LG2_ON_observable.next();
-}
-
-/* Entry action for state 'Blinking 1Hz'. */
-void FSM::enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz()
-{
-	/* Entry action for state 'Blinking 1Hz'. */
-	LG2_BLINKING_1HZ_observable.next();
-}
-
-/* Entry action for state 'Off'. */
-void FSM::enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off()
-{
-	/* Entry action for state 'Off'. */
-	LY2_OFF_observable.next();
-}
-
-/* Entry action for state 'Constant'. */
-void FSM::enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant()
-{
-	/* Entry action for state 'Constant'. */
-	LY2_ON_observable.next();
-}
-
-/* Entry action for state 'Off'. */
-void FSM::enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off()
-{
-	/* Entry action for state 'Off'. */
-	LR2_OFF_observable.next();
-}
-
-/* Entry action for state 'Constant'. */
-void FSM::enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant()
-{
-	/* Entry action for state 'Constant'. */
-	LR2_ON_observable.next();
-}
-
-/* Entry action for state 'Blinking05HZ'. */
-void FSM::enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ()
-{
-	/* Entry action for state 'Blinking05HZ'. */
-	LR2_BLINKING05HZ_observable.next();
 }
 
 /* Entry action for state 'ErrorinIngressRestart'. */
@@ -4178,31 +4150,319 @@ void FSM::enact_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullR
 	raiseLocal_EVALUATE();
 }
 
-/* Exit action for state 'ServiceMode'. */
-void FSM::exact_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode()
+/* Entry action for state 'OFF'. */
+void FSM::enact_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF()
 {
-	/* Exit action for state 'ServiceMode'. */
-	SYSTEM_SERVICE_OUT_observable.next();
-	raiseLocal_SYSTEM_SERVICE_OUT();
+	/* Entry action for state 'OFF'. */
+	LR1_OFF_observable.next();
 }
 
-/* Exit action for state 'ReceivedReset'. */
-void FSM::exact_FSM_System_FSM_System_FSM_System__Internal_FSM_ReceivedReset()
+/* Entry action for state 'ErrorMissingPuk'. */
+void FSM::enact_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk()
 {
-	/* Exit action for state 'ReceivedReset'. */
-	setCalibrated(false);
-	setEStopCalibratedReturn(false);
-	setServiceModeReturn(false);
-	setReadyReturn(false);
-	setFST_1_HeartBeat(false);
-	setFST_2_HeartBeat(false);
+	/* Entry action for state 'ErrorMissingPuk'. */
+	LR_1_BLINKING_05HZ_observable.next();
+}
+
+/* Entry action for state 'ErrorUnknownPuk'. */
+void FSM::enact_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk()
+{
+	/* Entry action for state 'ErrorUnknownPuk'. */
+	LR_1_BLINKING_1HZ_observable.next();
+}
+
+/* Entry action for state 'ErrorUnknownPukAcknowledged'. */
+void FSM::enact_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged()
+{
+	/* Entry action for state 'ErrorUnknownPukAcknowledged'. */
+	LR1_ON_observable.next();
+}
+
+/* Entry action for state 'EStop'. */
+void FSM::enact_Festo1__FSM_LAMP_RED_EStop()
+{
+	/* Entry action for state 'EStop'. */
+	LR1_ON_observable.next();
+}
+
+/* Entry action for state 'HeartbeatFailed'. */
+void FSM::enact_Festo1__FSM_LAMP_RED_HeartbeatFailed()
+{
+	/* Entry action for state 'HeartbeatFailed'. */
+	LR_1_BLINKING_2HZ_observable.next();
+}
+
+/* Entry action for state 'OFF'. */
+void FSM::enact_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF()
+{
+	/* Entry action for state 'OFF'. */
+	LG1_OFF_observable.next();
+}
+
+/* Entry action for state 'ServiceMode'. */
+void FSM::enact_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode()
+{
+	/* Entry action for state 'ServiceMode'. */
+	LG1_BLINKING_1HZ_observable.next();
+}
+
+/* Entry action for state 'Distancing'. */
+void FSM::enact_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing()
+{
+	/* Entry action for state 'Distancing'. */
+	LG1_BLINKING_2HZ_observable.next();
+}
+
+/* Entry action for state 'operational'. */
+void FSM::enact_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational()
+{
+	/* Entry action for state 'operational'. */
+	LG1_ON_observable.next();
+}
+
+/* Entry action for state 'EStop'. */
+void FSM::enact_Festo1__FSM_LAMP_GREEN_EStop()
+{
+	/* Entry action for state 'EStop'. */
+	LG1_ON_observable.next();
+}
+
+/* Entry action for state 'HeartBeatFailed'. */
+void FSM::enact_Festo1__FSM_LAMP_GREEN_HeartBeatFailed()
+{
+	/* Entry action for state 'HeartBeatFailed'. */
+	LG1_OFF_observable.next();
+}
+
+/* Entry action for state 'Error'. */
+void FSM::enact_Festo1__FSM_LAMP_GREEN_Error()
+{
+	/* Entry action for state 'Error'. */
+	LG1_OFF_observable.next();
+}
+
+/* Entry action for state 'OFF'. */
+void FSM::enact_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF()
+{
+	/* Entry action for state 'OFF'. */
+	LG2_OFF_observable.next();
+}
+
+/* Entry action for state 'ServiceMode'. */
+void FSM::enact_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode()
+{
+	/* Entry action for state 'ServiceMode'. */
+	LG2_BLINKING_1HZ_observable.next();
+}
+
+/* Entry action for state 'Distancing'. */
+void FSM::enact_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing()
+{
+	/* Entry action for state 'Distancing'. */
+	LG_2_BLINKING_2HZ_observable.next();
+}
+
+/* Entry action for state 'Operational'. */
+void FSM::enact_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational()
+{
+	/* Entry action for state 'Operational'. */
+	LG2_ON_observable.next();
+}
+
+/* Entry action for state 'EStop'. */
+void FSM::enact_Festo2__FSM_LAMP_GREEN_EStop()
+{
+	/* Entry action for state 'EStop'. */
+	LG2_ON_observable.next();
+}
+
+/* Entry action for state 'Error'. */
+void FSM::enact_Festo2__FSM_LAMP_GREEN_Error()
+{
+	/* Entry action for state 'Error'. */
+	LG2_OFF_observable.next();
+}
+
+/* Entry action for state 'OFF'. */
+void FSM::enact_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF()
+{
+	/* Entry action for state 'OFF'. */
+	LY1_OFF_observable.next();
+	EVALUATE_observable.next();
+	raiseLocal_EVALUATE();
+}
+
+/* Entry action for state 'RampFull'. */
+void FSM::enact_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull()
+{
+	/* Entry action for state 'RampFull'. */
+	LY1_ON_observable.next();
+	EVALUATE_observable.next();
+	raiseLocal_EVALUATE();
+}
+
+/* Entry action for state 'EStop'. */
+void FSM::enact_Festo1__FSM_LAMP_YELLOW_EStop()
+{
+	/* Entry action for state 'EStop'. */
+	LY1_ON_observable.next();
+}
+
+/* Entry action for state 'HeartbeatFailed'. */
+void FSM::enact_Festo1__FSM_LAMP_YELLOW_HeartbeatFailed()
+{
+	/* Entry action for state 'HeartbeatFailed'. */
+	LY1_OFF_observable.next();
+}
+
+/* Entry action for state 'OFF'. */
+void FSM::enact_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF()
+{
+	/* Entry action for state 'OFF'. */
+	LR2_OFF_observable.next();
+}
+
+/* Entry action for state 'ErrorMissingPuk'. */
+void FSM::enact_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk()
+{
+	/* Entry action for state 'ErrorMissingPuk'. */
+	LR2_BLINKING05HZ_observable.next();
+}
+
+/* Entry action for state 'ErrorUnknownPuk'. */
+void FSM::enact_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk()
+{
+	/* Entry action for state 'ErrorUnknownPuk'. */
+	LR2_BLINKING1HZ_observable.next();
+}
+
+/* Entry action for state 'ErrorUnknownPukAcknowledged'. */
+void FSM::enact_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged()
+{
+	/* Entry action for state 'ErrorUnknownPukAcknowledged'. */
+	LR2_ON_observable.next();
+}
+
+/* Entry action for state 'EStop'. */
+void FSM::enact_Festo2__FSM_LAMP_RED_EStop()
+{
+	/* Entry action for state 'EStop'. */
+	LR2_ON_observable.next();
+}
+
+/* Entry action for state 'OFF'. */
+void FSM::enact_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF()
+{
+	/* Entry action for state 'OFF'. */
+	LY2_OFF_observable.next();
+}
+
+/* Entry action for state 'RampFull'. */
+void FSM::enact_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull()
+{
+	/* Entry action for state 'RampFull'. */
+	LY2_ON_observable.next();
+}
+
+/* Entry action for state 'EStop'. */
+void FSM::enact_Festo2__FSM_LAMP_YELLOW_EStop()
+{
+	/* Entry action for state 'EStop'. */
+	LY2_ON_observable.next();
+}
+
+/* Entry action for state 'FSM_System'. */
+void FSM::enact_FSM_SystemV2_FSM_System()
+{
+	/* Entry action for state 'FSM_System'. */
 	setIsEStop1High(false);
 	setIsEStop2High(false);
+}
+
+/* Entry action for state 'Festo:FSM_System'. */
+void FSM::enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System()
+{
+	/* Entry action for state 'Festo:FSM_System'. */
+	setFST_1_HeartBeat(false);
+	setFST_2_HeartBeat(false);
+	setFst_1_Error(false);
+	setFst_2_Error(false);
+	setFST1RampFull(false);
+	setFST1isMetal(false);
+	setFst_2_ready(true);
+	setFST2RampFull(false);
+	setFST2isMetal(false);
+	setLbf_1_isOpen(true);
+	setHs_1_isOpen(true);
+	setLbm_1_isOpen(true);
+	setLbe_1_isOpen(true);
+	setLbr_1_isOpen(true);
+	setLbf_2_isOpen(true);
+	setHs_2_isOpen(true);
+	setLbm_2_isOpen(true);
+	setLbe_2_isOpen(true);
+	setLbr_2_isOpen(true);
+	setMotor1Stop(0);
+	setMotor1Slow(0);
+	setMotor1Forward(0);
+	setMotor2Stop(0);
+	setMotor2Slow(0);
+	setMotor2Forward(0);
+	setFirstTimeOperational(true);
+	Q11_OFF_observable.next();
+	Q12_OFF_observable.next();
+	Q21_OFF_observable.next();
+	Q22_OFF_observable.next();
+	EVALUATE_observable.next();
+	raiseLocal_EVALUATE();
+}
+
+/* Entry action for state 'Ready'. */
+void FSM::enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready()
+{
+	/* Entry action for state 'Ready'. */
+	setLbf_1_isOpenCopy(lbf_1_isOpen);
+	setHs_1_isOpenCopy(hs_1_isOpen);
+	setLbm_1_isOpenCopy(lbm_1_isOpen);
+	setLbe_1_isOpenCopy(lbe_1_isOpen);
+	setLbr_1_isOpenCopy(lbr_1_isOpen);
+	setLbf_2_isOpenCopy(lbf_2_isOpen);
+	setHs_2_isOpenCopy(hs_2_isOpen);
+	setLbm_2_isOpenCopy(lbm_2_isOpen);
+	setLbe_2_isOpenCopy(lbe_2_isOpen);
+	setLbr_2_isOpenCopy(lbr_2_isOpen);
+	EVALUATE_observable.next();
+	raiseLocal_EVALUATE();
+}
+
+/* Entry action for state 'Operational'. */
+void FSM::enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational()
+{
+	/* Entry action for state 'Operational'. */
+	setFirstTimeOperational(false);
+}
+
+/* Entry action for state 'EStopReceived'. */
+void FSM::enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived()
+{
+	/* Entry action for state 'EStopReceived'. */
 	setIsBGR1Pressed(false);
 	setIsBGR2Pressed(false);
-	setFST_1_HM_Counter(0);
-	setFST_1_Sorting_Counter(0);
-	setFST_1_Egress_Counter(0);
+}
+
+void FSM::enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1()
+{
+	completed = true;
+}
+
+void FSM::enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2()
+{
+	completed = true;
+}
+
+void FSM::enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_()
+{
+	completed = true;
 }
 
 /* 'default' enter sequence for state FSM_Festo1: Ingress */
@@ -4437,12 +4697,12 @@ void FSM::enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sortin
 	historyVector[3] = stateConfVector[2];
 }
 
-/* 'default' enter sequence for state EjectingDivider */
-void FSM::enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider_default()
+/* 'default' enter sequence for state EjectingDiverter */
+void FSM::enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter_default()
 {
-	/* 'default' enter sequence for state EjectingDivider */
-	enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider();
-	stateConfVector[2] = FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider;
+	/* 'default' enter sequence for state EjectingDiverter */
+	enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter();
+	stateConfVector[2] = FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter;
 	stateConfVectorPosition = 2;
 	historyVector[3] = stateConfVector[2];
 }
@@ -4635,220 +4895,6 @@ void FSM::enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_default(
 	stateConfVectorPosition = 4;
 }
 
-/* 'default' enter sequence for state FSM_System */
-void FSM::enseq_FSM_System_FSM_System_default()
-{
-	/* 'default' enter sequence for state FSM_System */
-	enact_FSM_System_FSM_System();
-	enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_default();
-}
-
-/* 'default' enter sequence for state Start */
-void FSM::enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start_default()
-{
-	/* 'default' enter sequence for state Start */
-	stateConfVector[5] = FSM::State::Start;
-	stateConfVectorPosition = 5;
-}
-
-/* 'default' enter sequence for state EStopCleared */
-void FSM::enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared_default()
-{
-	/* 'default' enter sequence for state EStopCleared */
-	stateConfVector[5] = FSM::State::EStopCleared;
-	stateConfVectorPosition = 5;
-}
-
-/* 'default' enter sequence for state EStopReceived */
-void FSM::enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default()
-{
-	/* 'default' enter sequence for state EStopReceived */
-	stateConfVector[5] = FSM::State::EStopReceived;
-	stateConfVectorPosition = 5;
-}
-
-/* 'default' enter sequence for state EStopCalibration */
-void FSM::enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCalibration_default()
-{
-	/* 'default' enter sequence for state EStopCalibration */
-	stateConfVector[5] = FSM::State::EStopCalibration;
-	stateConfVectorPosition = 5;
-}
-
-/* 'default' enter sequence for state Operational */
-void FSM::enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Operational_default()
-{
-	/* 'default' enter sequence for state Operational */
-	stateConfVector[5] = FSM::State::Operational;
-	stateConfVectorPosition = 5;
-}
-
-/* 'default' enter sequence for state ServiceMode */
-void FSM::enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode_default()
-{
-	/* 'default' enter sequence for state ServiceMode */
-	enact_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode();
-	stateConfVector[5] = FSM::State::ServiceMode;
-	stateConfVectorPosition = 5;
-}
-
-/* 'default' enter sequence for state ReceivedReset */
-void FSM::enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ReceivedReset_default()
-{
-	/* 'default' enter sequence for state ReceivedReset */
-	stateConfVector[5] = FSM::State::ReceivedReset;
-	stateConfVectorPosition = 5;
-}
-
-/* 'default' enter sequence for state Ready */
-void FSM::enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready_default()
-{
-	/* 'default' enter sequence for state Ready */
-	stateConfVector[5] = FSM::State::Ready;
-	stateConfVectorPosition = 5;
-}
-
-/* 'default' enter sequence for state Paused */
-void FSM::enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Paused_default()
-{
-	/* 'default' enter sequence for state Paused */
-	stateConfVector[5] = FSM::State::Paused;
-	stateConfVectorPosition = 5;
-}
-
-/* 'default' enter sequence for state HeartBeatFailed */
-void FSM::enseq_FSM_System_HeartBeatFailed_default()
-{
-	/* 'default' enter sequence for state HeartBeatFailed */
-	enact_FSM_System_HeartBeatFailed();
-	stateConfVector[5] = FSM::State::FSM_System_HeartBeatFailed;
-	stateConfVectorPosition = 5;
-}
-
-/* 'default' enter sequence for state FSM_LAMP */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_default()
-{
-	/* 'default' enter sequence for state FSM_LAMP */
-	enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_default();
-}
-
-/* 'default' enter sequence for state FSM_Lamp */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_default()
-{
-	/* 'default' enter sequence for state FSM_Lamp */
-	enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_default();
-	enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_default();
-	enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_default();
-}
-
-/* 'default' enter sequence for state Off */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default()
-{
-	/* 'default' enter sequence for state Off */
-	enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-	stateConfVector[6] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off;
-	stateConfVectorPosition = 6;
-}
-
-/* 'default' enter sequence for state Constant */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default()
-{
-	/* 'default' enter sequence for state Constant */
-	enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
-	stateConfVector[6] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant;
-	stateConfVectorPosition = 6;
-}
-
-/* 'default' enter sequence for state Blinking 1Hz */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_default()
-{
-	/* 'default' enter sequence for state Blinking 1Hz */
-	enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
-	stateConfVector[6] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz;
-	stateConfVectorPosition = 6;
-}
-
-/* 'default' enter sequence for state Blinking2HZ */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ_default()
-{
-	/* 'default' enter sequence for state Blinking2HZ */
-	enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ();
-	stateConfVector[6] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ;
-	stateConfVectorPosition = 6;
-}
-
-/* 'default' enter sequence for state Off */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default()
-{
-	/* 'default' enter sequence for state Off */
-	enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
-	stateConfVector[7] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off;
-	stateConfVectorPosition = 7;
-}
-
-/* 'default' enter sequence for state Constant */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default()
-{
-	/* 'default' enter sequence for state Constant */
-	enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant();
-	stateConfVector[7] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant;
-	stateConfVectorPosition = 7;
-}
-
-/* 'default' enter sequence for state Blinking1HZ */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ_default()
-{
-	/* 'default' enter sequence for state Blinking1HZ */
-	enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ();
-	stateConfVector[7] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ;
-	stateConfVectorPosition = 7;
-}
-
-/* 'default' enter sequence for state Off */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default()
-{
-	/* 'default' enter sequence for state Off */
-	enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-	stateConfVector[8] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off;
-	stateConfVectorPosition = 8;
-}
-
-/* 'default' enter sequence for state Constant */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default()
-{
-	/* 'default' enter sequence for state Constant */
-	enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-	stateConfVector[8] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant;
-	stateConfVectorPosition = 8;
-}
-
-/* 'default' enter sequence for state Blinking1HZ */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ_default()
-{
-	/* 'default' enter sequence for state Blinking1HZ */
-	enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ();
-	stateConfVector[8] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ;
-	stateConfVectorPosition = 8;
-}
-
-/* 'default' enter sequence for state Blinking0_5HZ */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ_default()
-{
-	/* 'default' enter sequence for state Blinking0_5HZ */
-	enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ();
-	stateConfVector[8] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ;
-	stateConfVectorPosition = 8;
-}
-
-/* 'default' enter sequence for state Blinking2HZ */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ_default()
-{
-	/* 'default' enter sequence for state Blinking2HZ */
-	enact_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ();
-	stateConfVector[8] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ;
-	stateConfVectorPosition = 8;
-}
-
 /* 'default' enter sequence for state FSM_Festo2: Ingress */
 void FSM::enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_default()
 {
@@ -4867,68 +4913,59 @@ void FSM::enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingres
 void FSM::enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle_default()
 {
 	/* 'default' enter sequence for state Idle */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle;
-	stateConfVectorPosition = 9;
-	historyVector[5] = stateConfVector[9];
-}
-
-/* 'default' enter sequence for state CreatingDistance */
-void FSM::enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance_default()
-{
-	/* 'default' enter sequence for state CreatingDistance */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance;
-	stateConfVectorPosition = 9;
-	historyVector[5] = stateConfVector[9];
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle;
+	stateConfVectorPosition = 5;
+	historyVector[5] = stateConfVector[5];
 }
 
 /* 'default' enter sequence for state PukExpected */
 void FSM::enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected_default()
 {
 	/* 'default' enter sequence for state PukExpected */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected;
-	stateConfVectorPosition = 9;
-	historyVector[5] = stateConfVector[9];
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected;
+	stateConfVectorPosition = 5;
+	historyVector[5] = stateConfVector[5];
 }
 
 /* 'default' enter sequence for state PukinLBF2 */
 void FSM::enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukinLBF2_default()
 {
 	/* 'default' enter sequence for state PukinLBF2 */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukinLBF2;
-	stateConfVectorPosition = 9;
-	historyVector[5] = stateConfVector[9];
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukinLBF2;
+	stateConfVectorPosition = 5;
+	historyVector[5] = stateConfVector[5];
 }
 
 /* 'default' enter sequence for state Stop */
 void FSM::enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Stop_default()
 {
 	/* 'default' enter sequence for state Stop */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Stop;
-	stateConfVectorPosition = 9;
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Stop;
+	stateConfVectorPosition = 5;
 }
 
 /* 'default' enter sequence for state Start */
 void FSM::enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Start_default()
 {
 	/* 'default' enter sequence for state Start */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Start;
-	stateConfVectorPosition = 9;
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Start;
+	stateConfVectorPosition = 5;
 }
 
 /* 'default' enter sequence for state ErrorFST2 */
 void FSM::enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_ErrorFST2_default()
 {
 	/* 'default' enter sequence for state ErrorFST2 */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_ErrorFST2;
-	stateConfVectorPosition = 9;
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_ErrorFST2;
+	stateConfVectorPosition = 5;
 }
 
 /* 'default' enter sequence for state ESTOP||HEARTBEATFAILED */
 void FSM::enseq_FSM_Festo2__Ingress_ESTOP__HEARTBEATFAILED_default()
 {
 	/* 'default' enter sequence for state ESTOP||HEARTBEATFAILED */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_ESTOP__HEARTBEATFAILED;
-	stateConfVectorPosition = 9;
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_ESTOP__HEARTBEATFAILED;
+	stateConfVectorPosition = 5;
 }
 
 /* 'default' enter sequence for state FSM_Festo2: HeightMeasurement */
@@ -4950,18 +4987,18 @@ void FSM::enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_
 {
 	/* 'default' enter sequence for state Idle */
 	enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle();
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle;
-	stateConfVectorPosition = 10;
-	historyVector[6] = stateConfVector[10];
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle;
+	stateConfVectorPosition = 6;
+	historyVector[6] = stateConfVector[6];
 }
 
 /* 'default' enter sequence for state PukExpected */
 void FSM::enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_PukExpected_default()
 {
 	/* 'default' enter sequence for state PukExpected */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_PukExpected;
-	stateConfVectorPosition = 10;
-	historyVector[6] = stateConfVector[10];
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_PukExpected;
+	stateConfVectorPosition = 6;
+	historyVector[6] = stateConfVector[6];
 }
 
 /* 'default' enter sequence for state Measuring */
@@ -4969,39 +5006,39 @@ void FSM::enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_
 {
 	/* 'default' enter sequence for state Measuring */
 	enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_default();
-	historyVector[6] = stateConfVector[10];
+	historyVector[6] = stateConfVector[6];
 }
 
 /* 'default' enter sequence for state A */
 void FSM::enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_A_default()
 {
 	/* 'default' enter sequence for state A */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_A;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_A;
+	stateConfVectorPosition = 6;
 }
 
 /* 'default' enter sequence for state B */
 void FSM::enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_B_default()
 {
 	/* 'default' enter sequence for state B */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_B;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_B;
+	stateConfVectorPosition = 6;
 }
 
 /* 'default' enter sequence for state C */
 void FSM::enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_C_default()
 {
 	/* 'default' enter sequence for state C */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_C;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_C;
+	stateConfVectorPosition = 6;
 }
 
 /* 'default' enter sequence for state Error */
 void FSM::enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error_default()
 {
 	/* 'default' enter sequence for state Error */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error;
+	stateConfVectorPosition = 6;
 }
 
 /* Default enter sequence for final state */
@@ -5009,40 +5046,40 @@ void FSM::enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_
 {
 	/* Default enter sequence for final state */
 	enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final_();
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final_;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final_;
+	stateConfVectorPosition = 6;
 }
 
 /* 'default' enter sequence for state Start */
 void FSM::enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_Start_default()
 {
 	/* 'default' enter sequence for state Start */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_Start;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_Start;
+	stateConfVectorPosition = 6;
 }
 
 /* 'default' enter sequence for state Stop */
 void FSM::enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_Stop_default()
 {
 	/* 'default' enter sequence for state Stop */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_Stop;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_Stop;
+	stateConfVectorPosition = 6;
 }
 
 /* 'default' enter sequence for state FST2Error */
 void FSM::enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_FST2Error_default()
 {
 	/* 'default' enter sequence for state FST2Error */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_FST2Error;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_FST2Error;
+	stateConfVectorPosition = 6;
 }
 
 /* 'default' enter sequence for state ESTOP||HEARTBEATFAILED */
 void FSM::enseq_FSM_Festo2__HeightMeasurement_ESTOP__HEARTBEATFAILED_default()
 {
 	/* 'default' enter sequence for state ESTOP||HEARTBEATFAILED */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_ESTOP__HEARTBEATFAILED;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_ESTOP__HEARTBEATFAILED;
+	stateConfVectorPosition = 6;
 }
 
 /* 'default' enter sequence for state FSM_Festo2: Egress */
@@ -5063,59 +5100,59 @@ void FSM::enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_E
 void FSM::enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE_default()
 {
 	/* 'default' enter sequence for state IDLE */
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE;
-	stateConfVectorPosition = 11;
-	historyVector[7] = stateConfVector[11];
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE;
+	stateConfVectorPosition = 7;
+	historyVector[7] = stateConfVector[7];
 }
 
 /* 'default' enter sequence for state Transfer */
 void FSM::enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_Transfer_default()
 {
 	/* 'default' enter sequence for state Transfer */
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_Transfer;
-	stateConfVectorPosition = 11;
-	historyVector[7] = stateConfVector[11];
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_Transfer;
+	stateConfVectorPosition = 7;
+	historyVector[7] = stateConfVector[7];
 }
 
 /* 'default' enter sequence for state PukExpected */
 void FSM::enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_PukExpected_default()
 {
 	/* 'default' enter sequence for state PukExpected */
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_PukExpected;
-	stateConfVectorPosition = 11;
-	historyVector[7] = stateConfVector[11];
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_PukExpected;
+	stateConfVectorPosition = 7;
+	historyVector[7] = stateConfVector[7];
 }
 
 /* 'default' enter sequence for state Start */
 void FSM::enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Start_default()
 {
 	/* 'default' enter sequence for state Start */
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Start;
-	stateConfVectorPosition = 11;
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Start;
+	stateConfVectorPosition = 7;
 }
 
 /* 'default' enter sequence for state Stop */
 void FSM::enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Stop_default()
 {
 	/* 'default' enter sequence for state Stop */
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Stop;
-	stateConfVectorPosition = 11;
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Stop;
+	stateConfVectorPosition = 7;
 }
 
 /* 'default' enter sequence for state ErrorFST2 */
 void FSM::enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_ErrorFST2_default()
 {
 	/* 'default' enter sequence for state ErrorFST2 */
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_ErrorFST2;
-	stateConfVectorPosition = 11;
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_ErrorFST2;
+	stateConfVectorPosition = 7;
 }
 
 /* 'default' enter sequence for state ESTOP||HEARTBEATFAILED */
 void FSM::enseq_FSM_Festo2__Egress_ESTOP__HEARTBEATFAILED_default()
 {
 	/* 'default' enter sequence for state ESTOP||HEARTBEATFAILED */
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_ESTOP__HEARTBEATFAILED;
-	stateConfVectorPosition = 11;
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_ESTOP__HEARTBEATFAILED;
+	stateConfVectorPosition = 7;
 }
 
 /* 'default' enter sequence for state SystemMotor */
@@ -5130,8 +5167,8 @@ void FSM::enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_default()
 {
 	/* 'default' enter sequence for state Forward */
 	enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
-	stateConfVector[12] = FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward;
-	stateConfVectorPosition = 12;
+	stateConfVector[8] = FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward;
+	stateConfVectorPosition = 8;
 }
 
 /* 'default' enter sequence for state Slow */
@@ -5139,8 +5176,8 @@ void FSM::enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default()
 {
 	/* 'default' enter sequence for state Slow */
 	enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
-	stateConfVector[12] = FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow;
-	stateConfVectorPosition = 12;
+	stateConfVector[8] = FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow;
+	stateConfVectorPosition = 8;
 }
 
 /* 'default' enter sequence for state Stop */
@@ -5148,128 +5185,16 @@ void FSM::enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default()
 {
 	/* 'default' enter sequence for state Stop */
 	enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
-	stateConfVector[12] = FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop;
-	stateConfVectorPosition = 12;
-}
-
-/* 'default' enter sequence for state FSM_LAMP */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_default()
-{
-	/* 'default' enter sequence for state FSM_LAMP */
-	enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_default();
-}
-
-/* 'default' enter sequence for state FSM_Lamp */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_default()
-{
-	/* 'default' enter sequence for state FSM_Lamp */
-	enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_default();
-	enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_default();
-	enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_default();
-}
-
-/* 'default' enter sequence for state Off */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default()
-{
-	/* 'default' enter sequence for state Off */
-	enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-	stateConfVector[13] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off;
-	stateConfVectorPosition = 13;
-}
-
-/* 'default' enter sequence for state Constant */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default()
-{
-	/* 'default' enter sequence for state Constant */
-	enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
-	stateConfVector[13] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant;
-	stateConfVectorPosition = 13;
-}
-
-/* 'default' enter sequence for state Blinking 1Hz */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_default()
-{
-	/* 'default' enter sequence for state Blinking 1Hz */
-	enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
-	stateConfVector[13] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz;
-	stateConfVectorPosition = 13;
-}
-
-/* 'default' enter sequence for state Blinking2HZ */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ_default()
-{
-	/* 'default' enter sequence for state Blinking2HZ */
-	stateConfVector[13] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ;
-	stateConfVectorPosition = 13;
-}
-
-/* 'default' enter sequence for state Off */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default()
-{
-	/* 'default' enter sequence for state Off */
-	enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
-	stateConfVector[14] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off;
-	stateConfVectorPosition = 14;
-}
-
-/* 'default' enter sequence for state Constant */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default()
-{
-	/* 'default' enter sequence for state Constant */
-	enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant();
-	stateConfVector[14] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant;
-	stateConfVectorPosition = 14;
-}
-
-/* 'default' enter sequence for state Blinking1HZ */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ_default()
-{
-	/* 'default' enter sequence for state Blinking1HZ */
-	stateConfVector[14] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ;
-	stateConfVectorPosition = 14;
-}
-
-/* 'default' enter sequence for state Off */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default()
-{
-	/* 'default' enter sequence for state Off */
-	enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-	stateConfVector[15] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off;
-	stateConfVectorPosition = 15;
-}
-
-/* 'default' enter sequence for state Constant */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default()
-{
-	/* 'default' enter sequence for state Constant */
-	enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-	stateConfVector[15] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant;
-	stateConfVectorPosition = 15;
-}
-
-/* 'default' enter sequence for state Blinking1HZ */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ_default()
-{
-	/* 'default' enter sequence for state Blinking1HZ */
-	stateConfVector[15] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ;
-	stateConfVectorPosition = 15;
-}
-
-/* 'default' enter sequence for state Blinking05HZ */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ_default()
-{
-	/* 'default' enter sequence for state Blinking05HZ */
-	enact_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ();
-	stateConfVector[15] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ;
-	stateConfVectorPosition = 15;
+	stateConfVector[8] = FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop;
+	stateConfVectorPosition = 8;
 }
 
 /* 'default' enter sequence for state EvaluateTester */
 void FSM::enseq_Evaluate_EvaluateTester_default()
 {
 	/* 'default' enter sequence for state EvaluateTester */
-	stateConfVector[16] = FSM::State::Evaluate_EvaluateTester;
-	stateConfVectorPosition = 16;
+	stateConfVector[9] = FSM::State::Evaluate_EvaluateTester;
+	stateConfVectorPosition = 9;
 }
 
 /* 'default' enter sequence for state FSM_Errors */
@@ -5283,16 +5208,16 @@ void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_default()
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMRestart_default()
 {
 	/* 'default' enter sequence for state ErrorinHMRestart */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMRestart;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMRestart;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorinSortingPukUnacknowledged */
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingPukUnacknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorinSortingPukUnacknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingPukUnacknowledged;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingPukUnacknowledged;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorinIngressRestart */
@@ -5300,64 +5225,64 @@ void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Errori
 {
 	/* 'default' enter sequence for state ErrorinIngressRestart */
 	enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressRestart();
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressRestart;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressRestart;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorinSortingPukAcknowledged */
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingPukAcknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorinSortingPukAcknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingPukAcknowledged;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingPukAcknowledged;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state Idle */
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default()
 {
 	/* 'default' enter sequence for state Idle */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorinSortingRestart */
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingRestart_default()
 {
 	/* 'default' enter sequence for state ErrorinSortingRestart */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingRestart;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingRestart;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorinEgressMissingPukAcknowledged */
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressMissingPukAcknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorinEgressMissingPukAcknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressMissingPukAcknowledged;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressMissingPukAcknowledged;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorinEgressPukUnacknowledged */
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressPukUnacknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorinEgressPukUnacknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressPukUnacknowledged;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressPukUnacknowledged;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorinHMPukAcknowledged */
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMPukAcknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorinHMPukAcknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMPukAcknowledged;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMPukAcknowledged;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorinHMUnacknowledged */
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMUnacknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorinHMUnacknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMUnacknowledged;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMUnacknowledged;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorinIngressAcknowledged */
@@ -5365,64 +5290,64 @@ void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Errori
 {
 	/* 'default' enter sequence for state ErrorinIngressAcknowledged */
 	enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressAcknowledged();
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressAcknowledged;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressAcknowledged;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorinIngressUnacknowledged */
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressUnacknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorinIngressUnacknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressUnacknowledged;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressUnacknowledged;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorinEgressRestart */
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressRestart_default()
 {
 	/* 'default' enter sequence for state ErrorinEgressRestart */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressRestart;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressRestart;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorRampFullUnacknowledged */
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorRampFullUnacknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorRampFullUnacknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorRampFullUnacknowledged;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorRampFullUnacknowledged;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorRampFullAcknowledged */
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorRampFullAcknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorRampFullAcknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorRampFullAcknowledged;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorRampFullAcknowledged;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state ErrorinRampRestart */
 void FSM::enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinRampRestart_default()
 {
 	/* 'default' enter sequence for state ErrorinRampRestart */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinRampRestart;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinRampRestart;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state EStop */
 void FSM::enseq_FSM_Festo1__Errors_EStop_default()
 {
 	/* 'default' enter sequence for state EStop */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_EStop;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_EStop;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state Start */
 void FSM::enseq_FSM_Festo1__Errors_Start_default()
 {
 	/* 'default' enter sequence for state Start */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_Start;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_Start;
+	stateConfVectorPosition = 10;
 }
 
 /* 'default' enter sequence for state FSM_Festo2: Sorting */
@@ -5443,18 +5368,18 @@ void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sortin
 void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle_default()
 {
 	/* 'default' enter sequence for state Idle */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle;
-	stateConfVectorPosition = 18;
-	historyVector[8] = stateConfVector[18];
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle;
+	stateConfVectorPosition = 11;
+	historyVector[8] = stateConfVector[11];
 }
 
 /* 'default' enter sequence for state PukExpected */
 void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_PukExpected_default()
 {
 	/* 'default' enter sequence for state PukExpected */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_PukExpected;
-	stateConfVectorPosition = 18;
-	historyVector[8] = stateConfVector[18];
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_PukExpected;
+	stateConfVectorPosition = 11;
+	historyVector[8] = stateConfVector[11];
 }
 
 /* 'default' enter sequence for state Evaluate */
@@ -5462,9 +5387,9 @@ void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sortin
 {
 	/* 'default' enter sequence for state Evaluate */
 	enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate();
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate;
-	stateConfVectorPosition = 18;
-	historyVector[8] = stateConfVector[18];
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate;
+	stateConfVectorPosition = 11;
+	historyVector[8] = stateConfVector[11];
 }
 
 /* 'default' enter sequence for state EjectingDiverter */
@@ -5472,9 +5397,9 @@ void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sortin
 {
 	/* 'default' enter sequence for state EjectingDiverter */
 	enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingDiverter();
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingDiverter;
-	stateConfVectorPosition = 18;
-	historyVector[8] = stateConfVector[18];
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingDiverter;
+	stateConfVectorPosition = 11;
+	historyVector[8] = stateConfVector[11];
 }
 
 /* 'default' enter sequence for state TransferEjector */
@@ -5482,9 +5407,9 @@ void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sortin
 {
 	/* 'default' enter sequence for state TransferEjector */
 	enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferEjector();
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferEjector;
-	stateConfVectorPosition = 18;
-	historyVector[8] = stateConfVector[18];
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferEjector;
+	stateConfVectorPosition = 11;
+	historyVector[8] = stateConfVector[11];
 }
 
 /* 'default' enter sequence for state TransferDivider */
@@ -5492,9 +5417,9 @@ void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sortin
 {
 	/* 'default' enter sequence for state TransferDivider */
 	enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferDivider();
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferDivider;
-	stateConfVectorPosition = 18;
-	historyVector[8] = stateConfVector[18];
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferDivider;
+	stateConfVectorPosition = 11;
+	historyVector[8] = stateConfVector[11];
 }
 
 /* 'default' enter sequence for state EjectingEjector */
@@ -5502,9 +5427,9 @@ void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sortin
 {
 	/* 'default' enter sequence for state EjectingEjector */
 	enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingEjector();
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingEjector;
-	stateConfVectorPosition = 18;
-	historyVector[8] = stateConfVector[18];
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingEjector;
+	stateConfVectorPosition = 11;
+	historyVector[8] = stateConfVector[11];
 }
 
 /* 'default' enter sequence for state EvaluateCounter */
@@ -5512,59 +5437,59 @@ void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sortin
 {
 	/* 'default' enter sequence for state EvaluateCounter */
 	enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EvaluateCounter();
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EvaluateCounter;
-	stateConfVectorPosition = 18;
-	historyVector[8] = stateConfVector[18];
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EvaluateCounter;
+	stateConfVectorPosition = 11;
+	historyVector[8] = stateConfVector[11];
 }
 
 /* 'default' enter sequence for state AwaitingRampClearanceDivider */
 void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_AwaitingRampClearanceDivider_default()
 {
 	/* 'default' enter sequence for state AwaitingRampClearanceDivider */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_AwaitingRampClearanceDivider;
-	stateConfVectorPosition = 18;
-	historyVector[8] = stateConfVector[18];
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_AwaitingRampClearanceDivider;
+	stateConfVectorPosition = 11;
+	historyVector[8] = stateConfVector[11];
 }
 
 /* 'default' enter sequence for state AwaitingRampClearanceEjector */
 void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_AwaitingRampClearanceEjector_default()
 {
 	/* 'default' enter sequence for state AwaitingRampClearanceEjector */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_AwaitingRampClearanceEjector;
-	stateConfVectorPosition = 18;
-	historyVector[8] = stateConfVector[18];
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_AwaitingRampClearanceEjector;
+	stateConfVectorPosition = 11;
+	historyVector[8] = stateConfVector[11];
 }
 
 /* 'default' enter sequence for state Stop */
 void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Stop_default()
 {
 	/* 'default' enter sequence for state Stop */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Stop;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Stop;
+	stateConfVectorPosition = 11;
 }
 
 /* 'default' enter sequence for state Start */
 void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Start_default()
 {
 	/* 'default' enter sequence for state Start */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Start;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Start;
+	stateConfVectorPosition = 11;
 }
 
 /* 'default' enter sequence for state ErrorFST2 */
 void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_ErrorFST2_default()
 {
 	/* 'default' enter sequence for state ErrorFST2 */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_ErrorFST2;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_ErrorFST2;
+	stateConfVectorPosition = 11;
 }
 
 /* 'default' enter sequence for state ESTOP||HEARTBEATFAILED */
 void FSM::enseq_FSM_Festo2__Sorting_ESTOP__HEARTBEATFAILED_default()
 {
 	/* 'default' enter sequence for state ESTOP||HEARTBEATFAILED */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_ESTOP__HEARTBEATFAILED;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_ESTOP__HEARTBEATFAILED;
+	stateConfVectorPosition = 11;
 }
 
 /* 'default' enter sequence for state FSM_Errors */
@@ -5578,8 +5503,8 @@ void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_default()
 void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingUnacknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorinSortingUnacknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingUnacknowledged;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingUnacknowledged;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorinIngressRestart */
@@ -5587,8 +5512,8 @@ void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressRe
 {
 	/* 'default' enter sequence for state ErrorinIngressRestart */
 	enact_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressRestart();
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressRestart;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressRestart;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorinSortingPukAcknowledged */
@@ -5596,16 +5521,16 @@ void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingPu
 {
 	/* 'default' enter sequence for state ErrorinSortingPukAcknowledged */
 	enact_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingPukAcknowledged();
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingPukAcknowledged;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingPukAcknowledged;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state Idle */
 void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default()
 {
 	/* 'default' enter sequence for state Idle */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorinEgressUPRestart */
@@ -5613,16 +5538,16 @@ void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUPR
 {
 	/* 'default' enter sequence for state ErrorinEgressUPRestart */
 	enact_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUPRestart();
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUPRestart;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUPRestart;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorinEgressUnacknowledged */
 void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUnacknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorinEgressUnacknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUnacknowledged;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUnacknowledged;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorinEgressAcknowledged */
@@ -5630,8 +5555,8 @@ void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressAck
 {
 	/* 'default' enter sequence for state ErrorinEgressAcknowledged */
 	enact_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressAcknowledged();
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressAcknowledged;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressAcknowledged;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorinIngressUnacknowledged */
@@ -5639,16 +5564,16 @@ void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressUn
 {
 	/* 'default' enter sequence for state ErrorinIngressUnacknowledged */
 	enact_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressUnacknowledged();
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressUnacknowledged;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressUnacknowledged;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorinIngressAcknowledged */
 void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressAcknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorinIngressAcknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressAcknowledged;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressAcknowledged;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorinHMAcknowledged */
@@ -5656,16 +5581,16 @@ void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMAcknowl
 {
 	/* 'default' enter sequence for state ErrorinHMAcknowledged */
 	enact_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMAcknowledged();
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMAcknowledged;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMAcknowledged;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorinHMUnacknowledged */
 void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMUnacknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorinHMUnacknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMUnacknowledged;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMUnacknowledged;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorinHMRestart */
@@ -5673,8 +5598,8 @@ void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestart
 {
 	/* 'default' enter sequence for state ErrorinHMRestart */
 	enact_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestart();
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestart;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestart;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorinSortingRestart */
@@ -5682,16 +5607,16 @@ void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingRe
 {
 	/* 'default' enter sequence for state ErrorinSortingRestart */
 	enact_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingRestart();
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingRestart;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingRestart;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorRampFullUnacknowledged */
 void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorRampFullUnacknowledged_default()
 {
 	/* 'default' enter sequence for state ErrorRampFullUnacknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorRampFullUnacknowledged;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorRampFullUnacknowledged;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorinRampFullAcknowledged */
@@ -5699,8 +5624,8 @@ void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullA
 {
 	/* 'default' enter sequence for state ErrorinRampFullAcknowledged */
 	enact_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullAcknowledged();
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullAcknowledged;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullAcknowledged;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state ErrorinRampFullRestart */
@@ -5708,23 +5633,476 @@ void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullR
 {
 	/* 'default' enter sequence for state ErrorinRampFullRestart */
 	enact_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullRestart();
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullRestart;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullRestart;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state EStop */
 void FSM::enseq_FSM_Festo2__Errors_EStop_default()
 {
 	/* 'default' enter sequence for state EStop */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_EStop;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_EStop;
+	stateConfVectorPosition = 12;
 }
 
 /* 'default' enter sequence for state Start */
 void FSM::enseq_FSM_Festo2__Errors_Start_default()
 {
 	/* 'default' enter sequence for state Start */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_Start;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_Start;
+	stateConfVectorPosition = 12;
+}
+
+/* 'default' enter sequence for state FSM_Festo1: LR */
+void FSM::enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_default()
+{
+	/* 'default' enter sequence for state FSM_Festo1: LR */
+	enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_default();
+}
+
+/* 'default' enter sequence for state OFF */
+void FSM::enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF_default()
+{
+	/* 'default' enter sequence for state OFF */
+	enact_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF();
+	stateConfVector[13] = FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF;
+	stateConfVectorPosition = 13;
+}
+
+/* 'default' enter sequence for state ErrorMissingPuk */
+void FSM::enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk_default()
+{
+	/* 'default' enter sequence for state ErrorMissingPuk */
+	enact_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk();
+	stateConfVector[13] = FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk;
+	stateConfVectorPosition = 13;
+}
+
+/* 'default' enter sequence for state ErrorUnknownPuk */
+void FSM::enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk_default()
+{
+	/* 'default' enter sequence for state ErrorUnknownPuk */
+	enact_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk();
+	stateConfVector[13] = FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk;
+	stateConfVectorPosition = 13;
+}
+
+/* 'default' enter sequence for state ErrorUnknownPukAcknowledged */
+void FSM::enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged_default()
+{
+	/* 'default' enter sequence for state ErrorUnknownPukAcknowledged */
+	enact_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged();
+	stateConfVector[13] = FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged;
+	stateConfVectorPosition = 13;
+}
+
+/* 'default' enter sequence for state EStop */
+void FSM::enseq_Festo1__FSM_LAMP_RED_EStop_default()
+{
+	/* 'default' enter sequence for state EStop */
+	enact_Festo1__FSM_LAMP_RED_EStop();
+	stateConfVector[13] = FSM::State::Festo1__FSM_LAMP_RED_EStop;
+	stateConfVectorPosition = 13;
+}
+
+/* 'default' enter sequence for state HeartbeatFailed */
+void FSM::enseq_Festo1__FSM_LAMP_RED_HeartbeatFailed_default()
+{
+	/* 'default' enter sequence for state HeartbeatFailed */
+	enact_Festo1__FSM_LAMP_RED_HeartbeatFailed();
+	stateConfVector[13] = FSM::State::Festo1__FSM_LAMP_RED_HeartbeatFailed;
+	stateConfVectorPosition = 13;
+}
+
+/* 'default' enter sequence for state FSM_Festo1: LG */
+void FSM::enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_default()
+{
+	/* 'default' enter sequence for state FSM_Festo1: LG */
+	enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_default();
+}
+
+/* 'default' enter sequence for state OFF */
+void FSM::enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF_default()
+{
+	/* 'default' enter sequence for state OFF */
+	enact_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF();
+	stateConfVector[14] = FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF;
+	stateConfVectorPosition = 14;
+	historyVector[9] = stateConfVector[14];
+}
+
+/* 'default' enter sequence for state ServiceMode */
+void FSM::enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode_default()
+{
+	/* 'default' enter sequence for state ServiceMode */
+	enact_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode();
+	stateConfVector[14] = FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode;
+	stateConfVectorPosition = 14;
+	historyVector[9] = stateConfVector[14];
+}
+
+/* 'default' enter sequence for state Distancing */
+void FSM::enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing_default()
+{
+	/* 'default' enter sequence for state Distancing */
+	enact_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing();
+	stateConfVector[14] = FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing;
+	stateConfVectorPosition = 14;
+	historyVector[9] = stateConfVector[14];
+}
+
+/* 'default' enter sequence for state operational */
+void FSM::enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational_default()
+{
+	/* 'default' enter sequence for state operational */
+	enact_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational();
+	stateConfVector[14] = FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational;
+	stateConfVectorPosition = 14;
+	historyVector[9] = stateConfVector[14];
+}
+
+/* 'default' enter sequence for state EStop */
+void FSM::enseq_Festo1__FSM_LAMP_GREEN_EStop_default()
+{
+	/* 'default' enter sequence for state EStop */
+	enact_Festo1__FSM_LAMP_GREEN_EStop();
+	stateConfVector[14] = FSM::State::Festo1__FSM_LAMP_GREEN_EStop;
+	stateConfVectorPosition = 14;
+}
+
+/* 'default' enter sequence for state HeartBeatFailed */
+void FSM::enseq_Festo1__FSM_LAMP_GREEN_HeartBeatFailed_default()
+{
+	/* 'default' enter sequence for state HeartBeatFailed */
+	enact_Festo1__FSM_LAMP_GREEN_HeartBeatFailed();
+	stateConfVector[14] = FSM::State::Festo1__FSM_LAMP_GREEN_HeartBeatFailed;
+	stateConfVectorPosition = 14;
+}
+
+/* 'default' enter sequence for state Error */
+void FSM::enseq_Festo1__FSM_LAMP_GREEN_Error_default()
+{
+	/* 'default' enter sequence for state Error */
+	enact_Festo1__FSM_LAMP_GREEN_Error();
+	stateConfVector[14] = FSM::State::Festo1__FSM_LAMP_GREEN_Error;
+	stateConfVectorPosition = 14;
+}
+
+/* 'default' enter sequence for state FSM_Festo2: LG */
+void FSM::enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_default()
+{
+	/* 'default' enter sequence for state FSM_Festo2: LG */
+	enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_default();
+}
+
+/* 'default' enter sequence for state OFF */
+void FSM::enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF_default()
+{
+	/* 'default' enter sequence for state OFF */
+	enact_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF();
+	stateConfVector[15] = FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF;
+	stateConfVectorPosition = 15;
+	historyVector[10] = stateConfVector[15];
+}
+
+/* 'default' enter sequence for state ServiceMode */
+void FSM::enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode_default()
+{
+	/* 'default' enter sequence for state ServiceMode */
+	enact_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode();
+	stateConfVector[15] = FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode;
+	stateConfVectorPosition = 15;
+	historyVector[10] = stateConfVector[15];
+}
+
+/* 'default' enter sequence for state Distancing */
+void FSM::enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing_default()
+{
+	/* 'default' enter sequence for state Distancing */
+	enact_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing();
+	stateConfVector[15] = FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing;
+	stateConfVectorPosition = 15;
+	historyVector[10] = stateConfVector[15];
+}
+
+/* 'default' enter sequence for state Operational */
+void FSM::enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational_default()
+{
+	/* 'default' enter sequence for state Operational */
+	enact_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational();
+	stateConfVector[15] = FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational;
+	stateConfVectorPosition = 15;
+	historyVector[10] = stateConfVector[15];
+}
+
+/* 'default' enter sequence for state EStop */
+void FSM::enseq_Festo2__FSM_LAMP_GREEN_EStop_default()
+{
+	/* 'default' enter sequence for state EStop */
+	enact_Festo2__FSM_LAMP_GREEN_EStop();
+	stateConfVector[15] = FSM::State::Festo2__FSM_LAMP_GREEN_EStop;
+	stateConfVectorPosition = 15;
+}
+
+/* 'default' enter sequence for state Error */
+void FSM::enseq_Festo2__FSM_LAMP_GREEN_Error_default()
+{
+	/* 'default' enter sequence for state Error */
+	enact_Festo2__FSM_LAMP_GREEN_Error();
+	stateConfVector[15] = FSM::State::Festo2__FSM_LAMP_GREEN_Error;
+	stateConfVectorPosition = 15;
+}
+
+/* 'default' enter sequence for state FSM_Festo1: LY */
+void FSM::enseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_default()
+{
+	/* 'default' enter sequence for state FSM_Festo1: LY */
+	enseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_default();
+}
+
+/* 'default' enter sequence for state OFF */
+void FSM::enseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF_default()
+{
+	/* 'default' enter sequence for state OFF */
+	enact_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF();
+	stateConfVector[16] = FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF;
+	stateConfVectorPosition = 16;
+}
+
+/* 'default' enter sequence for state RampFull */
+void FSM::enseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull_default()
+{
+	/* 'default' enter sequence for state RampFull */
+	enact_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull();
+	stateConfVector[16] = FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull;
+	stateConfVectorPosition = 16;
+}
+
+/* 'default' enter sequence for state EStop */
+void FSM::enseq_Festo1__FSM_LAMP_YELLOW_EStop_default()
+{
+	/* 'default' enter sequence for state EStop */
+	enact_Festo1__FSM_LAMP_YELLOW_EStop();
+	stateConfVector[16] = FSM::State::Festo1__FSM_LAMP_YELLOW_EStop;
+	stateConfVectorPosition = 16;
+}
+
+/* 'default' enter sequence for state HeartbeatFailed */
+void FSM::enseq_Festo1__FSM_LAMP_YELLOW_HeartbeatFailed_default()
+{
+	/* 'default' enter sequence for state HeartbeatFailed */
+	enact_Festo1__FSM_LAMP_YELLOW_HeartbeatFailed();
+	stateConfVector[16] = FSM::State::Festo1__FSM_LAMP_YELLOW_HeartbeatFailed;
+	stateConfVectorPosition = 16;
+}
+
+/* 'default' enter sequence for state FSM_Festo2: LR */
+void FSM::enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_default()
+{
+	/* 'default' enter sequence for state FSM_Festo2: LR */
+	enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_default();
+}
+
+/* 'default' enter sequence for state OFF */
+void FSM::enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF_default()
+{
+	/* 'default' enter sequence for state OFF */
+	enact_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF();
+	stateConfVector[17] = FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF;
+	stateConfVectorPosition = 17;
+}
+
+/* 'default' enter sequence for state ErrorMissingPuk */
+void FSM::enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk_default()
+{
+	/* 'default' enter sequence for state ErrorMissingPuk */
+	enact_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk();
+	stateConfVector[17] = FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk;
+	stateConfVectorPosition = 17;
+}
+
+/* 'default' enter sequence for state ErrorUnknownPuk */
+void FSM::enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk_default()
+{
+	/* 'default' enter sequence for state ErrorUnknownPuk */
+	enact_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk();
+	stateConfVector[17] = FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk;
+	stateConfVectorPosition = 17;
+}
+
+/* 'default' enter sequence for state ErrorUnknownPukAcknowledged */
+void FSM::enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged_default()
+{
+	/* 'default' enter sequence for state ErrorUnknownPukAcknowledged */
+	enact_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged();
+	stateConfVector[17] = FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged;
+	stateConfVectorPosition = 17;
+}
+
+/* 'default' enter sequence for state EStop */
+void FSM::enseq_Festo2__FSM_LAMP_RED_EStop_default()
+{
+	/* 'default' enter sequence for state EStop */
+	enact_Festo2__FSM_LAMP_RED_EStop();
+	stateConfVector[17] = FSM::State::Festo2__FSM_LAMP_RED_EStop;
+	stateConfVectorPosition = 17;
+}
+
+/* 'default' enter sequence for state FSM_Festo2: LY */
+void FSM::enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_default()
+{
+	/* 'default' enter sequence for state FSM_Festo2: LY */
+	enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_default();
+}
+
+/* 'default' enter sequence for state OFF */
+void FSM::enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF_default()
+{
+	/* 'default' enter sequence for state OFF */
+	enact_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF();
+	stateConfVector[18] = FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF;
+	stateConfVectorPosition = 18;
+}
+
+/* 'default' enter sequence for state RampFull */
+void FSM::enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull_default()
+{
+	/* 'default' enter sequence for state RampFull */
+	enact_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull();
+	stateConfVector[18] = FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull;
+	stateConfVectorPosition = 18;
+}
+
+/* 'default' enter sequence for state EStop */
+void FSM::enseq_Festo2__FSM_LAMP_YELLOW_EStop_default()
+{
+	/* 'default' enter sequence for state EStop */
+	enact_Festo2__FSM_LAMP_YELLOW_EStop();
+	stateConfVector[18] = FSM::State::Festo2__FSM_LAMP_YELLOW_EStop;
+	stateConfVectorPosition = 18;
+}
+
+/* 'default' enter sequence for state HeartBeatFailed */
+void FSM::enseq_FSM_SystemV2_HeartBeatFailed_default()
+{
+	/* 'default' enter sequence for state HeartBeatFailed */
+	stateConfVector[19] = FSM::State::FSM_SystemV2_HeartBeatFailed;
+	stateConfVectorPosition = 19;
+}
+
+/* 'default' enter sequence for state FSM_System */
+void FSM::enseq_FSM_SystemV2_FSM_System_default()
+{
+	/* 'default' enter sequence for state FSM_System */
+	enact_FSM_SystemV2_FSM_System();
+	enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_default();
+}
+
+/* 'default' enter sequence for state Festo:FSM_System */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_default()
+{
+	/* 'default' enter sequence for state Festo:FSM_System */
+	enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System();
+	enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_default();
+}
+
+/* 'default' enter sequence for state Ready */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready_default()
+{
+	/* 'default' enter sequence for state Ready */
+	enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+	stateConfVector[19] = FSM::State::Ready;
+	stateConfVectorPosition = 19;
+}
+
+/* 'default' enter sequence for state ServiceMode */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_default()
+{
+	/* 'default' enter sequence for state ServiceMode */
+	stateConfVector[19] = FSM::State::ServiceMode;
+	stateConfVectorPosition = 19;
+}
+
+/* 'default' enter sequence for state Operational */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational_default()
+{
+	/* 'default' enter sequence for state Operational */
+	enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational();
+	stateConfVector[19] = FSM::State::Operational;
+	stateConfVectorPosition = 19;
+}
+
+/* 'default' enter sequence for state Error */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default()
+{
+	/* 'default' enter sequence for state Error */
+	stateConfVector[19] = FSM::State::Error;
+	stateConfVectorPosition = 19;
+}
+
+/* 'default' enter sequence for state EStop */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_default()
+{
+	/* 'default' enter sequence for state EStop */
+	enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_default();
+}
+
+/* 'default' enter sequence for state EStopReceived */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived_default()
+{
+	/* 'default' enter sequence for state EStopReceived */
+	enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived();
+	stateConfVector[19] = FSM::State::EStop_FSM_EStop_EStopReceived;
+	stateConfVectorPosition = 19;
+}
+
+/* 'default' enter sequence for state EStopCleared */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopCleared_default()
+{
+	/* 'default' enter sequence for state EStopCleared */
+	stateConfVector[19] = FSM::State::EStop_FSM_EStop_EStopCleared;
+	stateConfVectorPosition = 19;
+}
+
+/* 'default' enter sequence for state BGR1Pressed */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1Pressed_default()
+{
+	/* 'default' enter sequence for state BGR1Pressed */
+	stateConfVector[19] = FSM::State::EStop_FSM_EStop_BGR1Pressed;
+	stateConfVectorPosition = 19;
+}
+
+/* 'default' enter sequence for state BGR2Pressed */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2Pressed_default()
+{
+	/* 'default' enter sequence for state BGR2Pressed */
+	stateConfVector[19] = FSM::State::EStop_FSM_EStop_BGR2Pressed;
+	stateConfVectorPosition = 19;
+}
+
+/* 'default' enter sequence for state BGR2PressedAfterBGR1 */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1_default()
+{
+	/* 'default' enter sequence for state BGR2PressedAfterBGR1 */
+	enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1();
+	stateConfVector[19] = FSM::State::EStop_FSM_EStop_BGR2PressedAfterBGR1;
+	stateConfVectorPosition = 19;
+}
+
+/* 'default' enter sequence for state BGR1PressedAfterBGR2 */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2_default()
+{
+	/* 'default' enter sequence for state BGR1PressedAfterBGR2 */
+	enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2();
+	stateConfVector[19] = FSM::State::EStop_FSM_EStop_BGR1PressedAfterBGR2;
+	stateConfVectorPosition = 19;
+}
+
+/* 'default' enter sequence for state EStopCalibration */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration_default()
+{
+	/* 'default' enter sequence for state EStopCalibration */
+	stateConfVector[19] = FSM::State::EStopCalibration;
 	stateConfVectorPosition = 19;
 }
 
@@ -5940,9 +6318,9 @@ void FSM::shenseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sort
 			enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate_default();
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider :
+		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter :
 		{
-			enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider_default();
+			enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter_default();
 			break;
 		}
 		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferEjector :
@@ -6039,55 +6417,6 @@ void FSM::enseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_default()
 	react_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor__entry_Default();
 }
 
-/* 'default' enter sequence for region FSM_System */
-void FSM::enseq_FSM_System_default()
-{
-	/* 'default' enter sequence for region FSM_System */
-	react_FSM_System__entry_Default();
-}
-
-/* 'default' enter sequence for region FSM_System: Internal FSM */
-void FSM::enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_default()
-{
-	/* 'default' enter sequence for region FSM_System: Internal FSM */
-	react_FSM_System_FSM_System_FSM_System__Internal_FSM__entry_Default();
-}
-
-/* 'default' enter sequence for region FSM_Festo1:Signaling */
-void FSM::enseq_FSM_Festo1_Signaling_default()
-{
-	/* 'default' enter sequence for region FSM_Festo1:Signaling */
-	react_FSM_Festo1_Signaling__entry_Default();
-}
-
-/* 'default' enter sequence for region FSM_LAMP */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_default()
-{
-	/* 'default' enter sequence for region FSM_LAMP */
-	react_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP__entry_Default();
-}
-
-/* 'default' enter sequence for region FSM_Lamp_Green */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_default()
-{
-	/* 'default' enter sequence for region FSM_Lamp_Green */
-	react_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green__entry_Default();
-}
-
-/* 'default' enter sequence for region FSM_Lamp_Yellow */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_default()
-{
-	/* 'default' enter sequence for region FSM_Lamp_Yellow */
-	react_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow__entry_Default();
-}
-
-/* 'default' enter sequence for region FSM_Lamp_Red */
-void FSM::enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_default()
-{
-	/* 'default' enter sequence for region FSM_Lamp_Red */
-	react_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red__entry_Default();
-}
-
 /* 'default' enter sequence for region FSM_Festo2: Ingress */
 void FSM::enseq_FSM_Festo2__Ingress_default()
 {
@@ -6119,11 +6448,6 @@ void FSM::shenseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingr
 		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle :
 		{
 			enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle_default();
-			break;
-		}
-		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance :
-		{
-			enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance_default();
 			break;
 		}
 		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected :
@@ -6281,41 +6605,6 @@ void FSM::enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_default()
 	react_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor__entry_Default();
 }
 
-/* 'default' enter sequence for region FSM_Festo2: Signaling */
-void FSM::enseq_FSM_Festo2__Signaling_default()
-{
-	/* 'default' enter sequence for region FSM_Festo2: Signaling */
-	react_FSM_Festo2__Signaling__entry_Default();
-}
-
-/* 'default' enter sequence for region FSM_LAMP */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_default()
-{
-	/* 'default' enter sequence for region FSM_LAMP */
-	react_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP__entry_Default();
-}
-
-/* 'default' enter sequence for region FSM_Lamp_Green */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_default()
-{
-	/* 'default' enter sequence for region FSM_Lamp_Green */
-	react_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green__entry_Default();
-}
-
-/* 'default' enter sequence for region FSM_Lamp_Yellow */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_default()
-{
-	/* 'default' enter sequence for region FSM_Lamp_Yellow */
-	react_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow__entry_Default();
-}
-
-/* 'default' enter sequence for region FSM_Lamp_Red */
-void FSM::enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_default()
-{
-	/* 'default' enter sequence for region FSM_Lamp_Red */
-	react_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red__entry_Default();
-}
-
 /* 'default' enter sequence for region Evaluate */
 void FSM::enseq_Evaluate_default()
 {
@@ -6433,6 +6722,184 @@ void FSM::enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_default()
 {
 	/* 'default' enter sequence for region FST_2: FSM_Errors */
 	react_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors__entry_Default();
+}
+
+/* 'default' enter sequence for region Festo1: FSM_LAMP_RED */
+void FSM::enseq_Festo1__FSM_LAMP_RED_default()
+{
+	/* 'default' enter sequence for region Festo1: FSM_LAMP_RED */
+	react_Festo1__FSM_LAMP_RED__entry_Default();
+}
+
+/* 'default' enter sequence for region FSM_Festo1: Inner_LampRed */
+void FSM::enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_default()
+{
+	/* 'default' enter sequence for region FSM_Festo1: Inner_LampRed */
+	react_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed__entry_Default();
+}
+
+/* 'default' enter sequence for region Festo1: FSM_LAMP_GREEN */
+void FSM::enseq_Festo1__FSM_LAMP_GREEN_default()
+{
+	/* 'default' enter sequence for region Festo1: FSM_LAMP_GREEN */
+	react_Festo1__FSM_LAMP_GREEN__entry_Default();
+}
+
+/* 'default' enter sequence for region FSM_Festo1: Inner_LampGreen */
+void FSM::enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_default()
+{
+	/* 'default' enter sequence for region FSM_Festo1: Inner_LampGreen */
+	react_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen__entry_Default();
+}
+
+/* shallow enterSequence with history in child FSM_Festo1: Inner_LampGreen */
+void FSM::shenseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen()
+{
+	/* shallow enterSequence with history in child FSM_Festo1: Inner_LampGreen */
+	/* Handle shallow history entry of FSM_Festo1: Inner_LampGreen */
+	switch(historyVector[ 9 ])
+	{
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF :
+		{
+			enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF_default();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode :
+		{
+			enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode_default();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing :
+		{
+			enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing_default();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational :
+		{
+			enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational_default();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* 'default' enter sequence for region Festo2: FSM_LAMP_GREEN */
+void FSM::enseq_Festo2__FSM_LAMP_GREEN_default()
+{
+	/* 'default' enter sequence for region Festo2: FSM_LAMP_GREEN */
+	react_Festo2__FSM_LAMP_GREEN__entry_Default();
+}
+
+/* 'default' enter sequence for region FSM_Festo2: Inner_LampGreen */
+void FSM::enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_default()
+{
+	/* 'default' enter sequence for region FSM_Festo2: Inner_LampGreen */
+	react_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen__entry_Default();
+}
+
+/* shallow enterSequence with history in child FSM_Festo2: Inner_LampGreen */
+void FSM::shenseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen()
+{
+	/* shallow enterSequence with history in child FSM_Festo2: Inner_LampGreen */
+	/* Handle shallow history entry of FSM_Festo2: Inner_LampGreen */
+	switch(historyVector[ 10 ])
+	{
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF :
+		{
+			enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF_default();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode :
+		{
+			enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode_default();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing :
+		{
+			enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing_default();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational :
+		{
+			enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational_default();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* 'default' enter sequence for region Festo1: FSM_LAMP_YELLOW */
+void FSM::enseq_Festo1__FSM_LAMP_YELLOW_default()
+{
+	/* 'default' enter sequence for region Festo1: FSM_LAMP_YELLOW */
+	react_Festo1__FSM_LAMP_YELLOW__entry_Default();
+}
+
+/* 'default' enter sequence for region FSM_Festo1: Inner_LampYellow */
+void FSM::enseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_default()
+{
+	/* 'default' enter sequence for region FSM_Festo1: Inner_LampYellow */
+	react_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow__entry_Default();
+}
+
+/* 'default' enter sequence for region Festo2: FSM_LAMP_RED */
+void FSM::enseq_Festo2__FSM_LAMP_RED_default()
+{
+	/* 'default' enter sequence for region Festo2: FSM_LAMP_RED */
+	react_Festo2__FSM_LAMP_RED__entry_Default();
+}
+
+/* 'default' enter sequence for region FSM_Festo2: Inner_LampRed */
+void FSM::enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_default()
+{
+	/* 'default' enter sequence for region FSM_Festo2: Inner_LampRed */
+	react_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed__entry_Default();
+}
+
+/* 'default' enter sequence for region Festo2: FSM_LAMP_YELLOW */
+void FSM::enseq_Festo2__FSM_LAMP_YELLOW_default()
+{
+	/* 'default' enter sequence for region Festo2: FSM_LAMP_YELLOW */
+	react_Festo2__FSM_LAMP_YELLOW__entry_Default();
+}
+
+/* 'default' enter sequence for region FSM_Festo2: Inner_LampYellow */
+void FSM::enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_default()
+{
+	/* 'default' enter sequence for region FSM_Festo2: Inner_LampYellow */
+	react_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow__entry_Default();
+}
+
+/* 'default' enter sequence for region FSM_SystemV2 */
+void FSM::enseq_FSM_SystemV2_default()
+{
+	/* 'default' enter sequence for region FSM_SystemV2 */
+	react_FSM_SystemV2__entry_Default();
+}
+
+/* 'default' enter sequence for region FSM_System: Outer_FSM */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_default()
+{
+	/* 'default' enter sequence for region FSM_System: Outer_FSM */
+	react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM__entry_Default();
+}
+
+/* 'default' enter sequence for region FSM_System: Inner_FSM */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_default()
+{
+	/* 'default' enter sequence for region FSM_System: Inner_FSM */
+	react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM__entry_Default();
+}
+
+/* 'default' enter sequence for region FSM_EStop */
+void FSM::enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_default()
+{
+	/* 'default' enter sequence for region FSM_EStop */
+	react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__entry_Default();
 }
 
 /* Default exit sequence for state FSM_Festo1: Ingress */
@@ -6666,10 +7133,10 @@ void FSM::exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sortin
 	stateConfVectorPosition = 2;
 }
 
-/* Default exit sequence for state EjectingDivider */
-void FSM::exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider()
+/* Default exit sequence for state EjectingDiverter */
+void FSM::exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter()
 {
-	/* Default exit sequence for state EjectingDivider */
+	/* Default exit sequence for state EjectingDiverter */
 	stateConfVector[2] = FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting;
 	stateConfVectorPosition = 2;
 }
@@ -6853,200 +7320,13 @@ void FSM::exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop()
 	stateConfVectorPosition = 4;
 }
 
-/* Default exit sequence for state FSM_System */
-void FSM::exseq_FSM_System_FSM_System()
-{
-	/* Default exit sequence for state FSM_System */
-	exseq_FSM_System_FSM_System_FSM_System__Internal_FSM();
-	stateConfVector[5] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 5;
-}
-
-/* Default exit sequence for state Start */
-void FSM::exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start()
-{
-	/* Default exit sequence for state Start */
-	stateConfVector[5] = FSM::State::FSM_System_FSM_System;
-	stateConfVectorPosition = 5;
-}
-
-/* Default exit sequence for state EStopCleared */
-void FSM::exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared()
-{
-	/* Default exit sequence for state EStopCleared */
-	stateConfVector[5] = FSM::State::FSM_System_FSM_System;
-	stateConfVectorPosition = 5;
-}
-
-/* Default exit sequence for state EStopReceived */
-void FSM::exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived()
-{
-	/* Default exit sequence for state EStopReceived */
-	stateConfVector[5] = FSM::State::FSM_System_FSM_System;
-	stateConfVectorPosition = 5;
-}
-
-/* Default exit sequence for state EStopCalibration */
-void FSM::exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCalibration()
-{
-	/* Default exit sequence for state EStopCalibration */
-	stateConfVector[5] = FSM::State::FSM_System_FSM_System;
-	stateConfVectorPosition = 5;
-}
-
-/* Default exit sequence for state Operational */
-void FSM::exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Operational()
-{
-	/* Default exit sequence for state Operational */
-	stateConfVector[5] = FSM::State::FSM_System_FSM_System;
-	stateConfVectorPosition = 5;
-}
-
-/* Default exit sequence for state ServiceMode */
-void FSM::exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode()
-{
-	/* Default exit sequence for state ServiceMode */
-	stateConfVector[5] = FSM::State::FSM_System_FSM_System;
-	stateConfVectorPosition = 5;
-	exact_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode();
-}
-
-/* Default exit sequence for state ReceivedReset */
-void FSM::exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ReceivedReset()
-{
-	/* Default exit sequence for state ReceivedReset */
-	stateConfVector[5] = FSM::State::FSM_System_FSM_System;
-	stateConfVectorPosition = 5;
-	exact_FSM_System_FSM_System_FSM_System__Internal_FSM_ReceivedReset();
-}
-
-/* Default exit sequence for state Ready */
-void FSM::exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready()
-{
-	/* Default exit sequence for state Ready */
-	stateConfVector[5] = FSM::State::FSM_System_FSM_System;
-	stateConfVectorPosition = 5;
-}
-
-/* Default exit sequence for state Paused */
-void FSM::exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Paused()
-{
-	/* Default exit sequence for state Paused */
-	stateConfVector[5] = FSM::State::FSM_System_FSM_System;
-	stateConfVectorPosition = 5;
-}
-
-/* Default exit sequence for state HeartBeatFailed */
-void FSM::exseq_FSM_System_HeartBeatFailed()
-{
-	/* Default exit sequence for state HeartBeatFailed */
-	stateConfVector[5] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 5;
-}
-
-/* Default exit sequence for state Off */
-void FSM::exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off()
-{
-	/* Default exit sequence for state Off */
-	stateConfVector[6] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 6;
-}
-
-/* Default exit sequence for state Constant */
-void FSM::exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant()
-{
-	/* Default exit sequence for state Constant */
-	stateConfVector[6] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 6;
-}
-
-/* Default exit sequence for state Blinking 1Hz */
-void FSM::exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz()
-{
-	/* Default exit sequence for state Blinking 1Hz */
-	stateConfVector[6] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 6;
-}
-
-/* Default exit sequence for state Blinking2HZ */
-void FSM::exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ()
-{
-	/* Default exit sequence for state Blinking2HZ */
-	stateConfVector[6] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 6;
-}
-
-/* Default exit sequence for state Off */
-void FSM::exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off()
-{
-	/* Default exit sequence for state Off */
-	stateConfVector[7] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 7;
-}
-
-/* Default exit sequence for state Constant */
-void FSM::exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant()
-{
-	/* Default exit sequence for state Constant */
-	stateConfVector[7] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 7;
-}
-
-/* Default exit sequence for state Blinking1HZ */
-void FSM::exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ()
-{
-	/* Default exit sequence for state Blinking1HZ */
-	stateConfVector[7] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 7;
-}
-
-/* Default exit sequence for state Off */
-void FSM::exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off()
-{
-	/* Default exit sequence for state Off */
-	stateConfVector[8] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 8;
-}
-
-/* Default exit sequence for state Constant */
-void FSM::exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant()
-{
-	/* Default exit sequence for state Constant */
-	stateConfVector[8] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 8;
-}
-
-/* Default exit sequence for state Blinking1HZ */
-void FSM::exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ()
-{
-	/* Default exit sequence for state Blinking1HZ */
-	stateConfVector[8] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 8;
-}
-
-/* Default exit sequence for state Blinking0_5HZ */
-void FSM::exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ()
-{
-	/* Default exit sequence for state Blinking0_5HZ */
-	stateConfVector[8] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 8;
-}
-
-/* Default exit sequence for state Blinking2HZ */
-void FSM::exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ()
-{
-	/* Default exit sequence for state Blinking2HZ */
-	stateConfVector[8] = FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 8;
-}
-
 /* Default exit sequence for state FSM_Festo2: Ingress */
 void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress()
 {
 	/* Default exit sequence for state FSM_Festo2: Ingress */
 	exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress();
-	stateConfVector[9] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 9;
+	stateConfVector[5] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 5;
 }
 
 /* Default exit sequence for state Ingress */
@@ -7054,72 +7334,64 @@ void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingres
 {
 	/* Default exit sequence for state Ingress */
 	exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress();
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress;
-	stateConfVectorPosition = 9;
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress;
+	stateConfVectorPosition = 5;
 }
 
 /* Default exit sequence for state Idle */
 void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle()
 {
 	/* Default exit sequence for state Idle */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress;
-	stateConfVectorPosition = 9;
-}
-
-/* Default exit sequence for state CreatingDistance */
-void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance()
-{
-	/* Default exit sequence for state CreatingDistance */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress;
-	stateConfVectorPosition = 9;
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress;
+	stateConfVectorPosition = 5;
 }
 
 /* Default exit sequence for state PukExpected */
 void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected()
 {
 	/* Default exit sequence for state PukExpected */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress;
-	stateConfVectorPosition = 9;
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress;
+	stateConfVectorPosition = 5;
 }
 
 /* Default exit sequence for state PukinLBF2 */
 void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukinLBF2()
 {
 	/* Default exit sequence for state PukinLBF2 */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress;
-	stateConfVectorPosition = 9;
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress;
+	stateConfVectorPosition = 5;
 }
 
 /* Default exit sequence for state Stop */
 void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Stop()
 {
 	/* Default exit sequence for state Stop */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress;
-	stateConfVectorPosition = 9;
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress;
+	stateConfVectorPosition = 5;
 }
 
 /* Default exit sequence for state Start */
 void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Start()
 {
 	/* Default exit sequence for state Start */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress;
-	stateConfVectorPosition = 9;
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress;
+	stateConfVectorPosition = 5;
 }
 
 /* Default exit sequence for state ErrorFST2 */
 void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_ErrorFST2()
 {
 	/* Default exit sequence for state ErrorFST2 */
-	stateConfVector[9] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress;
-	stateConfVectorPosition = 9;
+	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress;
+	stateConfVectorPosition = 5;
 }
 
 /* Default exit sequence for state ESTOP||HEARTBEATFAILED */
 void FSM::exseq_FSM_Festo2__Ingress_ESTOP__HEARTBEATFAILED()
 {
 	/* Default exit sequence for state ESTOP||HEARTBEATFAILED */
-	stateConfVector[9] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 9;
+	stateConfVector[5] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 5;
 }
 
 /* Default exit sequence for state FSM_Festo2: HeightMeasurement */
@@ -7127,8 +7399,8 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement()
 {
 	/* Default exit sequence for state FSM_Festo2: HeightMeasurement */
 	exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement();
-	stateConfVector[10] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for state HeightMeasurement */
@@ -7136,24 +7408,24 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_
 {
 	/* Default exit sequence for state HeightMeasurement */
 	exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement();
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for state Idle */
 void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle()
 {
 	/* Default exit sequence for state Idle */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for state PukExpected */
 void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_PukExpected()
 {
 	/* Default exit sequence for state PukExpected */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for state Measuring */
@@ -7161,80 +7433,80 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_
 {
 	/* Default exit sequence for state Measuring */
 	exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement();
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for state A */
 void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_A()
 {
 	/* Default exit sequence for state A */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for state B */
 void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_B()
 {
 	/* Default exit sequence for state B */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for state C */
 void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_C()
 {
 	/* Default exit sequence for state C */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for state Error */
 void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error()
 {
 	/* Default exit sequence for state Error */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for final state. */
 void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final_()
 {
 	/* Default exit sequence for final state. */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for state Start */
 void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_Start()
 {
 	/* Default exit sequence for state Start */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for state Stop */
 void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_Stop()
 {
 	/* Default exit sequence for state Stop */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for state FST2Error */
 void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_FST2Error()
 {
 	/* Default exit sequence for state FST2Error */
-	stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for state ESTOP||HEARTBEATFAILED */
 void FSM::exseq_FSM_Festo2__HeightMeasurement_ESTOP__HEARTBEATFAILED()
 {
 	/* Default exit sequence for state ESTOP||HEARTBEATFAILED */
-	stateConfVector[10] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 10;
+	stateConfVector[6] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 6;
 }
 
 /* Default exit sequence for state FSM_Festo2: Egress */
@@ -7242,8 +7514,8 @@ void FSM::exseq_FSM_Festo2__Egress_FSM_Festo2__Egress()
 {
 	/* Default exit sequence for state FSM_Festo2: Egress */
 	exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress();
-	stateConfVector[11] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 11;
+	stateConfVector[7] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 7;
 }
 
 /* Default exit sequence for state Egress */
@@ -7251,64 +7523,64 @@ void FSM::exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_E
 {
 	/* Default exit sequence for state Egress */
 	exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress();
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress;
-	stateConfVectorPosition = 11;
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress;
+	stateConfVectorPosition = 7;
 }
 
 /* Default exit sequence for state IDLE */
 void FSM::exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE()
 {
 	/* Default exit sequence for state IDLE */
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress;
-	stateConfVectorPosition = 11;
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress;
+	stateConfVectorPosition = 7;
 }
 
 /* Default exit sequence for state Transfer */
 void FSM::exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_Transfer()
 {
 	/* Default exit sequence for state Transfer */
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress;
-	stateConfVectorPosition = 11;
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress;
+	stateConfVectorPosition = 7;
 }
 
 /* Default exit sequence for state PukExpected */
 void FSM::exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_PukExpected()
 {
 	/* Default exit sequence for state PukExpected */
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress;
-	stateConfVectorPosition = 11;
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress;
+	stateConfVectorPosition = 7;
 }
 
 /* Default exit sequence for state Start */
 void FSM::exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Start()
 {
 	/* Default exit sequence for state Start */
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress;
-	stateConfVectorPosition = 11;
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress;
+	stateConfVectorPosition = 7;
 }
 
 /* Default exit sequence for state Stop */
 void FSM::exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Stop()
 {
 	/* Default exit sequence for state Stop */
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress;
-	stateConfVectorPosition = 11;
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress;
+	stateConfVectorPosition = 7;
 }
 
 /* Default exit sequence for state ErrorFST2 */
 void FSM::exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_ErrorFST2()
 {
 	/* Default exit sequence for state ErrorFST2 */
-	stateConfVector[11] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress;
-	stateConfVectorPosition = 11;
+	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress;
+	stateConfVectorPosition = 7;
 }
 
 /* Default exit sequence for state ESTOP||HEARTBEATFAILED */
 void FSM::exseq_FSM_Festo2__Egress_ESTOP__HEARTBEATFAILED()
 {
 	/* Default exit sequence for state ESTOP||HEARTBEATFAILED */
-	stateConfVector[11] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 11;
+	stateConfVector[7] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 7;
 }
 
 /* Default exit sequence for state SystemMotor */
@@ -7316,128 +7588,40 @@ void FSM::exseq_FSM_Festo2__Motor_SystemMotor()
 {
 	/* Default exit sequence for state SystemMotor */
 	exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor();
-	stateConfVector[12] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 12;
+	stateConfVector[8] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 8;
 }
 
 /* Default exit sequence for state Forward */
 void FSM::exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward()
 {
 	/* Default exit sequence for state Forward */
-	stateConfVector[12] = FSM::State::FSM_Festo2__Motor_SystemMotor;
-	stateConfVectorPosition = 12;
+	stateConfVector[8] = FSM::State::FSM_Festo2__Motor_SystemMotor;
+	stateConfVectorPosition = 8;
 }
 
 /* Default exit sequence for state Slow */
 void FSM::exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow()
 {
 	/* Default exit sequence for state Slow */
-	stateConfVector[12] = FSM::State::FSM_Festo2__Motor_SystemMotor;
-	stateConfVectorPosition = 12;
+	stateConfVector[8] = FSM::State::FSM_Festo2__Motor_SystemMotor;
+	stateConfVectorPosition = 8;
 }
 
 /* Default exit sequence for state Stop */
 void FSM::exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop()
 {
 	/* Default exit sequence for state Stop */
-	stateConfVector[12] = FSM::State::FSM_Festo2__Motor_SystemMotor;
-	stateConfVectorPosition = 12;
-}
-
-/* Default exit sequence for state Off */
-void FSM::exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off()
-{
-	/* Default exit sequence for state Off */
-	stateConfVector[13] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 13;
-}
-
-/* Default exit sequence for state Constant */
-void FSM::exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant()
-{
-	/* Default exit sequence for state Constant */
-	stateConfVector[13] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 13;
-}
-
-/* Default exit sequence for state Blinking 1Hz */
-void FSM::exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz()
-{
-	/* Default exit sequence for state Blinking 1Hz */
-	stateConfVector[13] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 13;
-}
-
-/* Default exit sequence for state Blinking2HZ */
-void FSM::exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ()
-{
-	/* Default exit sequence for state Blinking2HZ */
-	stateConfVector[13] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 13;
-}
-
-/* Default exit sequence for state Off */
-void FSM::exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off()
-{
-	/* Default exit sequence for state Off */
-	stateConfVector[14] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 14;
-}
-
-/* Default exit sequence for state Constant */
-void FSM::exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant()
-{
-	/* Default exit sequence for state Constant */
-	stateConfVector[14] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 14;
-}
-
-/* Default exit sequence for state Blinking1HZ */
-void FSM::exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ()
-{
-	/* Default exit sequence for state Blinking1HZ */
-	stateConfVector[14] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 14;
-}
-
-/* Default exit sequence for state Off */
-void FSM::exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off()
-{
-	/* Default exit sequence for state Off */
-	stateConfVector[15] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 15;
-}
-
-/* Default exit sequence for state Constant */
-void FSM::exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant()
-{
-	/* Default exit sequence for state Constant */
-	stateConfVector[15] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 15;
-}
-
-/* Default exit sequence for state Blinking1HZ */
-void FSM::exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ()
-{
-	/* Default exit sequence for state Blinking1HZ */
-	stateConfVector[15] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 15;
-}
-
-/* Default exit sequence for state Blinking05HZ */
-void FSM::exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ()
-{
-	/* Default exit sequence for state Blinking05HZ */
-	stateConfVector[15] = FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp;
-	stateConfVectorPosition = 15;
+	stateConfVector[8] = FSM::State::FSM_Festo2__Motor_SystemMotor;
+	stateConfVectorPosition = 8;
 }
 
 /* Default exit sequence for state EvaluateTester */
 void FSM::exseq_Evaluate_EvaluateTester()
 {
 	/* Default exit sequence for state EvaluateTester */
-	stateConfVector[16] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 16;
+	stateConfVector[9] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 9;
 }
 
 /* Default exit sequence for state FSM_Errors */
@@ -7445,152 +7629,152 @@ void FSM::exseq_FSM_Festo1__Errors_FSM_Errors()
 {
 	/* Default exit sequence for state FSM_Errors */
 	exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors();
-	stateConfVector[17] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorinHMRestart */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMRestart()
 {
 	/* Default exit sequence for state ErrorinHMRestart */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorinSortingPukUnacknowledged */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingPukUnacknowledged()
 {
 	/* Default exit sequence for state ErrorinSortingPukUnacknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorinIngressRestart */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressRestart()
 {
 	/* Default exit sequence for state ErrorinIngressRestart */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorinSortingPukAcknowledged */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingPukAcknowledged()
 {
 	/* Default exit sequence for state ErrorinSortingPukAcknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state Idle */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle()
 {
 	/* Default exit sequence for state Idle */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorinSortingRestart */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingRestart()
 {
 	/* Default exit sequence for state ErrorinSortingRestart */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorinEgressMissingPukAcknowledged */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressMissingPukAcknowledged()
 {
 	/* Default exit sequence for state ErrorinEgressMissingPukAcknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorinEgressPukUnacknowledged */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressPukUnacknowledged()
 {
 	/* Default exit sequence for state ErrorinEgressPukUnacknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorinHMPukAcknowledged */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMPukAcknowledged()
 {
 	/* Default exit sequence for state ErrorinHMPukAcknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorinHMUnacknowledged */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMUnacknowledged()
 {
 	/* Default exit sequence for state ErrorinHMUnacknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorinIngressAcknowledged */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressAcknowledged()
 {
 	/* Default exit sequence for state ErrorinIngressAcknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorinIngressUnacknowledged */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressUnacknowledged()
 {
 	/* Default exit sequence for state ErrorinIngressUnacknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorinEgressRestart */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressRestart()
 {
 	/* Default exit sequence for state ErrorinEgressRestart */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorRampFullUnacknowledged */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorRampFullUnacknowledged()
 {
 	/* Default exit sequence for state ErrorRampFullUnacknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorRampFullAcknowledged */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorRampFullAcknowledged()
 {
 	/* Default exit sequence for state ErrorRampFullAcknowledged */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state ErrorinRampRestart */
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinRampRestart()
 {
 	/* Default exit sequence for state ErrorinRampRestart */
-	stateConfVector[17] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state EStop */
 void FSM::exseq_FSM_Festo1__Errors_EStop()
 {
 	/* Default exit sequence for state EStop */
-	stateConfVector[17] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state Start */
 void FSM::exseq_FSM_Festo1__Errors_Start()
 {
 	/* Default exit sequence for state Start */
-	stateConfVector[17] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 17;
+	stateConfVector[10] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 10;
 }
 
 /* Default exit sequence for state FSM_Festo2: Sorting */
@@ -7598,8 +7782,8 @@ void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting()
 {
 	/* Default exit sequence for state FSM_Festo2: Sorting */
 	exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting();
-	stateConfVector[18] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state Sorting */
@@ -7607,120 +7791,120 @@ void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sortin
 {
 	/* Default exit sequence for state Sorting */
 	exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting();
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state Idle */
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle()
 {
 	/* Default exit sequence for state Idle */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state PukExpected */
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_PukExpected()
 {
 	/* Default exit sequence for state PukExpected */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state Evaluate */
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate()
 {
 	/* Default exit sequence for state Evaluate */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state EjectingDiverter */
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingDiverter()
 {
 	/* Default exit sequence for state EjectingDiverter */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state TransferEjector */
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferEjector()
 {
 	/* Default exit sequence for state TransferEjector */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state TransferDivider */
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferDivider()
 {
 	/* Default exit sequence for state TransferDivider */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state EjectingEjector */
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingEjector()
 {
 	/* Default exit sequence for state EjectingEjector */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state EvaluateCounter */
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EvaluateCounter()
 {
 	/* Default exit sequence for state EvaluateCounter */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state AwaitingRampClearanceDivider */
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_AwaitingRampClearanceDivider()
 {
 	/* Default exit sequence for state AwaitingRampClearanceDivider */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state AwaitingRampClearanceEjector */
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_AwaitingRampClearanceEjector()
 {
 	/* Default exit sequence for state AwaitingRampClearanceEjector */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state Stop */
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Stop()
 {
 	/* Default exit sequence for state Stop */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state Start */
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Start()
 {
 	/* Default exit sequence for state Start */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state ErrorFST2 */
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_ErrorFST2()
 {
 	/* Default exit sequence for state ErrorFST2 */
-	stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state ESTOP||HEARTBEATFAILED */
 void FSM::exseq_FSM_Festo2__Sorting_ESTOP__HEARTBEATFAILED()
 {
 	/* Default exit sequence for state ESTOP||HEARTBEATFAILED */
-	stateConfVector[18] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 18;
+	stateConfVector[11] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 11;
 }
 
 /* Default exit sequence for state FSM_Errors */
@@ -7728,151 +7912,584 @@ void FSM::exseq_FSM_Festo2__Errors_FSM_Errors()
 {
 	/* Default exit sequence for state FSM_Errors */
 	exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors();
-	stateConfVector[19] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinSortingUnacknowledged */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingUnacknowledged()
 {
 	/* Default exit sequence for state ErrorinSortingUnacknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinIngressRestart */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressRestart()
 {
 	/* Default exit sequence for state ErrorinIngressRestart */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinSortingPukAcknowledged */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingPukAcknowledged()
 {
 	/* Default exit sequence for state ErrorinSortingPukAcknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state Idle */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle()
 {
 	/* Default exit sequence for state Idle */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinEgressUPRestart */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUPRestart()
 {
 	/* Default exit sequence for state ErrorinEgressUPRestart */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinEgressUnacknowledged */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUnacknowledged()
 {
 	/* Default exit sequence for state ErrorinEgressUnacknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinEgressAcknowledged */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressAcknowledged()
 {
 	/* Default exit sequence for state ErrorinEgressAcknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinIngressUnacknowledged */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressUnacknowledged()
 {
 	/* Default exit sequence for state ErrorinIngressUnacknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinIngressAcknowledged */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressAcknowledged()
 {
 	/* Default exit sequence for state ErrorinIngressAcknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinHMAcknowledged */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMAcknowledged()
 {
 	/* Default exit sequence for state ErrorinHMAcknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinHMUnacknowledged */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMUnacknowledged()
 {
 	/* Default exit sequence for state ErrorinHMUnacknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinHMRestart */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestart()
 {
 	/* Default exit sequence for state ErrorinHMRestart */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinSortingRestart */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingRestart()
 {
 	/* Default exit sequence for state ErrorinSortingRestart */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorRampFullUnacknowledged */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorRampFullUnacknowledged()
 {
 	/* Default exit sequence for state ErrorRampFullUnacknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinRampFullAcknowledged */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullAcknowledged()
 {
 	/* Default exit sequence for state ErrorinRampFullAcknowledged */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state ErrorinRampFullRestart */
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullRestart()
 {
 	/* Default exit sequence for state ErrorinRampFullRestart */
-	stateConfVector[19] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::FSM_Festo2__Errors_FSM_Errors;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state EStop */
 void FSM::exseq_FSM_Festo2__Errors_EStop()
 {
 	/* Default exit sequence for state EStop */
-	stateConfVector[19] = FSM::State::NO_STATE;
-	stateConfVectorPosition = 19;
+	stateConfVector[12] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 12;
 }
 
 /* Default exit sequence for state Start */
 void FSM::exseq_FSM_Festo2__Errors_Start()
 {
 	/* Default exit sequence for state Start */
+	stateConfVector[12] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 12;
+}
+
+/* Default exit sequence for state FSM_Festo1: LR */
+void FSM::exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR()
+{
+	/* Default exit sequence for state FSM_Festo1: LR */
+	exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed();
+	stateConfVector[13] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 13;
+}
+
+/* Default exit sequence for state OFF */
+void FSM::exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF()
+{
+	/* Default exit sequence for state OFF */
+	stateConfVector[13] = FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR;
+	stateConfVectorPosition = 13;
+}
+
+/* Default exit sequence for state ErrorMissingPuk */
+void FSM::exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk()
+{
+	/* Default exit sequence for state ErrorMissingPuk */
+	stateConfVector[13] = FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR;
+	stateConfVectorPosition = 13;
+}
+
+/* Default exit sequence for state ErrorUnknownPuk */
+void FSM::exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk()
+{
+	/* Default exit sequence for state ErrorUnknownPuk */
+	stateConfVector[13] = FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR;
+	stateConfVectorPosition = 13;
+}
+
+/* Default exit sequence for state ErrorUnknownPukAcknowledged */
+void FSM::exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged()
+{
+	/* Default exit sequence for state ErrorUnknownPukAcknowledged */
+	stateConfVector[13] = FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR;
+	stateConfVectorPosition = 13;
+}
+
+/* Default exit sequence for state EStop */
+void FSM::exseq_Festo1__FSM_LAMP_RED_EStop()
+{
+	/* Default exit sequence for state EStop */
+	stateConfVector[13] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 13;
+}
+
+/* Default exit sequence for state HeartbeatFailed */
+void FSM::exseq_Festo1__FSM_LAMP_RED_HeartbeatFailed()
+{
+	/* Default exit sequence for state HeartbeatFailed */
+	stateConfVector[13] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 13;
+}
+
+/* Default exit sequence for state FSM_Festo1: LG */
+void FSM::exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG()
+{
+	/* Default exit sequence for state FSM_Festo1: LG */
+	exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen();
+	stateConfVector[14] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 14;
+}
+
+/* Default exit sequence for state OFF */
+void FSM::exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF()
+{
+	/* Default exit sequence for state OFF */
+	stateConfVector[14] = FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG;
+	stateConfVectorPosition = 14;
+}
+
+/* Default exit sequence for state ServiceMode */
+void FSM::exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode()
+{
+	/* Default exit sequence for state ServiceMode */
+	stateConfVector[14] = FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG;
+	stateConfVectorPosition = 14;
+}
+
+/* Default exit sequence for state Distancing */
+void FSM::exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing()
+{
+	/* Default exit sequence for state Distancing */
+	stateConfVector[14] = FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG;
+	stateConfVectorPosition = 14;
+}
+
+/* Default exit sequence for state operational */
+void FSM::exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational()
+{
+	/* Default exit sequence for state operational */
+	stateConfVector[14] = FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG;
+	stateConfVectorPosition = 14;
+}
+
+/* Default exit sequence for state EStop */
+void FSM::exseq_Festo1__FSM_LAMP_GREEN_EStop()
+{
+	/* Default exit sequence for state EStop */
+	stateConfVector[14] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 14;
+}
+
+/* Default exit sequence for state HeartBeatFailed */
+void FSM::exseq_Festo1__FSM_LAMP_GREEN_HeartBeatFailed()
+{
+	/* Default exit sequence for state HeartBeatFailed */
+	stateConfVector[14] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 14;
+}
+
+/* Default exit sequence for state Error */
+void FSM::exseq_Festo1__FSM_LAMP_GREEN_Error()
+{
+	/* Default exit sequence for state Error */
+	stateConfVector[14] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 14;
+}
+
+/* Default exit sequence for state FSM_Festo2: LG */
+void FSM::exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG()
+{
+	/* Default exit sequence for state FSM_Festo2: LG */
+	exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen();
+	stateConfVector[15] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 15;
+}
+
+/* Default exit sequence for state OFF */
+void FSM::exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF()
+{
+	/* Default exit sequence for state OFF */
+	stateConfVector[15] = FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG;
+	stateConfVectorPosition = 15;
+}
+
+/* Default exit sequence for state ServiceMode */
+void FSM::exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode()
+{
+	/* Default exit sequence for state ServiceMode */
+	stateConfVector[15] = FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG;
+	stateConfVectorPosition = 15;
+}
+
+/* Default exit sequence for state Distancing */
+void FSM::exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing()
+{
+	/* Default exit sequence for state Distancing */
+	stateConfVector[15] = FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG;
+	stateConfVectorPosition = 15;
+}
+
+/* Default exit sequence for state Operational */
+void FSM::exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational()
+{
+	/* Default exit sequence for state Operational */
+	stateConfVector[15] = FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG;
+	stateConfVectorPosition = 15;
+}
+
+/* Default exit sequence for state EStop */
+void FSM::exseq_Festo2__FSM_LAMP_GREEN_EStop()
+{
+	/* Default exit sequence for state EStop */
+	stateConfVector[15] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 15;
+}
+
+/* Default exit sequence for state Error */
+void FSM::exseq_Festo2__FSM_LAMP_GREEN_Error()
+{
+	/* Default exit sequence for state Error */
+	stateConfVector[15] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 15;
+}
+
+/* Default exit sequence for state FSM_Festo1: LY */
+void FSM::exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY()
+{
+	/* Default exit sequence for state FSM_Festo1: LY */
+	exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow();
+	stateConfVector[16] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 16;
+}
+
+/* Default exit sequence for state OFF */
+void FSM::exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF()
+{
+	/* Default exit sequence for state OFF */
+	stateConfVector[16] = FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY;
+	stateConfVectorPosition = 16;
+}
+
+/* Default exit sequence for state RampFull */
+void FSM::exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull()
+{
+	/* Default exit sequence for state RampFull */
+	stateConfVector[16] = FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY;
+	stateConfVectorPosition = 16;
+}
+
+/* Default exit sequence for state EStop */
+void FSM::exseq_Festo1__FSM_LAMP_YELLOW_EStop()
+{
+	/* Default exit sequence for state EStop */
+	stateConfVector[16] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 16;
+}
+
+/* Default exit sequence for state HeartbeatFailed */
+void FSM::exseq_Festo1__FSM_LAMP_YELLOW_HeartbeatFailed()
+{
+	/* Default exit sequence for state HeartbeatFailed */
+	stateConfVector[16] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 16;
+}
+
+/* Default exit sequence for state FSM_Festo2: LR */
+void FSM::exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR()
+{
+	/* Default exit sequence for state FSM_Festo2: LR */
+	exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed();
+	stateConfVector[17] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 17;
+}
+
+/* Default exit sequence for state OFF */
+void FSM::exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF()
+{
+	/* Default exit sequence for state OFF */
+	stateConfVector[17] = FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR;
+	stateConfVectorPosition = 17;
+}
+
+/* Default exit sequence for state ErrorMissingPuk */
+void FSM::exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk()
+{
+	/* Default exit sequence for state ErrorMissingPuk */
+	stateConfVector[17] = FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR;
+	stateConfVectorPosition = 17;
+}
+
+/* Default exit sequence for state ErrorUnknownPuk */
+void FSM::exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk()
+{
+	/* Default exit sequence for state ErrorUnknownPuk */
+	stateConfVector[17] = FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR;
+	stateConfVectorPosition = 17;
+}
+
+/* Default exit sequence for state ErrorUnknownPukAcknowledged */
+void FSM::exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged()
+{
+	/* Default exit sequence for state ErrorUnknownPukAcknowledged */
+	stateConfVector[17] = FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR;
+	stateConfVectorPosition = 17;
+}
+
+/* Default exit sequence for state EStop */
+void FSM::exseq_Festo2__FSM_LAMP_RED_EStop()
+{
+	/* Default exit sequence for state EStop */
+	stateConfVector[17] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 17;
+}
+
+/* Default exit sequence for state FSM_Festo2: LY */
+void FSM::exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY()
+{
+	/* Default exit sequence for state FSM_Festo2: LY */
+	exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow();
+	stateConfVector[18] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 18;
+}
+
+/* Default exit sequence for state OFF */
+void FSM::exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF()
+{
+	/* Default exit sequence for state OFF */
+	stateConfVector[18] = FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY;
+	stateConfVectorPosition = 18;
+}
+
+/* Default exit sequence for state RampFull */
+void FSM::exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull()
+{
+	/* Default exit sequence for state RampFull */
+	stateConfVector[18] = FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY;
+	stateConfVectorPosition = 18;
+}
+
+/* Default exit sequence for state EStop */
+void FSM::exseq_Festo2__FSM_LAMP_YELLOW_EStop()
+{
+	/* Default exit sequence for state EStop */
+	stateConfVector[18] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 18;
+}
+
+/* Default exit sequence for state HeartBeatFailed */
+void FSM::exseq_FSM_SystemV2_HeartBeatFailed()
+{
+	/* Default exit sequence for state HeartBeatFailed */
 	stateConfVector[19] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state FSM_System */
+void FSM::exseq_FSM_SystemV2_FSM_System()
+{
+	/* Default exit sequence for state FSM_System */
+	exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM();
+	stateConfVector[19] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state Festo:FSM_System */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System()
+{
+	/* Default exit sequence for state Festo:FSM_System */
+	exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM();
+	stateConfVector[19] = FSM::State::FSM_SystemV2_FSM_System;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state Ready */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready()
+{
+	/* Default exit sequence for state Ready */
+	stateConfVector[19] = FSM::State::Festo_FSM_System;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state ServiceMode */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode()
+{
+	/* Default exit sequence for state ServiceMode */
+	stateConfVector[19] = FSM::State::Festo_FSM_System;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state Operational */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational()
+{
+	/* Default exit sequence for state Operational */
+	stateConfVector[19] = FSM::State::Festo_FSM_System;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state Error */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error()
+{
+	/* Default exit sequence for state Error */
+	stateConfVector[19] = FSM::State::Festo_FSM_System;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state EStop */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop()
+{
+	/* Default exit sequence for state EStop */
+	exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop();
+	stateConfVector[19] = FSM::State::FSM_SystemV2_FSM_System;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state EStopReceived */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived()
+{
+	/* Default exit sequence for state EStopReceived */
+	stateConfVector[19] = FSM::State::EStop;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state EStopCleared */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopCleared()
+{
+	/* Default exit sequence for state EStopCleared */
+	stateConfVector[19] = FSM::State::EStop;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state BGR1Pressed */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1Pressed()
+{
+	/* Default exit sequence for state BGR1Pressed */
+	stateConfVector[19] = FSM::State::EStop;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state BGR2Pressed */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2Pressed()
+{
+	/* Default exit sequence for state BGR2Pressed */
+	stateConfVector[19] = FSM::State::EStop;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state BGR2PressedAfterBGR1 */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1()
+{
+	/* Default exit sequence for state BGR2PressedAfterBGR1 */
+	stateConfVector[19] = FSM::State::EStop;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state BGR1PressedAfterBGR2 */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2()
+{
+	/* Default exit sequence for state BGR1PressedAfterBGR2 */
+	stateConfVector[19] = FSM::State::EStop;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for final state. */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_()
+{
+	/* Default exit sequence for final state. */
+	stateConfVector[19] = FSM::State::EStop;
+	stateConfVectorPosition = 19;
+}
+
+/* Default exit sequence for state EStopCalibration */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration()
+{
+	/* Default exit sequence for state EStopCalibration */
+	stateConfVector[19] = FSM::State::FSM_SystemV2_FSM_System;
 	stateConfVectorPosition = 19;
 }
 
@@ -8289,9 +8906,9 @@ void FSM::exseq_FSM_Festo1__Sorting()
 			exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate();
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider :
+		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter :
 		{
-			exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider();
+			exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter();
 			break;
 		}
 		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferEjector :
@@ -8367,9 +8984,9 @@ void FSM::exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sortin
 			exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate();
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider :
+		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter :
 		{
-			exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider();
+			exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter();
 			break;
 		}
 		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferEjector :
@@ -8435,9 +9052,9 @@ void FSM::exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sortin
 			exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate();
 			break;
 		}
-		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider :
+		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter :
 		{
-			exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider();
+			exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter();
 			break;
 		}
 		case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferEjector :
@@ -8676,225 +9293,12 @@ void FSM::exseq_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor()
 	}
 }
 
-/* Default exit sequence for region FSM_System */
-void FSM::exseq_FSM_System()
-{
-	/* Default exit sequence for region FSM_System */
-	/* Handle exit of all possible states (of FSM.FSM_System) at position 5... */
-	switch(stateConfVector[ 5 ])
-	{
-		case FSM::State::FSM_System_FSM_System :
-		{
-			exseq_FSM_System_FSM_System();
-			break;
-		}
-		case FSM::State::Start :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start();
-			break;
-		}
-		case FSM::State::EStopCleared :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared();
-			break;
-		}
-		case FSM::State::EStopReceived :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived();
-			break;
-		}
-		case FSM::State::EStopCalibration :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCalibration();
-			break;
-		}
-		case FSM::State::Operational :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Operational();
-			break;
-		}
-		case FSM::State::ServiceMode :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode();
-			break;
-		}
-		case FSM::State::ReceivedReset :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ReceivedReset();
-			break;
-		}
-		case FSM::State::Ready :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready();
-			break;
-		}
-		case FSM::State::Paused :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Paused();
-			break;
-		}
-		case FSM::State::FSM_System_HeartBeatFailed :
-		{
-			exseq_FSM_System_HeartBeatFailed();
-			break;
-		}
-		default:
-			/* do nothing */
-			break;
-	}
-}
-
-/* Default exit sequence for region FSM_System: Internal FSM */
-void FSM::exseq_FSM_System_FSM_System_FSM_System__Internal_FSM()
-{
-	/* Default exit sequence for region FSM_System: Internal FSM */
-	/* Handle exit of all possible states (of FSM.FSM_System.FSM_System.FSM_System__Internal_FSM) at position 5... */
-	switch(stateConfVector[ 5 ])
-	{
-		case FSM::State::Start :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start();
-			break;
-		}
-		case FSM::State::EStopCleared :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared();
-			break;
-		}
-		case FSM::State::EStopReceived :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived();
-			break;
-		}
-		case FSM::State::EStopCalibration :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCalibration();
-			break;
-		}
-		case FSM::State::Operational :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Operational();
-			break;
-		}
-		case FSM::State::ServiceMode :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode();
-			break;
-		}
-		case FSM::State::ReceivedReset :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ReceivedReset();
-			break;
-		}
-		case FSM::State::Ready :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready();
-			break;
-		}
-		case FSM::State::Paused :
-		{
-			exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Paused();
-			break;
-		}
-		default:
-			/* do nothing */
-			break;
-	}
-}
-
-/* Default exit sequence for region FSM_Festo1:Signaling */
-void FSM::exseq_FSM_Festo1_Signaling()
-{
-	/* Default exit sequence for region FSM_Festo1:Signaling */
-	/* Handle exit of all possible states (of FSM.FSM_Festo1_Signaling) at position 6... */
-	switch(stateConfVector[ 6 ])
-	{
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off :
-		{
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant :
-		{
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz :
-		{
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ :
-		{
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ();
-			break;
-		}
-		default:
-			/* do nothing */
-			break;
-	}
-	/* Handle exit of all possible states (of FSM.FSM_Festo1_Signaling) at position 7... */
-	switch(stateConfVector[ 7 ])
-	{
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off :
-		{
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant :
-		{
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant();
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ :
-		{
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ();
-			break;
-		}
-		default:
-			/* do nothing */
-			break;
-	}
-	/* Handle exit of all possible states (of FSM.FSM_Festo1_Signaling) at position 8... */
-	switch(stateConfVector[ 8 ])
-	{
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off :
-		{
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant :
-		{
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ :
-		{
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ();
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ :
-		{
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ();
-			break;
-		}
-		case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ :
-		{
-			exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ();
-			break;
-		}
-		default:
-			/* do nothing */
-			break;
-	}
-}
-
 /* Default exit sequence for region FSM_Festo2: Ingress */
 void FSM::exseq_FSM_Festo2__Ingress()
 {
 	/* Default exit sequence for region FSM_Festo2: Ingress */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Ingress) at position 9... */
-	switch(stateConfVector[ 9 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__Ingress) at position 5... */
+	switch(stateConfVector[ 5 ])
 	{
 		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress :
 		{
@@ -8909,11 +9313,6 @@ void FSM::exseq_FSM_Festo2__Ingress()
 		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle :
 		{
 			exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle();
-			break;
-		}
-		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance :
-		{
-			exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance();
 			break;
 		}
 		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected :
@@ -8956,8 +9355,8 @@ void FSM::exseq_FSM_Festo2__Ingress()
 void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress()
 {
 	/* Default exit sequence for region FSM_Festo2: Outer_Ingress */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Ingress.FSM_Festo2__Ingress.FSM_Festo2__Outer_Ingress) at position 9... */
-	switch(stateConfVector[ 9 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__Ingress.FSM_Festo2__Ingress.FSM_Festo2__Outer_Ingress) at position 5... */
+	switch(stateConfVector[ 5 ])
 	{
 		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress :
 		{
@@ -8967,11 +9366,6 @@ void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingres
 		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle :
 		{
 			exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle();
-			break;
-		}
-		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance :
-		{
-			exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance();
 			break;
 		}
 		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected :
@@ -9009,17 +9403,12 @@ void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingres
 void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress()
 {
 	/* Default exit sequence for region FSM_Festo2: Internal_Ingress */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Ingress.FSM_Festo2__Ingress.FSM_Festo2__Outer_Ingress.Ingress.FSM_Festo2__Internal_Ingress) at position 9... */
-	switch(stateConfVector[ 9 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__Ingress.FSM_Festo2__Ingress.FSM_Festo2__Outer_Ingress.Ingress.FSM_Festo2__Internal_Ingress) at position 5... */
+	switch(stateConfVector[ 5 ])
 	{
 		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle :
 		{
 			exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle();
-			break;
-		}
-		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance :
-		{
-			exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance();
 			break;
 		}
 		case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected :
@@ -9042,8 +9431,8 @@ void FSM::exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingres
 void FSM::exseq_FSM_Festo2__HeightMeasurement()
 {
 	/* Default exit sequence for region FSM_Festo2: HeightMeasurement */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__HeightMeasurement) at position 10... */
-	switch(stateConfVector[ 10 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__HeightMeasurement) at position 6... */
+	switch(stateConfVector[ 6 ])
 	{
 		case FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement :
 		{
@@ -9125,8 +9514,8 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement()
 void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement()
 {
 	/* Default exit sequence for region FSM_Festo2: Outer_Heightmeasurement */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__HeightMeasurement.FSM_Festo2__HeightMeasurement.FSM_Festo2__Outer_Heightmeasurement) at position 10... */
-	switch(stateConfVector[ 10 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__HeightMeasurement.FSM_Festo2__HeightMeasurement.FSM_Festo2__Outer_Heightmeasurement) at position 6... */
+	switch(stateConfVector[ 6 ])
 	{
 		case FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement :
 		{
@@ -9198,8 +9587,8 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_
 void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement()
 {
 	/* Default exit sequence for region FSM_Festo2: Internal_HeightMeasurement */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__HeightMeasurement.FSM_Festo2__HeightMeasurement.FSM_Festo2__Outer_Heightmeasurement.HeightMeasurement.FSM_Festo2__Internal_HeightMeasurement) at position 10... */
-	switch(stateConfVector[ 10 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__HeightMeasurement.FSM_Festo2__HeightMeasurement.FSM_Festo2__Outer_Heightmeasurement.HeightMeasurement.FSM_Festo2__Internal_HeightMeasurement) at position 6... */
+	switch(stateConfVector[ 6 ])
 	{
 		case FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle :
 		{
@@ -9251,8 +9640,8 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_
 void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement()
 {
 	/* Default exit sequence for region FSM_Festo2: Outer_HeightMeasurement */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__HeightMeasurement.FSM_Festo2__HeightMeasurement.FSM_Festo2__Outer_Heightmeasurement.HeightMeasurement.FSM_Festo2__Internal_HeightMeasurement.Measuring.FSM_Festo2__Outer_HeightMeasurement) at position 10... */
-	switch(stateConfVector[ 10 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__HeightMeasurement.FSM_Festo2__HeightMeasurement.FSM_Festo2__Outer_Heightmeasurement.HeightMeasurement.FSM_Festo2__Internal_HeightMeasurement.Measuring.FSM_Festo2__Outer_HeightMeasurement) at position 6... */
+	switch(stateConfVector[ 6 ])
 	{
 		case FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_A :
 		{
@@ -9289,8 +9678,8 @@ void FSM::exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_
 void FSM::exseq_FSM_Festo2__Egress()
 {
 	/* Default exit sequence for region FSM_Festo2: Egress */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Egress) at position 11... */
-	switch(stateConfVector[ 11 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__Egress) at position 7... */
+	switch(stateConfVector[ 7 ])
 	{
 		case FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress :
 		{
@@ -9347,8 +9736,8 @@ void FSM::exseq_FSM_Festo2__Egress()
 void FSM::exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress()
 {
 	/* Default exit sequence for region FSM_FEsto2: Outer_Egress */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Egress.FSM_Festo2__Egress.FSM_FEsto2__Outer_Egress) at position 11... */
-	switch(stateConfVector[ 11 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__Egress.FSM_Festo2__Egress.FSM_FEsto2__Outer_Egress) at position 7... */
+	switch(stateConfVector[ 7 ])
 	{
 		case FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress :
 		{
@@ -9395,8 +9784,8 @@ void FSM::exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress()
 void FSM::exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress()
 {
 	/* Default exit sequence for region FSM_Festo2: Internal_Egress */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Egress.FSM_Festo2__Egress.FSM_FEsto2__Outer_Egress.Egress.FSM_Festo2__Internal_Egress) at position 11... */
-	switch(stateConfVector[ 11 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__Egress.FSM_Festo2__Egress.FSM_FEsto2__Outer_Egress.Egress.FSM_Festo2__Internal_Egress) at position 7... */
+	switch(stateConfVector[ 7 ])
 	{
 		case FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE :
 		{
@@ -9423,8 +9812,8 @@ void FSM::exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_E
 void FSM::exseq_FSM_Festo2__Motor()
 {
 	/* Default exit sequence for region FSM_Festo2: Motor */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Motor) at position 12... */
-	switch(stateConfVector[ 12 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__Motor) at position 8... */
+	switch(stateConfVector[ 8 ])
 	{
 		case FSM::State::FSM_Festo2__Motor_SystemMotor :
 		{
@@ -9456,8 +9845,8 @@ void FSM::exseq_FSM_Festo2__Motor()
 void FSM::exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor()
 {
 	/* Default exit sequence for region FSM:SystemMotor */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Motor.SystemMotor.FSM_SystemMotor) at position 12... */
-	switch(stateConfVector[ 12 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__Motor.SystemMotor.FSM_SystemMotor) at position 8... */
+	switch(stateConfVector[ 8 ])
 	{
 		case FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward :
 		{
@@ -9480,94 +9869,12 @@ void FSM::exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor()
 	}
 }
 
-/* Default exit sequence for region FSM_Festo2: Signaling */
-void FSM::exseq_FSM_Festo2__Signaling()
-{
-	/* Default exit sequence for region FSM_Festo2: Signaling */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Signaling) at position 13... */
-	switch(stateConfVector[ 13 ])
-	{
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off :
-		{
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant :
-		{
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz :
-		{
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ :
-		{
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ();
-			break;
-		}
-		default:
-			/* do nothing */
-			break;
-	}
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Signaling) at position 14... */
-	switch(stateConfVector[ 14 ])
-	{
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off :
-		{
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant :
-		{
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant();
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ :
-		{
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ();
-			break;
-		}
-		default:
-			/* do nothing */
-			break;
-	}
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Signaling) at position 15... */
-	switch(stateConfVector[ 15 ])
-	{
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off :
-		{
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant :
-		{
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ :
-		{
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ();
-			break;
-		}
-		case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ :
-		{
-			exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ();
-			break;
-		}
-		default:
-			/* do nothing */
-			break;
-	}
-}
-
 /* Default exit sequence for region Evaluate */
 void FSM::exseq_Evaluate()
 {
 	/* Default exit sequence for region Evaluate */
-	/* Handle exit of all possible states (of FSM.Evaluate) at position 16... */
-	switch(stateConfVector[ 16 ])
+	/* Handle exit of all possible states (of FSM.Evaluate) at position 9... */
+	switch(stateConfVector[ 9 ])
 	{
 		case FSM::State::Evaluate_EvaluateTester :
 		{
@@ -9584,8 +9891,8 @@ void FSM::exseq_Evaluate()
 void FSM::exseq_FSM_Festo1__Errors()
 {
 	/* Default exit sequence for region FSM_Festo1: Errors */
-	/* Handle exit of all possible states (of FSM.FSM_Festo1__Errors) at position 17... */
-	switch(stateConfVector[ 17 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo1__Errors) at position 10... */
+	switch(stateConfVector[ 10 ])
 	{
 		case FSM::State::FSM_Festo1__Errors_FSM_Errors :
 		{
@@ -9692,8 +9999,8 @@ void FSM::exseq_FSM_Festo1__Errors()
 void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors()
 {
 	/* Default exit sequence for region FSM_Festo1: Internal_Errors */
-	/* Handle exit of all possible states (of FSM.FSM_Festo1__Errors.FSM_Errors.FSM_Festo1__Internal_Errors) at position 17... */
-	switch(stateConfVector[ 17 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo1__Errors.FSM_Errors.FSM_Festo1__Internal_Errors) at position 10... */
+	switch(stateConfVector[ 10 ])
 	{
 		case FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMRestart :
 		{
@@ -9785,8 +10092,8 @@ void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors()
 void FSM::exseq_FSM_Festo2__Sorting()
 {
 	/* Default exit sequence for region FSM_Festo2: Sorting */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Sorting) at position 18... */
-	switch(stateConfVector[ 18 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__Sorting) at position 11... */
+	switch(stateConfVector[ 11 ])
 	{
 		case FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting :
 		{
@@ -9878,8 +10185,8 @@ void FSM::exseq_FSM_Festo2__Sorting()
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting()
 {
 	/* Default exit sequence for region FSM_Festo2: Outer_Sorting */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Sorting.FSM_Festo2__Sorting.FSM_Festo2__Outer_Sorting) at position 18... */
-	switch(stateConfVector[ 18 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__Sorting.FSM_Festo2__Sorting.FSM_Festo2__Outer_Sorting) at position 11... */
+	switch(stateConfVector[ 11 ])
 	{
 		case FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting :
 		{
@@ -9961,8 +10268,8 @@ void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sortin
 void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting()
 {
 	/* Default exit sequence for region FSM_Festo2: Internal_Sorting */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Sorting.FSM_Festo2__Sorting.FSM_Festo2__Outer_Sorting.Sorting.FSM_Festo2__Internal_Sorting) at position 18... */
-	switch(stateConfVector[ 18 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__Sorting.FSM_Festo2__Sorting.FSM_Festo2__Outer_Sorting.Sorting.FSM_Festo2__Internal_Sorting) at position 11... */
+	switch(stateConfVector[ 11 ])
 	{
 		case FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle :
 		{
@@ -10024,8 +10331,8 @@ void FSM::exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sortin
 void FSM::exseq_FSM_Festo2__Errors()
 {
 	/* Default exit sequence for region FSM_Festo2: Errors */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Errors) at position 19... */
-	switch(stateConfVector[ 19 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__Errors) at position 12... */
+	switch(stateConfVector[ 12 ])
 	{
 		case FSM::State::FSM_Festo2__Errors_FSM_Errors :
 		{
@@ -10132,8 +10439,8 @@ void FSM::exseq_FSM_Festo2__Errors()
 void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors()
 {
 	/* Default exit sequence for region FST_2: FSM_Errors */
-	/* Handle exit of all possible states (of FSM.FSM_Festo2__Errors.FSM_Errors.FST_2__FSM_Errors) at position 19... */
-	switch(stateConfVector[ 19 ])
+	/* Handle exit of all possible states (of FSM.FSM_Festo2__Errors.FSM_Errors.FST_2__FSM_Errors) at position 12... */
+	switch(stateConfVector[ 12 ])
 	{
 		case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingUnacknowledged :
 		{
@@ -10213,6 +10520,704 @@ void FSM::exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors()
 		case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullRestart :
 		{
 			exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullRestart();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region Festo1: FSM_LAMP_RED */
+void FSM::exseq_Festo1__FSM_LAMP_RED()
+{
+	/* Default exit sequence for region Festo1: FSM_LAMP_RED */
+	/* Handle exit of all possible states (of FSM.Festo1__FSM_LAMP_RED) at position 13... */
+	switch(stateConfVector[ 13 ])
+	{
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR :
+		{
+			exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF :
+		{
+			exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk :
+		{
+			exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk :
+		{
+			exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged :
+		{
+			exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_EStop :
+		{
+			exseq_Festo1__FSM_LAMP_RED_EStop();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_HeartbeatFailed :
+		{
+			exseq_Festo1__FSM_LAMP_RED_HeartbeatFailed();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region FSM_Festo1: Inner_LampRed */
+void FSM::exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed()
+{
+	/* Default exit sequence for region FSM_Festo1: Inner_LampRed */
+	/* Handle exit of all possible states (of FSM.Festo1__FSM_LAMP_RED.FSM_Festo1__LR.FSM_Festo1__Inner_LampRed) at position 13... */
+	switch(stateConfVector[ 13 ])
+	{
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF :
+		{
+			exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk :
+		{
+			exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk :
+		{
+			exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged :
+		{
+			exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region Festo1: FSM_LAMP_GREEN */
+void FSM::exseq_Festo1__FSM_LAMP_GREEN()
+{
+	/* Default exit sequence for region Festo1: FSM_LAMP_GREEN */
+	/* Handle exit of all possible states (of FSM.Festo1__FSM_LAMP_GREEN) at position 14... */
+	switch(stateConfVector[ 14 ])
+	{
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG :
+		{
+			exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF :
+		{
+			exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode :
+		{
+			exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing :
+		{
+			exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational :
+		{
+			exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_EStop :
+		{
+			exseq_Festo1__FSM_LAMP_GREEN_EStop();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_HeartBeatFailed :
+		{
+			exseq_Festo1__FSM_LAMP_GREEN_HeartBeatFailed();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_Error :
+		{
+			exseq_Festo1__FSM_LAMP_GREEN_Error();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region FSM_Festo1: Inner_LampGreen */
+void FSM::exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen()
+{
+	/* Default exit sequence for region FSM_Festo1: Inner_LampGreen */
+	/* Handle exit of all possible states (of FSM.Festo1__FSM_LAMP_GREEN.FSM_Festo1__LG.FSM_Festo1__Inner_LampGreen) at position 14... */
+	switch(stateConfVector[ 14 ])
+	{
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF :
+		{
+			exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode :
+		{
+			exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing :
+		{
+			exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational :
+		{
+			exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region Festo2: FSM_LAMP_GREEN */
+void FSM::exseq_Festo2__FSM_LAMP_GREEN()
+{
+	/* Default exit sequence for region Festo2: FSM_LAMP_GREEN */
+	/* Handle exit of all possible states (of FSM.Festo2__FSM_LAMP_GREEN) at position 15... */
+	switch(stateConfVector[ 15 ])
+	{
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG :
+		{
+			exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF :
+		{
+			exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode :
+		{
+			exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing :
+		{
+			exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational :
+		{
+			exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_EStop :
+		{
+			exseq_Festo2__FSM_LAMP_GREEN_EStop();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_Error :
+		{
+			exseq_Festo2__FSM_LAMP_GREEN_Error();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region FSM_Festo2: Inner_LampGreen */
+void FSM::exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen()
+{
+	/* Default exit sequence for region FSM_Festo2: Inner_LampGreen */
+	/* Handle exit of all possible states (of FSM.Festo2__FSM_LAMP_GREEN.FSM_Festo2__LG.FSM_Festo2__Inner_LampGreen) at position 15... */
+	switch(stateConfVector[ 15 ])
+	{
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF :
+		{
+			exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode :
+		{
+			exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing :
+		{
+			exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational :
+		{
+			exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region Festo1: FSM_LAMP_YELLOW */
+void FSM::exseq_Festo1__FSM_LAMP_YELLOW()
+{
+	/* Default exit sequence for region Festo1: FSM_LAMP_YELLOW */
+	/* Handle exit of all possible states (of FSM.Festo1__FSM_LAMP_YELLOW) at position 16... */
+	switch(stateConfVector[ 16 ])
+	{
+		case FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY :
+		{
+			exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF :
+		{
+			exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull :
+		{
+			exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_YELLOW_EStop :
+		{
+			exseq_Festo1__FSM_LAMP_YELLOW_EStop();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_YELLOW_HeartbeatFailed :
+		{
+			exseq_Festo1__FSM_LAMP_YELLOW_HeartbeatFailed();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region FSM_Festo1: Inner_LampYellow */
+void FSM::exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow()
+{
+	/* Default exit sequence for region FSM_Festo1: Inner_LampYellow */
+	/* Handle exit of all possible states (of FSM.Festo1__FSM_LAMP_YELLOW.FSM_Festo1__LY.FSM_Festo1__Inner_LampYellow) at position 16... */
+	switch(stateConfVector[ 16 ])
+	{
+		case FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF :
+		{
+			exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF();
+			break;
+		}
+		case FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull :
+		{
+			exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region Festo2: FSM_LAMP_RED */
+void FSM::exseq_Festo2__FSM_LAMP_RED()
+{
+	/* Default exit sequence for region Festo2: FSM_LAMP_RED */
+	/* Handle exit of all possible states (of FSM.Festo2__FSM_LAMP_RED) at position 17... */
+	switch(stateConfVector[ 17 ])
+	{
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR :
+		{
+			exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF :
+		{
+			exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk :
+		{
+			exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk :
+		{
+			exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged :
+		{
+			exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_EStop :
+		{
+			exseq_Festo2__FSM_LAMP_RED_EStop();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region FSM_Festo2: Inner_LampRed */
+void FSM::exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed()
+{
+	/* Default exit sequence for region FSM_Festo2: Inner_LampRed */
+	/* Handle exit of all possible states (of FSM.Festo2__FSM_LAMP_RED.FSM_Festo2__LR.FSM_Festo2__Inner_LampRed) at position 17... */
+	switch(stateConfVector[ 17 ])
+	{
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF :
+		{
+			exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk :
+		{
+			exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk :
+		{
+			exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged :
+		{
+			exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region Festo2: FSM_LAMP_YELLOW */
+void FSM::exseq_Festo2__FSM_LAMP_YELLOW()
+{
+	/* Default exit sequence for region Festo2: FSM_LAMP_YELLOW */
+	/* Handle exit of all possible states (of FSM.Festo2__FSM_LAMP_YELLOW) at position 18... */
+	switch(stateConfVector[ 18 ])
+	{
+		case FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY :
+		{
+			exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF :
+		{
+			exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull :
+		{
+			exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_YELLOW_EStop :
+		{
+			exseq_Festo2__FSM_LAMP_YELLOW_EStop();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region FSM_Festo2: Inner_LampYellow */
+void FSM::exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow()
+{
+	/* Default exit sequence for region FSM_Festo2: Inner_LampYellow */
+	/* Handle exit of all possible states (of FSM.Festo2__FSM_LAMP_YELLOW.FSM_Festo2__LY.FSM_Festo2__Inner_LampYellow) at position 18... */
+	switch(stateConfVector[ 18 ])
+	{
+		case FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF :
+		{
+			exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF();
+			break;
+		}
+		case FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull :
+		{
+			exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region FSM_SystemV2 */
+void FSM::exseq_FSM_SystemV2()
+{
+	/* Default exit sequence for region FSM_SystemV2 */
+	/* Handle exit of all possible states (of FSM.FSM_SystemV2) at position 19... */
+	switch(stateConfVector[ 19 ])
+	{
+		case FSM::State::FSM_SystemV2_HeartBeatFailed :
+		{
+			exseq_FSM_SystemV2_HeartBeatFailed();
+			break;
+		}
+		case FSM::State::FSM_SystemV2_FSM_System :
+		{
+			exseq_FSM_SystemV2_FSM_System();
+			break;
+		}
+		case FSM::State::Festo_FSM_System :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System();
+			break;
+		}
+		case FSM::State::Ready :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+			break;
+		}
+		case FSM::State::ServiceMode :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode();
+			break;
+		}
+		case FSM::State::Operational :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational();
+			break;
+		}
+		case FSM::State::Error :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error();
+			break;
+		}
+		case FSM::State::EStop :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_EStopReceived :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_EStopCleared :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopCleared();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR1Pressed :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1Pressed();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR2Pressed :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2Pressed();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR2PressedAfterBGR1 :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR1PressedAfterBGR2 :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop__final_ :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_();
+			break;
+		}
+		case FSM::State::EStopCalibration :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region FSM_System: Outer_FSM */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM()
+{
+	/* Default exit sequence for region FSM_System: Outer_FSM */
+	/* Handle exit of all possible states (of FSM.FSM_SystemV2.FSM_System.FSM_System__Outer_FSM) at position 19... */
+	switch(stateConfVector[ 19 ])
+	{
+		case FSM::State::Festo_FSM_System :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System();
+			break;
+		}
+		case FSM::State::Ready :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+			break;
+		}
+		case FSM::State::ServiceMode :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode();
+			break;
+		}
+		case FSM::State::Operational :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational();
+			break;
+		}
+		case FSM::State::Error :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error();
+			break;
+		}
+		case FSM::State::EStop :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_EStopReceived :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_EStopCleared :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopCleared();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR1Pressed :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1Pressed();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR2Pressed :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2Pressed();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR2PressedAfterBGR1 :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR1PressedAfterBGR2 :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop__final_ :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_();
+			break;
+		}
+		case FSM::State::EStopCalibration :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region FSM_System: Inner_FSM */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM()
+{
+	/* Default exit sequence for region FSM_System: Inner_FSM */
+	/* Handle exit of all possible states (of FSM.FSM_SystemV2.FSM_System.FSM_System__Outer_FSM.Festo_FSM_System.FSM_System__Inner_FSM) at position 19... */
+	switch(stateConfVector[ 19 ])
+	{
+		case FSM::State::Ready :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+			break;
+		}
+		case FSM::State::ServiceMode :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode();
+			break;
+		}
+		case FSM::State::Operational :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational();
+			break;
+		}
+		case FSM::State::Error :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error();
+			break;
+		}
+		default:
+			/* do nothing */
+			break;
+	}
+}
+
+/* Default exit sequence for region FSM_EStop */
+void FSM::exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop()
+{
+	/* Default exit sequence for region FSM_EStop */
+	/* Handle exit of all possible states (of FSM.FSM_SystemV2.FSM_System.FSM_System__Outer_FSM.EStop.FSM_EStop) at position 19... */
+	switch(stateConfVector[ 19 ])
+	{
+		case FSM::State::EStop_FSM_EStop_EStopReceived :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_EStopCleared :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopCleared();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR1Pressed :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1Pressed();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR2Pressed :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2Pressed();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR2PressedAfterBGR1 :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop_BGR1PressedAfterBGR2 :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2();
+			break;
+		}
+		case FSM::State::EStop_FSM_EStop__final_ :
+		{
+			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_();
 			break;
 		}
 		default:
@@ -10383,55 +11388,6 @@ void FSM::react_FSM_QualityGate__Motor__entry_Default()
 }
 
 /* Default react sequence for initial entry  */
-void FSM::react_FSM_System_FSM_System_FSM_System__Internal_FSM__entry_Default()
-{
-	/* Default react sequence for initial entry  */
-	enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start_default();
-}
-
-/* Default react sequence for initial entry  */
-void FSM::react_FSM_System__entry_Default()
-{
-	/* Default react sequence for initial entry  */
-	enseq_FSM_System_FSM_System_default();
-}
-
-/* Default react sequence for initial entry  */
-void FSM::react_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green__entry_Default()
-{
-	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
-}
-
-/* Default react sequence for initial entry  */
-void FSM::react_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow__entry_Default()
-{
-	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
-}
-
-/* Default react sequence for initial entry  */
-void FSM::react_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red__entry_Default()
-{
-	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
-}
-
-/* Default react sequence for initial entry  */
-void FSM::react_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP__entry_Default()
-{
-	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_default();
-}
-
-/* Default react sequence for initial entry  */
-void FSM::react_FSM_Festo1_Signaling__entry_Default()
-{
-	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo1_Signaling_FSM_LAMP_default();
-}
-
-/* Default react sequence for initial entry  */
 void FSM::react_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress__entry_Default()
 {
 	/* Default react sequence for initial entry  */
@@ -10558,41 +11514,6 @@ void FSM::react_FSM_Festo2__Motor__entry_Default()
 }
 
 /* Default react sequence for initial entry  */
-void FSM::react_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green__entry_Default()
-{
-	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
-}
-
-/* Default react sequence for initial entry  */
-void FSM::react_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow__entry_Default()
-{
-	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
-}
-
-/* Default react sequence for initial entry  */
-void FSM::react_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red__entry_Default()
-{
-	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
-}
-
-/* Default react sequence for initial entry  */
-void FSM::react_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP__entry_Default()
-{
-	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_default();
-}
-
-/* Default react sequence for initial entry  */
-void FSM::react_FSM_Festo2__Signaling__entry_Default()
-{
-	/* Default react sequence for initial entry  */
-	enseq_FSM_Festo2__Signaling_FSM_LAMP_default();
-}
-
-/* Default react sequence for initial entry  */
 void FSM::react_Evaluate__entry_Default()
 {
 	/* Default react sequence for initial entry  */
@@ -10660,6 +11581,146 @@ void FSM::react_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors__entry_Default()
 {
 	/* Default react sequence for initial entry  */
 	enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_Festo1__FSM_LAMP_RED__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF_default();
+}
+
+/* Default react sequence for shallow history entry History */
+void FSM::react_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_History()
+{
+	/* Default react sequence for shallow history entry History */
+	/* Enter the region with shallow history */
+	if (historyVector[9] != FSM::State::NO_STATE)
+	{
+		shenseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen();
+	} else
+	{
+		enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF_default();
+	} 
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_Festo1__FSM_LAMP_GREEN__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF_default();
+}
+
+/* Default react sequence for shallow history entry History */
+void FSM::react_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_History()
+{
+	/* Default react sequence for shallow history entry History */
+	/* Enter the region with shallow history */
+	if (historyVector[10] != FSM::State::NO_STATE)
+	{
+		shenseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen();
+	} else
+	{
+		enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF_default();
+	} 
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_Festo2__FSM_LAMP_GREEN__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_Festo1__FSM_LAMP_YELLOW__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_Festo2__FSM_LAMP_RED__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_Festo2__FSM_LAMP_YELLOW__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration_default();
+}
+
+/* Default react sequence for initial entry  */
+void FSM::react_FSM_SystemV2__entry_Default()
+{
+	/* Default react sequence for initial entry  */
+	enseq_FSM_SystemV2_FSM_System_default();
 }
 
 sc::integer FSM::react(const sc::integer transitioned_before) {
@@ -10757,7 +11818,6 @@ sc::integer FSM::FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingres
 			if (LBF_1_OPEN_raised)
 			{ 
 				exseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_PukPresent();
-				FST_1_HM_Counter++;
 				FST_1_POSITION_INGRESS_NEW_PUK_observable.next();
 				enseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_CreatingDistance_default();
 				FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_react(0);
@@ -11448,7 +12508,7 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 					transitioned_after = 2;
 				}  else
 				{
-					if ((FST_1_POSITION_INGRESS_DISTANCE_VALID_raised) && (!(FST_1_isEjector)))
+					if ((FST_1_POSITION_DIVERTER_DISTANCE_VALID_raised) && (!(FST_1_isEjector)))
 					{ 
 						exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting();
 						FST_1_SORTING_MODULE_RESTING_observable.next();
@@ -11532,7 +12592,7 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 					transitioned_after = 2;
 				}  else
 				{
-					if ((FST_1_POSITION_SORTING_PUK_EXPIRED_raised) && ((FST_1_Sorting_Counter) == (1)))
+					if (FST_1_POSITION_SORTING_PUK_EXPIRED_raised)
 					{ 
 						exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_PukExpected();
 						motor1Forward--;
@@ -11567,7 +12627,6 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 			if ((FST_1_PUK_SORTING_PASSTHROUGH_raised) && (FST_1_isEjector))
 			{ 
 				exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate();
-				FST_1_Sorting_Counter--;
 				FST_1_PUK_ENTRY_EGRESS_observable.next();
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
@@ -11579,7 +12638,6 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 				if ((FST_1_PUK_SORTING_PASSTHROUGH_raised) && (!(FST_1_isEjector)))
 				{ 
 					exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate();
-					FST_1_Sorting_Counter--;
 					FST_1_SORTING_MODULE_ACTIVE_observable.next();
 					FST_1_PUK_ENTRY_EGRESS_observable.next();
 					enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferDivider_default();
@@ -11593,7 +12651,7 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 						FST_1_Sorting_Counter--;
 						EVALUATE_observable.next();
 						raiseLocal_EVALUATE();
-						enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider_default();
+						enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter_default();
 						FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_react(2);
 						transitioned_after = 2;
 					}  else
@@ -11601,7 +12659,6 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 						if (((FST_1_PUK_SORTING_EJECT_raised) && (FST_1_isEjector)) && (!(FST1RampFull)))
 						{ 
 							exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate();
-							FST_1_Sorting_Counter--;
 							FST_1_SORTING_MODULE_ACTIVE_observable.next();
 							enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingEjector_default();
 							FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_react(2);
@@ -11622,7 +12679,6 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 								if (((FST_1_PUK_SORTING_EJECT_raised) && (!(FST_1_isEjector))) && (FST1RampFull))
 								{ 
 									exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate();
-									FST_1_Sorting_Counter--;
 									FST_1_PUK_ENTRY_EGRESS_observable.next();
 									enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferEjector_default();
 									FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_react(2);
@@ -11644,16 +12700,16 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider_react(const sc::integer transitioned_before) {
-	/* The reactions of state EjectingDivider. */
+sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter_react(const sc::integer transitioned_before) {
+	/* The reactions of state EjectingDiverter. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
 		if ((transitioned_after) < (2))
 		{ 
-			if (LBR_1_OPEN_raised)
+			if (LBR_1_INTERRUPTED_raised)
 			{ 
-				exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider();
+				exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter();
 				motor1Forward--;
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
@@ -11682,7 +12738,6 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 			if (LBM_1_OPEN_raised)
 			{ 
 				exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferEjector();
-				FST_1_Egress_Counter++;
 				FST_1_POSITION_SORTING_NEW_PUK_observable.next();
 				enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EvaluateCounter_default();
 				FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_react(2);
@@ -11709,7 +12764,6 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 			if (LBM_1_OPEN_raised)
 			{ 
 				exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferDivider();
-				FST_1_Egress_Counter++;
 				FST_1_POSITION_SORTING_NEW_PUK_observable.next();
 				enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EvaluateCounter_default();
 				FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_react(2);
@@ -11733,7 +12787,7 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 	{ 
 		if ((transitioned_after) < (2))
 		{ 
-			if (LBR_1_OPEN_raised)
+			if (LBR_1_INTERRUPTED_raised)
 			{ 
 				exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingEjector();
 				motor1Forward--;
@@ -12272,1172 +13326,18 @@ sc::integer FSM::FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop_react(c
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_System_FSM_System_react(const sc::integer transitioned_before) {
-	/* The reactions of state FSM_System. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (5))
-		{ 
-			if (HEARTBEAT_FAILED_raised)
-			{ 
-				exseq_FSM_System_FSM_System();
-				ESTOP_RECEIVED_observable.next();
-				raiseLocal_ESTOP_RECEIVED();
-				enseq_FSM_System_HeartBeatFailed_default();
-				transitioned_after = 5;
-			}  else
-			{
-				if (FST_1_HEARTBEAT_RECONNECT_raised)
-				{ 
-					exseq_FSM_System_FSM_System();
-					setFST_1_HeartBeat(true);
-					enseq_FSM_System_FSM_System_default();
-					transitioned_after = 5;
-				}  else
-				{
-					if (FST_2_HEARTBEAT_RECONNECT_raised)
-					{ 
-						exseq_FSM_System_FSM_System();
-						setFST_2_HeartBeat(true);
-						enseq_FSM_System_FSM_System_default();
-						transitioned_after = 5;
-					} 
-				}
-			}
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_System_FSM_System_FSM_System__Internal_FSM_Start_react(const sc::integer transitioned_before) {
-	/* The reactions of state Start. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (5))
-		{ 
-			if (((isEStop1High) == (true)) && ((isEStop2High) == (true)))
-			{ 
-				exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start();
-				enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCalibration_default();
-				FSM_System_FSM_System_react(5);
-				transitioned_after = 5;
-			}  else
-			{
-				if (ESTOP_2_HIGH_raised)
-				{ 
-					exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start();
-					setIsEStop2High(true);
-					EVALUATE_observable.next();
-					raiseLocal_EVALUATE();
-					enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start_default();
-					FSM_System_FSM_System_react(5);
-					transitioned_after = 5;
-				}  else
-				{
-					if (ESTOP_2_LOW_raised)
-					{ 
-						exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start();
-						setIsEStop2High(false);
-						EVALUATE_observable.next();
-						raiseLocal_EVALUATE();
-						enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start_default();
-						FSM_System_FSM_System_react(5);
-						transitioned_after = 5;
-					}  else
-					{
-						if (ESTOP_1_HIGH_raised)
-						{ 
-							exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start();
-							setIsEStop1High(true);
-							EVALUATE_observable.next();
-							raiseLocal_EVALUATE();
-							enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start_default();
-							FSM_System_FSM_System_react(5);
-							transitioned_after = 5;
-						}  else
-						{
-							if (ESTOP_1_LOW_raised)
-							{ 
-								exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start();
-								setIsEStop1High(false);
-								EVALUATE_observable.next();
-								raiseLocal_EVALUATE();
-								enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Start_default();
-								FSM_System_FSM_System_react(5);
-								transitioned_after = 5;
-							} 
-						}
-					}
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_System_FSM_System_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared_react(const sc::integer transitioned_before) {
-	/* The reactions of state EStopCleared. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (5))
-		{ 
-			if (BGR_1_INTERRUPTED_raised)
-			{ 
-				exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared();
-				setIsBGR1Pressed(true);
-				EVALUATE_observable.next();
-				raiseLocal_EVALUATE();
-				enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared_default();
-				FSM_System_FSM_System_react(5);
-				transitioned_after = 5;
-			}  else
-			{
-				if (BGR_2_INTERRUPTED_raised)
-				{ 
-					exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared();
-					setIsBGR2Pressed(true);
-					EVALUATE_observable.next();
-					raiseLocal_EVALUATE();
-					enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared_default();
-					FSM_System_FSM_System_react(5);
-					transitioned_after = 5;
-				}  else
-				{
-					if (ESTOP_1_LOW_raised)
-					{ 
-						exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared();
-						setIsEStop1High(false);
-						setIsBGR1Pressed(false);
-						setIsBGR2Pressed(false);
-						enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-						FSM_System_FSM_System_react(5);
-						transitioned_after = 5;
-					}  else
-					{
-						if (ESTOP_2_LOW_raised)
-						{ 
-							exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared();
-							setIsEStop2High(false);
-							setIsBGR1Pressed(false);
-							setIsBGR2Pressed(false);
-							enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-							FSM_System_FSM_System_react(5);
-							transitioned_after = 5;
-						}  else
-						{
-							if (((isBGR1Pressed) == (true)) && ((isBGR2Pressed) == (true)))
-							{ 
-								exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared();
-								setIsBGR1Pressed(false);
-								setIsBGR2Pressed(false);
-								setMotor1Stop(0);
-								setMotor1Slow(0);
-								setMotor1Forward(0);
-								setMotor2Stop(0);
-								setMotor2Slow(0);
-								setMotor2Forward(0);
-								ESTOP_CLEARED_observable.next();
-								raiseLocal_ESTOP_CLEARED();
-								enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ReceivedReset_default();
-								FSM_System_FSM_System_react(5);
-								transitioned_after = 5;
-							} 
-						}
-					}
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_System_FSM_System_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_react(const sc::integer transitioned_before) {
-	/* The reactions of state EStopReceived. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (5))
-		{ 
-			if (ESTOP_1_HIGH_raised)
-			{ 
-				exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived();
-				setIsEStop1High(true);
-				EVALUATE_observable.next();
-				raiseLocal_EVALUATE();
-				enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-				FSM_System_FSM_System_react(5);
-				transitioned_after = 5;
-			}  else
-			{
-				if (ESTOP_2_HIGH_raised)
-				{ 
-					exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived();
-					setIsEStop2High(true);
-					EVALUATE_observable.next();
-					raiseLocal_EVALUATE();
-					enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-					FSM_System_FSM_System_react(5);
-					transitioned_after = 5;
-				}  else
-				{
-					if (((isEStop1High) == (true)) && ((isEStop2High) == (true)))
-					{ 
-						exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived();
-						enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared_default();
-						FSM_System_FSM_System_react(5);
-						transitioned_after = 5;
-					}  else
-					{
-						if (ESTOP_1_LOW_raised)
-						{ 
-							exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived();
-							setIsEStop1High(false);
-							EVALUATE_observable.next();
-							raiseLocal_EVALUATE();
-							enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-							FSM_System_FSM_System_react(5);
-							transitioned_after = 5;
-						}  else
-						{
-							if (ESTOP_2_LOW_raised)
-							{ 
-								exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived();
-								setIsEStop2High(false);
-								EVALUATE_observable.next();
-								raiseLocal_EVALUATE();
-								enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-								FSM_System_FSM_System_react(5);
-								transitioned_after = 5;
-							} 
-						}
-					}
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_System_FSM_System_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCalibration_react(const sc::integer transitioned_before) {
-	/* The reactions of state EStopCalibration. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (5))
-		{ 
-			if (BGS_1_LONG_PRESSED_raised)
-			{ 
-				exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCalibration();
-				enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode_default();
-				FSM_System_FSM_System_react(5);
-				transitioned_after = 5;
-			}  else
-			{
-				if (ESTOP_1_LOW_raised)
-				{ 
-					exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCalibration();
-					setIsEStop1High(false);
-					motor1Stop++;
-					motor2Stop++;
-					setEStopCalibratedReturn(true);
-					ESTOP_RECEIVED_observable.next();
-					raiseLocal_ESTOP_RECEIVED();
-					enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-					FSM_System_FSM_System_react(5);
-					transitioned_after = 5;
-				}  else
-				{
-					if (ESTOP_2_LOW_raised)
-					{ 
-						exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCalibration();
-						setIsEStop2High(false);
-						setEStopCalibratedReturn(true);
-						ESTOP_RECEIVED_observable.next();
-						raiseLocal_ESTOP_RECEIVED();
-						enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-						FSM_System_FSM_System_react(5);
-						transitioned_after = 5;
-					}  else
-					{
-						if (BGS_2_LONG_PRESSED_raised)
-						{ 
-							exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCalibration();
-							enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode_default();
-							FSM_System_FSM_System_react(5);
-							transitioned_after = 5;
-						} 
-					}
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_System_FSM_System_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_System_FSM_System_FSM_System__Internal_FSM_Operational_react(const sc::integer transitioned_before) {
-	/* The reactions of state Operational. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (5))
-		{ 
-			if (BRS_1_INTERRUPTED_raised)
-			{ 
-				exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Operational();
-				motor1Stop++;
-				motor2Stop++;
-				SYSTEM_OPERATIONAL_OUT_observable.next();
-				raiseLocal_SYSTEM_OPERATIONAL_OUT();
-				enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Paused_default();
-				FSM_System_FSM_System_react(5);
-				transitioned_after = 5;
-			}  else
-			{
-				if (ESTOP_1_LOW_raised)
-				{ 
-					exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Operational();
-					setIsEStop1High(false);
-					motor1Stop++;
-					motor2Stop++;
-					setReadyReturn(true);
-					ESTOP_RECEIVED_observable.next();
-					raiseLocal_ESTOP_RECEIVED();
-					enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-					FSM_System_FSM_System_react(5);
-					transitioned_after = 5;
-				}  else
-				{
-					if (ESTOP_2_LOW_raised)
-					{ 
-						exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Operational();
-						setIsEStop2High(false);
-						motor1Stop++;
-						motor2Stop++;
-						setReadyReturn(true);
-						ESTOP_RECEIVED_observable.next();
-						raiseLocal_ESTOP_RECEIVED();
-						enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-						FSM_System_FSM_System_react(5);
-						transitioned_after = 5;
-					}  else
-					{
-						if (BRS_2_INTERRUPTED_raised)
-						{ 
-							exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Operational();
-							motor1Stop++;
-							motor2Stop++;
-							SYSTEM_OPERATIONAL_OUT_observable.next();
-							raiseLocal_SYSTEM_OPERATIONAL_OUT();
-							enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Paused_default();
-							FSM_System_FSM_System_react(5);
-							transitioned_after = 5;
-						} 
-					}
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_System_FSM_System_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode_react(const sc::integer transitioned_before) {
-	/* The reactions of state ServiceMode. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (5))
-		{ 
-			if (BRS_1_INTERRUPTED_raised)
-			{ 
-				exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode();
-				setCalibrated(true);
-				EVALUATE_observable.next();
-				raiseLocal_EVALUATE();
-				enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready_default();
-				FSM_System_FSM_System_react(5);
-				transitioned_after = 5;
-			}  else
-			{
-				if (ESTOP_1_LOW_raised)
-				{ 
-					exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode();
-					setIsEStop1High(false);
-					motor1Stop++;
-					motor2Stop++;
-					setServiceModeReturn(true);
-					ESTOP_RECEIVED_observable.next();
-					raiseLocal_ESTOP_RECEIVED();
-					enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-					FSM_System_FSM_System_react(5);
-					transitioned_after = 5;
-				}  else
-				{
-					if (ESTOP_2_LOW_raised)
-					{ 
-						exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode();
-						setIsEStop2High(false);
-						setServiceModeReturn(true);
-						ESTOP_RECEIVED_observable.next();
-						raiseLocal_ESTOP_RECEIVED();
-						enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-						FSM_System_FSM_System_react(5);
-						transitioned_after = 5;
-					}  else
-					{
-						if (BRS_2_INTERRUPTED_raised)
-						{ 
-							exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode();
-							setCalibrated(true);
-							EVALUATE_observable.next();
-							raiseLocal_EVALUATE();
-							enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready_default();
-							FSM_System_FSM_System_react(5);
-							transitioned_after = 5;
-						} 
-					}
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_System_FSM_System_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_System_FSM_System_FSM_System__Internal_FSM_ReceivedReset_react(const sc::integer transitioned_before) {
-	/* The reactions of state ReceivedReset. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (5))
-		{ 
-			if ((eStopCalibratedReturn) == (true))
-			{ 
-				exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ReceivedReset();
-				setEStopCalibratedReturn(false);
-				enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCalibration_default();
-				FSM_System_FSM_System_react(5);
-				transitioned_after = 5;
-			}  else
-			{
-				if ((serviceModeReturn) == (true))
-				{ 
-					exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ReceivedReset();
-					setServiceModeReturn(false);
-					enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode_default();
-					FSM_System_FSM_System_react(5);
-					transitioned_after = 5;
-				}  else
-				{
-					if ((readyReturn) == (true))
-					{ 
-						exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ReceivedReset();
-						setReadyReturn(false);
-						enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready_default();
-						FSM_System_FSM_System_react(5);
-						transitioned_after = 5;
-					} 
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_System_FSM_System_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_System_FSM_System_FSM_System__Internal_FSM_Ready_react(const sc::integer transitioned_before) {
-	/* The reactions of state Ready. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (5))
-		{ 
-			if (BGS_1_LONG_PRESSED_raised)
-			{ 
-				exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready();
-				setCalibrated(false);
-				EVALUATE_observable.next();
-				raiseLocal_EVALUATE();
-				enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode_default();
-				FSM_System_FSM_System_react(5);
-				transitioned_after = 5;
-			}  else
-			{
-				if (BGS_1_INTERRUPTED_raised)
-				{ 
-					exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready();
-					incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::SYSTEM_OPERATIONAL_IN))
-					;
-					enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Operational_default();
-					FSM_System_FSM_System_react(5);
-					transitioned_after = 5;
-				}  else
-				{
-					if (ESTOP_2_LOW_raised)
-					{ 
-						exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready();
-						setIsEStop2High(false);
-						setReadyReturn(true);
-						ESTOP_RECEIVED_observable.next();
-						raiseLocal_ESTOP_RECEIVED();
-						enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-						FSM_System_FSM_System_react(5);
-						transitioned_after = 5;
-					}  else
-					{
-						if (ESTOP_1_LOW_raised)
-						{ 
-							exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready();
-							setIsEStop1High(false);
-							motor1Stop++;
-							motor2Stop++;
-							setReadyReturn(true);
-							ESTOP_RECEIVED_observable.next();
-							raiseLocal_ESTOP_RECEIVED();
-							enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-							FSM_System_FSM_System_react(5);
-							transitioned_after = 5;
-						}  else
-						{
-							if (BGS_2_INTERRUPTED_raised)
-							{ 
-								exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready();
-								incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::SYSTEM_OPERATIONAL_IN))
-								;
-								enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Operational_default();
-								FSM_System_FSM_System_react(5);
-								transitioned_after = 5;
-							}  else
-							{
-								if (BGS_2_LONG_PRESSED_raised)
-								{ 
-									exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Ready();
-									setCalibrated(false);
-									EVALUATE_observable.next();
-									raiseLocal_EVALUATE();
-									enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode_default();
-									FSM_System_FSM_System_react(5);
-									transitioned_after = 5;
-								} 
-							}
-						}
-					}
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_System_FSM_System_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_System_FSM_System_FSM_System__Internal_FSM_Paused_react(const sc::integer transitioned_before) {
-	/* The reactions of state Paused. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (5))
-		{ 
-			if (BGS_1_INTERRUPTED_raised)
-			{ 
-				exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Paused();
-				motor1Stop--;
-				motor2Stop--;
-				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::SYSTEM_OPERATIONAL_IN))
-				;
-				enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Operational_default();
-				FSM_System_FSM_System_react(5);
-				transitioned_after = 5;
-			}  else
-			{
-				if (BGS_2_INTERRUPTED_raised)
-				{ 
-					exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Paused();
-					motor1Stop--;
-					motor2Stop--;
-					incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::SYSTEM_OPERATIONAL_IN))
-					;
-					enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Operational_default();
-					FSM_System_FSM_System_react(5);
-					transitioned_after = 5;
-				}  else
-				{
-					if (ESTOP_1_LOW_raised)
-					{ 
-						exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Paused();
-						setIsEStop1High(false);
-						motor1Stop++;
-						motor2Stop++;
-						setReadyReturn(true);
-						ESTOP_RECEIVED_observable.next();
-						raiseLocal_ESTOP_RECEIVED();
-						enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-						FSM_System_FSM_System_react(5);
-						transitioned_after = 5;
-					}  else
-					{
-						if (ESTOP_2_LOW_raised)
-						{ 
-							exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Paused();
-							motor1Stop++;
-							motor2Stop++;
-							setIsEStop2High(false);
-							setReadyReturn(true);
-							ESTOP_RECEIVED_observable.next();
-							raiseLocal_ESTOP_RECEIVED();
-							enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_default();
-							FSM_System_FSM_System_react(5);
-							transitioned_after = 5;
-						}  else
-						{
-							if ((BGS_1_LONG_PRESSED_raised) || (BGS_2_LONG_PRESSED_raised))
-							{ 
-								exseq_FSM_System_FSM_System_FSM_System__Internal_FSM_Paused();
-								setMotor1Stop(0);
-								setMotor1Slow(0);
-								setMotor1Forward(0);
-								setMotor2Stop(0);
-								setMotor2Slow(0);
-								setMotor2Forward(0);
-								setCalibrated(false);
-								EVALUATE_observable.next();
-								raiseLocal_EVALUATE();
-								enseq_FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode_default();
-								FSM_System_FSM_System_react(5);
-								transitioned_after = 5;
-							} 
-						}
-					}
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_System_FSM_System_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_System_HeartBeatFailed_react(const sc::integer transitioned_before) {
-	/* The reactions of state HeartBeatFailed. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (5))
-		{ 
-			if (FST_1_HEARTBEAT_RECONNECT_raised)
-			{ 
-				exseq_FSM_System_HeartBeatFailed();
-				setFST_1_HeartBeat(true);
-				enseq_FSM_System_HeartBeatFailed_default();
-				transitioned_after = 5;
-			}  else
-			{
-				if (FST_2_HEARTBEAT_RECONNECT_raised)
-				{ 
-					exseq_FSM_System_HeartBeatFailed();
-					setFST_2_HeartBeat(true);
-					enseq_FSM_System_HeartBeatFailed_default();
-					transitioned_after = 5;
-				}  else
-				{
-					if ((FST_1_HeartBeat) && (FST_2_HeartBeat))
-					{ 
-						exseq_FSM_System_HeartBeatFailed();
-						ESTOP_CLEARED_observable.next();
-						raiseLocal_ESTOP_CLEARED();
-						enseq_FSM_System_FSM_System_default();
-						transitioned_after = 5;
-					} 
-				}
-			}
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_react(const sc::integer transitioned_before) {
-	/* The reactions of state FSM_LAMP. */
-	return transitioned_before;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(const sc::integer transitioned_before) {
-	/* The reactions of state FSM_Lamp. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		/* Always execute local reactions. */
-		transitioned_after = FSM_Festo1_Signaling_FSM_LAMP_react(transitioned_before);
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_react(const sc::integer transitioned_before) {
-	/* The reactions of state Off. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (6))
-		{ 
-			if ((SYSTEM_OPERATIONAL_IN_raised) && ((fst1_Puk_in_Ingress) == (false)))
-			{ 
-				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
-				transitioned_after = 6;
-			}  else
-			{
-				if (local_ESTOP_RECEIVED_raised)
-				{ 
-					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
-					transitioned_after = 6;
-				}  else
-				{
-					if (local_SYSTEM_SERVICE_IN_raised)
-					{ 
-						exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-						enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_default();
-						transitioned_after = 6;
-					}  else
-					{
-						if (local_FST_1_INGRESS_IN_raised)
-						{ 
-							exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-							setFst1_Puk_in_Ingress(true);
-							enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ_default();
-							transitioned_after = 6;
-						}  else
-						{
-							if ((SYSTEM_OPERATIONAL_IN_raised) && ((fst1_Puk_in_Ingress) == (true)))
-							{ 
-								exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-								enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ_default();
-								transitioned_after = 6;
-							} 
-						}
-					}
-				}
-			}
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_react(const sc::integer transitioned_before) {
-	/* The reactions of state Constant. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (6))
-		{ 
-			if (local_SYSTEM_OPERATIONAL_OUT_raised)
-			{ 
-				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
-				transitioned_after = 6;
-			}  else
-			{
-				if (local_ESTOP_CLEARED_raised)
-				{ 
-					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
-					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
-					transitioned_after = 6;
-				} 
-			}
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_react(const sc::integer transitioned_before) {
-	/* The reactions of state Blinking 1Hz. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (6))
-		{ 
-			if (local_SYSTEM_SERVICE_OUT_raised)
-			{ 
-				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
-				transitioned_after = 6;
-			}  else
-			{
-				if (local_ESTOP_RECEIVED_raised)
-				{ 
-					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
-					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
-					transitioned_after = 6;
-				} 
-			}
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ_react(const sc::integer transitioned_before) {
-	/* The reactions of state Blinking2HZ. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (6))
-		{ 
-			if (local_FST_1_INGRESS_OUT_raised)
-			{ 
-				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ();
-				setFst1_Puk_in_Ingress(false);
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
-				transitioned_after = 6;
-			}  else
-			{
-				if (local_ESTOP_RECEIVED_raised)
-				{ 
-					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ();
-					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
-					transitioned_after = 6;
-				} 
-			}
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_react(const sc::integer transitioned_before) {
-	/* The reactions of state Off. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (7))
-		{ 
-			if (local_ESTOP_RECEIVED_raised)
-			{ 
-				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default();
-				transitioned_after = 7;
-			}  else
-			{
-				if (FST1RampFull)
-				{ 
-					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
-					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ_default();
-					transitioned_after = 7;
-				} 
-			}
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_react(const sc::integer transitioned_before) {
-	/* The reactions of state Constant. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (7))
-		{ 
-			if (local_ESTOP_CLEARED_raised)
-			{ 
-				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant();
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
-				transitioned_after = 7;
-			}  else
-			{
-				if (!(FST1RampFull))
-				{ 
-					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant();
-					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
-					transitioned_after = 7;
-				} 
-			}
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ_react(const sc::integer transitioned_before) {
-	/* The reactions of state Blinking1HZ. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (7))
-		{ 
-			if (!(FST1RampFull))
-			{ 
-				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ();
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
-				transitioned_after = 7;
-			}  else
-			{
-				if (local_ESTOP_RECEIVED_raised)
-				{ 
-					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ();
-					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default();
-					transitioned_after = 7;
-				} 
-			}
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_react(const sc::integer transitioned_before) {
-	/* The reactions of state Off. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (8))
-		{ 
-			if (local_ESTOP_RECEIVED_raised)
-			{ 
-				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default();
-				FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-				transitioned_after = 8;
-			}  else
-			{
-				if (local_FST_1_ERROR_LAMP_UNACKNOWLEDGED_raised)
-				{ 
-					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ_default();
-					FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-					transitioned_after = 8;
-				}  else
-				{
-					if (local_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_raised)
-					{ 
-						exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-						enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ_default();
-						FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-						transitioned_after = 8;
-					}  else
-					{
-						if (HEARTBEAT_FAILED_raised)
-						{ 
-							exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-							enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ_default();
-							FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-							transitioned_after = 8;
-						} 
-					}
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_react(const sc::integer transitioned_before) {
-	/* The reactions of state Constant. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (8))
-		{ 
-			if (local_ESTOP_CLEARED_raised)
-			{ 
-				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
-				FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-				transitioned_after = 8;
-			}  else
-			{
-				if (local_FST_1_ERROR_LAMP_RESOLVED_raised)
-				{ 
-					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
-					FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-					transitioned_after = 8;
-				}  else
-				{
-					if (HEARTBEAT_FAILED_raised)
-					{ 
-						exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-						enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ_default();
-						FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-						transitioned_after = 8;
-					} 
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ_react(const sc::integer transitioned_before) {
-	/* The reactions of state Blinking1HZ. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (8))
-		{ 
-			if (local_FST_1_ERROR_ACKNOWLEDGED_raised)
-			{ 
-				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ();
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default();
-				FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-				transitioned_after = 8;
-			}  else
-			{
-				if (local_ESTOP_RECEIVED_raised)
-				{ 
-					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ();
-					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default();
-					FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-					transitioned_after = 8;
-				} 
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ_react(const sc::integer transitioned_before) {
-	/* The reactions of state Blinking0_5HZ. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (8))
-		{ 
-			if (local_ESTOP_RECEIVED_raised)
-			{ 
-				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ();
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default();
-				FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-				transitioned_after = 8;
-			}  else
-			{
-				if (local_FST_1_ERROR_LAMP_RESOLVED_raised)
-				{ 
-					exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ();
-					enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
-					FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-					transitioned_after = 8;
-				}  else
-				{
-					if (HEARTBEAT_FAILED_raised)
-					{ 
-						exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ();
-						enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ_default();
-						FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-						transitioned_after = 8;
-					} 
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ_react(const sc::integer transitioned_before) {
-	/* The reactions of state Blinking2HZ. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (8))
-		{ 
-			if (local_ESTOP_CLEARED_raised)
-			{ 
-				exseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ();
-				enseq_FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
-				FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(6);
-				transitioned_after = 8;
-			} 
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
 sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_react(const sc::integer transitioned_before) {
 	/* The reactions of state FSM_Festo2: Ingress. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (9))
+		if ((transitioned_after) < (5))
 		{ 
 			if ((local_ESTOP_RECEIVED_raised) || (HEARTBEAT_FAILED_raised))
 			{ 
 				exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress();
 				enseq_FSM_Festo2__Ingress_ESTOP__HEARTBEATFAILED_default();
-				transitioned_after = 9;
+				transitioned_after = 5;
 			} 
 		} 
 	} 
@@ -13449,22 +13349,22 @@ sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingre
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (9))
+		if ((transitioned_after) < (5))
 		{ 
 			if (local_SYSTEM_OPERATIONAL_OUT_raised)
 			{ 
 				exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress();
 				enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Stop_default();
-				FSM_Festo2__Ingress_FSM_Festo2__Ingress_react(9);
-				transitioned_after = 9;
+				FSM_Festo2__Ingress_FSM_Festo2__Ingress_react(5);
+				transitioned_after = 5;
 			}  else
 			{
 				if (local_FST_2_ERROR_SYSTEM_raised)
 				{ 
 					exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress();
 					enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_ErrorFST2_default();
-					FSM_Festo2__Ingress_FSM_Festo2__Ingress_react(9);
-					transitioned_after = 9;
+					FSM_Festo2__Ingress_FSM_Festo2__Ingress_react(5);
+					transitioned_after = 5;
 				} 
 			}
 		} 
@@ -13483,7 +13383,7 @@ sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingre
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (9))
+		if ((transitioned_after) < (5))
 		{ 
 			if (LBF_2_INTERRUPTED_raised)
 			{ 
@@ -13493,44 +13393,18 @@ sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingre
 				FST_2_ERROR_INGRESS_UNKNOWNPUK_observable.next();
 				raiseLocal_FST_2_ERROR_INGRESS_UNKNOWNPUK();
 				enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle_default();
-				FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(9);
-				transitioned_after = 9;
+				FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(5);
+				transitioned_after = 5;
 			}  else
 			{
 				if (FST_2_POSITION_INGRESS_PUK_EXPECTED_raised)
 				{ 
 					exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle();
 					enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected_default();
-					FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(9);
-					transitioned_after = 9;
+					FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(5);
+					transitioned_after = 5;
 				} 
 			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance_react(const sc::integer transitioned_before) {
-	/* The reactions of state CreatingDistance. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (9))
-		{ 
-			if (FST_2_POSITION_INGRESS_DISTANCE_VALID_raised)
-			{ 
-				exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance();
-				FST_2_YELLOW_LAMP_OFF_observable.next();
-				enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle_default();
-				FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(9);
-				transitioned_after = 9;
-			} 
 		} 
 		/* If no transition was taken */
 		if ((transitioned_after) == (transitioned_before))
@@ -13547,14 +13421,14 @@ sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingre
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (9))
+		if ((transitioned_after) < (5))
 		{ 
 			if (LBF_2_INTERRUPTED_raised)
 			{ 
 				exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected();
 				enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukinLBF2_default();
-				FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(9);
-				transitioned_after = 9;
+				FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(5);
+				transitioned_after = 5;
 			}  else
 			{
 				if (FST_2_POSITION_INGRESS_PUK_EXPIRED_raised)
@@ -13568,8 +13442,8 @@ sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingre
 					FST_2_ERROR_INGRESS_MISSING_PUK_observable.next();
 					raiseLocal_FST_2_ERROR_INGRESS_MISSING_PUK();
 					enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle_default();
-					FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(9);
-					transitioned_after = 9;
+					FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(5);
+					transitioned_after = 5;
 				} 
 			}
 		} 
@@ -13588,16 +13462,18 @@ sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingre
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (9))
+		if ((transitioned_after) < (5))
 		{ 
 			if (LBF_2_OPEN_raised)
 			{ 
 				exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukinLBF2();
-				motor1Forward--;
 				FST_2_POSITION_INGRESS_NEW_PUK_observable.next();
-				enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance_default();
-				FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(9);
-				transitioned_after = 9;
+				motor1Forward--;
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle_default();
+				FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(5);
+				transitioned_after = 5;
 			} 
 		} 
 		/* If no transition was taken */
@@ -13615,14 +13491,14 @@ sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingre
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (9))
+		if ((transitioned_after) < (5))
 		{ 
 			if (SYSTEM_OPERATIONAL_IN_raised)
 			{ 
 				exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Stop();
 				react_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_History();
-				FSM_Festo2__Ingress_FSM_Festo2__Ingress_react(9);
-				transitioned_after = 9;
+				FSM_Festo2__Ingress_FSM_Festo2__Ingress_react(5);
+				transitioned_after = 5;
 			} 
 		} 
 		/* If no transition was taken */
@@ -13640,14 +13516,14 @@ sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingre
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (9))
+		if ((transitioned_after) < (5))
 		{ 
 			if (SYSTEM_OPERATIONAL_IN_raised)
 			{ 
 				exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Start();
 				enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_default();
-				FSM_Festo2__Ingress_FSM_Festo2__Ingress_react(9);
-				transitioned_after = 9;
+				FSM_Festo2__Ingress_FSM_Festo2__Ingress_react(5);
+				transitioned_after = 5;
 			} 
 		} 
 		/* If no transition was taken */
@@ -13665,14 +13541,14 @@ sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingre
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (9))
+		if ((transitioned_after) < (5))
 		{ 
 			if (FST_2_ERROR_SYSTEM_RESOLVED_raised)
 			{ 
 				exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_ErrorFST2();
 				react_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_History();
-				FSM_Festo2__Ingress_FSM_Festo2__Ingress_react(9);
-				transitioned_after = 9;
+				FSM_Festo2__Ingress_FSM_Festo2__Ingress_react(5);
+				transitioned_after = 5;
 			} 
 		} 
 		/* If no transition was taken */
@@ -13690,13 +13566,13 @@ sc::integer FSM::FSM_Festo2__Ingress_ESTOP__HEARTBEATFAILED_react(const sc::inte
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (9))
+		if ((transitioned_after) < (5))
 		{ 
 			if ((local_ESTOP_CLEARED_raised) || (HEARTBEAT_RECONNECT_raised))
 			{ 
 				exseq_FSM_Festo2__Ingress_ESTOP__HEARTBEATFAILED();
 				enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_default();
-				transitioned_after = 9;
+				transitioned_after = 5;
 			} 
 		} 
 	} 
@@ -13708,13 +13584,13 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_rea
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (10))
+		if ((transitioned_after) < (6))
 		{ 
 			if ((local_ESTOP_RECEIVED_raised) || (HEARTBEAT_FAILED_raised))
 			{ 
 				exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement();
 				enseq_FSM_Festo2__HeightMeasurement_ESTOP__HEARTBEATFAILED_default();
-				transitioned_after = 10;
+				transitioned_after = 6;
 			} 
 		} 
 	} 
@@ -13726,22 +13602,22 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (10))
+		if ((transitioned_after) < (6))
 		{ 
 			if (local_SYSTEM_OPERATIONAL_OUT_raised)
 			{ 
 				exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement();
 				enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_Stop_default();
-				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_react(10);
-				transitioned_after = 10;
+				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_react(6);
+				transitioned_after = 6;
 			}  else
 			{
 				if (local_FST_2_ERROR_SYSTEM_raised)
 				{ 
 					exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement();
 					enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_FST2Error_default();
-					FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_react(10);
-					transitioned_after = 10;
+					FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_react(6);
+					transitioned_after = 6;
 				} 
 			}
 		} 
@@ -13760,7 +13636,7 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (10))
+		if ((transitioned_after) < (6))
 		{ 
 			if (HS_2_SAMPLE_raised)
 			{ 
@@ -13770,16 +13646,16 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 				FST_2_ERROR_HM_UNKNOWNPUK_observable.next();
 				raiseLocal_FST_2_ERROR_HM_UNKNOWNPUK();
 				enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle_default();
-				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_react(10);
-				transitioned_after = 10;
+				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_react(6);
+				transitioned_after = 6;
 			}  else
 			{
 				if (FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised)
 				{ 
 					exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle();
 					enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_PukExpected_default();
-					FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_react(10);
-					transitioned_after = 10;
+					FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_react(6);
+					transitioned_after = 6;
 				} 
 			}
 		} 
@@ -13798,7 +13674,7 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (10))
+		if ((transitioned_after) < (6))
 		{ 
 			if (HS_2_SAMPLE_raised)
 			{ 
@@ -13807,8 +13683,8 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
 				enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_default();
-				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_react(10);
-				transitioned_after = 10;
+				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_react(6);
+				transitioned_after = 6;
 			}  else
 			{
 				if (FST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED_raised)
@@ -13821,8 +13697,8 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 					FST_2_ERROR_HM_UNKNOWNPUK_observable.next();
 					raiseLocal_FST_2_ERROR_HM_UNKNOWNPUK();
 					enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle_default();
-					FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_react(10);
-					transitioned_after = 10;
+					FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_react(6);
+					transitioned_after = 6;
 				} 
 			}
 		} 
@@ -13843,14 +13719,14 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 	{ 
 		/* Default exit sequence for state Measuring */
 		exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement();
-		stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement;
-		stateConfVectorPosition = 10;
+		stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement;
+		stateConfVectorPosition = 6;
 		/* 'default' enter sequence for state Idle */
 		enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle();
-		stateConfVector[10] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle;
-		stateConfVectorPosition = 10;
-		historyVector[6] = stateConfVector[10];
-		FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_react(10);
+		stateConfVector[6] = FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle;
+		stateConfVectorPosition = 6;
+		historyVector[6] = stateConfVector[6];
+		FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_react(6);
 	}  else
 	{
 		/* If no transition was taken */
@@ -13868,7 +13744,7 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (10))
+		if ((transitioned_after) < (6))
 		{ 
 			if ((((AReferenceMinCount) <= (FST_2_sampleCount)) && (((BReferenceHeight + HeightThreshhold)) > (FST_2_currentValue))) && (((BReferenceHeight - HeightThreshhold)) < (FST_2_currentValue)))
 			{ 
@@ -13877,24 +13753,24 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
 				enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_B_default();
-				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-				transitioned_after = 10;
+				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+				transitioned_after = 6;
 			}  else
 			{
 				if ((((AReferenceHeight + HeightThreshhold)) < (FST_2_currentValue)) || ((FST_2_currentValue) < ((AReferenceHeight - HeightThreshhold))))
 				{ 
 					exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_A();
 					enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error_default();
-					FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-					transitioned_after = 10;
+					FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+					transitioned_after = 6;
 				}  else
 				{
 					if ((AReferenceMaxCount) < (FST_2_sampleCount))
 					{ 
 						exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_A();
 						enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error_default();
-						FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-						transitioned_after = 10;
+						FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+						transitioned_after = 6;
 					}  else
 					{
 						if (HS_2_SAMPLE_raised)
@@ -13905,16 +13781,16 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 							EVALUATE_observable.next();
 							raiseLocal_EVALUATE();
 							enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_A_default();
-							FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-							transitioned_after = 10;
+							FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+							transitioned_after = 6;
 						}  else
 						{
 							if ((FST_2_generalCount) > (MaxSampleCount))
 							{ 
 								exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_A();
 								enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error_default();
-								FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-								transitioned_after = 10;
+								FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+								transitioned_after = 6;
 							} 
 						}
 					}
@@ -13936,7 +13812,7 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (10))
+		if ((transitioned_after) < (6))
 		{ 
 			if ((((BReferenceMinCount) <= (FST_2_sampleCount)) && (((CReferenceHeight + HeightThreshhold)) > (FST_2_currentValue))) && (((CReferenceHeight - HeightThreshhold)) < (FST_2_currentValue)))
 			{ 
@@ -13945,16 +13821,16 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
 				enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_C_default();
-				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-				transitioned_after = 10;
+				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+				transitioned_after = 6;
 			}  else
 			{
 				if ((((BReferenceHeight + HeightThreshhold)) < (FST_2_currentValue)) || ((FST_2_currentValue) < ((BReferenceHeight - HeightThreshhold))))
 				{ 
 					exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_B();
 					enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error_default();
-					FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-					transitioned_after = 10;
+					FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+					transitioned_after = 6;
 				}  else
 				{
 					if (HS_2_SAMPLE_raised)
@@ -13965,24 +13841,24 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 						EVALUATE_observable.next();
 						raiseLocal_EVALUATE();
 						enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_B_default();
-						FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-						transitioned_after = 10;
+						FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+						transitioned_after = 6;
 					}  else
 					{
 						if ((BReferenceMaxCount) < (FST_2_sampleCount))
 						{ 
 							exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_B();
 							enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error_default();
-							FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-							transitioned_after = 10;
+							FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+							transitioned_after = 6;
 						}  else
 						{
 							if ((FST_2_generalCount) > (MaxSampleCount))
 							{ 
 								exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_B();
 								enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error_default();
-								FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-								transitioned_after = 10;
+								FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+								transitioned_after = 6;
 							} 
 						}
 					}
@@ -14004,22 +13880,22 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (10))
+		if ((transitioned_after) < (6))
 		{ 
 			if ((((CReferenceHeight + HeightThreshhold)) < (FST_2_currentValue)) || ((FST_2_currentValue) < ((CReferenceHeight - HeightThreshhold))))
 			{ 
 				exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_C();
 				enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error_default();
-				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-				transitioned_after = 10;
+				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+				transitioned_after = 6;
 			}  else
 			{
 				if ((CReferenceMaxCount) < (FST_2_sampleCount))
 				{ 
 					exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_C();
 					enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error_default();
-					FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-					transitioned_after = 10;
+					FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+					transitioned_after = 6;
 				}  else
 				{
 					if (HS_2_SAMPLE_raised)
@@ -14030,16 +13906,16 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 						EVALUATE_observable.next();
 						raiseLocal_EVALUATE();
 						enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_C_default();
-						FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-						transitioned_after = 10;
+						FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+						transitioned_after = 6;
 					}  else
 					{
 						if ((FST_2_generalCount) > (MaxSampleCount))
 						{ 
 							exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_C();
 							enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error_default();
-							FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(10);
-							transitioned_after = 10;
+							FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
+							transitioned_after = 6;
 						}  else
 						{
 							if ((HS_2_SAMPLING_DONE_raised) && ((CReferenceMinCount) > (FST_2_sampleCount)))
@@ -14049,7 +13925,7 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 								FST_2_PUK_HEIGHT_IS_NOT_VALID_observable.next();
 								FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
 								enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final__default();
-								transitioned_after = 10;
+								transitioned_after = 6;
 							}  else
 							{
 								if ((HS_2_SAMPLING_DONE_raised) && ((CReferenceMinCount) <= (FST_2_sampleCount)))
@@ -14059,7 +13935,7 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 									FST_2_PUK_HEIGHT_IS_VALID_observable.next();
 									FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
 									enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final__default();
-									transitioned_after = 10;
+									transitioned_after = 6;
 								} 
 							}
 						}
@@ -14082,7 +13958,7 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (10))
+		if ((transitioned_after) < (6))
 		{ 
 			if (HS_2_SAMPLING_DONE_raised)
 			{ 
@@ -14091,7 +13967,7 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 				FST_2_PUK_HEIGHT_IS_NOT_VALID_observable.next();
 				FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
 				enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final__default();
-				transitioned_after = 10;
+				transitioned_after = 6;
 			} 
 		} 
 		/* If no transition was taken */
@@ -14114,14 +13990,14 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (10))
+		if ((transitioned_after) < (6))
 		{ 
 			if (SYSTEM_OPERATIONAL_IN_raised)
 			{ 
 				exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_Start();
 				enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_default();
-				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_react(10);
-				transitioned_after = 10;
+				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_react(6);
+				transitioned_after = 6;
 			} 
 		} 
 		/* If no transition was taken */
@@ -14139,14 +14015,14 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (10))
+		if ((transitioned_after) < (6))
 		{ 
 			if (SYSTEM_OPERATIONAL_IN_raised)
 			{ 
 				exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_Stop();
 				react_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_History();
-				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_react(10);
-				transitioned_after = 10;
+				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_react(6);
+				transitioned_after = 6;
 			} 
 		} 
 		/* If no transition was taken */
@@ -14164,14 +14040,14 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (10))
+		if ((transitioned_after) < (6))
 		{ 
 			if (FST_2_ERROR_SYSTEM_RESOLVED_raised)
 			{ 
 				exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_FST2Error();
 				react_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_History();
-				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_react(10);
-				transitioned_after = 10;
+				FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_react(6);
+				transitioned_after = 6;
 			} 
 		} 
 		/* If no transition was taken */
@@ -14189,13 +14065,13 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_ESTOP__HEARTBEATFAILED_react(cons
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (10))
+		if ((transitioned_after) < (6))
 		{ 
 			if ((local_ESTOP_CLEARED_raised) || (HEARTBEAT_RECONNECT_raised))
 			{ 
 				exseq_FSM_Festo2__HeightMeasurement_ESTOP__HEARTBEATFAILED();
 				enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_default();
-				transitioned_after = 10;
+				transitioned_after = 6;
 			} 
 		} 
 	} 
@@ -14207,13 +14083,13 @@ sc::integer FSM::FSM_Festo2__Egress_FSM_Festo2__Egress_react(const sc::integer t
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (11))
+		if ((transitioned_after) < (7))
 		{ 
 			if ((local_ESTOP_RECEIVED_raised) || (HEARTBEAT_FAILED_raised))
 			{ 
 				exseq_FSM_Festo2__Egress_FSM_Festo2__Egress();
 				enseq_FSM_Festo2__Egress_ESTOP__HEARTBEATFAILED_default();
-				transitioned_after = 11;
+				transitioned_after = 7;
 			} 
 		} 
 	} 
@@ -14225,22 +14101,22 @@ sc::integer FSM::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (11))
+		if ((transitioned_after) < (7))
 		{ 
 			if (local_SYSTEM_OPERATIONAL_OUT_raised)
 			{ 
 				exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress();
 				enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Stop_default();
-				FSM_Festo2__Egress_FSM_Festo2__Egress_react(11);
-				transitioned_after = 11;
+				FSM_Festo2__Egress_FSM_Festo2__Egress_react(7);
+				transitioned_after = 7;
 			}  else
 			{
 				if (local_FST_2_ERROR_SYSTEM_raised)
 				{ 
 					exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress();
 					enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_ErrorFST2_default();
-					FSM_Festo2__Egress_FSM_Festo2__Egress_react(11);
-					transitioned_after = 11;
+					FSM_Festo2__Egress_FSM_Festo2__Egress_react(7);
+					transitioned_after = 7;
 				} 
 			}
 		} 
@@ -14259,7 +14135,7 @@ sc::integer FSM::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (11))
+		if ((transitioned_after) < (7))
 		{ 
 			if (LBE_2_INTERRUPTED_raised)
 			{ 
@@ -14269,16 +14145,16 @@ sc::integer FSM::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_
 				FST_2_ERROR_EGRESS_UNKNOWNPUK_observable.next();
 				raiseLocal_FST_2_ERROR_EGRESS_UNKNOWNPUK();
 				enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE_default();
-				FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_react(11);
-				transitioned_after = 11;
+				FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_react(7);
+				transitioned_after = 7;
 			}  else
 			{
 				if (FST_2_POSITION_EGRESS_PUK_EXPECTED_raised)
 				{ 
 					exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE();
 					enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_PukExpected_default();
-					FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_react(11);
-					transitioned_after = 11;
+					FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_react(7);
+					transitioned_after = 7;
 				} 
 			}
 		} 
@@ -14297,18 +14173,19 @@ sc::integer FSM::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (11))
+		if ((transitioned_after) < (7))
 		{ 
 			if (LBE_2_OPEN_raised)
 			{ 
 				exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_Transfer();
 				motor2Stop--;
 				setFst_2_ready(true);
+				FST_2_POSITION_EGRESS_PUK_REMOVED_observable.next();
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
 				enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE_default();
-				FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_react(11);
-				transitioned_after = 11;
+				FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_react(7);
+				transitioned_after = 7;
 			} 
 		} 
 		/* If no transition was taken */
@@ -14326,7 +14203,7 @@ sc::integer FSM::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (11))
+		if ((transitioned_after) < (7))
 		{ 
 			if (LBE_2_INTERRUPTED_raised)
 			{ 
@@ -14336,8 +14213,8 @@ sc::integer FSM::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
 				enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_Transfer_default();
-				FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_react(11);
-				transitioned_after = 11;
+				FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_react(7);
+				transitioned_after = 7;
 			}  else
 			{
 				if (FST_2_POSITION_EGRESS_PUK_EXPIRED_raised)
@@ -14350,8 +14227,8 @@ sc::integer FSM::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_
 					FST_2_ERROR_EGRESS_MISSING_PUK_observable.next();
 					raiseLocal_FST_2_ERROR_EGRESS_MISSING_PUK();
 					enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE_default();
-					FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_react(11);
-					transitioned_after = 11;
+					FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_react(7);
+					transitioned_after = 7;
 				} 
 			}
 		} 
@@ -14370,14 +14247,14 @@ sc::integer FSM::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (11))
+		if ((transitioned_after) < (7))
 		{ 
 			if (SYSTEM_OPERATIONAL_IN_raised)
 			{ 
 				exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Start();
 				enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_default();
-				FSM_Festo2__Egress_FSM_Festo2__Egress_react(11);
-				transitioned_after = 11;
+				FSM_Festo2__Egress_FSM_Festo2__Egress_react(7);
+				transitioned_after = 7;
 			} 
 		} 
 		/* If no transition was taken */
@@ -14395,14 +14272,14 @@ sc::integer FSM::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (11))
+		if ((transitioned_after) < (7))
 		{ 
 			if (SYSTEM_OPERATIONAL_IN_raised)
 			{ 
 				exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Stop();
 				react_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_History();
-				FSM_Festo2__Egress_FSM_Festo2__Egress_react(11);
-				transitioned_after = 11;
+				FSM_Festo2__Egress_FSM_Festo2__Egress_react(7);
+				transitioned_after = 7;
 			} 
 		} 
 		/* If no transition was taken */
@@ -14420,14 +14297,14 @@ sc::integer FSM::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (11))
+		if ((transitioned_after) < (7))
 		{ 
 			if (FST_2_ERROR_SYSTEM_RESOLVED_raised)
 			{ 
 				exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_ErrorFST2();
 				react_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_History();
-				FSM_Festo2__Egress_FSM_Festo2__Egress_react(11);
-				transitioned_after = 11;
+				FSM_Festo2__Egress_FSM_Festo2__Egress_react(7);
+				transitioned_after = 7;
 			} 
 		} 
 		/* If no transition was taken */
@@ -14445,13 +14322,13 @@ sc::integer FSM::FSM_Festo2__Egress_ESTOP__HEARTBEATFAILED_react(const sc::integ
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (11))
+		if ((transitioned_after) < (7))
 		{ 
 			if ((local_ESTOP_CLEARED_raised) || (HEARTBEAT_RECONNECT_raised))
 			{ 
 				exseq_FSM_Festo2__Egress_ESTOP__HEARTBEATFAILED();
 				enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_default();
-				transitioned_after = 11;
+				transitioned_after = 7;
 			} 
 		} 
 	} 
@@ -14468,22 +14345,22 @@ sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_react(con
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (12))
+		if ((transitioned_after) < (8))
 		{ 
 			if (((motor2Stop) > (0)) || ((((motor2Forward) == (0)) && ((motor2Slow) == (0)))))
 			{ 
 				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
 				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
-				FSM_Festo2__Motor_SystemMotor_react(12);
-				transitioned_after = 12;
+				FSM_Festo2__Motor_SystemMotor_react(8);
+				transitioned_after = 8;
 			}  else
 			{
 				if (((motor2Stop) == (0)) && ((motor2Slow) > (0)))
 				{ 
 					exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
 					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
-					FSM_Festo2__Motor_SystemMotor_react(12);
-					transitioned_after = 12;
+					FSM_Festo2__Motor_SystemMotor_react(8);
+					transitioned_after = 8;
 				} 
 			}
 		} 
@@ -14502,22 +14379,22 @@ sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_react(const 
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (12))
+		if ((transitioned_after) < (8))
 		{ 
 			if (((motor2Stop) > (0)) || ((((motor2Slow) == (0)) && ((motor2Forward) == (0)))))
 			{ 
 				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
 				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_default();
-				FSM_Festo2__Motor_SystemMotor_react(12);
-				transitioned_after = 12;
+				FSM_Festo2__Motor_SystemMotor_react(8);
+				transitioned_after = 8;
 			}  else
 			{
 				if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) > (0)))
 				{ 
 					exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
 					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
-					FSM_Festo2__Motor_SystemMotor_react(12);
-					transitioned_after = 12;
+					FSM_Festo2__Motor_SystemMotor_react(8);
+					transitioned_after = 8;
 				} 
 			}
 		} 
@@ -14536,22 +14413,22 @@ sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_react(const 
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (12))
+		if ((transitioned_after) < (8))
 		{ 
 			if (((motor2Stop) == (0)) && ((motor2Slow) > (0)))
 			{ 
 				exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
 				enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow_default();
-				FSM_Festo2__Motor_SystemMotor_react(12);
-				transitioned_after = 12;
+				FSM_Festo2__Motor_SystemMotor_react(8);
+				transitioned_after = 8;
 			}  else
 			{
 				if ((((motor2Stop) == (0)) && ((motor2Slow) == (0))) && ((motor2Forward) > (0)))
 				{ 
 					exseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
 					enseq_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward_default();
-					FSM_Festo2__Motor_SystemMotor_react(12);
-					transitioned_after = 12;
+					FSM_Festo2__Motor_SystemMotor_react(8);
+					transitioned_after = 8;
 				} 
 			}
 		} 
@@ -14565,352 +14442,18 @@ sc::integer FSM::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop_react(const 
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_react(const sc::integer transitioned_before) {
-	/* The reactions of state FSM_LAMP. */
-	return transitioned_before;
-}
-
-sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(const sc::integer transitioned_before) {
-	/* The reactions of state FSM_Lamp. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		/* Always execute local reactions. */
-		transitioned_after = FSM_Festo2__Signaling_FSM_LAMP_react(transitioned_before);
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_react(const sc::integer transitioned_before) {
-	/* The reactions of state Off. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (13))
-		{ 
-			if ((SYSTEM_OPERATIONAL_IN_raised) || (FST_2_ERROR_SYSTEM_RESOLVED_raised))
-			{ 
-				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
-				transitioned_after = 13;
-			}  else
-			{
-				if (local_ESTOP_RECEIVED_raised)
-				{ 
-					exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-					enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
-					transitioned_after = 13;
-				}  else
-				{
-					if (local_SYSTEM_SERVICE_IN_raised)
-					{ 
-						exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-						enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_default();
-						transitioned_after = 13;
-					}  else
-					{
-						if (!(fst_2_ready))
-						{ 
-							exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off();
-							enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ_default();
-							transitioned_after = 13;
-						} 
-					}
-				}
-			}
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_react(const sc::integer transitioned_before) {
-	/* The reactions of state Constant. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (13))
-		{ 
-			if ((local_SYSTEM_OPERATIONAL_OUT_raised) || (local_FST_2_ERROR_SYSTEM_raised))
-			{ 
-				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
-				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
-				transitioned_after = 13;
-			}  else
-			{
-				if (local_ESTOP_CLEARED_raised)
-				{ 
-					exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
-					enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
-					transitioned_after = 13;
-				}  else
-				{
-					if (!(fst_2_ready))
-					{ 
-						exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant();
-						enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ_default();
-						transitioned_after = 13;
-					} 
-				}
-			}
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_react(const sc::integer transitioned_before) {
-	/* The reactions of state Blinking 1Hz. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (13))
-		{ 
-			if (local_SYSTEM_SERVICE_OUT_raised)
-			{ 
-				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
-				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_default();
-				transitioned_after = 13;
-			}  else
-			{
-				if (local_ESTOP_RECEIVED_raised)
-				{ 
-					exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz();
-					enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
-					transitioned_after = 13;
-				} 
-			}
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ_react(const sc::integer transitioned_before) {
-	/* The reactions of state Blinking2HZ. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (13))
-		{ 
-			if (fst_2_ready)
-			{ 
-				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ();
-				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_default();
-				transitioned_after = 13;
-			} 
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_react(const sc::integer transitioned_before) {
-	/* The reactions of state Off. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (14))
-		{ 
-			if (local_ESTOP_RECEIVED_raised)
-			{ 
-				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
-				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_default();
-				transitioned_after = 14;
-			}  else
-			{
-				if (FST2RampFull)
-				{ 
-					exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off();
-					enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ_default();
-					transitioned_after = 14;
-				} 
-			}
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_react(const sc::integer transitioned_before) {
-	/* The reactions of state Constant. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (14))
-		{ 
-			if (local_ESTOP_CLEARED_raised)
-			{ 
-				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant();
-				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
-				transitioned_after = 14;
-			} 
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ_react(const sc::integer transitioned_before) {
-	/* The reactions of state Blinking1HZ. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (14))
-		{ 
-			if (!(FST2RampFull))
-			{ 
-				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ();
-				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_default();
-				transitioned_after = 14;
-			} 
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_react(const sc::integer transitioned_before) {
-	/* The reactions of state Off. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (15))
-		{ 
-			if (local_ESTOP_RECEIVED_raised)
-			{ 
-				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default();
-				FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(13);
-				transitioned_after = 15;
-			}  else
-			{
-				if (local_FST_2_ERROR_UNACKNOWLEDGED_raised)
-				{ 
-					exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-					enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ_default();
-					FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(13);
-					transitioned_after = 15;
-				}  else
-				{
-					if (local_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_raised)
-					{ 
-						exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off();
-						enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ_default();
-						FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(13);
-						transitioned_after = 15;
-					} 
-				}
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_react(const sc::integer transitioned_before) {
-	/* The reactions of state Constant. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (15))
-		{ 
-			if (local_ESTOP_CLEARED_raised)
-			{ 
-				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
-				FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(13);
-				transitioned_after = 15;
-			}  else
-			{
-				if (local_FST_2_ERROR_LAMP_RESOLVED_raised)
-				{ 
-					exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant();
-					enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
-					FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(13);
-					transitioned_after = 15;
-				} 
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ_react(const sc::integer transitioned_before) {
-	/* The reactions of state Blinking1HZ. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (15))
-		{ 
-			if ((local_FST_2_ERROR_ACKNOWLEDGED_raised) || (local_ESTOP_RECEIVED_raised))
-			{ 
-				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ();
-				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default();
-				FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(13);
-				transitioned_after = 15;
-			} 
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
-sc::integer FSM::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ_react(const sc::integer transitioned_before) {
-	/* The reactions of state Blinking05HZ. */
-	sc::integer transitioned_after = transitioned_before;
-	if (!(doCompletion))
-	{ 
-		if ((transitioned_after) < (15))
-		{ 
-			if (local_FST_2_ERROR_LAMP_RESOLVED_raised)
-			{ 
-				exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ();
-				enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_default();
-				FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(13);
-				transitioned_after = 15;
-			}  else
-			{
-				if (local_ESTOP_RECEIVED_raised)
-				{ 
-					exseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ();
-					enseq_FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_default();
-					FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(13);
-					transitioned_after = 15;
-				} 
-			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_react(transitioned_before);
-		} 
-	} 
-	return transitioned_after;
-}
-
 sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_before) {
 	/* The reactions of state EvaluateTester. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (16))
+		if ((transitioned_after) < (9))
 		{ 
 			if (local_EVALUATE_raised)
 			{ 
 				exseq_Evaluate_EvaluateTester();
 				enseq_Evaluate_EvaluateTester_default();
-				transitioned_after = 16;
+				transitioned_after = 9;
 			}  else
 			{
 				if (LBF_1_INTERRUPTED_raised)
@@ -14920,7 +14463,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 					EVALUATE_observable.next();
 					raiseLocal_EVALUATE();
 					enseq_Evaluate_EvaluateTester_default();
-					transitioned_after = 16;
+					transitioned_after = 9;
 				}  else
 				{
 					if (LBF_1_OPEN_raised)
@@ -14928,7 +14471,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 						exseq_Evaluate_EvaluateTester();
 						setLbf_1_isOpen(true);
 						enseq_Evaluate_EvaluateTester_default();
-						transitioned_after = 16;
+						transitioned_after = 9;
 					}  else
 					{
 						if (LBM_1_OPEN_raised)
@@ -14938,7 +14481,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 							EVALUATE_observable.next();
 							raiseLocal_EVALUATE();
 							enseq_Evaluate_EvaluateTester_default();
-							transitioned_after = 16;
+							transitioned_after = 9;
 						}  else
 						{
 							if (LBM_1_INTERRUPTED_raised)
@@ -14948,7 +14491,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 								EVALUATE_observable.next();
 								raiseLocal_EVALUATE();
 								enseq_Evaluate_EvaluateTester_default();
-								transitioned_after = 16;
+								transitioned_after = 9;
 							}  else
 							{
 								if (HS_1_SAMPLING_DONE_raised)
@@ -14958,7 +14501,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 									EVALUATE_observable.next();
 									raiseLocal_EVALUATE();
 									enseq_Evaluate_EvaluateTester_default();
-									transitioned_after = 16;
+									transitioned_after = 9;
 								}  else
 								{
 									if (HS_1_SAMPLE_raised)
@@ -14968,7 +14511,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 										EVALUATE_observable.next();
 										raiseLocal_EVALUATE();
 										enseq_Evaluate_EvaluateTester_default();
-										transitioned_after = 16;
+										transitioned_after = 9;
 									}  else
 									{
 										if (LBE_1_OPEN_raised)
@@ -14978,7 +14521,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 											EVALUATE_observable.next();
 											raiseLocal_EVALUATE();
 											enseq_Evaluate_EvaluateTester_default();
-											transitioned_after = 16;
+											transitioned_after = 9;
 										}  else
 										{
 											if (LBE_1_INTERRUPTED_raised)
@@ -14988,7 +14531,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 												EVALUATE_observable.next();
 												raiseLocal_EVALUATE();
 												enseq_Evaluate_EvaluateTester_default();
-												transitioned_after = 16;
+												transitioned_after = 9;
 											}  else
 											{
 												if (LBR_1_OPEN_raised)
@@ -14998,7 +14541,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 													EVALUATE_observable.next();
 													raiseLocal_EVALUATE();
 													enseq_Evaluate_EvaluateTester_default();
-													transitioned_after = 16;
+													transitioned_after = 9;
 												}  else
 												{
 													if (LBR_1_INTERRUPTED_raised)
@@ -15008,7 +14551,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 														EVALUATE_observable.next();
 														raiseLocal_EVALUATE();
 														enseq_Evaluate_EvaluateTester_default();
-														transitioned_after = 16;
+														transitioned_after = 9;
 													}  else
 													{
 														if (LBF_2_OPEN_raised)
@@ -15018,7 +14561,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 															EVALUATE_observable.next();
 															raiseLocal_EVALUATE();
 															enseq_Evaluate_EvaluateTester_default();
-															transitioned_after = 16;
+															transitioned_after = 9;
 														}  else
 														{
 															if (LBF_2_INTERRUPTED_raised)
@@ -15028,7 +14571,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																EVALUATE_observable.next();
 																raiseLocal_EVALUATE();
 																enseq_Evaluate_EvaluateTester_default();
-																transitioned_after = 16;
+																transitioned_after = 9;
 															}  else
 															{
 																if (HS_2_SAMPLE_raised)
@@ -15038,7 +14581,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																	EVALUATE_observable.next();
 																	raiseLocal_EVALUATE();
 																	enseq_Evaluate_EvaluateTester_default();
-																	transitioned_after = 16;
+																	transitioned_after = 9;
 																}  else
 																{
 																	if (HS_2_SAMPLING_DONE_raised)
@@ -15048,7 +14591,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																		EVALUATE_observable.next();
 																		raiseLocal_EVALUATE();
 																		enseq_Evaluate_EvaluateTester_default();
-																		transitioned_after = 16;
+																		transitioned_after = 9;
 																	}  else
 																	{
 																		if (LBM_2_INTERRUPTED_raised)
@@ -15058,7 +14601,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																			EVALUATE_observable.next();
 																			raiseLocal_EVALUATE();
 																			enseq_Evaluate_EvaluateTester_default();
-																			transitioned_after = 16;
+																			transitioned_after = 9;
 																		}  else
 																		{
 																			if (LBM_2_OPEN_raised)
@@ -15068,7 +14611,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																				EVALUATE_observable.next();
 																				raiseLocal_EVALUATE();
 																				enseq_Evaluate_EvaluateTester_default();
-																				transitioned_after = 16;
+																				transitioned_after = 9;
 																			}  else
 																			{
 																				if (LBR_2_OPEN_raised)
@@ -15078,7 +14621,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																					EVALUATE_observable.next();
 																					raiseLocal_EVALUATE();
 																					enseq_Evaluate_EvaluateTester_default();
-																					transitioned_after = 16;
+																					transitioned_after = 9;
 																				}  else
 																				{
 																					if (LBR_2_INTERRUPTED_raised)
@@ -15088,7 +14631,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																						EVALUATE_observable.next();
 																						raiseLocal_EVALUATE();
 																						enseq_Evaluate_EvaluateTester_default();
-																						transitioned_after = 16;
+																						transitioned_after = 9;
 																					}  else
 																					{
 																						if (LBE_2_INTERRUPTED_raised)
@@ -15098,7 +14641,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																							EVALUATE_observable.next();
 																							raiseLocal_EVALUATE();
 																							enseq_Evaluate_EvaluateTester_default();
-																							transitioned_after = 16;
+																							transitioned_after = 9;
 																						}  else
 																						{
 																							if (LBE_2_OPEN_raised)
@@ -15108,7 +14651,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																								EVALUATE_observable.next();
 																								raiseLocal_EVALUATE();
 																								enseq_Evaluate_EvaluateTester_default();
-																								transitioned_after = 16;
+																								transitioned_after = 9;
 																							}  else
 																							{
 																								if (MS_1_HIGH_raised)
@@ -15118,7 +14661,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																									EVALUATE_observable.next();
 																									raiseLocal_EVALUATE();
 																									enseq_Evaluate_EvaluateTester_default();
-																									transitioned_after = 16;
+																									transitioned_after = 9;
 																								}  else
 																								{
 																									if (MS_1_LOW_raised)
@@ -15128,7 +14671,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																										EVALUATE_observable.next();
 																										raiseLocal_EVALUATE();
 																										enseq_Evaluate_EvaluateTester_default();
-																										transitioned_after = 16;
+																										transitioned_after = 9;
 																									}  else
 																									{
 																										if (MS_2_HIGH_raised)
@@ -15138,7 +14681,7 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																											EVALUATE_observable.next();
 																											raiseLocal_EVALUATE();
 																											enseq_Evaluate_EvaluateTester_default();
-																											transitioned_after = 16;
+																											transitioned_after = 9;
 																										}  else
 																										{
 																											if (MS_2_LOW_raised)
@@ -15148,8 +14691,96 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																												EVALUATE_observable.next();
 																												raiseLocal_EVALUATE();
 																												enseq_Evaluate_EvaluateTester_default();
-																												transitioned_after = 16;
-																											} 
+																												transitioned_after = 9;
+																											}  else
+																											{
+																												if (FST_2_HEARTBEAT_RECONNECT_raised)
+																												{ 
+																													exseq_Evaluate_EvaluateTester();
+																													setFST_2_HeartBeat(true);
+																													EVALUATE_observable.next();
+																													raiseLocal_EVALUATE();
+																													enseq_Evaluate_EvaluateTester_default();
+																													transitioned_after = 9;
+																												}  else
+																												{
+																													if (FST_1_HEARTBEAT_RECONNECT_raised)
+																													{ 
+																														exseq_Evaluate_EvaluateTester();
+																														setFST_1_HeartBeat(true);
+																														EVALUATE_observable.next();
+																														raiseLocal_EVALUATE();
+																														enseq_Evaluate_EvaluateTester_default();
+																														transitioned_after = 9;
+																													}  else
+																													{
+																														if (ESTOP_2_HIGH_raised)
+																														{ 
+																															exseq_Evaluate_EvaluateTester();
+																															setIsEStop2High(true);
+																															EVALUATE_observable.next();
+																															raiseLocal_EVALUATE();
+																															enseq_Evaluate_EvaluateTester_default();
+																															transitioned_after = 9;
+																														}  else
+																														{
+																															if (ESTOP_1_HIGH_raised)
+																															{ 
+																																exseq_Evaluate_EvaluateTester();
+																																setIsEStop1High(true);
+																																EVALUATE_observable.next();
+																																raiseLocal_EVALUATE();
+																																enseq_Evaluate_EvaluateTester_default();
+																																transitioned_after = 9;
+																															}  else
+																															{
+																																if (ESTOP_2_LOW_raised)
+																																{ 
+																																	exseq_Evaluate_EvaluateTester();
+																																	setIsEStop2High(false);
+																																	EVALUATE_observable.next();
+																																	raiseLocal_EVALUATE();
+																																	enseq_Evaluate_EvaluateTester_default();
+																																	transitioned_after = 9;
+																																}  else
+																																{
+																																	if (ESTOP_1_LOW_raised)
+																																	{ 
+																																		exseq_Evaluate_EvaluateTester();
+																																		setIsEStop1High(false);
+																																		EVALUATE_observable.next();
+																																		raiseLocal_EVALUATE();
+																																		enseq_Evaluate_EvaluateTester_default();
+																																		transitioned_after = 9;
+																																	}  else
+																																	{
+																																		if (BGR_1_INTERRUPTED_raised)
+																																		{ 
+																																			exseq_Evaluate_EvaluateTester();
+																																			setIsBGR1Pressed(true);
+																																			EVALUATE_observable.next();
+																																			raiseLocal_EVALUATE();
+																																			enseq_Evaluate_EvaluateTester_default();
+																																			transitioned_after = 9;
+																																		}  else
+																																		{
+																																			if (BGR_2_INTERRUPTED_raised)
+																																			{ 
+																																				exseq_Evaluate_EvaluateTester();
+																																				setIsBGR2Pressed(true);
+																																				EVALUATE_observable.next();
+																																				raiseLocal_EVALUATE();
+																																				enseq_Evaluate_EvaluateTester_default();
+																																				transitioned_after = 9;
+																																			} 
+																																		}
+																																	}
+																																}
+																															}
+																														}
+																													}
+																												}
+																											}
 																										}
 																									}
 																								}
@@ -15184,23 +14815,24 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_react(const sc::integer transitio
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (local_ESTOP_RECEIVED_raised)
 			{ 
 				exseq_FSM_Festo1__Errors_FSM_Errors();
 				enseq_FSM_Festo1__Errors_EStop_default();
-				transitioned_after = 17;
+				transitioned_after = 10;
 			}  else
 			{
 				if (FST_1_ERROR_SYSTEM_RESOLVED_raised)
 				{ 
 					exseq_FSM_Festo1__Errors_FSM_Errors();
 					motor1Stop--;
+					setFst_1_Error(false);
 					EVALUATE_observable.next();
 					raiseLocal_EVALUATE();
 					enseq_FSM_Festo1__Errors_Start_default();
-					transitioned_after = 17;
+					transitioned_after = 10;
 				} 
 			}
 		} 
@@ -15213,7 +14845,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (BGS_1_INTERRUPTED_raised)
 			{ 
@@ -15221,8 +14853,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_ERROR_SYSTEM_RESOLVED))
 				;
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			}  else
 			{
 				if (((lbf_1_isOpenCopy) == (false)) && ((lbf_1_isOpen) == (true)))
@@ -15232,8 +14864,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 					FST_1_ERROR_INGRESS_MISSING_PUK_observable.next();
 					raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK();
 					enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-					FSM_Festo1__Errors_FSM_Errors_react(17);
-					transitioned_after = 17;
+					FSM_Festo1__Errors_FSM_Errors_react(10);
+					transitioned_after = 10;
 				}  else
 				{
 					if (((lbm_1_isOpenCopy) == (false)) && ((lbm_1_isOpen) == (true)))
@@ -15243,8 +14875,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 						FST_1_ERROR_SORTING_MISSING_PUK_observable.next();
 						raiseLocal_FST_1_ERROR_SORTING_MISSING_PUK();
 						enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-						FSM_Festo1__Errors_FSM_Errors_react(17);
-						transitioned_after = 17;
+						FSM_Festo1__Errors_FSM_Errors_react(10);
+						transitioned_after = 10;
 					}  else
 					{
 						if (((lbr_1_isOpenCopy) == (false)) && ((lbr_1_isOpen) == (true)))
@@ -15254,8 +14886,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 							FST_1_ERROR_RAMPFULL_MISSING_PUK_observable.next();
 							raiseLocal_FST_1_ERROR_RAMPFULL_MISSING_PUK();
 							enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-							FSM_Festo1__Errors_FSM_Errors_react(17);
-							transitioned_after = 17;
+							FSM_Festo1__Errors_FSM_Errors_react(10);
+							transitioned_after = 10;
 						}  else
 						{
 							if (((lbe_1_isOpenCopy) == (true)) && ((lbe_1_isOpen) == (false)))
@@ -15265,8 +14897,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 								FST_1_ERROR_EGRESS_UNKNOWNPUK_observable.next();
 								raiseLocal_FST_1_ERROR_EGRESS_UNKNOWNPUK();
 								enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-								FSM_Festo1__Errors_FSM_Errors_react(17);
-								transitioned_after = 17;
+								FSM_Festo1__Errors_FSM_Errors_react(10);
+								transitioned_after = 10;
 							}  else
 							{
 								if (((lbf_1_isOpenCopy) == (true)) && ((lbf_1_isOpen) == (false)))
@@ -15276,8 +14908,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 									FST_1_ERROR_INGRESS_UNKNOWNPUK_observable.next();
 									raiseLocal_FST_1_ERROR_INGRESS_UNKNOWNPUK();
 									enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-									FSM_Festo1__Errors_FSM_Errors_react(17);
-									transitioned_after = 17;
+									FSM_Festo1__Errors_FSM_Errors_react(10);
+									transitioned_after = 10;
 								}  else
 								{
 									if (((lbm_1_isOpenCopy) == (true)) && ((lbm_1_isOpenCopy) == (false)))
@@ -15287,8 +14919,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 										FST_1_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
 										raiseLocal_FST_1_ERROR_RAMPFULL_UNKNOWNPUK();
 										enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-										FSM_Festo1__Errors_FSM_Errors_react(17);
-										transitioned_after = 17;
+										FSM_Festo1__Errors_FSM_Errors_react(10);
+										transitioned_after = 10;
 									}  else
 									{
 										if (((lbe_1_isOpenCopy) == (false)) && ((lbe_1_isOpen) == (true)))
@@ -15298,8 +14930,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 											FST_1_ERROR_EGRESS_MISSING_PUK_observable.next();
 											raiseLocal_FST_1_ERROR_EGRESS_MISSING_PUK();
 											enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-											FSM_Festo1__Errors_FSM_Errors_react(17);
-											transitioned_after = 17;
+											FSM_Festo1__Errors_FSM_Errors_react(10);
+											transitioned_after = 10;
 										}  else
 										{
 											if (((lbr_1_isOpenCopy) == (true)) && ((lbr_1_isOpen) == (false)))
@@ -15309,8 +14941,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 												FST_1_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
 												raiseLocal_FST_1_ERROR_RAMPFULL_UNKNOWNPUK();
 												enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-												FSM_Festo1__Errors_FSM_Errors_react(17);
-												transitioned_after = 17;
+												FSM_Festo1__Errors_FSM_Errors_react(10);
+												transitioned_after = 10;
 											} 
 										}
 									}
@@ -15336,7 +14968,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if ((BGR_1_INTERRUPTED_raised) && (!(lbm_1_isOpen)))
 			{ 
@@ -15344,8 +14976,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				FST_1_ERROR_ACKNOWLEDGED_observable.next();
 				raiseLocal_FST_1_ERROR_ACKNOWLEDGED();
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingPukAcknowledged_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			}  else
 			{
 				if ((BGR_1_INTERRUPTED_raised) && (lbm_1_isOpen))
@@ -15355,8 +14987,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 					raiseLocal_FST_1_ERROR_LAMP_RESOLVED();
 					Q12_OFF_observable.next();
 					enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingRestart_default();
-					FSM_Festo1__Errors_FSM_Errors_react(17);
-					transitioned_after = 17;
+					FSM_Festo1__Errors_FSM_Errors_react(10);
+					transitioned_after = 10;
 				} 
 			}
 		} 
@@ -15375,7 +15007,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (BGS_1_INTERRUPTED_raised)
 			{ 
@@ -15383,8 +15015,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_ERROR_SYSTEM_RESOLVED))
 				;
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			}  else
 			{
 				if (((hs_1_isOpenCopy) == (false)) && ((hs_1_isOpen) == (true)))
@@ -15394,8 +15026,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 					FST_1_ERROR_HM_MISSING_PUK_observable.next();
 					raiseLocal_FST_1_ERROR_HM_MISSING_PUK();
 					enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-					FSM_Festo1__Errors_FSM_Errors_react(17);
-					transitioned_after = 17;
+					FSM_Festo1__Errors_FSM_Errors_react(10);
+					transitioned_after = 10;
 				}  else
 				{
 					if (((lbm_1_isOpenCopy) == (false)) && ((lbm_1_isOpen) == (true)))
@@ -15405,8 +15037,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 						FST_1_ERROR_SORTING_MISSING_PUK_observable.next();
 						raiseLocal_FST_1_ERROR_SORTING_MISSING_PUK();
 						enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-						FSM_Festo1__Errors_FSM_Errors_react(17);
-						transitioned_after = 17;
+						FSM_Festo1__Errors_FSM_Errors_react(10);
+						transitioned_after = 10;
 					}  else
 					{
 						if (((lbr_1_isOpenCopy) == (true)) && ((lbr_1_isOpen) == (false)))
@@ -15416,8 +15048,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 							FST_1_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
 							raiseLocal_FST_1_ERROR_RAMPFULL_UNKNOWNPUK();
 							enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-							FSM_Festo1__Errors_FSM_Errors_react(17);
-							transitioned_after = 17;
+							FSM_Festo1__Errors_FSM_Errors_react(10);
+							transitioned_after = 10;
 						}  else
 						{
 							if (((lbe_1_isOpenCopy) == (false)) && ((lbe_1_isOpen) == (true)))
@@ -15427,8 +15059,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 								FST_1_ERROR_EGRESS_MISSING_PUK_observable.next();
 								raiseLocal_FST_1_ERROR_EGRESS_MISSING_PUK();
 								enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-								FSM_Festo1__Errors_FSM_Errors_react(17);
-								transitioned_after = 17;
+								FSM_Festo1__Errors_FSM_Errors_react(10);
+								transitioned_after = 10;
 							}  else
 							{
 								if (((lbe_1_isOpenCopy) == (false)) && ((lbe_1_isOpen) == (true)))
@@ -15438,8 +15070,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 									FST_1_ERROR_EGRESS_UNKNOWNPUK_observable.next();
 									raiseLocal_FST_1_ERROR_EGRESS_UNKNOWNPUK();
 									enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-									FSM_Festo1__Errors_FSM_Errors_react(17);
-									transitioned_after = 17;
+									FSM_Festo1__Errors_FSM_Errors_react(10);
+									transitioned_after = 10;
 								}  else
 								{
 									if (((lbr_1_isOpenCopy) == (false)) && ((lbr_1_isOpen) == (true)))
@@ -15449,8 +15081,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 										FST_1_ERROR_RAMPFULL_MISSING_PUK_observable.next();
 										raiseLocal_FST_1_ERROR_RAMPFULL_MISSING_PUK();
 										enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-										FSM_Festo1__Errors_FSM_Errors_react(17);
-										transitioned_after = 17;
+										FSM_Festo1__Errors_FSM_Errors_react(10);
+										transitioned_after = 10;
 									}  else
 									{
 										if (((lbm_1_isOpenCopy) == (true)) && ((lbm_1_isOpen) == (false)))
@@ -15460,8 +15092,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 											FST_1_ERROR_SORTING_UNKNOWNPUK_observable.next();
 											raiseLocal_FST_1_ERROR_SORTING_UNKNOWNPUK();
 											enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-											FSM_Festo1__Errors_FSM_Errors_react(17);
-											transitioned_after = 17;
+											FSM_Festo1__Errors_FSM_Errors_react(10);
+											transitioned_after = 10;
 										}  else
 										{
 											if (((hs_1_isOpenCopy) == (true)) && ((hs_1_isOpen) == (false)))
@@ -15471,8 +15103,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 												FST_1_ERROR_HM_UNKNOWNPUK_observable.next();
 												raiseLocal_FST_1_ERROR_HM_UNKNOWNPUK();
 												enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-												FSM_Festo1__Errors_FSM_Errors_react(17);
-												transitioned_after = 17;
+												FSM_Festo1__Errors_FSM_Errors_react(10);
+												transitioned_after = 10;
 											} 
 										}
 									}
@@ -15498,7 +15130,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (lbm_1_isOpen)
 			{ 
@@ -15507,8 +15139,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				raiseLocal_FST_1_ERROR_LAMP_RESOLVED();
 				Q12_OFF_observable.next();
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingRestart_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			} 
 		} 
 		/* If no transition was taken */
@@ -15526,7 +15158,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (local_FST_1_ERROR_INGRESS_UNKNOWNPUK_raised)
 			{ 
@@ -15534,8 +15166,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_
 				FST_1_ERROR_LAMP_UNACKNOWLEDGED_observable.next();
 				raiseLocal_FST_1_ERROR_LAMP_UNACKNOWLEDGED();
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressUnacknowledged_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			}  else
 			{
 				if (local_FST_1_ERROR_HM_UNKNOWNPUK_raised)
@@ -15545,8 +15177,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_
 					raiseLocal_FST_1_ERROR_LAMP_UNACKNOWLEDGED();
 					Q11_ON_observable.next();
 					enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMUnacknowledged_default();
-					FSM_Festo1__Errors_FSM_Errors_react(17);
-					transitioned_after = 17;
+					FSM_Festo1__Errors_FSM_Errors_react(10);
+					transitioned_after = 10;
 				}  else
 				{
 					if (local_FST_1_ERROR_SORTING_UNKNOWNPUK_raised)
@@ -15556,8 +15188,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_
 						raiseLocal_FST_1_ERROR_LAMP_UNACKNOWLEDGED();
 						Q12_ON_observable.next();
 						enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingPukUnacknowledged_default();
-						FSM_Festo1__Errors_FSM_Errors_react(17);
-						transitioned_after = 17;
+						FSM_Festo1__Errors_FSM_Errors_react(10);
+						transitioned_after = 10;
 					}  else
 					{
 						if (local_FST_1_ERROR_EGRESS_MISSING_PUK_raised)
@@ -15569,8 +15201,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_
 							Q11_ON_observable.next();
 							Q12_ON_observable.next();
 							enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressPukUnacknowledged_default();
-							FSM_Festo1__Errors_FSM_Errors_react(17);
-							transitioned_after = 17;
+							FSM_Festo1__Errors_FSM_Errors_react(10);
+							transitioned_after = 10;
 						}  else
 						{
 							if (local_FST_1_ERROR_RAMPFULL_UNKNOWNPUK_raised)
@@ -15580,8 +15212,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_
 								raiseLocal_FST_1_ERROR_LAMP_UNACKNOWLEDGED();
 								Q12_ON_observable.next();
 								enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorRampFullUnacknowledged_default();
-								FSM_Festo1__Errors_FSM_Errors_react(17);
-								transitioned_after = 17;
+								FSM_Festo1__Errors_FSM_Errors_react(10);
+								transitioned_after = 10;
 							}  else
 							{
 								if (local_FST_1_ERROR_HM_MISSING_PUK_raised)
@@ -15592,8 +15224,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_
 									FST_1_POSITION_HEIGHTMEASUREMENT_PUK_REMOVED_observable.next();
 									Q11_ON_observable.next();
 									enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMUnacknowledged_default();
-									FSM_Festo1__Errors_FSM_Errors_react(17);
-									transitioned_after = 17;
+									FSM_Festo1__Errors_FSM_Errors_react(10);
+									transitioned_after = 10;
 								}  else
 								{
 									if (local_FST_1_ERROR_SORTING_MISSING_PUK_raised)
@@ -15604,8 +15236,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_
 										FST_1_POSITION_SORTING_PUK_REMOVED_observable.next();
 										Q12_ON_observable.next();
 										enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinSortingPukUnacknowledged_default();
-										FSM_Festo1__Errors_FSM_Errors_react(17);
-										transitioned_after = 17;
+										FSM_Festo1__Errors_FSM_Errors_react(10);
+										transitioned_after = 10;
 									}  else
 									{
 										if (local_FST_1_ERROR_EGRESS_UNKNOWNPUK_raised)
@@ -15616,8 +15248,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_
 											Q11_ON_observable.next();
 											Q12_ON_observable.next();
 											enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressPukUnacknowledged_default();
-											FSM_Festo1__Errors_FSM_Errors_react(17);
-											transitioned_after = 17;
+											FSM_Festo1__Errors_FSM_Errors_react(10);
+											transitioned_after = 10;
 										}  else
 										{
 											if (local_FST_1_ERROR_INGRESS_MISSING_PUK_raised)
@@ -15627,8 +15259,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_
 												raiseLocal_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED();
 												FST_1_POSITION_INGRESS_PUK_REMOVED_observable.next();
 												enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressUnacknowledged_default();
-												FSM_Festo1__Errors_FSM_Errors_react(17);
-												transitioned_after = 17;
+												FSM_Festo1__Errors_FSM_Errors_react(10);
+												transitioned_after = 10;
 											}  else
 											{
 												if (local_FST_1_ERROR_RAMPFULL_MISSING_PUK_raised)
@@ -15637,8 +15269,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_
 													FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_observable.next();
 													raiseLocal_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED();
 													enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorRampFullUnacknowledged_default();
-													FSM_Festo1__Errors_FSM_Errors_react(17);
-													transitioned_after = 17;
+													FSM_Festo1__Errors_FSM_Errors_react(10);
+													transitioned_after = 10;
 												} 
 											}
 										}
@@ -15665,7 +15297,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (BGS_1_INTERRUPTED_raised)
 			{ 
@@ -15673,8 +15305,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_ERROR_SYSTEM_RESOLVED))
 				;
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			}  else
 			{
 				if (((lbf_1_isOpenCopy) == (false)) && ((lbf_1_isOpen) == (true)))
@@ -15684,8 +15316,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 					FST_1_ERROR_INGRESS_MISSING_PUK_observable.next();
 					raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK();
 					enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-					FSM_Festo1__Errors_FSM_Errors_react(17);
-					transitioned_after = 17;
+					FSM_Festo1__Errors_FSM_Errors_react(10);
+					transitioned_after = 10;
 				}  else
 				{
 					if (((lbr_1_isOpenCopy) == (false)) && ((lbr_1_isOpen) == (true)))
@@ -15695,8 +15327,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 						FST_1_ERROR_RAMPFULL_MISSING_PUK_observable.next();
 						raiseLocal_FST_1_ERROR_RAMPFULL_MISSING_PUK();
 						enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-						FSM_Festo1__Errors_FSM_Errors_react(17);
-						transitioned_after = 17;
+						FSM_Festo1__Errors_FSM_Errors_react(10);
+						transitioned_after = 10;
 					}  else
 					{
 						if (((lbr_1_isOpenCopy) == (false)) && ((lbr_1_isOpen) == (true)))
@@ -15706,8 +15338,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 							FST_1_ERROR_RAMPFULL_MISSING_PUK_observable.next();
 							raiseLocal_FST_1_ERROR_RAMPFULL_MISSING_PUK();
 							enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-							FSM_Festo1__Errors_FSM_Errors_react(17);
-							transitioned_after = 17;
+							FSM_Festo1__Errors_FSM_Errors_react(10);
+							transitioned_after = 10;
 						}  else
 						{
 							if (((lbe_1_isOpenCopy) == (false)) && ((lbe_1_isOpen) == (true)))
@@ -15717,8 +15349,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 								FST_1_ERROR_EGRESS_MISSING_PUK_observable.next();
 								raiseLocal_FST_1_ERROR_EGRESS_MISSING_PUK();
 								enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-								FSM_Festo1__Errors_FSM_Errors_react(17);
-								transitioned_after = 17;
+								FSM_Festo1__Errors_FSM_Errors_react(10);
+								transitioned_after = 10;
 							}  else
 							{
 								if (((hs_1_isOpenCopy) == (false)) && ((hs_1_isOpen) == (true)))
@@ -15728,8 +15360,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 									FST_1_ERROR_HM_MISSING_PUK_observable.next();
 									raiseLocal_FST_1_ERROR_HM_MISSING_PUK();
 									enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-									FSM_Festo1__Errors_FSM_Errors_react(17);
-									transitioned_after = 17;
+									FSM_Festo1__Errors_FSM_Errors_react(10);
+									transitioned_after = 10;
 								}  else
 								{
 									if (((hs_1_isOpenCopy) == (true)) && ((hs_1_isOpen) == (false)))
@@ -15739,8 +15371,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 										FST_1_ERROR_HM_UNKNOWNPUK_observable.next();
 										raiseLocal_FST_1_ERROR_HM_UNKNOWNPUK();
 										enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-										FSM_Festo1__Errors_FSM_Errors_react(17);
-										transitioned_after = 17;
+										FSM_Festo1__Errors_FSM_Errors_react(10);
+										transitioned_after = 10;
 									}  else
 									{
 										if (((lbr_1_isOpenCopy) == (true)) && ((lbr_1_isOpen) == (false)))
@@ -15750,8 +15382,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 											FST_1_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
 											raiseLocal_FST_1_ERROR_RAMPFULL_UNKNOWNPUK();
 											enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-											FSM_Festo1__Errors_FSM_Errors_react(17);
-											transitioned_after = 17;
+											FSM_Festo1__Errors_FSM_Errors_react(10);
+											transitioned_after = 10;
 										}  else
 										{
 											if (((lbe_1_isOpenCopy) == (false)) && ((lbe_1_isOpen) == (true)))
@@ -15761,8 +15393,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 												FST_1_ERROR_EGRESS_UNKNOWNPUK_observable.next();
 												raiseLocal_FST_1_ERROR_EGRESS_UNKNOWNPUK();
 												enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-												FSM_Festo1__Errors_FSM_Errors_react(17);
-												transitioned_after = 17;
+												FSM_Festo1__Errors_FSM_Errors_react(10);
+												transitioned_after = 10;
 											}  else
 											{
 												if (((lbf_1_isOpenCopy) == (true)) && ((lbf_1_isOpen) == (false)))
@@ -15772,8 +15404,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 													FST_1_ERROR_INGRESS_UNKNOWNPUK_observable.next();
 													raiseLocal_FST_1_ERROR_INGRESS_UNKNOWNPUK();
 													enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-													FSM_Festo1__Errors_FSM_Errors_react(17);
-													transitioned_after = 17;
+													FSM_Festo1__Errors_FSM_Errors_react(10);
+													transitioned_after = 10;
 												} 
 											}
 										}
@@ -15800,7 +15432,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (lbe_1_isOpen)
 			{ 
@@ -15810,8 +15442,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				Q11_OFF_observable.next();
 				Q12_OFF_observable.next();
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressRestart_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			} 
 		} 
 		/* If no transition was taken */
@@ -15829,19 +15461,19 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
-			if ((BGR_1_INTERRUPTED_raised) && (!(lbr_1_isOpen)))
+			if ((BGR_1_INTERRUPTED_raised) && (!(lbe_1_isOpen)))
 			{ 
 				exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressPukUnacknowledged();
 				FST_1_ERROR_ACKNOWLEDGED_observable.next();
 				raiseLocal_FST_1_ERROR_ACKNOWLEDGED();
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressMissingPukAcknowledged_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			}  else
 			{
-				if ((BGR_1_INTERRUPTED_raised) && (lbr_1_isOpen))
+				if ((BGR_1_INTERRUPTED_raised) && (lbe_1_isOpen))
 				{ 
 					exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressPukUnacknowledged();
 					FST_1_ERROR_LAMP_RESOLVED_observable.next();
@@ -15849,8 +15481,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 					Q11_OFF_observable.next();
 					Q12_OFF_observable.next();
 					enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinEgressRestart_default();
-					FSM_Festo1__Errors_FSM_Errors_react(17);
-					transitioned_after = 17;
+					FSM_Festo1__Errors_FSM_Errors_react(10);
+					transitioned_after = 10;
 				} 
 			}
 		} 
@@ -15869,7 +15501,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (hs_1_isOpen)
 			{ 
@@ -15878,8 +15510,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				raiseLocal_FST_1_ERROR_LAMP_RESOLVED();
 				Q12_OFF_observable.next();
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMRestart_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			} 
 		} 
 		/* If no transition was taken */
@@ -15897,7 +15529,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if ((BGR_1_INTERRUPTED_raised) && (!(hs_1_isOpen)))
 			{ 
@@ -15905,8 +15537,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				FST_1_ERROR_ACKNOWLEDGED_observable.next();
 				raiseLocal_FST_1_ERROR_ACKNOWLEDGED();
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMPukAcknowledged_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			}  else
 			{
 				if ((BGR_1_INTERRUPTED_raised) && (hs_1_isOpen))
@@ -15915,8 +15547,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 					FST_1_ERROR_LAMP_RESOLVED_observable.next();
 					raiseLocal_FST_1_ERROR_LAMP_RESOLVED();
 					enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMRestart_default();
-					FSM_Festo1__Errors_FSM_Errors_react(17);
-					transitioned_after = 17;
+					FSM_Festo1__Errors_FSM_Errors_react(10);
+					transitioned_after = 10;
 				} 
 			}
 		} 
@@ -15935,7 +15567,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (lbf_1_isOpen)
 			{ 
@@ -15943,8 +15575,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				FST_1_ERROR_LAMP_RESOLVED_observable.next();
 				raiseLocal_FST_1_ERROR_LAMP_RESOLVED();
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressRestart_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			} 
 		} 
 		/* If no transition was taken */
@@ -15962,7 +15594,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if ((BGR_1_INTERRUPTED_raised) && (!(lbf_1_isOpen)))
 			{ 
@@ -15970,8 +15602,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				FST_1_ERROR_ACKNOWLEDGED_observable.next();
 				raiseLocal_FST_1_ERROR_ACKNOWLEDGED();
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressAcknowledged_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			}  else
 			{
 				if ((BGR_1_INTERRUPTED_raised) && (lbf_1_isOpen))
@@ -15980,8 +15612,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 					FST_1_ERROR_LAMP_RESOLVED_observable.next();
 					raiseLocal_FST_1_ERROR_LAMP_RESOLVED();
 					enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressRestart_default();
-					FSM_Festo1__Errors_FSM_Errors_react(17);
-					transitioned_after = 17;
+					FSM_Festo1__Errors_FSM_Errors_react(10);
+					transitioned_after = 10;
 				} 
 			}
 		} 
@@ -16000,7 +15632,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (BGS_1_INTERRUPTED_raised)
 			{ 
@@ -16008,8 +15640,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_ERROR_SYSTEM_RESOLVED))
 				;
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			}  else
 			{
 				if (((hs_1_isOpenCopy) == (false)) && ((hs_1_isOpen) == (true)))
@@ -16019,8 +15651,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 					FST_1_ERROR_HM_MISSING_PUK_observable.next();
 					raiseLocal_FST_1_ERROR_HM_MISSING_PUK();
 					enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-					FSM_Festo1__Errors_FSM_Errors_react(17);
-					transitioned_after = 17;
+					FSM_Festo1__Errors_FSM_Errors_react(10);
+					transitioned_after = 10;
 				}  else
 				{
 					if (((hs_1_isOpenCopy) == (true)) && ((hs_1_isOpen) == (false)))
@@ -16030,8 +15662,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 						FST_1_ERROR_HM_UNKNOWNPUK_observable.next();
 						raiseLocal_FST_1_ERROR_HM_UNKNOWNPUK();
 						enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-						FSM_Festo1__Errors_FSM_Errors_react(17);
-						transitioned_after = 17;
+						FSM_Festo1__Errors_FSM_Errors_react(10);
+						transitioned_after = 10;
 					}  else
 					{
 						if (((lbm_1_isOpenCopy) == (false)) && ((lbm_1_isOpen) == (true)))
@@ -16041,8 +15673,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 							FST_1_ERROR_SORTING_MISSING_PUK_observable.next();
 							raiseLocal_FST_1_ERROR_SORTING_MISSING_PUK();
 							enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-							FSM_Festo1__Errors_FSM_Errors_react(17);
-							transitioned_after = 17;
+							FSM_Festo1__Errors_FSM_Errors_react(10);
+							transitioned_after = 10;
 						}  else
 						{
 							if (((lbm_1_isOpenCopy) == (true)) && ((lbm_1_isOpenCopy) == (false)))
@@ -16052,8 +15684,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 								FST_1_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
 								raiseLocal_FST_1_ERROR_RAMPFULL_UNKNOWNPUK();
 								enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-								FSM_Festo1__Errors_FSM_Errors_react(17);
-								transitioned_after = 17;
+								FSM_Festo1__Errors_FSM_Errors_react(10);
+								transitioned_after = 10;
 							}  else
 							{
 								if (((lbf_1_isOpenCopy) == (false)) && ((lbf_1_isOpen) == (true)))
@@ -16063,8 +15695,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 									FST_1_ERROR_INGRESS_MISSING_PUK_observable.next();
 									raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK();
 									enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-									FSM_Festo1__Errors_FSM_Errors_react(17);
-									transitioned_after = 17;
+									FSM_Festo1__Errors_FSM_Errors_react(10);
+									transitioned_after = 10;
 								}  else
 								{
 									if (((lbf_1_isOpenCopy) == (true)) && ((lbf_1_isOpen) == (false)))
@@ -16074,8 +15706,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 										FST_1_ERROR_INGRESS_UNKNOWNPUK_observable.next();
 										raiseLocal_FST_1_ERROR_INGRESS_UNKNOWNPUK();
 										enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-										FSM_Festo1__Errors_FSM_Errors_react(17);
-										transitioned_after = 17;
+										FSM_Festo1__Errors_FSM_Errors_react(10);
+										transitioned_after = 10;
 									}  else
 									{
 										if (((lbr_1_isOpenCopy) == (false)) && ((lbr_1_isOpen) == (true)))
@@ -16085,8 +15717,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 											FST_1_ERROR_RAMPFULL_MISSING_PUK_observable.next();
 											raiseLocal_FST_1_ERROR_RAMPFULL_MISSING_PUK();
 											enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-											FSM_Festo1__Errors_FSM_Errors_react(17);
-											transitioned_after = 17;
+											FSM_Festo1__Errors_FSM_Errors_react(10);
+											transitioned_after = 10;
 										}  else
 										{
 											if (((lbr_1_isOpenCopy) == (true)) && ((lbr_1_isOpen) == (false)))
@@ -16096,8 +15728,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 												FST_1_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
 												raiseLocal_FST_1_ERROR_RAMPFULL_UNKNOWNPUK();
 												enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-												FSM_Festo1__Errors_FSM_Errors_react(17);
-												transitioned_after = 17;
+												FSM_Festo1__Errors_FSM_Errors_react(10);
+												transitioned_after = 10;
 											} 
 										}
 									}
@@ -16123,7 +15755,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if ((BGR_1_INTERRUPTED_raised) && (!(lbr_1_isOpen)))
 			{ 
@@ -16131,19 +15763,19 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				FST_1_ERROR_ACKNOWLEDGED_observable.next();
 				raiseLocal_FST_1_ERROR_ACKNOWLEDGED();
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorRampFullAcknowledged_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			}  else
 			{
-				if (local_FST_1_ERROR_ACKNOWLEDGED_raised)
+				if ((BGR_1_INTERRUPTED_raised) && (!(lbr_1_isOpen)))
 				{ 
 					exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorRampFullUnacknowledged();
 					FST_1_ERROR_LAMP_RESOLVED_observable.next();
 					raiseLocal_FST_1_ERROR_LAMP_RESOLVED();
 					Q12_OFF_observable.next();
 					enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinRampRestart_default();
-					FSM_Festo1__Errors_FSM_Errors_react(17);
-					transitioned_after = 17;
+					FSM_Festo1__Errors_FSM_Errors_react(10);
+					transitioned_after = 10;
 				} 
 			}
 		} 
@@ -16162,7 +15794,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (lbr_1_isOpen)
 			{ 
@@ -16171,8 +15803,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				raiseLocal_FST_1_ERROR_LAMP_RESOLVED();
 				Q12_OFF_observable.next();
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinRampRestart_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			} 
 		} 
 		/* If no transition was taken */
@@ -16190,7 +15822,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (BGS_1_INTERRUPTED_raised)
 			{ 
@@ -16198,8 +15830,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_1_ERROR_SYSTEM_RESOLVED))
 				;
 				enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-				FSM_Festo1__Errors_FSM_Errors_react(17);
-				transitioned_after = 17;
+				FSM_Festo1__Errors_FSM_Errors_react(10);
+				transitioned_after = 10;
 			}  else
 			{
 				if (((lbf_1_isOpenCopy) == (false)) && ((lbf_1_isOpen) == (true)))
@@ -16209,8 +15841,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 					FST_1_ERROR_INGRESS_MISSING_PUK_observable.next();
 					raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK();
 					enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-					FSM_Festo1__Errors_FSM_Errors_react(17);
-					transitioned_after = 17;
+					FSM_Festo1__Errors_FSM_Errors_react(10);
+					transitioned_after = 10;
 				}  else
 				{
 					if (((hs_1_isOpenCopy) == (false)) && ((hs_1_isOpen) == (true)))
@@ -16220,8 +15852,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 						FST_1_ERROR_HM_MISSING_PUK_observable.next();
 						raiseLocal_FST_1_ERROR_HM_MISSING_PUK();
 						enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-						FSM_Festo1__Errors_FSM_Errors_react(17);
-						transitioned_after = 17;
+						FSM_Festo1__Errors_FSM_Errors_react(10);
+						transitioned_after = 10;
 					}  else
 					{
 						if (((lbm_1_isOpenCopy) == (false)) && ((lbm_1_isOpen) == (true)))
@@ -16231,8 +15863,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 							FST_1_ERROR_SORTING_MISSING_PUK_observable.next();
 							raiseLocal_FST_1_ERROR_SORTING_MISSING_PUK();
 							enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-							FSM_Festo1__Errors_FSM_Errors_react(17);
-							transitioned_after = 17;
+							FSM_Festo1__Errors_FSM_Errors_react(10);
+							transitioned_after = 10;
 						}  else
 						{
 							if (((lbe_1_isOpenCopy) == (false)) && ((lbe_1_isOpen) == (true)))
@@ -16242,8 +15874,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 								FST_1_ERROR_EGRESS_MISSING_PUK_observable.next();
 								raiseLocal_FST_1_ERROR_EGRESS_MISSING_PUK();
 								enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-								FSM_Festo1__Errors_FSM_Errors_react(17);
-								transitioned_after = 17;
+								FSM_Festo1__Errors_FSM_Errors_react(10);
+								transitioned_after = 10;
 							}  else
 							{
 								if (((lbf_1_isOpenCopy) == (true)) && ((lbf_1_isOpen) == (false)))
@@ -16253,8 +15885,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 									FST_1_ERROR_INGRESS_UNKNOWNPUK_observable.next();
 									raiseLocal_FST_1_ERROR_INGRESS_UNKNOWNPUK();
 									enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-									FSM_Festo1__Errors_FSM_Errors_react(17);
-									transitioned_after = 17;
+									FSM_Festo1__Errors_FSM_Errors_react(10);
+									transitioned_after = 10;
 								}  else
 								{
 									if (((lbm_1_isOpenCopy) == (true)) && ((lbm_1_isOpenCopy) == (false)))
@@ -16264,8 +15896,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 										FST_1_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
 										raiseLocal_FST_1_ERROR_RAMPFULL_UNKNOWNPUK();
 										enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-										FSM_Festo1__Errors_FSM_Errors_react(17);
-										transitioned_after = 17;
+										FSM_Festo1__Errors_FSM_Errors_react(10);
+										transitioned_after = 10;
 									}  else
 									{
 										if (((lbe_1_isOpenCopy) == (true)) && ((lbe_1_isOpen) == (false)))
@@ -16275,8 +15907,8 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Error
 											FST_1_ERROR_EGRESS_UNKNOWNPUK_observable.next();
 											raiseLocal_FST_1_ERROR_EGRESS_UNKNOWNPUK();
 											enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_Idle_default();
-											FSM_Festo1__Errors_FSM_Errors_react(17);
-											transitioned_after = 17;
+											FSM_Festo1__Errors_FSM_Errors_react(10);
+											transitioned_after = 10;
 										} 
 									}
 								}
@@ -16301,13 +15933,13 @@ sc::integer FSM::FSM_Festo1__Errors_EStop_react(const sc::integer transitioned_b
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (local_ESTOP_CLEARED_raised)
 			{ 
 				exseq_FSM_Festo1__Errors_EStop();
 				enseq_FSM_Festo1__Errors_Start_default();
-				transitioned_after = 17;
+				transitioned_after = 10;
 			} 
 		} 
 	} 
@@ -16319,12 +15951,13 @@ sc::integer FSM::FSM_Festo1__Errors_Start_react(const sc::integer transitioned_b
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (17))
+		if ((transitioned_after) < (10))
 		{ 
 			if (local_FST_1_ERROR_SYSTEM_raised)
 			{ 
 				exseq_FSM_Festo1__Errors_Start();
 				motor1Stop++;
+				setFst_1_Error(true);
 				setLbf_1_isOpenCopy(lbf_1_isOpen);
 				setHs_1_isOpenCopy(hs_1_isOpen);
 				setLbm_1_isOpenCopy(lbm_1_isOpen);
@@ -16333,8 +15966,20 @@ sc::integer FSM::FSM_Festo1__Errors_Start_react(const sc::integer transitioned_b
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
 				enseq_FSM_Festo1__Errors_FSM_Errors_default();
-				transitioned_after = 17;
-			} 
+				transitioned_after = 10;
+			}  else
+			{
+				if (local_FST_1_ERROR_IN_READY_raised)
+				{ 
+					exseq_FSM_Festo1__Errors_Start();
+					motor1Stop++;
+					setFst_1_Error(true);
+					EVALUATE_observable.next();
+					raiseLocal_EVALUATE();
+					enseq_FSM_Festo1__Errors_FSM_Errors_default();
+					transitioned_after = 10;
+				} 
+			}
 		} 
 	} 
 	return transitioned_after;
@@ -16345,13 +15990,13 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(const sc::integer
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if ((local_ESTOP_RECEIVED_raised) || (HEARTBEAT_FAILED_raised))
 			{ 
 				exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting();
 				enseq_FSM_Festo2__Sorting_ESTOP__HEARTBEATFAILED_default();
-				transitioned_after = 18;
+				transitioned_after = 11;
 			} 
 		} 
 	} 
@@ -16363,23 +16008,33 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if (local_SYSTEM_OPERATIONAL_OUT_raised)
 			{ 
 				exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting();
 				enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Stop_default();
-				FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(18);
-				transitioned_after = 18;
+				FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(11);
+				transitioned_after = 11;
 			}  else
 			{
 				if (local_FST_2_ERROR_SYSTEM_raised)
 				{ 
 					exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting();
 					enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_ErrorFST2_default();
-					FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(18);
-					transitioned_after = 18;
-				} 
+					FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(11);
+					transitioned_after = 11;
+				}  else
+				{
+					if ((FST_2_POSITION_DIVERTER_DISTANCE_VALID_raised) && (!(FST_2_isEjector)))
+					{ 
+						exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting();
+						FST_2_SORTING_MODULE_RESTING_observable.next();
+						react_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_History();
+						FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(11);
+						transitioned_after = 11;
+					} 
+				}
 			}
 		} 
 		/* If no transition was taken */
@@ -16397,7 +16052,7 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if (LBM_2_INTERRUPTED_raised)
 			{ 
@@ -16407,16 +16062,16 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 				FST_2_ERROR_SORTING_UNKNOWNPUK_observable.next();
 				raiseLocal_FST_2_ERROR_SORTING_UNKNOWNPUK();
 				enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle_default();
-				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-				transitioned_after = 18;
+				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+				transitioned_after = 11;
 			}  else
 			{
 				if (FST_2_POSITION_SORTING_PUK_EXPECTED_raised)
 				{ 
 					exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle();
 					enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_PukExpected_default();
-					FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-					transitioned_after = 18;
+					FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+					transitioned_after = 11;
 				} 
 			}
 		} 
@@ -16435,15 +16090,15 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if ((LBM_2_INTERRUPTED_raised) && ((FST2isMetal) == (true)))
 			{ 
 				exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_PukExpected();
 				FST_2_PUK_IS_METAL_observable.next();
 				enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate_default();
-				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-				transitioned_after = 18;
+				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+				transitioned_after = 11;
 			}  else
 			{
 				if ((LBM_2_INTERRUPTED_raised) && ((FST2isMetal) == (false)))
@@ -16451,8 +16106,8 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 					exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_PukExpected();
 					FST_2_PUK_IS_NOT_METAL_observable.next();
 					enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate_default();
-					FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-					transitioned_after = 18;
+					FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+					transitioned_after = 11;
 				}  else
 				{
 					if (FST_2_POSITION_SORTING_PUK_EXPIRED_raised)
@@ -16465,8 +16120,8 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 						FST_2_ERROR_SORTING_MISSING_PUK_observable.next();
 						raiseLocal_FST_2_ERROR_SORTING_MISSING_PUK();
 						enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle_default();
-						FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-						transitioned_after = 18;
+						FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+						transitioned_after = 11;
 					} 
 				}
 			}
@@ -16486,7 +16141,7 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if ((FST_2_PUK_SORTING_PASSTHROUGH_raised) && (FST_2_isEjector))
 			{ 
@@ -16494,8 +16149,8 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
 				enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferEjector_default();
-				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-				transitioned_after = 18;
+				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+				transitioned_after = 11;
 			}  else
 			{
 				if ((FST_2_PUK_SORTING_PASSTHROUGH_raised) && (!(FST_2_isEjector)))
@@ -16503,8 +16158,8 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 					exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate();
 					FST_2_SORTING_MODULE_ACTIVE_observable.next();
 					enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferDivider_default();
-					FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-					transitioned_after = 18;
+					FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+					transitioned_after = 11;
 				}  else
 				{
 					if (((FST_2_PUK_SORTING_EJECT_raised) && (!(FST_2_isEjector))) && (!(FST2RampFull)))
@@ -16513,8 +16168,8 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 						EVALUATE_observable.next();
 						raiseLocal_EVALUATE();
 						enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingDiverter_default();
-						FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-						transitioned_after = 18;
+						FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+						transitioned_after = 11;
 					}  else
 					{
 						if (((FST_2_PUK_SORTING_EJECT_raised) && (FST_2_isEjector)) && (!(FST2RampFull)))
@@ -16522,8 +16177,8 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 							exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate();
 							FST_2_SORTING_MODULE_ACTIVE_observable.next();
 							enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingEjector_default();
-							FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-							transitioned_after = 18;
+							FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+							transitioned_after = 11;
 						}  else
 						{
 							if (((FST_2_PUK_SORTING_EJECT_raised) && (!(FST_2_isEjector))) && (FST2RampFull))
@@ -16538,8 +16193,8 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 								FST_2_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
 								raiseLocal_FST_2_ERROR_RAMPFULL_UNKNOWNPUK();
 								enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_AwaitingRampClearanceDivider_default();
-								FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-								transitioned_after = 18;
+								FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+								transitioned_after = 11;
 							}  else
 							{
 								if (((FST_2_PUK_SORTING_EJECT_raised) && (FST_2_isEjector)) && (FST2RampFull))
@@ -16554,8 +16209,8 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 									FST_2_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
 									raiseLocal_FST_2_ERROR_RAMPFULL_UNKNOWNPUK();
 									enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_AwaitingRampClearanceEjector_default();
-									FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-									transitioned_after = 18;
+									FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+									transitioned_after = 11;
 								} 
 							}
 						}
@@ -16578,7 +16233,7 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if (LBR_2_INTERRUPTED_raised)
 			{ 
@@ -16588,8 +16243,8 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
 				enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EvaluateCounter_default();
-				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-				transitioned_after = 18;
+				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+				transitioned_after = 11;
 			} 
 		} 
 		/* If no transition was taken */
@@ -16607,15 +16262,15 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if (LBM_2_OPEN_raised)
 			{ 
 				exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferEjector();
 				FST_2_POSITION_SORTING_NEW_PUK_observable.next();
 				enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EvaluateCounter_default();
-				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-				transitioned_after = 18;
+				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+				transitioned_after = 11;
 			} 
 		} 
 		/* If no transition was taken */
@@ -16633,15 +16288,15 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if (LBM_2_OPEN_raised)
 			{ 
 				exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferDivider();
 				FST_2_POSITION_SORTING_NEW_PUK_observable.next();
 				enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EvaluateCounter_default();
-				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-				transitioned_after = 18;
+				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+				transitioned_after = 11;
 			} 
 		} 
 		/* If no transition was taken */
@@ -16659,7 +16314,7 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if (LBR_2_INTERRUPTED_raised)
 			{ 
@@ -16668,8 +16323,8 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 				motor2Forward--;
 				FST_2_SORTING_MODULE_RESTING_observable.next();
 				enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EvaluateCounter_default();
-				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-				transitioned_after = 18;
+				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+				transitioned_after = 11;
 			} 
 		} 
 		/* If no transition was taken */
@@ -16688,13 +16343,13 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	if (doCompletion)
 	{ 
 		/* Default exit sequence for state EvaluateCounter */
-		stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
-		stateConfVectorPosition = 18;
+		stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting;
+		stateConfVectorPosition = 11;
 		/* 'default' enter sequence for state Idle */
-		stateConfVector[18] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle;
-		stateConfVectorPosition = 18;
-		historyVector[8] = stateConfVector[18];
-		FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
+		stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle;
+		stateConfVectorPosition = 11;
+		historyVector[8] = stateConfVector[11];
+		FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
 	}  else
 	{
 		/* If no transition was taken */
@@ -16712,7 +16367,7 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if (!(FST2RampFull))
 			{ 
@@ -16721,8 +16376,8 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
 				enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingDiverter_default();
-				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-				transitioned_after = 18;
+				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+				transitioned_after = 11;
 			} 
 		} 
 		/* If no transition was taken */
@@ -16740,15 +16395,15 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if (!(FST2RampFull))
 			{ 
 				exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_AwaitingRampClearanceEjector();
 				FST_2_SORTING_MODULE_ACTIVE_observable.next();
 				enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingEjector_default();
-				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(18);
-				transitioned_after = 18;
+				FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
+				transitioned_after = 11;
 			} 
 		} 
 		/* If no transition was taken */
@@ -16766,14 +16421,14 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if (SYSTEM_OPERATIONAL_IN_raised)
 			{ 
 				exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Stop();
 				react_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_History();
-				FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(18);
-				transitioned_after = 18;
+				FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(11);
+				transitioned_after = 11;
 			} 
 		} 
 		/* If no transition was taken */
@@ -16791,14 +16446,14 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if (SYSTEM_OPERATIONAL_IN_raised)
 			{ 
 				exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Start();
 				enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_default();
-				FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(18);
-				transitioned_after = 18;
+				FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(11);
+				transitioned_after = 11;
 			} 
 		} 
 		/* If no transition was taken */
@@ -16816,14 +16471,14 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if (FST_2_ERROR_SYSTEM_RESOLVED_raised)
 			{ 
 				exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_ErrorFST2();
 				react_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_History();
-				FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(18);
-				transitioned_after = 18;
+				FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(11);
+				transitioned_after = 11;
 			} 
 		} 
 		/* If no transition was taken */
@@ -16841,13 +16496,13 @@ sc::integer FSM::FSM_Festo2__Sorting_ESTOP__HEARTBEATFAILED_react(const sc::inte
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (18))
+		if ((transitioned_after) < (11))
 		{ 
 			if ((local_ESTOP_CLEARED_raised) || (HEARTBEAT_RECONNECT_raised))
 			{ 
 				exseq_FSM_Festo2__Sorting_ESTOP__HEARTBEATFAILED();
 				enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_default();
-				transitioned_after = 18;
+				transitioned_after = 11;
 			} 
 		} 
 	} 
@@ -16859,33 +16514,26 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_react(const sc::integer transitio
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if (local_ESTOP_RECEIVED_raised)
 			{ 
 				exseq_FSM_Festo2__Errors_FSM_Errors();
 				enseq_FSM_Festo2__Errors_EStop_default();
-				react(0);
-				transitioned_after = 19;
+				transitioned_after = 12;
 			}  else
 			{
 				if (FST_2_ERROR_SYSTEM_RESOLVED_raised)
 				{ 
 					exseq_FSM_Festo2__Errors_FSM_Errors();
 					motor2Stop--;
+					setFst_2_Error(false);
 					EVALUATE_observable.next();
 					raiseLocal_EVALUATE();
 					enseq_FSM_Festo2__Errors_Start_default();
-					react(0);
-					transitioned_after = 19;
+					transitioned_after = 12;
 				} 
 			}
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = react(transitioned_before);
 		} 
 	} 
 	return transitioned_after;
@@ -16896,7 +16544,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingU
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if ((BGR_2_INTERRUPTED_raised) && (!(lbm_2_isOpen)))
 			{ 
@@ -16904,8 +16552,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingU
 				FST_2_ERROR_ACKNOWLEDGED_observable.next();
 				raiseLocal_FST_2_ERROR_ACKNOWLEDGED();
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingPukAcknowledged_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			}  else
 			{
 				if ((BGR_2_INTERRUPTED_raised) && (lbm_2_isOpen))
@@ -16915,8 +16563,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingU
 					raiseLocal_FST_2_ERROR_LAMP_RESOLVED();
 					Q22_OFF_observable.next();
 					enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingRestart_default();
-					FSM_Festo2__Errors_FSM_Errors_react(19);
-					transitioned_after = 19;
+					FSM_Festo2__Errors_FSM_Errors_react(12);
+					transitioned_after = 12;
 				} 
 			}
 		} 
@@ -16935,7 +16583,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressR
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if (BGS_2_INTERRUPTED_raised)
 			{ 
@@ -16943,8 +16591,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressR
 				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_ERROR_SYSTEM_RESOLVED))
 				;
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			}  else
 			{
 				if (((hs_2_isOpenCopy) == (false)) && ((hs_2_isOpen) == (true)))
@@ -16954,8 +16602,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressR
 					FST_2_ERROR_HM_MISSING_PUK_observable.next();
 					raiseLocal_FST_2_ERROR_HM_MISSING_PUK();
 					enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-					FSM_Festo2__Errors_FSM_Errors_react(19);
-					transitioned_after = 19;
+					FSM_Festo2__Errors_FSM_Errors_react(12);
+					transitioned_after = 12;
 				}  else
 				{
 					if (((hs_2_isOpenCopy) == (true)) && ((hs_2_isOpen) == (false)))
@@ -16965,8 +16613,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressR
 						FST_2_ERROR_HM_UNKNOWNPUK_observable.next();
 						raiseLocal_FST_2_ERROR_HM_UNKNOWNPUK();
 						enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-						FSM_Festo2__Errors_FSM_Errors_react(19);
-						transitioned_after = 19;
+						FSM_Festo2__Errors_FSM_Errors_react(12);
+						transitioned_after = 12;
 					}  else
 					{
 						if (((lbm_2_isOpenCopy) == (false)) && ((lbm_2_isOpen) == (true)))
@@ -16976,8 +16624,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressR
 							FST_2_ERROR_SORTING_MISSING_PUK_observable.next();
 							raiseLocal_FST_2_ERROR_SORTING_MISSING_PUK();
 							enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-							FSM_Festo2__Errors_FSM_Errors_react(19);
-							transitioned_after = 19;
+							FSM_Festo2__Errors_FSM_Errors_react(12);
+							transitioned_after = 12;
 						}  else
 						{
 							if (((lbm_2_isOpenCopy) == (true)) && ((lbm_2_isOpen) == (false)))
@@ -16987,8 +16635,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressR
 								FST_2_ERROR_SORTING_UNKNOWNPUK_observable.next();
 								raiseLocal_FST_2_ERROR_SORTING_UNKNOWNPUK();
 								enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-								FSM_Festo2__Errors_FSM_Errors_react(19);
-								transitioned_after = 19;
+								FSM_Festo2__Errors_FSM_Errors_react(12);
+								transitioned_after = 12;
 							}  else
 							{
 								if (((lbr_2_isOpenCopy) == (false)) && ((lbr_2_isOpen) == (true)))
@@ -16998,8 +16646,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressR
 									FST_2_ERROR_RAMPFULL_MISSINGPUK_observable.next();
 									raiseLocal_FST_2_ERROR_RAMPFULL_MISSINGPUK();
 									enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-									FSM_Festo2__Errors_FSM_Errors_react(19);
-									transitioned_after = 19;
+									FSM_Festo2__Errors_FSM_Errors_react(12);
+									transitioned_after = 12;
 								}  else
 								{
 									if (((lbr_2_isOpenCopy) == (true)) && ((lbr_2_isOpen) == (false)))
@@ -17009,8 +16657,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressR
 										FST_2_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
 										raiseLocal_FST_2_ERROR_RAMPFULL_UNKNOWNPUK();
 										enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-										FSM_Festo2__Errors_FSM_Errors_react(19);
-										transitioned_after = 19;
+										FSM_Festo2__Errors_FSM_Errors_react(12);
+										transitioned_after = 12;
 									}  else
 									{
 										if (((lbe_2_isOpenCopy) == (false)) && ((lbe_2_isOpen) == (false)))
@@ -17020,8 +16668,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressR
 											FST_2_ERROR_EGRESS_MISSING_PUK_observable.next();
 											raiseLocal_FST_2_ERROR_EGRESS_MISSING_PUK();
 											enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-											FSM_Festo2__Errors_FSM_Errors_react(19);
-											transitioned_after = 19;
+											FSM_Festo2__Errors_FSM_Errors_react(12);
+											transitioned_after = 12;
 										}  else
 										{
 											if (((lbe_2_isOpenCopy) == (true)) && ((lbe_2_isOpen) == (false)))
@@ -17031,8 +16679,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressR
 												FST_2_ERROR_EGRESS_UNKNOWNPUK_observable.next();
 												raiseLocal_FST_2_ERROR_EGRESS_UNKNOWNPUK();
 												enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-												FSM_Festo2__Errors_FSM_Errors_react(19);
-												transitioned_after = 19;
+												FSM_Festo2__Errors_FSM_Errors_react(12);
+												transitioned_after = 12;
 											} 
 										}
 									}
@@ -17058,7 +16706,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingP
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if ((lbm_2_isOpen) == (true))
 			{ 
@@ -17067,8 +16715,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingP
 				raiseLocal_FST_2_ERROR_LAMP_RESOLVED();
 				Q22_OFF_observable.next();
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingRestart_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			} 
 		} 
 		/* If no transition was taken */
@@ -17086,7 +16734,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_react(cons
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if (local_FST_2_ERROR_HM_UNKNOWNPUK_raised)
 			{ 
@@ -17095,18 +16743,19 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_react(cons
 				raiseLocal_FST_2_ERROR_UNACKNOWLEDGED();
 				Q21_ON_observable.next();
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMUnacknowledged_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			}  else
 			{
 				if (local_FST_2_ERROR_SORTING_UNKNOWNPUK_raised)
 				{ 
 					exseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle();
-					FST_1_ERROR_UNACKNOWLEDGED_observable.next();
+					FST_2_ERROR_UNACKNOWLEDGED_observable.next();
+					raiseLocal_FST_2_ERROR_UNACKNOWLEDGED();
 					Q22_ON_observable.next();
 					enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingUnacknowledged_default();
-					FSM_Festo2__Errors_FSM_Errors_react(19);
-					transitioned_after = 19;
+					FSM_Festo2__Errors_FSM_Errors_react(12);
+					transitioned_after = 12;
 				}  else
 				{
 					if (local_FST_2_ERROR_INGRESS_UNKNOWNPUK_raised)
@@ -17115,8 +16764,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_react(cons
 						FST_2_ERROR_UNACKNOWLEDGED_observable.next();
 						raiseLocal_FST_2_ERROR_UNACKNOWLEDGED();
 						enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressAcknowledged_default();
-						FSM_Festo2__Errors_FSM_Errors_react(19);
-						transitioned_after = 19;
+						FSM_Festo2__Errors_FSM_Errors_react(12);
+						transitioned_after = 12;
 					}  else
 					{
 						if (local_FST_2_ERROR_EGRESS_UNKNOWNPUK_raised)
@@ -17127,8 +16776,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_react(cons
 							Q21_ON_observable.next();
 							Q22_ON_observable.next();
 							enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUnacknowledged_default();
-							FSM_Festo2__Errors_FSM_Errors_react(19);
-							transitioned_after = 19;
+							FSM_Festo2__Errors_FSM_Errors_react(12);
+							transitioned_after = 12;
 						}  else
 						{
 							if (local_FST_2_ERROR_RAMPFULL_UNKNOWNPUK_raised)
@@ -17138,8 +16787,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_react(cons
 								raiseLocal_FST_2_ERROR_UNACKNOWLEDGED();
 								Q22_ON_observable.next();
 								enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorRampFullUnacknowledged_default();
-								FSM_Festo2__Errors_FSM_Errors_react(19);
-								transitioned_after = 19;
+								FSM_Festo2__Errors_FSM_Errors_react(12);
+								transitioned_after = 12;
 							}  else
 							{
 								if (local_FST_2_ERROR_INGRESS_MISSING_PUK_raised)
@@ -17149,8 +16798,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_react(cons
 									raiseLocal_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED();
 									FST_2_POSITION_INGRESS_PUK_REMOVED_observable.next();
 									enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressAcknowledged_default();
-									FSM_Festo2__Errors_FSM_Errors_react(19);
-									transitioned_after = 19;
+									FSM_Festo2__Errors_FSM_Errors_react(12);
+									transitioned_after = 12;
 								}  else
 								{
 									if (local_FST_2_ERROR_HM_MISSING_PUK_raised)
@@ -17161,8 +16810,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_react(cons
 										FST_2_POSITION_HEIGHTMEASUREMENT_PUK_REMOVED_observable.next();
 										Q21_ON_observable.next();
 										enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMUnacknowledged_default();
-										FSM_Festo2__Errors_FSM_Errors_react(19);
-										transitioned_after = 19;
+										FSM_Festo2__Errors_FSM_Errors_react(12);
+										transitioned_after = 12;
 									}  else
 									{
 										if (local_FST_2_ERROR_SORTING_MISSING_PUK_raised)
@@ -17173,8 +16822,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_react(cons
 											FST_2_POSITION_SORTING_PUK_REMOVED_observable.next();
 											Q22_ON_observable.next();
 											enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingUnacknowledged_default();
-											FSM_Festo2__Errors_FSM_Errors_react(19);
-											transitioned_after = 19;
+											FSM_Festo2__Errors_FSM_Errors_react(12);
+											transitioned_after = 12;
 										}  else
 										{
 											if (local_FST_2_ERROR_EGRESS_MISSING_PUK_raised)
@@ -17186,8 +16835,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_react(cons
 												Q21_ON_observable.next();
 												Q22_ON_observable.next();
 												enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUnacknowledged_default();
-												FSM_Festo2__Errors_FSM_Errors_react(19);
-												transitioned_after = 19;
+												FSM_Festo2__Errors_FSM_Errors_react(12);
+												transitioned_after = 12;
 											}  else
 											{
 												if (local_FST_2_ERROR_RAMPFULL_MISSINGPUK_raised)
@@ -17197,8 +16846,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_react(cons
 													raiseLocal_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED();
 													Q22_ON_observable.next();
 													enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorRampFullUnacknowledged_default();
-													FSM_Festo2__Errors_FSM_Errors_react(19);
-													transitioned_after = 19;
+													FSM_Festo2__Errors_FSM_Errors_react(12);
+													transitioned_after = 12;
 												} 
 											}
 										}
@@ -17225,7 +16874,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUP
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if (BGS_2_INTERRUPTED_raised)
 			{ 
@@ -17233,8 +16882,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUP
 				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_ERROR_SYSTEM_RESOLVED))
 				;
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			}  else
 			{
 				if (((lbf_2_isOpenCopy) == (false)) && ((lbf_2_isOpen) == (true)))
@@ -17244,8 +16893,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUP
 					FST_2_ERROR_INGRESS_MISSING_PUK_observable.next();
 					raiseLocal_FST_2_ERROR_INGRESS_MISSING_PUK();
 					enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-					FSM_Festo2__Errors_FSM_Errors_react(19);
-					transitioned_after = 19;
+					FSM_Festo2__Errors_FSM_Errors_react(12);
+					transitioned_after = 12;
 				}  else
 				{
 					if (((lbf_2_isOpenCopy) == (true)) && ((lbf_2_isOpen) == (false)))
@@ -17255,8 +16904,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUP
 						FST_2_ERROR_INGRESS_UNKNOWNPUK_observable.next();
 						raiseLocal_FST_2_ERROR_INGRESS_UNKNOWNPUK();
 						enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-						FSM_Festo2__Errors_FSM_Errors_react(19);
-						transitioned_after = 19;
+						FSM_Festo2__Errors_FSM_Errors_react(12);
+						transitioned_after = 12;
 					}  else
 					{
 						if (((hs_2_isOpenCopy) == (true)) && ((hs_2_isOpen) == (false)))
@@ -17266,8 +16915,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUP
 							FST_2_ERROR_HM_UNKNOWNPUK_observable.next();
 							raiseLocal_FST_2_ERROR_HM_UNKNOWNPUK();
 							enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-							FSM_Festo2__Errors_FSM_Errors_react(19);
-							transitioned_after = 19;
+							FSM_Festo2__Errors_FSM_Errors_react(12);
+							transitioned_after = 12;
 						}  else
 						{
 							if (((lbm_2_isOpenCopy) == (false)) && ((lbm_2_isOpen) == (true)))
@@ -17277,8 +16926,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUP
 								FST_2_ERROR_SORTING_MISSING_PUK_observable.next();
 								raiseLocal_FST_2_ERROR_SORTING_MISSING_PUK();
 								enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-								FSM_Festo2__Errors_FSM_Errors_react(19);
-								transitioned_after = 19;
+								FSM_Festo2__Errors_FSM_Errors_react(12);
+								transitioned_after = 12;
 							}  else
 							{
 								if (((hs_2_isOpenCopy) == (false)) && ((hs_2_isOpen) == (true)))
@@ -17288,8 +16937,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUP
 									FST_2_ERROR_HM_MISSING_PUK_observable.next();
 									raiseLocal_FST_2_ERROR_HM_MISSING_PUK();
 									enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-									FSM_Festo2__Errors_FSM_Errors_react(19);
-									transitioned_after = 19;
+									FSM_Festo2__Errors_FSM_Errors_react(12);
+									transitioned_after = 12;
 								}  else
 								{
 									if (((lbm_2_isOpenCopy) == (true)) && ((lbm_2_isOpen) == (false)))
@@ -17299,8 +16948,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUP
 										FST_2_ERROR_SORTING_UNKNOWNPUK_observable.next();
 										raiseLocal_FST_2_ERROR_SORTING_UNKNOWNPUK();
 										enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-										FSM_Festo2__Errors_FSM_Errors_react(19);
-										transitioned_after = 19;
+										FSM_Festo2__Errors_FSM_Errors_react(12);
+										transitioned_after = 12;
 									}  else
 									{
 										if (((lbr_2_isOpenCopy) == (false)) && ((lbr_2_isOpen) == (true)))
@@ -17310,8 +16959,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUP
 											FST_2_ERROR_RAMPFULL_MISSINGPUK_observable.next();
 											raiseLocal_FST_2_ERROR_RAMPFULL_MISSINGPUK();
 											enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-											FSM_Festo2__Errors_FSM_Errors_react(19);
-											transitioned_after = 19;
+											FSM_Festo2__Errors_FSM_Errors_react(12);
+											transitioned_after = 12;
 										}  else
 										{
 											if (((lbr_2_isOpenCopy) == (false)) && ((lbr_2_isOpen) == (true)))
@@ -17321,8 +16970,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUP
 												FST_2_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
 												raiseLocal_FST_2_ERROR_RAMPFULL_UNKNOWNPUK();
 												enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-												FSM_Festo2__Errors_FSM_Errors_react(19);
-												transitioned_after = 19;
+												FSM_Festo2__Errors_FSM_Errors_react(12);
+												transitioned_after = 12;
 											} 
 										}
 									}
@@ -17348,7 +16997,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUn
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if ((BGR_2_INTERRUPTED_raised) && (lbe_2_isOpen))
 			{ 
@@ -17356,8 +17005,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUn
 				FST_2_ERROR_ACKNOWLEDGED_observable.next();
 				raiseLocal_FST_2_ERROR_ACKNOWLEDGED();
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressAcknowledged_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			}  else
 			{
 				if ((BGR_2_INTERRUPTED_raised) && (lbe_2_isOpen))
@@ -17368,8 +17017,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUn
 					Q21_OFF_observable.next();
 					Q22_OFF_observable.next();
 					enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUPRestart_default();
-					FSM_Festo2__Errors_FSM_Errors_react(19);
-					transitioned_after = 19;
+					FSM_Festo2__Errors_FSM_Errors_react(12);
+					transitioned_after = 12;
 				} 
 			}
 		} 
@@ -17388,7 +17037,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressAc
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if ((lbe_2_isOpen) == (true))
 			{ 
@@ -17398,8 +17047,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressAc
 				Q21_OFF_observable.next();
 				Q22_OFF_observable.next();
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUPRestart_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			} 
 		} 
 		/* If no transition was taken */
@@ -17417,7 +17066,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressU
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if (lbf_2_isOpen)
 			{ 
@@ -17425,8 +17074,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressU
 				FST_2_ERROR_LAMP_RESOLVED_observable.next();
 				raiseLocal_FST_2_ERROR_LAMP_RESOLVED();
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressRestart_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			} 
 		} 
 		/* If no transition was taken */
@@ -17444,7 +17093,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressA
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if ((BGR_2_INTERRUPTED_raised) && (!(lbf_2_isOpen)))
 			{ 
@@ -17452,8 +17101,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressA
 				FST_2_ERROR_ACKNOWLEDGED_observable.next();
 				raiseLocal_FST_2_ERROR_ACKNOWLEDGED();
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressUnacknowledged_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			}  else
 			{
 				if ((BGR_2_INTERRUPTED_raised) && (!(lbf_2_isOpen)))
@@ -17462,8 +17111,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressA
 					FST_2_ERROR_LAMP_RESOLVED_observable.next();
 					raiseLocal_FST_2_ERROR_LAMP_RESOLVED();
 					enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressRestart_default();
-					FSM_Festo2__Errors_FSM_Errors_react(19);
-					transitioned_after = 19;
+					FSM_Festo2__Errors_FSM_Errors_react(12);
+					transitioned_after = 12;
 				} 
 			}
 		} 
@@ -17482,7 +17131,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMAcknow
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if (hs_2_isOpen)
 			{ 
@@ -17491,8 +17140,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMAcknow
 				raiseLocal_FST_2_ERROR_LAMP_RESOLVED();
 				Q21_OFF_observable.next();
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestart_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			} 
 		} 
 		/* If no transition was taken */
@@ -17510,7 +17159,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMUnackn
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if ((BGR_2_INTERRUPTED_raised) && (!(hs_2_isOpen)))
 			{ 
@@ -17518,8 +17167,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMUnackn
 				FST_2_ERROR_ACKNOWLEDGED_observable.next();
 				raiseLocal_FST_2_ERROR_ACKNOWLEDGED();
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMAcknowledged_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			}  else
 			{
 				if ((BGR_2_INTERRUPTED_raised) && (hs_2_isOpen))
@@ -17529,8 +17178,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMUnackn
 					raiseLocal_FST_2_ERROR_LAMP_RESOLVED();
 					Q21_OFF_observable.next();
 					enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestart_default();
-					FSM_Festo2__Errors_FSM_Errors_react(19);
-					transitioned_after = 19;
+					FSM_Festo2__Errors_FSM_Errors_react(12);
+					transitioned_after = 12;
 				} 
 			}
 		} 
@@ -17549,7 +17198,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestar
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if (BGS_2_INTERRUPTED_raised)
 			{ 
@@ -17557,8 +17206,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestar
 				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_ERROR_SYSTEM_RESOLVED))
 				;
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			}  else
 			{
 				if (((lbf_2_isOpenCopy) == (false)) && ((lbf_2_isOpen) == (true)))
@@ -17568,8 +17217,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestar
 					FST_2_ERROR_INGRESS_MISSING_PUK_observable.next();
 					raiseLocal_FST_2_ERROR_INGRESS_MISSING_PUK();
 					enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-					FSM_Festo2__Errors_FSM_Errors_react(19);
-					transitioned_after = 19;
+					FSM_Festo2__Errors_FSM_Errors_react(12);
+					transitioned_after = 12;
 				}  else
 				{
 					if (((lbm_2_isOpenCopy) == (false)) && ((lbm_2_isOpen) == (true)))
@@ -17579,8 +17228,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestar
 						FST_2_ERROR_SORTING_MISSING_PUK_observable.next();
 						raiseLocal_FST_2_ERROR_SORTING_MISSING_PUK();
 						enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-						FSM_Festo2__Errors_FSM_Errors_react(19);
-						transitioned_after = 19;
+						FSM_Festo2__Errors_FSM_Errors_react(12);
+						transitioned_after = 12;
 					}  else
 					{
 						if (((lbf_2_isOpenCopy) == (true)) && ((lbf_2_isOpen) == (false)))
@@ -17590,8 +17239,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestar
 							FST_2_ERROR_INGRESS_UNKNOWNPUK_observable.next();
 							raiseLocal_FST_2_ERROR_INGRESS_UNKNOWNPUK();
 							enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-							FSM_Festo2__Errors_FSM_Errors_react(19);
-							transitioned_after = 19;
+							FSM_Festo2__Errors_FSM_Errors_react(12);
+							transitioned_after = 12;
 						}  else
 						{
 							if (((lbm_2_isOpenCopy) == (true)) && ((lbm_2_isOpen) == (false)))
@@ -17601,8 +17250,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestar
 								FST_2_ERROR_SORTING_UNKNOWNPUK_observable.next();
 								raiseLocal_FST_2_ERROR_SORTING_UNKNOWNPUK();
 								enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-								FSM_Festo2__Errors_FSM_Errors_react(19);
-								transitioned_after = 19;
+								FSM_Festo2__Errors_FSM_Errors_react(12);
+								transitioned_after = 12;
 							}  else
 							{
 								if (((lbe_2_isOpenCopy) == (false)) && ((lbe_2_isOpen) == (true)))
@@ -17612,8 +17261,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestar
 									FST_2_ERROR_EGRESS_UNKNOWNPUK_observable.next();
 									raiseLocal_FST_2_ERROR_EGRESS_UNKNOWNPUK();
 									enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-									FSM_Festo2__Errors_FSM_Errors_react(19);
-									transitioned_after = 19;
+									FSM_Festo2__Errors_FSM_Errors_react(12);
+									transitioned_after = 12;
 								}  else
 								{
 									if (((lbr_2_isOpenCopy) == (false)) && ((lbr_2_isOpen) == (true)))
@@ -17623,8 +17272,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestar
 										FST_2_ERROR_RAMPFULL_MISSINGPUK_observable.next();
 										raiseLocal_FST_2_ERROR_RAMPFULL_MISSINGPUK();
 										enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-										FSM_Festo2__Errors_FSM_Errors_react(19);
-										transitioned_after = 19;
+										FSM_Festo2__Errors_FSM_Errors_react(12);
+										transitioned_after = 12;
 									}  else
 									{
 										if (((lbr_2_isOpenCopy) == (false)) && ((lbr_2_isOpen) == (true)))
@@ -17634,8 +17283,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestar
 											FST_2_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
 											raiseLocal_FST_2_ERROR_RAMPFULL_UNKNOWNPUK();
 											enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-											FSM_Festo2__Errors_FSM_Errors_react(19);
-											transitioned_after = 19;
+											FSM_Festo2__Errors_FSM_Errors_react(12);
+											transitioned_after = 12;
 										}  else
 										{
 											if (((lbe_2_isOpenCopy) == (false)) && ((lbe_2_isOpen) == (true)))
@@ -17645,8 +17294,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestar
 												FST_2_ERROR_EGRESS_MISSING_PUK_observable.next();
 												raiseLocal_FST_2_ERROR_EGRESS_MISSING_PUK();
 												enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-												FSM_Festo2__Errors_FSM_Errors_react(19);
-												transitioned_after = 19;
+												FSM_Festo2__Errors_FSM_Errors_react(12);
+												transitioned_after = 12;
 											} 
 										}
 									}
@@ -17672,7 +17321,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingR
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if (BGS_2_INTERRUPTED_raised)
 			{ 
@@ -17680,8 +17329,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingR
 				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_ERROR_SYSTEM_RESOLVED))
 				;
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			}  else
 			{
 				if (((lbf_2_isOpenCopy) == (false)) && ((lbf_2_isOpen) == (true)))
@@ -17691,8 +17340,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingR
 					FST_2_ERROR_INGRESS_MISSING_PUK_observable.next();
 					raiseLocal_FST_2_ERROR_INGRESS_MISSING_PUK();
 					enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-					FSM_Festo2__Errors_FSM_Errors_react(19);
-					transitioned_after = 19;
+					FSM_Festo2__Errors_FSM_Errors_react(12);
+					transitioned_after = 12;
 				}  else
 				{
 					if (((lbf_2_isOpenCopy) == (true)) && ((lbf_2_isOpen) == (false)))
@@ -17702,8 +17351,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingR
 						FST_2_ERROR_INGRESS_UNKNOWNPUK_observable.next();
 						raiseLocal_FST_2_ERROR_INGRESS_UNKNOWNPUK();
 						enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-						FSM_Festo2__Errors_FSM_Errors_react(19);
-						transitioned_after = 19;
+						FSM_Festo2__Errors_FSM_Errors_react(12);
+						transitioned_after = 12;
 					}  else
 					{
 						if (((hs_2_isOpenCopy) == (true)) && ((hs_2_isOpen) == (false)))
@@ -17713,8 +17362,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingR
 							FST_2_ERROR_HM_UNKNOWNPUK_observable.next();
 							raiseLocal_FST_2_ERROR_HM_UNKNOWNPUK();
 							enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-							FSM_Festo2__Errors_FSM_Errors_react(19);
-							transitioned_after = 19;
+							FSM_Festo2__Errors_FSM_Errors_react(12);
+							transitioned_after = 12;
 						}  else
 						{
 							if (((hs_2_isOpenCopy) == (false)) && ((hs_2_isOpen) == (true)))
@@ -17724,8 +17373,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingR
 								FST_2_ERROR_HM_MISSING_PUK_observable.next();
 								raiseLocal_FST_2_ERROR_HM_MISSING_PUK();
 								enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-								FSM_Festo2__Errors_FSM_Errors_react(19);
-								transitioned_after = 19;
+								FSM_Festo2__Errors_FSM_Errors_react(12);
+								transitioned_after = 12;
 							}  else
 							{
 								if (((lbr_2_isOpenCopy) == (false)) && ((lbr_2_isOpen) == (true)))
@@ -17735,8 +17384,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingR
 									FST_2_ERROR_RAMPFULL_MISSINGPUK_observable.next();
 									raiseLocal_FST_2_ERROR_RAMPFULL_MISSINGPUK();
 									enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-									FSM_Festo2__Errors_FSM_Errors_react(19);
-									transitioned_after = 19;
+									FSM_Festo2__Errors_FSM_Errors_react(12);
+									transitioned_after = 12;
 								}  else
 								{
 									if (((lbr_2_isOpenCopy) == (true)) && ((lbr_2_isOpen) == (false)))
@@ -17746,8 +17395,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingR
 										FST_2_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
 										raiseLocal_FST_2_ERROR_RAMPFULL_UNKNOWNPUK();
 										enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-										FSM_Festo2__Errors_FSM_Errors_react(19);
-										transitioned_after = 19;
+										FSM_Festo2__Errors_FSM_Errors_react(12);
+										transitioned_after = 12;
 									}  else
 									{
 										if (((lbe_2_isOpenCopy) == (false)) && ((lbe_2_isOpen) == (false)))
@@ -17757,8 +17406,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingR
 											FST_2_ERROR_EGRESS_MISSING_PUK_observable.next();
 											raiseLocal_FST_2_ERROR_EGRESS_MISSING_PUK();
 											enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-											FSM_Festo2__Errors_FSM_Errors_react(19);
-											transitioned_after = 19;
+											FSM_Festo2__Errors_FSM_Errors_react(12);
+											transitioned_after = 12;
 										}  else
 										{
 											if (((lbe_2_isOpenCopy) == (true)) && ((lbe_2_isOpen) == (false)))
@@ -17768,8 +17417,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingR
 												FST_2_ERROR_EGRESS_UNKNOWNPUK_observable.next();
 												raiseLocal_FST_2_ERROR_EGRESS_UNKNOWNPUK();
 												enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-												FSM_Festo2__Errors_FSM_Errors_react(19);
-												transitioned_after = 19;
+												FSM_Festo2__Errors_FSM_Errors_react(12);
+												transitioned_after = 12;
 											} 
 										}
 									}
@@ -17795,7 +17444,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorRampFullUn
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if ((BGR_2_INTERRUPTED_raised) && (!(lbr_2_isOpen)))
 			{ 
@@ -17803,8 +17452,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorRampFullUn
 				FST_2_ERROR_ACKNOWLEDGED_observable.next();
 				raiseLocal_FST_2_ERROR_ACKNOWLEDGED();
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullAcknowledged_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			}  else
 			{
 				if ((BGR_2_INTERRUPTED_raised) && (lbr_2_isOpen))
@@ -17814,8 +17463,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorRampFullUn
 					raiseLocal_FST_2_ERROR_LAMP_RESOLVED();
 					Q22_OFF_observable.next();
 					enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullRestart_default();
-					FSM_Festo2__Errors_FSM_Errors_react(19);
-					transitioned_after = 19;
+					FSM_Festo2__Errors_FSM_Errors_react(12);
+					transitioned_after = 12;
 				} 
 			}
 		} 
@@ -17834,7 +17483,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFull
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if ((lbr_2_isOpen) == (true))
 			{ 
@@ -17843,8 +17492,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFull
 				raiseLocal_FST_2_ERROR_LAMP_RESOLVED();
 				Q22_OFF_observable.next();
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullRestart_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			} 
 		} 
 		/* If no transition was taken */
@@ -17862,7 +17511,7 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFull
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if (BGS_2_INTERRUPTED_raised)
 			{ 
@@ -17870,8 +17519,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFull
 				incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::FST_2_ERROR_SYSTEM_RESOLVED))
 				;
 				enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-				FSM_Festo2__Errors_FSM_Errors_react(19);
-				transitioned_after = 19;
+				FSM_Festo2__Errors_FSM_Errors_react(12);
+				transitioned_after = 12;
 			}  else
 			{
 				if (((lbf_2_isOpenCopy) == (false)) && ((lbf_2_isOpen) == (true)))
@@ -17881,8 +17530,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFull
 					FST_2_ERROR_INGRESS_MISSING_PUK_observable.next();
 					raiseLocal_FST_2_ERROR_INGRESS_MISSING_PUK();
 					enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-					FSM_Festo2__Errors_FSM_Errors_react(19);
-					transitioned_after = 19;
+					FSM_Festo2__Errors_FSM_Errors_react(12);
+					transitioned_after = 12;
 				}  else
 				{
 					if (((lbf_2_isOpenCopy) == (true)) && ((lbf_2_isOpen) == (false)))
@@ -17892,8 +17541,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFull
 						FST_2_ERROR_INGRESS_UNKNOWNPUK_observable.next();
 						raiseLocal_FST_2_ERROR_INGRESS_UNKNOWNPUK();
 						enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-						FSM_Festo2__Errors_FSM_Errors_react(19);
-						transitioned_after = 19;
+						FSM_Festo2__Errors_FSM_Errors_react(12);
+						transitioned_after = 12;
 					}  else
 					{
 						if (((hs_2_isOpenCopy) == (false)) && ((hs_2_isOpen) == (true)))
@@ -17903,8 +17552,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFull
 							FST_2_ERROR_HM_MISSING_PUK_observable.next();
 							raiseLocal_FST_2_ERROR_HM_MISSING_PUK();
 							enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-							FSM_Festo2__Errors_FSM_Errors_react(19);
-							transitioned_after = 19;
+							FSM_Festo2__Errors_FSM_Errors_react(12);
+							transitioned_after = 12;
 						}  else
 						{
 							if (((hs_2_isOpenCopy) == (true)) && ((hs_2_isOpen) == (false)))
@@ -17914,8 +17563,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFull
 								FST_2_ERROR_HM_UNKNOWNPUK_observable.next();
 								raiseLocal_FST_2_ERROR_HM_UNKNOWNPUK();
 								enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-								FSM_Festo2__Errors_FSM_Errors_react(19);
-								transitioned_after = 19;
+								FSM_Festo2__Errors_FSM_Errors_react(12);
+								transitioned_after = 12;
 							}  else
 							{
 								if (((lbm_2_isOpenCopy) == (false)) && ((lbm_2_isOpen) == (true)))
@@ -17925,8 +17574,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFull
 									FST_2_ERROR_SORTING_MISSING_PUK_observable.next();
 									raiseLocal_FST_2_ERROR_SORTING_MISSING_PUK();
 									enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-									FSM_Festo2__Errors_FSM_Errors_react(19);
-									transitioned_after = 19;
+									FSM_Festo2__Errors_FSM_Errors_react(12);
+									transitioned_after = 12;
 								}  else
 								{
 									if (((lbm_2_isOpenCopy) == (true)) && ((lbm_2_isOpen) == (false)))
@@ -17936,8 +17585,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFull
 										FST_2_ERROR_SORTING_UNKNOWNPUK_observable.next();
 										raiseLocal_FST_2_ERROR_SORTING_UNKNOWNPUK();
 										enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-										FSM_Festo2__Errors_FSM_Errors_react(19);
-										transitioned_after = 19;
+										FSM_Festo2__Errors_FSM_Errors_react(12);
+										transitioned_after = 12;
 									}  else
 									{
 										if (((lbe_2_isOpenCopy) == (false)) && ((lbe_2_isOpen) == (true)))
@@ -17947,8 +17596,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFull
 											FST_2_ERROR_EGRESS_MISSING_PUK_observable.next();
 											raiseLocal_FST_2_ERROR_EGRESS_MISSING_PUK();
 											enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-											FSM_Festo2__Errors_FSM_Errors_react(19);
-											transitioned_after = 19;
+											FSM_Festo2__Errors_FSM_Errors_react(12);
+											transitioned_after = 12;
 										}  else
 										{
 											if (((lbe_2_isOpenCopy) == (false)) && ((lbe_2_isOpen) == (true)))
@@ -17958,8 +17607,8 @@ sc::integer FSM::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFull
 												FST_2_ERROR_EGRESS_UNKNOWNPUK_observable.next();
 												raiseLocal_FST_2_ERROR_EGRESS_UNKNOWNPUK();
 												enseq_FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_default();
-												FSM_Festo2__Errors_FSM_Errors_react(19);
-												transitioned_after = 19;
+												FSM_Festo2__Errors_FSM_Errors_react(12);
+												transitioned_after = 12;
 											} 
 										}
 									}
@@ -17985,12 +17634,1011 @@ sc::integer FSM::FSM_Festo2__Errors_EStop_react(const sc::integer transitioned_b
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
-		if ((transitioned_after) < (19))
+		if ((transitioned_after) < (12))
 		{ 
 			if (local_ESTOP_CLEARED_raised)
 			{ 
 				exseq_FSM_Festo2__Errors_EStop();
 				enseq_FSM_Festo2__Errors_Start_default();
+				transitioned_after = 12;
+			} 
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_Festo2__Errors_Start_react(const sc::integer transitioned_before) {
+	/* The reactions of state Start. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (12))
+		{ 
+			if (local_FST_2_ERROR_SYSTEM_raised)
+			{ 
+				exseq_FSM_Festo2__Errors_Start();
+				motor2Stop++;
+				setFst_2_Error(true);
+				setLbf_2_isOpenCopy(lbf_2_isOpen);
+				setHs_2_isOpenCopy(hs_2_isOpen);
+				setLbm_2_isOpenCopy(lbm_2_isOpen);
+				setLbe_2_isOpenCopy(lbe_2_isOpen);
+				setLbr_2_isOpenCopy(lbr_2_isOpenCopy);
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_Festo2__Errors_FSM_Errors_default();
+				transitioned_after = 12;
+			}  else
+			{
+				if (local_FST_2_ERROR_IN_READY_raised)
+				{ 
+					exseq_FSM_Festo2__Errors_Start();
+					motor2Stop++;
+					setFst_2_Error(true);
+					EVALUATE_observable.next();
+					raiseLocal_EVALUATE();
+					enseq_FSM_Festo2__Errors_FSM_Errors_default();
+					transitioned_after = 12;
+				} 
+			}
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_react(const sc::integer transitioned_before) {
+	/* The reactions of state FSM_Festo1: LR. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (13))
+		{ 
+			if (local_ESTOP_RECEIVED_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR();
+				enseq_Festo1__FSM_LAMP_RED_EStop_default();
+				transitioned_after = 13;
+			}  else
+			{
+				if (HEARTBEAT_FAILED_raised)
+				{ 
+					exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR();
+					enseq_Festo1__FSM_LAMP_RED_HeartbeatFailed_default();
+					transitioned_after = 13;
+				} 
+			}
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF_react(const sc::integer transitioned_before) {
+	/* The reactions of state OFF. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (13))
+		{ 
+			if (local_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF();
+				enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk_default();
+				Festo1__FSM_LAMP_RED_FSM_Festo1__LR_react(13);
+				transitioned_after = 13;
+			}  else
+			{
+				if (local_FST_1_ERROR_LAMP_UNACKNOWLEDGED_raised)
+				{ 
+					exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF();
+					enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk_default();
+					Festo1__FSM_LAMP_RED_FSM_Festo1__LR_react(13);
+					transitioned_after = 13;
+				} 
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo1__FSM_LAMP_RED_FSM_Festo1__LR_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk_react(const sc::integer transitioned_before) {
+	/* The reactions of state ErrorMissingPuk. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (13))
+		{ 
+			if (local_FST_1_ERROR_LAMP_RESOLVED_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk();
+				enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF_default();
+				Festo1__FSM_LAMP_RED_FSM_Festo1__LR_react(13);
+				transitioned_after = 13;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo1__FSM_LAMP_RED_FSM_Festo1__LR_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk_react(const sc::integer transitioned_before) {
+	/* The reactions of state ErrorUnknownPuk. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (13))
+		{ 
+			if (local_FST_1_ERROR_ACKNOWLEDGED_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk();
+				enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged_default();
+				Festo1__FSM_LAMP_RED_FSM_Festo1__LR_react(13);
+				transitioned_after = 13;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo1__FSM_LAMP_RED_FSM_Festo1__LR_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged_react(const sc::integer transitioned_before) {
+	/* The reactions of state ErrorUnknownPukAcknowledged. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (13))
+		{ 
+			if (local_FST_1_ERROR_LAMP_RESOLVED_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged();
+				enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF_default();
+				Festo1__FSM_LAMP_RED_FSM_Festo1__LR_react(13);
+				transitioned_after = 13;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo1__FSM_LAMP_RED_FSM_Festo1__LR_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_RED_EStop_react(const sc::integer transitioned_before) {
+	/* The reactions of state EStop. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (13))
+		{ 
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_RED_EStop();
+				enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_default();
+				transitioned_after = 13;
+			}  else
+			{
+				if (HEARTBEAT_FAILED_raised)
+				{ 
+					exseq_Festo1__FSM_LAMP_RED_EStop();
+					enseq_Festo1__FSM_LAMP_RED_HeartbeatFailed_default();
+					transitioned_after = 13;
+				} 
+			}
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_RED_HeartbeatFailed_react(const sc::integer transitioned_before) {
+	/* The reactions of state HeartbeatFailed. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (13))
+		{ 
+			if (HEARTBEAT_RECONNECT_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_RED_HeartbeatFailed();
+				enseq_Festo1__FSM_LAMP_RED_FSM_Festo1__LR_default();
+				transitioned_after = 13;
+			} 
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_react(const sc::integer transitioned_before) {
+	/* The reactions of state FSM_Festo1: LG. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (14))
+		{ 
+			if (local_ESTOP_RECEIVED_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG();
+				enseq_Festo1__FSM_LAMP_GREEN_EStop_default();
+				transitioned_after = 14;
+			}  else
+			{
+				if (HEARTBEAT_FAILED_raised)
+				{ 
+					exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG();
+					enseq_Festo1__FSM_LAMP_GREEN_HeartBeatFailed_default();
+					transitioned_after = 14;
+				}  else
+				{
+					if (local_FST_1_ERROR_SYSTEM_raised)
+					{ 
+						exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG();
+						enseq_Festo1__FSM_LAMP_GREEN_Error_default();
+						transitioned_after = 14;
+					} 
+				}
+			}
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF_react(const sc::integer transitioned_before) {
+	/* The reactions of state OFF. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (14))
+		{ 
+			if (local_SYSTEM_SERVICE_IN_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF();
+				enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode_default();
+				Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_react(14);
+				transitioned_after = 14;
+			}  else
+			{
+				if (SYSTEM_OPERATIONAL_IN_raised)
+				{ 
+					exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF();
+					enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational_default();
+					Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_react(14);
+					transitioned_after = 14;
+				} 
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode_react(const sc::integer transitioned_before) {
+	/* The reactions of state ServiceMode. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (14))
+		{ 
+			if (local_SYSTEM_SERVICE_OUT_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode();
+				enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF_default();
+				Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_react(14);
+				transitioned_after = 14;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing_react(const sc::integer transitioned_before) {
+	/* The reactions of state Distancing. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (14))
+		{ 
+			if (local_FST_1_INGRESS_OUT_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing();
+				enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational_default();
+				Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_react(14);
+				transitioned_after = 14;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational_react(const sc::integer transitioned_before) {
+	/* The reactions of state operational. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (14))
+		{ 
+			if (local_FST_1_INGRESS_IN_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational();
+				enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing_default();
+				Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_react(14);
+				transitioned_after = 14;
+			}  else
+			{
+				if (local_SYSTEM_OPERATIONAL_OUT_raised)
+				{ 
+					exseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational();
+					enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF_default();
+					Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_react(14);
+					transitioned_after = 14;
+				} 
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_GREEN_EStop_react(const sc::integer transitioned_before) {
+	/* The reactions of state EStop. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (14))
+		{ 
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_GREEN_EStop();
+				enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_default();
+				transitioned_after = 14;
+			}  else
+			{
+				if (HEARTBEAT_FAILED_raised)
+				{ 
+					exseq_Festo1__FSM_LAMP_GREEN_EStop();
+					enseq_Festo1__FSM_LAMP_GREEN_HeartBeatFailed_default();
+					transitioned_after = 14;
+				} 
+			}
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_GREEN_HeartBeatFailed_react(const sc::integer transitioned_before) {
+	/* The reactions of state HeartBeatFailed. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (14))
+		{ 
+			if (HEARTBEAT_RECONNECT_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_GREEN_HeartBeatFailed();
+				enseq_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_default();
+				transitioned_after = 14;
+			} 
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_GREEN_Error_react(const sc::integer transitioned_before) {
+	/* The reactions of state Error. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (14))
+		{ 
+			if (FST_1_ERROR_SYSTEM_RESOLVED_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_GREEN_Error();
+				react_Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_History();
+				transitioned_after = 14;
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_Festo1__FSM_LAMP_GREEN_Error();
+					enseq_Festo1__FSM_LAMP_GREEN_EStop_default();
+					transitioned_after = 14;
+				} 
+			}
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_react(const sc::integer transitioned_before) {
+	/* The reactions of state FSM_Festo2: LG. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (15))
+		{ 
+			if (local_ESTOP_RECEIVED_raised)
+			{ 
+				exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG();
+				enseq_Festo2__FSM_LAMP_GREEN_EStop_default();
+				transitioned_after = 15;
+			}  else
+			{
+				if (local_FST_2_ERROR_SYSTEM_raised)
+				{ 
+					exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG();
+					enseq_Festo2__FSM_LAMP_GREEN_Error_default();
+					transitioned_after = 15;
+				} 
+			}
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF_react(const sc::integer transitioned_before) {
+	/* The reactions of state OFF. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (15))
+		{ 
+			if (local_SYSTEM_SERVICE_IN_raised)
+			{ 
+				exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF();
+				enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode_default();
+				Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_react(15);
+				transitioned_after = 15;
+			}  else
+			{
+				if (SYSTEM_OPERATIONAL_IN_raised)
+				{ 
+					exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF();
+					enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational_default();
+					Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_react(15);
+					transitioned_after = 15;
+				} 
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode_react(const sc::integer transitioned_before) {
+	/* The reactions of state ServiceMode. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (15))
+		{ 
+			if (local_SYSTEM_SERVICE_OUT_raised)
+			{ 
+				exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode();
+				enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF_default();
+				Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_react(15);
+				transitioned_after = 15;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing_react(const sc::integer transitioned_before) {
+	/* The reactions of state Distancing. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (15))
+		{ 
+			if (fst_2_ready)
+			{ 
+				exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing();
+				enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational_default();
+				Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_react(15);
+				transitioned_after = 15;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational_react(const sc::integer transitioned_before) {
+	/* The reactions of state Operational. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (15))
+		{ 
+			if (!(fst_2_ready))
+			{ 
+				exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational();
+				enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing_default();
+				Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_react(15);
+				transitioned_after = 15;
+			}  else
+			{
+				if (local_SYSTEM_OPERATIONAL_OUT_raised)
+				{ 
+					exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational();
+					enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF_default();
+					Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_react(15);
+					transitioned_after = 15;
+				} 
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_GREEN_EStop_react(const sc::integer transitioned_before) {
+	/* The reactions of state EStop. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (15))
+		{ 
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_Festo2__FSM_LAMP_GREEN_EStop();
+				enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_default();
+				transitioned_after = 15;
+			} 
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_GREEN_Error_react(const sc::integer transitioned_before) {
+	/* The reactions of state Error. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (15))
+		{ 
+			if (FST_2_ERROR_SYSTEM_RESOLVED_raised)
+			{ 
+				exseq_Festo2__FSM_LAMP_GREEN_Error();
+				react_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_History();
+				transitioned_after = 15;
+			}  else
+			{
+				if (local_ESTOP_RECEIVED_raised)
+				{ 
+					exseq_Festo2__FSM_LAMP_GREEN_Error();
+					enseq_Festo2__FSM_LAMP_GREEN_EStop_default();
+					transitioned_after = 15;
+				} 
+			}
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_react(const sc::integer transitioned_before) {
+	/* The reactions of state FSM_Festo1: LY. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (16))
+		{ 
+			if (local_ESTOP_RECEIVED_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY();
+				enseq_Festo1__FSM_LAMP_YELLOW_EStop_default();
+				transitioned_after = 16;
+			}  else
+			{
+				if (HEARTBEAT_FAILED_raised)
+				{ 
+					exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY();
+					enseq_Festo1__FSM_LAMP_YELLOW_HeartbeatFailed_default();
+					transitioned_after = 16;
+				} 
+			}
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF_react(const sc::integer transitioned_before) {
+	/* The reactions of state OFF. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (16))
+		{ 
+			if (FST1RampFull)
+			{ 
+				exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF();
+				enseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull_default();
+				Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_react(16);
+				transitioned_after = 16;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull_react(const sc::integer transitioned_before) {
+	/* The reactions of state RampFull. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (16))
+		{ 
+			if (!(FST1RampFull))
+			{ 
+				exseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull();
+				enseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF_default();
+				Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_react(16);
+				transitioned_after = 16;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_YELLOW_EStop_react(const sc::integer transitioned_before) {
+	/* The reactions of state EStop. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (16))
+		{ 
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_YELLOW_EStop();
+				enseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_default();
+				transitioned_after = 16;
+			}  else
+			{
+				if (HEARTBEAT_FAILED_raised)
+				{ 
+					exseq_Festo1__FSM_LAMP_YELLOW_EStop();
+					enseq_Festo1__FSM_LAMP_YELLOW_HeartbeatFailed_default();
+					transitioned_after = 16;
+				} 
+			}
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo1__FSM_LAMP_YELLOW_HeartbeatFailed_react(const sc::integer transitioned_before) {
+	/* The reactions of state HeartbeatFailed. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (16))
+		{ 
+			if (HEARTBEAT_RECONNECT_raised)
+			{ 
+				exseq_Festo1__FSM_LAMP_YELLOW_HeartbeatFailed();
+				enseq_Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_default();
+				transitioned_after = 16;
+			} 
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_react(const sc::integer transitioned_before) {
+	/* The reactions of state FSM_Festo2: LR. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (17))
+		{ 
+			if (local_ESTOP_RECEIVED_raised)
+			{ 
+				exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR();
+				enseq_Festo2__FSM_LAMP_RED_EStop_default();
+				transitioned_after = 17;
+			} 
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF_react(const sc::integer transitioned_before) {
+	/* The reactions of state OFF. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (17))
+		{ 
+			if (local_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_raised)
+			{ 
+				exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF();
+				enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk_default();
+				Festo2__FSM_LAMP_RED_FSM_Festo2__LR_react(17);
+				transitioned_after = 17;
+			}  else
+			{
+				if (local_FST_2_ERROR_UNACKNOWLEDGED_raised)
+				{ 
+					exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF();
+					enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk_default();
+					Festo2__FSM_LAMP_RED_FSM_Festo2__LR_react(17);
+					transitioned_after = 17;
+				} 
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo2__FSM_LAMP_RED_FSM_Festo2__LR_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk_react(const sc::integer transitioned_before) {
+	/* The reactions of state ErrorMissingPuk. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (17))
+		{ 
+			if (local_FST_2_ERROR_LAMP_RESOLVED_raised)
+			{ 
+				exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk();
+				enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF_default();
+				Festo2__FSM_LAMP_RED_FSM_Festo2__LR_react(17);
+				transitioned_after = 17;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo2__FSM_LAMP_RED_FSM_Festo2__LR_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk_react(const sc::integer transitioned_before) {
+	/* The reactions of state ErrorUnknownPuk. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (17))
+		{ 
+			if (local_FST_2_ERROR_ACKNOWLEDGED_raised)
+			{ 
+				exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk();
+				enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged_default();
+				Festo2__FSM_LAMP_RED_FSM_Festo2__LR_react(17);
+				transitioned_after = 17;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo2__FSM_LAMP_RED_FSM_Festo2__LR_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged_react(const sc::integer transitioned_before) {
+	/* The reactions of state ErrorUnknownPukAcknowledged. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (17))
+		{ 
+			if (local_FST_2_ERROR_LAMP_RESOLVED_raised)
+			{ 
+				exseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged();
+				enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF_default();
+				Festo2__FSM_LAMP_RED_FSM_Festo2__LR_react(17);
+				transitioned_after = 17;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo2__FSM_LAMP_RED_FSM_Festo2__LR_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_RED_EStop_react(const sc::integer transitioned_before) {
+	/* The reactions of state EStop. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (17))
+		{ 
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_Festo2__FSM_LAMP_RED_EStop();
+				enseq_Festo2__FSM_LAMP_RED_FSM_Festo2__LR_default();
+				transitioned_after = 17;
+			} 
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_react(const sc::integer transitioned_before) {
+	/* The reactions of state FSM_Festo2: LY. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (18))
+		{ 
+			if (local_ESTOP_RECEIVED_raised)
+			{ 
+				exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY();
+				enseq_Festo2__FSM_LAMP_YELLOW_EStop_default();
+				transitioned_after = 18;
+			} 
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF_react(const sc::integer transitioned_before) {
+	/* The reactions of state OFF. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (18))
+		{ 
+			if (FST2RampFull)
+			{ 
+				exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF();
+				enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull_default();
+				Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_react(18);
+				transitioned_after = 18;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull_react(const sc::integer transitioned_before) {
+	/* The reactions of state RampFull. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (18))
+		{ 
+			if (!(FST2RampFull))
+			{ 
+				exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull();
+				enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF_default();
+				Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_react(18);
+				transitioned_after = 18;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::Festo2__FSM_LAMP_YELLOW_EStop_react(const sc::integer transitioned_before) {
+	/* The reactions of state EStop. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (18))
+		{ 
+			if (local_ESTOP_CLEARED_raised)
+			{ 
+				exseq_Festo2__FSM_LAMP_YELLOW_EStop();
+				enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_default();
+				transitioned_after = 18;
+			} 
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_HeartBeatFailed_react(const sc::integer transitioned_before) {
+	/* The reactions of state HeartBeatFailed. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (19))
+		{ 
+			if ((FST_1_HeartBeat) && (FST_2_HeartBeat))
+			{ 
+				exseq_FSM_SystemV2_HeartBeatFailed();
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_SystemV2_FSM_System_default();
 				react(0);
 				transitioned_after = 19;
 			} 
@@ -18005,23 +18653,17 @@ sc::integer FSM::FSM_Festo2__Errors_EStop_react(const sc::integer transitioned_b
 	return transitioned_after;
 }
 
-sc::integer FSM::FSM_Festo2__Errors_Start_react(const sc::integer transitioned_before) {
-	/* The reactions of state Start. */
+sc::integer FSM::FSM_SystemV2_FSM_System_react(const sc::integer transitioned_before) {
+	/* The reactions of state FSM_System. */
 	sc::integer transitioned_after = transitioned_before;
 	if (!(doCompletion))
 	{ 
 		if ((transitioned_after) < (19))
 		{ 
-			if (local_FST_2_ERROR_SYSTEM_raised)
+			if (HEARTBEAT_FAILED_raised)
 			{ 
-				exseq_FSM_Festo2__Errors_Start();
-				motor2Stop++;
-				setLbf_2_isOpenCopy(lbf_2_isOpen);
-				setHs_2_isOpenCopy(hs_2_isOpen);
-				setLbm_2_isOpenCopy(lbm_2_isOpen);
-				setLbe_2_isOpenCopy(lbe_2_isOpen);
-				setLbr_2_isOpenCopy(lbr_2_isOpenCopy);
-				enseq_FSM_Festo2__Errors_FSM_Errors_default();
+				exseq_FSM_SystemV2_FSM_System();
+				enseq_FSM_SystemV2_HeartBeatFailed_default();
 				react(0);
 				transitioned_after = 19;
 			} 
@@ -18031,6 +18673,656 @@ sc::integer FSM::FSM_Festo2__Errors_Start_react(const sc::integer transitioned_b
 		{ 
 			/* then execute local reactions. */
 			transitioned_after = react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(const sc::integer transitioned_before) {
+	/* The reactions of state Festo:FSM_System. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (19))
+		{ 
+			if ((ESTOP_1_LOW_raised) || (ESTOP_2_LOW_raised))
+			{ 
+				exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System();
+				motor1Stop++;
+				motor2Stop++;
+				ESTOP_RECEIVED_observable.next();
+				raiseLocal_ESTOP_RECEIVED();
+				enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_default();
+				FSM_SystemV2_FSM_System_react(19);
+				transitioned_after = 19;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_SystemV2_FSM_System_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready_react(const sc::integer transitioned_before) {
+	/* The reactions of state Ready. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (19))
+		{ 
+			if ((BGS_1_LONG_PRESSED_raised) || (BGS_2_LONG_PRESSED_raised))
+			{ 
+				exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+				SYSTEM_SERVICE_IN_observable.next();
+				raiseLocal_SYSTEM_SERVICE_IN();
+				enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_default();
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+				transitioned_after = 19;
+			}  else
+			{
+				if ((((BGS_1_INTERRUPTED_raised) || (BGS_2_INTERRUPTED_raised))) && (firstTimeOperational))
+				{ 
+					exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+					incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::SYSTEM_OPERATIONAL_IN))
+					;
+					enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational_default();
+					FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+					transitioned_after = 19;
+				}  else
+				{
+					if (((lbf_1_isOpenCopy) == (true)) && ((lbf_1_isOpen) == (false)))
+					{ 
+						exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+						FST_1_ERROR_IN_READY_observable.next();
+						raiseLocal_FST_1_ERROR_IN_READY();
+						FST_1_ERROR_INGRESS_UNKNOWNPUK_observable.next();
+						raiseLocal_FST_1_ERROR_INGRESS_UNKNOWNPUK();
+						enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+						FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+						transitioned_after = 19;
+					}  else
+					{
+						if (((lbf_1_isOpenCopy) == (false)) && ((lbf_1_isOpen) == (true)))
+						{ 
+							exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+							FST_1_ERROR_IN_READY_observable.next();
+							raiseLocal_FST_1_ERROR_IN_READY();
+							FST_1_ERROR_INGRESS_MISSING_PUK_observable.next();
+							raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK();
+							enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+							FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+							transitioned_after = 19;
+						}  else
+						{
+							if (((hs_1_isOpenCopy) == (true)) && ((hs_1_isOpen) == (false)))
+							{ 
+								exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+								FST_1_ERROR_IN_READY_observable.next();
+								raiseLocal_FST_1_ERROR_IN_READY();
+								FST_1_ERROR_HM_UNKNOWNPUK_observable.next();
+								raiseLocal_FST_1_ERROR_HM_UNKNOWNPUK();
+								enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+								FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+								transitioned_after = 19;
+							}  else
+							{
+								if (((hs_1_isOpenCopy) == (false)) && ((hs_1_isOpen) == (true)))
+								{ 
+									exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+									FST_1_ERROR_IN_READY_observable.next();
+									raiseLocal_FST_1_ERROR_IN_READY();
+									FST_1_ERROR_HM_MISSING_PUK_observable.next();
+									raiseLocal_FST_1_ERROR_HM_MISSING_PUK();
+									enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+									FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+									transitioned_after = 19;
+								}  else
+								{
+									if (((lbm_1_isOpenCopy) == (true)) && ((lbm_1_isOpen) == (false)))
+									{ 
+										exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+										FST_1_ERROR_IN_READY_observable.next();
+										raiseLocal_FST_1_ERROR_IN_READY();
+										FST_1_ERROR_SORTING_UNKNOWNPUK_observable.next();
+										raiseLocal_FST_1_ERROR_SORTING_UNKNOWNPUK();
+										enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+										FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+										transitioned_after = 19;
+									}  else
+									{
+										if (((lbm_1_isOpenCopy) == (false)) && ((lbm_1_isOpen) == (true)))
+										{ 
+											exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+											FST_1_ERROR_IN_READY_observable.next();
+											raiseLocal_FST_1_ERROR_IN_READY();
+											FST_1_ERROR_SORTING_MISSING_PUK_observable.next();
+											raiseLocal_FST_1_ERROR_SORTING_MISSING_PUK();
+											enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+											FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+											transitioned_after = 19;
+										}  else
+										{
+											if (((lbr_1_isOpenCopy) == (true)) && ((lbr_1_isOpen) == (false)))
+											{ 
+												exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+												FST_1_ERROR_IN_READY_observable.next();
+												raiseLocal_FST_1_ERROR_IN_READY();
+												FST_1_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
+												raiseLocal_FST_1_ERROR_RAMPFULL_UNKNOWNPUK();
+												enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+												FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+												transitioned_after = 19;
+											}  else
+											{
+												if (((lbr_1_isOpenCopy) == (false)) && ((lbr_1_isOpen) == (true)))
+												{ 
+													exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+													FST_1_ERROR_IN_READY_observable.next();
+													raiseLocal_FST_1_ERROR_IN_READY();
+													FST_1_ERROR_RAMPFULL_MISSING_PUK_observable.next();
+													raiseLocal_FST_1_ERROR_RAMPFULL_MISSING_PUK();
+													enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+													FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+													transitioned_after = 19;
+												}  else
+												{
+													if (((lbe_1_isOpenCopy) == (true)) && ((lbe_1_isOpen) == (false)))
+													{ 
+														exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+														FST_1_ERROR_IN_READY_observable.next();
+														raiseLocal_FST_1_ERROR_IN_READY();
+														FST_1_ERROR_EGRESS_UNKNOWNPUK_observable.next();
+														raiseLocal_FST_1_ERROR_EGRESS_UNKNOWNPUK();
+														enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+														FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+														transitioned_after = 19;
+													}  else
+													{
+														if (((lbe_1_isOpenCopy) == (false)) && ((lbe_1_isOpen) == (true)))
+														{ 
+															exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+															FST_1_ERROR_IN_READY_observable.next();
+															raiseLocal_FST_1_ERROR_IN_READY();
+															FST_1_ERROR_EGRESS_MISSING_PUK_observable.next();
+															raiseLocal_FST_1_ERROR_EGRESS_MISSING_PUK();
+															enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+															FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+															transitioned_after = 19;
+														}  else
+														{
+															if (((lbe_2_isOpenCopy) == (false)) && ((lbe_2_isOpen) == (true)))
+															{ 
+																exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+																FST_2_ERROR_IN_READY_observable.next();
+																raiseLocal_FST_2_ERROR_IN_READY();
+																FST_2_ERROR_EGRESS_MISSING_PUK_observable.next();
+																raiseLocal_FST_2_ERROR_EGRESS_MISSING_PUK();
+																enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+																FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+																transitioned_after = 19;
+															}  else
+															{
+																if (((lbe_2_isOpenCopy) == (true)) && ((lbe_2_isOpen) == (false)))
+																{ 
+																	exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+																	FST_2_ERROR_IN_READY_observable.next();
+																	raiseLocal_FST_2_ERROR_IN_READY();
+																	FST_2_ERROR_EGRESS_UNKNOWNPUK_observable.next();
+																	raiseLocal_FST_2_ERROR_EGRESS_UNKNOWNPUK();
+																	enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+																	FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+																	transitioned_after = 19;
+																}  else
+																{
+																	if (((lbf_2_isOpenCopy) == (true)) && ((lbf_2_isOpen) == (false)))
+																	{ 
+																		exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+																		FST_2_ERROR_IN_READY_observable.next();
+																		raiseLocal_FST_2_ERROR_IN_READY();
+																		FST_2_ERROR_INGRESS_UNKNOWNPUK_observable.next();
+																		raiseLocal_FST_2_ERROR_INGRESS_UNKNOWNPUK();
+																		enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+																		FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+																		transitioned_after = 19;
+																	}  else
+																	{
+																		if (((lbf_2_isOpenCopy) == (false)) && ((lbf_2_isOpen) == (true)))
+																		{ 
+																			exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+																			FST_2_ERROR_IN_READY_observable.next();
+																			raiseLocal_FST_2_ERROR_IN_READY();
+																			FST_2_ERROR_INGRESS_MISSING_PUK_observable.next();
+																			raiseLocal_FST_2_ERROR_INGRESS_MISSING_PUK();
+																			enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+																			FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+																			transitioned_after = 19;
+																		}  else
+																		{
+																			if (((hs_2_isOpenCopy) == (true)) && ((hs_2_isOpen) == (false)))
+																			{ 
+																				exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+																				FST_2_ERROR_IN_READY_observable.next();
+																				raiseLocal_FST_2_ERROR_IN_READY();
+																				FST_2_ERROR_HM_UNKNOWNPUK_observable.next();
+																				raiseLocal_FST_2_ERROR_HM_UNKNOWNPUK();
+																				enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+																				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+																				transitioned_after = 19;
+																			}  else
+																			{
+																				if (((hs_2_isOpenCopy) == (false)) && ((hs_2_isOpen) == (true)))
+																				{ 
+																					exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+																					FST_2_ERROR_IN_READY_observable.next();
+																					raiseLocal_FST_2_ERROR_IN_READY();
+																					FST_2_ERROR_HM_MISSING_PUK_observable.next();
+																					raiseLocal_FST_2_ERROR_HM_MISSING_PUK();
+																					enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+																					FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+																					transitioned_after = 19;
+																				}  else
+																				{
+																					if (((lbm_2_isOpenCopy) == (true)) && ((lbm_2_isOpen) == (false)))
+																					{ 
+																						exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+																						FST_2_ERROR_IN_READY_observable.next();
+																						raiseLocal_FST_2_ERROR_IN_READY();
+																						FST_2_ERROR_SORTING_UNKNOWNPUK_observable.next();
+																						raiseLocal_FST_2_ERROR_SORTING_UNKNOWNPUK();
+																						enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+																						FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+																						transitioned_after = 19;
+																					}  else
+																					{
+																						if (((lbm_2_isOpenCopy) == (false)) && ((lbm_2_isOpen) == (true)))
+																						{ 
+																							exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+																							FST_2_ERROR_IN_READY_observable.next();
+																							raiseLocal_FST_2_ERROR_IN_READY();
+																							FST_2_ERROR_SORTING_MISSING_PUK_observable.next();
+																							raiseLocal_FST_2_ERROR_SORTING_MISSING_PUK();
+																							enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+																							FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+																							transitioned_after = 19;
+																						}  else
+																						{
+																							if (((lbr_2_isOpenCopy) == (true)) && ((lbr_2_isOpen) == (false)))
+																							{ 
+																								exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+																								FST_2_ERROR_IN_READY_observable.next();
+																								raiseLocal_FST_2_ERROR_IN_READY();
+																								FST_2_ERROR_RAMPFULL_UNKNOWNPUK_observable.next();
+																								raiseLocal_FST_2_ERROR_RAMPFULL_UNKNOWNPUK();
+																								enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+																								FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+																								transitioned_after = 19;
+																							}  else
+																							{
+																								if (((lbr_2_isOpenCopy) == (false)) && ((lbr_2_isOpen) == (true)))
+																								{ 
+																									exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+																									FST_2_ERROR_IN_READY_observable.next();
+																									raiseLocal_FST_2_ERROR_IN_READY();
+																									FST_2_ERROR_RAMPFULL_MISSINGPUK_observable.next();
+																									raiseLocal_FST_2_ERROR_RAMPFULL_MISSINGPUK();
+																									enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
+																									FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+																									transitioned_after = 19;
+																								}  else
+																								{
+																									if ((((BGS_1_INTERRUPTED_raised) || (BGS_2_INTERRUPTED_raised))) && (!(firstTimeOperational)))
+																									{ 
+																										exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+																										motor1Stop--;
+																										motor2Stop--;
+																										incomingEventQueue.push_back(new FSM::EventInstance(FSM::Event::SYSTEM_OPERATIONAL_IN))
+																										;
+																										enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational_default();
+																										FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+																										transitioned_after = 19;
+																									} 
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_react(const sc::integer transitioned_before) {
+	/* The reactions of state ServiceMode. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (19))
+		{ 
+			if ((BRS_1_INTERRUPTED_raised) || (BRS_2_INTERRUPTED_raised))
+			{ 
+				exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode();
+				SYSTEM_SERVICE_OUT_observable.next();
+				raiseLocal_SYSTEM_SERVICE_OUT();
+				enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready_default();
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+				transitioned_after = 19;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational_react(const sc::integer transitioned_before) {
+	/* The reactions of state Operational. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (19))
+		{ 
+			if (((((BRS_1_INTERRUPTED_raised) || (BRS_2_INTERRUPTED_raised))) && (!(fst_1_Error))) && (!(fst_2_Error)))
+			{ 
+				exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational();
+				motor1Stop++;
+				motor2Stop++;
+				SYSTEM_OPERATIONAL_OUT_observable.next();
+				raiseLocal_SYSTEM_OPERATIONAL_OUT();
+				enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready_default();
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+				transitioned_after = 19;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_react(const sc::integer transitioned_before) {
+	/* The reactions of state Error. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (19))
+		{ 
+			if ((!(fst_1_Error)) && (!(fst_2_Error)))
+			{ 
+				exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error();
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready_default();
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(19);
+				transitioned_after = 19;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(const sc::integer transitioned_before) {
+	/* The reactions of state EStop. */
+	sc::integer transitioned_after = transitioned_before;
+	if ((isStateActive(FSM::State::EStop_FSM_EStop__final_)) && (doCompletion))
+	{ 
+		/* Default exit sequence for state EStop */
+		exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop();
+		stateConfVector[19] = FSM::State::FSM_SystemV2_FSM_System;
+		stateConfVectorPosition = 19;
+		/* 'default' enter sequence for state Festo:FSM_System */
+		enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System();
+		enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_default();
+		FSM_SystemV2_FSM_System_react(19);
+	}  else
+	{
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_SystemV2_FSM_System_react(transitioned_before);
+		} 
+	}
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived_react(const sc::integer transitioned_before) {
+	/* The reactions of state EStopReceived. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (19))
+		{ 
+			if ((isEStop1High) && (isEStop2High))
+			{ 
+				exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived();
+				enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopCleared_default();
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(19);
+				transitioned_after = 19;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopCleared_react(const sc::integer transitioned_before) {
+	/* The reactions of state EStopCleared. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (19))
+		{ 
+			if ((!(isEStop1High)) || (!(isEStop2High)))
+			{ 
+				exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopCleared();
+				enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived_default();
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(19);
+				transitioned_after = 19;
+			}  else
+			{
+				if (BGR_1_INTERRUPTED_raised)
+				{ 
+					exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopCleared();
+					enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1Pressed_default();
+					FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(19);
+					transitioned_after = 19;
+				}  else
+				{
+					if (BGR_2_INTERRUPTED_raised)
+					{ 
+						exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopCleared();
+						enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2Pressed_default();
+						FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(19);
+						transitioned_after = 19;
+					} 
+				}
+			}
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1Pressed_react(const sc::integer transitioned_before) {
+	/* The reactions of state BGR1Pressed. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (19))
+		{ 
+			if (BGR_2_INTERRUPTED_raised)
+			{ 
+				exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1Pressed();
+				ESTOP_CLEARED_observable.next();
+				raiseLocal_ESTOP_CLEARED();
+				enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1_default();
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(19);
+				transitioned_after = 19;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2Pressed_react(const sc::integer transitioned_before) {
+	/* The reactions of state BGR2Pressed. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (19))
+		{ 
+			if (BGR_1_INTERRUPTED_raised)
+			{ 
+				exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2Pressed();
+				ESTOP_CLEARED_observable.next();
+				raiseLocal_ESTOP_CLEARED();
+				enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2_default();
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(19);
+				transitioned_after = 19;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(transitioned_before);
+		} 
+	} 
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1_react(const sc::integer transitioned_before) {
+	/* The reactions of state BGR2PressedAfterBGR1. */
+	sc::integer transitioned_after = transitioned_before;
+	if (doCompletion)
+	{ 
+		/* Default exit sequence for state BGR2PressedAfterBGR1 */
+		stateConfVector[19] = FSM::State::EStop;
+		stateConfVectorPosition = 19;
+		/* Default enter sequence for final state */
+		enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_();
+		stateConfVector[19] = FSM::State::EStop_FSM_EStop__final_;
+		stateConfVectorPosition = 19;
+	}  else
+	{
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(transitioned_before);
+		} 
+	}
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2_react(const sc::integer transitioned_before) {
+	/* The reactions of state BGR1PressedAfterBGR2. */
+	sc::integer transitioned_after = transitioned_before;
+	if (doCompletion)
+	{ 
+		/* Default exit sequence for state BGR1PressedAfterBGR2 */
+		stateConfVector[19] = FSM::State::EStop;
+		stateConfVectorPosition = 19;
+		/* Default enter sequence for final state */
+		enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_();
+		stateConfVector[19] = FSM::State::EStop_FSM_EStop__final_;
+		stateConfVectorPosition = 19;
+	}  else
+	{
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(transitioned_before);
+		} 
+	}
+	return transitioned_after;
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final__react(const sc::integer transitioned_before) {
+	/* The reactions of state null. */
+	return FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(transitioned_before);
+}
+
+sc::integer FSM::FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration_react(const sc::integer transitioned_before) {
+	/* The reactions of state EStopCalibration. */
+	sc::integer transitioned_after = transitioned_before;
+	if (!(doCompletion))
+	{ 
+		if ((transitioned_after) < (19))
+		{ 
+			if ((isEStop1High) && (isEStop2High))
+			{ 
+				exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration();
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
+				enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_default();
+				FSM_SystemV2_FSM_System_react(19);
+				transitioned_after = 19;
+			} 
+		} 
+		/* If no transition was taken */
+		if ((transitioned_after) == (transitioned_before))
+		{ 
+			/* then execute local reactions. */
+			transitioned_after = FSM_SystemV2_FSM_System_react(transitioned_before);
 		} 
 	} 
 	return transitioned_after;
@@ -18051,7 +19343,7 @@ void FSM::clearInEvents() noexcept {
 	FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED_raised = false;
 	FST_1_POSITION_SORTING_PUK_EXPECTED_raised = false;
 	FST_1_POSITION_SORTING_PUK_EXPIRED_raised = false;
-	FST_1_POSITION_DIVIDER_DISTANCE_VALID_raised = false;
+	FST_1_POSITION_DIVERTER_DISTANCE_VALID_raised = false;
 	FST_1_POSITION_EGRESS_PUK_EXPECTED_raised = false;
 	FST_1_POSITION_EGRESS_PUK_EXPIRED_raised = false;
 	FST_2_POSITION_INGRESS_DISTANCE_VALID_raised = false;
@@ -18063,7 +19355,7 @@ void FSM::clearInEvents() noexcept {
 	FST_2_POSITION_SORTING_PUK_EXPIRED_raised = false;
 	FST_2_POSITION_EGRESS_PUK_EXPECTED_raised = false;
 	FST_2_POSITION_EGRESS_PUK_EXPIRED_raised = false;
-	FST_2_POSITION_DIVIDER_DISTANCE_VALID_raised = false;
+	FST_2_POSITION_DIVERTER_DISTANCE_VALID_raised = false;
 	FST_1_ERROR_SYSTEM_RESOLVED_raised = false;
 	LBF_1_INTERRUPTED_raised = false;
 	LBF_1_OPEN_raised = false;
@@ -18120,19 +19412,7 @@ void FSM::clearInternalEvents() noexcept {
 	local_SYSTEM_OPERATIONAL_OUT_raised = false;
 	local_FST_1_ERROR_SYSTEM_raised = false;
 	local_ESTOP_CLEARED_raised = false;
-	local_SYSTEM_SERVICE_IN_raised = false;
-	local_FST_1_INGRESS_IN_raised = false;
-	local_SYSTEM_SERVICE_OUT_raised = false;
-	local_FST_1_INGRESS_OUT_raised = false;
-	local_FST_1_ERROR_LAMP_UNACKNOWLEDGED_raised = false;
-	local_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_raised = false;
-	local_FST_1_ERROR_LAMP_RESOLVED_raised = false;
-	local_FST_1_ERROR_ACKNOWLEDGED_raised = false;
 	local_FST_2_ERROR_SYSTEM_raised = false;
-	local_FST_2_ERROR_UNACKNOWLEDGED_raised = false;
-	local_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_raised = false;
-	local_FST_2_ERROR_LAMP_RESOLVED_raised = false;
-	local_FST_2_ERROR_ACKNOWLEDGED_raised = false;
 	local_EVALUATE_raised = false;
 	local_FST_1_ERROR_INGRESS_UNKNOWNPUK_raised = false;
 	local_FST_1_ERROR_HM_UNKNOWNPUK_raised = false;
@@ -18144,6 +19424,7 @@ void FSM::clearInternalEvents() noexcept {
 	local_FST_1_ERROR_EGRESS_UNKNOWNPUK_raised = false;
 	local_FST_1_ERROR_INGRESS_MISSING_PUK_raised = false;
 	local_FST_1_ERROR_RAMPFULL_MISSING_PUK_raised = false;
+	local_FST_1_ERROR_IN_READY_raised = false;
 	local_FST_2_ERROR_HM_UNKNOWNPUK_raised = false;
 	local_FST_2_ERROR_SORTING_UNKNOWNPUK_raised = false;
 	local_FST_2_ERROR_INGRESS_UNKNOWNPUK_raised = false;
@@ -18154,6 +19435,19 @@ void FSM::clearInternalEvents() noexcept {
 	local_FST_2_ERROR_SORTING_MISSING_PUK_raised = false;
 	local_FST_2_ERROR_EGRESS_MISSING_PUK_raised = false;
 	local_FST_2_ERROR_RAMPFULL_MISSINGPUK_raised = false;
+	local_FST_2_ERROR_IN_READY_raised = false;
+	local_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_raised = false;
+	local_FST_1_ERROR_LAMP_UNACKNOWLEDGED_raised = false;
+	local_FST_1_ERROR_LAMP_RESOLVED_raised = false;
+	local_FST_1_ERROR_ACKNOWLEDGED_raised = false;
+	local_SYSTEM_SERVICE_IN_raised = false;
+	local_SYSTEM_SERVICE_OUT_raised = false;
+	local_FST_1_INGRESS_OUT_raised = false;
+	local_FST_1_INGRESS_IN_raised = false;
+	local_FST_2_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_raised = false;
+	local_FST_2_ERROR_UNACKNOWLEDGED_raised = false;
+	local_FST_2_ERROR_LAMP_RESOLVED_raised = false;
+	local_FST_2_ERROR_ACKNOWLEDGED_raised = false;
 }
 
 void FSM::microStep() {
@@ -18283,9 +19577,9 @@ void FSM::microStep() {
 				transitioned = FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate_react(transitioned);
 				break;
 			}
-			case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider :
+			case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter :
 			{
-				transitioned = FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDivider_react(transitioned);
+				transitioned = FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferEjector :
@@ -18410,160 +19704,9 @@ void FSM::microStep() {
 	{ 
 		switch(stateConfVector[ 5 ])
 		{
-			case FSM::State::Start :
-			{
-				transitioned = FSM_System_FSM_System_FSM_System__Internal_FSM_Start_react(transitioned);
-				break;
-			}
-			case FSM::State::EStopCleared :
-			{
-				transitioned = FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCleared_react(transitioned);
-				break;
-			}
-			case FSM::State::EStopReceived :
-			{
-				transitioned = FSM_System_FSM_System_FSM_System__Internal_FSM_EStopReceived_react(transitioned);
-				break;
-			}
-			case FSM::State::EStopCalibration :
-			{
-				transitioned = FSM_System_FSM_System_FSM_System__Internal_FSM_EStopCalibration_react(transitioned);
-				break;
-			}
-			case FSM::State::Operational :
-			{
-				transitioned = FSM_System_FSM_System_FSM_System__Internal_FSM_Operational_react(transitioned);
-				break;
-			}
-			case FSM::State::ServiceMode :
-			{
-				transitioned = FSM_System_FSM_System_FSM_System__Internal_FSM_ServiceMode_react(transitioned);
-				break;
-			}
-			case FSM::State::ReceivedReset :
-			{
-				transitioned = FSM_System_FSM_System_FSM_System__Internal_FSM_ReceivedReset_react(transitioned);
-				break;
-			}
-			case FSM::State::Ready :
-			{
-				transitioned = FSM_System_FSM_System_FSM_System__Internal_FSM_Ready_react(transitioned);
-				break;
-			}
-			case FSM::State::Paused :
-			{
-				transitioned = FSM_System_FSM_System_FSM_System__Internal_FSM_Paused_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_System_HeartBeatFailed :
-			{
-				transitioned = FSM_System_HeartBeatFailed_react(transitioned);
-				break;
-			}
-			default:
-				/* do nothing */
-				break;
-		}
-	} 
-	if ((stateConfVectorPosition) < (6))
-	{ 
-		switch(stateConfVector[ 6 ])
-		{
-			case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off :
-			{
-				transitioned = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant :
-			{
-				transitioned = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz :
-			{
-				transitioned = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ :
-			{
-				transitioned = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ_react(transitioned);
-				break;
-			}
-			default:
-				/* do nothing */
-				break;
-		}
-	} 
-	if ((stateConfVectorPosition) < (7))
-	{ 
-		switch(stateConfVector[ 7 ])
-		{
-			case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off :
-			{
-				transitioned = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant :
-			{
-				transitioned = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ :
-			{
-				transitioned = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ_react(transitioned);
-				break;
-			}
-			default:
-				/* do nothing */
-				break;
-		}
-	} 
-	if ((stateConfVectorPosition) < (8))
-	{ 
-		switch(stateConfVector[ 8 ])
-		{
-			case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off :
-			{
-				transitioned = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant :
-			{
-				transitioned = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ :
-			{
-				transitioned = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ :
-			{
-				transitioned = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking0_5HZ_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ :
-			{
-				transitioned = FSM_Festo1_Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking2HZ_react(transitioned);
-				break;
-			}
-			default:
-				/* do nothing */
-				break;
-		}
-	} 
-	if ((stateConfVectorPosition) < (9))
-	{ 
-		switch(stateConfVector[ 9 ])
-		{
 			case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle :
 			{
 				transitioned = FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance :
-			{
-				transitioned = FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_CreatingDistance_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected :
@@ -18601,9 +19744,9 @@ void FSM::microStep() {
 				break;
 		}
 	} 
-	if ((stateConfVectorPosition) < (10))
+	if ((stateConfVectorPosition) < (6))
 	{ 
-		switch(stateConfVector[ 10 ])
+		switch(stateConfVector[ 6 ])
 		{
 			case FSM::State::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle :
 			{
@@ -18665,9 +19808,9 @@ void FSM::microStep() {
 				break;
 		}
 	} 
-	if ((stateConfVectorPosition) < (11))
+	if ((stateConfVectorPosition) < (7))
 	{ 
-		switch(stateConfVector[ 11 ])
+		switch(stateConfVector[ 7 ])
 		{
 			case FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE :
 			{
@@ -18709,9 +19852,9 @@ void FSM::microStep() {
 				break;
 		}
 	} 
-	if ((stateConfVectorPosition) < (12))
+	if ((stateConfVectorPosition) < (8))
 	{ 
-		switch(stateConfVector[ 12 ])
+		switch(stateConfVector[ 8 ])
 		{
 			case FSM::State::FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward :
 			{
@@ -18733,91 +19876,9 @@ void FSM::microStep() {
 				break;
 		}
 	} 
-	if ((stateConfVectorPosition) < (13))
+	if ((stateConfVectorPosition) < (9))
 	{ 
-		switch(stateConfVector[ 13 ])
-		{
-			case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off :
-			{
-				transitioned = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Off_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant :
-			{
-				transitioned = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Constant_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz :
-			{
-				transitioned = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking_1Hz_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ :
-			{
-				transitioned = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Green_Blinking2HZ_react(transitioned);
-				break;
-			}
-			default:
-				/* do nothing */
-				break;
-		}
-	} 
-	if ((stateConfVectorPosition) < (14))
-	{ 
-		switch(stateConfVector[ 14 ])
-		{
-			case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off :
-			{
-				transitioned = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Off_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant :
-			{
-				transitioned = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Constant_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ :
-			{
-				transitioned = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Yellow_Blinking1HZ_react(transitioned);
-				break;
-			}
-			default:
-				/* do nothing */
-				break;
-		}
-	} 
-	if ((stateConfVectorPosition) < (15))
-	{ 
-		switch(stateConfVector[ 15 ])
-		{
-			case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off :
-			{
-				transitioned = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Off_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant :
-			{
-				transitioned = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Constant_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ :
-			{
-				transitioned = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking1HZ_react(transitioned);
-				break;
-			}
-			case FSM::State::FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ :
-			{
-				transitioned = FSM_Festo2__Signaling_FSM_LAMP_FSM_LAMP_FSM_Lamp_FSM_Lamp_Red_Blinking05HZ_react(transitioned);
-				break;
-			}
-			default:
-				/* do nothing */
-				break;
-		}
-	} 
-	if ((stateConfVectorPosition) < (16))
-	{ 
-		switch(stateConfVector[ 16 ])
+		switch(stateConfVector[ 9 ])
 		{
 			case FSM::State::Evaluate_EvaluateTester :
 			{
@@ -18829,9 +19890,9 @@ void FSM::microStep() {
 				break;
 		}
 	} 
-	if ((stateConfVectorPosition) < (17))
+	if ((stateConfVectorPosition) < (10))
 	{ 
-		switch(stateConfVector[ 17 ])
+		switch(stateConfVector[ 10 ])
 		{
 			case FSM::State::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMRestart :
 			{
@@ -18928,9 +19989,9 @@ void FSM::microStep() {
 				break;
 		}
 	} 
-	if ((stateConfVectorPosition) < (18))
+	if ((stateConfVectorPosition) < (11))
 	{ 
-		switch(stateConfVector[ 18 ])
+		switch(stateConfVector[ 11 ])
 		{
 			case FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle :
 			{
@@ -19007,98 +20068,381 @@ void FSM::microStep() {
 				break;
 		}
 	} 
-	if ((stateConfVectorPosition) < (19))
+	if ((stateConfVectorPosition) < (12))
 	{ 
-		switch(stateConfVector[ 19 ])
+		switch(stateConfVector[ 12 ])
 		{
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingUnacknowledged :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingUnacknowledged_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingUnacknowledged_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressRestart :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressRestart_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressRestart_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingPukAcknowledged :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingPukAcknowledged_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingPukAcknowledged_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_Idle_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUPRestart :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUPRestart_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUPRestart_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUnacknowledged :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUnacknowledged_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressUnacknowledged_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressAcknowledged :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressAcknowledged_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinEgressAcknowledged_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressUnacknowledged :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressUnacknowledged_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressUnacknowledged_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressAcknowledged :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressAcknowledged_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinIngressAcknowledged_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMAcknowledged :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMAcknowledged_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMAcknowledged_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMUnacknowledged :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMUnacknowledged_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMUnacknowledged_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestart :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestart_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinHMRestart_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingRestart :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingRestart_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinSortingRestart_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorRampFullUnacknowledged :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorRampFullUnacknowledged_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorRampFullUnacknowledged_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullAcknowledged :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullAcknowledged_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullAcknowledged_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullRestart :
 			{
-				FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullRestart_react(transitioned);
+				transitioned = FSM_Festo2__Errors_FSM_Errors_FST_2__FSM_Errors_ErrorinRampFullRestart_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_EStop :
 			{
-				FSM_Festo2__Errors_EStop_react(transitioned);
+				transitioned = FSM_Festo2__Errors_EStop_react(transitioned);
 				break;
 			}
 			case FSM::State::FSM_Festo2__Errors_Start :
 			{
-				FSM_Festo2__Errors_Start_react(transitioned);
+				transitioned = FSM_Festo2__Errors_Start_react(transitioned);
+				break;
+			}
+			default:
+				/* do nothing */
+				break;
+		}
+	} 
+	if ((stateConfVectorPosition) < (13))
+	{ 
+		switch(stateConfVector[ 13 ])
+		{
+			case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF :
+			{
+				transitioned = Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_OFF_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk :
+			{
+				transitioned = Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorMissingPuk_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk :
+			{
+				transitioned = Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPuk_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged :
+			{
+				transitioned = Festo1__FSM_LAMP_RED_FSM_Festo1__LR_FSM_Festo1__Inner_LampRed_ErrorUnknownPukAcknowledged_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_RED_EStop :
+			{
+				transitioned = Festo1__FSM_LAMP_RED_EStop_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_RED_HeartbeatFailed :
+			{
+				transitioned = Festo1__FSM_LAMP_RED_HeartbeatFailed_react(transitioned);
+				break;
+			}
+			default:
+				/* do nothing */
+				break;
+		}
+	} 
+	if ((stateConfVectorPosition) < (14))
+	{ 
+		switch(stateConfVector[ 14 ])
+		{
+			case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF :
+			{
+				transitioned = Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_OFF_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode :
+			{
+				transitioned = Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_ServiceMode_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing :
+			{
+				transitioned = Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_Distancing_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational :
+			{
+				transitioned = Festo1__FSM_LAMP_GREEN_FSM_Festo1__LG_FSM_Festo1__Inner_LampGreen_operational_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_GREEN_EStop :
+			{
+				transitioned = Festo1__FSM_LAMP_GREEN_EStop_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_GREEN_HeartBeatFailed :
+			{
+				transitioned = Festo1__FSM_LAMP_GREEN_HeartBeatFailed_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_GREEN_Error :
+			{
+				transitioned = Festo1__FSM_LAMP_GREEN_Error_react(transitioned);
+				break;
+			}
+			default:
+				/* do nothing */
+				break;
+		}
+	} 
+	if ((stateConfVectorPosition) < (15))
+	{ 
+		switch(stateConfVector[ 15 ])
+		{
+			case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF :
+			{
+				transitioned = Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode :
+			{
+				transitioned = Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing :
+			{
+				transitioned = Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational :
+			{
+				transitioned = Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo2__FSM_LAMP_GREEN_EStop :
+			{
+				transitioned = Festo2__FSM_LAMP_GREEN_EStop_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo2__FSM_LAMP_GREEN_Error :
+			{
+				transitioned = Festo2__FSM_LAMP_GREEN_Error_react(transitioned);
+				break;
+			}
+			default:
+				/* do nothing */
+				break;
+		}
+	} 
+	if ((stateConfVectorPosition) < (16))
+	{ 
+		switch(stateConfVector[ 16 ])
+		{
+			case FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF :
+			{
+				transitioned = Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_OFF_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull :
+			{
+				transitioned = Festo1__FSM_LAMP_YELLOW_FSM_Festo1__LY_FSM_Festo1__Inner_LampYellow_RampFull_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_YELLOW_EStop :
+			{
+				transitioned = Festo1__FSM_LAMP_YELLOW_EStop_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo1__FSM_LAMP_YELLOW_HeartbeatFailed :
+			{
+				transitioned = Festo1__FSM_LAMP_YELLOW_HeartbeatFailed_react(transitioned);
+				break;
+			}
+			default:
+				/* do nothing */
+				break;
+		}
+	} 
+	if ((stateConfVectorPosition) < (17))
+	{ 
+		switch(stateConfVector[ 17 ])
+		{
+			case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF :
+			{
+				transitioned = Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_OFF_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk :
+			{
+				transitioned = Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorMissingPuk_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk :
+			{
+				transitioned = Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPuk_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged :
+			{
+				transitioned = Festo2__FSM_LAMP_RED_FSM_Festo2__LR_FSM_Festo2__Inner_LampRed_ErrorUnknownPukAcknowledged_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo2__FSM_LAMP_RED_EStop :
+			{
+				transitioned = Festo2__FSM_LAMP_RED_EStop_react(transitioned);
+				break;
+			}
+			default:
+				/* do nothing */
+				break;
+		}
+	} 
+	if ((stateConfVectorPosition) < (18))
+	{ 
+		switch(stateConfVector[ 18 ])
+		{
+			case FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF :
+			{
+				transitioned = Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull :
+			{
+				transitioned = Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull_react(transitioned);
+				break;
+			}
+			case FSM::State::Festo2__FSM_LAMP_YELLOW_EStop :
+			{
+				transitioned = Festo2__FSM_LAMP_YELLOW_EStop_react(transitioned);
+				break;
+			}
+			default:
+				/* do nothing */
+				break;
+		}
+	} 
+	if ((stateConfVectorPosition) < (19))
+	{ 
+		switch(stateConfVector[ 19 ])
+		{
+			case FSM::State::FSM_SystemV2_HeartBeatFailed :
+			{
+				FSM_SystemV2_HeartBeatFailed_react(transitioned);
+				break;
+			}
+			case FSM::State::Ready :
+			{
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready_react(transitioned);
+				break;
+			}
+			case FSM::State::ServiceMode :
+			{
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_react(transitioned);
+				break;
+			}
+			case FSM::State::Operational :
+			{
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational_react(transitioned);
+				break;
+			}
+			case FSM::State::Error :
+			{
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_react(transitioned);
+				break;
+			}
+			case FSM::State::EStop_FSM_EStop_EStopReceived :
+			{
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived_react(transitioned);
+				break;
+			}
+			case FSM::State::EStop_FSM_EStop_EStopCleared :
+			{
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopCleared_react(transitioned);
+				break;
+			}
+			case FSM::State::EStop_FSM_EStop_BGR1Pressed :
+			{
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1Pressed_react(transitioned);
+				break;
+			}
+			case FSM::State::EStop_FSM_EStop_BGR2Pressed :
+			{
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2Pressed_react(transitioned);
+				break;
+			}
+			case FSM::State::EStop_FSM_EStop_BGR2PressedAfterBGR1 :
+			{
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1_react(transitioned);
+				break;
+			}
+			case FSM::State::EStop_FSM_EStop_BGR1PressedAfterBGR2 :
+			{
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2_react(transitioned);
+				break;
+			}
+			case FSM::State::EStop_FSM_EStop__final_ :
+			{
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final__react(transitioned);
+				break;
+			}
+			case FSM::State::EStopCalibration :
+			{
+				FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration_react(transitioned);
 				break;
 			}
 			default:
@@ -19148,17 +20492,21 @@ void FSM::enter() {
 	enseq_FSM_Festo1__Sorting_default();
 	enseq_FSM_Festo1__Egress_default();
 	enseq_FSM_QualityGate__Motor_default();
-	enseq_FSM_System_default();
-	enseq_FSM_Festo1_Signaling_default();
 	enseq_FSM_Festo2__Ingress_default();
 	enseq_FSM_Festo2__HeightMeasurement_default();
 	enseq_FSM_Festo2__Egress_default();
 	enseq_FSM_Festo2__Motor_default();
-	enseq_FSM_Festo2__Signaling_default();
 	enseq_Evaluate_default();
 	enseq_FSM_Festo1__Errors_default();
 	enseq_FSM_Festo2__Sorting_default();
 	enseq_FSM_Festo2__Errors_default();
+	enseq_Festo1__FSM_LAMP_RED_default();
+	enseq_Festo1__FSM_LAMP_GREEN_default();
+	enseq_Festo2__FSM_LAMP_GREEN_default();
+	enseq_Festo1__FSM_LAMP_YELLOW_default();
+	enseq_Festo2__FSM_LAMP_RED_default();
+	enseq_Festo2__FSM_LAMP_YELLOW_default();
+	enseq_FSM_SystemV2_default();
 	doCompletion = false;
 	do
 	{ 
@@ -19196,41 +20544,49 @@ void FSM::exit() {
 	exseq_FSM_QualityGate__Motor();
 	stateConfVector[4] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 4;
-	exseq_FSM_System();
+	exseq_FSM_Festo2__Ingress();
 	stateConfVector[5] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 5;
-	exseq_FSM_Festo1_Signaling();
+	exseq_FSM_Festo2__HeightMeasurement();
 	stateConfVector[6] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 6;
+	exseq_FSM_Festo2__Egress();
 	stateConfVector[7] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 7;
+	exseq_FSM_Festo2__Motor();
 	stateConfVector[8] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 8;
-	exseq_FSM_Festo2__Ingress();
+	exseq_Evaluate();
 	stateConfVector[9] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 9;
-	exseq_FSM_Festo2__HeightMeasurement();
+	exseq_FSM_Festo1__Errors();
 	stateConfVector[10] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 10;
-	exseq_FSM_Festo2__Egress();
+	exseq_FSM_Festo2__Sorting();
 	stateConfVector[11] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 11;
-	exseq_FSM_Festo2__Motor();
+	exseq_FSM_Festo2__Errors();
 	stateConfVector[12] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 12;
-	exseq_FSM_Festo2__Signaling();
+	exseq_Festo1__FSM_LAMP_RED();
 	stateConfVector[13] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 13;
+	exseq_Festo1__FSM_LAMP_GREEN();
 	stateConfVector[14] = FSM::State::NO_STATE;
+	stateConfVectorPosition = 14;
+	exseq_Festo2__FSM_LAMP_GREEN();
 	stateConfVector[15] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 15;
-	exseq_Evaluate();
+	exseq_Festo1__FSM_LAMP_YELLOW();
 	stateConfVector[16] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 16;
-	exseq_FSM_Festo1__Errors();
+	exseq_Festo2__FSM_LAMP_RED();
 	stateConfVector[17] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 17;
-	exseq_FSM_Festo2__Sorting();
+	exseq_Festo2__FSM_LAMP_YELLOW();
 	stateConfVector[18] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 18;
-	exseq_FSM_Festo2__Errors();
+	exseq_FSM_SystemV2();
 	stateConfVector[19] = FSM::State::NO_STATE;
 	stateConfVectorPosition = 19;
 	isExecuting = false;

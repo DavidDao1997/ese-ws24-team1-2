@@ -25,6 +25,7 @@ int8_t FSMController::pulses[FSM_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_HS1_SAMPLING_DONE,
     PULSE_HS2_SAMPLING_DONE,
     PULSE_MS_TRUE,
+    PULSE_MS_FALSE
 };
 
 FSMController::FSMController(const std::string dispatcherChannelName) {
@@ -40,19 +41,21 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     PositionTracker* positionTracker = new PositionTracker(fsm);
 
     fsm->enter();
-    fsm->setFst_2_ready(true); // FIXME hacked
+    //fsm->setFst_2_ready(true); // FIXME hacked
+    fsm->setFST_1_isEjector(true);
+    //fsm->setFST_2_isEjector(false);
 
     fsm->setAReferenceHeight(2200);
-    fsm->setBReferenceHeight(3150);
+    fsm->setBReferenceHeight(3050);
     fsm->setCReferenceHeight(2200);
-    fsm->setAReferenceMinCount(4);
-    fsm->setAReferenceMaxCount(35);
-    fsm->setBReferenceMinCount(20);
-    fsm->setBReferenceMaxCount(60);
-    fsm->setCReferenceMinCount(10);
-    fsm->setCReferenceMaxCount(45);
-    fsm->setHeightThreshhold(150);
-    fsm->setMaxSampleCount(130);
+    fsm->setAReferenceMinCount(1);
+    fsm->setAReferenceMaxCount(100);
+    fsm->setBReferenceMinCount(1);
+    fsm->setBReferenceMaxCount(100);
+    fsm->setCReferenceMinCount(1);
+    fsm->setCReferenceMaxCount(100);
+    fsm->setHeightThreshhold(400);
+    fsm->setMaxSampleCount(1300);
     
     fsm->setEStopCalibratedReturn(false);
     fsm->setServiceModeReturn(false);
@@ -144,11 +147,24 @@ void FSMController::subscribeToOutEvents() {
         )
     );
     // PULSE_LR1_BLINKING // msg.value int32_t (period [ms])
-    // fsm->getLR1_BLINKING().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_LR1_BLINKING, 0, "PULSE_LR1_BLINKING")
-    //     )
-    // );
+    fsm->getLR_1_BLINKING_05HZ().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LR1_BLINKING, 2000, "PULSE_LR1_BLINKING 0.5 HZ")
+        )
+    );
+
+    fsm->getLR_1_BLINKING_1HZ().subscribe(
+    *new sc::rx::subscription<void>(
+        *new VoidObserver(dispatcherConnectionID, PULSE_LR1_BLINKING, 1000, "PULSE_LR1_BLINKING 1 HZ")
+    )
+);
+    fsm->getLR_1_BLINKING_2HZ().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LR1_BLINKING, 500, "PULSE_LR1_BLINKING 2 HZ")
+        )
+    );
+
+    
     // PULSE_LR1_OFF          
     fsm->getLR1_OFF().subscribe(
         *new sc::rx::subscription<void>(
@@ -173,12 +189,18 @@ void FSMController::subscribeToOutEvents() {
             *new VoidObserver(dispatcherConnectionID, PULSE_LY1_OFF, 0, "PULSE_LY1_OFF")
         )
     );
-    // PULSE_LG1_ON
     fsm->getLG1_ON().subscribe(
         *new sc::rx::subscription<void>(
             *new VoidObserver(dispatcherConnectionID, PULSE_LG1_ON, 0, "PULSE_LG1_ON")
         )
     );
+    // PULSE_LG1_BLINKING 2HZ
+    fsm->getLG1_BLINKING_2HZ().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LG1_BLINKING, 500, "PULSE_LG1_ON")
+        )
+    );
+
     // PULSE_LG1_BLINKING // msg.value int32_t (period [ms])
     fsm->getLG1_BLINKING_1HZ().subscribe(
         *new sc::rx::subscription<void>(
@@ -191,30 +213,35 @@ void FSMController::subscribeToOutEvents() {
             *new VoidObserver(dispatcherConnectionID, PULSE_LG1_OFF, 0, "PULSE_LG1_OFF")
         )
     );
-    // PUK Height is Valid
-    // fsm->getFST_1_PUK_HEIGHT_IS_VALID().subscribe(
-    //         *new sc::rx::subscription<void>(
-    //             *new VoidObserver(dispatcherConnectionID, PULSE_FSM, FST_1_PUK_HEIGHT_VALID, "PULSE_FST_1_PUK_HEIGHT_VALID")
-    //         )
-    //     );
-    // // PUK Height is NOT Valid
-    // fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID().subscribe(
-    // 		*new sc::rx::subscription<void>(
-    // 			*new VoidObserver(dispatcherConnectionID, PULSE_FSM, FST_1_PUK_HEIGHT_NOT_VALID, "PULSE_FST_1_PUK_HEIGHT_NOT_VALID")
-	// 	   )
-	//    );
+    //PUK Height is Valid
+    //fsm->getFST_1_PUK_HEIGHT_IS_VALID().subscribe(
+    //        *new sc::rx::subscription<void>(
+     //           *new VoidObserver(dispatcherConnectionID, PULSE_FSM, FST_1_PUK_HEIGHT_VALID, "PULSE_FST_1_PUK_HEIGHT_VALID")
+     //       )
+     //   );
+    // PUK Height is NOT Valid
+    //fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID().subscribe(
+    //		*new sc::rx::subscription<void>(
+    //			*new VoidObserver(dispatcherConnectionID, PULSE_FSM, FST_1_PUK_HEIGHT_NOT_VALID, "PULSE_FST_1_PUK_HEIGHT_NOT_VALID")
+	//	   )
+	//  );
     // PULSE_LR2_ON
     fsm->getLR2_ON().subscribe(
         *new sc::rx::subscription<void>(
             *new VoidObserver(dispatcherConnectionID, PULSE_LR2_ON, 0, "PULSE_LR2_ON")
         )
     );
-    // // PULSE_LR2_BLINKING // msg.value int32_t (period [ms])
-    // fsm->getLR2_BLINKING().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_LR2_BLINKING, 0, "PULSE_LR2_BLINKING")
-    //     )
-    // );
+    // PULSE_LR2_BLINKING // msg.value int32_t (period [ms])
+    fsm->getLR2_BLINKING1HZ().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LR2_BLINKING, 1000, "PULSE_LR2_BLINKING")
+        )
+    );
+    fsm->getLR2_BLINKING05HZ().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LR2_BLINKING, 1000, "PULSE_LR2_BLINKING")
+        )
+    );
     // PULSE_LR2_OFF      
     fsm->getLR2_OFF().subscribe(
         *new sc::rx::subscription<void>(
@@ -245,12 +272,19 @@ void FSMController::subscribeToOutEvents() {
             *new VoidObserver(dispatcherConnectionID, PULSE_LG2_ON, 0, "PULSE_LG2_ON")
         )
     );
-    // PULSE_LG2_BLINKING // msg.value int32_t (period [ms])
+    // PULSE_LG2_BLINKING 1 HZ // msg.value int32_t (period [ms])
     fsm->getLG2_BLINKING_1HZ().subscribe(
         *new sc::rx::subscription<void>(
             *new VoidObserver(dispatcherConnectionID, PULSE_LG2_BLINKING, 1000, "PULSE_LG2_BLINKING")
         )
     );
+    // PULSE_LG2_BLINKING 2 HZ // msg.value int32_t (period [ms])
+    fsm->getLG_2_BLINKING_2HZ().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_LG2_BLINKING, 500, "PULSE_LG2_BLINKING")
+        )
+    );
+
     // PULSE_LG2_OFF      
     fsm->getLG2_OFF().subscribe(
         *new sc::rx::subscription<void>(
@@ -264,11 +298,11 @@ void FSMController::subscribeToOutEvents() {
          )
      );
     // // PULSE_Q11_OFF     
-    // fsm->getQ11_OFF().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_Q11_OFF, 0, "PULSE_Q11_OFF")
-    //     )
-    // );
+    fsm->getQ11_OFF().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_Q11_OFF, 0, "PULSE_Q11_OFF")
+        )
+    );
      // PULSE_Q12_ON
      fsm->getQ12_ON().subscribe(
          *new sc::rx::subscription<void>(
@@ -276,35 +310,35 @@ void FSMController::subscribeToOutEvents() {
          )
      );
     // // PULSE_Q12_OFF
-    // fsm->getQ12_OFF().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_Q12_OFF, 0, "PULSE_Q12_OFF")
-    //     )
-    // );
+    fsm->getQ12_OFF().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_Q12_OFF, 0, "PULSE_Q12_OFF")
+        )
+    );
     // // PULSE_Q21_ON      
-    // fsm->getQ21_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_Q21_ON, 0, "PULSE_Q21_ON")
-    //     )
-    // );
+    fsm->getQ21_ON().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_Q21_ON, 0, "PULSE_Q21_ON")
+        )
+    );
     // // PULSE_Q21_OFF     
-    // fsm->getQ21_OFF().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_Q21_OFF, 0, "PULSE_Q21_OFF")
-    //     )
-    // );
+    fsm->getQ21_OFF().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_Q21_OFF, 0, "PULSE_Q21_OFF")
+        )
+    );
     // // PULSE_Q22_ON      
-    // fsm->getQ22_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_Q22_ON, 0, "PULSE_Q22_ON")
-    //     )
-    // );
+    fsm->getQ22_ON().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_Q22_ON, 0, "PULSE_Q22_ON")
+        )
+    );
     // // PULSE_Q22_OFF
-    // fsm->getQ22_OFF().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_Q22_OFF, 0, "PULSE_Q22_OFF")
-    //     )
-    // );
+    fsm->getQ22_OFF().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_Q22_OFF, 0, "PULSE_Q22_OFF")
+        )
+    );
     // PULSE_SM1_ACTIVE   
     fsm->getFST_1_SORTING_MODULE_ACTIVE().subscribe(
         *new sc::rx::subscription<void>(
@@ -318,17 +352,17 @@ void FSMController::subscribeToOutEvents() {
         )
     );
     // // PULSE_SM2_ACTIVE  
-    // fsm->getSM2_ACTIVE().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_SM2_ACTIVE, 0, "PULSE_SM2_ACTIVE")
-    //     )
-    // );
-    // // PULSE_SM2_RESTING
-    // fsm->getSM2_RESTING().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_SM2_RESTING, 0, "PULSE_SM2_RESTING")
-    //     )
-    // );
+    fsm->getFST_2_SORTING_MODULE_ACTIVE().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_SM2_ACTIVE, 0, "PULSE_SM2_ACTIVE")
+        )
+    );
+    // PULSE_SM2_RESTING
+    fsm->getFST_2_SORTING_MODULE_RESTING().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_SM2_RESTING, 0, "PULSE_SM2_RESTING")
+        )
+    );
 }
 
 void FSMController::handlePulse(_pulse msg) {
@@ -380,7 +414,7 @@ void FSMController::handlePulse(_pulse msg) {
         case PULSE_LBM_OPEN:
             (msgVal == 0)?fsm->raiseLBM_1_OPEN():fsm->raiseLBM_2_OPEN();
             Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBM_OPEN..."+ std::to_string(msgVal), "FSMController");
-            // fsm->raiseFST_1_POSITION_EGRESS_PUK_EXPECTED();
+            //fsm->raiseFST_1_POSITION_EGRESS_PUK_EXPECTED();
             break;
         case PULSE_BGS_SHORT:
             (msgVal == 0)?fsm->raiseBGS_1_INTERRUPTED():fsm->raiseBGS_2_INTERRUPTED();
@@ -401,33 +435,29 @@ void FSMController::handlePulse(_pulse msg) {
         case PULSE_HS1_SAMPLE:
             fsm->setFST_1_currentValue(msgVal);
             fsm-> raiseHS_1_SAMPLE();
-            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLE...", "FSMController");
+            // Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLE...", "FSMController");
             break;
         case PULSE_HS2_SAMPLE:
+            fsm-> setFST_2_currentValue(msgVal); 
             fsm->raiseHS_2_SAMPLE();
-            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLE...", "FSMController");
+            // Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLE...", "FSMController");
             break;
         case PULSE_HS1_SAMPLING_DONE:
             fsm-> raiseHS_1_SAMPLING_DONE();
             Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLING_DONE...", "FSMController");
-            // //FIXME hacked
-            // fsm->raiseFST_1_POSITION_SORTING_PUK_EXPECTED();
             break; 
         case PULSE_HS2_SAMPLING_DONE:
             fsm-> raiseHS_2_SAMPLING_DONE();
             Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLING_DONE...", "FSMController");
             break;
         case PULSE_MS_TRUE:
-            // (msgVal == 0)?fsm->raiseMS_1_HIGH():fsm->raiseMS_2_HIGH();
-            if (msgVal == 0) {
-                fsm->raiseMS_1_HIGH();
-            }
-            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_MS_TRUE..."+ std::to_string(msgVal), "FSMController");
+            (msgVal == 0)?fsm->raiseMS_1_HIGH():fsm->raiseMS_2_HIGH();
+            Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_MS_TRUE..."+ std::to_string(msgVal), "FSMController");
             break;
-        // case PULSE_MS_FALSE:
-        //     fsm->raiseMS_1_FALSE();    
-        //     Logger::getInstance().log(LogLevel::TRACE, "received PULSE_MS_FALSE...", "FSMController");
-        //     break;   
+        case PULSE_MS_FALSE:
+            (msgVal == 0)?fsm->raiseMS_1_LOW():fsm->raiseMS_2_LOW();    
+            Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_MS_FALSE..."+ std::to_string(msgVal), "FSMController");
+            break;   
         default:
             // TODO handle non application messages, for reference see ActuatorController 
             Logger::getInstance().log(LogLevel::ERROR, "Unknown Pulse....." + std::to_string(msg.code), "FSMController");

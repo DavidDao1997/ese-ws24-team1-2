@@ -101,7 +101,7 @@ void Dispatcher::handleMsg() {
                     }
                     break;
                 default:
-                    Logger::getInstance().log(LogLevel::TRACE, "Dispatcher forwarding messages", "Dispatcher");
+                    // Logger::getInstance().log(LogLevel::TRACE, "Dispatcher forwarding messages", "Dispatcher");
                     // char buffer[100];
                     // sprintf(buffer, "DISPATCHER: Revieved pulse %d\n", msg.code);
                     // std::cout << buffer << std::flush;

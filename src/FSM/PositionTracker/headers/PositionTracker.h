@@ -23,9 +23,9 @@
 #include "../../Timer/headers/Timer.h"
 
 // these are measured times by hand with a stopwatch, without any added margin
-// #define DURATION_INGRESS_DISTANCE_VALID_FAST std::chrono::milliseconds(1240) // guessed as DURATION_HS_PUK_EXPECTED_FAST / 2
-// #define DURATION_INGRESS_DISTANCE_VALID_SLOW std::chrono::milliseconds(2790) // guessed as DURATION_HS_PUK_EXPECTED_SLOW / 2
-// #define DURATION_HS_PUK_EXPECTED_FAST std::chrono::milliseconds(2480)
+//#define DURATION_INGRESS_DISTANCE_VALID_FAST std::chrono::milliseconds(1240) // guessed as DURATION_HS_PUK_EXPECTED_FAST / 2
+//#define DURATION_INGRESS_DISTANCE_VALID_SLOW std::chrono::milliseconds(2790) // guessed as DURATION_HS_PUK_EXPECTED_SLOW / 2
+//#define DURATION_HS_PUK_EXPECTED_FAST std::chrono::milliseconds(2480)
 // #define DURATION_HS_PUK_EXPECTED_SLOW std::chrono::milliseconds(5580)
 // #define DURATION_HS_PUK_EXPIRED_FAST std::chrono::milliseconds(3500)
 // #define DURATION_HS_PUK_EXPIRED_SLOW std::chrono::milliseconds(7400) // worst case measured, no margin added yet
@@ -40,29 +40,38 @@
 #define TESTING_SORTING_DISTANCE_FAST 1000
 #define TESTING_EGRESS_FAST 2000
 
-#define DURATION_INGRESS_EXPECTED_FAST std::chrono::milliseconds(TESTING_INGRESS_FAST - 100) // LBE_OPEN -> LBF_INTERRUPTED
-#define DURATION_INGRESS_EXPECTED_SLOW std::chrono::milliseconds(TESTING_INGRESS_FAST*2 - 100) // LBE_OPEN -> LBF_INTERRUPTED
-#define DURATION_INGRESS_EXPIRED_FAST std::chrono::milliseconds(TESTING_INGRESS_FAST + 100) // LBE_OPEN -> LBF_INTERRUPTED
-#define DURATION_INGRESS_EXPIRED_SLOW std::chrono::milliseconds(TESTING_INGRESS_FAST*2 + 100) // LBE_OPEN -> LBF_INTERRUPTED
+//Transfer
+#define DURATION_INGRESS_EXPECTED_FAST std::chrono::milliseconds(15) // LBE_OPEN -> LBF_INTERRUPTED
+#define DURATION_INGRESS_EXPECTED_SLOW std::chrono::milliseconds(100) // LBE_OPEN -> LBF_INTERRUPTED
+#define DURATION_INGRESS_EXPIRED_FAST std::chrono::milliseconds(15000) // LBE_OPEN -> LBF_INTERRUPTED
+#define DURATION_INGRESS_EXPIRED_SLOW std::chrono::milliseconds(10000) // LBE_OPEN -> LBF_INTERRUPTED
 
-#define DURATION_INGRESS_DISTANCE_VALID_FAST std::chrono::milliseconds(TESTING_INGRESS_DISTANCE_FAST) // LBF_OPEN -> DISTANCE_CLEARED
-#define DURATION_INGRESS_DISTANCE_VALID_SLOW std::chrono::milliseconds(TESTING_INGRESS_DISTANCE_FAST*2) // LBF_OPEN -> DISTANCE_CLEARED
-#define DURATION_HS_EXPECTED_FAST std::chrono::milliseconds(TESTING_HS_FAST - 100) // LBF_OPEN -> HS_SAMPLE
-#define DURATION_HS_EXPECTED_SLOW std::chrono::milliseconds(TESTING_HS_FAST*2 - 100) // LBF_OPEN -> HS_SAMPLE
-#define DURATION_HS_EXPIRED_FAST std::chrono::milliseconds(TESTING_HS_FAST + 100) // LBF_OPEN -> HS_SAMPLE
-#define DURATION_HS_EXPIRED_SLOW std::chrono::milliseconds(TESTING_HS_FAST*2 + 100) // LBF_OPEN -> HS_SAMPLE
+//LBF
+#define DURATION_INGRESS_DISTANCE_VALID_FAST std::chrono::milliseconds(100) // LBF_OPEN -> DISTANCE_CLEARED
+#define DURATION_INGRESS_DISTANCE_VALID_SLOW std::chrono::milliseconds(2000) // LBF_OPEN -> DISTANCE_CLEARED
 
-#define DURATION_SORTING_EXPECTED_FAST std::chrono::milliseconds(TESTING_SORTING_FAST - 100) // HS_SAMPLING_DONE -> LBM_INTERRUPTED
-#define DURATION_SORTING_EXPECTED_SLOW std::chrono::milliseconds(TESTING_SORTING_FAST*2 - 100) // HS_SAMPLING_DONE -> LBM_INTERRUPTED
-#define DURATION_SORTING_EXPIRED_FAST std::chrono::milliseconds(TESTING_SORTING_FAST + 100) // HS_SAMPLING_DONE -> LBM_INTERRUPTED
-#define DURATION_SORTING_EXPIRED_SLOW std::chrono::milliseconds(TESTING_SORTING_FAST*2 + 100) // HS_SAMPLING_DONE -> LBM_INTERRUPTED
+//HS
+#define DURATION_HS_EXPECTED_FAST std::chrono::milliseconds(200) // LBF_OPEN -> HS_SAMPLE
+#define DURATION_HS_EXPECTED_SLOW std::chrono::milliseconds(400) // LBF_OPEN -> HS_SAMPLE
 
-#define DURATION_SORTING_DISTANCE_VALID_FAST std::chrono::milliseconds(TESTING_SORTING_DISTANCE_FAST)// LBM_OPEN -> DIVERTER_CLEARED
-#define DURATION_SORTING_DISTANCE_VALID_SLOW std::chrono::milliseconds(TESTING_SORTING_DISTANCE_FAST*2)// LBM_OPEN -> DIVERTER_CLEARED
-#define DURATION_EGRESS_EXPECTED_FAST std::chrono::milliseconds(TESTING_EGRESS_FAST - 100) // LBM_OPEN -> LBE_INTERRUPTED
-#define DURATION_EGRESS_EXPECTED_SLOW std::chrono::milliseconds(TESTING_EGRESS_FAST*2 - 100) // LBM_OPEN -> LBE_INTERRUPTED
-#define DURATION_EGRESS_EXPIRED_FAST std::chrono::milliseconds(TESTING_EGRESS_FAST + 100) // LBM_OPEN -> LBE_INTERRUPTED
-#define DURATION_EGRESS_EXPIRED_SLOW std::chrono::milliseconds(TESTING_EGRESS_FAST*2 + 100) // LBM_OPEN -> LBE_INTERRUPTED
+#define DURATION_HS_EXPIRED_FAST std::chrono::milliseconds(5000) // LBF_OPEN -> HS_SAMPLE
+#define DURATION_HS_EXPIRED_SLOW std::chrono::milliseconds(7000) // LBF_OPEN -> HS_SAMPLE
+
+//LBM
+#define DURATION_SORTING_EXPECTED_FAST std::chrono::milliseconds(500) // HS_SAMPLING_DONE -> LBM_INTERRUPTED
+#define DURATION_SORTING_EXPECTED_SLOW std::chrono::milliseconds(1000) // HS_SAMPLING_DONE -> LBM_INTERRUPTED
+#define DURATION_SORTING_EXPIRED_FAST std::chrono::milliseconds(2000) // HS_SAMPLING_DONE -> LBM_INTERRUPTED
+#define DURATION_SORTING_EXPIRED_SLOW std::chrono::milliseconds(3500) // HS_SAMPLING_DONE -> LBM_INTERRUPTED
+
+//SM
+#define DURATION_SORTING_DISTANCE_VALID_FAST std::chrono::milliseconds(500)// LBM_OPEN -> DIVERTER_CLEARED
+#define DURATION_SORTING_DISTANCE_VALID_SLOW std::chrono::milliseconds(1000)// LBM_OPEN -> DIVERTER_CLEARED
+
+//LBE
+#define DURATION_EGRESS_EXPECTED_FAST std::chrono::milliseconds(1500) // LBM_OPEN -> LBE_INTERRUPTED
+#define DURATION_EGRESS_EXPECTED_SLOW std::chrono::milliseconds(5000) // LBM_OPEN -> LBE_INTERRUPTED
+#define DURATION_EGRESS_EXPIRED_FAST std::chrono::milliseconds(4000) // LBM_OPEN -> LBE_INTERRUPTED
+#define DURATION_EGRESS_EXPIRED_SLOW std::chrono::milliseconds(7000) // LBM_OPEN -> LBE_INTERRUPTED
 
 // This could be solved by a boolean if we are sure there are no more profiles to track
 enum HeightProfile {

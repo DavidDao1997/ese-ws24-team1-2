@@ -122,6 +122,8 @@ enum PulseCode {
     // MetalSensor
     PULSE_MS_TRUE,
     PULSE_MS_FALSE
+
+    //
 };
 
 // // PULSECODE DECODER

@@ -19,8 +19,8 @@
 
 #include <gtest/gtest.h>
 
-#define TESTING 1
-#define LOGLEVEL INFO
+#define TESTING 0
+#define LOGLEVEL TRACE
 
 
 int main(int argc, char **argv) {
