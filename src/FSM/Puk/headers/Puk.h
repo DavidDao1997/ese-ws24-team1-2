@@ -27,6 +27,11 @@ public:
     void setTimers(Timer::MotorState motorState);
     void clearSegementTimers();
     void clearTimers();
+
+    bool getIsMetal();
+    void setIsMetal(bool);
+    bool getIsValid();
+    void setIsValid(bool);
 private:
     uint32_t id;
     Timer* ingressDistanceValid = nullptr;
@@ -34,8 +39,8 @@ private:
     Timer* nextExpected = nullptr;
     Timer* nextExpired = nullptr;
     
-    bool heightIsValid;
-    bool isMetal;
+    bool isValid; // height
+    bool isMetal; // metal
     // bool isValid; // it feals like we should calculate this just in time instead of writing a property that we need to update.
     // func updateTimers(motorState)
 };

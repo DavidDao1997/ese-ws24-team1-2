@@ -70,4 +70,18 @@ void Puk::clearTimers() {
     clearSegementTimers();
 }
 
+bool Puk::getIsMetal() {
+    return isMetal;
+}
 
+void Puk::setIsMetal(bool _isMetal) {
+    isMetal = _isMetal;
+}
+
+bool Puk::getIsValid() {
+    return isValid;
+}
+
+void Puk::setIsValid(bool _isValid) {
+    isValid = _isValid;
+}

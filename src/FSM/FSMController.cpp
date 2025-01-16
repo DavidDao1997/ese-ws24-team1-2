@@ -356,14 +356,6 @@ void FSMController::handlePulse(_pulse msg) {
         case PULSE_LBF_OPEN:
             (msgVal == 0)?fsm->raiseLBF_1_OPEN():fsm->raiseLBF_2_OPEN();
             Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBF_OPEN..."+ std::to_string(msgVal), "FSMController");
-            // FIXME hacked
-            if (msgVal == 0) {
-                // fsm->raiseFST_1_POSITION_INGRESS_DISTANCE_VALID();
-                // fsm->raiseFST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
-            } else {
-                fsm->raiseFST_2_POSITION_INGRESS_DISTANCE_VALID();
-                fsm->raiseFST_2_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED();
-            }
             break;
         case PULSE_LBE_INTERRUPTED:
             (msgVal == 0)?fsm->raiseLBE_1_INTERRUPTED():fsm->raiseLBE_2_INTERRUPTED();
@@ -372,11 +364,6 @@ void FSMController::handlePulse(_pulse msg) {
         case PULSE_LBE_OPEN:
             (msgVal == 0)?fsm->raiseLBE_1_OPEN():fsm->raiseLBE_2_OPEN();
             Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBE_OPEN..."+ std::to_string(msgVal), "FSMController");
-            // FIXME hacked
-            if (msgVal == 0) {
-                fsm->raiseFST_2_POSITION_INGRESS_PUK_EXPECTED();
-            } else {
-            }
             break;
         case PULSE_LBR_INTERRUPTED:
             (msgVal == 0)?fsm->raiseLBR_1_INTERRUPTED():fsm->raiseLBR_2_INTERRUPTED();
@@ -389,14 +376,6 @@ void FSMController::handlePulse(_pulse msg) {
         case PULSE_LBM_INTERRUPTED:
             (msgVal == 0)?fsm->raiseLBM_1_INTERRUPTED():fsm->raiseLBM_2_INTERRUPTED();
             Logger::getInstance().log(LogLevel::TRACE, "received PULSE_LBM_INTERRUPTED..."+ std::to_string(msgVal), "FSMController");
-            // FIXME hacked
-            if (msgVal == 0) {
-                fsm->raiseFST_1_PUK_SORTING_PASSTHROUGH();
-                fsm->raiseFST_1_POSITION_EGRESS_PUK_EXPECTED();
-            } else {
-                // fsm->raiseFST_2_PUK_SORTING_PASSTHROUGH();
-                // fsm->raiseFST_2_POSITION_EGRESS_PUK_EXPECTED();
-            }
             break;
         case PULSE_LBM_OPEN:
             (msgVal == 0)?fsm->raiseLBM_1_OPEN():fsm->raiseLBM_2_OPEN();
@@ -431,12 +410,12 @@ void FSMController::handlePulse(_pulse msg) {
         case PULSE_HS1_SAMPLING_DONE:
             fsm-> raiseHS_1_SAMPLING_DONE();
             Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLING_DONE...", "FSMController");
-            //FIXME hacked
-            fsm->raiseFST_1_POSITION_SORTING_PUK_EXPECTED();
+            // //FIXME hacked
+            // fsm->raiseFST_1_POSITION_SORTING_PUK_EXPECTED();
             break; 
         case PULSE_HS2_SAMPLING_DONE:
             fsm-> raiseHS_2_SAMPLING_DONE();
-            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_INTERRUPTED...", "FSMController");
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLING_DONE...", "FSMController");
             break;
         case PULSE_MS_TRUE:
             // (msgVal == 0)?fsm->raiseMS_1_HIGH():fsm->raiseMS_2_HIGH();

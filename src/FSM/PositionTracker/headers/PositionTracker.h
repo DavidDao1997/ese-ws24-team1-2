@@ -12,6 +12,8 @@
 #include <chrono>
 #include <list>
 #include <mutex>
+#include <map>
+#include <tuple>
 
 #include "../../gen/src-gen/FSM.h"
 #include "../../gen/src/sc_rxcpp.h"
@@ -119,7 +121,9 @@ private:
     std::atomic<uint32_t> lastPukId;
     uint32_t nextPukId();
 
-    
+    bool isMetalDesired1;
+    bool isMetalDesired2;
+
     std::atomic<Timer::MotorState> motorState1;
     std::atomic<Timer::MotorState> motorState2;
 

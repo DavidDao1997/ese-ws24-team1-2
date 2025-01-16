@@ -836,26 +836,126 @@ TEST_F(SystemTestTwoFesto, singleValidWellTimedPuk) {
         RedLightState::LIGHT_STATE_OFF
     );
     
-    WAIT(250);
-    decoder1->sendPulse(PULSE_BRS_SHORT, 0);
-    timeStopped += 250;
-    WAIT(250);
-    // assertActuatorState(
-    //     FESTO1, 
-    //     MotorState::MOTOR_STATE_OFF,
-    //     GreenLightState::LIGHT_STATE_OFF,
-    //     YellowLightState::LIGHT_STATE_OFF,
-    //     RedLightState::LIGHT_STATE_OFF
-    // );
-    // assertActuatorState(
-    //     FESTO2, 
-    //     MotorState::MOTOR_STATE_OFF,
-    //     GreenLightState::LIGHT_STATE_OFF,
-    //     YellowLightState::LIGHT_STATE_OFF,
-    //     RedLightState::LIGHT_STATE_OFF
-    // );
-    decoder1->sendPulse(PULSE_BGS_SHORT, 0);
+    // WAIT(250);
+    // decoder1->sendPulse(PULSE_BRS_SHORT, 0);
+    // timeStopped += 250;
+    // WAIT(250);
+    // // assertActuatorState(
+    // //     FESTO1, 
+    // //     MotorState::MOTOR_STATE_OFF,
+    // //     GreenLightState::LIGHT_STATE_OFF,
+    // //     YellowLightState::LIGHT_STATE_OFF,
+    // //     RedLightState::LIGHT_STATE_OFF
+    // // );
+    // // assertActuatorState(
+    // //     FESTO2, 
+    // //     MotorState::MOTOR_STATE_OFF,
+    // //     GreenLightState::LIGHT_STATE_OFF,
+    // //     YellowLightState::LIGHT_STATE_OFF,
+    // //     RedLightState::LIGHT_STATE_OFF
+    // // );
+    // decoder1->sendPulse(PULSE_BGS_SHORT, 0);
+    WAIT(950);
+    decoder1->sendPulse(PULSE_LBM_INTERRUPTED, 0);
+
+    WAIT(50);
+    decoder1->sendPulse(PULSE_LBM_OPEN, 0);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+
+    WAIT(2000);
+    decoder1->sendPulse(PULSE_LBE_INTERRUPTED, 0);
+
+    WAIT(50);
+    decoder1->sendPulse(PULSE_LBE_OPEN, 0);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+
+    WAIT(1000);
+    decoder1->sendPulse(PULSE_LBF_INTERRUPTED, 1);
+
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    decoder1->sendPulse(PULSE_LBF_OPEN, 1);
+    WAIT(50);
+    assertActuatorState(
+        FESTO1, 
+        MotorState::MOTOR_STATE_OFF,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+
+    WAIT(2000);
+    decoder1->sendPulse(PULSE_HS2_SAMPLE, 1000);
+    WAIT(50);
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_SLOW,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    
+    // TODO mock HS sampling
+    decoder1->sendPulse(PULSE_HS2_SAMPLING_DONE, 0);
+    WAIT(50);
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_FAST,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+
+    WAIT(950);
+    decoder1->sendPulse(PULSE_LBM_INTERRUPTED, 1);
+
+    WAIT(50);
+    decoder1->sendPulse(PULSE_LBM_OPEN, 1);
+
+    WAIT(2000);
+    decoder1->sendPulse(PULSE_LBE_INTERRUPTED, 1);
+    WAIT(50);
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_OFF,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
+    decoder1->sendPulse(PULSE_LBE_OPEN, 1);
+    WAIT(50);
+    assertActuatorState(
+        FESTO2, 
+        MotorState::MOTOR_STATE_OFF,
+        GreenLightState::LIGHT_STATE_ON,
+        YellowLightState::LIGHT_STATE_OFF,
+        RedLightState::LIGHT_STATE_OFF
+    );
 
     WAIT(5000);
-    FAIL() << "The Timers sortingExpected/sortingExired seem to disappear somewhere along the way, why is this log missing [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPECTED";
 }
