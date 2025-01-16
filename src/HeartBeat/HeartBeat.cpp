@@ -13,12 +13,13 @@ int8_t HeartBeat::pulses[HEARTBEAT_NUM_OF_PULSES] = {
     PULSE_ESTOP_HIGH
 };
 
-HeartBeat::HeartBeat(uint8_t festoNr) {
-    running = false;
+HeartBeat::HeartBeat(uint8_t festoNr, int32_t actuatorControllerChannelId) {
+    running = true;
     // check if festo 1 or festo 2 in parameter list // TODO What happens if named Channel not created yet? create namedChannels in main on qnx level. who creates it then? 
     dispatcherChannel = name_open(std::string(DISPATCHERNAME).c_str(),NAME_FLAG_ATTACH_GLOBAL);
     festoId = festoNr;
     messageReceivedOnce = false;
+    actChannel = actuatorControllerChannelId;
     
     if (festoNr == FESTO1){
         heartBeatChannel = createNamedChannel("Festo1HeartBeat");
@@ -165,6 +166,21 @@ void HeartBeat::handleDisconnect() {
         }
 
         // TODO set Actuators
+        int32_t coid = connectToChannel(actChannel);
+        if (0 > MsgSendPulse(coid, -1, PULSE_LG2_ON, festoId)) {
+            Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo2...", "HeartBeat");
+        }
+         if (0 > MsgSendPulse(coid, -1, PULSE_LR2_ON, festoId)) {
+            Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo2...", "HeartBeat");
+        }
+         if (0 > MsgSendPulse(coid, -1, PULSE_LY2_ON, festoId)) {
+            Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo2...", "HeartBeat");
+        }
+        if (0 > MsgSendPulse(coid, -1, PULSE_MOTOR2_STOP, festoId)) {
+            Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo2...", "HeartBeat");
+        }
+        
+
     }
 }
 

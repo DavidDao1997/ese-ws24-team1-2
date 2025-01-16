@@ -27,7 +27,7 @@
 #include "../../Logging/headers/Logger.h"
 class HeartBeat : public PulseMsgHandler {
   public:
-    HeartBeat(uint8_t festoNr);
+    HeartBeat(uint8_t festoNr, int32_t actuatorControllerChannelId);
     virtual ~HeartBeat();
 
     void connectToFesto();
@@ -45,6 +45,7 @@ class HeartBeat : public PulseMsgHandler {
     int32_t festoId;
     int32_t otherFesto;
     int32_t dispatcherChannel;
+    int32_t actChannel;
     bool messageReceivedOnce;
     name_attach_t* heartBeatChannel;
     std::mutex heartbeatMutex;
