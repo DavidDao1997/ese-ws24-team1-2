@@ -13,475 +13,395 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     motorState1.store(Timer::MotorState::MOTOR_STOP);
     motorState2.store(Timer::MotorState::MOTOR_STOP);
 
-    fsm->getFST_1_POSITION_INGRESS_NEW_PUK().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                uint32_t pukId = nextPukId();
-                Puk* puk = new Puk(pukId);              
-                std::lock_guard<std::mutex> lock(heightSensor1Mutex);
-                heightSensor1.push(puk);
+    onEvent(&fsm->getFST_1_POSITION_INGRESS_NEW_PUK(), [this](){
+        std::lock_guard<std::mutex> lock(heightSensor1Mutex);
 
-                Timer::MotorState motorState = motorState1.load();
-                puk->approachingHS(
-                    motorState,
-                    new Timer(
-                        getDuration(SEGMENT_INGRESS, DURATION_VALID, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_INGRESS, DURATION_VALID, Timer::MotorState::MOTOR_SLOW), 
-                        connectionId, 
-                        Timer::PulseCode::PULSE_INGRESS_1_DISTANCE_VALID, 
-                        puk->getPukId()
-                    ),
-                    new Timer(
-                        getDuration(SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW), 
-                        connectionId, 
-                        Timer::PulseCode::PULSE_HS_1_PUK_EXPECTED, 
-                        puk->getPukId()
-                    ),
-                    new Timer(
-                        getDuration(SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW), 
-                        connectionId, 
-                        Timer::PulseCode::PULSE_HS_1_PUK_EXPIRED, 
-                        puk->getPukId()
-                    )
-                );
-                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIngressNewPuk");
-            })
-        )
-    );
-    fsm->getFST_1_PUK_HEIGHT_IS_VALID().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                // FIXME add HS mocking in tests to make this testable
-                // std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
-                // Puk* puk = heightSensor1.front();
-                // puk->setIsValid(true);
-                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIsValid");
-            })
-        )
-    );
-    fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                // FIXME add HS mocking in tests to make this testable
-                // std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
-                // Puk* puk = heightSensor1.front();
-                // puk->setIsValid(false);
-                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIsInvalid");
-            })
-        )
-    );
+        Puk* puk = new Puk(nextPukId());              
+        heightSensor1.push(puk);
+
+        puk->approachingHS(
+            motorState1.load(),
+            new Timer(
+                getDuration(SEGMENT_INGRESS, DURATION_VALID, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_INGRESS, DURATION_VALID, Timer::MotorState::MOTOR_SLOW), 
+                connectionId, 
+                Timer::PulseCode::PULSE_INGRESS_1_DISTANCE_VALID, 
+                puk->getPukId()
+            ),
+            new Timer(
+                getDuration(SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW), 
+                connectionId, 
+                Timer::PulseCode::PULSE_HS_1_PUK_EXPECTED, 
+                puk->getPukId()
+            ),
+            new Timer(
+                getDuration(SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW), 
+                connectionId, 
+                Timer::PulseCode::PULSE_HS_1_PUK_EXPIRED, 
+                puk->getPukId()
+            )
+        );
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onIngressNewPuk");
+    });
+    onEvent(&fsm->getFST_1_PUK_HEIGHT_IS_VALID(), [this](){
+        // FIXME add HS mocking in tests to make this testable
+        // std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
+        // Puk* puk = heightSensor1.front();
+        // puk->setIsValid(true);
+        // Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIsValid");
+    });
+    onEvent(&fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID(), [this](){
+        // FIXME add HS mocking in tests to make this testable
+        // std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
+        // Puk* puk = heightSensor1.front();
+        // puk->setIsValid(false);
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onIsInvalid");
+    });
     // TODO Puk that disappear or are sorted out
-    fsm->getFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                Timer::MotorState motorState = motorState1.load();
-                std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
-                std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
-                Puk* puk = heightSensor1.front();
-                heightSensor1.pop();
-                sorting1.push(puk);
+    onEvent(&fsm->getFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK(), [this](){
+        std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
+        std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
 
-                puk->approachingSorting(
-                    motorState,
-                    new Timer(
-                        getDuration(SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_SORTING_1_PUK_EXPECTED, 
-                        puk->getPukId()
-                    ),
-                    new Timer(
-                        getDuration(SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_SORTING_1_PUK_EXPIRED, 
-                        puk->getPukId()
-                    )
-                );
-                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onHSNewPuk");
-            })
-        )
-    );
-    fsm->getFST_1_PUK_IS_METAL().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
-                Puk* puk = sorting1.front();
-                if (isMetalDesired1) {
-                    // continue
-                    puk->setIsMetal(true);
-                    isMetalDesired1 = false;
-                    fsm->raiseFST_1_PUK_SORTING_PASSTHROUGH();
-                    Logger::getInstance().log(LogLevel::DEBUG, "Passing", "PositionTracker.onIsNotMetal");
-                } else {
-                    // eject
-                    fsm->raiseFST_1_PUK_SORTING_EJECT();
-                }
+        Puk* puk = PositionTracker::queuePop(&heightSensor1);
+        sorting1.push(puk);
 
-                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIsMetal");
-            })
-        )
-    );
-    fsm->getFST_1_PUK_IS_NOT_METAL().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
-                Puk* puk = sorting1.front();
-                if (!isMetalDesired1) {
-                    // continue
-                    puk->setIsMetal(false);
-                    isMetalDesired1 = true;
-                    fsm->raiseFST_1_PUK_SORTING_PASSTHROUGH();
-                    Logger::getInstance().log(LogLevel::DEBUG, "Passing", "PositionTracker.onIsNotMetal");
-                } else {
-                    // eject
-                    fsm->raiseFST_1_PUK_SORTING_EJECT();
-                }
+        puk->approachingSorting(
+            motorState1.load(),
+            new Timer(
+                getDuration(SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_SORTING_1_PUK_EXPECTED, 
+                puk->getPukId()
+            ),
+            new Timer(
+                getDuration(SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_SORTING_1_PUK_EXPIRED, 
+                puk->getPukId()
+            )
+        );
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onHSNewPuk");
+    });
+    onEvent(&fsm->getFST_1_PUK_IS_METAL(), [this](){
+        std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
 
-                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIsNotMetal");
-            })
-        )
-    );
-    fsm->getFST_1_POSITION_SORTING_NEW_PUK().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                Timer::MotorState motorState = motorState1.load();
-                std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
-                std::lock_guard<std::mutex> lockEgress(egress1Mutex);
-                Puk* puk = sorting1.front();
-                sorting1.pop();
-                egress1.push(puk);
+        Puk* puk = sorting1.front();
+        if (isMetalDesired1) { // FIXME
+        // if (isMetalDesired1 && puk->getIsValid()) {
+            // passthrough
+            puk->setIsMetal(true);
+            isMetalDesired1 = false;
+            fsm->raiseFST_1_PUK_SORTING_PASSTHROUGH();
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Passing", "PositionTracker.onIsMetal");
+        } else {
+            // eject
+            sorting1.pop();
+            fsm->raiseFST_1_PUK_SORTING_EJECT();
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Ejecting", "PositionTracker.onIsMetal");
+        }
+    });
+    onEvent(&fsm->getFST_1_PUK_IS_NOT_METAL(), [this](){
+        std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
 
-                puk->approachingEgress(
-                    motorState,
-                    new Timer(
-                        getDuration(SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_FAST),
-                        getDuration(SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_SORTING_1_DISTANCE_VALID, 
-                        puk->getPukId()
-                    ),
-                    new Timer(
-                        getDuration(SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_EGRESS_1_PUK_EXPECTED, 
-                        puk->getPukId()
-                    ),
-                    new Timer(
-                        getDuration(SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_EGRESS_1_PUK_EXPIRED, 
-                        puk->getPukId()
-                    )
-                );
-                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onSortingNewPuk");
-            })
-        )
-    );
-    fsm->getFST_1_POSITION_EGRESS_NEW_PUK().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                Timer::MotorState motorState = motorState1.load();
-                std::lock_guard<std::mutex> lockEgress(egress1Mutex);
-                std::lock_guard<std::mutex> lockSorting(ingress2Mutex);
-                Puk* puk = egress1.front();
-                egress1.pop();
-                ingress2.push(puk);
+        Puk* puk = sorting1.front();
+        if (!isMetalDesired1) {  // FIXME
+        // if (!isMetalDesired1 && puk->getIsValid()) {
+            // passthrough
+            puk->setIsMetal(false);
+            isMetalDesired1 = true;
+            fsm->raiseFST_1_PUK_SORTING_PASSTHROUGH();
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Passing", "PositionTracker.onIsNotMetal");
+        } else {
+            // eject
+            sorting1.pop();
+            fsm->raiseFST_1_PUK_SORTING_EJECT();
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Ejecting", "PositionTracker.onIsNotMetal");
+        }
+    });
+    onEvent(&fsm->getFST_1_POSITION_SORTING_NEW_PUK(), [this](){
+        std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
+        std::lock_guard<std::mutex> lockEgress(egress1Mutex);
 
-                puk->approachingIngress(
-                    motorState,
-                    new Timer(
-                        getDuration(SEGMENT_INGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_INGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_INGRESS_2_PUK_EXPECTED, 
-                        puk->getPukId()
-                    ),
-                    new Timer(
-                        getDuration(SEGMENT_INGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_INGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_INGRESS_2_PUK_EXPIRED, 
-                        puk->getPukId()
-                    )
-                );
-                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onEgressNewPuk");
-            })
-        )
-    );
-    fsm->getFST_2_POSITION_INGRESS_NEW_PUK().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                Timer::MotorState motorState = motorState2.load();
-                std::lock_guard<std::mutex> lockSorting(ingress2Mutex);
-                std::lock_guard<std::mutex> lockEgress(heightSensor2Mutex);
-                Puk* puk = ingress2.front();
-                if (puk == nullptr) {
-                    Logger::getInstance().log(LogLevel::DEBUG, "fooooooooooooooooooooooo", "PositionTracker.onIngressNewPuk");
-                    WAIT(5000);
-                }
-                ingress2.pop();
-                heightSensor2.push(puk);
+        Puk* puk = PositionTracker::queuePop(&sorting1);
+        egress1.push(puk);
 
-                puk->approachingHS(
-                    motorState,
-                    nullptr,
-                    new Timer(
-                        getDuration(SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_HS_2_PUK_EXPECTED, 
-                        puk->getPukId()
-                    ),
-                    new Timer(
-                        getDuration(SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_HS_2_PUK_EXPIRED, 
-                        puk->getPukId()
-                    )
-                );
-                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIngressNewPuk");
-            })
-        )
-    );
-    // TODO Puk that disappear or are sorted out
-    fsm->getFST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                Timer::MotorState motorState = motorState2.load();
-                std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
-                std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
-                Puk* puk = heightSensor2.front();
-                heightSensor2.pop();
-                sorting2.push(puk);
+        puk->approachingEgress(
+            motorState1.load(),
+            new Timer(
+                getDuration(SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_FAST),
+                getDuration(SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_SORTING_1_DISTANCE_VALID, 
+                puk->getPukId()
+            ),
+            new Timer(
+                getDuration(SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_EGRESS_1_PUK_EXPECTED, 
+                puk->getPukId()
+            ),
+            new Timer(
+                getDuration(SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_EGRESS_1_PUK_EXPIRED, 
+                puk->getPukId()
+            )
+        );
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onSortingNewPuk");
+    });
+    onEvent(&fsm->getFST_1_POSITION_EGRESS_NEW_PUK(), [this](){
+        std::lock_guard<std::mutex> lockEgress(egress1Mutex);
+        std::lock_guard<std::mutex> lockSorting(ingress2Mutex);
 
-                puk->approachingSorting(
-                    motorState,
-                    new Timer(
-                        getDuration(SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_SORTING_2_PUK_EXPECTED, 
-                        puk->getPukId()
-                    ),
-                    new Timer(
-                        getDuration(SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_SORTING_2_PUK_EXPIRED, 
-                        puk->getPukId()
-                    )
-                );
-                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onHSNewPuk");
-            })
-        )
-    );
-    fsm->getFST_2_PUK_IS_METAL().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
-                Puk* puk = sorting2.front();
-                if (isMetalDesired2) {
-                    // continue
-                    puk->setIsMetal(true);
-                    isMetalDesired2 = false;
-                    fsm->raiseFST_2_PUK_SORTING_PASSTHROUGH();
-                    Logger::getInstance().log(LogLevel::DEBUG, "Passing", "PositionTracker.onIsNotMetal");
-                } else {
-                    // eject
-                    fsm->raiseFST_2_PUK_SORTING_EJECT();
-                }
+        Puk* puk = queuePop(&egress1);
+        ingress2.push(puk);
 
-                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIsMetal");
-            })
-        )
-    );
-    fsm->getFST_2_PUK_IS_NOT_METAL().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
-                Puk* puk = sorting2.front();
-                if (!isMetalDesired2) {
-                    // continue
-                    puk->setIsMetal(false);
-                    isMetalDesired2 = true;
-                    fsm->raiseFST_2_PUK_SORTING_PASSTHROUGH();
-                    Logger::getInstance().log(LogLevel::DEBUG, "Passing", "PositionTracker.onIsNotMetal");
-                } else {
-                    // eject
-                    fsm->raiseFST_2_PUK_SORTING_EJECT();
-                }
+        puk->approachingIngress(
+            motorState1.load(),
+            new Timer(
+                getDuration(SEGMENT_INGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_INGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_INGRESS_2_PUK_EXPECTED, 
+                puk->getPukId()
+            ),
+            new Timer(
+                getDuration(SEGMENT_INGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_INGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_INGRESS_2_PUK_EXPIRED, 
+                puk->getPukId()
+            )
+        );
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onEgressNewPuk");
+    });
+    onEvent(&fsm->getFST_2_POSITION_INGRESS_NEW_PUK(), [this](){
+        std::lock_guard<std::mutex> lockSorting(ingress2Mutex);
+        std::lock_guard<std::mutex> lockEgress(heightSensor2Mutex);
 
-                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onIsNotMetal");
-            })
-        )
-    );
-    fsm->getFST_2_POSITION_SORTING_NEW_PUK().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                Timer::MotorState motorState = motorState2.load();
-                std::lock_guard<std::mutex> lockSorting(sorting2Mutex);
-                std::lock_guard<std::mutex> lockHeightSensor(egress2Mutex);
-                Puk* puk = sorting2.front();
-                sorting2.pop();
-                egress2.push(puk);
+        Puk* puk = queuePop(&ingress2);
+        heightSensor2.push(puk);
 
-                puk->approachingEgress(
-                    motorState,
-                    new Timer(
-                        getDuration(SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_FAST),
-                        getDuration(SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_SORTING_2_DISTANCE_VALID, 
-                        puk->getPukId()
-                    ),
-                    new Timer(
-                        getDuration(SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_EGRESS_2_PUK_EXPECTED, 
-                        puk->getPukId()
-                    ),
-                    new Timer(
-                        getDuration(SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
-                        getDuration(SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
-                        connectionId, 
-                        Timer::PulseCode::PULSE_EGRESS_2_PUK_EXPIRED, 
-                        puk->getPukId()
-                    )
-                );
-                Logger::getInstance().log(LogLevel::DEBUG, "", "PositionTracker.onSortingNewPuk");
-            })
-        )
-    );
+        puk->approachingHS(
+            motorState2.load(),
+            nullptr,
+            new Timer(
+                getDuration(SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_HS_2_PUK_EXPECTED, 
+                puk->getPukId()
+            ),
+            new Timer(
+                getDuration(SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_HS_2_PUK_EXPIRED, 
+                puk->getPukId()
+            )
+        );
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onIngressNewPuk");
+    });
+    onEvent(&fsm->getFST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK(), [this](){
+        std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
+        std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
 
-    fsm->getMOTOR_1_FAST().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                motorState1.store(Timer::MotorState::MOTOR_FAST);
-                {
-                    std::lock_guard<std::mutex> lock(egress1Mutex);
-                    egress1 = updatePukQueue(egress1, Timer::MotorState::MOTOR_FAST);
-                }
-                {
-                    std::lock_guard<std::mutex> lock(sorting1Mutex);
-                    sorting1 = updatePukQueue(sorting1, Timer::MotorState::MOTOR_FAST);
-                }
-                {
-                    std::lock_guard<std::mutex> lock(heightSensor1Mutex);
-                    heightSensor1 = updatePukQueue(heightSensor1, Timer::MotorState::MOTOR_FAST);
-                }
-                Logger::getInstance().log(LogLevel::DEBUG, "MotorFast", "PositionTracker.onMotorFast");
-            })
-        )
-    );
-    fsm->getMOTOR_1_SLOW().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                motorState1.store(Timer::MotorState::MOTOR_SLOW);
-                {
-                    std::lock_guard<std::mutex> lock(egress1Mutex);
-                    egress1 = updatePukQueue(egress1, Timer::MotorState::MOTOR_SLOW);
-                }
-                {
-                    std::lock_guard<std::mutex> lock(sorting1Mutex);
-                    sorting1 = updatePukQueue(sorting1, Timer::MotorState::MOTOR_SLOW);
-                }
-                {
-                    std::lock_guard<std::mutex> lock(heightSensor1Mutex);
-                    heightSensor1 = updatePukQueue(heightSensor1, Timer::MotorState::MOTOR_SLOW);
-                }
-                Logger::getInstance().log(LogLevel::DEBUG, "Motor Slow", "PositionTracker.onMotorSlow");
-            })
-        )
-    );
-    fsm->getMOTOR_1_STOP().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                motorState1.store(Timer::MotorState::MOTOR_STOP);
-                {
-                    std::lock_guard<std::mutex> lock(egress1Mutex);
-                    egress1 = updatePukQueue(egress1, Timer::MotorState::MOTOR_STOP);
-                }
-                {
-                    std::lock_guard<std::mutex> lock(sorting1Mutex);
-                    sorting1 = updatePukQueue(sorting1, Timer::MotorState::MOTOR_STOP);
-                }
-                {
-                    std::lock_guard<std::mutex> lock(heightSensor1Mutex);
-                    heightSensor1 = updatePukQueue(heightSensor1, Timer::MotorState::MOTOR_STOP);
-                }
-                // for each (timer in timers1) { updateTimersToFast } 
-                Logger::getInstance().log(LogLevel::DEBUG, "Motor Stop", "PositionTracker.onMotorStop");
-            })
-        )
-    );
-    fsm->getMOTOR_2_FAST().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                motorState2.store(Timer::MotorState::MOTOR_FAST);
-                {
-                    std::lock_guard<std::mutex> lock(egress2Mutex);
-                    egress2 = updatePukQueue(egress2, Timer::MotorState::MOTOR_FAST);
-                }
-                {
-                    std::lock_guard<std::mutex> lock(sorting2Mutex);
-                    sorting2 = updatePukQueue(sorting2, Timer::MotorState::MOTOR_FAST);
-                }
-                {
-                    std::lock_guard<std::mutex> lock(heightSensor2Mutex);
-                    heightSensor2 = updatePukQueue(heightSensor2, Timer::MotorState::MOTOR_FAST);
-                }
-                Logger::getInstance().log(LogLevel::DEBUG, "MotorFast", "PositionTracker.onMotorFast");
-            })
-        )
-    );
-    fsm->getMOTOR_2_SLOW().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                motorState2.store(Timer::MotorState::MOTOR_SLOW);
-                {
-                    std::lock_guard<std::mutex> lock(egress2Mutex);
-                    egress2 = updatePukQueue(egress2, Timer::MotorState::MOTOR_SLOW);
-                }
-                {
-                    std::lock_guard<std::mutex> lock(sorting2Mutex);
-                    sorting2 = updatePukQueue(sorting2, Timer::MotorState::MOTOR_SLOW);
-                }
-                {
-                    std::lock_guard<std::mutex> lock(heightSensor2Mutex);
-                    heightSensor2 = updatePukQueue(heightSensor2, Timer::MotorState::MOTOR_SLOW);
-                }
-                Logger::getInstance().log(LogLevel::DEBUG, "Motor Slow", "PositionTracker.onMotorSlow");
-            })
-        )
-    );
-    fsm->getMOTOR_2_STOP().subscribe(
-        *new sc::rx::subscription<void>(
-            *new PositionTrackerObserver([this](){
-                motorState2.store(Timer::MotorState::MOTOR_STOP);
-                {
-                    std::lock_guard<std::mutex> lock(egress2Mutex);
-                    egress2 = updatePukQueue(egress2, Timer::MotorState::MOTOR_STOP);
-                }
-                {
-                    std::lock_guard<std::mutex> lock(sorting2Mutex);
-                    sorting2 = updatePukQueue(sorting2, Timer::MotorState::MOTOR_STOP);
-                }
-                {
-                    std::lock_guard<std::mutex> lock(heightSensor2Mutex);
-                    heightSensor2 = updatePukQueue(heightSensor2, Timer::MotorState::MOTOR_STOP);
-                }
-                Logger::getInstance().log(LogLevel::DEBUG, "Motor Stop", "PositionTracker.onMotorStop");
-            })
-        )
-    );
+        Puk* puk = queuePop(&heightSensor2);
+        sorting2.push(puk);
+
+        puk->approachingSorting(
+            motorState2.load(),
+            new Timer(
+                getDuration(SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_SORTING_2_PUK_EXPECTED, 
+                puk->getPukId()
+            ),
+            new Timer(
+                getDuration(SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_SORTING_2_PUK_EXPIRED, 
+                puk->getPukId()
+            )
+        );
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onHSNewPuk");
+    });
+    onEvent(&fsm->getFST_2_PUK_IS_METAL(), [this](){
+        std::lock_guard<std::mutex> lockSorting(sorting2Mutex);
+
+        Puk* puk = sorting2.front();
+        if (isMetalDesired2 && puk->getIsMetal()) { // FIXME
+        // if (isMetalDesired2 && puk->getIsMetal() && puk->getIsValid()) {
+            // passthrough
+            isMetalDesired2 = false;
+            fsm->raiseFST_2_PUK_SORTING_PASSTHROUGH();
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Passing", "PositionTracker.onIsMetal");
+        } else {
+            // eject
+            sorting2.pop();
+            fsm->raiseFST_1_PUK_SORTING_EJECT();
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Ejecting", "PositionTracker.onIsMetal");
+        }
+    });
+    onEvent(&fsm->getFST_2_PUK_IS_NOT_METAL(), [this](){
+        std::lock_guard<std::mutex> lockSorting(sorting2Mutex);
+
+        Puk* puk = sorting2.front();
+        if (!isMetalDesired2 && !puk->getIsMetal()) {  // FIXME
+        // if (!isMetalDesired2 && !puk->getIsMetal() && puk->getIsValid()) {
+            // passthrough
+            puk->setIsMetal(false);
+            isMetalDesired2 = true;
+            fsm->raiseFST_2_PUK_SORTING_PASSTHROUGH();
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Passing", "PositionTracker.onIsNotMetal");
+        } else {
+            // eject
+            sorting2.pop();
+            fsm->raiseFST_2_PUK_SORTING_EJECT();
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Ejecting", "PositionTracker.onIsNotMetal");
+        }
+    });
+    onEvent(&fsm->getFST_2_POSITION_SORTING_NEW_PUK(), [this](){
+        std::lock_guard<std::mutex> lockSorting(sorting2Mutex);
+        std::lock_guard<std::mutex> lockHeightSensor(egress2Mutex);
+
+        Puk* puk = queuePop(&sorting2);
+        egress2.push(puk);
+
+        puk->approachingEgress(
+            motorState2.load(),
+            new Timer(
+                getDuration(SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_FAST),
+                getDuration(SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_SORTING_2_DISTANCE_VALID, 
+                puk->getPukId()
+            ),
+            new Timer(
+                getDuration(SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_EGRESS_2_PUK_EXPECTED, 
+                puk->getPukId()
+            ),
+            new Timer(
+                getDuration(SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
+                connectionId, 
+                Timer::PulseCode::PULSE_EGRESS_2_PUK_EXPIRED, 
+                puk->getPukId()
+            )
+        );
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onSortingNewPuk");
+    });
+    onEvent(&fsm->getMOTOR_1_FAST(), [this](){
+        motorState1.store(Timer::MotorState::MOTOR_FAST);
+        {
+            std::lock_guard<std::mutex> lock(egress1Mutex);
+            egress1 = updatePukQueue(egress1, Timer::MotorState::MOTOR_FAST);
+        }
+        {
+            std::lock_guard<std::mutex> lock(sorting1Mutex);
+            sorting1 = updatePukQueue(sorting1, Timer::MotorState::MOTOR_FAST);
+        }
+        {
+            std::lock_guard<std::mutex> lock(heightSensor1Mutex);
+            heightSensor1 = updatePukQueue(heightSensor1, Timer::MotorState::MOTOR_FAST);
+        }
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] MotorFast", "PositionTracker.onMotorFast");
+    });
+    onEvent(&fsm->getMOTOR_1_SLOW(), [this](){
+        motorState1.store(Timer::MotorState::MOTOR_SLOW);
+        {
+            std::lock_guard<std::mutex> lock(egress1Mutex);
+            egress1 = updatePukQueue(egress1, Timer::MotorState::MOTOR_SLOW);
+        }
+        {
+            std::lock_guard<std::mutex> lock(sorting1Mutex);
+            sorting1 = updatePukQueue(sorting1, Timer::MotorState::MOTOR_SLOW);
+        }
+        {
+            std::lock_guard<std::mutex> lock(heightSensor1Mutex);
+            heightSensor1 = updatePukQueue(heightSensor1, Timer::MotorState::MOTOR_SLOW);
+        }
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Motor Slow", "PositionTracker.onMotorSlow");
+    });
+    onEvent(&fsm->getMOTOR_1_STOP(), [this](){
+        motorState1.store(Timer::MotorState::MOTOR_STOP);
+        {
+            std::lock_guard<std::mutex> lock(egress1Mutex);
+            egress1 = updatePukQueue(egress1, Timer::MotorState::MOTOR_STOP);
+        }
+        {
+            std::lock_guard<std::mutex> lock(sorting1Mutex);
+            sorting1 = updatePukQueue(sorting1, Timer::MotorState::MOTOR_STOP);
+        }
+        {
+            std::lock_guard<std::mutex> lock(heightSensor1Mutex);
+            heightSensor1 = updatePukQueue(heightSensor1, Timer::MotorState::MOTOR_STOP);
+        }
+        // for each (timer in timers1) { updateTimersToFast } 
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Motor Stop", "PositionTracker.onMotorStop");
+    });
+    onEvent(&fsm->getMOTOR_2_FAST(), [this](){
+        motorState2.store(Timer::MotorState::MOTOR_FAST);
+        {
+            std::lock_guard<std::mutex> lock(egress2Mutex);
+            egress2 = updatePukQueue(egress2, Timer::MotorState::MOTOR_FAST);
+        }
+        {
+            std::lock_guard<std::mutex> lock(sorting2Mutex);
+            sorting2 = updatePukQueue(sorting2, Timer::MotorState::MOTOR_FAST);
+        }
+        {
+            std::lock_guard<std::mutex> lock(heightSensor2Mutex);
+            heightSensor2 = updatePukQueue(heightSensor2, Timer::MotorState::MOTOR_FAST);
+        }
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2] MotorFast", "PositionTracker.onMotorFast");
+    });
+    onEvent(&fsm->getMOTOR_2_SLOW(), [this](){
+        motorState2.store(Timer::MotorState::MOTOR_SLOW);
+        {
+            std::lock_guard<std::mutex> lock(egress2Mutex);
+            egress2 = updatePukQueue(egress2, Timer::MotorState::MOTOR_SLOW);
+        }
+        {
+            std::lock_guard<std::mutex> lock(sorting2Mutex);
+            sorting2 = updatePukQueue(sorting2, Timer::MotorState::MOTOR_SLOW);
+        }
+        {
+            std::lock_guard<std::mutex> lock(heightSensor2Mutex);
+            heightSensor2 = updatePukQueue(heightSensor2, Timer::MotorState::MOTOR_SLOW);
+        }
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Motor Slow", "PositionTracker.onMotorSlow");
+    });
+    onEvent(&fsm->getMOTOR_2_STOP(), [this](){
+        motorState2.store(Timer::MotorState::MOTOR_STOP);
+        {
+            std::lock_guard<std::mutex> lock(egress2Mutex);
+            egress2 = updatePukQueue(egress2, Timer::MotorState::MOTOR_STOP);
+        }
+        {
+            std::lock_guard<std::mutex> lock(sorting2Mutex);
+            sorting2 = updatePukQueue(sorting2, Timer::MotorState::MOTOR_STOP);
+        }
+        {
+            std::lock_guard<std::mutex> lock(heightSensor2Mutex);
+            heightSensor2 = updatePukQueue(heightSensor2, Timer::MotorState::MOTOR_STOP);
+        }
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Motor Stop", "PositionTracker.onMotorStop");
+    });
 }
+
+PositionTracker::~PositionTracker() {}
 
 std::queue<Puk*> PositionTracker::updatePukQueue(std::queue<Puk*> tempQueue, Timer::MotorState ms){
     std::queue<Puk*> updatedQueue;// = new std::queue<Puk*>();
@@ -489,15 +409,21 @@ std::queue<Puk*> PositionTracker::updatePukQueue(std::queue<Puk*> tempQueue, Tim
         Puk* puk = tempQueue.front();
         Logger::getInstance().log(LogLevel::DEBUG,  "Processing Puk with ID: " + std::to_string(puk->getPukId()), "PositionTracker.updatePukQueue");
         puk->setTimers(ms);
-        tempQueue.pop();  // Remove the element from the temporary queue
+        tempQueue.pop();
         updatedQueue.push(puk);
     }
 
     return updatedQueue;
 }
 
-
-PositionTracker::~PositionTracker() {}
+Puk* PositionTracker::queuePop(std::queue<Puk*>* queue){
+    if (queue->empty()) {
+        return nullptr;
+    }
+    Puk* puk = queue->front();
+    queue->pop();
+    return puk;
+}
 
 void PositionTracker::listen() {
     // Connection ID für Pulse Message
@@ -631,4 +557,13 @@ uint32_t PositionTracker::nextPukId() {
     // TODO mutex for racecondition
     lastPukId++;
     return pukId;
+}
+
+
+void PositionTracker::onEvent(sc::rx::Observable<void>* event ,std::function<void()> callback) {
+    event->subscribe(
+        *new sc::rx::subscription<void>(
+            *new PositionTrackerObserver(callback)
+        )
+    );
 }

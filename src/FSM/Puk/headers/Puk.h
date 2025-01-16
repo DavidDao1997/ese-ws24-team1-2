@@ -42,7 +42,6 @@ private:
     bool isValid; // height
     bool isMetal; // metal
     // bool isValid; // it feals like we should calculate this just in time instead of writing a property that we need to update.
-    // func updateTimers(motorState)
 };
 
 

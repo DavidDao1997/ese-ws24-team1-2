@@ -129,6 +129,9 @@ private:
 
     std::chrono::milliseconds getDuration(SegmentType segmentType, DurationType durationType, Timer::MotorState motorState);
     std::queue<Puk*> updatePukQueue(std::queue<Puk*> tempQueue, Timer::MotorState ms);
+    Puk* queuePop(std::queue<Puk*>* queue);
+
+    void onEvent(sc::rx::Observable<void>* event ,std::function<void()> callback);
 };
 
 class PositionTrackerObserver : public sc::rx::Observer<void> {
