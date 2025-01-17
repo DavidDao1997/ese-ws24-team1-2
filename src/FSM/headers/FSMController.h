@@ -11,7 +11,7 @@
 #include "../PositionTracker/headers/PositionTracker.h"
 #include "../gen/src/sc_rxcpp.h"
 
-#define FSM_CONTROLLER_NUM_OF_PULSES 20
+#define FSM_CONTROLLER_NUM_OF_PULSES 22
 
 class FSMController : public PulseMsgHandler {
   public:

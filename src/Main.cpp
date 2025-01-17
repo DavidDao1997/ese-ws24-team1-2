@@ -20,7 +20,7 @@
 #include <gtest/gtest.h>
 
 #define TESTING 0
-#define LOGLEVEL TRACE
+#define LOGLEVEL DEBUG
 
 
 int main(int argc, char **argv) {
@@ -68,6 +68,12 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         Dispatcher *dispatcher = new Dispatcher(dispatcherChannelName);
         std::thread dispatcherThread(std::bind(&Dispatcher::handleMsg, dispatcher));
 
+        FSMController *fsmController = new FSMController(dispatcherChannelName);
+        dispatcher->addSubscriber(
+            fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
+        );
+        
+        std::thread fsmControllerHandleMsgThread(std::bind(&FSMController::handleMsg, fsmController));
 
         Decoder *decoder = new Decoder(dispatcherChannelName, FESTO1);
         std::string actuatorControllerChannelName = "actuatorController1";
@@ -80,12 +86,7 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         ADC* adc = new ADC(*tsc);
         HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl1", dispatcherChannelName, FESTO1, tsc, adc);
         std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
-        FSMController *fsmController = new FSMController(dispatcherChannelName);
-        dispatcher->addSubscriber(
-            fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
-        );
         
-        std::thread fsmControllerHandleMsgThread(std::bind(&FSMController::handleMsg, fsmController));
        
         std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
         dispatcherThread.join();

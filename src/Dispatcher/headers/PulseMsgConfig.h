@@ -104,6 +104,18 @@ enum PulseCode {
     PULSE_Q22_ON,
     PULSE_Q22_OFF,
 
+    // Button Start LED 
+    PULSE_BGSL1_ON,
+    PULSE_BGSL1_OFF,
+    PULSE_BGSL2_ON,
+    PULSE_BGSL2_OFF,
+
+    // Button Reset LED
+    PULSE_BRSL1_ON,
+    PULSE_BRSL1_OFF,
+    PULSE_BRSL2_ON,
+    PULSE_BRSL2_OFF,
+
     // Sorting
     PULSE_SM_TYPE_EJECTOR,
     PULSE_SM_TYPE_DIVERTER,

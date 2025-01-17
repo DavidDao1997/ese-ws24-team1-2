@@ -31,7 +31,11 @@ int8_t ActuatorController::pulses_FESTO1[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
 	PULSE_Q11_ON,      
 	PULSE_Q11_OFF,     
     PULSE_Q21_ON,      
-	PULSE_Q21_OFF,     
+	PULSE_Q21_OFF, 
+    PULSE_BGSL1_ON,
+    PULSE_BGSL1_OFF,
+    PULSE_BRSL1_ON,
+    PULSE_BRSL1_OFF,
     PULSE_SM1_ACTIVE,   
 	PULSE_SM1_RESTING, 
 };
@@ -53,6 +57,10 @@ int8_t ActuatorController::pulses_FESTO2[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
 	PULSE_Q12_OFF,
 	PULSE_Q22_ON,      
 	PULSE_Q22_OFF,
+    PULSE_BGSL2_ON,
+    PULSE_BGSL2_OFF,
+    PULSE_BRSL2_ON,
+    PULSE_BRSL2_OFF,
 	PULSE_SM2_ACTIVE,  
 	PULSE_SM2_RESTING,
 };
@@ -106,11 +114,13 @@ void ActuatorController::subscribeToDispatcher(){
     Logger::getInstance().log(LogLevel::DEBUG, "SM_TYPE is ..." + std::to_string(type), "ActuatorController");
     // send Type
     if (SM_TYPE_EJECTOR == type) {
+        Logger::getInstance().log(LogLevel::DEBUG, "SM_TYPE IS EJECTOR ..." + std::to_string(type), "ActuatorController");
         if (0 > MsgSendPulse(dispatcherChannelID, -1, PULSE_SM_TYPE_EJECTOR, festoID)) {
-            Logger::getInstance().log(LogLevel::ERROR, "Sending PULSE_SM_TYPE_EJECTOR to Dispatcher failed...", "ActuatorController");
+            Logger::getInstance().log(LogLevel::ERROR, "Sending PULSE_SM_TYPE_DIVERTER to Dispatcher failed...", "ActuatorController");
         }
     } else { 
-         if (0 > MsgSendPulse(dispatcherChannelID, -1, PULSE_SM_TYPE_DIVERTER, festoID)) {
+        Logger::getInstance().log(LogLevel::DEBUG, "SM_TYPE IS DIVERTER ..." + std::to_string(type), "ActuatorController");
+        if (0 > MsgSendPulse(dispatcherChannelID, -1, PULSE_SM_TYPE_DIVERTER, festoID)) {
             Logger::getInstance().log(LogLevel::ERROR, "Sending PULSE_SM_TYPE_DIVERTER to Dispatcher failed...", "ActuatorController");
         }
     }
@@ -230,33 +240,35 @@ void ActuatorController::handleMsg() {
                 actuators->redLampLightOff();
                 break;
             case PULSE_LG1_BLINKING:
+                lgblinking = false;
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 1 LED Green blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
                 lgblinking = true;
                 startGreenLampBlinkingThread(msgVal);
                 break;
+            case PULSE_LG2_BLINKING:
+                lgblinking = false;
+                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Green blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
+                lgblinking = true;
+                startGreenLampBlinkingThread(msgVal);
+                break;
             case PULSE_LY1_BLINKING:
+                lyblinking = false;
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 1 LED Yellow blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
+                lyblinking = true;
+                startYellowLampBlinkingThread(msgVal);
+                break;
+            case PULSE_LY2_BLINKING:
+                lyblinking = false;
+                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Yellow blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
                 lyblinking = true;
                 startYellowLampBlinkingThread(msgVal);
                 break;
             case PULSE_LR1_BLINKING:
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 1 LED Red blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
-                lrblinking = true;
                 startRedLampBlinkingThread(msgVal);
-                break;
-            case PULSE_LG2_BLINKING:
-                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Green blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
-                lgblinking = true;
-                startGreenLampBlinkingThread(msgVal);
-                break;
-            case PULSE_LY2_BLINKING:
-                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Yellow blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
-                lyblinking = true;
-                startYellowLampBlinkingThread(msgVal);
                 break;
             case PULSE_LR2_BLINKING:
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Red blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
-                lrblinking = true;
                 startRedLampBlinkingThread(msgVal);
                 break;
             case PULSE_LG1_ON:
@@ -321,6 +333,7 @@ void ActuatorController::handleMsg() {
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Q2 off......", "ActuatorController");
                 actuators->Q2LightOff();
                 break;
+            //TTTT
 			case PULSE_SM1_ACTIVE: // set Bit 1
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 1 SM Active......", "ActuatorController");
 				actuators->closeSortingModule();
@@ -337,6 +350,7 @@ void ActuatorController::handleMsg() {
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 SM Resting......", "ActuatorController");
 				actuators->openSortingModule();
 				break;
+            
             case _PULSE_CODE_COIDDEATH:
                 Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_COIDDEATH...", "ActuatorController");
                 break;
@@ -373,7 +387,11 @@ void ActuatorController::handleMsg() {
 
 void ActuatorController::startRedLampBlinkingThread(int frequency) {
     // Hier wird der Thread außerhalb des Switch-Blocks gestartet
+    lrblinking = false;
+    WAIT(frequency + 1);
     frequency = frequency >> 1;
+    lrblinking = true;    
+    Logger::getInstance().log(LogLevel::WARNING, "New Blinking Threat starting NEEDED TO BE CHECKED!!!!!..", "ActuatorController");	
     redBlinkThread = new std::thread([this, frequency]() { this->redlampBlinking(&lrblinking, frequency); });
 
     redBlinkThread->detach(); // Thread im Hintergrund ausführen lassen
@@ -397,7 +415,6 @@ void ActuatorController::startYellowLampBlinkingThread(int frequency) {
 
 void ActuatorController::greenlampBlinking(std::atomic<bool> *blink, int32_t frequency) {
     while (*blink && (frequency > 0)) {
-
         if (*blink) actuators->greenLampLightOff();
         std::this_thread::sleep_for(std::chrono::milliseconds(frequency));
         if (*blink) actuators->greenLampLightOn();

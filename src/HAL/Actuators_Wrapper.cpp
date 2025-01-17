@@ -34,6 +34,8 @@ bool Actuators_Wrapper::init() {
     gpio_bank_0 = mmap_device_io(IO_MEM_LEN, (uint64_t)GPIO_BANK_0);
     gpio_bank_1 = mmap_device_io(IO_MEM_LEN, (uint64_t)GPIO_BANK_1);
     gpio_bank_2 = mmap_device_io(IO_MEM_LEN, (uint64_t)GPIO_BANK_2);
+    out32((uintptr_t)(gpio_bank_2 + GPIO_OE), 0x00000000);
+    out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), 0xFFFFFFFF);
     // think bubble: clarification? should it be ||?
     if (MAP_DEVICE_FAILED == gpio_bank_1 || MAP_DEVICE_FAILED == gpio_bank_2 || MAP_DEVICE_FAILED == gpio_bank_0) {
         return false;
@@ -57,7 +59,7 @@ void Actuators_Wrapper::yellowLampLightOff() { out32((uintptr_t)(gpio_bank_1 + G
 void Actuators_Wrapper::greenLampLightOn() { out32((uintptr_t)(gpio_bank_1 + GPIO_SET), BIT_MASK(LG_PIN)); }
 void Actuators_Wrapper::greenLampLightOff() { out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), BIT_MASK(LG_PIN)); }
 
-/*Button's LED's set/clear*/
+/*Button's LED's set/clear -> maybe DATA_IN and DATA_OUT PIN*/ 
 
 //Start Button LED
 void Actuators_Wrapper::startButtonLightOn() { out32((uintptr_t)(gpio_bank_2 + GPIO_SET), BIT_MASK(BGSL_PIN)); }

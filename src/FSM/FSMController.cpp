@@ -25,7 +25,9 @@ int8_t FSMController::pulses[FSM_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_HS1_SAMPLING_DONE,
     PULSE_HS2_SAMPLING_DONE,
     PULSE_MS_TRUE,
-    PULSE_MS_FALSE
+    PULSE_MS_FALSE,
+    PULSE_SM_TYPE_EJECTOR,
+    PULSE_SM_TYPE_DIVERTER
 };
 
 FSMController::FSMController(const std::string dispatcherChannelName) {
@@ -41,9 +43,6 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     PositionTracker* positionTracker = new PositionTracker(fsm);
 
     fsm->enter();
-    //fsm->setFst_2_ready(true); // FIXME hacked
-    fsm->setFST_1_isEjector(true);
-    //fsm->setFST_2_isEjector(false);
 
     fsm->setAReferenceHeight(2200);
     fsm->setBReferenceHeight(3050);
@@ -55,7 +54,7 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     fsm->setCReferenceMinCount(1);
     fsm->setCReferenceMaxCount(100);
     fsm->setHeightThreshhold(400);
-    fsm->setMaxSampleCount(1300);
+    fsm->setMaxSampleCount(300);
     
     fsm->setEStopCalibratedReturn(false);
     fsm->setServiceModeReturn(false);
@@ -239,7 +238,7 @@ void FSMController::subscribeToOutEvents() {
     );
     fsm->getLR2_BLINKING05HZ().subscribe(
         *new sc::rx::subscription<void>(
-            *new VoidObserver(dispatcherConnectionID, PULSE_LR2_BLINKING, 1000, "PULSE_LR2_BLINKING")
+            *new VoidObserver(dispatcherConnectionID, PULSE_LR2_BLINKING, 2000, "PULSE_LR2_BLINKING")
         )
     );
     // PULSE_LR2_OFF      
@@ -339,6 +338,62 @@ void FSMController::subscribeToOutEvents() {
             *new VoidObserver(dispatcherConnectionID, PULSE_Q22_OFF, 0, "PULSE_Q22_OFF")
         )
     );
+    // // PULSE_BGSL1_ON 
+    // fsm->getFST_1_BGSL_LIGHT_ON().subscribe(
+    //     *new sc::rx::subscription<void>(
+    //         *new VoidObserver(dispatcherConnectionID, PULSE_BGSL1_ON, 0, "PULSE_BGSL1_ON")
+    //     )
+    // );
+    
+    // // PULSE_BGSL1_OFF
+    // fsm->getFST_1_BGSL_LIGHT_OFF().subscribe(
+    //     *new sc::rx::subscription<void>(
+    //         *new VoidObserver(dispatcherConnectionID, PULSE_BGSL1_OFF, 0, "PULSE_BGSL1_OFF")
+    //     )
+    // );
+
+    // // PULSE_BRSL1_ON 
+    // fsm->getFST_1_BRSL_LIGHT_ON().subscribe(
+    //     *new sc::rx::subscription<void>(
+    //         *new VoidObserver(dispatcherConnectionID, PULSE_BRSL1_ON, 0, "PULSE_BRSL1_ON")
+    //     )
+    // );
+
+    // // PULSE_BRSL1_OFF
+    // fsm->getFST_1_BRSL_LIGHT_ON().subscribe(
+    //     *new sc::rx::subscription<void>(
+    //         *new VoidObserver(dispatcherConnectionID, PULSE_BRSL1_OFF, 0, "PULSE_BRSL1_OFF")
+    //     )
+    // );
+
+    // // PULSE_BGSL2_ON 
+    // fsm->getFST_2_BGSL_LIGHT_ON().subscribe(
+    //     *new sc::rx::subscription<void>(
+    //         *new VoidObserver(dispatcherConnectionID, PULSE_BGSL2_ON, 0, "PULSE_BGSL2_ON")
+    //     )
+    // );
+    
+    // // PULSE_BGSL2_OFF
+    // fsm->getFST_2_BGSL_LIGHT_OFF().subscribe(
+    //     *new sc::rx::subscription<void>(
+    //         *new VoidObserver(dispatcherConnectionID, PULSE_BGSL2_OFF, 0, "PULSE_BGSL2_OFF")
+    //     )
+    // );
+
+    // // PULSE_BRSL2_ON 
+    // fsm->getFST_2_BRSL_LIGHT_ON().subscribe(
+    //     *new sc::rx::subscription<void>(
+    //         *new VoidObserver(dispatcherConnectionID, PULSE_BRSL2_ON, 0, "PULSE_BRSL2_OFF")
+    //     )
+    // );
+
+    // // PULSE_BRSL2_OFF
+    // fsm->getFST_2_BRSL_LIGHT_ON().subscribe(
+    //     *new sc::rx::subscription<void>(
+    //         *new VoidObserver(dispatcherConnectionID, PULSE_BRSL2_OFF, 0, "PULSE_BRSL2_OFF")
+    //     )
+    // );
+
     // PULSE_SM1_ACTIVE   
     fsm->getFST_1_SORTING_MODULE_ACTIVE().subscribe(
         *new sc::rx::subscription<void>(
@@ -458,6 +513,24 @@ void FSMController::handlePulse(_pulse msg) {
             (msgVal == 0)?fsm->raiseMS_1_LOW():fsm->raiseMS_2_LOW();    
             Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_MS_FALSE..."+ std::to_string(msgVal), "FSMController");
             break;   
+        case PULSE_SM_TYPE_EJECTOR:
+            if(msgVal == 0)fsm->setFST_1_isEjector(true); 
+            if(msgVal == 1)fsm->setFST_2_isEjector(true);    
+            if(msgVal == 0){
+                Logger::getInstance().log(LogLevel::DEBUG, "sorting Moduel on FST_1 ist EJECTOR!..."+ std::to_string(msgVal), "FSMController");
+            } else{
+                Logger::getInstance().log(LogLevel::DEBUG, "sorting Moduel on FST_2 ist EJECTOR!..."+ std::to_string(msgVal), "FSMController");
+            }
+            break;
+        case PULSE_SM_TYPE_DIVERTER:
+            if(msgVal == 0)fsm->setFST_1_isEjector(false);
+            if(msgVal == 1)fsm->setFST_2_isEjector(false);
+            if(msgVal == 0){
+                Logger::getInstance().log(LogLevel::DEBUG, "sorting Moduel on FST_1 is DIVERTER!..."+ std::to_string(msgVal), "FSMController");
+            } else {
+                Logger::getInstance().log(LogLevel::DEBUG, "sorting Moduel on FST_2 is DIVERTER!..."+ std::to_string(msgVal), "FSMController");
+            }
+            break;
         default:
             // TODO handle non application messages, for reference see ActuatorController 
             Logger::getInstance().log(LogLevel::ERROR, "Unknown Pulse....." + std::to_string(msg.code), "FSMController");

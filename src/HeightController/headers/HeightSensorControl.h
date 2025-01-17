@@ -56,7 +56,7 @@ using namespace std;
 
 
 /* Threshold */
-#define THRESHOLD 180 // Hysterese-Bereich.
+#define THRESHOLD 150 // Hysterese-Bereich.
 #define MAX_PRINT_COUNT 100 // Maximale Bestätigungsanzahl.
 
 // Struktur für das Speichern von Höhen- und Sample-Daten

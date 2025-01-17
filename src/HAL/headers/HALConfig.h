@@ -29,6 +29,9 @@
 #define GPIO_CLEAR 0x190
 #define GPIO_SET 0x194
 
+//Reset Register
+#define GPIO_OE 0x134
+
 // LightBarriers
 #define LBF_PIN 2
 #define LBE_PIN 20
