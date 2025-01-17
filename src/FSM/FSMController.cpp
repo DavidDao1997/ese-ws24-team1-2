@@ -54,7 +54,7 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     fsm->setCReferenceMinCount(1);
     fsm->setCReferenceMaxCount(100);
     fsm->setHeightThreshhold(400);
-    fsm->setMaxSampleCount(300);
+    fsm->setMaxSampleCount(150);
     
     fsm->setEStopCalibratedReturn(false);
     fsm->setServiceModeReturn(false);
@@ -338,61 +338,61 @@ void FSMController::subscribeToOutEvents() {
             *new VoidObserver(dispatcherConnectionID, PULSE_Q22_OFF, 0, "PULSE_Q22_OFF")
         )
     );
-    // // PULSE_BGSL1_ON 
-    // fsm->getFST_1_BGSL_LIGHT_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_BGSL1_ON, 0, "PULSE_BGSL1_ON")
-    //     )
-    // );
+    // PULSE_BGSL1_ON 
+    fsm->getFST_1_BGSL_LIGHT_ON().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_BGSL1_ON, 0, "PULSE_BGSL1_ON")
+        )
+    );
     
-    // // PULSE_BGSL1_OFF
-    // fsm->getFST_1_BGSL_LIGHT_OFF().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_BGSL1_OFF, 0, "PULSE_BGSL1_OFF")
-    //     )
-    // );
+    // PULSE_BGSL1_OFF
+    fsm->getFST_1_BGSL_LIGHT_OFF().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_BGSL1_OFF, 0, "PULSE_BGSL1_OFF")
+        )
+    );
 
-    // // PULSE_BRSL1_ON 
-    // fsm->getFST_1_BRSL_LIGHT_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_BRSL1_ON, 0, "PULSE_BRSL1_ON")
-    //     )
-    // );
+    // PULSE_BRSL1_ON 
+    fsm->getFST_1_BGRL_LIGHT_ON().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_BRSL1_ON, 0, "PULSE_BRSL1_ON")
+        )
+    );
 
-    // // PULSE_BRSL1_OFF
-    // fsm->getFST_1_BRSL_LIGHT_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_BRSL1_OFF, 0, "PULSE_BRSL1_OFF")
-    //     )
-    // );
+    // PULSE_BRSL1_OFF
+    fsm->getFST_1_BGRL_LIGHT_OFF().subscribe(
+       *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_BRSL1_OFF, 0, "PULSE_BRSL1_OFF")
+        )
+    );
 
-    // // PULSE_BGSL2_ON 
-    // fsm->getFST_2_BGSL_LIGHT_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_BGSL2_ON, 0, "PULSE_BGSL2_ON")
-    //     )
-    // );
+    // PULSE_BGSL2_ON 
+    fsm->getFST_2_BGSL_LIGHT_ON().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_BGSL2_ON, 0, "PULSE_BGSL2_ON")
+        )
+    );
     
-    // // PULSE_BGSL2_OFF
-    // fsm->getFST_2_BGSL_LIGHT_OFF().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_BGSL2_OFF, 0, "PULSE_BGSL2_OFF")
-    //     )
-    // );
+    // PULSE_BGSL2_OFF
+    fsm->getFST_2_BGSL_LIGHT_OFF().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_BGSL2_OFF, 0, "PULSE_BGSL2_OFF")
+        )
+    );
 
-    // // PULSE_BRSL2_ON 
-    // fsm->getFST_2_BRSL_LIGHT_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_BRSL2_ON, 0, "PULSE_BRSL2_OFF")
-    //     )
-    // );
+    // PULSE_BRSL2_ON - Reset
+    fsm->getFST_2_BGRL_LIGHT_ON().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_BRSL2_ON, 0, "PULSE_BRSL2_OFF")
+        )
+    );
 
-    // // PULSE_BRSL2_OFF
-    // fsm->getFST_2_BRSL_LIGHT_ON().subscribe(
-    //     *new sc::rx::subscription<void>(
-    //         *new VoidObserver(dispatcherConnectionID, PULSE_BRSL2_OFF, 0, "PULSE_BRSL2_OFF")
-    //     )
-    // );
+    // PULSE_BRSL2_OFF - Reset
+    fsm->getFST_2_BGRL_LIGHT_OFF().subscribe(
+        *new sc::rx::subscription<void>(
+            *new VoidObserver(dispatcherConnectionID, PULSE_BRSL2_OFF, 0, "PULSE_BRSL2_OFF")
+        )
+    );
 
     // PULSE_SM1_ACTIVE   
     fsm->getFST_1_SORTING_MODULE_ACTIVE().subscribe(

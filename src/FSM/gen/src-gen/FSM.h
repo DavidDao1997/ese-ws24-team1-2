@@ -144,6 +144,11 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_SortingMissingPuk,
 			FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_IngressUnkownPukAcknowledged,
 			FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_HMMissingPuk,
+			FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorIngress,
+			FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorHM,
+			FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorSorting,
+			FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorEgress,
+			FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorRampFull,
 			FSM_Festo1__Errors_EStop,
 			FSM_Festo1__Errors_Start,
 			FSM_Festo2__Sorting_FSM_Festo2__Sorting,
@@ -204,6 +209,25 @@ class FSM : public sc::EventDrivenInterface
 			Festo_FSM_System,
 			Ready,
 			ServiceMode,
+			ServiceMode_HS_Idle,
+			ServiceMode_HS_LBFInterrupt,
+			ServiceMode_HS_LBF_1_TO_HS_1,
+			ServiceMode_HS_HS1Interrupt,
+			ServiceMode_HS_HS1Interrupt_FSM_HS_Internal_HMCalibration,
+			ServiceMode_HS_HS_1_TO_MS_1,
+			ServiceMode_HS_LBM1Interrupt,
+			ServiceMode_HS_LBM_1_TO_LBE_1,
+			ServiceMode_HS_LBE1Iinterruppt,
+			ServiceMode_HS_LBE_1_TO_LBF_2,
+			ServiceMode_HS_LBF_2_Interrupt,
+			ServiceMode_HS_LBF_2_TO_HS_2,
+			ServiceMode_HS_HS_2_Interrupt,
+			ServiceMode_HS_HS_2_TO_MS_2,
+			ServiceMode_HS_MS2Interrrupt,
+			ServiceMode_HS_MS_2_TO_LBE_2,
+			ServiceMode_HS_LBE_2_INTERRUPT,
+			ServiceMode_HS_Hs1InterruptnonSlow,
+			ServiceMode_HS__final_,
 			Operational,
 			Error,
 			EStop,
@@ -237,12 +261,17 @@ class FSM : public sc::EventDrivenInterface
 			Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingMissingPuk,
 			Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_IngressUnkownPukAcknowledged,
 			Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_HMMissingPuk,
+			Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorEgress,
+			Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NOErrorHM,
+			Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorIngress,
+			Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorSorting,
+			Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorRampFull,
 			Festo2__Errors_EStop,
 			Festo2__Errors_Start
 		};
 		
 		/*! The number of states. */
-		static constexpr const sc::integer numStates {205};
+		static constexpr const sc::integer numStates {234};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_FSM_Festo1__Ingress {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_Idle {0};
@@ -353,6 +382,11 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_SortingMissingPuk {10};
 		static constexpr const sc::integer scvi_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_IngressUnkownPukAcknowledged {10};
 		static constexpr const sc::integer scvi_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_HMMissingPuk {10};
+		static constexpr const sc::integer scvi_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorIngress {10};
+		static constexpr const sc::integer scvi_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorHM {10};
+		static constexpr const sc::integer scvi_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorSorting {10};
+		static constexpr const sc::integer scvi_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorEgress {10};
+		static constexpr const sc::integer scvi_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorRampFull {10};
 		static constexpr const sc::integer scvi_FSM_Festo1__Errors_EStop {10};
 		static constexpr const sc::integer scvi_FSM_Festo1__Errors_Start {10};
 		static constexpr const sc::integer scvi_FSM_Festo2__Sorting_FSM_Festo2__Sorting {11};
@@ -413,6 +447,25 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_Idle {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBFInterrupt {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBF_1_TO_HS_1 {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS1Interrupt {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS1Interrupt_FSM_HS_Internal_HMCalibration {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS_1_TO_MS_1 {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBM1Interrupt {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBM_1_TO_LBE_1 {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBE1Iinterruppt {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBE_1_TO_LBF_2 {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBF_2_Interrupt {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBF_2_TO_HS_2 {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS_2_Interrupt {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS_2_TO_MS_2 {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_MS2Interrrupt {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_MS_2_TO_LBE_2 {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBE_2_INTERRUPT {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_Hs1InterruptnonSlow {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS__final_ {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop {18};
@@ -446,6 +499,11 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingMissingPuk {19};
 		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_IngressUnkownPukAcknowledged {19};
 		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_HMMissingPuk {19};
+		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorEgress {19};
+		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NOErrorHM {19};
+		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorIngress {19};
+		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorSorting {19};
+		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorRampFull {19};
 		static constexpr const sc::integer scvi_Festo2__Errors_EStop {19};
 		static constexpr const sc::integer scvi_Festo2__Errors_Start {19};
 		
@@ -578,6 +636,20 @@ class FSM : public sc::EventDrivenInterface
 				virtual ~EventInstance() = default;
 				const Event eventId;
 		};
+		/*! Get observable for event 'TIMING_LBF_1_TO_HS_1' of default interface scope. */
+		sc::rx::Observable<void>& getTIMING_LBF_1_TO_HS_1() noexcept;
+		/*! Get observable for event 'TIMING_HS_1_TO_MS_1' of default interface scope. */
+		sc::rx::Observable<void>& getTIMING_HS_1_TO_MS_1() noexcept;
+		/*! Get observable for event 'TIMING_MS_1_LBE_1' of default interface scope. */
+		sc::rx::Observable<void>& getTIMING_MS_1_LBE_1() noexcept;
+		/*! Get observable for event 'TIMING_LBE_1_LBF_2' of default interface scope. */
+		sc::rx::Observable<void>& getTIMING_LBE_1_LBF_2() noexcept;
+		/*! Get observable for event 'TIMING_LBF_2_TO_HS_2' of default interface scope. */
+		sc::rx::Observable<void>& getTIMING_LBF_2_TO_HS_2() noexcept;
+		/*! Get observable for event 'TIMING_HS_2_TO_MS_2' of default interface scope. */
+		sc::rx::Observable<void>& getTIMING_HS_2_TO_MS_2() noexcept;
+		/*! Get observable for event 'TIMING_MS_2_LBE_2' of default interface scope. */
+		sc::rx::Observable<void>& getTIMING_MS_2_LBE_2() noexcept;
 		/*! Raises the in event 'HEARTBEAT_FAILED' of default interface scope. */
 		void raiseHEARTBEAT_FAILED();
 		/*! Raises the in event 'HEARTBEAT_RECONNECT' of default interface scope. */
@@ -586,6 +658,22 @@ class FSM : public sc::EventDrivenInterface
 		void raiseFST_1_HEARTBEAT_RECONNECT();
 		/*! Raises the in event 'FST_2_HEARTBEAT_RECONNECT' of default interface scope. */
 		void raiseFST_2_HEARTBEAT_RECONNECT();
+		/*! Get observable for event 'FST_1_BGRL_LIGHT_ON' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_BGRL_LIGHT_ON() noexcept;
+		/*! Get observable for event 'FST_1_BGRL_LIGHT_OFF' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_BGRL_LIGHT_OFF() noexcept;
+		/*! Get observable for event 'FST_1_BGSL_LIGHT_OFF' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_BGSL_LIGHT_OFF() noexcept;
+		/*! Get observable for event 'FST_1_BGSL_LIGHT_ON' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_BGSL_LIGHT_ON() noexcept;
+		/*! Get observable for event 'FST_2_BGRL_LIGHT_ON' of default interface scope. */
+		sc::rx::Observable<void>& getFST_2_BGRL_LIGHT_ON() noexcept;
+		/*! Get observable for event 'FST_2_BGRL_LIGHT_OFF' of default interface scope. */
+		sc::rx::Observable<void>& getFST_2_BGRL_LIGHT_OFF() noexcept;
+		/*! Get observable for event 'FST_2_BGSL_LIGHT_ON' of default interface scope. */
+		sc::rx::Observable<void>& getFST_2_BGSL_LIGHT_ON() noexcept;
+		/*! Get observable for event 'FST_2_BGSL_LIGHT_OFF' of default interface scope. */
+		sc::rx::Observable<void>& getFST_2_BGSL_LIGHT_OFF() noexcept;
 		/*! Raises the in event 'SYSTEM_OPERATIONAL_IN' of default interface scope. */
 		void raiseSYSTEM_OPERATIONAL_IN();
 		/*! Get observable for event 'SYSTEM_OPERATIONAL_OUT' of default interface scope. */
@@ -1036,6 +1124,34 @@ class FSM : public sc::EventDrivenInterface
 		bool getFirstTimeOperational() const noexcept;
 		/*! Sets the value of the variable 'firstTimeOperational' that is defined in the default interface scope. */
 		void setFirstTimeOperational(bool firstTimeOperational) noexcept;
+		/*! Gets the value of the variable 'flatPukHeight' that is defined in the default interface scope. */
+		sc::integer getFlatPukHeight() const noexcept;
+		/*! Sets the value of the variable 'flatPukHeight' that is defined in the default interface scope. */
+		void setFlatPukHeight(sc::integer flatPukHeight) noexcept;
+		/*! Gets the value of the variable 'firstLoopCalibration' that is defined in the default interface scope. */
+		bool getFirstLoopCalibration() const noexcept;
+		/*! Sets the value of the variable 'firstLoopCalibration' that is defined in the default interface scope. */
+		void setFirstLoopCalibration(bool firstLoopCalibration) noexcept;
+		/*! Gets the value of the variable 'refPukHeight' that is defined in the default interface scope. */
+		sc::integer getRefPukHeight() const noexcept;
+		/*! Sets the value of the variable 'refPukHeight' that is defined in the default interface scope. */
+		void setRefPukHeight(sc::integer refPukHeight) noexcept;
+		/*! Gets the value of the variable 'isBandHeight' that is defined in the default interface scope. */
+		sc::integer getIsBandHeight() const noexcept;
+		/*! Sets the value of the variable 'isBandHeight' that is defined in the default interface scope. */
+		void setIsBandHeight(sc::integer isBandHeight) noexcept;
+		/*! Gets the value of the variable 'HeightInDigit' that is defined in the default interface scope. */
+		sc::integer getHeightInDigit() const noexcept;
+		/*! Sets the value of the variable 'HeightInDigit' that is defined in the default interface scope. */
+		void setHeightInDigit(sc::integer HeightInDigit) noexcept;
+		/*! Gets the value of the variable 'isCurrentCalVal' that is defined in the default interface scope. */
+		sc::integer getIsCurrentCalVal() const noexcept;
+		/*! Sets the value of the variable 'isCurrentCalVal' that is defined in the default interface scope. */
+		void setIsCurrentCalVal(sc::integer isCurrentCalVal) noexcept;
+		/*! Gets the value of the variable 'isCountSampleCalVal' that is defined in the default interface scope. */
+		sc::integer getIsCountSampleCalVal() const noexcept;
+		/*! Sets the value of the variable 'isCountSampleCalVal' that is defined in the default interface scope. */
+		void setIsCountSampleCalVal(sc::integer isCountSampleCalVal) noexcept;
 		/*! Gets the value of the variable 'FST_1_HeartBeat' that is defined in the default interface scope. */
 		bool getFST_1_HeartBeat() const noexcept;
 		/*! Sets the value of the variable 'FST_1_HeartBeat' that is defined in the default interface scope. */
@@ -1349,6 +1465,13 @@ class FSM : public sc::EventDrivenInterface
 		bool fst_1_Error {false};
 		bool fst_2_Error {false};
 		bool firstTimeOperational {false};
+		sc::integer flatPukHeight {0};
+		bool firstLoopCalibration {false};
+		sc::integer refPukHeight {0};
+		sc::integer isBandHeight {0};
+		sc::integer HeightInDigit {0};
+		sc::integer isCurrentCalVal {0};
+		sc::integer isCountSampleCalVal {0};
 		bool FST_1_HeartBeat {false};
 		bool FST_2_HeartBeat {false};
 		bool isEStop1High {false};
@@ -1455,9 +1578,11 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
+		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinHMRestart();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_SortingUnknownPuk();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_ErrorinIngressRestart();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_EgressMissingPuk();
+		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_HMUnknownPukAcknowledged();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_HMUnknownPuk();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_IngressUnkownPuk();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_RampFullUnknownPuk();
@@ -1465,7 +1590,13 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_EgressUnknownPuk();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_RampFullMissingPuk();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_SortingMissingPuk();
+		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_IngressUnkownPukAcknowledged();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_HMMissingPuk();
+		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorIngress();
+		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorHM();
+		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorSorting();
+		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorEgress();
+		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorRampFull();
 		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate();
 		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingDiverter();
 		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferEjector();
@@ -1506,8 +1637,12 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_SystemV2_FSM_System();
 		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System();
 		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode();
 		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational();
 		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopReceived();
+		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_EStopCleared();
+		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1Pressed();
+		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2Pressed();
 		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1();
 		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2();
 		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_();
@@ -1522,6 +1657,21 @@ class FSM : public sc::EventDrivenInterface
 		void enact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_RampFullMissingPuk();
 		void enact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingMissingPuk();
 		void enact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_HMMissingPuk();
+		void enact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorEgress();
+		void enact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NOErrorHM();
+		void enact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorIngress();
+		void enact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorSorting();
+		void enact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorRampFull();
+		void exact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorIngress();
+		void exact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorHM();
+		void exact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorSorting();
+		void exact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorEgress();
+		void exact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
+		void exact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorEgress();
+		void exact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NOErrorHM();
+		void exact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorIngress();
+		void exact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorSorting();
+		void exact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorRampFull();
 		void enseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_default();
 		void enseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_default();
 		void enseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_Idle_default();
@@ -1632,6 +1782,11 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_SortingMissingPuk_default();
 		void enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_IngressUnkownPukAcknowledged_default();
 		void enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_HMMissingPuk_default();
+		void enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorIngress_default();
+		void enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorHM_default();
+		void enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorSorting_default();
+		void enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorEgress_default();
+		void enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorRampFull_default();
 		void enseq_FSM_Festo1__Errors_EStop_default();
 		void enseq_FSM_Festo1__Errors_Start_default();
 		void enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_default();
@@ -1692,6 +1847,25 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_Idle_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBFInterrupt_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBF_1_TO_HS_1_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS1Interrupt_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS1Interrupt_FSM_HS_Internal_HMCalibration_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS_1_TO_MS_1_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBM1Interrupt_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBM_1_TO_LBE_1_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBE1Iinterruppt_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBE_1_TO_LBF_2_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBF_2_Interrupt_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBF_2_TO_HS_2_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS_2_Interrupt_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS_2_TO_MS_2_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_MS2Interrrupt_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_MS_2_TO_LBE_2_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBE_2_INTERRUPT_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_Hs1InterruptnonSlow_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS__final__default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_default();
@@ -1724,6 +1898,11 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingMissingPuk_default();
 		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_IngressUnkownPukAcknowledged_default();
 		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_HMMissingPuk_default();
+		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorEgress_default();
+		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NOErrorHM_default();
+		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorIngress_default();
+		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorSorting_default();
+		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorRampFull_default();
 		void enseq_Festo2__Errors_EStop_default();
 		void enseq_Festo2__Errors_Start_default();
 		void enseq_FSM_Festo1_Ingress_default();
@@ -1785,6 +1964,8 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_SystemV2_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS1Interrupt_FSM_HS_Internal_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_default();
 		void enseq_Festo2__Errors_default();
 		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_default();
@@ -1898,6 +2079,11 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_SortingMissingPuk();
 		void exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_IngressUnkownPukAcknowledged();
 		void exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_HMMissingPuk();
+		void exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorIngress();
+		void exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorHM();
+		void exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorSorting();
+		void exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorEgress();
+		void exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorRampFull();
 		void exseq_FSM_Festo1__Errors_EStop();
 		void exseq_FSM_Festo1__Errors_Start();
 		void exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting();
@@ -1958,6 +2144,25 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_Idle();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBFInterrupt();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBF_1_TO_HS_1();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS1Interrupt();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS1Interrupt_FSM_HS_Internal_HMCalibration();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS_1_TO_MS_1();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBM1Interrupt();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBM_1_TO_LBE_1();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBE1Iinterruppt();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBE_1_TO_LBF_2();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBF_2_Interrupt();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBF_2_TO_HS_2();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS_2_Interrupt();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS_2_TO_MS_2();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_MS2Interrrupt();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_MS_2_TO_LBE_2();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBE_2_INTERRUPT();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_Hs1InterruptnonSlow();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS__final_();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop();
@@ -1991,6 +2196,11 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingMissingPuk();
 		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_IngressUnkownPukAcknowledged();
 		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_HMMissingPuk();
+		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorEgress();
+		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NOErrorHM();
+		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorIngress();
+		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorSorting();
+		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorRampFull();
 		void exseq_Festo2__Errors_EStop();
 		void exseq_Festo2__Errors_Start();
 		void exseq_FSM_Festo1_Ingress();
@@ -2041,6 +2251,8 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_SystemV2();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS1Interrupt_FSM_HS_Internal();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop();
 		void exseq_Festo2__Errors();
 		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors();
@@ -2100,6 +2312,8 @@ class FSM : public sc::EventDrivenInterface
 		void react_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow__entry_Default();
 		void react_Festo2__FSM_LAMP_YELLOW__entry_Default();
 		void react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM__entry_Default();
+		void react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS__entry_Default();
+		void react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS1Interrupt_FSM_HS_Internal__entry_Default();
 		void react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__entry_Default();
 		void react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM__entry_Default();
 		void react_FSM_SystemV2__entry_Default();
@@ -2216,6 +2430,11 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_SortingMissingPuk_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_IngressUnkownPukAcknowledged_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_HMMissingPuk_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorIngress_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorHM_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorSorting_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorEgress_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorRampFull_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Errors_EStop_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Errors_Start_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(const sc::integer transitioned_before);
@@ -2276,6 +2495,25 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_Idle_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBFInterrupt_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBF_1_TO_HS_1_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS1Interrupt_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS1Interrupt_FSM_HS_Internal_HMCalibration_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS_1_TO_MS_1_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBM1Interrupt_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBM_1_TO_LBE_1_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBE1Iinterruppt_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBE_1_TO_LBF_2_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBF_2_Interrupt_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBF_2_TO_HS_2_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS_2_Interrupt_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_HS_2_TO_MS_2_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_MS2Interrrupt_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_MS_2_TO_LBE_2_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_LBE_2_INTERRUPT_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS_Hs1InterruptnonSlow_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_HS__final__react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(const sc::integer transitioned_before);
@@ -2309,6 +2547,11 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingMissingPuk_react(const sc::integer transitioned_before);
 		sc::integer Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_IngressUnkownPukAcknowledged_react(const sc::integer transitioned_before);
 		sc::integer Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_HMMissingPuk_react(const sc::integer transitioned_before);
+		sc::integer Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorEgress_react(const sc::integer transitioned_before);
+		sc::integer Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NOErrorHM_react(const sc::integer transitioned_before);
+		sc::integer Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorIngress_react(const sc::integer transitioned_before);
+		sc::integer Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorSorting_react(const sc::integer transitioned_before);
+		sc::integer Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorRampFull_react(const sc::integer transitioned_before);
 		sc::integer Festo2__Errors_EStop_react(const sc::integer transitioned_before);
 		sc::integer Festo2__Errors_Start_react(const sc::integer transitioned_before);
 		void clearInEvents() noexcept;
@@ -2317,6 +2560,27 @@ class FSM : public sc::EventDrivenInterface
 		void runCycle();
 		
 		
+		
+		/*! Observable for event 'TIMING_LBF_1_TO_HS_1' of default interface scope. */
+		sc::rx::Observable<void> TIMING_LBF_1_TO_HS_1_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'TIMING_HS_1_TO_MS_1' of default interface scope. */
+		sc::rx::Observable<void> TIMING_HS_1_TO_MS_1_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'TIMING_MS_1_LBE_1' of default interface scope. */
+		sc::rx::Observable<void> TIMING_MS_1_LBE_1_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'TIMING_LBE_1_LBF_2' of default interface scope. */
+		sc::rx::Observable<void> TIMING_LBE_1_LBF_2_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'TIMING_LBF_2_TO_HS_2' of default interface scope. */
+		sc::rx::Observable<void> TIMING_LBF_2_TO_HS_2_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'TIMING_HS_2_TO_MS_2' of default interface scope. */
+		sc::rx::Observable<void> TIMING_HS_2_TO_MS_2_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'TIMING_MS_2_LBE_2' of default interface scope. */
+		sc::rx::Observable<void> TIMING_MS_2_LBE_2_observable = sc::rx::Observable<void>{};
 		
 		/*! Indicates event 'HEARTBEAT_FAILED' of default interface scope is active. */
 		bool HEARTBEAT_FAILED_raised {false};
@@ -2329,6 +2593,30 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Indicates event 'FST_2_HEARTBEAT_RECONNECT' of default interface scope is active. */
 		bool FST_2_HEARTBEAT_RECONNECT_raised {false};
+		
+		/*! Observable for event 'FST_1_BGRL_LIGHT_ON' of default interface scope. */
+		sc::rx::Observable<void> FST_1_BGRL_LIGHT_ON_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'FST_1_BGRL_LIGHT_OFF' of default interface scope. */
+		sc::rx::Observable<void> FST_1_BGRL_LIGHT_OFF_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'FST_1_BGSL_LIGHT_OFF' of default interface scope. */
+		sc::rx::Observable<void> FST_1_BGSL_LIGHT_OFF_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'FST_1_BGSL_LIGHT_ON' of default interface scope. */
+		sc::rx::Observable<void> FST_1_BGSL_LIGHT_ON_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'FST_2_BGRL_LIGHT_ON' of default interface scope. */
+		sc::rx::Observable<void> FST_2_BGRL_LIGHT_ON_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'FST_2_BGRL_LIGHT_OFF' of default interface scope. */
+		sc::rx::Observable<void> FST_2_BGRL_LIGHT_OFF_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'FST_2_BGSL_LIGHT_ON' of default interface scope. */
+		sc::rx::Observable<void> FST_2_BGSL_LIGHT_ON_observable = sc::rx::Observable<void>{};
+		
+		/*! Observable for event 'FST_2_BGSL_LIGHT_OFF' of default interface scope. */
+		sc::rx::Observable<void> FST_2_BGSL_LIGHT_OFF_observable = sc::rx::Observable<void>{};
 		
 		/*! Indicates event 'SYSTEM_OPERATIONAL_IN' of default interface scope is active. */
 		bool SYSTEM_OPERATIONAL_IN_raised {false};

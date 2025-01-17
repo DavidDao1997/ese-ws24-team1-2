@@ -16,6 +16,7 @@
 #include "FSM/headers/FsmController.h"
 // #include "FSM/src-gen/FSM_QualityGate.h"
 #include "Logging/headers/Logger.h"
+#include "TimingLogger/headers/TimingLogger.h"
 
 #include <gtest/gtest.h>
 
@@ -72,8 +73,14 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         dispatcher->addSubscriber(
             fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
         );
+
+        // TimingLogger* tl = new TimingLogger(dispatcherChannelName);
+        // dispatcher->addSubscriber(
+        //     tl->getChannel(), tl->getPulses(), tl->getNumOfPulses()
+        // );
         
         std::thread fsmControllerHandleMsgThread(std::bind(&FSMController::handleMsg, fsmController));
+        
 
         Decoder *decoder = new Decoder(dispatcherChannelName, FESTO1);
         std::string actuatorControllerChannelName = "actuatorController1";
@@ -87,12 +94,12 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl1", dispatcherChannelName, FESTO1, tsc, adc);
         std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
         
-       
+       // std::thread tlThread(std::bind(&TimingLogger::handleMsg, tl));
         std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
         dispatcherThread.join();
-        // fsmThread.join();
         fsmControllerHandleMsgThread.join();
-        //fsmControllerSendMsgThread.join();
+        // tlThread.join();
+
         actuatorControllerThread.join();
         decoderThread.join();
 

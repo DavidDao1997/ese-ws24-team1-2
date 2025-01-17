@@ -97,7 +97,6 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Passing", "PositionTracker.onIsMetal");
         } else {
             // eject
-            sorting1.pop();
             puk->setTimers(Timer::MotorState::MOTOR_STOP); // could also implement puk->killTimers()
             fsm->raiseFST_1_PUK_SORTING_EJECT();
             Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Ejecting", "PositionTracker.onIsMetal");
@@ -115,7 +114,6 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Passing", "PositionTracker.onIsNotMetal");
         } else {
             // eject
-            sorting1.pop();
             puk->setTimers(Timer::MotorState::MOTOR_STOP); // could also implement puk->killTimers()
             fsm->raiseFST_1_PUK_SORTING_EJECT();
             Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Ejecting", "PositionTracker.onIsNotMetal");
@@ -344,11 +342,19 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     });
     onEvent(&fsm->getFST_1_POSITION_SORTING_PUK_REMOVED(), [this](){
         Puk* puk = queuePop(&sorting1);
+        if (puk == nullptr) {
+            Logger::getInstance().log(LogLevel::ERROR, "[FST1] " + std::to_string(sorting1.size()), "PositionTracker.onSortingPukRemoved");
+            return;
+        }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onSortingPukRemoved");
     });
     onEvent(&fsm->getFST_1_POSITION_EGRESS_PUK_REMOVED(), [this](){
         Puk* puk = queuePop(&egress1);
+        if (puk == nullptr) {
+            Logger::getInstance().log(LogLevel::ERROR, "[FST1] " + std::to_string(egress1.size()), "PositionTracker.onEgressPukRemoved");
+            return;
+        }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onEgressPukRemoved");
     });
@@ -380,6 +386,35 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             puk->setTimers(Timer::MotorState::MOTOR_STOP);
             Logger::getInstance().log(LogLevel::TRACE, "[FST2]", "PositionTracker.onEgressPukRemoved");
         }
+    });
+    onEvent(&fsm->getESTOP_RECEIVED(), [this](){
+        // kill all remaining timers
+        updatePukQueue(heightSensor1, Timer::MotorState::MOTOR_STOP);
+        updatePukQueue(sorting1, Timer::MotorState::MOTOR_STOP);
+        updatePukQueue(egress1, Timer::MotorState::MOTOR_STOP);
+        updatePukQueue(ingress2, Timer::MotorState::MOTOR_STOP);
+        updatePukQueue(heightSensor2, Timer::MotorState::MOTOR_STOP);
+        updatePukQueue(sorting2, Timer::MotorState::MOTOR_STOP);
+        updatePukQueue(egress2, Timer::MotorState::MOTOR_STOP);
+
+        std::lock_guard<std::mutex> lockHeightSensor1(heightSensor1Mutex);
+        std::lock_guard<std::mutex> lockSorting1(sorting1Mutex);
+        std::lock_guard<std::mutex> lockEgress1(egress1Mutex);
+        std::lock_guard<std::mutex> lockIngress2(ingress2Mutex);
+        std::lock_guard<std::mutex> lockHeightSensor2(heightSensor2Mutex);
+        std::lock_guard<std::mutex> lockSorting2(sorting2Mutex);
+        std::lock_guard<std::mutex> lockEgress2(egress2Mutex);
+
+        // clear all segements
+        heightSensor1 = *new std::queue<Puk*>();
+        sorting1 = *new std::queue<Puk*>();
+        egress1 = *new std::queue<Puk*>();
+        ingress2 = *new std::queue<Puk*>();
+        heightSensor2 = *new std::queue<Puk*>();
+        sorting2 = *new std::queue<Puk*>();
+        egress2 = *new std::queue<Puk*>();
+        isMetalDesired1 = false;
+        isMetalDesired2 = false;
     });
     onEvent(&fsm->getMOTOR_1_FAST(), [this](){
         motorState1.store(Timer::MotorState::MOTOR_FAST);

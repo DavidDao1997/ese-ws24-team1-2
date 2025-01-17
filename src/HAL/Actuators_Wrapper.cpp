@@ -34,6 +34,10 @@ bool Actuators_Wrapper::init() {
     gpio_bank_0 = mmap_device_io(IO_MEM_LEN, (uint64_t)GPIO_BANK_0);
     gpio_bank_1 = mmap_device_io(IO_MEM_LEN, (uint64_t)GPIO_BANK_1);
     gpio_bank_2 = mmap_device_io(IO_MEM_LEN, (uint64_t)GPIO_BANK_2);
+   // out32((uintptr_t)(gpio_bank_0 + GPIO_OE), 0xFFFFFFFF);
+    //out32((uintptr_t)(gpio_bank_0 + GPIO_CLEAR), 0x00000000);
+    //out32((uintptr_t)(gpio_bank_1 + GPIO_OE), 0xFFFFFFFF);
+    //out32((uintptr_t)(gpio_bank_1 + GPIO_CLEAR), 0x00000000);
     out32((uintptr_t)(gpio_bank_2 + GPIO_OE), 0x00000000);
     out32((uintptr_t)(gpio_bank_2 + GPIO_CLEAR), 0xFFFFFFFF);
     // think bubble: clarification? should it be ||?

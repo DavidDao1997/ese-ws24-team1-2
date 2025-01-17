@@ -131,7 +131,6 @@ void HeightSensorControl::handleMsg() {
             //exit(EXIT_FAILURE);
         }
 
-        
         // printf("Iam into Routine HeightPulse with Code: %d\n", msg.code );
         if (msg.code == PULSE_ADC_SAMPLE) {
             int32_t currentValue = msg.value.sival_int;

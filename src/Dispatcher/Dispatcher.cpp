@@ -100,6 +100,54 @@ void Dispatcher::handleMsg() {
                         addKnownSubscriber("actuatorController2");
                     }
                     break;
+                
+                // case PULSE_LBF_INTERRUPTED:
+                //     if (msgVal == FESTO1) {
+                //     } else {
+                //     }
+                // case PULSE_LBF_OPEN:
+                //     if (msgVal == FESTO1) {
+                //         lbf1 = std::chrono::high_resolution_clock::now();
+                //     } else {
+                //         lbf2 = std::chrono::high_resolution_clock::now();
+                //     }
+                // case PULSE_LBE_INTERRUPTED:
+                //     if (msgVal == FESTO1) {
+
+                //     } else {
+
+                //     }
+                // case PULSE_LBE_OPEN:
+                //     if (msgVal == FESTO1) {
+
+                //     } else {
+
+                //     }
+                // case PULSE_LBR_INTERRUPTED:
+                //     if (msgVal == FESTO1) {
+
+                //     } else {
+
+                //     }
+                // case PULSE_LBR_OPEN:
+                //     if (msgVal == FESTO1) {
+
+                //     } else {
+
+                //     }
+                // case PULSE_LBM_INTERRUPTED:
+                //     if (msgVal == FESTO1) {
+
+                //     } else {
+
+                //     }
+                // case PULSE_LBM_OPEN:
+                //     if (msgVal == FESTO1) {
+
+                //     } else {
+
+                //     }
+
                 default:
                     // Logger::getInstance().log(LogLevel::TRACE, "Dispatcher forwarding messages", "Dispatcher");
                     // char buffer[100];

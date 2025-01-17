@@ -125,7 +125,7 @@ void Decoder::decode() {
     //     (flippedValues & (uint32_t)BIT_MASK(LBF_PIN)),
     //     (currentValues & (uint32_t)BIT_MASK(LBF_PIN))
     // );
-    Logger::getInstance().log(LogLevel::DEBUG, "decode...", "Decoder");
+    Logger::getInstance().log(LogLevel::TRACE, "decode...", "Decoder");
 
     // ESTOP
     if ((flippedValues & (uint32_t)BIT_MASK(SES_PIN)) != 0) {
@@ -133,7 +133,7 @@ void Decoder::decode() {
         int8_t current_level = (currentValues >> SES_PIN) & 0x1;
         int32_t code = current_level ? PULSE_ESTOP_HIGH : PULSE_ESTOP_LOW;
         // Test
-        Logger::getInstance().log(LogLevel::DEBUG, "current level: " + std::to_string(current_level), "Decoder");
+        Logger::getInstance().log(LogLevel::TRACE, "current level: " + std::to_string(current_level), "Decoder");
         // char buffer[100];
         // sprintf(buffer, "DECODER: current level %d\n", current_level);
         // std::cout << buffer << std::endl;
@@ -149,9 +149,9 @@ void Decoder::decode() {
         // TODO Add 2 Festo support eg add festo# to value instead of sending just 0 and remove number ->
         // PULSE_LBF_INTERRUPTED
         int32_t code = current_level ? PULSE_LBF_OPEN : PULSE_LBF_INTERRUPTED;
-        Logger::getInstance().log(LogLevel::DEBUG, "LBF erkannt", "Decoder");
+        Logger::getInstance().log(LogLevel::TRACE, "LBF erkannt", "Decoder");
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
-            Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
+            Logger::getInstance().log(LogLevel::TRACE, "Dispatcher Send failed", "Decoder");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
     // Light Berrier End
@@ -159,9 +159,9 @@ void Decoder::decode() {
         // LBM_PIN
         int8_t current_level = (currentValues >> LBE_PIN) & 0x1;
         int32_t code = current_level ? PULSE_LBE_OPEN : PULSE_LBE_INTERRUPTED;
-        Logger::getInstance().log(LogLevel::DEBUG, "LBE erkannt", "Decoder");
+        Logger::getInstance().log(LogLevel::TRACE, "LBE erkannt", "Decoder");
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
-            Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
+            Logger::getInstance().log(LogLevel::TRACE, "Dispatcher Send failed", "Decoder");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
     }
     // Light Barrier Ramp
@@ -169,7 +169,7 @@ void Decoder::decode() {
         // LBM_PIN
         int8_t current_level = (currentValues >> LBR_PIN) & 0x1;
         int32_t code = current_level ? PULSE_LBR_OPEN : PULSE_LBR_INTERRUPTED;
-        Logger::getInstance().log(LogLevel::DEBUG, "LBR erkannt", "Decoder");
+        Logger::getInstance().log(LogLevel::TRACE, "LBR erkannt", "Decoder");
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
@@ -179,7 +179,7 @@ void Decoder::decode() {
         // LBM_PIN
         int8_t current_level = (currentValues >> LBM_PIN) & 0x1;
         int32_t code = current_level ? PULSE_LBM_OPEN : PULSE_LBM_INTERRUPTED;
-        Logger::getInstance().log(LogLevel::DEBUG, "LBM erkannt", "Decoder");
+        Logger::getInstance().log(LogLevel::TRACE, "LBM erkannt", "Decoder");
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
@@ -189,21 +189,21 @@ void Decoder::decode() {
         // LBM_PIN
         int8_t current_level = (currentValues >> BGS_PIN) & 0x1; // HIGH wenn bestätigt
         if (current_level) {
-            Logger::getInstance().log(LogLevel::DEBUG, "BGS gedrueckt", "Decoder");
+            Logger::getInstance().log(LogLevel::TRACE, "BGS gedrueckt", "Decoder");
             pressStartTime = std::chrono::steady_clock::now(); // Startzeit des Tastendrucks
         } else {
-            Logger::getInstance().log(LogLevel::DEBUG, "BGS losgelassen", "Decoder");
+            Logger::getInstance().log(LogLevel::TRACE, "BGS losgelassen", "Decoder");
             // timer stuff to check if it was short or long press
             auto pressDuration = std::chrono::steady_clock::now() - pressStartTime; // Berechnung der Dauer
             if (pressDuration < longPressDuration) {
                 // Kurz drücken
-                Logger::getInstance().log(LogLevel::DEBUG, "BGS_SHORT erkannt", "Decoder");
+                Logger::getInstance().log(LogLevel::TRACE, "BGS_SHORT erkannt", "Decoder");
                 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_SHORT, festoId)) {
                     Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
                 }
             } else {
                 // Lang drücken
-                Logger::getInstance().log(LogLevel::DEBUG, "BGS_LONG erkannt", "Decoder");
+                Logger::getInstance().log(LogLevel::TRACE, "BGS_LONG erkannt", "Decoder");
                 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGS_LONG, festoId)) {
                     Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
                 }
@@ -215,21 +215,21 @@ void Decoder::decode() {
         // LBM_PIN
         int8_t current_level = (currentValues >> BRS_PIN) & 0x1; // LOW wenn bestätigt
         if (!current_level) {
-            Logger::getInstance().log(LogLevel::DEBUG, "BRS gedrueckt", "Decoder");
+            Logger::getInstance().log(LogLevel::TRACE, "BRS gedrueckt", "Decoder");
             pressStartTime = std::chrono::steady_clock::now(); // Startzeit des Tastendrucks
         } else {
-            Logger::getInstance().log(LogLevel::DEBUG, "BRS losgelassen", "Decoder");
+            Logger::getInstance().log(LogLevel::TRACE, "BRS losgelassen", "Decoder");
             // timer stuff to check if it was short or long press
             auto pressDuration = std::chrono::steady_clock::now() - pressStartTime; // Berechnung der Dauer
             if (pressDuration < longPressDuration) {
                 // Kurz drücken
-                Logger::getInstance().log(LogLevel::DEBUG, "BRS_SHORT erkannt", "Decoder");
+                Logger::getInstance().log(LogLevel::TRACE, "BRS_SHORT erkannt", "Decoder");
                 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_SHORT, festoId)) {
                     Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
                 }
             } else {
                 // Lang drücken
-                Logger::getInstance().log(LogLevel::DEBUG, "BRS_LONG erkannt", "Decoder");
+                Logger::getInstance().log(LogLevel::TRACE, "BRS_LONG erkannt", "Decoder");
                 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BRS_LONG, festoId)) {
                     Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
                 }
@@ -241,21 +241,21 @@ void Decoder::decode() {
         // LBM_PIN
         int8_t current_level = (currentValues >> BGR_PIN) & 0x1; // HIGH wenn bestätigt
         if (current_level) {
-            Logger::getInstance().log(LogLevel::DEBUG, "BGR gedrueckt", "Decoder");
+            Logger::getInstance().log(LogLevel::TRACE, "BGR gedrueckt", "Decoder");
             pressStartTime = std::chrono::steady_clock::now(); // Startzeit des Tastendrucks
         } else {
-            Logger::getInstance().log(LogLevel::DEBUG, "BGR losgelassen", "Decoder");
+            Logger::getInstance().log(LogLevel::TRACE, "BGR losgelassen", "Decoder");
             // timer stuff to check if it was short or long press
             auto pressDuration = std::chrono::steady_clock::now() - pressStartTime; // Berechnung der Dauer
             if (pressDuration < longPressDuration) {
                 // Kurz drücken
-                Logger::getInstance().log(LogLevel::DEBUG, "BGR_SHORT erkannt", "Decoder");
+                Logger::getInstance().log(LogLevel::TRACE, "BGR_SHORT erkannt", "Decoder");
                 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_SHORT, festoId)) {
                     Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
                 }
             } else {
                 // Lang drücken
-                Logger::getInstance().log(LogLevel::DEBUG, "BGR_LONG erkannt", "Decoder");
+                Logger::getInstance().log(LogLevel::TRACE, "BGR_LONG erkannt", "Decoder");
                 if (0 > MsgSendPulse(dispatcherConnectionID, -1, PULSE_BGR_LONG, festoId)) {
                     Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
                 }
@@ -268,7 +268,7 @@ void Decoder::decode() {
         // LBM_PIN
         int8_t current_level = (currentValues >> MS_PIN) & 0x1;
         int32_t code = current_level ? PULSE_MS_TRUE : PULSE_MS_FALSE;
-        Logger::getInstance().log(LogLevel::DEBUG, "MS erkannt", "Decoder");
+        Logger::getInstance().log(LogLevel::TRACE, "MS erkannt", "Decoder");
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
         } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)

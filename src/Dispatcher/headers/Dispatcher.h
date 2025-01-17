@@ -47,7 +47,6 @@ class Dispatcher : public PulseMsgHandler {
     std::map<uint8_t, std::vector<int32_t>> connectionsByPulse;
     bool running;
 
-
     void addKnownSubscriber(std::string channelName);
 };
 
