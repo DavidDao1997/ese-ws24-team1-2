@@ -6,6 +6,37 @@
  */
 
 #include "headers/PositionTracker.h"
+constexpr std::chrono::milliseconds Duration::Ingress::Expected::Fast;
+constexpr std::chrono::milliseconds Duration::Ingress::Expected::Slow;
+constexpr std::chrono::milliseconds Duration::Ingress::Expired::Fast;
+constexpr std::chrono::milliseconds Duration::Ingress::Expired::Slow;
+constexpr std::chrono::milliseconds Duration::Ingress::Mean::Fast;
+constexpr std::chrono::milliseconds Duration::Ingress::Mean::Slow;
+constexpr std::chrono::milliseconds Duration::Ingress::DistanceValid::Fast;
+constexpr std::chrono::milliseconds Duration::Ingress::DistanceValid::Slow;
+
+constexpr std::chrono::milliseconds Duration::HeightSensor::Expected::Fast;
+constexpr std::chrono::milliseconds Duration::HeightSensor::Expected::Slow;
+constexpr std::chrono::milliseconds Duration::HeightSensor::Expired::Fast;
+constexpr std::chrono::milliseconds Duration::HeightSensor::Expired::Slow;
+constexpr std::chrono::milliseconds Duration::HeightSensor::Mean::Fast;
+constexpr std::chrono::milliseconds Duration::HeightSensor::Mean::Slow;
+
+constexpr std::chrono::milliseconds Duration::Sorting::Expected::Fast;
+constexpr std::chrono::milliseconds Duration::Sorting::Expected::Slow;
+constexpr std::chrono::milliseconds Duration::Sorting::Expired::Fast;
+constexpr std::chrono::milliseconds Duration::Sorting::Expired::Slow;
+constexpr std::chrono::milliseconds Duration::Sorting::Mean::Fast;
+constexpr std::chrono::milliseconds Duration::Sorting::Mean::Slow;
+constexpr std::chrono::milliseconds Duration::Sorting::DistanceValid::Fast;
+constexpr std::chrono::milliseconds Duration::Sorting::DistanceValid::Slow;
+
+constexpr std::chrono::milliseconds Duration::Egress::Expected::Fast;
+constexpr std::chrono::milliseconds Duration::Egress::Expected::Slow;
+constexpr std::chrono::milliseconds Duration::Egress::Expired::Fast;
+constexpr std::chrono::milliseconds Duration::Egress::Expired::Slow;
+constexpr std::chrono::milliseconds Duration::Egress::Mean::Fast;
+constexpr std::chrono::milliseconds Duration::Egress::Mean::Slow;
 
 PositionTracker::PositionTracker(FSM* _fsm) {
     fsm = _fsm;
@@ -217,15 +248,6 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         }
         heightSensor2.push(puk);
         
-        Logger::getInstance().log(LogLevel::DEBUG, "[FST2] " 
-            + std::to_string(heightSensor1.size())
-            + std::to_string(sorting1.size())
-            + std::to_string(egress1.size())
-            + std::to_string(ingress2.size())
-            + std::to_string(heightSensor2.size())
-            + std::to_string(sorting2.size())
-            + std::to_string(egress2.size()),
-            "PositionTracker.onIngressNewPuk");
         puk->approachingHS(
             motorState2.load(),
             nullptr,
@@ -319,7 +341,6 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Passing", "PositionTracker.onIsMetal");
         } else {
             // eject
-            sorting2.pop();
             puk->setTimers(Timer::MotorState::MOTOR_STOP); // could also implement puk->killTimers()
             fsm->raiseFST_2_PUK_SORTING_EJECT();
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Ejecting", "PositionTracker.onIsMetal");
@@ -348,7 +369,6 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         } else {
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Ejecting", "PositionTracker.onIsNotMetal");
         }
-        sorting2.pop();
         puk->setTimers(Timer::MotorState::MOTOR_STOP); // could also implement puk->killTimers()
         fsm->raiseFST_2_PUK_SORTING_EJECT();
     });
@@ -671,29 +691,29 @@ std::chrono::milliseconds PositionTracker::getDuration(SegmentType segmentType, 
     std::chrono::milliseconds duration = std::chrono::milliseconds(0);
     if (motorState == Timer::MotorState::MOTOR_STOP) return duration;
     static const std::map<std::tuple<SegmentType, DurationType, Timer::MotorState>, std::chrono::milliseconds> combination_map = {
-        { {SEGMENT_INGRESS, DURATION_VALID, Timer::MotorState::MOTOR_FAST}, DURATION_INGRESS_DISTANCE_VALID_FAST },
-        { {SEGMENT_INGRESS, DURATION_VALID, Timer::MotorState::MOTOR_SLOW}, DURATION_INGRESS_DISTANCE_VALID_SLOW },
-        { {SEGMENT_INGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST}, DURATION_INGRESS_EXPECTED_FAST },
-        { {SEGMENT_INGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW}, DURATION_INGRESS_EXPECTED_SLOW },
-        { {SEGMENT_INGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST}, DURATION_INGRESS_EXPIRED_FAST },
-        { {SEGMENT_INGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW}, DURATION_INGRESS_EXPIRED_SLOW },
+        { {SEGMENT_INGRESS, DURATION_VALID, Timer::MotorState::MOTOR_FAST}, Duration::Ingress::DistanceValid::Fast },
+        { {SEGMENT_INGRESS, DURATION_VALID, Timer::MotorState::MOTOR_SLOW}, Duration::Ingress::DistanceValid::Slow },
+        { {SEGMENT_INGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST}, Duration::Ingress::Expected::Fast },
+        { {SEGMENT_INGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW}, Duration::Ingress::Expected::Slow },
+        { {SEGMENT_INGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST}, Duration::Ingress::Expired::Fast },
+        { {SEGMENT_INGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW}, Duration::Ingress::Expired::Slow },
 
-        { {SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST}, DURATION_HS_EXPECTED_FAST },
-        { {SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW}, DURATION_HS_EXPECTED_SLOW },
-        { {SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST}, DURATION_HS_EXPIRED_FAST },
-        { {SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW}, DURATION_HS_EXPIRED_SLOW },
+        { {SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST}, Duration::HeightSensor::Expected::Fast },
+        { {SEGMENT_HS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW}, Duration::HeightSensor::Expected::Slow },
+        { {SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST}, Duration::HeightSensor::Expired::Fast },
+        { {SEGMENT_HS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW}, Duration::HeightSensor::Expired::Slow },
 
-        { {SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_FAST}, DURATION_SORTING_DISTANCE_VALID_FAST },
-        { {SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_SLOW}, DURATION_SORTING_DISTANCE_VALID_SLOW },
-        { {SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST}, DURATION_SORTING_EXPECTED_FAST },
-        { {SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW}, DURATION_SORTING_EXPECTED_SLOW },
-        { {SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST}, DURATION_SORTING_EXPIRED_FAST },
-        { {SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW}, DURATION_SORTING_EXPIRED_SLOW },
+        { {SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_FAST}, Duration::Sorting::DistanceValid::Fast },
+        { {SEGMENT_SORTING, DURATION_VALID, Timer::MotorState::MOTOR_SLOW}, Duration::Sorting::DistanceValid::Slow },
+        { {SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST}, Duration::Sorting::Expected::Fast },
+        { {SEGMENT_SORTING, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW}, Duration::Sorting::Expected::Slow },
+        { {SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST}, Duration::Sorting::Expired::Fast },
+        { {SEGMENT_SORTING, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW}, Duration::Sorting::Expired::Slow },
 
-        { {SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST}, DURATION_EGRESS_EXPECTED_FAST },
-        { {SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW}, DURATION_EGRESS_EXPECTED_SLOW },
-        { {SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST}, DURATION_EGRESS_EXPIRED_FAST },
-        { {SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW}, DURATION_EGRESS_EXPIRED_SLOW },
+        { {SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST}, Duration::Egress::Expected::Fast },
+        { {SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW}, Duration::Egress::Expected::Slow },
+        { {SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST}, Duration::Egress::Expired::Fast },
+        { {SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW}, Duration::Egress::Expired::Slow },
     };
 
     // Look up the combination and print the result

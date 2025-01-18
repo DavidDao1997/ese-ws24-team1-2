@@ -40,43 +40,82 @@
 #define TESTING_SORTING_DISTANCE_FAST 1000
 #define TESTING_EGRESS_FAST 2000
 
-//Transfer
-#define DURATION_INGRESS_EXPECTED_FAST std::chrono::milliseconds(15) // LBE_OPEN -> LBF_INTERRUPTED
-#define DURATION_INGRESS_EXPECTED_SLOW std::chrono::milliseconds(100) // LBE_OPEN -> LBF_INTERRUPTED
-#define DURATION_INGRESS_EXPIRED_FAST std::chrono::milliseconds(15000) // LBE_OPEN -> LBF_INTERRUPTED
-#define DURATION_INGRESS_EXPIRED_SLOW std::chrono::milliseconds(10000) // LBE_OPEN -> LBF_INTERRUPTED
+struct Duration {
+    // LBE_OPEN -> LBF_INTERRUPTED
+    struct Ingress {
+        struct Expected {
+            static constexpr std::chrono::milliseconds Fast{100};
+            static constexpr std::chrono::milliseconds Slow{200};
+        };
+        struct Expired {
+            static constexpr std::chrono::milliseconds Fast{15000};
+            static constexpr std::chrono::milliseconds Slow{10000};
+        };
+        struct Mean {
+            static constexpr std::chrono::milliseconds Fast = (Duration::Ingress::Expected::Fast + Duration::Ingress::Expired::Fast) / 2;
+            static constexpr std::chrono::milliseconds Slow = (Duration::Ingress::Expected::Slow + Duration::Ingress::Expired::Slow) / 2;
+        };
 
-//LBF
-#define DURATION_INGRESS_DISTANCE_VALID_FAST std::chrono::milliseconds(100) // LBF_OPEN -> DISTANCE_CLEARED
-#define DURATION_INGRESS_DISTANCE_VALID_SLOW std::chrono::milliseconds(2000) // LBF_OPEN -> DISTANCE_CLEARED
+        // LBF_OPEN -> DISTANCE_CLEARED
+        struct DistanceValid {
+            static constexpr std::chrono::milliseconds Fast{100};
+            static constexpr std::chrono::milliseconds Slow{2000};
+        };
+    };
 
-//HS
-#define DURATION_HS_EXPECTED_FAST std::chrono::milliseconds(200) // LBF_OPEN -> HS_SAMPLE
-#define DURATION_HS_EXPECTED_SLOW std::chrono::milliseconds(400) // LBF_OPEN -> HS_SAMPLE
+    // LBF_OPEN -> HS_SAMPLE
+    struct HeightSensor {
+        struct Expected {
+            static constexpr std::chrono::milliseconds Fast{200};
+            static constexpr std::chrono::milliseconds Slow{400};
+        };
+        struct Expired {
+            static constexpr std::chrono::milliseconds Fast{5000};
+            static constexpr std::chrono::milliseconds Slow{7000};
+        };
+        struct Mean {
+            static constexpr std::chrono::milliseconds Fast = (Duration::HeightSensor::Expected::Fast + Duration::HeightSensor::Expired::Fast) / 2;
+            static constexpr std::chrono::milliseconds Slow = (Duration::HeightSensor::Expected::Slow + Duration::HeightSensor::Expired::Slow) / 2;
+        };
+    };
 
-#define DURATION_HS_EXPIRED_FAST std::chrono::milliseconds(5000) // LBF_OPEN -> HS_SAMPLE
-#define DURATION_HS_EXPIRED_SLOW std::chrono::milliseconds(7000) // LBF_OPEN -> HS_SAMPLE
+    // HS_SAMPLING_DONE -> LBM_INTERRUPTED
+    struct Sorting {
+        struct Expected {
+            static constexpr std::chrono::milliseconds Fast{500};
+            static constexpr std::chrono::milliseconds Slow{1000};
+        };
+        struct Expired {
+            static constexpr std::chrono::milliseconds Fast{2000};
+            static constexpr std::chrono::milliseconds Slow{3500};
+        };
+        struct Mean {
+            static constexpr std::chrono::milliseconds Fast = (Duration::Sorting::Expected::Fast + Duration::Sorting::Expired::Fast) / 2;
+            static constexpr std::chrono::milliseconds Slow = (Duration::Sorting::Expected::Slow + Duration::Sorting::Expired::Slow) / 2;
+        };
 
-//LBM
-#define DURATION_SORTING_EXPECTED_FAST std::chrono::milliseconds(500) // HS_SAMPLING_DONE -> LBM_INTERRUPTED
-#define DURATION_SORTING_EXPECTED_SLOW std::chrono::milliseconds(1000) // HS_SAMPLING_DONE -> LBM_INTERRUPTED
-#define DURATION_SORTING_EXPIRED_FAST std::chrono::milliseconds(2000) // HS_SAMPLING_DONE -> LBM_INTERRUPTED
-#define DURATION_SORTING_EXPIRED_SLOW std::chrono::milliseconds(3500) // HS_SAMPLING_DONE -> LBM_INTERRUPTED
+        // LBM_OPEN -> DIVERTER_CLEARED
+        struct DistanceValid {
+            static constexpr std::chrono::milliseconds Fast{500};
+            static constexpr std::chrono::milliseconds Slow{1000};
+        };
+    };
 
-//SM
-#define DURATION_SORTING_DISTANCE_VALID_FAST std::chrono::milliseconds(500)// LBM_OPEN -> DIVERTER_CLEARED
-#define DURATION_SORTING_DISTANCE_VALID_SLOW std::chrono::milliseconds(1000)// LBM_OPEN -> DIVERTER_CLEARED
-
-//LBE
-#define DURATION_EGRESS_EXPECTED_FAST std::chrono::milliseconds(1500) // LBM_OPEN -> LBE_INTERRUPTED
-#define DURATION_EGRESS_EXPECTED_SLOW std::chrono::milliseconds(5000) // LBM_OPEN -> LBE_INTERRUPTED
-#define DURATION_EGRESS_EXPIRED_FAST std::chrono::milliseconds(4000) // LBM_OPEN -> LBE_INTERRUPTED
-#define DURATION_EGRESS_EXPIRED_SLOW std::chrono::milliseconds(7000) // LBM_OPEN -> LBE_INTERRUPTED
-
-// This could be solved by a boolean if we are sure there are no more profiles to track
-enum HeightProfile {
-    HEIGHTPROFLIE_INVALID,
-    HEIGHTPROFLIE_VALID
+    // LBM_OPEN -> LBE_INTERRUPTED
+    struct Egress {
+        struct Expected {
+            static constexpr std::chrono::milliseconds Fast{1500};
+            static constexpr std::chrono::milliseconds Slow{5000};
+        };
+        struct Expired {
+            static constexpr std::chrono::milliseconds Fast{4000};
+            static constexpr std::chrono::milliseconds Slow{7000};
+        };
+        struct Mean {
+            static constexpr std::chrono::milliseconds Fast = (Duration::Egress::Expected::Fast + Duration::Egress::Expired::Fast) / 2;
+            static constexpr std::chrono::milliseconds Slow = (Duration::Egress::Expected::Slow + Duration::Egress::Expired::Slow) / 2;
+        };
+    };
 };
 
 struct TimerProps {

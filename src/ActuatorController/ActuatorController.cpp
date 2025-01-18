@@ -179,18 +179,18 @@ void ActuatorController::handleMsg() {
                 running = false;
                 break;
             case PULSE_MOTOR1_STOP:
-                Logger::getInstance().log(LogLevel::INFO, "[Festo" + std::to_string(festoID+1) + "] Motor stop", "ActuatorController");
+                Logger::getInstance().log(LogLevel::TRACE, "[Festo" + std::to_string(festoID+1) + "] Motor stop", "ActuatorController");
                 // Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Motor Festo 1 will be stopped...", "ActuatorController");
                 actuators->motorStop();
                 break;
             case PULSE_MOTOR1_SLOW:
-                Logger::getInstance().log(LogLevel::INFO, "[Festo" + std::to_string(festoID+1) + "] Motor slow", "ActuatorController");
+                Logger::getInstance().log(LogLevel::TRACE, "[Festo" + std::to_string(festoID+1) + "] Motor slow", "ActuatorController");
                 // Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Motor Festo 1 will be slow running...", "ActuatorController");
                 actuators->runSlow();
                 actuators->runRight(); // TODO test is toggle button is not needed
                 break;
             case PULSE_MOTOR1_FAST:
-                Logger::getInstance().log(LogLevel::INFO, "[Festo" + std::to_string(festoID+1) + "] Motor fast", "ActuatorController");
+                Logger::getInstance().log(LogLevel::TRACE, "[Festo" + std::to_string(festoID+1) + "] Motor fast", "ActuatorController");
                 // Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Motor Festo 1 will be fast running...", "ActuatorController");
                 actuators->runFast();
                 actuators->runRight();
