@@ -49,14 +49,22 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     onEvent(&fsm->getFST_1_PUK_HEIGHT_IS_VALID(), [this](){
         std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
         Puk* puk = sorting1.front();  // FST1 raises "puk valid/inValid" after "sorting new puk", so we need to use sorting1.front() here
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onIsValid");
+            return
+        }
         puk->setIsValid(true);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1] HEIGHT_IS_VALID", "PositionTracker.onIsValid");
     });
     onEvent(&fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID(), [this](){
         std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
         Puk* puk = sorting1.front();
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onIsNotValid");
+            return
+        }
         puk->setIsValid(false); // FIXME add HS mocking in tests to make this testable
-        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] HEIGHT_IS_NOT_VALID", "PositionTracker.onIs_NOT_Valid");
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] HEIGHT_IS_NOT_VALID", "PositionTracker.onIsNotValid");
     });
     // TODO Puk that disappear or are sorted out
     onEvent(&fsm->getFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK(), [this](){
@@ -64,6 +72,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
 
         Puk* puk = PositionTracker::queuePop(&heightSensor1);
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onHSNewPuk");
+            return
+        }
         sorting1.push(puk);
 
         puk->approachingSorting(
@@ -89,6 +101,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
 
         Puk* puk = sorting1.front();  // FST1 raises "puk valid/inValid" after "sorting new puk", so we need to use sorting1.front() here
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onIsMetal");
+            return
+        }
         if (isMetalDesired1 && puk->getIsValid()) {
             // passthrough
             puk->setIsMetal(true);
@@ -106,6 +122,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
 
         Puk* puk = sorting1.front();
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onIsNotMetal");
+            return
+        }
         if (!isMetalDesired1 && puk->getIsValid()) {
             // passthrough
             puk->setIsMetal(false);
@@ -124,6 +144,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockEgress(egress1Mutex);
 
         Puk* puk = PositionTracker::queuePop(&sorting1);
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onSortingNewPuk");
+            return
+        }
         egress1.push(puk);
 
         puk->approachingEgress(
@@ -157,6 +181,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockSorting(ingress2Mutex);
 
         Puk* puk = queuePop(&egress1);
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onEgressNewPuk");
+            return
+        }
         ingress2.push(puk);
 
         puk->approachingIngress(
@@ -183,6 +211,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockEgress(heightSensor2Mutex);
 
         Puk* puk = queuePop(&ingress2);
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onIngressNewPuk");
+            return
+        }
         heightSensor2.push(puk);
         
         Logger::getInstance().log(LogLevel::DEBUG, "[FST2] " 
@@ -217,8 +249,12 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     onEvent(&fsm->getFST_2_PUK_HEIGHT_IS_VALID(), [this](){
         std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
         Puk* puk = heightSensor2.front();
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onIsValid");
+            return
+        }
         if (!puk->getIsValid()) {
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Profile mismatch", "PositionTracker.onIs_Valid");
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Profile mismatch", "PositionTracker.onIsValid");
         } else {
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onIsValid");
         }
@@ -226,14 +262,16 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     onEvent(&fsm->getFST_2_PUK_HEIGHT_IS_NOT_VALID(), [this](){
         std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
         Puk* puk = heightSensor2.front();
-        if (puk->getIsValid()) {
-            // FIXME add HS mocking in tests to make this testable
-            puk->setIsValid(false);
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Profile mismatch, invalidating puk", "PositionTracker.onIs_NOT_Valid");
-
-        } {
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onIsInvalid");
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onIsInvalid");
+            return
         }
+        if (puk->getIsValid()) {
+            puk->setIsValid(false);
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Profile mismatch, invalidating puk", "PositionTracker.onIsInvalid");
+
+        }
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onIsInvalid");
     });
     onEvent(&fsm->getFST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK(), [this](){
         Logger::getInstance().log(LogLevel::DEBUG, "ENTRY HS [FST2]", "PositionTracker.onHSNewPuk");
@@ -241,6 +279,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
 
         Puk* puk = queuePop(&heightSensor2);
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onHSNewPuk");
+            return
+        }
         sorting2.push(puk);
 
         puk->approachingSorting(
@@ -266,6 +308,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockSorting(sorting2Mutex);
 
         Puk* puk = sorting2.front();
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onIsMetal");
+            return
+        }
         if (isMetalDesired2 && puk->getIsMetal() && puk->getIsValid()) {
             // passthrough
             isMetalDesired2 = false;
@@ -283,6 +329,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockSorting(sorting2Mutex);
 
         Puk* puk = sorting2.front();
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onIsNotMetal");
+            return
+        }
         if (!isMetalDesired2 && !puk->getIsMetal() && puk->getIsValid()) {
             // passthrough
             puk->setIsMetal(false);
@@ -307,6 +357,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         std::lock_guard<std::mutex> lockHeightSensor(egress2Mutex);
 
         Puk* puk = queuePop(&sorting2);
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onSortingNewPuk");
+            return
+        }
         egress2.push(puk);
 
         puk->approachingEgress(
@@ -336,56 +390,74 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onSortingNewPuk");
     });
     onEvent(&fsm->getFST_1_POSITION_HEIGHTMEASUREMENT_PUK_REMOVED(), [this](){
+        std::lock_guard<std::mutex> lock(heightSensor1Mutex);
         Puk* puk = queuePop(&heightSensor1);
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onHSPukRemoved");
+            return
+        }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onHSPukRemoved");
     });
     onEvent(&fsm->getFST_1_POSITION_SORTING_PUK_REMOVED(), [this](){
+        std::lock_guard<std::mutex> lock(sorting1Mutex);
         Puk* puk = queuePop(&sorting1);
-        if (puk == nullptr) {
-            Logger::getInstance().log(LogLevel::ERROR, "[FST1] " + std::to_string(sorting1.size()), "PositionTracker.onSortingPukRemoved");
-            return;
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onSortingPukRemoved");
+            return
         }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onSortingPukRemoved");
     });
     onEvent(&fsm->getFST_1_POSITION_EGRESS_PUK_REMOVED(), [this](){
+        std::lock_guard<std::mutex> lock(egress1Mutex);
         Puk* puk = queuePop(&egress1);
-        if (puk == nullptr) {
-            Logger::getInstance().log(LogLevel::ERROR, "[FST1] " + std::to_string(egress1.size()), "PositionTracker.onEgressPukRemoved");
-            return;
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onEgressPukRemoved");
+            return
         }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onEgressPukRemoved");
     });
     onEvent(&fsm->getFST_2_POSITION_INGRESS_PUK_REMOVED(), [this](){
+        std::lock_guard<std::mutex> lock(ingress2Mutex);
         Puk* puk = queuePop(&ingress2);
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onIngressPukRemoved");
+            return
+        }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onIngressPukRemoved");
     });
     onEvent(&fsm->getFST_2_POSITION_HEIGHTMEASUREMENT_PUK_REMOVED(), [this](){
+        std::lock_guard<std::mutex> lock(heightSensor2Mutex);
         Puk* puk = queuePop(&heightSensor2);
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onHSPukRemoved");
+            return
+        }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onHSPukRemoved");
     });
     onEvent(&fsm->getFST_2_POSITION_SORTING_PUK_REMOVED(), [this](){
+        std::lock_guard<std::mutex> lock(sorting2Mutex);
         Puk* puk = queuePop(&sorting2);
+        if (puk == nullptr){
+            Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onSortingPukRemoved");
+            return
+        }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onSortingPukRemoved");
     });
-    // onEvent(&fst->getFST_2_POSITION_EGRESS_PUK_REMOVED(), [this](){
-    //     Puk* puk = popQueue(&egress2);
-    //     puk->setTimers(Timer::MotorState::MOTOR_STOP);
-    //     Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onEgressPukRemoved");
-    // });
     onEvent(&fsm->getFST_2_POSITION_EGRESS_PUK_REMOVED(), [this](){
+        std::lock_guard<std::mutex> lock(egress2Mutex);
         Puk* puk = queuePop(&egress2);
         if (puk == nullptr){
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK is NULLPTR", "PositionTracker.onEgressPukRemoved");
-        } else {
-            puk->setTimers(Timer::MotorState::MOTOR_STOP);
-            Logger::getInstance().log(LogLevel::TRACE, "[FST2]", "PositionTracker.onEgressPukRemoved");
+            Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onEgressPukRemoved");
+            return
         }
+        puk->setTimers(Timer::MotorState::MOTOR_STOP);
+        Logger::getInstance().log(LogLevel::TRACE, "[FST2]", "PositionTracker.onEgressPukRemoved");
     });
     onEvent(&fsm->getESTOP_RECEIVED(), [this](){
         // kill all remaining timers
