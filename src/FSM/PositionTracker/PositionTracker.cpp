@@ -51,7 +51,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = sorting1.front();  // FST1 raises "puk valid/inValid" after "sorting new puk", so we need to use sorting1.front() here
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onIsValid");
-            return
+            return;
         }
         puk->setIsValid(true);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1] HEIGHT_IS_VALID", "PositionTracker.onIsValid");
@@ -61,7 +61,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = sorting1.front();
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onIsNotValid");
-            return
+            return;
         }
         puk->setIsValid(false); // FIXME add HS mocking in tests to make this testable
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1] HEIGHT_IS_NOT_VALID", "PositionTracker.onIsNotValid");
@@ -74,7 +74,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = PositionTracker::queuePop(&heightSensor1);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onHSNewPuk");
-            return
+            return;
         }
         sorting1.push(puk);
 
@@ -103,7 +103,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = sorting1.front();  // FST1 raises "puk valid/inValid" after "sorting new puk", so we need to use sorting1.front() here
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onIsMetal");
-            return
+            return;
         }
         if (isMetalDesired1 && puk->getIsValid()) {
             // passthrough
@@ -124,7 +124,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = sorting1.front();
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onIsNotMetal");
-            return
+            return;
         }
         if (!isMetalDesired1 && puk->getIsValid()) {
             // passthrough
@@ -146,7 +146,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = PositionTracker::queuePop(&sorting1);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onSortingNewPuk");
-            return
+            return;
         }
         egress1.push(puk);
 
@@ -183,7 +183,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = queuePop(&egress1);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onEgressNewPuk");
-            return
+            return;
         }
         ingress2.push(puk);
 
@@ -213,7 +213,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = queuePop(&ingress2);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onIngressNewPuk");
-            return
+            return;
         }
         heightSensor2.push(puk);
         
@@ -251,7 +251,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = heightSensor2.front();
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onIsValid");
-            return
+            return;
         }
         if (!puk->getIsValid()) {
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Profile mismatch", "PositionTracker.onIsValid");
@@ -264,7 +264,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = heightSensor2.front();
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onIsInvalid");
-            return
+            return;
         }
         if (puk->getIsValid()) {
             puk->setIsValid(false);
@@ -281,7 +281,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = queuePop(&heightSensor2);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onHSNewPuk");
-            return
+            return;
         }
         sorting2.push(puk);
 
@@ -310,7 +310,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = sorting2.front();
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onIsMetal");
-            return
+            return;
         }
         if (isMetalDesired2 && puk->getIsMetal() && puk->getIsValid()) {
             // passthrough
@@ -331,7 +331,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = sorting2.front();
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onIsNotMetal");
-            return
+            return;
         }
         if (!isMetalDesired2 && !puk->getIsMetal() && puk->getIsValid()) {
             // passthrough
@@ -359,7 +359,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = queuePop(&sorting2);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onSortingNewPuk");
-            return
+            return;
         }
         egress2.push(puk);
 
@@ -394,7 +394,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = queuePop(&heightSensor1);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onHSPukRemoved");
-            return
+            return;
         }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onHSPukRemoved");
@@ -404,7 +404,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = queuePop(&sorting1);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onSortingPukRemoved");
-            return
+            return;
         }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onSortingPukRemoved");
@@ -414,7 +414,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = queuePop(&egress1);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] nullpointer exception", "PositionTracker.onEgressPukRemoved");
-            return
+            return;
         }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onEgressPukRemoved");
@@ -424,7 +424,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = queuePop(&ingress2);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onIngressPukRemoved");
-            return
+            return;
         }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onIngressPukRemoved");
@@ -434,7 +434,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = queuePop(&heightSensor2);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onHSPukRemoved");
-            return
+            return;
         }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onHSPukRemoved");
@@ -444,7 +444,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = queuePop(&sorting2);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onSortingPukRemoved");
-            return
+            return;
         }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onSortingPukRemoved");
@@ -454,7 +454,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Puk* puk = queuePop(&egress2);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] nullpointer exception", "PositionTracker.onEgressPukRemoved");
-            return
+            return;
         }
         puk->setTimers(Timer::MotorState::MOTOR_STOP);
         Logger::getInstance().log(LogLevel::TRACE, "[FST2]", "PositionTracker.onEgressPukRemoved");
@@ -489,102 +489,64 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         isMetalDesired2 = false;
     });
     onEvent(&fsm->getMOTOR_1_FAST(), [this](){
-        motorState1.store(Timer::MotorState::MOTOR_FAST);
-        {
-            std::lock_guard<std::mutex> lock(egress1Mutex);
-            egress1 = updatePukQueue(egress1, Timer::MotorState::MOTOR_FAST);
-        }
-        {
-            std::lock_guard<std::mutex> lock(sorting1Mutex);
-            sorting1 = updatePukQueue(sorting1, Timer::MotorState::MOTOR_FAST);
-        }
-        {
-            std::lock_guard<std::mutex> lock(heightSensor1Mutex);
-            heightSensor1 = updatePukQueue(heightSensor1, Timer::MotorState::MOTOR_FAST);
-        }
-        Logger::getInstance().log(LogLevel::TRACE, "[FST1] MotorFast", "PositionTracker.onMotorFast");
+        handleMotorChange(FESTO1, Timer::MotorState::MOTOR_FAST);
     });
     onEvent(&fsm->getMOTOR_1_SLOW(), [this](){
-        motorState1.store(Timer::MotorState::MOTOR_SLOW);
-        {
-            std::lock_guard<std::mutex> lock(egress1Mutex);
-            egress1 = updatePukQueue(egress1, Timer::MotorState::MOTOR_SLOW);
-        }
-        {
-            std::lock_guard<std::mutex> lock(sorting1Mutex);
-            sorting1 = updatePukQueue(sorting1, Timer::MotorState::MOTOR_SLOW);
-        }
-        {
-            std::lock_guard<std::mutex> lock(heightSensor1Mutex);
-            heightSensor1 = updatePukQueue(heightSensor1, Timer::MotorState::MOTOR_SLOW);
-        }
-        Logger::getInstance().log(LogLevel::TRACE, "[FST1] Motor Slow", "PositionTracker.onMotorSlow");
+        handleMotorChange(FESTO1, Timer::MotorState::MOTOR_SLOW);
     });
     onEvent(&fsm->getMOTOR_1_STOP(), [this](){
-        motorState1.store(Timer::MotorState::MOTOR_STOP);
+        handleMotorChange(FESTO1, Timer::MotorState::MOTOR_STOP);
+    });
+    onEvent(&fsm->getMOTOR_2_FAST(), [this](){
+        handleMotorChange(FESTO2, Timer::MotorState::MOTOR_FAST);
+    });
+    onEvent(&fsm->getMOTOR_2_SLOW(), [this](){
+        handleMotorChange(FESTO2, Timer::MotorState::MOTOR_SLOW);
+    });
+    onEvent(&fsm->getMOTOR_2_STOP(), [this](){
+        handleMotorChange(FESTO2, Timer::MotorState::MOTOR_STOP);
+    });
+}
+
+void PositionTracker::handleMotorChange(uint8_t festoId, Timer::MotorState motorState) {
+    if (festoId == FESTO1) {
+        motorState1.store(motorState);
         {
             std::lock_guard<std::mutex> lock(egress1Mutex);
-            egress1 = updatePukQueue(egress1, Timer::MotorState::MOTOR_STOP);
+            egress1 = updatePukQueue(egress1, motorState);
         }
         {
             std::lock_guard<std::mutex> lock(sorting1Mutex);
-            sorting1 = updatePukQueue(sorting1, Timer::MotorState::MOTOR_STOP);
+            sorting1 = updatePukQueue(sorting1, motorState);
         }
         {
             std::lock_guard<std::mutex> lock(heightSensor1Mutex);
-            heightSensor1 = updatePukQueue(heightSensor1, Timer::MotorState::MOTOR_STOP);
+            heightSensor1 = updatePukQueue(heightSensor1, motorState);
         }
-        // for each (timer in timers1) { updateTimersToFast } 
-        Logger::getInstance().log(LogLevel::TRACE, "[FST1] Motor Stop", "PositionTracker.onMotorStop");
-    });
-    onEvent(&fsm->getMOTOR_2_FAST(), [this](){
-        motorState2.store(Timer::MotorState::MOTOR_FAST);
+    } else {
+        motorState2.store(motorState);
         {
             std::lock_guard<std::mutex> lock(egress2Mutex);
-            egress2 = updatePukQueue(egress2, Timer::MotorState::MOTOR_FAST);
+            egress2 = updatePukQueue(egress2, motorState);
         }
         {
             std::lock_guard<std::mutex> lock(sorting2Mutex);
-            sorting2 = updatePukQueue(sorting2, Timer::MotorState::MOTOR_FAST);
+            sorting2 = updatePukQueue(sorting2, motorState);
         }
         {
             std::lock_guard<std::mutex> lock(heightSensor2Mutex);
-            heightSensor2 = updatePukQueue(heightSensor2, Timer::MotorState::MOTOR_FAST);
-        }
-        Logger::getInstance().log(LogLevel::TRACE, "[FST2] MotorFast", "PositionTracker.onMotorFast");
-    });
-    onEvent(&fsm->getMOTOR_2_SLOW(), [this](){
-        motorState2.store(Timer::MotorState::MOTOR_SLOW);
-        {
-            std::lock_guard<std::mutex> lock(egress2Mutex);
-            egress2 = updatePukQueue(egress2, Timer::MotorState::MOTOR_SLOW);
+            heightSensor2 = updatePukQueue(heightSensor2, motorState);
         }
         {
-            std::lock_guard<std::mutex> lock(sorting2Mutex);
-            sorting2 = updatePukQueue(sorting2, Timer::MotorState::MOTOR_SLOW);
+            std::lock_guard<std::mutex> lock(ingress2Mutex);
+            ingress2 = updatePukQueue(ingress2, motorState);
         }
-        {
-            std::lock_guard<std::mutex> lock(heightSensor2Mutex);
-            heightSensor2 = updatePukQueue(heightSensor2, Timer::MotorState::MOTOR_SLOW);
-        }
-        Logger::getInstance().log(LogLevel::TRACE, "[FST2] Motor Slow", "PositionTracker.onMotorSlow");
-    });
-    onEvent(&fsm->getMOTOR_2_STOP(), [this](){
-        motorState2.store(Timer::MotorState::MOTOR_STOP);
-        {
-            std::lock_guard<std::mutex> lock(egress2Mutex);
-            egress2 = updatePukQueue(egress2, Timer::MotorState::MOTOR_STOP);
-        }
-        {
-            std::lock_guard<std::mutex> lock(sorting2Mutex);
-            sorting2 = updatePukQueue(sorting2, Timer::MotorState::MOTOR_STOP);
-        }
-        {
-            std::lock_guard<std::mutex> lock(heightSensor2Mutex);
-            heightSensor2 = updatePukQueue(heightSensor2, Timer::MotorState::MOTOR_STOP);
-        }
-        Logger::getInstance().log(LogLevel::TRACE, "[FST2] Motor Stop", "PositionTracker.onMotorStop");
-    });
+    }
+    std::string motorStateDescriptor;
+    if (motorState == Timer::MotorState::MOTOR_FAST) motorStateDescriptor = "Fast";
+    if (motorState == Timer::MotorState::MOTOR_SLOW) motorStateDescriptor = "Slow";
+    if (motorState == Timer::MotorState::MOTOR_STOP) motorStateDescriptor = "Stop";
+    Logger::getInstance().log(LogLevel::TRACE, "[FST" + std::to_string(festoId + 1) + "] Motor " + motorStateDescriptor, "PositionTracker.onMotor" + motorStateDescriptor);
 }
 
 PositionTracker::~PositionTracker() {

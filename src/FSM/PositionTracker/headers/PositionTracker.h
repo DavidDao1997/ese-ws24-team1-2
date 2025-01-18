@@ -136,6 +136,8 @@ private:
     std::atomic<Timer::MotorState> motorState1;
     std::atomic<Timer::MotorState> motorState2;
 
+    void handleMotorChange(uint8_t festoId, Timer::MotorState motorState);
+
     std::chrono::milliseconds getDuration(SegmentType segmentType, DurationType durationType, Timer::MotorState motorState);
     std::queue<Puk*> updatePukQueue(std::queue<Puk*> tempQueue, Timer::MotorState ms);
     Puk* queuePop(std::queue<Puk*>* queue);
