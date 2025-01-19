@@ -16,12 +16,12 @@
 #include "FSM/headers/FsmController.h"
 // #include "FSM/src-gen/FSM_QualityGate.h"
 #include "Logging/headers/Logger.h"
-#include "TimingLogger/headers/TimingLogger.h"
+#include "HeartBeat/headers/HeartBeat.h"
 
 #include <gtest/gtest.h>
 
 #define TESTING 0
-#define LOGLEVEL DEBUG
+#define LOGLEVEL TRACE
 
 
 int main(int argc, char **argv) {
@@ -65,23 +65,13 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         logger.log(LogLevel::INFO, "Running as Server -> FESTO1...", "Main");
         system("gns -s");
         // TODO run as Server TO BE TESTED
+               
         std::string dispatcherChannelName = "dispatcher";
         Dispatcher *dispatcher = new Dispatcher(dispatcherChannelName);
         std::thread dispatcherThread(std::bind(&Dispatcher::handleMsg, dispatcher));
 
-        FSMController *fsmController = new FSMController(dispatcherChannelName);
-        dispatcher->addSubscriber(
-            fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
-        );
-
-        // TimingLogger* tl = new TimingLogger(dispatcherChannelName);
-        // dispatcher->addSubscriber(
-        //     tl->getChannel(), tl->getPulses(), tl->getNumOfPulses()
-        // );
+          
         
-        std::thread fsmControllerHandleMsgThread(std::bind(&FSMController::handleMsg, fsmController));
-        
-
         Decoder *decoder = new Decoder(dispatcherChannelName, FESTO1);
         std::string actuatorControllerChannelName = "actuatorController1";
         Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
@@ -89,17 +79,34 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
          std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
         actuatorController->subscribeToDispatcher();
 
+        HeartBeat* hb1 = new HeartBeat(FESTO1, actuatorController->getChannel());
+        hb1->connectToFesto();
+        std::thread hb1SendThread(std::bind(&HeartBeat::sendMsg, hb1));
+        std::thread hb1ReicvThread(std::bind(&HeartBeat::handleMsg, hb1));
+
         TSCADC* tsc = new TSCADC();
         ADC* adc = new ADC(*tsc);
         HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl1", dispatcherChannelName, FESTO1, tsc, adc);
         std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
-        
-       // std::thread tlThread(std::bind(&TimingLogger::handleMsg, tl));
-        std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
-        dispatcherThread.join();
-        fsmControllerHandleMsgThread.join();
-        // tlThread.join();
+        FSMController *fsmController = new FSMController(dispatcherChannelName);
+        dispatcher->addSubscriber(
+            fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
+        );
 
+        
+
+        
+        std::thread fsmControllerHandleMsgThread(std::bind(&FSMController::handleMsg, fsmController));
+       
+        std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
+
+
+        
+
+        dispatcherThread.join();
+        // fsmThread.join();
+        fsmControllerHandleMsgThread.join();
+        //fsmControllerSendMsgThread.join();
         actuatorControllerThread.join();
         decoderThread.join();
 
@@ -122,14 +129,29 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         logger.log(LogLevel::DEBUG, "ActuatorController created", "Main");
         std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
         actuatorController->subscribeToDispatcher();
+
+        HeartBeat* hb2 = new HeartBeat(FESTO2, actuatorController->getChannel());
+        hb2->connectToFesto();
+        std::thread hb2SendThread(std::bind(&HeartBeat::sendMsg, hb2));
+        std::thread hb2ReicvThread(std::bind(&HeartBeat::handleMsg, hb2));
         
         TSCADC* tsc = new TSCADC();
         ADC* adc = new ADC(*tsc);
         // logger.log(LogLevel::DEBUG, "ActuatorController init done", "Main");
         HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl2", dispatcherChannelName, FESTO2, tsc, adc);
+
+        
+
+
+
         std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
         
         std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
+
+
+        hb2->connectToFesto();
+        std::thread hbSendThread(std::bind(&HeartBeat::sendMsg, hb2));
+        std::thread hbReicvThread(std::bind(&HeartBeat::handleMsg, hb2));
 
         heightSensorControllerThread.join();
         actuatorControllerThread.join();

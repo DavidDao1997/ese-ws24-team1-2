@@ -8,6 +8,9 @@ int8_t FSMController::numOfPulses = FSM_CONTROLLER_NUM_OF_PULSES;
 int8_t FSMController::pulses[FSM_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_ESTOP_HIGH,
     PULSE_ESTOP_LOW,
+    PULSE_E_STOP_HEARTBEAT_FESTO1,
+    PULSE_E_STOP_HEARTBEAT_FESTO2,
+    PULSE_RECONNECT_HEARTBEAT_FESTO,
     PULSE_LBF_INTERRUPTED,
     PULSE_LBF_OPEN,
     PULSE_LBE_INTERRUPTED,
@@ -437,6 +440,18 @@ void FSMController::handlePulse(_pulse msg) {
             Logger::getInstance().log(LogLevel::TRACE, "received PULSE_STOP_RECV_THREAD...", "FSMController");
             running = false;
             subThreadsRunning = false;             
+            break;
+        case PULSE_E_STOP_HEARTBEAT_FESTO1:
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_E_STOP_HEARTBEAT_FESTO1...", "FSMController");
+            fsm->raiseHEARTBEAT_FAILED();
+            break;
+        case PULSE_E_STOP_HEARTBEAT_FESTO2:
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_E_STOP_HEARTBEAT_FESTO2...", "FSMController");
+            fsm->raiseHEARTBEAT_FAILED();
+            break;
+        case PULSE_RECONNECT_HEARTBEAT_FESTO:
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_RECONNECT_HEARTBEAT_FESTO...", "FSMController");
+            (msgVal == 0)?fsm->raiseFST_1_HEARTBEAT_RECONNECT():fsm->raiseFST_2_HEARTBEAT_RECONNECT();
             break;
         case PULSE_LBF_INTERRUPTED:
             (msgVal == 0)?fsm->raiseLBF_1_INTERRUPTED():fsm->raiseLBF_2_INTERRUPTED();

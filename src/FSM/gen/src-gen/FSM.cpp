@@ -15817,7 +15817,18 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 								enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error_default();
 								FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
 								transitioned_after = 6;
-							} 
+							}  else
+							{
+								if (HS_2_SAMPLING_DONE_raised)
+								{ 
+									exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_A();
+									motor2Slow--;
+									FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
+									FST_2_PUK_HEIGHT_IS_NOT_VALID_observable.next();
+									enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final__default();
+									transitioned_after = 6;
+								} 
+							}
 						}
 					}
 				}
@@ -15885,7 +15896,18 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 								enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error_default();
 								FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_react(6);
 								transitioned_after = 6;
-							} 
+							}  else
+							{
+								if (HS_2_SAMPLING_DONE_raised)
+								{ 
+									exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_B();
+									motor2Slow--;
+									FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
+									FST_2_PUK_HEIGHT_IS_NOT_VALID_observable.next();
+									enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final__default();
+									transitioned_after = 6;
+								} 
+							}
 						}
 					}
 				}
@@ -15948,8 +15970,8 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 							{ 
 								exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_C();
 								motor2Slow--;
-								FST_2_PUK_HEIGHT_IS_NOT_VALID_observable.next();
 								FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
+								FST_2_PUK_HEIGHT_IS_VALID_observable.next();
 								enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final__default();
 								transitioned_after = 6;
 							}  else
@@ -15958,8 +15980,8 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 								{ 
 									exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_C();
 									motor2Slow--;
-									FST_2_PUK_HEIGHT_IS_VALID_observable.next();
 									FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
+									FST_2_PUK_HEIGHT_IS_VALID_observable.next();
 									enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final__default();
 									transitioned_after = 6;
 								} 
@@ -15990,8 +16012,8 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 			{ 
 				exseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_Error();
 				motor2Slow--;
-				FST_2_PUK_HEIGHT_IS_NOT_VALID_observable.next();
 				FST_2_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
+				FST_2_PUK_HEIGHT_IS_VALID_observable.next();
 				enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final__default();
 				transitioned_after = 6;
 			} 
@@ -16802,7 +16824,25 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																																				raiseLocal_EVALUATE();
 																																				enseq_Evaluate_EvaluateTester_default();
 																																				transitioned_after = 9;
-																																			} 
+																																			}  else
+																																			{
+																																				if (FST_1_POSITION_DIVERTER_DISTANCE_VALID_raised)
+																																				{ 
+																																					exseq_Evaluate_EvaluateTester();
+																																					FST_1_SORTING_MODULE_RESTING_observable.next();
+																																					enseq_Evaluate_EvaluateTester_default();
+																																					transitioned_after = 9;
+																																				}  else
+																																				{
+																																					if (FST_2_POSITION_DIVERTER_DISTANCE_VALID_raised)
+																																					{ 
+																																						exseq_Evaluate_EvaluateTester();
+																																						FST_1_SORTING_MODULE_RESTING_observable.next();
+																																						enseq_Evaluate_EvaluateTester_default();
+																																						transitioned_after = 9;
+																																					} 
+																																				}
+																																			}
 																																		}
 																																	}
 																																}

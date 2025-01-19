@@ -13,12 +13,13 @@ int8_t HeartBeat::pulses[HEARTBEAT_NUM_OF_PULSES] = {
     PULSE_ESTOP_HIGH
 };
 
-HeartBeat::HeartBeat(uint8_t festoNr) {
-    running = false;
+HeartBeat::HeartBeat(uint8_t festoNr, int32_t actuatorControllerChannelId) {
+    running = true;
     // check if festo 1 or festo 2 in parameter list // TODO What happens if named Channel not created yet? create namedChannels in main on qnx level. who creates it then? 
     dispatcherChannel = name_open(std::string(DISPATCHERNAME).c_str(),NAME_FLAG_ATTACH_GLOBAL);
     festoId = festoNr;
     messageReceivedOnce = false;
+    actChannel = actuatorControllerChannelId;
     
     if (festoNr == FESTO1){
         heartBeatChannel = createNamedChannel("Festo1HeartBeat");
@@ -38,17 +39,21 @@ HeartBeat::~HeartBeat(){
 }
 
 void HeartBeat::connectToFesto(){
-    if (festoId == FESTO1){
-        otherFesto = name_open("Festo2HeartBeat", NAME_FLAG_ATTACH_GLOBAL);
-    } else if (festoId == FESTO2) {
-        otherFesto = name_open("Festo1HeartBeat", NAME_FLAG_ATTACH_GLOBAL);
-    } else {
-        Logger::getInstance().log(LogLevel::ERROR, "Wrong Festo ID set " + std::to_string(festoId), "HeartBeat");
-    }
     
-    if (0 > otherFesto) {
-        Logger::getInstance().log(LogLevel::CRITICAL, std::to_string(festoId) + " Could not connect to other Festo...", "HeartBeat");
-    }
+    do {
+        if (festoId == FESTO1){
+            otherFesto = name_open("Festo2HeartBeat", NAME_FLAG_ATTACH_GLOBAL);
+        } else if (festoId == FESTO2) {
+            otherFesto = name_open("Festo1HeartBeat", NAME_FLAG_ATTACH_GLOBAL);
+        } else {
+            Logger::getInstance().log(LogLevel::ERROR, "Wrong Festo ID set " + std::to_string(festoId), "HeartBeat");
+        }
+        if (0 > otherFesto) {
+            Logger::getInstance().log(LogLevel::CRITICAL, std::to_string(festoId) + " Could not connect to other Festo...", "HeartBeat");
+        }
+        WAIT(10);
+    } while (0 > otherFesto); 
+    Logger::getInstance().log(LogLevel::TRACE, "Connection established...", "HeartBeat");
 }
 
 bool HeartBeat::stop(){
@@ -72,6 +77,8 @@ void HeartBeat::sendMsg() {
     // TODO: check for first connect. initial connection handling
 
     bool disconnect = false;
+
+    Logger::getInstance().log(LogLevel::TRACE, "MSGSENDER ONLINE...", "HeartBeat");
 
     while (running) {
         Logger::getInstance().log(LogLevel::DEBUG,std::to_string(festoId) + "Sending Heartbeat...", "HeartBeat");
@@ -103,9 +110,6 @@ void HeartBeat::sendMsg() {
 
         WAIT(10);
     }
-    
-    
-
 }
 
 void HeartBeat::handleMsg() {
@@ -114,7 +118,7 @@ void HeartBeat::handleMsg() {
     _pulse msg;
     running = true;
 
-    
+    Logger::getInstance().log(LogLevel::TRACE, "MSGHANDLER ONLINE...", "HeartBeat");
     while (running) {
         int recvid = MsgReceive(channelID, &msg, sizeof(_pulse), nullptr);
 
@@ -134,12 +138,12 @@ void HeartBeat::handleMsg() {
             } else if (msg.code == PULSE_STOP_RECV_THREAD) {
                 Logger::getInstance().log(LogLevel::TRACE, "received PULSE_STOP_RECV_THREAD...", "HeartBeat");
                 running = false;
-            } else if (msg.code == PULSE_ESTOP_LOW) {
-                Logger::getInstance().log(LogLevel::TRACE, "received PULSE_ESTOP_LOW...", "HeartBeat");
-                eStopPressed = true;     
-            } else if (msg.code == PULSE_ESTOP_HIGH) {
-                Logger::getInstance().log(LogLevel::TRACE, "received PULSE_ESTOP_HIGH...", "HeartBeat");
-                eStopPressed = false;                   
+            // } else if (msg.code == PULSE_ESTOP_LOW) {
+            //     Logger::getInstance().log(LogLevel::TRACE, "received PULSE_ESTOP_LOW...", "HeartBeat");
+            //     eStopPressed = true;     
+            // } else if (msg.code == PULSE_ESTOP_HIGH) {
+            //     Logger::getInstance().log(LogLevel::TRACE, "received PULSE_ESTOP_HIGH...", "HeartBeat");
+            //     eStopPressed = false;                   
             } else {
                 Logger::getInstance().log(LogLevel::ERROR, "Unexpected Pulse received: " + std::to_string(msg.code), "HeartBeat");
             }
@@ -165,6 +169,21 @@ void HeartBeat::handleDisconnect() {
         }
 
         // TODO set Actuators
+        int32_t coid = connectToChannel(actChannel);
+        if (0 > MsgSendPulse(coid, -1, PULSE_LG2_ON, festoId)) {
+            Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo2...", "HeartBeat");
+        }
+         if (0 > MsgSendPulse(coid, -1, PULSE_LR2_ON, festoId)) {
+            Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo2...", "HeartBeat");
+        }
+         if (0 > MsgSendPulse(coid, -1, PULSE_LY2_ON, festoId)) {
+            Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo2...", "HeartBeat");
+        }
+        if (0 > MsgSendPulse(coid, -1, PULSE_MOTOR2_STOP, festoId)) {
+            Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo2...", "HeartBeat");
+        }
+        
+
     }
 }
 
