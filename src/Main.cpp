@@ -79,10 +79,10 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
          std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
         actuatorController->subscribeToDispatcher();
 
-        HeartBeat* hb1 = new HeartBeat(FESTO1, actuatorController->getChannel());
-        hb1->connectToFesto();
-        std::thread hb1SendThread(std::bind(&HeartBeat::sendMsg, hb1));
-        std::thread hb1ReicvThread(std::bind(&HeartBeat::handleMsg, hb1));
+        // HeartBeat* hb1 = new HeartBeat(FESTO1, actuatorController->getChannel());
+        // hb1->connectToFesto();
+        // std::thread hb1SendThread(std::bind(&HeartBeat::sendMsg, hb1));
+        // std::thread hb1ReicvThread(std::bind(&HeartBeat::handleMsg, hb1));
 
         TSCADC* tsc = new TSCADC();
         ADC* adc = new ADC(*tsc);
@@ -130,10 +130,10 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
         actuatorController->subscribeToDispatcher();
 
-        HeartBeat* hb2 = new HeartBeat(FESTO2, actuatorController->getChannel());
-        hb2->connectToFesto();
-        std::thread hb2SendThread(std::bind(&HeartBeat::sendMsg, hb2));
-        std::thread hb2ReicvThread(std::bind(&HeartBeat::handleMsg, hb2));
+        // HeartBeat* hb2 = new HeartBeat(FESTO2, actuatorController->getChannel());
+        // hb2->connectToFesto();
+        // std::thread hb2SendThread(std::bind(&HeartBeat::sendMsg, hb2));
+        // std::thread hb2ReicvThread(std::bind(&HeartBeat::handleMsg, hb2));
         
         TSCADC* tsc = new TSCADC();
         ADC* adc = new ADC(*tsc);
@@ -149,9 +149,9 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         std::thread decoderThread(std::bind(&Decoder::handleMsg, decoder));
 
 
-        hb2->connectToFesto();
-        std::thread hbSendThread(std::bind(&HeartBeat::sendMsg, hb2));
-        std::thread hbReicvThread(std::bind(&HeartBeat::handleMsg, hb2));
+        // hb2->connectToFesto();
+        // std::thread hbSendThread(std::bind(&HeartBeat::sendMsg, hb2));
+        // std::thread hbReicvThread(std::bind(&HeartBeat::handleMsg, hb2));
 
         heightSensorControllerThread.join();
         actuatorControllerThread.join();

@@ -8,7 +8,7 @@
 // std::vector<int> sampleCounts;  // Array für die Anzahl der Samples für jede Höhe
 
 bool receivingRunning = false;
-int bandHeight = 0;
+int32_t bandHeight = 0;
 bool firstValue = false;
 int lastValue = -1;
 int stableCount = 0;
@@ -158,16 +158,19 @@ void HeightSensorControl::processSample(
     int currentValue, bool &secondChance, bool &candidatesSend, int &candidateValue, I_ADC *adc
 ) { //, ADC *adc) {
     if (!firstValue) {
-        Logger::getInstance().log(LogLevel::DEBUG, "setting first Value to " + std::to_string(currentValue), "HeightSensorControl");
         bandHeight = currentValue;
         firstValue = true;
+        //Logger::getInstance().log(LogLevel::DEBUG, "sendeing BANDHEIGHT.." + std::to_string(bandHeight), "HeightSensorControl");
+        if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_BANDHEIGHT, bandHeight)) {
+            Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
+        }
     }
 
     if ((abs(currentValue - bandHeight) <= THRESHOLD)) {
         handleBandHeightReached(secondChance);
         if (candidatesSend) {
             if (festoNr == FESTO1){
-                Logger::getInstance().log(LogLevel::TRACE, "sending Value in candidates send..." + std::to_string(currentValue), "HeightSensorControl");
+                //Logger::getInstance().log(LogLevel::TRACE, "sending Value in candidates send..." + std::to_string(currentValue), "HeightSensorControl");
                 if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS1_SAMPLING_DONE, currentValue)) {
                     Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
                 }
@@ -185,7 +188,7 @@ void HeightSensorControl::processSample(
         // std::cout << "HSCONTROL: value is: " << currentValue << std::endl;
         // std::cout << "HSCONT
         if (festoNr == FESTO1){
-            Logger::getInstance().log(LogLevel::TRACE, "sending Value in not candidates send..." + std::to_string(currentValue), "HeightSensorControl");
+            //Logger::getInstance().log(LogLevel::TRACE, "sending Value in not candidates send..." + std::to_string(currentValue), "HeightSensorControl");
             if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS1_SAMPLE, currentValue)) {
                 Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
             }

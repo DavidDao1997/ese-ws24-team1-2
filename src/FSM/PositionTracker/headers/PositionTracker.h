@@ -31,91 +31,219 @@
 // #define DURATION_HS_PUK_EXPIRED_SLOW std::chrono::milliseconds(7400) // worst case measured, no margin added yet
 
 #define TESTING_INGRESS_FAST 1000
+#define OFFSET std::chrono::milliseconds(200)
 
 #define TESTING_INGRESS_DISTANCE_FAST 1000
 #define TESTING_HS_FAST 2000
-
 #define TESTING_SORTING_FAST 1000
-
 #define TESTING_SORTING_DISTANCE_FAST 1000
 #define TESTING_EGRESS_FAST 2000
 
 struct Duration {
-    // LBE_OPEN -> LBF_INTERRUPTED
-    struct Ingress {
-        struct Expected {
-            static constexpr std::chrono::milliseconds Fast{100};
-            static constexpr std::chrono::milliseconds Slow{200};
-        };
-        struct Expired {
-            static constexpr std::chrono::milliseconds Fast{15000};
-            static constexpr std::chrono::milliseconds Slow{10000};
-        };
-        struct Mean {
-            static constexpr std::chrono::milliseconds Fast = (Duration::Ingress::Expected::Fast + Duration::Ingress::Expired::Fast) / 2;
-            static constexpr std::chrono::milliseconds Slow = (Duration::Ingress::Expected::Slow + Duration::Ingress::Expired::Slow) / 2;
+    struct Fst1 {
+        // LBE_OPEN -> LBF_INTERRUPTED
+        struct Ingress {
+            struct Expected {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Expired {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Mean {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+
+            // LBF_OPEN -> DISTANCE_CLEARED
+            struct DistanceValid {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+
+            Expected expected;
+            Expired expired;
+            Mean mean;
+            DistanceValid distanceValid;
         };
 
-        // LBF_OPEN -> DISTANCE_CLEARED
-        struct DistanceValid {
-            static constexpr std::chrono::milliseconds Fast{100};
-            static constexpr std::chrono::milliseconds Slow{2000};
+        // LBF_OPEN -> HS_SAMPLE
+        struct HeightSensor {
+            struct Expected {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Expired {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Mean {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+
+            Expected expected;
+            Expired expired;
+            Mean mean;
         };
+
+        // HS_SAMPLING_DONE -> LBM_INTERRUPTED
+        struct Sorting {
+            struct Expected {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Expired {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Mean {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+
+            // LBM_OPEN -> DIVERTER_CLEARED
+            struct DistanceValid {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+
+            Expected expected;
+            Expired expired;
+            Mean mean;
+            DistanceValid distanceValid;
+        };
+
+        // LBM_OPEN -> LBE_INTERRUPTED
+        struct Egress {
+            struct Expected {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Expired {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Mean {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+
+            Expected expected;
+            Expired expired;
+            Mean mean;
+        };
+        
+        Ingress ingress;
+        HeightSensor heightSensor;
+        Sorting sorting;
+        Egress egress;
     };
 
-    // LBF_OPEN -> HS_SAMPLE
-    struct HeightSensor {
-        struct Expected {
-            static constexpr std::chrono::milliseconds Fast{200};
-            static constexpr std::chrono::milliseconds Slow{400};
-        };
-        struct Expired {
-            static constexpr std::chrono::milliseconds Fast{5000};
-            static constexpr std::chrono::milliseconds Slow{7000};
-        };
-        struct Mean {
-            static constexpr std::chrono::milliseconds Fast = (Duration::HeightSensor::Expected::Fast + Duration::HeightSensor::Expired::Fast) / 2;
-            static constexpr std::chrono::milliseconds Slow = (Duration::HeightSensor::Expected::Slow + Duration::HeightSensor::Expired::Slow) / 2;
-        };
-    };
+    struct Fst2 {
+        // LBE_OPEN -> LBF_INTERRUPTED
+        struct Ingress {
+            struct Expected {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Expired {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Mean {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
 
-    // HS_SAMPLING_DONE -> LBM_INTERRUPTED
-    struct Sorting {
-        struct Expected {
-            static constexpr std::chrono::milliseconds Fast{500};
-            static constexpr std::chrono::milliseconds Slow{1000};
-        };
-        struct Expired {
-            static constexpr std::chrono::milliseconds Fast{2000};
-            static constexpr std::chrono::milliseconds Slow{3500};
-        };
-        struct Mean {
-            static constexpr std::chrono::milliseconds Fast = (Duration::Sorting::Expected::Fast + Duration::Sorting::Expired::Fast) / 2;
-            static constexpr std::chrono::milliseconds Slow = (Duration::Sorting::Expected::Slow + Duration::Sorting::Expired::Slow) / 2;
+            // LBF_OPEN -> DISTANCE_CLEARED
+            struct DistanceValid {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+
+            Expected expected;
+            Expired expired;
+            Mean mean;
+            DistanceValid distanceValid;
         };
 
-        // LBM_OPEN -> DIVERTER_CLEARED
-        struct DistanceValid {
-            static constexpr std::chrono::milliseconds Fast{500};
-            static constexpr std::chrono::milliseconds Slow{1000};
+        // LBF_OPEN -> HS_SAMPLE
+        struct HeightSensor {
+            struct Expected {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Expired {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Mean {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+
+            Expected expected;
+            Expired expired;
+            Mean mean;
         };
+
+        // HS_SAMPLING_DONE -> LBM_INTERRUPTED
+        struct Sorting {
+            struct Expected {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Expired {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Mean {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+
+            // LBM_OPEN -> DIVERTER_CLEARED
+            struct DistanceValid {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+
+            Expected expected;
+            Expired expired;
+            Mean mean;
+            DistanceValid distanceValid;
+        };
+
+        // LBM_OPEN -> LBE_INTERRUPTED
+        struct Egress {
+            struct Expected {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Expired {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+            struct Mean {
+                std::chrono::milliseconds Fast;
+                std::chrono::milliseconds Slow;
+            };
+
+            Expected expected;
+            Expired expired;
+            Mean mean;
+        };
+        
+        Ingress ingress;
+        HeightSensor heightSensor;
+        Sorting sorting;
+        Egress egress;
     };
 
-    // LBM_OPEN -> LBE_INTERRUPTED
-    struct Egress {
-        struct Expected {
-            static constexpr std::chrono::milliseconds Fast{1500};
-            static constexpr std::chrono::milliseconds Slow{5000};
-        };
-        struct Expired {
-            static constexpr std::chrono::milliseconds Fast{4000};
-            static constexpr std::chrono::milliseconds Slow{7000};
-        };
-        struct Mean {
-            static constexpr std::chrono::milliseconds Fast = (Duration::Egress::Expected::Fast + Duration::Egress::Expired::Fast) / 2;
-            static constexpr std::chrono::milliseconds Slow = (Duration::Egress::Expected::Slow + Duration::Egress::Expired::Slow) / 2;
-        };
-    };
+    Fst1 fst1;
+    Fst2 fst2;
 };
 
 struct TimerProps {
@@ -124,12 +252,16 @@ struct TimerProps {
     // uint32_t progress;
 };
 
+// bool isNullTimePoint(const std::chrono::steady_clock::time_point& timePoint) {
+//     return timePoint == std::chrono::steady_clock::time_point::min(); // Checking against the min value
+// }
+
 class PositionTracker{
 public:
     PositionTracker(FSM* fsm);
     ~PositionTracker();
     
-    
+    // Duration durations;
 
     enum SegmentType {
         SEGMENT_INGRESS,
@@ -143,7 +275,7 @@ public:
         DURATION_EXPIRED
     };
 private:
-
+    
     FSM* fsm;
     void listen();
     std::thread* listenThread;
@@ -166,6 +298,9 @@ private:
     std::mutex egress2Mutex;
     std::queue<Puk*> egress2;        // LBM_2_OPEN -> LBE_2_INTERRUPTED
 
+    std::chrono::steady_clock::time_point lastTimer = std::chrono::steady_clock::time_point::min();
+    Duration durations;
+
     std::atomic<uint32_t> lastPukId;
     uint32_t nextPukId();
 
@@ -177,7 +312,7 @@ private:
 
     void handleMotorChange(uint8_t festoId, Timer::MotorState motorState);
 
-    std::chrono::milliseconds getDuration(SegmentType segmentType, DurationType durationType, Timer::MotorState motorState);
+    std::chrono::milliseconds getDuration(int festoId, SegmentType segmentType, DurationType durationType, Timer::MotorState motorState);
     std::queue<Puk*> updatePukQueue(std::queue<Puk*> tempQueue, Timer::MotorState ms);
     Puk* queuePop(std::queue<Puk*>* queue);
 

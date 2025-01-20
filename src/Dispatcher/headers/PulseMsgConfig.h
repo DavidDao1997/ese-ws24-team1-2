@@ -130,6 +130,7 @@ enum PulseCode {
     PULSE_HS1_SAMPLING_DONE,
     PULSE_HS2_SAMPLE,
     PULSE_HS2_SAMPLING_DONE,
+    PULSE_BANDHEIGHT,
 
     // MetalSensor
     PULSE_MS_TRUE,
