@@ -76,36 +76,39 @@ bool HeartBeat::stop(){
 }
 
 void HeartBeat::sendMsg() {
-    if (0 > otherFesto){ 
-        if (festoId == FESTO1){
-            otherFesto = name_open("Festo2HeartBeat", NAME_FLAG_ATTACH_GLOBAL);
-        } else if (festoId == FESTO2) {
-            otherFesto = name_open("Festo1HeartBeat", NAME_FLAG_ATTACH_GLOBAL);
-        } else {
-            Logger::getInstance().log(LogLevel::ERROR, "Wrong Festo ID set " + std::to_string(festoId), "HeartBeat");
-        }
-        if (0 > otherFesto) {
-            Logger::getInstance().log(LogLevel::CRITICAL, std::to_string(festoId) + " Could not connect to other Festo...", "HeartBeat");
-            WAIT(10);
-        } else {
-            if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_RECONNECT_HEARTBEAT_FESTO, festoId)) {
-                Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo1...", "HeartBeat");
-            }
-        }
-    } else {
 
         // TODO: Send heartbeat and check when last heartbeat was received. if received heartbeat is
         // overdue then handleDisconnect, else reset timer
         // TODO: check for first connect. initial connection handling
 
         bool disconnect = false;
-
-        Logger::getInstance().log(LogLevel::TRACE, "MSGSENDER ONLINE...", "HeartBeat");
-
         while (running) {
-            Logger::getInstance().log(LogLevel::DEBUG,std::to_string(festoId) + "Sending Heartbeat...", "HeartBeat");
+            if (0 > otherFesto){ 
+                if (festoId == FESTO1){
+                    otherFesto = name_open("Festo2HeartBeat", NAME_FLAG_ATTACH_GLOBAL);
+                } else if (festoId == FESTO2) {
+                    otherFesto = name_open("Festo1HeartBeat", NAME_FLAG_ATTACH_GLOBAL);
+                } else {
+                    Logger::getInstance().log(LogLevel::ERROR, "Wrong Festo ID set " + std::to_string(festoId), "HeartBeat");
+                }
+                if (0 > otherFesto) {
+                    Logger::getInstance().log(LogLevel::CRITICAL, std::to_string(festoId) + " Could not connect to other Festo...", "HeartBeat");
+                    WAIT(10);
+                } else {
+                    if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_RECONNECT_HEARTBEAT_FESTO, festoId)) {
+                        Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo1...", "HeartBeat");
+                    }
+                }
+                if (0 >= otherFesto) {
+                    disconnect = false;
+                    Logger::getInstance().log(LogLevel::TRACE, "MSGSENDER ONLINE...", "HeartBeat");
+                }
+                WAIT(10);
+                continue;
+            } 
+            //Logger::getInstance().log(LogLevel::DEBUG,std::to_string(festoId) + "Sending Heartbeat...", "HeartBeat");
             if (0 > MsgSendPulse(otherFesto, -1, PULSE_HEARTBEAT, 0)) {
-                Logger::getInstance().log(LogLevel::WARNING, "PulseCouldnotBeSent...", "HeartBeat");
+                // Logger::getInstance().log(LogLevel::WARNING, "PulseCouldnotBeSent...", "HeartBeat");
             }
             // TODO check last heartbeat if last heartbeat < 100 ms or disconnected DONE -> WRITE TESTS
             {
@@ -114,26 +117,25 @@ void HeartBeat::sendMsg() {
                     std::chrono::steady_clock::now() - lastHeartbeatReceived
                 ).count();
 
-                if (timeSinceLastHeartbeat > 100 && messageReceivedOnce) { // Adjust threshold as necessary
+                if (disconnect == false && timeSinceLastHeartbeat > 3000 && messageReceivedOnce) { // Adjust threshold as necessary
                     Logger::getInstance().log(LogLevel::WARNING, "Heartbeat overdue. Disconnecting...", "HeartBeat");
                     handleDisconnect(); // Handle disconnection
                     disconnect = true;
-                }else if  (disconnect == true){
+                } else if  (disconnect == true){
+                    Logger::getInstance().log(LogLevel::DEBUG, "ATTEMPTING RECONNECT", "FOOOOO");
                     if (0 > MsgSendPulse(dispatcherChannel, -1, PULSE_RECONNECT_HEARTBEAT_FESTO, festoId)) {
                         Logger::getInstance().log(LogLevel::WARNING, std::to_string(festoId) + "PulseCouldnotBeSent Festo1...", "HeartBeat");
+                        WAIT(1000);
+                    } else {
+                        disconnect = false;
+                        Logger::getInstance().log(LogLevel::DEBUG, "RECONNECTED", "FOOOOO");
                     }   
-                    disconnect = false;
-                } else {
-                    disconnect = false;
                 }
-
-
             }
-
             WAIT(10);
         }
     }
-}
+
 
 void HeartBeat::handleMsg() {
     ThreadCtl(_NTO_TCTL_IO, 0); // Request IO privileges
@@ -151,11 +153,12 @@ void HeartBeat::handleMsg() {
 
         if (recvid == 0) { // Pulse received
             if (msg.code == PULSE_HEARTBEAT) {
-                Logger::getInstance().log(LogLevel::DEBUG, "Getting Heartbeat from Other Festo...", "HeartBeat");
+                //Logger::getInstance().log(LogLevel::DEBUG, "Getting Heartbeat from Other Festo...", "HeartBeat");
                 // TODO update time when last heartbeat was received. 
                 {
                     std::lock_guard<std::mutex> lock(heartbeatMutex); // Protect shared data
                     lastHeartbeatReceived = std::chrono::steady_clock::now(); // Update heartbeat timestamp
+                    if(messageReceivedOnce == false)Logger::getInstance().log(LogLevel::DEBUG, "MessageReceiveOnce First Heartbeat!!", "HeartBeat");
                     messageReceivedOnce = true;
                 }      
             } else if (msg.code == PULSE_STOP_RECV_THREAD) {

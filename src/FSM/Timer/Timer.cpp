@@ -66,6 +66,10 @@ void Timer::setMotorState(MotorState nextMotorState) {
     }
     uint32_t timeRemaining = timerSpec.it_value.tv_sec * 1000 + timerSpec.it_value.tv_nsec / MILLION; // in milliseconds
     uint32_t timeTotal = motorState == MOTOR_FAST ? fastDuration.count()  : slowDuration.count(); // in milliseconds
+    if (timeTotal == 0) {
+        Logger::getInstance().log(LogLevel::ERROR, "timeTotal = o, div by 0", "Timer");
+        return;
+    }
     fractionRemaining = static_cast<uint8_t>(timeRemaining * UINT8_MAX / timeTotal);
     if (fractionRemaining == 0) return;
 

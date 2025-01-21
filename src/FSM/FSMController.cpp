@@ -426,12 +426,12 @@ void FSMController::subscribeToOutEvents() {
 
 void FSMController::handlePulse(_pulse msg) {
     int32_t msgVal = msg.value.sival_int;
-    int32_t digit = 0;
+    // int32_t digit = 0;
     int32_t averageHeight = 0;
-    int32_t heightSum = 0;
-    int32_t fsmBandHeight = 0;
-    int32_t countSample = 0;
-    int32_t heightDiff = 0;
+    // int32_t heightSum = 0;
+    // int32_t fsmBandHeight = 0;
+    // int32_t countSample = 0;
+    // int32_t heightDiff = 0;
     switch (msg.code) {
         case PULSE_ESTOP_HIGH:
             (msgVal == 0)?fsm->raiseESTOP_1_HIGH():fsm->raiseESTOP_2_HIGH();
@@ -457,7 +457,7 @@ void FSMController::handlePulse(_pulse msg) {
             fsm->raiseHEARTBEAT_FAILED();
             break;
         case PULSE_RECONNECT_HEARTBEAT_FESTO:
-            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_RECONNECT_HEARTBEAT_FESTO...", "FSMController");
+            Logger::getInstance().log(LogLevel::TRACE, "received PULSE_RECONNECT_HEARTBEAT_FESTO(from FST" + std::to_string(msgVal+1)+")...", "FSMController");
             (msgVal == 0)?fsm->raiseFST_1_HEARTBEAT_RECONNECT():fsm->raiseFST_2_HEARTBEAT_RECONNECT();
             break;
         case PULSE_LBF_INTERRUPTED:
@@ -512,13 +512,13 @@ void FSMController::handlePulse(_pulse msg) {
         case PULSE_HS1_SAMPLE:
             fsm->setFST_1_currentValue(msgVal);// 2400
             Logger::getInstance().log(LogLevel::DEBUG, "received currentValue..."+ std::to_string(msgVal), "FSMController");
-            heightSum = fsm->getHeightSum(); // bandheight - currentValue = heightSUmm
-            Logger::getInstance().log(LogLevel::DEBUG, "received heightSum..."+ std::to_string(heightSum), "FSMController");
-            countSample = fsm->getMaxCountSample(); // max count
-            Logger::getInstance().log(LogLevel::DEBUG, "received countSample..."+ std::to_string(countSample), "FSMController");
-            //heightDiff = fsm->getHeightInDigit(); //heightSum/countSample = heightDIff
-            //Logger::getInstance().log(LogLevel::DEBUG, "received heightDiff..."+ std::to_string(heightDiff), "FSMController");
-            ///averageHeight = fsm->getAverageHeight();
+            // heightSum = fsm->getHeightSum(); // bandheight - currentValue = heightSUmm
+            // Logger::getInstance().log(LogLevel::DEBUG, "received heightSum..."+ std::to_string(heightSum), "FSMController");
+            // countSample = fsm->getMaxCountSample(); // max count
+            // Logger::getInstance().log(LogLevel::DEBUG, "received countSample..."+ std::to_string(countSample), "FSMController");
+            // //heightDiff = fsm->getHeightInDigit(); //heightSum/countSample = heightDIff
+            // //Logger::getInstance().log(LogLevel::DEBUG, "received heightDiff..."+ std::to_string(heightDiff), "FSMController");
+            // ///averageHeight = fsm->getAverageHeight();
             fsm-> raiseHS_1_SAMPLE();
             // Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLE...", "FSMController");
             break;
@@ -529,20 +529,20 @@ void FSMController::handlePulse(_pulse msg) {
             break;
         case PULSE_HS1_SAMPLING_DONE:
             fsm-> raiseHS_1_SAMPLING_DONE();
-            heightSum = fsm->getHeightSum();
-            digit = fsm->getDigitpermm();
-            Logger::getInstance().log(LogLevel::DEBUG, "received delta..."+ std::to_string(digit), "FSMController");
-            Logger::getInstance().log(LogLevel::DEBUG, "received heightSum..."+ std::to_string(heightSum), "FSMController");
+            // heightSum = fsm->getHeightSum();
+            // digit = fsm->getDigitpermm();
+            // Logger::getInstance().log(LogLevel::DEBUG, "received delta..."+ std::to_string(digit), "FSMController");
+            // Logger::getInstance().log(LogLevel::DEBUG, "received heightSum..."+ std::to_string(heightSum), "FSMController");
             averageHeight = fsm->getAverageHeight();
             Logger::getInstance().log(LogLevel::DEBUG, "received AverageHeight..."+ std::to_string(averageHeight), "FSMController");
             Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLING_DONE...", "FSMController");
             break; 
         case PULSE_HS2_SAMPLING_DONE:
             fsm-> raiseHS_2_SAMPLING_DONE();
-            heightSum = fsm->getHeightSum();
-            digit = fsm->getDigitpermm();
-            Logger::getInstance().log(LogLevel::DEBUG, "received delta..."+ std::to_string(digit), "FSMController");
-            Logger::getInstance().log(LogLevel::DEBUG, "received heightSum..."+ std::to_string(heightSum), "FSMController");
+            // heightSum = fsm->getHeightSum();
+            // digit = fsm->getDigitpermm();
+            // Logger::getInstance().log(LogLevel::DEBUG, "received delta..."+ std::to_string(digit), "FSMController");
+            // Logger::getInstance().log(LogLevel::DEBUG, "received heightSum..."+ std::to_string(heightSum), "FSMController");
             averageHeight = fsm->getAverageHeight();
             Logger::getInstance().log(LogLevel::DEBUG, "received AverageHeight..."+ std::to_string(averageHeight), "FSMController");
             Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLING_DONE...", "FSMController");

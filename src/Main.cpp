@@ -73,6 +73,10 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
           
         
         Decoder *decoder = new Decoder(dispatcherChannelName, FESTO1);
+        FSMController *fsmController = new FSMController(dispatcherChannelName);
+        dispatcher->addSubscriber(
+            fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
+        );
         std::string actuatorControllerChannelName = "actuatorController1";
         Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
         ActuatorController *actuatorController = new ActuatorController(FESTO1, actuatorControllerChannelName, actuatorsWrapper);
@@ -80,7 +84,7 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         actuatorController->subscribeToDispatcher();
 
         // HeartBeat* hb1 = new HeartBeat(FESTO1, actuatorController->getChannel());
-        // hb1->connectToFesto();
+        // // hb1->connectToFesto();
         // std::thread hb1SendThread(std::bind(&HeartBeat::sendMsg, hb1));
         // std::thread hb1ReicvThread(std::bind(&HeartBeat::handleMsg, hb1));
 
@@ -88,10 +92,10 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         ADC* adc = new ADC(*tsc);
         HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl1", dispatcherChannelName, FESTO1, tsc, adc);
         std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
-        FSMController *fsmController = new FSMController(dispatcherChannelName);
-        dispatcher->addSubscriber(
-            fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
-        );
+        // FSMController *fsmController = new FSMController(dispatcherChannelName);
+        // dispatcher->addSubscriber(
+        //     fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
+        // );
 
         
 
@@ -131,7 +135,7 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         actuatorController->subscribeToDispatcher();
 
         // HeartBeat* hb2 = new HeartBeat(FESTO2, actuatorController->getChannel());
-        // hb2->connectToFesto();
+        // // hb2->connectToFesto();
         // std::thread hb2SendThread(std::bind(&HeartBeat::sendMsg, hb2));
         // std::thread hb2ReicvThread(std::bind(&HeartBeat::handleMsg, hb2));
         

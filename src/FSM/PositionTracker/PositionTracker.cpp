@@ -49,18 +49,17 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     durations.fst1.ingress.distanceValid.Fast = std::chrono::milliseconds(100);
     durations.fst1.ingress.distanceValid.Slow = std::chrono::milliseconds(200);
     
-    durations.fst1.sorting.distanceValid.Fast = std::chrono::milliseconds(500);
-    durations.fst1.sorting.distanceValid.Slow = std::chrono::milliseconds(1000);
+    durations.fst1.sorting.distanceValid.Fast = std::chrono::milliseconds(1500);
+    durations.fst1.sorting.distanceValid.Slow = std::chrono::milliseconds(3000);
     
     durations.fst2.ingress.distanceValid.Fast = std::chrono::milliseconds(100);
     durations.fst2.ingress.distanceValid.Slow = std::chrono::milliseconds(200);
     
-    durations.fst2.sorting.distanceValid.Fast = std::chrono::milliseconds(500);
-    durations.fst2.sorting.distanceValid.Slow = std::chrono::milliseconds(1000);
+    durations.fst2.sorting.distanceValid.Fast = std::chrono::milliseconds(1500);
+    durations.fst2.sorting.distanceValid.Slow = std::chrono::milliseconds(3000);
+    
     onEvent(&fsm->getFST_1_POSITION_INGRESS_NEW_PUK(), [this](){
         std::lock_guard<std::mutex> lock(heightSensor1Mutex);
-        //WAIT(1000);
-        // exit(1);
         Puk* puk = new Puk(nextPukId());              
         heightSensor1.push(puk);
         if (puk == nullptr) {
@@ -302,17 +301,17 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         ingress2.push(puk);
 
         puk->approachingIngress(
-            motorState1.load(),
+            motorState1.load(),//motorstate2?
             new Timer(
-                getDuration(FESTO2, SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
-                getDuration(FESTO2, SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
+                getDuration(FESTO1, SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(FESTO1, SEGMENT_EGRESS, DURATION_EXPECTED, Timer::MotorState::MOTOR_SLOW),
                 connectionId, 
                 Timer::PulseCode::PULSE_INGRESS_2_PUK_EXPECTED, 
                 puk->getPukId()
             ),
             new Timer(
-                getDuration(FESTO2, SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
-                getDuration(FESTO2, SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
+                getDuration(FESTO1, SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_FAST), 
+                getDuration(FESTO1, SEGMENT_EGRESS, DURATION_EXPIRED, Timer::MotorState::MOTOR_SLOW),
                 connectionId, 
                 Timer::PulseCode::PULSE_INGRESS_2_PUK_EXPIRED, 
                 puk->getPukId()
@@ -672,7 +671,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             Logger::getInstance().log(LogLevel::TRACE, "[FST1] Starting Timer", "PositionTracker.onTimingLBF1toHS1");
         } else {
             // ending timer
-            timePassed = std::chrono::duration_cast<std::chrono::milliseconds>(
+                timePassed = std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::steady_clock::now() - lastTimer
             );
             Logger::getInstance().log(LogLevel::TRACE, "[FST1] Ending Timer: " + std::to_string(timePassed.count()), "PositionTracker.onTimingLBF1toHS1");
