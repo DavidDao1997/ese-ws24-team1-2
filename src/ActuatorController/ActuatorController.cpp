@@ -71,6 +71,7 @@ int8_t ActuatorController::pulses_FESTO2[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
 
 ActuatorController::ActuatorController(uint8_t festo, const std::string name, I_Actuators_Wrapper *actuatorsWrapper) {
     actuatorControllerChannel = createNamedChannel(name);
+    acForHBChannel = createChannel();
     channelID = actuatorControllerChannel->chid;
     actuators = actuatorsWrapper;
     running = false;
@@ -140,6 +141,7 @@ bool ActuatorController::stop(){
     if (yellowBlinkThread != nullptr && yellowBlinkThread->joinable()) yellowBlinkThread->join();
     if (redBlinkThread != nullptr && redBlinkThread->joinable()) redBlinkThread->join();
 	int coid = connectToChannel(channelID);
+    int coid2 = connectToChannel(acForHBChannel);
     if (0 > MsgSendPulse(coid, -1, PULSE_STOP_RECV_THREAD, 0)) {
             Logger::getInstance().log(LogLevel::ERROR, "shutting down MsgReceiver failed...", "ActuatorController");
             return false;
@@ -149,7 +151,58 @@ bool ActuatorController::stop(){
         Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "ActuatorController");
         return false;
     }
+    if (0 > MsgSendPulse(coid2, -1, PULSE_STOP_RECV_THREAD, 0)) {
+            Logger::getInstance().log(LogLevel::ERROR, "shutting down MsgReceiver failed...", "ActuatorController");
+            return false;
+    }
+    Logger::getInstance().log(LogLevel::TRACE, "Shutting down PULSE send...", "ActuatorController");
+    if (0 > ConnectDetach(coid)){
+        Logger::getInstance().log(LogLevel::ERROR, "Stop Detach failed...", "ActuatorController");
+        return false;
+    }
     return true;
+}
+
+void ActuatorController::handleHbMsg(){
+    Logger::getInstance().log(LogLevel::TRACE, "HBThread started...", "ActuatorController");
+    while(running){
+        ThreadCtl(_NTO_TCTL_IO, 0); // Request IO privileges
+        _pulse msg;
+        running = true;
+
+        int recvid = MsgReceivePulse(acForHBChannel, &msg, sizeof(_pulse), nullptr);
+        if (recvid == 0) { // Pulse received^
+            int32_t msgVal = msg.value.sival_int;
+            // Logger::getInstance().log(LogLevel::TRACE, "MSG VAL: " + std::to_string(msgVal), "ActuatorController");
+            switch (msg.code) {
+            case PULSE_STOP_RECV_THREAD:
+                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": received PULSE_STOP_RECV_THREAD...", "ActuatorController");
+                running = false;
+                break;
+            case PULSE_MOTOR2_STOP:
+                Logger::getInstance().log(LogLevel::TRACE, "[Festo" + std::to_string(festoID+1) + "] Motor stop", "ActuatorController");
+                // Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Motor Festo 1 will be stopped...", "ActuatorController");
+                actuators->motorStop();
+                break;
+            case PULSE_LR2_BLINKING:
+                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Red blinking(" + std::to_string(msgVal) + "Hz)...", "ActuatorController");
+                startRedLampBlinkingThread(msgVal);
+                break;
+            case PULSE_LG2_OFF:
+                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Green off...", "ActuatorController");
+                lgblinking = false;
+                actuators->greenLampLightOff();
+                break;
+            case PULSE_LY2_OFF:
+                Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Festo 2 LED Yellow off...", "ActuatorController");
+                lyblinking = false;
+                actuators->yellowLampLightOff();
+                break;
+            default:
+                Logger::getInstance().log(LogLevel::ERROR, std::to_string(festoID) + ": Unknown Pulse....." + std::to_string(msg.code), "ActuatorController");
+            }           
+        }
+    }
 }
 
 // int8_t *ActuatorController::getPulses() { return pulses; };
@@ -488,6 +541,7 @@ bool ActuatorController::getRedBlinking(){
 
 
 int32_t ActuatorController::getChannel() { return channelID; }
+int32_t ActuatorController::getHBChannel() { return acForHBChannel; }
 
 void ActuatorController::sendMsg() {
 

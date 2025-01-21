@@ -277,9 +277,32 @@ PositionTracker::PositionTracker(FSM* _fsm) {
                 connectionId, 
                 Timer::PulseCode::PULSE_EGRESS_1_PUK_EXPIRED, 
                 puk->getPukId()
-            )
+            ),
+            nullptr
+            // new Timer(
+            //     TIMEOUT_DIVERTER,
+            //     connectionId,
+            //     Timer::PulseCode::PULSE_SORTING_1_TIMEOUT_DIVERTER,
+            //     puk->getPukId()
+            // )
         );
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onSortingNewPuk");
+    });
+    onEvent(&fsm->getFST_1_SORTING_MODULE_ACTIVE(), [this]() {
+        diverter1TimeOut = new Timer(
+            TIMEOUT_DIVERTER,
+            connectionId,
+            Timer::PulseCode::PULSE_SORTING_1_TIMEOUT_DIVERTER,
+            0
+        );
+        diverter1TimeOut->setMotorState(Timer::MotorState::MOTOR_FAST);
+    });
+    onEvent(&fsm->getFST_1_SORTING_MODULE_RESTING(), [this]() {
+        if (diverter1TimeOut == nullptr) {
+            Logger::getInstance().log(LogLevel::ERROR, "PROBLEMSS", "PositionTracker.listen");
+        } else {
+            diverter1TimeOut->kill();
+        }
     });
     onEvent(&fsm->getFST_1_POSITION_EGRESS_NEW_PUK(), [this](){
         std::lock_guard<std::mutex> lockEgress(egress1Mutex);
@@ -542,9 +565,33 @@ PositionTracker::PositionTracker(FSM* _fsm) {
                 connectionId, 
                 Timer::PulseCode::PULSE_EGRESS_2_PUK_EXPIRED, 
                 puk->getPukId()
-            )
+            ),
+            nullptr
+            // new Timer(
+            //     TIMEOUT_DIVERTER,
+            //     connectionId,
+            //     Timer::PulseCode::PULSE_SORTING_2_TIMEOUT_DIVERTER,
+            //     puk->getPukId()
+            // )
         );
         Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onSortingNewPuk");
+    });
+    onEvent(&fsm->getFST_2_SORTING_MODULE_ACTIVE(), [this]() {
+        diverter2TimeOut = new Timer(
+            TIMEOUT_DIVERTER,
+            connectionId,
+            Timer::PulseCode::PULSE_SORTING_2_TIMEOUT_DIVERTER,
+            0
+        );
+        
+        diverter2TimeOut->setMotorState(Timer::MotorState::MOTOR_FAST);
+    });
+    onEvent(&fsm->getFST_2_SORTING_MODULE_RESTING(), [this]() {
+        if (diverter2TimeOut == nullptr) {
+            Logger::getInstance().log(LogLevel::ERROR, "PROBLEMSS", "PositionTracker.listen");
+        } else {
+            diverter2TimeOut->kill();
+        }
     });
     onEvent(&fsm->getFST_1_POSITION_HEIGHTMEASUREMENT_PUK_REMOVED(), [this](){
         std::lock_guard<std::mutex> lock(heightSensor1Mutex);
@@ -996,7 +1043,19 @@ void PositionTracker::listen() {
                 break;
             case Timer::PulseCode::PULSE_SORTING_1_DISTANCE_VALID:
                 pulseName = "PULSE_SORTING_1_DISTANCE_VALID";
+                // {
+                //     // Puk* puk = egress1.front();
+                //     if (diverter1TimeOut == nullptr) {
+                //         Logger::getInstance().log(LogLevel::ERROR, "PROBLEMSS", "PositionTracker.listen");
+                //     } else {
+                //         diverter1TimeOut->kill();
+                //     }
+                // }
                 fsm->raiseFST_1_POSITION_DIVERTER_DISTANCE_VALID();
+                break;
+            case Timer::PulseCode::PULSE_SORTING_1_TIMEOUT_DIVERTER:
+                pulseName = "PULSE_SORTING_1_TIMEOUT_DIVERTER";
+                fsm->raiseDIVERTER_TIMEOUT();
                 break;
             case Timer::PulseCode::PULSE_EGRESS_1_PUK_EXPECTED:
                 pulseName = "PULSE_EGRESS_1_PUK_EXPECTED";
@@ -1032,7 +1091,19 @@ void PositionTracker::listen() {
                 break;
             case Timer::PulseCode::PULSE_SORTING_2_DISTANCE_VALID:
                 pulseName = "PULSE_SORTING_2_DISTANCE_VALID";
+                // {
+                //     // Puk* puk = egress2.front();
+                //     if (diverter2TimeOut == nullptr) {
+                //         Logger::getInstance().log(LogLevel::ERROR, "PROBLEMSS", "PositionTracker.listen");
+                //     } else {
+                //         diverter2TimeOut->kill();
+                //     }
+                // }
                 fsm->raiseFST_2_POSITION_DIVERTER_DISTANCE_VALID();
+                break;
+            case Timer::PulseCode::PULSE_SORTING_2_TIMEOUT_DIVERTER:
+                pulseName = "PULSE_SORTING_2_TIMEOUT_DIVERTER";
+                fsm->raiseDIVERTER_TIMEOUT();
                 break;
             case Timer::PulseCode::PULSE_EGRESS_2_PUK_EXPECTED:
                 pulseName = "PULSE_EGRESS_2_PUK_EXPECTED";

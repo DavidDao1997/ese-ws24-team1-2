@@ -20,6 +20,23 @@ Timer::Timer(
     Logger::getInstance().log(LogLevel::TRACE, "New Timer", "Timer");
 }
 
+Timer::Timer(
+    std::chrono::milliseconds duration,
+    uint32_t _connectionId,
+    PulseCode _pulseCode,
+    uint32_t _pulseValue
+) {
+    fastDuration = duration;
+    slowDuration = duration;
+    connectionId = _connectionId;
+    pulseCode = _pulseCode;
+    pulseValue = _pulseValue;
+    motorState = MOTOR_STOP;
+    fractionRemaining = UINT8_MAX;
+    
+    Logger::getInstance().log(LogLevel::TRACE, "New Timer", "Timer");
+}
+
 Timer::~Timer() {}
 
 void Timer::setMotorState(MotorState nextMotorState) {

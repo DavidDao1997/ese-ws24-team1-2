@@ -36,6 +36,7 @@ class HeartBeat : public PulseMsgHandler {
     int32_t getChannel() override;
     void sendMsg() override;
     void handleMsg() override;
+    void checkConnection();
 
   private:
     void handleDisconnect();
@@ -49,6 +50,7 @@ class HeartBeat : public PulseMsgHandler {
     bool messageReceivedOnce;
     name_attach_t* heartBeatChannel;
     std::mutex heartbeatMutex;
+    std:: mutex otherFestoMutex;
     std::chrono::steady_clock::time_point lastHeartbeatReceived;
 
 

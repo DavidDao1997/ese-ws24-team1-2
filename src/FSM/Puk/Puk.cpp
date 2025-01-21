@@ -40,19 +40,33 @@ void Puk::approachingSorting(Timer::MotorState motorState, Timer* expected, Time
     setTimers(motorState);
 }
 
-void Puk::approachingEgress(Timer::MotorState motorState, Timer* distanceValid, Timer* expected, Timer* expired) {
+void Puk::approachingEgress(Timer::MotorState motorState, Timer* distanceValid, Timer* expected, Timer* expired, Timer* _diverterTimeout) {
     clearSegementTimers();
     sortingDistanceValid = distanceValid;
     nextExpected = expected;
     nextExpired = expired;
+    diverterTimeout = _diverterTimeout;
     setTimers(motorState);
+    if (diverterTimeout != nullptr) diverterTimeout->setMotorState(Timer::MotorState::MOTOR_FAST); // this timer gets started immediatly and only gets killed but never altered
+}
+
+void Puk::killTimers() {
+    if (ingressDistanceValid != nullptr) ingressDistanceValid->kill();
+    if (sortingDistanceValid != nullptr) sortingDistanceValid->kill();
+    if (nextExpected != nullptr) nextExpected->kill();
+    if (nextExpired != nullptr) nextExpired->kill();
+    if (diverterTimeout != nullptr) diverterTimeout->kill();
+}
+
+void Puk::killDiverterTimeout() {
+    if (diverterTimeout != nullptr) diverterTimeout->kill();
 }
 
 void Puk::setTimers(Timer::MotorState motorState) {
-     if (ingressDistanceValid != nullptr) ingressDistanceValid->setMotorState(motorState);
-     if (sortingDistanceValid != nullptr) sortingDistanceValid->setMotorState(motorState);
-     if (nextExpected != nullptr) nextExpected->setMotorState(motorState);
-     if (nextExpired != nullptr) nextExpired->setMotorState(motorState);
+    if (ingressDistanceValid != nullptr) ingressDistanceValid->setMotorState(motorState);
+    if (sortingDistanceValid != nullptr) sortingDistanceValid->setMotorState(motorState);
+    if (nextExpected != nullptr) nextExpected->setMotorState(motorState);
+    if (nextExpired != nullptr) nextExpired->setMotorState(motorState);
 }
 
 void Puk::clearSegementTimers(){ 

@@ -222,12 +222,14 @@ class FSM : public sc::EventDrivenInterface
 			ServiceMode_FSM_ServideMode__Internal_LBF_2_Interrupt,
 			ServiceMode_FSM_ServideMode__Internal_LBF_2_TO_HS_2,
 			ServiceMode_FSM_ServideMode__Internal_HS_2_Interrupt,
+			HMCalibration,
 			ServiceMode_FSM_ServideMode__Internal_HS_2_TO_MS_2,
 			ServiceMode_FSM_ServideMode__Internal_MS2Interrrupt,
 			ServiceMode_FSM_ServideMode__Internal_MS_2_TO_LBE_2,
 			ServiceMode_FSM_ServideMode__Internal_LBE_2_INTERRUPT,
 			ServiceMode_FSM_ServideMode__Internal_Hs1InterruptnonSlow,
 			ServiceMode_FSM_ServideMode__Internal__final_,
+			ServiceMode_FSM_ServideMode__Internal_HS_2_INTERRUPT_NON_SLOW,
 			Operational,
 			Error,
 			EStop,
@@ -271,7 +273,7 @@ class FSM : public sc::EventDrivenInterface
 		};
 		
 		/*! The number of states. */
-		static constexpr const sc::integer numStates {234};
+		static constexpr const sc::integer numStates {236};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_FSM_Festo1__Ingress {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_Idle {0};
@@ -460,12 +462,14 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_LBF_2_Interrupt {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_LBF_2_TO_HS_2 {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_Interrupt {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_Interrupt_HS_2__InternalFSM_HMCalibration {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_TO_MS_2 {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_MS2Interrrupt {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_MS_2_TO_LBE_2 {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_LBE_2_INTERRUPT {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_Hs1InterruptnonSlow {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal__final_ {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_INTERRUPT_NON_SLOW {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop {18};
@@ -511,6 +515,9 @@ class FSM : public sc::EventDrivenInterface
 		enum class Event
 		{
 			NO_EVENT,
+			FST_1_RAMP_TIMEOUT,
+			FST_2_RAMP_TIMEOUT,
+			DIVERTER_TIMEOUT,
 			HEARTBEAT_FAILED,
 			HEARTBEAT_RECONNECT,
 			FST_1_HEARTBEAT_RECONNECT,
@@ -590,6 +597,7 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_ESTOP_RECEIVED,
 			Internal_local_SYSTEM_OPERATIONAL_OUT,
 			Internal_local_FST_1_ERROR_SYSTEM,
+			Internal_local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID,
 			Internal_local_ESTOP_CLEARED,
 			Internal_local_FST_2_NOT_READY,
 			Internal_local_FST_2_IS_READY,
@@ -636,6 +644,14 @@ class FSM : public sc::EventDrivenInterface
 				virtual ~EventInstance() = default;
 				const Event eventId;
 		};
+		/*! Get observable for event 'FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of default interface scope. */
+		sc::rx::Observable<void>& getFST_1_INTERNAL_INGRESS_DISTANCE_VALID() noexcept;
+		/*! Raises the in event 'FST_1_RAMP_TIMEOUT' of default interface scope. */
+		void raiseFST_1_RAMP_TIMEOUT();
+		/*! Raises the in event 'FST_2_RAMP_TIMEOUT' of default interface scope. */
+		void raiseFST_2_RAMP_TIMEOUT();
+		/*! Raises the in event 'DIVERTER_TIMEOUT' of default interface scope. */
+		void raiseDIVERTER_TIMEOUT();
 		/*! Get observable for event 'TIMING_LBF_1_TO_HS_1' of default interface scope. */
 		sc::rx::Observable<void>& getTIMING_LBF_1_TO_HS_1() noexcept;
 		/*! Get observable for event 'TIMING_HS_1_TO_MS_1' of default interface scope. */
@@ -1144,10 +1160,10 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer getRefPukHeight() const noexcept;
 		/*! Sets the value of the variable 'refPukHeight' that is defined in the default interface scope. */
 		void setRefPukHeight(sc::integer refPukHeight) noexcept;
-		/*! Gets the value of the variable 'isBandHeight' that is defined in the default interface scope. */
+		/*! Gets the value of the variable 'IsBandHeight' that is defined in the default interface scope. */
 		sc::integer getIsBandHeight() const noexcept;
-		/*! Sets the value of the variable 'isBandHeight' that is defined in the default interface scope. */
-		void setIsBandHeight(sc::integer isBandHeight) noexcept;
+		/*! Sets the value of the variable 'IsBandHeight' that is defined in the default interface scope. */
+		void setIsBandHeight(sc::integer IsBandHeight) noexcept;
 		/*! Gets the value of the variable 'digitpermm' that is defined in the default interface scope. */
 		sc::integer getDigitpermm() const noexcept;
 		/*! Sets the value of the variable 'digitpermm' that is defined in the default interface scope. */
@@ -1168,6 +1184,18 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer getAverageHeight() const noexcept;
 		/*! Sets the value of the variable 'averageHeight' that is defined in the default interface scope. */
 		void setAverageHeight(sc::integer averageHeight) noexcept;
+		/*! Gets the value of the variable 'heightSum2' that is defined in the default interface scope. */
+		sc::integer getHeightSum2() const noexcept;
+		/*! Sets the value of the variable 'heightSum2' that is defined in the default interface scope. */
+		void setHeightSum2(sc::integer heightSum2) noexcept;
+		/*! Gets the value of the variable 'digitpermm2' that is defined in the default interface scope. */
+		sc::integer getDigitpermm2() const noexcept;
+		/*! Sets the value of the variable 'digitpermm2' that is defined in the default interface scope. */
+		void setDigitpermm2(sc::integer digitpermm2) noexcept;
+		/*! Gets the value of the variable 'IsBandHeight2' that is defined in the default interface scope. */
+		sc::integer getIsBandHeight2() const noexcept;
+		/*! Sets the value of the variable 'IsBandHeight2' that is defined in the default interface scope. */
+		void setIsBandHeight2(sc::integer IsBandHeight2) noexcept;
 		/*! Gets the value of the variable 'isCurrentCalVal' that is defined in the default interface scope. */
 		sc::integer getIsCurrentCalVal() const noexcept;
 		/*! Sets the value of the variable 'isCurrentCalVal' that is defined in the default interface scope. */
@@ -1494,12 +1522,15 @@ class FSM : public sc::EventDrivenInterface
 		bool firstLoopCalibration {false};
 		bool FastRun {false};
 		sc::integer refPukHeight {0};
-		sc::integer isBandHeight {0};
+		sc::integer IsBandHeight {0};
 		sc::integer digitpermm {0};
 		sc::integer heightInDigit {0};
 		sc::integer heightSum {0};
 		sc::integer maxCountSample {0};
 		sc::integer averageHeight {0};
+		sc::integer heightSum2 {0};
+		sc::integer digitpermm2 {0};
+		sc::integer IsBandHeight2 {0};
 		sc::integer isCurrentCalVal {0};
 		sc::integer isCountSampleCalVal {0};
 		bool FST_1_HeartBeat {false};
@@ -1890,12 +1921,14 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_LBF_2_Interrupt_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_LBF_2_TO_HS_2_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_Interrupt_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_Interrupt_HS_2__InternalFSM_HMCalibration_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_TO_MS_2_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_MS2Interrrupt_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_MS_2_TO_LBE_2_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_LBE_2_INTERRUPT_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_Hs1InterruptnonSlow_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal__final__default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_INTERRUPT_NON_SLOW_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_default();
@@ -1996,6 +2029,7 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS1Interrupt_FSM_HS_Internal_default();
+		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_Interrupt_HS_2__InternalFSM_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_default();
 		void enseq_Festo2__Errors_default();
 		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_default();
@@ -2187,12 +2221,14 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_LBF_2_Interrupt();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_LBF_2_TO_HS_2();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_Interrupt();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_Interrupt_HS_2__InternalFSM_HMCalibration();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_TO_MS_2();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_MS2Interrrupt();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_MS_2_TO_LBE_2();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_LBE_2_INTERRUPT();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_Hs1InterruptnonSlow();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal__final_();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_INTERRUPT_NON_SLOW();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop();
@@ -2283,6 +2319,7 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS1Interrupt_FSM_HS_Internal();
+		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_Interrupt_HS_2__InternalFSM();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop();
 		void exseq_Festo2__Errors();
 		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors();
@@ -2344,6 +2381,7 @@ class FSM : public sc::EventDrivenInterface
 		void react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM__entry_Default();
 		void react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal__entry_Default();
 		void react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS1Interrupt_FSM_HS_Internal__entry_Default();
+		void react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_Interrupt_HS_2__InternalFSM__entry_Default();
 		void react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__entry_Default();
 		void react_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM__entry_Default();
 		void react_FSM_SystemV2__entry_Default();
@@ -2538,12 +2576,14 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_LBF_2_Interrupt_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_LBF_2_TO_HS_2_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_Interrupt_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_Interrupt_HS_2__InternalFSM_HMCalibration_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_TO_MS_2_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_MS2Interrrupt_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_MS_2_TO_LBE_2_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_LBE_2_INTERRUPT_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_Hs1InterruptnonSlow_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal__final__react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_ServiceMode_FSM_ServideMode__Internal_HS_2_INTERRUPT_NON_SLOW_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Operational_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Error_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_react(const sc::integer transitioned_before);
@@ -2590,6 +2630,18 @@ class FSM : public sc::EventDrivenInterface
 		void runCycle();
 		
 		
+		
+		/*! Observable for event 'FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of default interface scope. */
+		sc::rx::Observable<void> FST_1_INTERNAL_INGRESS_DISTANCE_VALID_observable = sc::rx::Observable<void>{};
+		
+		/*! Indicates event 'FST_1_RAMP_TIMEOUT' of default interface scope is active. */
+		bool FST_1_RAMP_TIMEOUT_raised {false};
+		
+		/*! Indicates event 'FST_2_RAMP_TIMEOUT' of default interface scope is active. */
+		bool FST_2_RAMP_TIMEOUT_raised {false};
+		
+		/*! Indicates event 'DIVERTER_TIMEOUT' of default interface scope is active. */
+		bool DIVERTER_TIMEOUT_raised {false};
 		
 		/*! Observable for event 'TIMING_LBF_1_TO_HS_1' of default interface scope. */
 		sc::rx::Observable<void> TIMING_LBF_1_TO_HS_1_observable = sc::rx::Observable<void>{};
@@ -3295,6 +3347,12 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Raises the out event 'local_FST_1_ERROR_SYSTEM' of internal scope as a local event. */
 		void raiseLocal_FST_1_ERROR_SYSTEM();
+		
+		/*! Indicates event 'local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of internal scope is active. */
+		bool local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID_raised {false};
+		
+		/*! Raises the out event 'local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of internal scope as a local event. */
+		void raiseLocal_FST_1_INTERNAL_INGRESS_DISTANCE_VALID();
 		
 		/*! Indicates event 'local_ESTOP_CLEARED' of internal scope is active. */
 		bool local_ESTOP_CLEARED_raised {false};

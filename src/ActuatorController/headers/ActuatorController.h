@@ -28,7 +28,9 @@ class ActuatorController : public PulseMsgHandler {
 
     void handleMsg() override;
     int32_t getChannel() override;
+    int32_t getHBChannel();
     void sendMsg() override;
+    void handleHbMsg();
 
     // int8_t* getPulses();
     // int8_t getNumOfPulses();
@@ -48,6 +50,7 @@ class ActuatorController : public PulseMsgHandler {
 
   private:
     int32_t channelID;
+    int32_t acForHBChannel;
     uint8_t festoID;
     name_attach_t *actuatorControllerChannel;
     I_Actuators_Wrapper *actuators;

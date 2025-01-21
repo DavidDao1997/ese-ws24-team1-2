@@ -31,7 +31,9 @@
 // #define DURATION_HS_PUK_EXPIRED_SLOW std::chrono::milliseconds(7400) // worst case measured, no margin added yet
 
 #define TESTING_INGRESS_FAST 1000
-#define OFFSET std::chrono::milliseconds(200)
+#define OFFSET std::chrono::milliseconds(250)
+#define TIMEOUT_DIVERTER std::chrono::milliseconds(3 * 60 * 1000) // 3 minutes
+// #define TIMEOUT_DIVERTER std::chrono::milliseconds(20 * 1000) // 20 seconds
 
 #define TESTING_INGRESS_DISTANCE_FAST 1000
 #define TESTING_HS_FAST 2000
@@ -309,6 +311,9 @@ private:
 
     std::atomic<Timer::MotorState> motorState1;
     std::atomic<Timer::MotorState> motorState2;
+
+    Timer* diverter1TimeOut;
+    Timer* diverter2TimeOut;
 
     void handleMotorChange(uint8_t festoId, Timer::MotorState motorState);
 

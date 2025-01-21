@@ -25,6 +25,7 @@ public:
         // HS1_SAMPLING_DONE -> LBM_1_INTERRUPTED
         PULSE_SORTING_1_PUK_EXPECTED,
         PULSE_SORTING_1_PUK_EXPIRED,
+        PULSE_SORTING_1_TIMEOUT_DIVERTER,
         // LBM_1_OPEN -> LBE_1_INTERRUPTED
         PULSE_SORTING_1_DISTANCE_VALID,
         PULSE_EGRESS_1_PUK_EXPECTED,
@@ -38,6 +39,7 @@ public:
         // HS2_SAMPLING_DONE -> LBM_2_INTERRUPTED
         PULSE_SORTING_2_PUK_EXPECTED,
         PULSE_SORTING_2_PUK_EXPIRED,
+        PULSE_SORTING_2_TIMEOUT_DIVERTER,
         // LBM_2_OPEN -> LBE_2_INTERRUPTED
         PULSE_SORTING_2_DISTANCE_VALID,
         PULSE_EGRESS_2_PUK_EXPECTED,
@@ -57,6 +59,12 @@ public:
         uint32_t connectionId,
         PulseCode pulseCode, 
         uint32_t pulseValue
+    );
+    Timer(
+        std::chrono::milliseconds duration,
+        uint32_t _connectionId,
+        PulseCode _pulseCode,
+        uint32_t _pulseValue
     );
     ~Timer();
 

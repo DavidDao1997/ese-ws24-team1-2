@@ -21,7 +21,8 @@
 #include <gtest/gtest.h>
 
 #define TESTING 0
-#define LOGLEVEL TRACE
+#define LOGLEVEL INFO
+#define HB 1
 
 
 int main(int argc, char **argv) {
@@ -79,23 +80,23 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         );
         std::string actuatorControllerChannelName = "actuatorController1";
         Actuators_Wrapper *actuatorsWrapper = new Actuators_Wrapper();
+        // actuatorsWrapper->runSlow();
+        // actuatorsWrapper->runRight();
         ActuatorController *actuatorController = new ActuatorController(FESTO1, actuatorControllerChannelName, actuatorsWrapper);
          std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
         actuatorController->subscribeToDispatcher();
-
-        // HeartBeat* hb1 = new HeartBeat(FESTO1, actuatorController->getChannel());
-        // // hb1->connectToFesto();
-        // std::thread hb1SendThread(std::bind(&HeartBeat::sendMsg, hb1));
-        // std::thread hb1ReicvThread(std::bind(&HeartBeat::handleMsg, hb1));
-
+#if HB == 1
+        HeartBeat* hb1 = new HeartBeat(FESTO1, actuatorController->getHBChannel());
+        // hb1->connectToFesto();
+        std::thread hb1SendThread(std::bind(&HeartBeat::sendMsg, hb1));
+        WAIT(200);
+        std::thread hb1ReicvThread(std::bind(&HeartBeat::handleMsg, hb1));
+        std::thread hb1DisconnectThread(std::bind(&HeartBeat::checkConnection, hb1));  
+#endif
         TSCADC* tsc = new TSCADC();
         ADC* adc = new ADC(*tsc);
         HeightSensorControl *heightSensorController = new HeightSensorControl("HSControl1", dispatcherChannelName, FESTO1, tsc, adc);
         std::thread heightSensorControllerThread(std::bind(&HeightSensorControl::handleMsg, heightSensorController));
-        // FSMController *fsmController = new FSMController(dispatcherChannelName);
-        // dispatcher->addSubscriber(
-        //     fsmController->getChannel(), fsmController->getPulses(), fsmController->getNumOfPulses()
-        // );
 
         
 
@@ -113,12 +114,12 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         //fsmControllerSendMsgThread.join();
         actuatorControllerThread.join();
         decoderThread.join();
-
+        heightSensorControllerThread.join();
 
 
     } else if (std::strcmp(argv[1], "-c") == 0) {
         logger.log(LogLevel::INFO, "Running as Client -> FESTO2...", "Main");
-        system("gns");
+        system("gns -c");
         // TODO run as Client TO BE TESTED
         
         std::string dispatcherChannelName = "dispatcher";
@@ -132,13 +133,17 @@ logger.log(LogLevel::INFO, "Application starting...", "Main");
         ActuatorController *actuatorController = new ActuatorController(FESTO2,actuatorControllerChannelName, actuatorsWrapper);
         logger.log(LogLevel::DEBUG, "ActuatorController created", "Main");
         std::thread actuatorControllerThread(std::bind(&ActuatorController::handleMsg, actuatorController));
-        actuatorController->subscribeToDispatcher();
+        std::thread actuatorControllerLocalThread(std::bind(&ActuatorController::handleHbMsg, actuatorController));
 
-        // HeartBeat* hb2 = new HeartBeat(FESTO2, actuatorController->getChannel());
-        // // hb2->connectToFesto();
-        // std::thread hb2SendThread(std::bind(&HeartBeat::sendMsg, hb2));
-        // std::thread hb2ReicvThread(std::bind(&HeartBeat::handleMsg, hb2));
-        
+        actuatorController->subscribeToDispatcher();
+#if HB == 1
+        HeartBeat* hb2 = new HeartBeat(FESTO2, actuatorController->getHBChannel());
+        // hb2->connectToFesto();
+        std::thread hb2SendThread(std::bind(&HeartBeat::sendMsg, hb2));
+        WAIT(200);
+        std::thread hb2ReicvThread(std::bind(&HeartBeat::handleMsg, hb2));
+        std::thread hb2DisconnectThread(std::bind(&HeartBeat::checkConnection, hb2));
+#endif   
         TSCADC* tsc = new TSCADC();
         ADC* adc = new ADC(*tsc);
         // logger.log(LogLevel::DEBUG, "ActuatorController init done", "Main");

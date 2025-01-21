@@ -23,10 +23,12 @@ public:
     void approachingIngress(Timer::MotorState motorState, Timer* expected, Timer* expired); 
     void approachingHS(Timer::MotorState motorState, Timer* distanceValid, Timer* expected, Timer* expired);
     void approachingSorting(Timer::MotorState motorState, Timer* expected, Timer* expired);
-    void approachingEgress(Timer::MotorState motorState, Timer* distanceValid, Timer* expected, Timer* expired);
+    void approachingEgress(Timer::MotorState motorState, Timer* distanceValid, Timer* expected, Timer* expired, Timer* diverterTimeout);
     void setTimers(Timer::MotorState motorState);
     void clearSegementTimers();
     void clearTimers();
+    void killTimers();
+    void killDiverterTimeout();
 
     bool getIsMetal();
     void setIsMetal(bool);
@@ -38,6 +40,7 @@ private:
     Timer* sortingDistanceValid = nullptr; 
     Timer* nextExpected = nullptr;
     Timer* nextExpired = nullptr;
+    Timer* diverterTimeout = nullptr;
     
     bool isValid; // height
     bool isMetal; // metal

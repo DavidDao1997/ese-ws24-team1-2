@@ -13,6 +13,7 @@ bool firstValue = false;
 int lastValue = -1;
 int stableCount = 0;
 int countSample = 0; // Zähler für Samples
+int countBandHeight = 0;
 
 // Constructor
 HeightSensorControl::HeightSensorControl(const std::string channelName, const std::string dispatcherName, const uint8_t festoID, TSCADC* tscadc, I_ADC* hsadc) {
@@ -134,6 +135,11 @@ void HeightSensorControl::handleMsg() {
         // printf("Iam into Routine HeightPulse with Code: %d\n", msg.code );
         if (msg.code == PULSE_ADC_SAMPLE) {
             int32_t currentValue = msg.value.sival_int;
+            // Logger::getInstance().log(LogLevel::DEBUG,  
+            //     "ADC SAMPLE currentValue: " + std::to_string(currentValue) +
+            //     " secondChance: " + std::to_string(secondChance) +
+            //     " candidatesSend: " + std::to_string(candidatesSend) +
+            //     " candidateValue: " + std::to_string(candidateValue), "");
             processSample(currentValue, secondChance, candidatesSend, candidateValue, adc);
             // check if currentValue matches previousValue
 
@@ -160,48 +166,59 @@ void HeightSensorControl::processSample(
     if (!firstValue) {
         bandHeight = currentValue;
         firstValue = true;
-        //Logger::getInstance().log(LogLevel::DEBUG, "sendeing BANDHEIGHT.." + std::to_string(bandHeight), "HeightSensorControl");
-        if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_BANDHEIGHT, bandHeight)) {
-            Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
-        }
+        Logger::getInstance().log(LogLevel::DEBUG, "sendeing BANDHEIGHT.." + std::to_string(bandHeight), "HeightSensorControl");
+        // if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_BANDHEIGHT, bandHeight)) {
+        //     Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
+        // }
     }
 
     if ((abs(currentValue - bandHeight) <= THRESHOLD)) {
-        handleBandHeightReached(secondChance);
-        if (candidatesSend) {
+        countBandHeight++;
+        // Logger::getInstance().log(LogLevel::DEBUG, "BANDHIEGHT " + std::to_string(countBandHeight), "");
+        if(countBandHeight >= 5){
+            handleBandHeightReached(secondChance);
+            if (candidatesSend) {
+                if (festoNr == FESTO1){
+                    // Logger::getInstance().log(LogLevel::TRACE, "sending HS1_Sampling_DONE!..." + std::to_string(currentValue), "HeightSensorControl");
+                    if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS1_SAMPLING_DONE, currentValue)) {
+                        Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
+                    }
+                } else if (festoNr == FESTO2) {
+                    // Logger::getInstance().log(LogLevel::TRACE, "sending Value in candidates send..." + std::to_string(currentValue), "HeightSensorControl");
+                    if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS2_SAMPLING_DONE, currentValue)) {
+                        Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
+                    }
+                } else {
+                    Logger::getInstance().log(LogLevel::ERROR, "Festo Setup Wrong...", "HeightSensorControl");
+                }
+            // }
+                candidatesSend = false;
+            }
+        }
+    } else if (abs(currentValue - lastValue) <= THRESHOLD) {
+        // last value very close to current value
+        if (currentValue > 3600) {
+            countBandHeight = 0; 
+        } else {
+            // std::cout << "HSCONTROL: value is: " << currentValue << std::endl;
+            // std::cout << "HSCONT
             if (festoNr == FESTO1){
-                //Logger::getInstance().log(LogLevel::TRACE, "sending Value in candidates send..." + std::to_string(currentValue), "HeightSensorControl");
-                if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS1_SAMPLING_DONE, currentValue)) {
+                // Logger::getInstance().log(LogLevel::TRACE, "sending Value HS1_SAMPLE: ..." + std::to_string(currentValue), "HeightSensorControl");
+                if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS1_SAMPLE, currentValue)) {
                     Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
                 }
             } else if (festoNr == FESTO2) {
-                Logger::getInstance().log(LogLevel::TRACE, "sending Value in candidates send..." + std::to_string(currentValue), "HeightSensorControl");
-                if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS2_SAMPLING_DONE, currentValue)) {
+                // Logger::getInstance().log(LogLevel::TRACE, "sending Value in not candidates send..." + std::to_string(currentValue), "HeightSensorControl");
+                if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS2_SAMPLE, currentValue)) {
                     Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
                 }
             } else {
                 Logger::getInstance().log(LogLevel::ERROR, "Festo Setup Wrong...", "HeightSensorControl");
             }
-            candidatesSend = false;
+            candidatesSend = true;
         }
-    } else if (abs(currentValue - lastValue) <= THRESHOLD) {
-        // std::cout << "HSCONTROL: value is: " << currentValue << std::endl;
-        // std::cout << "HSCONT
-        if (festoNr == FESTO1){
-            //Logger::getInstance().log(LogLevel::TRACE, "sending Value in not candidates send..." + std::to_string(currentValue), "HeightSensorControl");
-            if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS1_SAMPLE, currentValue)) {
-                Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
-            }
-        } else if (festoNr == FESTO2) {
-            Logger::getInstance().log(LogLevel::TRACE, "sending Value in not candidates send..." + std::to_string(currentValue), "HeightSensorControl");
-            if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_HS2_SAMPLE, currentValue)) {
-                Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
-            }
-        } else {
-            Logger::getInstance().log(LogLevel::ERROR, "Festo Setup Wrong...", "HeightSensorControl");
-        }
-        candidatesSend = true;
     } else {
+        countBandHeight = 0; 
         handleNewValue(currentValue, secondChance, candidateValue);
     }
 
@@ -218,7 +235,7 @@ void HeightSensorControl::handleBandHeightReached(bool &secondChance) {
         sampleCounts.push_back(countSample);
     }
     */
-
+    countBandHeight = 0;
     secondChance = false;
     //countSample = 0;
 }
