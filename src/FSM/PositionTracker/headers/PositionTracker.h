@@ -37,7 +37,7 @@
 
 #define OFFSET_EGRESS_EXPECTED std::chrono::milliseconds(100) // OFFSET for Egress Expected Timer
 #define OFFSET_EGRESS_EXPIRED std::chrono::milliseconds(500) // OFFSET for Egress Expected Timer
-
+#define HEIGHTTHRESHHOLD 2
 
 
 #define TIMEOUT_DIVERTER std::chrono::milliseconds(3 * 60 * 1000) // 3 minutes
@@ -46,7 +46,7 @@
 #define TESTING_INGRESS_DISTANCE_FAST 1000
 #define TESTING_HS_FAST 2000
 #define TESTING_SORTING_FAST 1000
-#define TESTING_SORTING_DISTANCE_FAST 1000
+#define TESTING_SORTING_DISTANCE_FAST 1000 
 #define TESTING_EGRESS_FAST 2000
 
 struct Duration {

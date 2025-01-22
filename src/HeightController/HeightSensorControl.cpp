@@ -17,6 +17,7 @@ int stableCount = 0;
 int countSample = 0; // Zähler für Samples
 int bandHeightSum = 0;
 int countBandHeight = 0;
+int bandHeight = 0;
 
 // Constructor
 HeightSensorControl::HeightSensorControl(const std::string channelName, const std::string dispatcherName, const uint8_t festoID, TSCADC* tscadc, I_ADC* hsadc) {
@@ -174,6 +175,7 @@ void HeightSensorControl::processSample(
                 firstValue = true;
                 //bandHeight_FST_1 = currentValue;
                 Logger::getInstance().log(LogLevel::DEBUG, "sending BANDHEIGHT_FST_1: " + std::to_string(bandHeight_FST_1), "HeightSensorControl");
+                bandHeight = bandHeight_FST_1;
                 if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_BANDHEIGHT_FST_1, bandHeight_FST_1)) {
                     Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
                 }
@@ -182,6 +184,7 @@ void HeightSensorControl::processSample(
                 firstValue = true;
                 //bandHeight_FST_2 = currentValue;
                 Logger::getInstance().log(LogLevel::DEBUG, "sending BANDHEIGHT_FST_2: " + std::to_string(bandHeight_FST_2), "HeightSensorControl");
+                bandHeight = bandHeight_FST_2;
                 if (MsgSendPulse(dispatcherConnectionID, -1, PULSE_BANDHEIGHT_FST_2, bandHeight_FST_2)) {
                     Logger::getInstance().log(LogLevel::WARNING, "Send failed...", "HeightSensorControl");
                 }

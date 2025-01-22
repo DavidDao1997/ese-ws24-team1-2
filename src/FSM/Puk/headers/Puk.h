@@ -45,7 +45,7 @@ public:
     void setIsMetal(bool metal);
     bool getIsValid() const;
     void setIsValid(bool valid);
-
+    void setAverageHeight(int averageHeight);
     int getAverageHeight();
     std::string pukTypeToString(Puk::PUKType type);
 

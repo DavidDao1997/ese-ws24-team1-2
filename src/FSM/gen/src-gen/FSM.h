@@ -204,7 +204,6 @@ class FSM : public sc::EventDrivenInterface
 			Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF,
 			Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull,
 			Festo2__FSM_LAMP_YELLOW_EStop,
-			FSM_SystemV2_HeartBeatFailed,
 			FSM_SystemV2_FSM_System,
 			Festo_FSM_System,
 			Ready,
@@ -241,6 +240,7 @@ class FSM : public sc::EventDrivenInterface
 			EStop_FSM_EStop_BGR1PressedAfterBGR2,
 			EStop_FSM_EStop__final_,
 			EStopCalibration,
+			FSM_SystemV2__final_,
 			Festo2__Errors_FSM_Errors,
 			Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_ErrorinHMRestart,
 			Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingUnknownPuk,
@@ -444,7 +444,6 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF {17};
 		static constexpr const sc::integer scvi_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull {17};
 		static constexpr const sc::integer scvi_Festo2__FSM_LAMP_YELLOW_EStop {17};
-		static constexpr const sc::integer scvi_FSM_SystemV2_HeartBeatFailed {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready {18};
@@ -481,6 +480,7 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2 {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_ {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2__final_ {18};
 		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors {19};
 		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_ErrorinHMRestart {19};
 		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingUnknownPuk {19};
@@ -1188,6 +1188,18 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer getHeightSum2() const noexcept;
 		/*! Sets the value of the variable 'heightSum2' that is defined in the default interface scope. */
 		void setHeightSum2(sc::integer heightSum2) noexcept;
+		/*! Gets the value of the variable 'heightInDigit2' that is defined in the default interface scope. */
+		sc::integer getHeightInDigit2() const noexcept;
+		/*! Sets the value of the variable 'heightInDigit2' that is defined in the default interface scope. */
+		void setHeightInDigit2(sc::integer heightInDigit2) noexcept;
+		/*! Gets the value of the variable 'averageHeight2' that is defined in the default interface scope. */
+		sc::integer getAverageHeight2() const noexcept;
+		/*! Sets the value of the variable 'averageHeight2' that is defined in the default interface scope. */
+		void setAverageHeight2(sc::integer averageHeight2) noexcept;
+		/*! Gets the value of the variable 'maxCountSample2' that is defined in the default interface scope. */
+		sc::integer getMaxCountSample2() const noexcept;
+		/*! Sets the value of the variable 'maxCountSample2' that is defined in the default interface scope. */
+		void setMaxCountSample2(sc::integer maxCountSample2) noexcept;
 		/*! Gets the value of the variable 'digitpermm2' that is defined in the default interface scope. */
 		sc::integer getDigitpermm2() const noexcept;
 		/*! Sets the value of the variable 'digitpermm2' that is defined in the default interface scope. */
@@ -1529,6 +1541,9 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer maxCountSample {0};
 		sc::integer averageHeight {0};
 		sc::integer heightSum2 {0};
+		sc::integer heightInDigit2 {0};
+		sc::integer averageHeight2 {0};
+		sc::integer maxCountSample2 {0};
 		sc::integer digitpermm2 {0};
 		sc::integer IsBandHeight2 {0};
 		sc::integer isCurrentCalVal {0};
@@ -1903,7 +1918,6 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF_default();
 		void enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull_default();
 		void enseq_Festo2__FSM_LAMP_YELLOW_EStop_default();
-		void enseq_FSM_SystemV2_HeartBeatFailed_default();
 		void enseq_FSM_SystemV2_FSM_System_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready_default();
@@ -1939,6 +1953,7 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration_default();
+		void enseq_FSM_SystemV2__final__default();
 		void enseq_Festo2__Errors_FSM_Errors_default();
 		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_ErrorinHMRestart_default();
 		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingUnknownPuk_default();
@@ -2203,7 +2218,6 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF();
 		void exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull();
 		void exseq_Festo2__FSM_LAMP_YELLOW_EStop();
-		void exseq_FSM_SystemV2_HeartBeatFailed();
 		void exseq_FSM_SystemV2_FSM_System();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
@@ -2240,6 +2254,7 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration();
+		void exseq_FSM_SystemV2__final_();
 		void exseq_Festo2__Errors_FSM_Errors();
 		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_ErrorinHMRestart();
 		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingUnknownPuk();
@@ -2558,7 +2573,6 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF_react(const sc::integer transitioned_before);
 		sc::integer Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull_react(const sc::integer transitioned_before);
 		sc::integer Festo2__FSM_LAMP_YELLOW_EStop_react(const sc::integer transitioned_before);
-		sc::integer FSM_SystemV2_HeartBeatFailed_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready_react(const sc::integer transitioned_before);
@@ -2595,6 +2609,7 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final__react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2__final__react(const sc::integer transitioned_before);
 		sc::integer Festo2__Errors_FSM_Errors_react(const sc::integer transitioned_before);
 		sc::integer Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_ErrorinHMRestart_react(const sc::integer transitioned_before);
 		sc::integer Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingUnknownPuk_react(const sc::integer transitioned_before);
