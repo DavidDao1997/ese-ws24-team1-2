@@ -27,7 +27,8 @@ int8_t FSMController::pulses[FSM_CONTROLLER_NUM_OF_PULSES] = {
     PULSE_HS2_SAMPLE,
     PULSE_HS1_SAMPLING_DONE,
     PULSE_HS2_SAMPLING_DONE,
-    PULSE_BANDHEIGHT,
+    PULSE_BANDHEIGHT_FST_1,
+    PULSE_BANDHEIGHT_FST_2,
     PULSE_MS_TRUE,
     PULSE_MS_FALSE,
     PULSE_SM_TYPE_EJECTOR,
@@ -516,6 +517,7 @@ void FSMController::handlePulse(_pulse msg) {
             //Logger::getInstance().log(LogLevel::DEBUG, "received currentValue... HS2: "+ std::to_string(msgVal), "FSMController");
             //Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLE...", "FSMController");
             break;
+            //TODO need to rename 
         case PULSE_HS1_SAMPLING_DONE:
             fsm-> raiseHS_1_SAMPLING_DONE();
             averageHeight = fsm->getAverageHeight();
@@ -532,9 +534,13 @@ void FSMController::handlePulse(_pulse msg) {
             Logger::getInstance().log(LogLevel::DEBUG, "received AverageHeight..."+ std::to_string(averageHeight), "FSMController");
             Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLING_DONE...", "FSMController");
             break;
-        case PULSE_BANDHEIGHT:
+        case PULSE_BANDHEIGHT_FST_1:
             fsm->setIsBandHeight(msgVal);
-            Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BANDHEIGHT..."+ std::to_string(msgVal), "FSMController");
+            Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BANDHEIGHT Festo 1.."+ std::to_string(msgVal), "FSMController");
+            break;
+        case PULSE_BANDHEIGHT_FST_2:
+            fsm->setIsBandHeight2(msgVal); // set for bandheight_FST_2 TODO!
+            Logger::getInstance().log(LogLevel::DEBUG, "received PULSE_BANDHEIGHT Festo 2.."+ std::to_string(msgVal), "FSMController");
             break;
         case PULSE_MS_TRUE:
             (msgVal == 0)?fsm->raiseMS_1_HIGH():fsm->raiseMS_2_HIGH();

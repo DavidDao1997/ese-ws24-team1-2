@@ -19,7 +19,7 @@ public:
 
     enum PulseCode {
         // LBF_1_OPEN -> HS1_SAMPLE
-        PULSE_INGRESS_1_DISTANCE_VALID,
+        PULSE_INGRESS_1_DISTANCE_VALID  = _PULSE_CODE_MINAVAIL + 1,
         PULSE_HS_1_PUK_EXPECTED,
         PULSE_HS_1_PUK_EXPIRED,
         // HS1_SAMPLING_DONE -> LBM_1_INTERRUPTED
@@ -42,8 +42,9 @@ public:
         PULSE_SORTING_2_TIMEOUT_DIVERTER,
         // LBM_2_OPEN -> LBE_2_INTERRUPTED
         PULSE_SORTING_2_DISTANCE_VALID,
+        PULSE_EGRESS_2_PUK_EXPIRED,
         PULSE_EGRESS_2_PUK_EXPECTED,
-        PULSE_EGRESS_2_PUK_EXPIRED
+        PULSE_NOOP // does nothing
     };
 
     enum MotorState {

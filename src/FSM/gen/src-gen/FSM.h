@@ -204,7 +204,6 @@ class FSM : public sc::EventDrivenInterface
 			Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF,
 			Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull,
 			Festo2__FSM_LAMP_YELLOW_EStop,
-			FSM_SystemV2_HeartBeatFailed,
 			FSM_SystemV2_FSM_System,
 			Festo_FSM_System,
 			Ready,
@@ -241,6 +240,8 @@ class FSM : public sc::EventDrivenInterface
 			EStop_FSM_EStop_BGR1PressedAfterBGR2,
 			EStop_FSM_EStop__final_,
 			EStopCalibration,
+			FSM_SystemV2__final_,
+			FSM_SystemV2_Final,
 			Festo2__Errors_FSM_Errors,
 			Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_ErrorinHMRestart,
 			Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingUnknownPuk,
@@ -273,7 +274,7 @@ class FSM : public sc::EventDrivenInterface
 		};
 		
 		/*! The number of states. */
-		static constexpr const sc::integer numStates {236};
+		static constexpr const sc::integer numStates {237};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_FSM_Festo1__Ingress {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress {0};
 		static constexpr const sc::integer scvi_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_Idle {0};
@@ -444,7 +445,6 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF {17};
 		static constexpr const sc::integer scvi_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull {17};
 		static constexpr const sc::integer scvi_Festo2__FSM_LAMP_YELLOW_EStop {17};
-		static constexpr const sc::integer scvi_FSM_SystemV2_HeartBeatFailed {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready {18};
@@ -481,6 +481,8 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2 {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_ {18};
 		static constexpr const sc::integer scvi_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2__final_ {18};
+		static constexpr const sc::integer scvi_FSM_SystemV2_Final {18};
 		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors {19};
 		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_ErrorinHMRestart {19};
 		static constexpr const sc::integer scvi_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingUnknownPuk {19};
@@ -598,22 +600,26 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_SYSTEM_OPERATIONAL_OUT,
 			Internal_local_FST_1_ERROR_SYSTEM,
 			Internal_local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID,
+			Internal_local_FST_1_ERROR_INGRESS_MISSING_PUK,
 			Internal_local_ESTOP_CLEARED,
 			Internal_local_FST_2_NOT_READY,
 			Internal_local_FST_2_IS_READY,
+			Internal_local_FST_1_ERROR_HM_MISSING_PUK,
+			Internal_local_FST_1_ERROR_SORTING_MISSING_PUK,
+			Internal_local_FST_1_ERROR_EGRESS_MISSING_PUK,
 			Internal_local_FST_2_ERROR_SYSTEM,
+			Internal_local_FST_2_ERROR_INGRESS_MISSING_PUK,
+			Internal_local_FST_2_ERROR_HM_MISSING_PUK,
+			Internal_local_FST_2_ERROR_EGRESS_MISSING_PUK,
 			Internal_local_EVALUATE,
 			Internal_local_FST_1_ERROR_HM_UNKNOWNPUK,
 			Internal_local_FST_1_ERROR_SORTING_UNKNOWNPUK,
-			Internal_local_FST_1_ERROR_EGRESS_MISSING_PUK,
 			Internal_local_FST_1_ERROR_RAMPFULL_UNKNOWNPUK,
 			Internal_local_FST_1_ERROR_INGRESS_UNKNOWNPUK,
-			Internal_local_FST_1_ERROR_INGRESS_MISSING_PUK,
 			Internal_local_FST_1_ERROR_EGRESS_UNKNOWNPUK,
 			Internal_local_FST_1_ERROR_RAMPFULL_MISSING_PUK,
-			Internal_local_FST_1_ERROR_SORTING_MISSING_PUK,
-			Internal_local_FST_1_ERROR_HM_MISSING_PUK,
 			Internal_local_FST_1_ERROR_IN_READY,
+			Internal_local_FST_2_ERROR_SORTING_MISSING_PUK,
 			Internal_local_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED,
 			Internal_local_FST_1_ERROR_LAMP_UNACKNOWLEDGED,
 			Internal_local_FST_1_ERROR_LAMP_RESOLVED,
@@ -626,14 +632,10 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_FST_2_ERROR_ACKNOWLEDGED,
 			Internal_local_FST_2_ERROR_HM_UNKNOWNPUK,
 			Internal_local_FST_2_ERROR_SORTING_UNKNOWNPUK,
-			Internal_local_FST_2_ERROR_EGRESS_MISSING_PUK,
 			Internal_local_FST_2_ERROR_RAMPFULL_UNKNOWNPUK,
 			Internal_local_FST_2_ERROR_INGRESS_UNKNOWNPUK,
-			Internal_local_FST_2_ERROR_INGRESS_MISSING_PUK,
 			Internal_local_FST_2_ERROR_EGRESS_UNKNOWNPUK,
 			Internal_local_FST_2_ERROR_RAMPFULL_MISSINGPUK,
-			Internal_local_FST_2_ERROR_SORTING_MISSING_PUK,
-			Internal_local_FST_2_ERROR_HM_MISSING_PUK,
 			Internal_local_FST_2_ERROR_IN_READY
 		};
 		
@@ -1156,6 +1158,38 @@ class FSM : public sc::EventDrivenInterface
 		bool getFastRun() const noexcept;
 		/*! Sets the value of the variable 'FastRun' that is defined in the default interface scope. */
 		void setFastRun(bool FastRun) noexcept;
+		/*! Gets the value of the variable 'FST1IPE' that is defined in the default interface scope. */
+		bool getFST1IPE() const noexcept;
+		/*! Sets the value of the variable 'FST1IPE' that is defined in the default interface scope. */
+		void setFST1IPE(bool FST1IPE) noexcept;
+		/*! Gets the value of the variable 'FST1HMPE' that is defined in the default interface scope. */
+		bool getFST1HMPE() const noexcept;
+		/*! Sets the value of the variable 'FST1HMPE' that is defined in the default interface scope. */
+		void setFST1HMPE(bool FST1HMPE) noexcept;
+		/*! Gets the value of the variable 'FST1SORPE' that is defined in the default interface scope. */
+		bool getFST1SORPE() const noexcept;
+		/*! Sets the value of the variable 'FST1SORPE' that is defined in the default interface scope. */
+		void setFST1SORPE(bool FST1SORPE) noexcept;
+		/*! Gets the value of the variable 'FST1EPE' that is defined in the default interface scope. */
+		bool getFST1EPE() const noexcept;
+		/*! Sets the value of the variable 'FST1EPE' that is defined in the default interface scope. */
+		void setFST1EPE(bool FST1EPE) noexcept;
+		/*! Gets the value of the variable 'FST2IPE' that is defined in the default interface scope. */
+		bool getFST2IPE() const noexcept;
+		/*! Sets the value of the variable 'FST2IPE' that is defined in the default interface scope. */
+		void setFST2IPE(bool FST2IPE) noexcept;
+		/*! Gets the value of the variable 'FST2HMPE' that is defined in the default interface scope. */
+		bool getFST2HMPE() const noexcept;
+		/*! Sets the value of the variable 'FST2HMPE' that is defined in the default interface scope. */
+		void setFST2HMPE(bool FST2HMPE) noexcept;
+		/*! Gets the value of the variable 'FST2SORPE' that is defined in the default interface scope. */
+		bool getFST2SORPE() const noexcept;
+		/*! Sets the value of the variable 'FST2SORPE' that is defined in the default interface scope. */
+		void setFST2SORPE(bool FST2SORPE) noexcept;
+		/*! Gets the value of the variable 'FST2EPE' that is defined in the default interface scope. */
+		bool getFST2EPE() const noexcept;
+		/*! Sets the value of the variable 'FST2EPE' that is defined in the default interface scope. */
+		void setFST2EPE(bool FST2EPE) noexcept;
 		/*! Gets the value of the variable 'refPukHeight' that is defined in the default interface scope. */
 		sc::integer getRefPukHeight() const noexcept;
 		/*! Sets the value of the variable 'refPukHeight' that is defined in the default interface scope. */
@@ -1188,6 +1222,18 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer getHeightSum2() const noexcept;
 		/*! Sets the value of the variable 'heightSum2' that is defined in the default interface scope. */
 		void setHeightSum2(sc::integer heightSum2) noexcept;
+		/*! Gets the value of the variable 'heightInDigit2' that is defined in the default interface scope. */
+		sc::integer getHeightInDigit2() const noexcept;
+		/*! Sets the value of the variable 'heightInDigit2' that is defined in the default interface scope. */
+		void setHeightInDigit2(sc::integer heightInDigit2) noexcept;
+		/*! Gets the value of the variable 'averageHeight2' that is defined in the default interface scope. */
+		sc::integer getAverageHeight2() const noexcept;
+		/*! Sets the value of the variable 'averageHeight2' that is defined in the default interface scope. */
+		void setAverageHeight2(sc::integer averageHeight2) noexcept;
+		/*! Gets the value of the variable 'maxCountSample2' that is defined in the default interface scope. */
+		sc::integer getMaxCountSample2() const noexcept;
+		/*! Sets the value of the variable 'maxCountSample2' that is defined in the default interface scope. */
+		void setMaxCountSample2(sc::integer maxCountSample2) noexcept;
 		/*! Gets the value of the variable 'digitpermm2' that is defined in the default interface scope. */
 		sc::integer getDigitpermm2() const noexcept;
 		/*! Sets the value of the variable 'digitpermm2' that is defined in the default interface scope. */
@@ -1521,6 +1567,14 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer flatPukHeight {0};
 		bool firstLoopCalibration {false};
 		bool FastRun {false};
+		bool FST1IPE {false};
+		bool FST1HMPE {false};
+		bool FST1SORPE {false};
+		bool FST1EPE {false};
+		bool FST2IPE {false};
+		bool FST2HMPE {false};
+		bool FST2SORPE {false};
+		bool FST2EPE {false};
 		sc::integer refPukHeight {0};
 		sc::integer IsBandHeight {0};
 		sc::integer digitpermm {0};
@@ -1529,6 +1583,9 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer maxCountSample {0};
 		sc::integer averageHeight {0};
 		sc::integer heightSum2 {0};
+		sc::integer heightInDigit2 {0};
+		sc::integer averageHeight2 {0};
+		sc::integer maxCountSample2 {0};
 		sc::integer digitpermm2 {0};
 		sc::integer IsBandHeight2 {0};
 		sc::integer isCurrentCalVal {0};
@@ -1624,18 +1681,25 @@ class FSM : public sc::EventDrivenInterface
 		
 		// prototypes of all internal functions
 		
+		void enact_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_PukPresent();
 		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Idle();
 		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Measuring_FSM_Festo1__HeightMeasurement__final_();
+		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_PukExpected();
+		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_PukExpected();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferEjector();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferDiverter();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingEjector();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EvaluateCounter();
+		void enact_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_PukExpected();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop();
+		void enact_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected();
 		void enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle();
+		void enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_PukExpected();
 		void enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final_();
+		void enact_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_PukExpected();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
@@ -1658,6 +1722,7 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorSorting();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorEgress();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorRampFull();
+		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_PukExpected();
 		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate();
 		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingDiverter();
 		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferEjector();
@@ -1707,6 +1772,7 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1();
 		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2();
 		void enact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_();
+		void enact_FSM_SystemV2_Final();
 		void enact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingUnknownPuk();
 		void enact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_ErrorinIngressRestart();
 		void enact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_EgressMissingPuk();
@@ -1903,7 +1969,6 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF_default();
 		void enseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull_default();
 		void enseq_Festo2__FSM_LAMP_YELLOW_EStop_default();
-		void enseq_FSM_SystemV2_HeartBeatFailed_default();
 		void enseq_FSM_SystemV2_FSM_System_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready_default();
@@ -1939,6 +2004,7 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR2PressedAfterBGR1_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2_default();
 		void enseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration_default();
+		void enseq_FSM_SystemV2_Final_default();
 		void enseq_Festo2__Errors_FSM_Errors_default();
 		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_ErrorinHMRestart_default();
 		void enseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingUnknownPuk_default();
@@ -2203,7 +2269,6 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF();
 		void exseq_Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull();
 		void exseq_Festo2__FSM_LAMP_YELLOW_EStop();
-		void exseq_FSM_SystemV2_HeartBeatFailed();
 		void exseq_FSM_SystemV2_FSM_System();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
@@ -2240,6 +2305,8 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final_();
 		void exseq_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration();
+		void exseq_FSM_SystemV2__final_();
+		void exseq_FSM_SystemV2_Final();
 		void exseq_Festo2__Errors_FSM_Errors();
 		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_ErrorinHMRestart();
 		void exseq_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingUnknownPuk();
@@ -2558,7 +2625,6 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_OFF_react(const sc::integer transitioned_before);
 		sc::integer Festo2__FSM_LAMP_YELLOW_FSM_Festo2__LY_FSM_Festo2__Inner_LampYellow_RampFull_react(const sc::integer transitioned_before);
 		sc::integer Festo2__FSM_LAMP_YELLOW_EStop_react(const sc::integer transitioned_before);
-		sc::integer FSM_SystemV2_HeartBeatFailed_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready_react(const sc::integer transitioned_before);
@@ -2595,6 +2661,8 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop_BGR1PressedAfterBGR2_react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStop_FSM_EStop__final__react(const sc::integer transitioned_before);
 		sc::integer FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_EStopCalibration_react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2__final__react(const sc::integer transitioned_before);
+		sc::integer FSM_SystemV2_Final_react(const sc::integer transitioned_before);
 		sc::integer Festo2__Errors_FSM_Errors_react(const sc::integer transitioned_before);
 		sc::integer Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_ErrorinHMRestart_react(const sc::integer transitioned_before);
 		sc::integer Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_SortingUnknownPuk_react(const sc::integer transitioned_before);
@@ -3354,6 +3422,12 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of internal scope as a local event. */
 		void raiseLocal_FST_1_INTERNAL_INGRESS_DISTANCE_VALID();
 		
+		/*! Indicates event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope is active. */
+		bool local_FST_1_ERROR_INGRESS_MISSING_PUK_raised {false};
+		
+		/*! Raises the out event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope as a local event. */
+		void raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK();
+		
 		/*! Indicates event 'local_ESTOP_CLEARED' of internal scope is active. */
 		bool local_ESTOP_CLEARED_raised {false};
 		
@@ -3372,11 +3446,47 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_2_IS_READY' of internal scope as a local event. */
 		void raiseLocal_FST_2_IS_READY();
 		
+		/*! Indicates event 'local_FST_1_ERROR_HM_MISSING_PUK' of internal scope is active. */
+		bool local_FST_1_ERROR_HM_MISSING_PUK_raised {false};
+		
+		/*! Raises the out event 'local_FST_1_ERROR_HM_MISSING_PUK' of internal scope as a local event. */
+		void raiseLocal_FST_1_ERROR_HM_MISSING_PUK();
+		
+		/*! Indicates event 'local_FST_1_ERROR_SORTING_MISSING_PUK' of internal scope is active. */
+		bool local_FST_1_ERROR_SORTING_MISSING_PUK_raised {false};
+		
+		/*! Raises the out event 'local_FST_1_ERROR_SORTING_MISSING_PUK' of internal scope as a local event. */
+		void raiseLocal_FST_1_ERROR_SORTING_MISSING_PUK();
+		
+		/*! Indicates event 'local_FST_1_ERROR_EGRESS_MISSING_PUK' of internal scope is active. */
+		bool local_FST_1_ERROR_EGRESS_MISSING_PUK_raised {false};
+		
+		/*! Raises the out event 'local_FST_1_ERROR_EGRESS_MISSING_PUK' of internal scope as a local event. */
+		void raiseLocal_FST_1_ERROR_EGRESS_MISSING_PUK();
+		
 		/*! Indicates event 'local_FST_2_ERROR_SYSTEM' of internal scope is active. */
 		bool local_FST_2_ERROR_SYSTEM_raised {false};
 		
 		/*! Raises the out event 'local_FST_2_ERROR_SYSTEM' of internal scope as a local event. */
 		void raiseLocal_FST_2_ERROR_SYSTEM();
+		
+		/*! Indicates event 'local_FST_2_ERROR_INGRESS_MISSING_PUK' of internal scope is active. */
+		bool local_FST_2_ERROR_INGRESS_MISSING_PUK_raised {false};
+		
+		/*! Raises the out event 'local_FST_2_ERROR_INGRESS_MISSING_PUK' of internal scope as a local event. */
+		void raiseLocal_FST_2_ERROR_INGRESS_MISSING_PUK();
+		
+		/*! Indicates event 'local_FST_2_ERROR_HM_MISSING_PUK' of internal scope is active. */
+		bool local_FST_2_ERROR_HM_MISSING_PUK_raised {false};
+		
+		/*! Raises the out event 'local_FST_2_ERROR_HM_MISSING_PUK' of internal scope as a local event. */
+		void raiseLocal_FST_2_ERROR_HM_MISSING_PUK();
+		
+		/*! Indicates event 'local_FST_2_ERROR_EGRESS_MISSING_PUK' of internal scope is active. */
+		bool local_FST_2_ERROR_EGRESS_MISSING_PUK_raised {false};
+		
+		/*! Raises the out event 'local_FST_2_ERROR_EGRESS_MISSING_PUK' of internal scope as a local event. */
+		void raiseLocal_FST_2_ERROR_EGRESS_MISSING_PUK();
 		
 		/*! Indicates event 'local_EVALUATE' of internal scope is active. */
 		bool local_EVALUATE_raised {false};
@@ -3396,12 +3506,6 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_1_ERROR_SORTING_UNKNOWNPUK' of internal scope as a local event. */
 		void raiseLocal_FST_1_ERROR_SORTING_UNKNOWNPUK();
 		
-		/*! Indicates event 'local_FST_1_ERROR_EGRESS_MISSING_PUK' of internal scope is active. */
-		bool local_FST_1_ERROR_EGRESS_MISSING_PUK_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_ERROR_EGRESS_MISSING_PUK' of internal scope as a local event. */
-		void raiseLocal_FST_1_ERROR_EGRESS_MISSING_PUK();
-		
 		/*! Indicates event 'local_FST_1_ERROR_RAMPFULL_UNKNOWNPUK' of internal scope is active. */
 		bool local_FST_1_ERROR_RAMPFULL_UNKNOWNPUK_raised {false};
 		
@@ -3413,12 +3517,6 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Raises the out event 'local_FST_1_ERROR_INGRESS_UNKNOWNPUK' of internal scope as a local event. */
 		void raiseLocal_FST_1_ERROR_INGRESS_UNKNOWNPUK();
-		
-		/*! Indicates event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope is active. */
-		bool local_FST_1_ERROR_INGRESS_MISSING_PUK_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope as a local event. */
-		void raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK();
 		
 		/*! Indicates event 'local_FST_1_ERROR_EGRESS_UNKNOWNPUK' of internal scope is active. */
 		bool local_FST_1_ERROR_EGRESS_UNKNOWNPUK_raised {false};
@@ -3432,23 +3530,17 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_1_ERROR_RAMPFULL_MISSING_PUK' of internal scope as a local event. */
 		void raiseLocal_FST_1_ERROR_RAMPFULL_MISSING_PUK();
 		
-		/*! Indicates event 'local_FST_1_ERROR_SORTING_MISSING_PUK' of internal scope is active. */
-		bool local_FST_1_ERROR_SORTING_MISSING_PUK_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_ERROR_SORTING_MISSING_PUK' of internal scope as a local event. */
-		void raiseLocal_FST_1_ERROR_SORTING_MISSING_PUK();
-		
-		/*! Indicates event 'local_FST_1_ERROR_HM_MISSING_PUK' of internal scope is active. */
-		bool local_FST_1_ERROR_HM_MISSING_PUK_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_ERROR_HM_MISSING_PUK' of internal scope as a local event. */
-		void raiseLocal_FST_1_ERROR_HM_MISSING_PUK();
-		
 		/*! Indicates event 'local_FST_1_ERROR_IN_READY' of internal scope is active. */
 		bool local_FST_1_ERROR_IN_READY_raised {false};
 		
 		/*! Raises the out event 'local_FST_1_ERROR_IN_READY' of internal scope as a local event. */
 		void raiseLocal_FST_1_ERROR_IN_READY();
+		
+		/*! Indicates event 'local_FST_2_ERROR_SORTING_MISSING_PUK' of internal scope is active. */
+		bool local_FST_2_ERROR_SORTING_MISSING_PUK_raised {false};
+		
+		/*! Raises the out event 'local_FST_2_ERROR_SORTING_MISSING_PUK' of internal scope as a local event. */
+		void raiseLocal_FST_2_ERROR_SORTING_MISSING_PUK();
 		
 		/*! Indicates event 'local_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED' of internal scope is active. */
 		bool local_FST_1_ERROR_LAMP_RESOLVED_UNACKNOWLEDGED_raised {false};
@@ -3522,12 +3614,6 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_2_ERROR_SORTING_UNKNOWNPUK' of internal scope as a local event. */
 		void raiseLocal_FST_2_ERROR_SORTING_UNKNOWNPUK();
 		
-		/*! Indicates event 'local_FST_2_ERROR_EGRESS_MISSING_PUK' of internal scope is active. */
-		bool local_FST_2_ERROR_EGRESS_MISSING_PUK_raised {false};
-		
-		/*! Raises the out event 'local_FST_2_ERROR_EGRESS_MISSING_PUK' of internal scope as a local event. */
-		void raiseLocal_FST_2_ERROR_EGRESS_MISSING_PUK();
-		
 		/*! Indicates event 'local_FST_2_ERROR_RAMPFULL_UNKNOWNPUK' of internal scope is active. */
 		bool local_FST_2_ERROR_RAMPFULL_UNKNOWNPUK_raised {false};
 		
@@ -3540,12 +3626,6 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_2_ERROR_INGRESS_UNKNOWNPUK' of internal scope as a local event. */
 		void raiseLocal_FST_2_ERROR_INGRESS_UNKNOWNPUK();
 		
-		/*! Indicates event 'local_FST_2_ERROR_INGRESS_MISSING_PUK' of internal scope is active. */
-		bool local_FST_2_ERROR_INGRESS_MISSING_PUK_raised {false};
-		
-		/*! Raises the out event 'local_FST_2_ERROR_INGRESS_MISSING_PUK' of internal scope as a local event. */
-		void raiseLocal_FST_2_ERROR_INGRESS_MISSING_PUK();
-		
 		/*! Indicates event 'local_FST_2_ERROR_EGRESS_UNKNOWNPUK' of internal scope is active. */
 		bool local_FST_2_ERROR_EGRESS_UNKNOWNPUK_raised {false};
 		
@@ -3557,18 +3637,6 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Raises the out event 'local_FST_2_ERROR_RAMPFULL_MISSINGPUK' of internal scope as a local event. */
 		void raiseLocal_FST_2_ERROR_RAMPFULL_MISSINGPUK();
-		
-		/*! Indicates event 'local_FST_2_ERROR_SORTING_MISSING_PUK' of internal scope is active. */
-		bool local_FST_2_ERROR_SORTING_MISSING_PUK_raised {false};
-		
-		/*! Raises the out event 'local_FST_2_ERROR_SORTING_MISSING_PUK' of internal scope as a local event. */
-		void raiseLocal_FST_2_ERROR_SORTING_MISSING_PUK();
-		
-		/*! Indicates event 'local_FST_2_ERROR_HM_MISSING_PUK' of internal scope is active. */
-		bool local_FST_2_ERROR_HM_MISSING_PUK_raised {false};
-		
-		/*! Raises the out event 'local_FST_2_ERROR_HM_MISSING_PUK' of internal scope as a local event. */
-		void raiseLocal_FST_2_ERROR_HM_MISSING_PUK();
 		
 		/*! Indicates event 'local_FST_2_ERROR_IN_READY' of internal scope is active. */
 		bool local_FST_2_ERROR_IN_READY_raised {false};

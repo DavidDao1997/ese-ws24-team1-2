@@ -21,7 +21,7 @@
 #include <gtest/gtest.h>
 
 #define TESTING 0
-#define LOGLEVEL INFO
+#define LOGLEVEL TRACE
 #define HB 1
 
 

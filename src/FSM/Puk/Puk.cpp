@@ -13,8 +13,19 @@ Puk::Puk(uint32_t pukId) {
     
 Puk::~Puk() {}
 
+// Puk::PUKType getPukType() {
+//     return pukType;
+// };
 
-uint32_t Puk::getPukId() {
+Puk::PUKType Puk::getPukType() const {
+    return pukType;
+}
+
+void Puk::setPukType(PUKType type){
+    pukType = type;
+}
+
+uint32_t Puk::getPukId() const {
     return id;
 }
 
@@ -84,7 +95,7 @@ void Puk::clearTimers() {
     clearSegementTimers();
 }
 
-bool Puk::getIsMetal() {
+bool Puk::getIsMetal() const {
     return isMetal;
 }
 
@@ -92,10 +103,27 @@ void Puk::setIsMetal(bool _isMetal) {
     isMetal = _isMetal;
 }
 
-bool Puk::getIsValid() {
+bool Puk::getIsValid() const {
     return isValid;
 }
 
 void Puk::setIsValid(bool _isValid) {
     isValid = _isValid;
+}
+
+int Puk::getAverageHeight(){
+        return averageHeight;
+    }
+
+void Puk::setAverageHeight(int averageHeight){
+    this->averageHeight = averageHeight;
+}
+    
+std::string Puk::pukTypeToString(Puk::PUKType type) {
+    switch (type) {
+        case Puk::PUKType::PUK_WITH_HOLE:            return "PUK_WITH_HOLE";
+        case Puk::PUKType::PUK_WITH_HOLE_AND_METAL:  return "PUK_WITH_HOLE_AND_METAL";
+        case Puk::PUKType::PUK_WITHOUT_HOLE:         return "PUK_WITHOUT_HOLE";
+        default:                                     return "UNKNOWN";
+    }
 }
