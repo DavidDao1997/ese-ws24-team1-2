@@ -13,6 +13,12 @@ Puk::Puk(uint32_t pukId) {
     
 Puk::~Puk() {}
 
+PUKType getPukType() {
+    return pukType;
+};
+void setPukType(PUKType type){
+    pukType = type;
+}
 
 uint32_t Puk::getPukId() {
     return id;
@@ -98,4 +104,21 @@ bool Puk::getIsValid() {
 
 void Puk::setIsValid(bool _isValid) {
     isValid = _isValid;
+}
+
+int Puk::getAverageHeight(){
+        return averageHeight;
+    }
+
+void Puk::setAverageHeight(int averageHeight){
+    this->averageHeight = averageHeight;
+}
+    
+std::string PUK::pukTypeToString(Puk::PUKType type) {
+    switch (type) {
+        case Puk::PUKType::PUK_WITH_HOLE:            return "PUK_WITH_HOLE";
+        case Puk::PUKType::PUK_WITH_HOLE_AND_METAL:  return "PUK_WITH_HOLE_AND_METAL";
+        case Puk::PUKType::PUK_WITHOUT_HOLE:         return "PUK_WITHOUT_HOLE";
+        default:                                     return "UNKNOWN";
+    }
 }

@@ -12,13 +12,24 @@
 #include "../../Timer/headers/Timer.h"
 #include "../../../Logging/headers/Logger.h"
 
-
 class Puk {
 public:
-    Puk(uint32_t pukId);
+    enum class PUKType {
+        UNKNOWN,                // <- Default type if it's not known yet
+        PUK_WITH_HOLE,
+        PUK_WITH_HOLE_AND_METAL,
+        PUK_WITHOUT_HOLE
+    };
+
+    // Constructor uses UNKNOWN by default
+    explicit Puk(uint32_t pukId);
     ~Puk();
 
-    uint32_t getPukId();
+    uint32_t getPukId() const;
+    
+    // Getter and Setter for PUKType
+    PUKType getPukType() const;
+    void setPukType(PUKType type);
 
     void approachingIngress(Timer::MotorState motorState, Timer* expected, Timer* expired); 
     void approachingHS(Timer::MotorState motorState, Timer* distanceValid, Timer* expected, Timer* expired);
@@ -30,10 +41,15 @@ public:
     void killTimers();
     void killDiverterTimeout();
 
-    bool getIsMetal();
-    void setIsMetal(bool);
-    bool getIsValid();
-    void setIsValid(bool);
+    bool getIsMetal() const;
+    void setIsMetal(bool metal);
+    bool getIsValid() const;
+    void setIsValid(bool valid);
+
+    int getAverageHeight();
+    std::string pukTypeToString(Puk::PUKType type);
+
+
 private:
     uint32_t id;
     Timer* ingressDistanceValid = nullptr;
@@ -41,11 +57,14 @@ private:
     Timer* nextExpected = nullptr;
     Timer* nextExpired = nullptr;
     Timer* diverterTimeout = nullptr;
+    uint32_t averageHeight = 0;
     
-    bool isValid; // height
-    bool isMetal; // metal
-    // bool isValid; // it feals like we should calculate this just in time instead of writing a property that we need to update.
+    // Starts as UNKNOWN
+    PUKType pukType = PUKType::UNKNOWN;
+
+    bool isValid = false; 
+    bool isMetal = false; 
 };
 
+#endif // FSM_PUK_HEADERS_PUK_H_
 
-#endif /* FSM_PUK_HEADERS_PUK_H_ */
