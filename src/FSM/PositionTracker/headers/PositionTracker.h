@@ -32,7 +32,7 @@
 
 #define TESTING_INGRESS_FAST 1000
 
-#define OFFSET_EXPECTED std::chrono::milliseconds(350) // threshold for Timers
+#define OFFSET_EXPECTED std::chrono::milliseconds(375) // threshold for Timers
 #define OFFSET_EXPIRED std::chrono::milliseconds(200)
 
 #define OFFSET_EGRESS_EXPECTED std::chrono::milliseconds(100) // OFFSET for Egress Expected Timer
@@ -287,7 +287,7 @@ public:
     enum SortingType {
         PUK_A, // metal
         PUK_B,
-        PUk_C, // metal
+        PUK_C, // metal
     };
 private:
     
@@ -335,8 +335,8 @@ private:
 
     SortingType currentSortingType1 = PUK_A;
     SortingType currentSortingType2 = PUK_A;
-    SortingType sortingTypeNext(SortingType st);
-    SortingType sortingTypePrev(SortingType st);
+    SortingType sortingTypeNext(SortingType st, int festoId);
+    SortingType sortingTypePrev(SortingType st, int festoId);
 };
 
 class PositionTrackerObserver : public sc::rx::Observer<void> {

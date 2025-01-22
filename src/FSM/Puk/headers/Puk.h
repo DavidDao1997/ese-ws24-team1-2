@@ -12,7 +12,7 @@
 #include "../../Timer/headers/Timer.h"
 #include "../../../Logging/headers/Logger.h"
 
-class Puk {
+class Puk {   
 public:
     enum class PUKType {
         UNKNOWN,                // <- Default type if it's not known yet

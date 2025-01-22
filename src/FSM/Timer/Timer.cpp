@@ -51,7 +51,9 @@ void Timer::setMotorState(MotorState nextMotorState) {
         struct sigevent event;
         // setup pulse
         SIGEV_PULSE_INIT(&event, connectionId, SIGEV_PULSE_PRIO_INHERIT, pulseCode, pulseValue);
-        timer_create (CLOCK_REALTIME, &event, &timerId); // Fehlerbehandlung fehlt
+        if (timer_create (CLOCK_REALTIME, &event, &timerId) != 0) {
+            Logger::getInstance().log(LogLevel::ERROR, "timer_settime failed", "Timer");
+        }
         
         // setup timer
         std::chrono::milliseconds fullDuration = nextMotorState == MOTOR_FAST ? fastDuration : slowDuration;
