@@ -1,0 +1,59 @@
+FESTO (11 und 9) FAST
+1: Werkstück gut gelegen, 2: Werkstück mit metall schlecht gelegen,3: Binär mit Harzfülllung schlecht gelegen
+[2025-01-17 20:09:07.759] [INFO]     [TimingLogger] Motors start
+[2025-01-17 20:09:09.760] [INFO]     [ActuatorController] [Festo1] Motor fast
+[2025-01-17 20:09:12.123] [INFO]     [TimingLogger] [LBF1->HS1] 2020ms
+[2025-01-17 20:09:13.472] [INFO]     [TimingLogger] [HS1->LBM1] 1008ms
+[2025-01-17 20:09:15.729] [INFO]     [TimingLogger] [LBM1->LBE1] 1775ms
+[2025-01-17 20:09:16.265] [INFO]     [TimingLogger] [LBE1->LBF2] 180ms
+[2025-01-17 20:09:18.675] [INFO]     [TimingLogger] [LBF2->HS2] 2018ms
+[2025-01-17 20:09:19.996] [INFO]     [TimingLogger] [HS2->LBM2] 991ms
+[2025-01-17 20:09:22.270] [INFO]     [TimingLogger] [LBM2->LBE2] 1829ms
+
+[2025-01-17 20:10:26.969] [INFO]     [TimingLogger] Motors start
+[2025-01-17 20:10:28.970] [INFO]     [ActuatorController] [Festo1] Motor fast
+[2025-01-17 20:10:31.521] [INFO]     [TimingLogger] [LBF1->HS1] 2227ms
+[2025-01-17 20:10:32.897] [INFO]     [TimingLogger] [HS1->LBM1] 1001ms
+[2025-01-17 20:10:35.145] [INFO]     [TimingLogger] [LBM1->LBE1] 1770ms
+[2025-01-17 20:10:35.680] [INFO]     [TimingLogger] [LBE1->LBF2] 181ms
+[2025-01-17 20:10:38.051] [INFO]     [TimingLogger] [LBF2->HS2] 1980ms
+[2025-01-17 20:10:39.404] [INFO]     [TimingLogger] [HS2->LBM2] 979ms
+[2025-01-17 20:10:41.674] [INFO]     [TimingLogger] [LBM2->LBE2] 1825ms
+
+[2025-01-17 20:11:34.157] [INFO]     [TimingLogger] Motors start
+[2025-01-17 20:11:36.159] [INFO]     [ActuatorController] [Festo1] Motor fast
+[2025-01-17 20:11:38.742] [INFO]     [TimingLogger] [LBF1->HS1] 2238ms
+[2025-01-17 20:11:40.115] [INFO]     [TimingLogger] [HS1->LBM1] 1010ms
+[2025-01-17 20:11:42.364] [INFO]     [TimingLogger] [LBM1->LBE1] 1773ms
+[2025-01-17 20:11:42.895] [INFO]     [TimingLogger] [LBE1->LBF2] 179ms
+[2025-01-17 20:11:45.250] [INFO]     [TimingLogger] [LBF2->HS2] 1973ms
+[2025-01-17 20:11:46.607] [INFO]     [TimingLogger] [HS2->LBM2] 983ms
+[2025-01-17 20:11:48.875] [INFO]     [TimingLogger] [LBM2->LBE2] 1826ms
+
+FESTO (1: FST-11 (auswerfer) und FST-9 (weiche) ) SLOW
+1: Flacher Werkstückes gut gelegen, 2: Werkstück mit Metall schlecht gelegen
+
+[2025-01-17 20:13:41.376] [INFO]     [TimingLogger] Motors start
+[2025-01-17 20:13:43.377] [INFO]     [ActuatorController] [Festo1] Motor slow
+[2025-01-17 20:13:50.266] [INFO]     [TimingLogger] [LBF1->HS1] 6143ms
+[2025-01-17 20:13:54.609] [INFO]     [TimingLogger] [HS1->LBM1] 3210ms
+[2025-01-17 20:14:01.654] [INFO]     [TimingLogger] [LBM1->LBE1] 5551ms
+[2025-01-17 20:14:03.305] [INFO]     [TimingLogger] [LBE1->LBF2] 559ms
+[2025-01-17 20:14:10.714] [INFO]     [TimingLogger] [LBF2->HS2] 6264ms
+[2025-01-17 20:14:14.997] [INFO]     [TimingLogger] [HS2->LBM2] 3140ms
+[2025-01-17 20:14:22.183] [INFO]     [TimingLogger] [LBM2->LBE2] 5793ms
+[2025-01-17 20:14:23.300] [INFO]     [ActuatorController] [Festo1] Motor stop
+
+[2025-01-17 20:14:25.153] [INFO]     [ActuatorController] [Festo1] Motor stop
+[2025-01-17 20:15:08.726] [INFO]     [TimingLogger] Motors start
+[2025-01-17 20:15:10.728] [INFO]     [ActuatorController] [Festo1] Motor slow
+[2025-01-17 20:15:18.464] [INFO]     [TimingLogger] [LBF1->HS1] 7015ms
+[2025-01-17 20:15:22.783] [INFO]     [TimingLogger] [HS1->LBM1] 3186ms
+[2025-01-17 20:15:29.876] [INFO]     [TimingLogger] [LBM1->LBE1] 5589ms
+[2025-01-17 20:15:31.578] [INFO]     [TimingLogger] [LBE1->LBF2] 580ms
+[2025-01-17 20:15:38.999] [INFO]     [TimingLogger] [LBF2->HS2] 6265ms
+[2025-01-17 20:15:43.308] [INFO]     [TimingLogger] [HS2->LBM2] 3142ms
+[2025-01-17 20:15:50.513] [INFO]     [TimingLogger] [LBM2->LBE2] 5795ms
+[2025-01-17 20:15:51.617] [INFO]     [ActuatorController] [Festo1] Motor stop
+
+

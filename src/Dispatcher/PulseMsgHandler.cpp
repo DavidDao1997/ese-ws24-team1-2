@@ -18,11 +18,13 @@ int32_t PulseMsgHandler::createChannel() {
 }
 
 name_attach_t *PulseMsgHandler::createNamedChannel(const std::string channelName) {
-    name_attach_t *attach = name_attach(NULL, channelName.c_str(), 0);
+    Logger::getInstance().log(LogLevel::TRACE, "Creating GNS channel...", "PulseMsgHandler");
+    name_attach_t *attach = name_attach(NULL, channelName.c_str(), NAME_FLAG_ATTACH_GLOBAL);
     if (attach == NULL) {
         Logger::getInstance().log(LogLevel::CRITICAL, "Failed to create GNS channel...", "PulseMsgHandler");
-        throw std::runtime_error("Failed to create GNS channel!");
+        // throw std::runtime_error("Failed to create GNS channel!");
     }
+    Logger::getInstance().log(LogLevel::TRACE, "Created GNS channel...", "PulseMsgHandler");
     return attach;
 }
 
@@ -49,6 +51,5 @@ void PulseMsgHandler::destroyNamedChannel(int32_t channelID, name_attach_t *atta
         Logger::getInstance().log(LogLevel::ERROR, "Failed to unregister name in GNS...", "PulseMsgHandler");
         throw std::runtime_error("GNS deregistration failed");
     }
-    // TODO WHY DOES DESTROY CHANNEL WONT WORK
-    //destroyChannel(channelID);
+    
 }

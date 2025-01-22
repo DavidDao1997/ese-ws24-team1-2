@@ -113,6 +113,7 @@ std::string Logger::formatLog(LogLevel level, const std::string& message, const 
 
     // Log-Level hinzufügen
     switch (level) {
+        case LogLevel::TRACE:   oss << "[TRACE]   "; break;
         case LogLevel::DEBUG:   oss << "[DEBUG]   "; break;
         case LogLevel::INFO:    oss << "[INFO]    "; break;
         case LogLevel::WARNING: oss << "[WARNING] "; break;
