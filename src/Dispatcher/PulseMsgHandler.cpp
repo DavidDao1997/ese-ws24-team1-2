@@ -51,6 +51,5 @@ void PulseMsgHandler::destroyNamedChannel(int32_t channelID, name_attach_t *atta
         Logger::getInstance().log(LogLevel::ERROR, "Failed to unregister name in GNS...", "PulseMsgHandler");
         throw std::runtime_error("GNS deregistration failed");
     }
-    // TODO WHY DOES DESTROY CHANNEL WONT WORK
-    //destroyChannel(channelID);
+    
 }

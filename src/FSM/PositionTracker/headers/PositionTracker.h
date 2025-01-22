@@ -31,7 +31,15 @@
 // #define DURATION_HS_PUK_EXPIRED_SLOW std::chrono::milliseconds(7400) // worst case measured, no margin added yet
 
 #define TESTING_INGRESS_FAST 1000
-#define OFFSET std::chrono::milliseconds(250)
+
+#define OFFSET_EXPECTED std::chrono::milliseconds(350) // threshold for Timers
+#define OFFSET_EXPIRED std::chrono::milliseconds(200)
+
+#define OFFSET_EGRESS_EXPECTED std::chrono::milliseconds(100) // OFFSET for Egress Expected Timer
+#define OFFSET_EGRESS_EXPIRED std::chrono::milliseconds(500) // OFFSET for Egress Expected Timer
+
+
+
 #define TIMEOUT_DIVERTER std::chrono::milliseconds(3 * 60 * 1000) // 3 minutes
 // #define TIMEOUT_DIVERTER std::chrono::milliseconds(20 * 1000) // 20 seconds
 
@@ -276,6 +284,11 @@ public:
         DURATION_EXPECTED,
         DURATION_EXPIRED
     };
+    enum SortingType {
+        PUK_A, // metal
+        PUK_B,
+        PUk_C, // metal
+    };
 private:
     
     FSM* fsm;
@@ -306,9 +319,6 @@ private:
     std::atomic<uint32_t> lastPukId;
     uint32_t nextPukId();
 
-    bool isMetalDesired1;
-    bool isMetalDesired2;
-
     std::atomic<Timer::MotorState> motorState1;
     std::atomic<Timer::MotorState> motorState2;
 
@@ -322,6 +332,11 @@ private:
     Puk* queuePop(std::queue<Puk*>* queue);
 
     void onEvent(sc::rx::Observable<void>* event ,std::function<void()> callback);
+
+    SortingType currentSortingType1 = PUK_A;
+    SortingType currentSortingType2 = PUK_A;
+    SortingType sortingTypeNext(SortingType st);
+    SortingType sortingTypePrev(SortingType st);
 };
 
 class PositionTrackerObserver : public sc::rx::Observer<void> {

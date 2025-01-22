@@ -62,8 +62,9 @@ void Timer::setMotorState(MotorState nextMotorState) {
         timerSpec.it_interval.tv_sec = 0;
         timerSpec.it_interval.tv_nsec = 0;
 
-        timer_settime (timerId, 0, &timerSpec, NULL);
-        // TODO catch error
+        if (timer_settime (timerId, 0, &timerSpec, NULL) != 0) {
+            Logger::getInstance().log(LogLevel::ERROR, "timer_settime failed", "Timer");
+        }
         motorState = nextMotorState;
         Logger::getInstance().log(
             LogLevel::TRACE, 
@@ -92,8 +93,9 @@ void Timer::setMotorState(MotorState nextMotorState) {
 
     // stopping
     if (nextMotorState == MOTOR_STOP) {
-        timer_delete(timerId);
-        // TODO catch error
+        if (timer_delete(timerId) != 0){
+            Logger::getInstance().log(LogLevel::ERROR, "timer_delete failed", "Timer");
+        }        
         timerId  = 0;
         motorState = nextMotorState;
         Logger::getInstance().log(
@@ -113,7 +115,9 @@ void Timer::setMotorState(MotorState nextMotorState) {
     struct itimerspec nextTimerSpec = {};
     nextTimerSpec.it_value.tv_sec = nextTimeRemaining / 1000;
     nextTimerSpec.it_value.tv_nsec = (nextTimeRemaining % 1000) * MILLION;
-    timer_settime (timerId, 0, &nextTimerSpec, NULL);
+    if (timer_settime (timerId, 0, &nextTimerSpec, NULL) != 0) {
+        Logger::getInstance().log(LogLevel::ERROR, "timer_settime failed", "Timer");
+    }
     motorState = nextMotorState;
     Logger::getInstance().log(
         LogLevel::TRACE, 

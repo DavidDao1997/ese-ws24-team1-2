@@ -82,7 +82,7 @@ void Dispatcher::handleMsg() {
         int recvid = MsgReceive(channelID, &msg, sizeof(_pulse), nullptr);
         if (recvid < 0) {
             Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "Dispatcher");
-            //exit(EXIT_FAILURE); // TODO exit??? was passiert wenn der dispatcher stirbt. fehlerbhandlung?
+            
         }
 
         if (recvid == 0) { // Pulse received
@@ -100,66 +100,12 @@ void Dispatcher::handleMsg() {
                         addKnownSubscriber("actuatorController2");
                     }
                     break;
-                
-                // case PULSE_LBF_INTERRUPTED:
-                //     if (msgVal == FESTO1) {
-                //     } else {
-                //     }
-                // case PULSE_LBF_OPEN:
-                //     if (msgVal == FESTO1) {
-                //         lbf1 = std::chrono::high_resolution_clock::now();
-                //     } else {
-                //         lbf2 = std::chrono::high_resolution_clock::now();
-                //     }
-                // case PULSE_LBE_INTERRUPTED:
-                //     if (msgVal == FESTO1) {
-
-                //     } else {
-
-                //     }
-                // case PULSE_LBE_OPEN:
-                //     if (msgVal == FESTO1) {
-
-                //     } else {
-
-                //     }
-                // case PULSE_LBR_INTERRUPTED:
-                //     if (msgVal == FESTO1) {
-
-                //     } else {
-
-                //     }
-                // case PULSE_LBR_OPEN:
-                //     if (msgVal == FESTO1) {
-
-                //     } else {
-
-                //     }
-                // case PULSE_LBM_INTERRUPTED:
-                //     if (msgVal == FESTO1) {
-
-                //     } else {
-
-                //     }
-                // case PULSE_LBM_OPEN:
-                //     if (msgVal == FESTO1) {
-
-                //     } else {
-
-                //     }
-
                 default:
                     // Logger::getInstance().log(LogLevel::TRACE, "Dispatcher forwarding messages", "Dispatcher");
-                    // char buffer[100];
-                    // sprintf(buffer, "DISPATCHER: Revieved pulse %d\n", msg.code);
-                    // std::cout << buffer << std::flush;
-
                     // Schaue in map wer sich für msg.code interessiert und schicke an diese
                     auto coids = connectionsByPulse.find(msg.code);
                     if (coids != connectionsByPulse.end()) {
                         for (const auto &coid : coids->second) {
-                            // sprintf(buffer, "DISPATCHER: Forwarding pulse %d to connectionId %d\n", msg.code, coid);
-                            // std::cout << buffer << std::flush;
                             int err = MsgSendPulse(coid, -1, msg.code, msg.value.sival_int);
                             if (err == -1) {
                                 Logger::getInstance().log(LogLevel::ERROR, "MsgSendPulse failed...", "Dispatcher");

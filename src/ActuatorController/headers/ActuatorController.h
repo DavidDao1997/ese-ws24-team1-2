@@ -20,7 +20,7 @@
 
 class ActuatorController : public PulseMsgHandler {
   public:
-    // TODO check if festo 1 or festo 2 in parameter list
+
     ActuatorController(uint8_t festo, const std::string name, I_Actuators_Wrapper *actuators);
     virtual ~ActuatorController();
 

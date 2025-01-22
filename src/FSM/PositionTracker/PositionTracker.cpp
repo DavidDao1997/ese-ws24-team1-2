@@ -43,20 +43,19 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     listenThread = new std::thread(std::bind(&PositionTracker::listen, this));
     motorState1.store(Timer::MotorState::MOTOR_STOP);
     motorState2.store(Timer::MotorState::MOTOR_STOP);
-    isMetalDesired1 = false;
-    isMetalDesired2 = false;
-    // TODO CALCULATE THESE
-    durations.fst1.ingress.distanceValid.Fast = std::chrono::milliseconds(100);
-    durations.fst1.ingress.distanceValid.Slow = std::chrono::milliseconds(200);
+    // TODO CALCULATE THESE!!! -> is at the bottom row 942!!
+
+    // durations.fst1.ingress.distanceValid.Fast = std::chrono::milliseconds(100);
+    // durations.fst1.ingress.distanceValid.Slow = std::chrono::milliseconds(200);
     
-    durations.fst1.sorting.distanceValid.Fast = std::chrono::milliseconds(1500);
-    durations.fst1.sorting.distanceValid.Slow = std::chrono::milliseconds(3000);
+    // durations.fst1.sorting.distanceValid.Fast = std::chrono::milliseconds(1500);
+    // durations.fst1.sorting.distanceValid.Slow = std::chrono::milliseconds(3000);
     
-    durations.fst2.ingress.distanceValid.Fast = std::chrono::milliseconds(100);
-    durations.fst2.ingress.distanceValid.Slow = std::chrono::milliseconds(200);
+    // durations.fst2.ingress.distanceValid.Fast = std::chrono::milliseconds(100);
+    // durations.fst2.ingress.distanceValid.Slow = std::chrono::milliseconds(200);
     
-    durations.fst2.sorting.distanceValid.Fast = std::chrono::milliseconds(1500);
-    durations.fst2.sorting.distanceValid.Slow = std::chrono::milliseconds(3000);
+    durations.fst2.sorting.distanceValid.Fast = std::chrono::milliseconds(1500); // we dont need it or?
+    durations.fst2.sorting.distanceValid.Slow = std::chrono::milliseconds(3000); // we dont need it or? 
     
     onEvent(&fsm->getFST_1_POSITION_INGRESS_NEW_PUK(), [this](){
         std::lock_guard<std::mutex> lock(heightSensor1Mutex);
@@ -136,7 +135,6 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         puk->setIsValid(false); // FIXME add HS mocking in tests to make this testable
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1] HEIGHT_IS_NOT_VALID", "PositionTracker.onIsNotValid");
     });
-    // TODO Puk that disappear or are sorted out
     onEvent(&fsm->getFST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK(), [this](){
         std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
         std::lock_guard<std::mutex> lockSorting(sorting1Mutex);
@@ -194,10 +192,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
                 "PositionTracker.onIsMetal");
             return;
         }
-        if (isMetalDesired1 && puk->getIsValid()) {
+        if (currentSortingType1 != PUK_B && puk->getIsValid()) {
             // passthrough
             puk->setIsMetal(true);
-            isMetalDesired1 = false;
+            currentSortingType1 = sortingTypeNext(currentSortingType1);
             fsm->raiseFST_1_PUK_SORTING_PASSTHROUGH();
             Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Passing", "PositionTracker.onIsMetal");
         } else {
@@ -223,10 +221,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
                 "PositionTracker.onIsNotMetal");
             return;
         }
-        if (!isMetalDesired1 && puk->getIsValid()) {
+        if (currentSortingType1 == PUK_B && puk->getIsValid()) {
             // passthrough
             puk->setIsMetal(false);
-            isMetalDesired1 = true;
+            currentSortingType1 = sortingTypeNext(currentSortingType1);
             fsm->raiseFST_1_PUK_SORTING_PASSTHROUGH();
             Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Passing", "PositionTracker.onIsNotMetal");
         } else {
@@ -419,7 +417,6 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         if (puk->getIsValid()) {
             puk->setIsValid(false);
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Profile mismatch, invalidating puk", "PositionTracker.onIsInvalid");
-
         }
         Logger::getInstance().log(LogLevel::DEBUG, "[FST2]", "PositionTracker.onIsInvalid");
     });
@@ -478,9 +475,9 @@ PositionTracker::PositionTracker(FSM* _fsm) {
                 "PositionTracker.onIsMetal");
             return;
         }
-        if (isMetalDesired2 && puk->getIsMetal() && puk->getIsValid()) {
+        if (currentSortingType2 != PUK_B && puk->getIsMetal() && puk->getIsValid()) {
             // passthrough
-            isMetalDesired2 = false;
+            currentSortingType2 = sortingTypeNext(currentSortingType2);
             fsm->raiseFST_2_PUK_SORTING_PASSTHROUGH();
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Passing", "PositionTracker.onIsMetal");
         } else {
@@ -506,10 +503,9 @@ PositionTracker::PositionTracker(FSM* _fsm) {
                 "PositionTracker.onIsMetal");
             return;
         }
-        if (!isMetalDesired2 && !puk->getIsMetal() && puk->getIsValid()) {
+        if (currentSortingType2 == PUK_B && !puk->getIsMetal() && puk->getIsValid()) {
             // passthrough
-            puk->setIsMetal(false);
-            isMetalDesired2 = true;
+            currentSortingType2 = sortingTypeNext(currentSortingType2);
             fsm->raiseFST_2_PUK_SORTING_PASSTHROUGH();
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Passing", "PositionTracker.onIsNotMetal");
             return;
@@ -655,6 +651,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     });
     onEvent(&fsm->getFST_2_POSITION_EGRESS_PUK_REMOVED(), [this](){
         std::lock_guard<std::mutex> lock(egress2Mutex);
+        currentSortingType2 = sortingTypePrev(currentSortingType2);
         Puk* puk = queuePop(&egress2);
         if (puk == nullptr){
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] PUK is NULLPTR", "PositionTracker.onEgressPukRemoved");
@@ -689,8 +686,8 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         heightSensor2 = *new std::queue<Puk*>();
         sorting2 = *new std::queue<Puk*>();
         egress2 = *new std::queue<Puk*>();
-        isMetalDesired1 = false;
-        isMetalDesired2 = false;
+        currentSortingType1 = PUK_A;
+        currentSortingType2 = PUK_A;
     });
     onEvent(&fsm->getMOTOR_1_FAST(), [this](){
         handleMotorChange(FESTO1, Timer::MotorState::MOTOR_FAST);
@@ -723,13 +720,13 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             );
             Logger::getInstance().log(LogLevel::TRACE, "[FST1] Ending Timer: " + std::to_string(timePassed.count()), "PositionTracker.onTimingLBF1toHS1");
             if (motorState1.load() == Timer::MotorState::MOTOR_FAST && durations.fst1.ingress.expected.Fast.count() == 0) {
-                durations.fst1.ingress.expected.Fast = timePassed - OFFSET;
+                durations.fst1.ingress.expected.Fast = timePassed - OFFSET_EXPECTED;
             } else if (motorState1.load() == Timer::MotorState::MOTOR_FAST) {
-                durations.fst1.ingress.expired.Fast = timePassed + OFFSET;
+                durations.fst1.ingress.expired.Fast = timePassed + OFFSET_EXPIRED;
             } else if (motorState1.load() == Timer::MotorState::MOTOR_SLOW && durations.fst1.ingress.expected.Slow.count() == 0) {
-                durations.fst1.ingress.expected.Slow = timePassed - OFFSET;
+                durations.fst1.ingress.expected.Slow = timePassed - OFFSET_EXPECTED;
             } else if (motorState1.load() == Timer::MotorState::MOTOR_SLOW) {
-                durations.fst1.ingress.expired.Slow = timePassed + OFFSET;
+                durations.fst1.ingress.expired.Slow = timePassed + OFFSET_EXPIRED;
             } else {
                 Logger::getInstance().log(LogLevel::ERROR, "[FST1]", "PositionTracker.onTimingLBF1toHS1");
             }
@@ -750,13 +747,13 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             );
             Logger::getInstance().log(LogLevel::TRACE, "[FST1] Ending Timer: " + std::to_string(timePassed.count()), "PositionTracker.onTimingHS1toLBM1");
             if (motorState1.load() == Timer::MotorState::MOTOR_FAST && durations.fst1.heightSensor.expected.Fast.count() == 0) {
-                durations.fst1.heightSensor.expected.Fast = timePassed - OFFSET;
+                durations.fst1.heightSensor.expected.Fast = timePassed - OFFSET_EXPECTED;
             } else if (motorState1.load() == Timer::MotorState::MOTOR_FAST) {
-                durations.fst1.heightSensor.expired.Fast = timePassed + OFFSET;
+                durations.fst1.heightSensor.expired.Fast = timePassed + OFFSET_EXPIRED;
             } else if (motorState1.load() == Timer::MotorState::MOTOR_SLOW && durations.fst1.heightSensor.expected.Slow.count() == 0) {
-                durations.fst1.heightSensor.expected.Slow = timePassed - OFFSET;
+                durations.fst1.heightSensor.expected.Slow = timePassed - OFFSET_EXPECTED;
             } else if (motorState1.load() == Timer::MotorState::MOTOR_SLOW) {
-                durations.fst1.heightSensor.expired.Slow = timePassed + OFFSET;
+                durations.fst1.heightSensor.expired.Slow = timePassed + OFFSET_EXPIRED;
             } else {
                 Logger::getInstance().log(LogLevel::ERROR, "[FST1]", "PositionTracker.onTimingHS1toLBM1");
             }
@@ -777,13 +774,13 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             );
             Logger::getInstance().log(LogLevel::TRACE, "[FST1] Ending Timer: " + std::to_string(timePassed.count()), "PositionTracker.onTimingMS1toLBE1");
             if (motorState1.load() == Timer::MotorState::MOTOR_FAST && durations.fst1.sorting.expected.Fast.count() == 0) {
-                durations.fst1.sorting.expected.Fast = timePassed - OFFSET;
+                durations.fst1.sorting.expected.Fast = timePassed - OFFSET_EXPECTED;
             } else if (motorState1.load() == Timer::MotorState::MOTOR_FAST) {
-                durations.fst1.sorting.expired.Fast = timePassed + OFFSET;
+                durations.fst1.sorting.expired.Fast = timePassed + OFFSET_EXPIRED;
             } else if (motorState1.load() == Timer::MotorState::MOTOR_SLOW && durations.fst1.sorting.expected.Slow.count() == 0) {
-                durations.fst1.sorting.expected.Slow = timePassed - OFFSET;
+                durations.fst1.sorting.expected.Slow = timePassed - OFFSET_EXPECTED;
             } else if (motorState1.load() == Timer::MotorState::MOTOR_SLOW) {
-                durations.fst1.sorting.expired.Slow = timePassed + OFFSET;
+                durations.fst1.sorting.expired.Slow = timePassed + OFFSET_EXPIRED;
             } else {
                 Logger::getInstance().log(LogLevel::ERROR, "[FST1]", "PositionTracker.onTimingMS1toLBE1");
             }
@@ -791,7 +788,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         }
     });
     
-    // getTIMING_LBE1_TO_LBF2
+    // // getTIMING_LBE1_TO_LBF2
      onEvent(&fsm->getTIMING_LBE_1_LBF_2(), [this]{
         std::chrono::milliseconds timePassed;
         if (lastTimer == std::chrono::steady_clock::time_point::min()) {
@@ -805,20 +802,21 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             );
             Logger::getInstance().log(LogLevel::TRACE, "[FST1&2] Ending Timer: " + std::to_string(timePassed.count()), "PositionTracker.onTimingLBE1toLBF2");
             if (motorState1.load() == Timer::MotorState::MOTOR_FAST && durations.fst1.egress.expected.Fast.count() == 0) {
-                durations.fst1.egress.expected.Fast = timePassed - OFFSET;
+                durations.fst1.egress.expected.Fast = timePassed - OFFSET_EGRESS_EXPECTED;
             } else if (motorState1.load() == Timer::MotorState::MOTOR_FAST) {
-                durations.fst1.egress.expired.Fast = timePassed + OFFSET;
+                durations.fst1.egress.expired.Fast = timePassed + OFFSET_EGRESS_EXPIRED;
             } else if (motorState1.load() == Timer::MotorState::MOTOR_SLOW && durations.fst1.egress.expected.Slow.count() == 0) {
-                durations.fst1.egress.expected.Slow = timePassed - OFFSET;
+                durations.fst1.egress.expected.Slow = timePassed - OFFSET_EGRESS_EXPECTED;
             } else if (motorState1.load() == Timer::MotorState::MOTOR_SLOW) {
-                durations.fst1.egress.expired.Slow = timePassed + OFFSET;
+                durations.fst1.egress.expired.Slow = timePassed + OFFSET_EGRESS_EXPIRED;
             } else {
                 Logger::getInstance().log(LogLevel::ERROR, "[FST1&2]", "PositionTracker.onTimingLBE1toLBF2");
             }
             lastTimer = std::chrono::steady_clock::time_point::min();
         }
     });
-    // getTIMING_LBF_2_TO_HS2
+       
+       // getTIMING_LBF_2_TO_HS2
        onEvent(&fsm->getTIMING_LBF_2_TO_HS_2(), [this]{
         std::chrono::milliseconds timePassed;
         if (lastTimer == std::chrono::steady_clock::time_point::min()) {
@@ -832,14 +830,14 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             );
             Logger::getInstance().log(LogLevel::TRACE, "[FST2] Ending Timer: " + std::to_string(timePassed.count()), "PositionTracker.onTimingLBF2toHS2");
             if (motorState2.load() == Timer::MotorState::MOTOR_FAST && durations.fst2.ingress.expected.Fast.count() == 0) {
-                durations.fst2.ingress.expected.Fast = timePassed - OFFSET;
-                Logger::getInstance().log(LogLevel::TRACE, "[FST2] FOOOOOOOOOOOOOOOOO: " + std::to_string(durations.fst2.ingress.expected.Fast.count()), "PositionTracker.onTimingLBF2toHS2");
+                durations.fst2.ingress.expected.Fast = timePassed - OFFSET_EXPECTED;
+                Logger::getInstance().log(LogLevel::TRACE, "[FST2]: " + std::to_string(durations.fst2.ingress.expected.Fast.count()), "PositionTracker.onTimingLBF2toHS2"); // Hier war FOOOOOOOOOOOOOOOOO
             } else if (motorState2.load() == Timer::MotorState::MOTOR_FAST) {
-                durations.fst2.ingress.expired.Fast = timePassed + OFFSET;
+                durations.fst2.ingress.expired.Fast = timePassed + OFFSET_EXPIRED;
             } else if (motorState2.load() == Timer::MotorState::MOTOR_SLOW && durations.fst2.ingress.expected.Slow.count() == 0) {
-                durations.fst2.ingress.expected.Slow = timePassed - OFFSET;
+                durations.fst2.ingress.expected.Slow = timePassed - OFFSET_EXPECTED;
             } else if (motorState2.load() == Timer::MotorState::MOTOR_SLOW) {
-                durations.fst2.ingress.expired.Slow = timePassed + OFFSET;
+                durations.fst2.ingress.expired.Slow = timePassed + OFFSET_EXPIRED;
             } else {
                 Logger::getInstance().log(LogLevel::ERROR, "[FST2]", "PositionTracker.onTimingLBF2toHS2");
             }
@@ -860,13 +858,13 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             );
             Logger::getInstance().log(LogLevel::TRACE, "[FST2] Ending Timer: " + std::to_string(timePassed.count()), "PositionTracker.onTimingHS2toMS2");
             if (motorState2.load() == Timer::MotorState::MOTOR_FAST && durations.fst2.heightSensor.expected.Fast.count() == 0) {
-                durations.fst2.heightSensor.expected.Fast = timePassed - OFFSET;
+                durations.fst2.heightSensor.expected.Fast = timePassed - OFFSET_EXPECTED;
             } else if (motorState2.load() == Timer::MotorState::MOTOR_FAST) {
-                durations.fst2.heightSensor.expired.Fast = timePassed + OFFSET;
+                durations.fst2.heightSensor.expired.Fast = timePassed + OFFSET_EXPIRED;
             } else if (motorState2.load() == Timer::MotorState::MOTOR_SLOW && durations.fst2.heightSensor.expected.Slow.count() == 0) {
-                durations.fst2.heightSensor.expected.Slow = timePassed - OFFSET;
+                durations.fst2.heightSensor.expected.Slow = timePassed - OFFSET_EXPECTED;
             } else if (motorState2.load() == Timer::MotorState::MOTOR_SLOW) {
-                durations.fst2.heightSensor.expired.Slow = timePassed + OFFSET;
+                durations.fst2.heightSensor.expired.Slow = timePassed + OFFSET_EXPIRED;
             } else {
                 Logger::getInstance().log(LogLevel::ERROR, "[FST2]", "PositionTracker.onTimingHS2toMS2");
             }
@@ -887,16 +885,25 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             );
             Logger::getInstance().log(LogLevel::TRACE, "[FST2] Ending Timer: " + std::to_string(timePassed.count()), "PositionTracker.onTimingMS2toLBE2");
            if (durations.fst2.sorting.expected.Slow.count() == 0) {
-                durations.fst2.sorting.expected.Slow = timePassed - OFFSET;
+                durations.fst2.sorting.expected.Slow = timePassed - OFFSET_EXPECTED;
+                // TODO need to be tested !!!
+                durations.fst1.ingress.distanceValid.Slow = durations.fst1.ingress.expected.Slow  / 2;
+                durations.fst1.sorting.distanceValid.Slow = durations.fst1.sorting.expected.Slow  / 2;
+                durations.fst2.sorting.distanceValid.Slow = durations.fst2.sorting.expected.Slow  / 2;
             } else if (durations.fst2.sorting.expected.Fast.count() == 0) {
-                durations.fst2.sorting.expected.Fast = timePassed - OFFSET;
+                durations.fst2.sorting.expected.Fast = timePassed - OFFSET_EXPECTED;
+                // TODO need to be tested !!!
+                durations.fst1.ingress.distanceValid.Fast = durations.fst1.ingress.expected.Fast  / 2;
+                durations.fst1.sorting.distanceValid.Fast = durations.fst1.sorting.expected.Fast  / 2;
+                durations.fst2.sorting.distanceValid.Fast = durations.fst2.sorting.expected.Fast  / 2;
             } else if (durations.fst2.sorting.expired.Slow.count() == 0) {
-                durations.fst2.sorting.expired.Slow = timePassed + OFFSET;
+                durations.fst2.sorting.expired.Slow = timePassed + OFFSET_EXPIRED;
             } else if (durations.fst2.sorting.expired.Fast.count() == 0) {
-                durations.fst2.sorting.expired.Fast = timePassed + OFFSET;
+                durations.fst2.sorting.expired.Fast = timePassed + OFFSET_EXPIRED;
             } else {
                 Logger::getInstance().log(LogLevel::ERROR, "[FST2]", "PositionTracker.onTimingMS2toLBE2");
             }
+
             Logger::getInstance().log(LogLevel::WARNING,
                 "\ndurations.fst1.ingress.distanceValid.Fast:" + std::to_string(durations.fst1.ingress.distanceValid.Fast.count()) + "ms" +
                 "\ndurations.fst1.ingress.distanceValid.Slow:" + std::to_string(durations.fst1.ingress.distanceValid.Slow.count()) + "ms" +
@@ -937,10 +944,9 @@ PositionTracker::PositionTracker(FSM* _fsm) {
 
             lastTimer = std::chrono::steady_clock::time_point::min();
         }
+
     });
 }
-
-
 
 void PositionTracker::handleMotorChange(uint8_t festoId, Timer::MotorState motorState) {
     if (festoId == FESTO1) {
@@ -1187,7 +1193,6 @@ std::chrono::milliseconds PositionTracker::getDuration(int festoId, SegmentType 
 
 uint32_t PositionTracker::nextPukId() {
     bool pukId = lastPukId.load();
-    // TODO mutex for racecondition
     lastPukId++;
     return pukId;
 }
@@ -1199,4 +1204,12 @@ void PositionTracker::onEvent(sc::rx::Observable<void>* event ,std::function<voi
             *new PositionTrackerObserver(callback)
         )
     );
+}
+
+PositionTracker::SortingType PositionTracker::sortingTypeNext(SortingType st) {
+    return static_cast<SortingType>((static_cast<int>(st) + 1) % 3);
+}
+
+PositionTracker::SortingType PositionTracker::sortingTypePrev(SortingType st) {
+    return static_cast<SortingType>((static_cast<int>(st) + 2 % 3));
 }

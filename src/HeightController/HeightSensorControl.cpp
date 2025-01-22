@@ -34,11 +34,10 @@ HeightSensorControl::HeightSensorControl(const std::string channelName, const st
 
 // Destructor
 HeightSensorControl::~HeightSensorControl() { 
-    // TODO disconnect from dispatcher
+    //  disconnect from dispatcher
     if (0 > ConnectDetach(dispatcherConnectionID)){
         Logger::getInstance().log(LogLevel::ERROR, "Disconnection from Dispatcher failed...", "HeightSensorControl");
     }
-    // TODO How to end thread if blocked in MsgReveivePulse and return avlue?
     Logger::getInstance().log(LogLevel::TRACE, "destroying own channel...", "HeightSensorControl");
     destroyNamedChannel(channelID, hsControllerChannel); 
 }

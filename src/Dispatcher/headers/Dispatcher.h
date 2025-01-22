@@ -8,7 +8,6 @@
 #ifndef DISPATCHER_H
 #define DISPATCHER_H
 
-//#include <cstdio> // For sprintf TODO REMOVE
 #include <iostream>
 #include <map>
 #include <stdint.h>

@@ -17,12 +17,12 @@ Mock_Decoder::Mock_Decoder(const std::string dispatcherChannelName){
 }
 
 Mock_Decoder::~Mock_Decoder() {
-    // TODO disconnect from dispatcher
+    
     if (0 > ConnectDetach(dispatcherConnectionID)){
         Logger::getInstance().log(LogLevel::ERROR, "Disconnection from Dispatcher failed...", "Mock_Decoder");
     }
 
-    // TODO How to end thread if blocked in MsgReveivePulse
+    
     destroyChannel(channelID);
     
 }

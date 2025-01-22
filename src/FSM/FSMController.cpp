@@ -66,7 +66,7 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
 }
 
 FSMController::~FSMController() {
-    // TODO WHY DOES DESTROY CHANNEL WONT WORK
+    
     // std::cout << "FSMCONTROLLER: destroying own channel " << std::endl;
     // destroyChannel(channelID);   
     
@@ -507,13 +507,13 @@ void FSMController::handlePulse(_pulse msg) {
         case PULSE_HS1_SAMPLE:
             fsm->setFST_1_currentValue(msgVal);// 2400
             fsm-> raiseHS_1_SAMPLE();
-            Logger::getInstance().log(LogLevel::DEBUG, "received currentValue... HS1: "+ std::to_string(msgVal), "FSMController");
+            //Logger::getInstance().log(LogLevel::DEBUG, "received currentValue... HS1: "+ std::to_string(msgVal), "FSMController");
             //Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLE..."+ std::to_string(msgVal),, "FSMController");
             break;
         case PULSE_HS2_SAMPLE:
             fsm-> setFST_2_currentValue(msgVal); 
             fsm->raiseHS_2_SAMPLE();
-            Logger::getInstance().log(LogLevel::DEBUG, "received currentValue... HS2: "+ std::to_string(msgVal), "FSMController");
+            //Logger::getInstance().log(LogLevel::DEBUG, "received currentValue... HS2: "+ std::to_string(msgVal), "FSMController");
             //Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLE...", "FSMController");
             break;
         case PULSE_HS1_SAMPLING_DONE:
@@ -562,8 +562,31 @@ void FSMController::handlePulse(_pulse msg) {
                 Logger::getInstance().log(LogLevel::DEBUG, "sorting Moduel on FST_2 is DIVERTER!..."+ std::to_string(msgVal), "FSMController");
             }
             break;
+        case _PULSE_CODE_COIDDEATH:
+            Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_COIDDEATH...", "FSMController");
+            break;
+        case _PULSE_CODE_DISCONNECT:
+            Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_DISCONNECT...", "FSMController");
+            break;
+        case _PULSE_CODE_NET_ACK:
+            Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_NET_ACK...", "FSMController");
+            break;
+        case _PULSE_CODE_NET_UNBLOCK:
+            Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_NET_UNBLOCK...", "FSMController");
+            break;
+        case _PULSE_CODE_NET_DETACH:
+            Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_NET_DETACH...", "FSMController");
+            break;
+        case _PULSE_CODE_RESTART:
+            Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_RESTART...", "FSMController");
+            break;
+        case _PULSE_CODE_THREADDEATH:
+            Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_THREADDEATH...", "FSMController");
+            break;
+        case _PULSE_CODE_UNBLOCK:
+            Logger::getInstance().log(LogLevel::WARNING, "Recieved _PULSE_CODE_UNBLOCK...", "FSMController");			
+            break;
         default:
-            // TODO handle non application messages, for reference see ActuatorController 
             Logger::getInstance().log(LogLevel::ERROR, "Unknown Pulse....." + std::to_string(msg.code), "FSMController");
             break;
     }

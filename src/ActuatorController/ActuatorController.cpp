@@ -65,9 +65,7 @@ int8_t ActuatorController::pulses_FESTO2[ACTUATOR_CONTROLLER_NUM_OF_PULSES] = {
 	PULSE_SM2_RESTING,
 };
 
-// bool ActuatorController::lgblinking = false; // TODO make thread save
-// bool ActuatorController::lrblinking = false;
-// bool ActuatorController::lyblinking = false;
+
 
 ActuatorController::ActuatorController(uint8_t festo, const std::string name, I_Actuators_Wrapper *actuatorsWrapper) {
     actuatorControllerChannel = createNamedChannel(name);
@@ -85,7 +83,6 @@ ActuatorController::ActuatorController(uint8_t festo, const std::string name, I_
     actuators->yellowLampLightOff();
     actuators->redLampLightOff();
     actuators->startButtonLightOff();
-    // actuators->stopButtonLightOff();
     actuators->resetButtonLightOff();
     actuators->Q1LightOff();
     actuators->Q2LightOff();
@@ -240,7 +237,7 @@ void ActuatorController::handleMsg() {
                 Logger::getInstance().log(LogLevel::TRACE, "[Festo" + std::to_string(festoID+1) + "] Motor slow", "ActuatorController");
                 // Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Motor Festo 1 will be slow running...", "ActuatorController");
                 actuators->runSlow();
-                actuators->runRight(); // TODO test is toggle button is not needed
+                actuators->runRight(); 
                 break;
             case PULSE_MOTOR1_FAST:
                 Logger::getInstance().log(LogLevel::TRACE, "[Festo" + std::to_string(festoID+1) + "] Motor fast", "ActuatorController");
@@ -255,7 +252,7 @@ void ActuatorController::handleMsg() {
             case PULSE_MOTOR2_SLOW:
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Motor Festo 2 will be slow running...", "ActuatorController");
                 actuators->runSlow();
-                actuators->runRight(); // TODO test is toggle button is not needed
+                actuators->runRight(); 
                 break;
             case PULSE_MOTOR2_FAST:
                 Logger::getInstance().log(LogLevel::TRACE, std::to_string(festoID) + ": Motor Festo 2 will be fast running...", "ActuatorController");

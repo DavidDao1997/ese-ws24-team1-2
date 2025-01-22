@@ -7,7 +7,6 @@
 
 #include "headers/Decoder.h"
 #include "../HAL/headers/HALConfig.h"
-// #include <cstdio> // For sprintf TODO REMOVE
 
 
 #define LONG_PRESS_DURATION 1000
@@ -45,7 +44,6 @@ Decoder::Decoder(const std::string dispatcherChannelName, uint8_t festoID) {
     Logger::getInstance().log(LogLevel::DEBUG, "NAME_FLAG_ATTACH_GLOBAL: " + std::to_string(NAME_FLAG_ATTACH_GLOBAL), "Decoder");
     Logger::getInstance().log(LogLevel::DEBUG, "dispatcherConnectionID: " + std::to_string(dispatcherConnectionID), "Decoder");
 
-    // TODO check if festo 1 or festo 2 in parameter list
     if ((festoID == FESTO1) || (festoID == FESTO2)){
         festoNr = festoID;
     } else {
@@ -54,11 +52,11 @@ Decoder::Decoder(const std::string dispatcherChannelName, uint8_t festoID) {
 }
 
 Decoder::~Decoder() {
-    // TODO disconnect from dispatcher
+    //  disconnect from dispatcher
     if (0 > ConnectDetach(dispatcherConnectionID)){
         Logger::getInstance().log(LogLevel::ERROR, "Disconnection from Dispatcher failed...", "Decoder");
     }
-    // TODO How to end thread if blocked in MsgReveivePulse and return avlue?
+    //  How to end thread if blocked in MsgReveivePulse and return avlue?
     destroyChannel(channelID);
 }
 
@@ -87,9 +85,9 @@ void Decoder::handleMsg() {
         int recvid = MsgReceivePulse(channelID, &msg, sizeof(_pulse), nullptr);
 
         if (recvid < 0) {
-            Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "Decoder"); // TODO does this happen on decoonstruct???
+            Logger::getInstance().log(LogLevel::ERROR, "MsgReceivePulse failed...", "Decoder"); 
             running = false;
-            return; // TODO
+            return; 
         }
 
         if (recvid == 0) { // Pulse received
@@ -134,25 +132,22 @@ void Decoder::decode() {
         int32_t code = current_level ? PULSE_ESTOP_HIGH : PULSE_ESTOP_LOW;
         // Test
         Logger::getInstance().log(LogLevel::TRACE, "current level: " + std::to_string(current_level), "Decoder");
-        // char buffer[100];
-        // sprintf(buffer, "DECODER: current level %d\n", current_level);
-        // std::cout << buffer << std::endl;
+        
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed, send to heartbeat", "Decoder");
             
-        } // TODO 
+        } 
     }
     // Light Barrier Front
     if ((flippedValues & (uint32_t)BIT_MASK(LBF_PIN)) != 0) {
         // LBF_PIN
         uint8_t current_level = (currentValues >> LBF_PIN) & 0x1;
-        // TODO Add 2 Festo support eg add festo# to value instead of sending just 0 and remove number ->
         // PULSE_LBF_INTERRUPTED
         int32_t code = current_level ? PULSE_LBF_OPEN : PULSE_LBF_INTERRUPTED;
         Logger::getInstance().log(LogLevel::TRACE, "LBF erkannt", "Decoder");
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::TRACE, "Dispatcher Send failed", "Decoder");
-        } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+        } 
     }
     // Light Berrier End
     if ((flippedValues & (uint32_t)BIT_MASK(LBE_PIN)) != 0) {
@@ -162,7 +157,7 @@ void Decoder::decode() {
         Logger::getInstance().log(LogLevel::TRACE, "LBE erkannt", "Decoder");
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::TRACE, "Dispatcher Send failed", "Decoder");
-        } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+        }
     }
     // Light Barrier Ramp
     if ((flippedValues & (uint32_t)BIT_MASK(LBR_PIN)) != 0) {
@@ -172,7 +167,7 @@ void Decoder::decode() {
         Logger::getInstance().log(LogLevel::TRACE, "LBR erkannt", "Decoder");
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
-        } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+        }
     }
     // Light Barrier Metal Sensor
     if ((flippedValues & (uint32_t)BIT_MASK(LBM_PIN)) != 0) {
@@ -182,7 +177,7 @@ void Decoder::decode() {
         Logger::getInstance().log(LogLevel::TRACE, "LBM erkannt", "Decoder");
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
-        } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+        } 
     }
     // Button Start
     if ((flippedValues & (uint32_t)BIT_MASK(BGS_PIN)) != 0) {
@@ -271,14 +266,10 @@ void Decoder::decode() {
         Logger::getInstance().log(LogLevel::TRACE, "MS erkannt", "Decoder");
         if (0 > MsgSendPulse(dispatcherConnectionID, -1, code, festoId)) {
             Logger::getInstance().log(LogLevel::ERROR, "Dispatcher Send failed", "Decoder");
-        } // TODO SWITCH HERE TO SECOND FESTO (instead of 0 put 1 if festo2)
+        } 
     }
 
-    // TODO if neccessary
-    // if (...) {
-    //     ...
-    // }
-    // ...
+    
 }
 
 void Decoder::sendMsg() {
