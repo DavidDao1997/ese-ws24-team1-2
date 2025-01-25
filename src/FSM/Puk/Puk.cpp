@@ -118,6 +118,14 @@ int Puk::getAverageHeight(){
 void Puk::setAverageHeight(int averageHeight){
     this->averageHeight = averageHeight;
 }
+
+int Puk::getAverageHeight(){
+        return averageHeight;
+    }
+
+void Puk::setAverageHeight(int averageHeight){
+    this->averageHeight = averageHeight;
+}
     
 std::string Puk::pukTypeToString(Puk::PUKType type) {
     switch (type) {
