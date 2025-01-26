@@ -16065,6 +16065,9 @@ sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingre
 			if (LBF_2_INTERRUPTED_raised)
 			{ 
 				exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected();
+				setFST2IPE(false);
+				EVALUATE_observable.next();
+				raiseLocal_EVALUATE();
 				enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukinLBF2_default();
 				FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(5);
 				transitioned_after = 5;
