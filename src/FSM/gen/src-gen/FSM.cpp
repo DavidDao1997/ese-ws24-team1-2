@@ -4574,11 +4574,11 @@ void FSM::enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sortin
 	completed = true;
 }
 
-/* Entry action for state 'PukExpected'. */
-void FSM::enact_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_PukExpected()
+/* Entry action for state 'IDLE'. */
+void FSM::enact_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_IDLE()
 {
-	/* Entry action for state 'PukExpected'. */
-	setFST1EPE(true);
+	/* Entry action for state 'IDLE'. */
+	setFST1EPE(false);
 }
 
 /* Entry action for state 'Forward'. */
@@ -5822,7 +5822,6 @@ void FSM::enseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_E
 void FSM::enseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_PukExpected_default()
 {
 	/* 'default' enter sequence for state PukExpected */
-	enact_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_PukExpected();
 	stateConfVector[3] = FSM::State::FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_PukExpected;
 	stateConfVectorPosition = 3;
 	historyVector[4] = stateConfVector[3];
@@ -5832,6 +5831,7 @@ void FSM::enseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_E
 void FSM::enseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_IDLE_default()
 {
 	/* 'default' enter sequence for state IDLE */
+	enact_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_IDLE();
 	stateConfVector[3] = FSM::State::FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_IDLE;
 	stateConfVectorPosition = 3;
 	historyVector[4] = stateConfVector[3];
@@ -15546,11 +15546,9 @@ sc::integer FSM::FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_
 			{ 
 				exseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_Waiting();
 				motor1Stop--;
-				motor2Forward++;
+				setMotor2Forward(1);
 				FST_2_IS_READY_observable.next();
 				raiseLocal_FST_2_IS_READY();
-				EVALUATE_observable.next();
-				raiseLocal_EVALUATE();
 				enseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_Transfer_default();
 				FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_react(3);
 				transitioned_after = 3;
@@ -15559,6 +15557,9 @@ sc::integer FSM::FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_
 				if (!(FST1EPE))
 				{ 
 					exseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_Waiting();
+					motor1Stop--;
+					FST_2_IS_READY_observable.next();
+					raiseLocal_FST_2_IS_READY();
 					enseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_IDLE_default();
 					FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_react(3);
 					transitioned_after = 3;
@@ -15586,6 +15587,7 @@ sc::integer FSM::FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_
 			{ 
 				exseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_Transfer();
 				setFst_2_ready(false);
+				setFST1EPE(false);
 				FST_1_POSITION_EGRESS_NEW_PUK_observable.next();
 				enseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_IDLE_default();
 				FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_react(3);
@@ -15595,6 +15597,9 @@ sc::integer FSM::FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_
 				if (!(FST1EPE))
 				{ 
 					exseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_Transfer();
+					setMotor2Forward(0);
+					EVALUATE_observable.next();
+					raiseLocal_EVALUATE();
 					enseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_IDLE_default();
 					FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_react(3);
 					transitioned_after = 3;
@@ -15622,11 +15627,8 @@ sc::integer FSM::FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_
 			{ 
 				exseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_PukExpected();
 				motor1Stop++;
-				setFST1EPE(false);
 				FST_2_NOT_READY_observable.next();
 				raiseLocal_FST_2_NOT_READY();
-				EVALUATE_observable.next();
-				raiseLocal_EVALUATE();
 				enseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_Waiting_default();
 				FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_react(3);
 				transitioned_after = 3;
@@ -15636,7 +15638,6 @@ sc::integer FSM::FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_
 				{ 
 					exseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_PukExpected();
 					motor2Forward++;
-					setFST1EPE(false);
 					EVALUATE_observable.next();
 					raiseLocal_EVALUATE();
 					enseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_Transfer_default();
@@ -15702,6 +15703,7 @@ sc::integer FSM::FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_
 				if (FST_1_POSITION_EGRESS_PUK_EXPECTED_raised)
 				{ 
 					exseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_IDLE();
+					setFST1EPE(true);
 					enseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_PukExpected_default();
 					FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_react(3);
 					transitioned_after = 3;
@@ -15739,8 +15741,6 @@ sc::integer FSM::FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_
 					motor1Forward--;
 					setFST1EPE(false);
 					FST_1_POSITION_EGRESS_PUK_REMOVED_observable.next();
-					EVALUATE_observable.next();
-					raiseLocal_EVALUATE();
 					enseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_FST1Error_default();
 					FSM_Festo1__Egress_FSM_Festo1__Egress_react(3);
 					transitioned_after = 3;
