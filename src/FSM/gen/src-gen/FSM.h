@@ -599,6 +599,7 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_ESTOP_RECEIVED,
 			Internal_local_SYSTEM_OPERATIONAL_OUT,
 			Internal_local_FST_1_ERROR_SYSTEM,
+			Internal_local_FST_1_ERROR_INGRESS_MISSING_PUK,
 			Internal_local_ESTOP_CLEARED,
 			Internal_local_FST_2_NOT_READY,
 			Internal_local_FST_2_IS_READY,
@@ -614,7 +615,6 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_FST_1_ERROR_SORTING_UNKNOWNPUK,
 			Internal_local_FST_1_ERROR_RAMPFULL_UNKNOWNPUK,
 			Internal_local_FST_1_ERROR_INGRESS_UNKNOWNPUK,
-			Internal_local_FST_1_ERROR_INGRESS_MISSING_PUK,
 			Internal_local_FST_1_ERROR_EGRESS_UNKNOWNPUK,
 			Internal_local_FST_1_ERROR_RAMPFULL_MISSING_PUK,
 			Internal_local_FST_1_ERROR_IN_READY,
@@ -1155,10 +1155,10 @@ class FSM : public sc::EventDrivenInterface
 		bool getFastRun() const noexcept;
 		/*! Sets the value of the variable 'FastRun' that is defined in the default interface scope. */
 		void setFastRun(bool FastRun) noexcept;
-		/*! Gets the value of the variable 'FST1IPE' that is defined in the default interface scope. */
-		bool getFST1IPE() const noexcept;
-		/*! Sets the value of the variable 'FST1IPE' that is defined in the default interface scope. */
-		void setFST1IPE(bool FST1IPE) noexcept;
+		/*! Gets the value of the variable 'FST1IPP' that is defined in the default interface scope. */
+		bool getFST1IPP() const noexcept;
+		/*! Sets the value of the variable 'FST1IPP' that is defined in the default interface scope. */
+		void setFST1IPP(bool FST1IPP) noexcept;
 		/*! Gets the value of the variable 'FST1HMPE' that is defined in the default interface scope. */
 		bool getFST1HMPE() const noexcept;
 		/*! Sets the value of the variable 'FST1HMPE' that is defined in the default interface scope. */
@@ -1564,7 +1564,7 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer flatPukHeight {0};
 		bool firstLoopCalibration {false};
 		bool FastRun {false};
-		bool FST1IPE {false};
+		bool FST1IPP {false};
 		bool FST1HMPE {false};
 		bool FST1SORPE {false};
 		bool FST1EPE {false};
@@ -1678,7 +1678,6 @@ class FSM : public sc::EventDrivenInterface
 		
 		// prototypes of all internal functions
 		
-		void enact_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_PukPresent();
 		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Idle();
 		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Measuring_FSM_Festo1__HeightMeasurement__final_();
 		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_PukExpected();
@@ -3403,6 +3402,12 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_1_ERROR_SYSTEM' of internal scope as a local event. */
 		void raiseLocal_FST_1_ERROR_SYSTEM();
 		
+		/*! Indicates event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope is active. */
+		bool local_FST_1_ERROR_INGRESS_MISSING_PUK_raised {false};
+		
+		/*! Raises the out event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope as a local event. */
+		void raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK();
+		
 		/*! Indicates event 'local_ESTOP_CLEARED' of internal scope is active. */
 		bool local_ESTOP_CLEARED_raised {false};
 		
@@ -3492,12 +3497,6 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Raises the out event 'local_FST_1_ERROR_INGRESS_UNKNOWNPUK' of internal scope as a local event. */
 		void raiseLocal_FST_1_ERROR_INGRESS_UNKNOWNPUK();
-		
-		/*! Indicates event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope is active. */
-		bool local_FST_1_ERROR_INGRESS_MISSING_PUK_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope as a local event. */
-		void raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK();
 		
 		/*! Indicates event 'local_FST_1_ERROR_EGRESS_UNKNOWNPUK' of internal scope is active. */
 		bool local_FST_1_ERROR_EGRESS_UNKNOWNPUK_raised {false};
