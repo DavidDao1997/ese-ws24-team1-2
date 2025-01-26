@@ -4626,11 +4626,11 @@ void FSM::enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_
 	completed = true;
 }
 
-/* Entry action for state 'PukExpected'. */
-void FSM::enact_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_PukExpected()
+/* Entry action for state 'IDLE'. */
+void FSM::enact_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE()
 {
-	/* Entry action for state 'PukExpected'. */
-	setFST2EPE(true);
+	/* Entry action for state 'IDLE'. */
+	setFST2EPE(false);
 }
 
 /* Entry action for state 'Forward'. */
@@ -6107,6 +6107,7 @@ void FSM::enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_E
 void FSM::enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE_default()
 {
 	/* 'default' enter sequence for state IDLE */
+	enact_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE();
 	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE;
 	stateConfVectorPosition = 7;
 	historyVector[8] = stateConfVector[7];
@@ -6125,7 +6126,6 @@ void FSM::enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_E
 void FSM::enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_PukExpected_default()
 {
 	/* 'default' enter sequence for state PukExpected */
-	enact_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_PukExpected();
 	stateConfVector[7] = FSM::State::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_PukExpected;
 	stateConfVectorPosition = 7;
 	historyVector[8] = stateConfVector[7];
@@ -16938,6 +16938,9 @@ sc::integer FSM::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_
 				if (FST_2_POSITION_EGRESS_PUK_EXPECTED_raised)
 				{ 
 					exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE();
+					setFST2EPE(true);
+					EVALUATE_observable.next();
+					raiseLocal_EVALUATE();
 					enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_PukExpected_default();
 					FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_react(7);
 					transitioned_after = 7;
@@ -16964,6 +16967,7 @@ sc::integer FSM::FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_
 			if (LBE_2_OPEN_raised)
 			{ 
 				exseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_Transfer();
+				setMotor2Forward(0);
 				motor2Stop--;
 				setFst_2_ready(true);
 				setFST2EPE(false);

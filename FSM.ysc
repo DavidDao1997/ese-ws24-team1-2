@@ -429,18 +429,18 @@
             <outgoingTransitions xmi:id="_uISuUNLIEe-2sf9MeVa9Ow" specification="SYSTEM_OPERATIONAL_OUT" target="_sKaFUNLIEe-2sf9MeVa9Ow"/>
             <outgoingTransitions xmi:id="_GQ8JUNLJEe-2sf9MeVa9Ow" specification="FST_2_ERROR_SYSTEM" target="_D-0VsNLJEe-2sf9MeVa9Ow"/>
             <regions xmi:id="_3C2SQ80mEe-3NuOW5w28UA" name="FSM_Festo2: Internal_Egress">
-              <vertices xsi:type="sgraph:State" xmi:id="_3C2SRM0mEe-3NuOW5w28UA" specification="" name="IDLE" incomingTransitions="_3C249M0mEe-3NuOW5w28UA _3C247M0mEe-3NuOW5w28UA _gOG1sND3Ee-a-OWtajrXdQ _6P29ENLIEe-2sf9MeVa9Ow _lohY4NirEe-9ToXAdoPlsw _FnNw0NixEe-9ToXAdoPlsw">
+              <vertices xsi:type="sgraph:State" xmi:id="_3C2SRM0mEe-3NuOW5w28UA" specification="entry / FST2EPE = false" name="IDLE" incomingTransitions="_3C249M0mEe-3NuOW5w28UA _3C247M0mEe-3NuOW5w28UA _gOG1sND3Ee-a-OWtajrXdQ _6P29ENLIEe-2sf9MeVa9Ow _lohY4NirEe-9ToXAdoPlsw _FnNw0NixEe-9ToXAdoPlsw">
                 <outgoingTransitions xmi:id="_gOG1sND3Ee-a-OWtajrXdQ" specification="LBE_2_INTERRUPTED/&#xD;&#xA;raise FST_2_ERROR_SYSTEM;&#xD;&#xA;raise FST_2_ERROR_EGRESS_UNKNOWNPUK" target="_3C2SRM0mEe-3NuOW5w28UA"/>
-                <outgoingTransitions xmi:id="_3C242s0mEe-3NuOW5w28UA" specification="FST_2_POSITION_EGRESS_PUK_EXPECTED" target="_3C249c0mEe-3NuOW5w28UA"/>
+                <outgoingTransitions xmi:id="_3C242s0mEe-3NuOW5w28UA" specification="FST_2_POSITION_EGRESS_PUK_EXPECTED /&#xD;&#xA;FST2EPE = true;&#xD;&#xA;raise EVALUATE" target="_3C249c0mEe-3NuOW5w28UA"/>
               </vertices>
               <vertices xsi:type="sgraph:State" xmi:id="_3C243s0mEe-3NuOW5w28UA" specification="" name="Transfer" incomingTransitions="_3C24980mEe-3NuOW5w28UA">
-                <outgoingTransitions xmi:id="_3C247M0mEe-3NuOW5w28UA" specification="LBE_2_OPEN /&#xD;&#xA;motor2Stop--;&#xD;&#xA;fst_2_ready = true;&#xD;&#xA;FST2EPE = false;&#xD;&#xA;raise EVALUATE" target="_3C2SRM0mEe-3NuOW5w28UA"/>
+                <outgoingTransitions xmi:id="_3C247M0mEe-3NuOW5w28UA" specification="LBE_2_OPEN /&#xD;&#xA;motor2Forward = 0;&#xD;&#xA;motor2Stop--;&#xD;&#xA;fst_2_ready = true;&#xD;&#xA;FST2EPE = false;&#xD;&#xA;raise EVALUATE" target="_3C2SRM0mEe-3NuOW5w28UA"/>
                 <outgoingTransitions xmi:id="_FnNw0NixEe-9ToXAdoPlsw" specification="[!FST2EPE]/&#xA;motor2Stop--;&#xA;raise EVALUATE" target="_3C2SRM0mEe-3NuOW5w28UA"/>
               </vertices>
               <vertices xsi:type="sgraph:Entry" xmi:id="_3C24880mEe-3NuOW5w28UA">
                 <outgoingTransitions xmi:id="_3C249M0mEe-3NuOW5w28UA" specification="" target="_3C2SRM0mEe-3NuOW5w28UA"/>
               </vertices>
-              <vertices xsi:type="sgraph:State" xmi:id="_3C249c0mEe-3NuOW5w28UA" specification="entry/&#xA;FST2EPE = true" name="PukExpected" incomingTransitions="_3C242s0mEe-3NuOW5w28UA">
+              <vertices xsi:type="sgraph:State" xmi:id="_3C249c0mEe-3NuOW5w28UA" specification="" name="PukExpected" incomingTransitions="_3C242s0mEe-3NuOW5w28UA">
                 <outgoingTransitions xmi:id="_3C24980mEe-3NuOW5w28UA" specification="LBE_2_INTERRUPTED/ &#xA;motor2Stop++;&#xA;motor2Forward = 0;&#xA;raise EVALUATE&#xA;" target="_3C243s0mEe-3NuOW5w28UA"/>
                 <outgoingTransitions xmi:id="_6P29ENLIEe-2sf9MeVa9Ow" specification="FST_2_POSITION_EGRESS_PUK_EXPIRED/&#xD;&#xA;fst_2_ready = true;&#xD;&#xA;fst_2_Error = true;&#xD;&#xA;motor2Forward = 0;&#xD;&#xA;motor2Slow = 0;&#xD;&#xA;FST2EPE = false;&#xD;&#xA;raise FST_2_ERROR_SYSTEM;&#xD;&#xA;raise FST_2_ERROR_EGRESS_MISSING_PUK;&#xD;&#xA;raise FST_2_POSITION_EGRESS_PUK_REMOVED" target="_3C2SRM0mEe-3NuOW5w28UA"/>
                 <outgoingTransitions xmi:id="_lohY4NirEe-9ToXAdoPlsw" specification="[!FST2EPE]" target="_3C2SRM0mEe-3NuOW5w28UA"/>
@@ -6933,7 +6933,7 @@
     <edges xmi:id="_3C3f4M0mEe-3NuOW5w28UA" type="Transition" element="_3C247M0mEe-3NuOW5w28UA" source="_l3-eGtLIEe-2sf9MeVa9Ow" target="_l3-eAtLIEe-2sf9MeVa9Ow">
       <children xsi:type="notation:DecorationNode" xmi:id="_3C3f4c0mEe-3NuOW5w28UA" type="TransitionExpression">
         <styles xsi:type="notation:ShapeStyle" xmi:id="_3C3f4s0mEe-3NuOW5w28UA"/>
-        <layoutConstraint xsi:type="notation:Location" xmi:id="_3C3f480mEe-3NuOW5w28UA" x="40" y="35"/>
+        <layoutConstraint xsi:type="notation:Location" xmi:id="_3C3f480mEe-3NuOW5w28UA" x="41" y="44"/>
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_3C3f5M0mEe-3NuOW5w28UA" routing="Rectilinear" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_3C3f5c0mEe-3NuOW5w28UA" fontName="Verdana"/>
