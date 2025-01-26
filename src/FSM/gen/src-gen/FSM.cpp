@@ -15666,6 +15666,7 @@ sc::integer FSM::FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_
 			{ 
 				exseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_PukExpected();
 				motor1Stop++;
+				setFST1EPE(false);
 				FST_2_NOT_READY_observable.next();
 				raiseLocal_FST_2_NOT_READY();
 				EVALUATE_observable.next();
@@ -15679,6 +15680,7 @@ sc::integer FSM::FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_
 				{ 
 					exseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_PukExpected();
 					motor2Forward++;
+					setFST1EPE(false);
 					EVALUATE_observable.next();
 					raiseLocal_EVALUATE();
 					enseq_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_Transfer_default();
