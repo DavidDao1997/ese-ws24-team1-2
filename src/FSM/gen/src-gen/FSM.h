@@ -875,8 +875,6 @@ class FSM : public sc::EventDrivenInterface
 		sc::rx::Observable<void>& getFST_1_PUK_DESIRED() noexcept;
 		/*! Get observable for event 'FST_1_PUK_NOT_DESIRED' of default interface scope. */
 		sc::rx::Observable<void>& getFST_1_PUK_NOT_DESIRED() noexcept;
-		/*! Get observable for event 'FST_1_PUK_ENTRY_EGRESS' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_PUK_ENTRY_EGRESS() noexcept;
 		/*! Get observable for event 'FST_1_SORTING_MODULE_ACTIVE' of default interface scope. */
 		sc::rx::Observable<void>& getFST_1_SORTING_MODULE_ACTIVE() noexcept;
 		/*! Get observable for event 'FST_1_SORTING_MODULE_RESTING' of default interface scope. */
@@ -1678,9 +1676,10 @@ class FSM : public sc::EventDrivenInterface
 		
 		// prototypes of all internal functions
 		
+		void enact_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_Idle();
 		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Idle();
 		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Measuring_FSM_Festo1__HeightMeasurement__final_();
-		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_PukExpected();
+		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Idle();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferEjector();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferDiverter();
@@ -3031,9 +3030,6 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Observable for event 'FST_1_PUK_NOT_DESIRED' of default interface scope. */
 		sc::rx::Observable<void> FST_1_PUK_NOT_DESIRED_observable = sc::rx::Observable<void>{};
-		
-		/*! Observable for event 'FST_1_PUK_ENTRY_EGRESS' of default interface scope. */
-		sc::rx::Observable<void> FST_1_PUK_ENTRY_EGRESS_observable = sc::rx::Observable<void>{};
 		
 		/*! Observable for event 'FST_1_SORTING_MODULE_ACTIVE' of default interface scope. */
 		sc::rx::Observable<void> FST_1_SORTING_MODULE_ACTIVE_observable = sc::rx::Observable<void>{};
