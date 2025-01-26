@@ -1,0 +1,15 @@
+GeneratorModel for create::cpp {
+
+	const PROJECT : string = "esep-2024wise-team-1-2"
+
+	const FOLDER : string = "src/FSM/gen/src-gen"
+
+	statechart FSM {
+
+		feature Outlet {
+			targetProject = PROJECT
+			targetFolder = FOLDER
+			libraryTargetFolder = "src/FSM/gen/src"
+		}
+	}
+}
