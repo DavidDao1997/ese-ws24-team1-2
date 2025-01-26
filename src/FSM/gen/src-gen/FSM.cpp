@@ -4602,11 +4602,11 @@ void FSM::enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop()
 	MOTOR_1_STOP_observable.next();
 }
 
-/* Entry action for state 'PukExpected'. */
-void FSM::enact_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected()
+/* Entry action for state 'Idle'. */
+void FSM::enact_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle()
 {
-	/* Entry action for state 'PukExpected'. */
-	setFST2IPE(true);
+	/* Entry action for state 'Idle'. */
+	setFST2IPE(false);
 }
 
 /* Entry action for state 'Idle'. */
@@ -5921,6 +5921,7 @@ void FSM::enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingres
 void FSM::enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle_default()
 {
 	/* 'default' enter sequence for state Idle */
+	enact_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle();
 	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle;
 	stateConfVectorPosition = 5;
 	historyVector[5] = stateConfVector[5];
@@ -5930,7 +5931,6 @@ void FSM::enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingres
 void FSM::enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected_default()
 {
 	/* 'default' enter sequence for state PukExpected */
-	enact_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected();
 	stateConfVector[5] = FSM::State::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected;
 	stateConfVectorPosition = 5;
 	historyVector[5] = stateConfVector[5];
@@ -15995,6 +15995,9 @@ sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingre
 				if (FST_2_POSITION_INGRESS_PUK_EXPECTED_raised)
 				{ 
 					exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle();
+					setFST2IPE(true);
+					EVALUATE_observable.next();
+					raiseLocal_EVALUATE();
 					enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected_default();
 					FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(5);
 					transitioned_after = 5;
@@ -16021,9 +16024,6 @@ sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingre
 			if (LBF_2_INTERRUPTED_raised)
 			{ 
 				exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected();
-				setFST2IPE(false);
-				EVALUATE_observable.next();
-				raiseLocal_EVALUATE();
 				enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukinLBF2_default();
 				FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(5);
 				transitioned_after = 5;
@@ -16078,36 +16078,21 @@ sc::integer FSM::FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingre
 			if (LBF_2_OPEN_raised)
 			{ 
 				exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukinLBF2();
-				FST_2_POSITION_INGRESS_NEW_PUK_observable.next();
 				motor1Forward--;
-				EVALUATE_observable.next();
-				raiseLocal_EVALUATE();
+				setFST2IPE(false);
+				FST_2_POSITION_INGRESS_NEW_PUK_observable.next();
 				enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle_default();
 				FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(5);
 				transitioned_after = 5;
 			}  else
 			{
-				if (local_FST_2_ERROR_INGRESS_MISSING_PUK_raised)
+				if (!(FST2IPE))
 				{ 
 					exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukinLBF2();
-					setMotor2Forward(0);
-					setMotor2Slow(0);
-					setFst_2_ready(true);
-					EVALUATE_observable.next();
-					raiseLocal_EVALUATE();
 					enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle_default();
 					FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(5);
 					transitioned_after = 5;
-				}  else
-				{
-					if (!(FST2IPE))
-					{ 
-						exseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukinLBF2();
-						enseq_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle_default();
-						FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_react(5);
-						transitioned_after = 5;
-					} 
-				}
+				} 
 			}
 		} 
 		/* If no transition was taken */
