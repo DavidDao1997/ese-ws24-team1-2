@@ -601,6 +601,7 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_FST_1_ERROR_SYSTEM,
 			Internal_local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID,
 			Internal_local_FST_1_ERROR_INGRESS_MISSING_PUK,
+			Internal_local_EVALUATE,
 			Internal_local_ESTOP_CLEARED,
 			Internal_local_FST_2_NOT_READY,
 			Internal_local_FST_2_IS_READY,
@@ -611,7 +612,6 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_FST_2_ERROR_INGRESS_MISSING_PUK,
 			Internal_local_FST_2_ERROR_HM_MISSING_PUK,
 			Internal_local_FST_2_ERROR_EGRESS_MISSING_PUK,
-			Internal_local_EVALUATE,
 			Internal_local_FST_1_ERROR_HM_UNKNOWNPUK,
 			Internal_local_FST_1_ERROR_SORTING_UNKNOWNPUK,
 			Internal_local_FST_1_ERROR_RAMPFULL_UNKNOWNPUK,
@@ -3421,6 +3421,12 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope as a local event. */
 		void raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK();
 		
+		/*! Indicates event 'local_EVALUATE' of internal scope is active. */
+		bool local_EVALUATE_raised {false};
+		
+		/*! Raises the out event 'local_EVALUATE' of internal scope as a local event. */
+		void raiseLocal_EVALUATE();
+		
 		/*! Indicates event 'local_ESTOP_CLEARED' of internal scope is active. */
 		bool local_ESTOP_CLEARED_raised {false};
 		
@@ -3480,12 +3486,6 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Raises the out event 'local_FST_2_ERROR_EGRESS_MISSING_PUK' of internal scope as a local event. */
 		void raiseLocal_FST_2_ERROR_EGRESS_MISSING_PUK();
-		
-		/*! Indicates event 'local_EVALUATE' of internal scope is active. */
-		bool local_EVALUATE_raised {false};
-		
-		/*! Raises the out event 'local_EVALUATE' of internal scope as a local event. */
-		void raiseLocal_EVALUATE();
 		
 		/*! Indicates event 'local_FST_1_ERROR_HM_UNKNOWNPUK' of internal scope is active. */
 		bool local_FST_1_ERROR_HM_UNKNOWNPUK_raised {false};
