@@ -474,16 +474,6 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 			local_FST_1_ERROR_SYSTEM_raised = true;
 			break;
 		}
-		case FSM::Event::Internal_local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID:
-		{
-			local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID_raised = true;
-			break;
-		}
-		case FSM::Event::Internal_local_FST_1_ERROR_INGRESS_MISSING_PUK:
-		{
-			local_FST_1_ERROR_INGRESS_MISSING_PUK_raised = true;
-			break;
-		}
 		case FSM::Event::Internal_local_ESTOP_CLEARED:
 		{
 			local_ESTOP_CLEARED_raised = true;
@@ -557,6 +547,11 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 		case FSM::Event::Internal_local_FST_1_ERROR_INGRESS_UNKNOWNPUK:
 		{
 			local_FST_1_ERROR_INGRESS_UNKNOWNPUK_raised = true;
+			break;
+		}
+		case FSM::Event::Internal_local_FST_1_ERROR_INGRESS_MISSING_PUK:
+		{
+			local_FST_1_ERROR_INGRESS_MISSING_PUK_raised = true;
 			break;
 		}
 		case FSM::Event::Internal_local_FST_1_ERROR_EGRESS_UNKNOWNPUK:
@@ -674,11 +669,6 @@ bool FSM::dispatchEvent(FSM::EventInstance* event) noexcept
 	//pointer got out of scope
 	delete event;
 	return true;
-}
-
-
-sc::rx::Observable<void>& FSM::getFST_1_INTERNAL_INGRESS_DISTANCE_VALID() noexcept {
-	return this->FST_1_INTERNAL_INGRESS_DISTANCE_VALID_observable;
 }
 
 
@@ -2097,18 +2087,6 @@ void FSM::raiseLocal_FST_1_ERROR_SYSTEM() {
 }
 
 
-void FSM::raiseLocal_FST_1_INTERNAL_INGRESS_DISTANCE_VALID() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID))
-	;
-}
-
-
-void FSM::raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK() {
-	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_ERROR_INGRESS_MISSING_PUK))
-	;
-}
-
-
 void FSM::raiseLocal_ESTOP_CLEARED() {
 	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_ESTOP_CLEARED))
 	;
@@ -2195,6 +2173,12 @@ void FSM::raiseLocal_FST_1_ERROR_RAMPFULL_UNKNOWNPUK() {
 
 void FSM::raiseLocal_FST_1_ERROR_INGRESS_UNKNOWNPUK() {
 	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_ERROR_INGRESS_UNKNOWNPUK))
+	;
+}
+
+
+void FSM::raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK() {
+	internalEventQueue.push_back(new FSM::EventInstance(FSM::Event::Internal_local_FST_1_ERROR_INGRESS_MISSING_PUK))
 	;
 }
 
@@ -14247,7 +14231,7 @@ sc::integer FSM::FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingres
 	{ 
 		if ((transitioned_after) < (0))
 		{ 
-			if ((FST_1_POSITION_INGRESS_DISTANCE_VALID_raised) && (FST_1_isEjector))
+			if (FST_1_POSITION_INGRESS_DISTANCE_VALID_raised)
 			{ 
 				exseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_CreatingDistance();
 				setFst_1_is_distancing(false);
@@ -14270,37 +14254,13 @@ sc::integer FSM::FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingres
 					transitioned_after = 0;
 				}  else
 				{
-					if ((local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID_raised) && (!(FST_1_isEjector)))
+					if (!(FST1IPE))
 					{ 
 						exseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_CreatingDistance();
-						setFst_1_is_distancing(false);
-						EVALUATE_observable.next();
-						raiseLocal_EVALUATE();
 						enseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_Idle_default();
 						FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_react(0);
 						transitioned_after = 0;
-					}  else
-					{
-						if (FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPIRED_raised)
-						{ 
-							exseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_CreatingDistance();
-							setFst_1_is_distancing(false);
-							EVALUATE_observable.next();
-							raiseLocal_EVALUATE();
-							enseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_Idle_default();
-							FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_react(0);
-							transitioned_after = 0;
-						}  else
-						{
-							if (!(FST1IPE))
-							{ 
-								exseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_CreatingDistance();
-								enseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_Idle_default();
-								FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_react(0);
-								transitioned_after = 0;
-							} 
-						}
-					}
+					} 
 				}
 			}
 		} 
@@ -14327,21 +14287,7 @@ sc::integer FSM::FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingres
 				react_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_History();
 				FSM_Festo1_Ingress_FSM_Festo1__Ingress_react(0);
 				transitioned_after = 0;
-			}  else
-			{
-				if ((local_FST_1_ERROR_INGRESS_MISSING_PUK_raised) && (FST1IPE))
-				{ 
-					exseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_ErrorFST1();
-					setFST1IPE(false);
-					motor1Forward--;
-					FST_1_POSITION_SORTING_PUK_REMOVED_observable.next();
-					EVALUATE_observable.next();
-					raiseLocal_EVALUATE();
-					enseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_ErrorFST1_default();
-					FSM_Festo1_Ingress_FSM_Festo1__Ingress_react(0);
-					transitioned_after = 0;
-				} 
-			}
+			} 
 		} 
 		/* If no transition was taken */
 		if ((transitioned_after) == (transitioned_before))
@@ -14858,8 +14804,7 @@ sc::integer FSM::FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM
 				setHeightSum(heightSum + ((IsBandHeight - FST_1_currentValue)));
 				FST_1_sampleCount++;
 				FST_1_generalCount++;
-				FST_1_INTERNAL_INGRESS_DISTANCE_VALID_observable.next();
-				raiseLocal_FST_1_INTERNAL_INGRESS_DISTANCE_VALID();
+				setFST1HMPE(false);
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
 				enseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Measuring_default();
@@ -14877,8 +14822,6 @@ sc::integer FSM::FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM
 					FST_1_ERROR_HM_MISSING_PUK_observable.next();
 					raiseLocal_FST_1_ERROR_HM_MISSING_PUK();
 					FST_1_POSITION_HEIGHTMEASUREMENT_PUK_REMOVED_observable.next();
-					FST_1_INTERNAL_INGRESS_DISTANCE_VALID_observable.next();
-					raiseLocal_FST_1_INTERNAL_INGRESS_DISTANCE_VALID();
 					enseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Idle_default();
 					FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_react(1);
 					transitioned_after = 1;
@@ -23948,8 +23891,6 @@ void FSM::clearInternalEvents() noexcept {
 	local_ESTOP_RECEIVED_raised = false;
 	local_SYSTEM_OPERATIONAL_OUT_raised = false;
 	local_FST_1_ERROR_SYSTEM_raised = false;
-	local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID_raised = false;
-	local_FST_1_ERROR_INGRESS_MISSING_PUK_raised = false;
 	local_ESTOP_CLEARED_raised = false;
 	local_FST_2_NOT_READY_raised = false;
 	local_FST_2_IS_READY_raised = false;
@@ -23965,6 +23906,7 @@ void FSM::clearInternalEvents() noexcept {
 	local_FST_1_ERROR_SORTING_UNKNOWNPUK_raised = false;
 	local_FST_1_ERROR_RAMPFULL_UNKNOWNPUK_raised = false;
 	local_FST_1_ERROR_INGRESS_UNKNOWNPUK_raised = false;
+	local_FST_1_ERROR_INGRESS_MISSING_PUK_raised = false;
 	local_FST_1_ERROR_EGRESS_UNKNOWNPUK_raised = false;
 	local_FST_1_ERROR_RAMPFULL_MISSING_PUK_raised = false;
 	local_FST_1_ERROR_IN_READY_raised = false;

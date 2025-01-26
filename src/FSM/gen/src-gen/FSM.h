@@ -599,8 +599,6 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_ESTOP_RECEIVED,
 			Internal_local_SYSTEM_OPERATIONAL_OUT,
 			Internal_local_FST_1_ERROR_SYSTEM,
-			Internal_local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID,
-			Internal_local_FST_1_ERROR_INGRESS_MISSING_PUK,
 			Internal_local_ESTOP_CLEARED,
 			Internal_local_FST_2_NOT_READY,
 			Internal_local_FST_2_IS_READY,
@@ -616,6 +614,7 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_FST_1_ERROR_SORTING_UNKNOWNPUK,
 			Internal_local_FST_1_ERROR_RAMPFULL_UNKNOWNPUK,
 			Internal_local_FST_1_ERROR_INGRESS_UNKNOWNPUK,
+			Internal_local_FST_1_ERROR_INGRESS_MISSING_PUK,
 			Internal_local_FST_1_ERROR_EGRESS_UNKNOWNPUK,
 			Internal_local_FST_1_ERROR_RAMPFULL_MISSING_PUK,
 			Internal_local_FST_1_ERROR_IN_READY,
@@ -646,8 +645,6 @@ class FSM : public sc::EventDrivenInterface
 				virtual ~EventInstance() = default;
 				const Event eventId;
 		};
-		/*! Get observable for event 'FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_INTERNAL_INGRESS_DISTANCE_VALID() noexcept;
 		/*! Raises the in event 'FST_1_RAMP_TIMEOUT' of default interface scope. */
 		void raiseFST_1_RAMP_TIMEOUT();
 		/*! Raises the in event 'FST_2_RAMP_TIMEOUT' of default interface scope. */
@@ -2692,9 +2689,6 @@ class FSM : public sc::EventDrivenInterface
 		
 		
 		
-		/*! Observable for event 'FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of default interface scope. */
-		sc::rx::Observable<void> FST_1_INTERNAL_INGRESS_DISTANCE_VALID_observable = sc::rx::Observable<void>{};
-		
 		/*! Indicates event 'FST_1_RAMP_TIMEOUT' of default interface scope is active. */
 		bool FST_1_RAMP_TIMEOUT_raised {false};
 		
@@ -3409,18 +3403,6 @@ class FSM : public sc::EventDrivenInterface
 		/*! Raises the out event 'local_FST_1_ERROR_SYSTEM' of internal scope as a local event. */
 		void raiseLocal_FST_1_ERROR_SYSTEM();
 		
-		/*! Indicates event 'local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of internal scope is active. */
-		bool local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of internal scope as a local event. */
-		void raiseLocal_FST_1_INTERNAL_INGRESS_DISTANCE_VALID();
-		
-		/*! Indicates event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope is active. */
-		bool local_FST_1_ERROR_INGRESS_MISSING_PUK_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope as a local event. */
-		void raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK();
-		
 		/*! Indicates event 'local_ESTOP_CLEARED' of internal scope is active. */
 		bool local_ESTOP_CLEARED_raised {false};
 		
@@ -3510,6 +3492,12 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Raises the out event 'local_FST_1_ERROR_INGRESS_UNKNOWNPUK' of internal scope as a local event. */
 		void raiseLocal_FST_1_ERROR_INGRESS_UNKNOWNPUK();
+		
+		/*! Indicates event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope is active. */
+		bool local_FST_1_ERROR_INGRESS_MISSING_PUK_raised {false};
+		
+		/*! Raises the out event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope as a local event. */
+		void raiseLocal_FST_1_ERROR_INGRESS_MISSING_PUK();
 		
 		/*! Indicates event 'local_FST_1_ERROR_EGRESS_UNKNOWNPUK' of internal scope is active. */
 		bool local_FST_1_ERROR_EGRESS_UNKNOWNPUK_raised {false};
