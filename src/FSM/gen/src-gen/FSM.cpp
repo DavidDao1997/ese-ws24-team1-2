@@ -16386,6 +16386,7 @@ sc::integer FSM::FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM
 				setHeightSum2(heightSum2 + ((IsBandHeight2 - FST_2_currentValue)));
 				FST_2_sampleCount++;
 				FST_2_generalCount++;
+				setFST2HMPE(false);
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
 				enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_default();
