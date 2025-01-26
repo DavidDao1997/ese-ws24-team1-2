@@ -4525,13 +4525,6 @@ void FSM::enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_
 }
 
 /* Entry action for state 'PukExpected'. */
-void FSM::enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_PukExpected()
-{
-	/* Entry action for state 'PukExpected'. */
-	setFST1HMPE(true);
-}
-
-/* Entry action for state 'PukExpected'. */
 void FSM::enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_PukExpected()
 {
 	/* Entry action for state 'PukExpected'. */
@@ -5628,7 +5621,6 @@ void FSM::enseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_
 void FSM::enseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_PukExpected_default()
 {
 	/* 'default' enter sequence for state PukExpected */
-	enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_PukExpected();
 	stateConfVector[1] = FSM::State::FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_PukExpected;
 	stateConfVectorPosition = 1;
 	historyVector[1] = stateConfVector[1];
@@ -14436,6 +14428,7 @@ sc::integer FSM::FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM
 				if (FST_1_POSITION_HEIGHTMEASUREMENT_PUK_EXPECTED_raised)
 				{ 
 					exseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Idle();
+					setFST1HMPE(true);
 					enseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_PukExpected_default();
 					FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_react(1);
 					transitioned_after = 1;
@@ -14469,22 +14462,8 @@ sc::integer FSM::FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM
 		FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_react(1);
 	}  else
 	{
-		if ((transitioned_after) < (1))
-		{ 
-			if (!(FST1HMPE))
-			{ 
-				exseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Measuring();
-				enseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Idle_default();
-				FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_react(1);
-				transitioned_after = 1;
-			} 
-		} 
-		/* If no transition was taken */
-		if ((transitioned_after) == (transitioned_before))
-		{ 
-			/* then execute local reactions. */
-			transitioned_after = FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_react(transitioned_before);
-		} 
+		/* Always execute local reactions. */
+		transitioned_after = FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_react(transitioned_before);
 	}
 	return transitioned_after;
 }
@@ -14550,6 +14529,7 @@ sc::integer FSM::FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM
 									motor1Slow--;
 									setHeightInDigit((heightSum / FST_1_generalCount));
 									setAverageHeight((heightInDigit / digitpermm));
+									setFST1HMPE(false);
 									FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
 									FST_1_PUK_HEIGHT_IS_NOT_VALID_observable.next();
 									enseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Measuring_FSM_Festo1__HeightMeasurement__final__default();
@@ -14632,6 +14612,7 @@ sc::integer FSM::FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM
 									motor1Slow--;
 									setHeightInDigit((heightSum / FST_1_generalCount));
 									setAverageHeight((heightInDigit / digitpermm));
+									setFST1HMPE(false);
 									FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
 									FST_1_PUK_HEIGHT_IS_NOT_VALID_observable.next();
 									enseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Measuring_FSM_Festo1__HeightMeasurement__final__default();
@@ -14666,6 +14647,7 @@ sc::integer FSM::FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM
 				motor1Slow--;
 				setHeightInDigit((heightSum / FST_1_generalCount));
 				setAverageHeight((heightInDigit / digitpermm));
+				setFST1HMPE(false);
 				FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
 				FST_1_PUK_HEIGHT_IS_NOT_VALID_observable.next();
 				enseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Measuring_FSM_Festo1__HeightMeasurement__final__default();
@@ -14715,6 +14697,7 @@ sc::integer FSM::FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM
 									motor1Slow--;
 									setHeightInDigit((heightSum / FST_1_generalCount));
 									setAverageHeight((heightInDigit / digitpermm));
+									setFST1HMPE(false);
 									FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
 									FST_1_PUK_HEIGHT_IS_VALID_observable.next();
 									enseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Measuring_FSM_Festo1__HeightMeasurement__final__default();
@@ -14749,6 +14732,7 @@ sc::integer FSM::FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM
 				motor1Slow--;
 				setHeightInDigit((heightSum / FST_1_generalCount));
 				setAverageHeight((heightInDigit / digitpermm));
+				setFST1HMPE(false);
 				FST_1_POSITION_HEIGHTMEASUREMENT_NEW_PUK_observable.next();
 				FST_1_PUK_HEIGHT_IS_NOT_VALID_observable.next();
 				enseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Measuring_FSM_Festo1__HeightMeasurement__final__default();
@@ -14799,7 +14783,6 @@ sc::integer FSM::FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM
 				setHeightSum(heightSum + ((IsBandHeight - FST_1_currentValue)));
 				FST_1_sampleCount++;
 				FST_1_generalCount++;
-				setFST1HMPE(false);
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
 				enseq_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Measuring_default();
