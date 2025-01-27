@@ -82,7 +82,7 @@ void Timer::setMotorState(MotorState nextMotorState) {
 
     struct itimerspec timerSpec = {};
     if(timer_gettime(timerId,&timerSpec) != 0){
-        Logger::getInstance().log(LogLevel::ERROR, "timer_gettime failed", "Timer");
+        Logger::getInstance().log(LogLevel::ERROR, "timer_gettime failed for pulseCode: " + std::to_string(pulseCode) + ", pulseValue: " + std::to_string(pulseValue), "Timer");
     }
     uint32_t timeRemaining = timerSpec.it_value.tv_sec * 1000 + timerSpec.it_value.tv_nsec / MILLION; // in milliseconds
     uint32_t timeTotal = motorState == MOTOR_FAST ? fastDuration.count()  : slowDuration.count(); // in milliseconds
