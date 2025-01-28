@@ -599,7 +599,6 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_ESTOP_RECEIVED,
 			Internal_local_SYSTEM_OPERATIONAL_OUT,
 			Internal_local_FST_1_ERROR_SYSTEM,
-			Internal_local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID,
 			Internal_local_FST_1_ERROR_INGRESS_MISSING_PUK,
 			Internal_local_ESTOP_CLEARED,
 			Internal_local_FST_2_NOT_READY,
@@ -646,8 +645,6 @@ class FSM : public sc::EventDrivenInterface
 				virtual ~EventInstance() = default;
 				const Event eventId;
 		};
-		/*! Get observable for event 'FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_INTERNAL_INGRESS_DISTANCE_VALID() noexcept;
 		/*! Raises the in event 'FST_1_RAMP_TIMEOUT' of default interface scope. */
 		void raiseFST_1_RAMP_TIMEOUT();
 		/*! Raises the in event 'FST_2_RAMP_TIMEOUT' of default interface scope. */
@@ -878,8 +875,6 @@ class FSM : public sc::EventDrivenInterface
 		sc::rx::Observable<void>& getFST_1_PUK_DESIRED() noexcept;
 		/*! Get observable for event 'FST_1_PUK_NOT_DESIRED' of default interface scope. */
 		sc::rx::Observable<void>& getFST_1_PUK_NOT_DESIRED() noexcept;
-		/*! Get observable for event 'FST_1_PUK_ENTRY_EGRESS' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_PUK_ENTRY_EGRESS() noexcept;
 		/*! Get observable for event 'FST_1_SORTING_MODULE_ACTIVE' of default interface scope. */
 		sc::rx::Observable<void>& getFST_1_SORTING_MODULE_ACTIVE() noexcept;
 		/*! Get observable for event 'FST_1_SORTING_MODULE_RESTING' of default interface scope. */
@@ -1158,10 +1153,10 @@ class FSM : public sc::EventDrivenInterface
 		bool getFastRun() const noexcept;
 		/*! Sets the value of the variable 'FastRun' that is defined in the default interface scope. */
 		void setFastRun(bool FastRun) noexcept;
-		/*! Gets the value of the variable 'FST1IPE' that is defined in the default interface scope. */
-		bool getFST1IPE() const noexcept;
-		/*! Sets the value of the variable 'FST1IPE' that is defined in the default interface scope. */
-		void setFST1IPE(bool FST1IPE) noexcept;
+		/*! Gets the value of the variable 'FST1IPP' that is defined in the default interface scope. */
+		bool getFST1IPP() const noexcept;
+		/*! Sets the value of the variable 'FST1IPP' that is defined in the default interface scope. */
+		void setFST1IPP(bool FST1IPP) noexcept;
 		/*! Gets the value of the variable 'FST1HMPE' that is defined in the default interface scope. */
 		bool getFST1HMPE() const noexcept;
 		/*! Sets the value of the variable 'FST1HMPE' that is defined in the default interface scope. */
@@ -1567,7 +1562,7 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer flatPukHeight {0};
 		bool firstLoopCalibration {false};
 		bool FastRun {false};
-		bool FST1IPE {false};
+		bool FST1IPP {false};
 		bool FST1HMPE {false};
 		bool FST1SORPE {false};
 		bool FST1EPE {false};
@@ -1662,7 +1657,7 @@ class FSM : public sc::EventDrivenInterface
 		//! the maximum number of orthogonal states defines the dimension of the state configuration vector.
 		static const sc::ushort maxOrthogonalStates {20};
 		//! dimension of the state configuration vector for history states
-		static const sc::ushort maxHistoryStates {11};
+		static const sc::ushort maxHistoryStates {12};
 		
 		
 		
@@ -1681,25 +1676,23 @@ class FSM : public sc::EventDrivenInterface
 		
 		// prototypes of all internal functions
 		
-		void enact_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_PukPresent();
+		void enact_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_Idle();
 		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Idle();
 		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Measuring_FSM_Festo1__HeightMeasurement__final_();
-		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_PukExpected();
-		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_PukExpected();
+		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Idle();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferEjector();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferDiverter();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingEjector();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EvaluateCounter();
-		void enact_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_PukExpected();
+		void enact_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_IDLE();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop();
-		void enact_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected();
+		void enact_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle();
 		void enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle();
-		void enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_PukExpected();
 		void enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final_();
-		void enact_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_PukExpected();
+		void enact_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
@@ -1722,7 +1715,7 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorSorting();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorEgress();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorRampFull();
-		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_PukExpected();
+		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle();
 		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate();
 		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingDiverter();
 		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferEjector();
@@ -2061,8 +2054,9 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo2__HeightMeasurement_default();
 		void enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_default();
 		void enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_default();
-		void shenseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement();
+		void dhenseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement();
 		void enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_default();
+		void dhenseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement();
 		void enseq_FSM_Festo2__Egress_default();
 		void enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_default();
 		void enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_default();
@@ -2411,8 +2405,8 @@ class FSM : public sc::EventDrivenInterface
 		void react_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress__entry_Default();
 		void react_FSM_Festo2__Ingress__entry_Default();
 		void react_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement__entry_Default();
-		void react_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_History();
 		void react_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__entry_Default();
+		void react_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_History();
 		void react_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement__entry_Default();
 		void react_FSM_Festo2__HeightMeasurement__entry_Default();
 		void react_FSM_Festo2__Egress__entry_Default();
@@ -2691,9 +2685,6 @@ class FSM : public sc::EventDrivenInterface
 		void runCycle();
 		
 		
-		
-		/*! Observable for event 'FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of default interface scope. */
-		sc::rx::Observable<void> FST_1_INTERNAL_INGRESS_DISTANCE_VALID_observable = sc::rx::Observable<void>{};
 		
 		/*! Indicates event 'FST_1_RAMP_TIMEOUT' of default interface scope is active. */
 		bool FST_1_RAMP_TIMEOUT_raised {false};
@@ -3039,9 +3030,6 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Observable for event 'FST_1_PUK_NOT_DESIRED' of default interface scope. */
 		sc::rx::Observable<void> FST_1_PUK_NOT_DESIRED_observable = sc::rx::Observable<void>{};
-		
-		/*! Observable for event 'FST_1_PUK_ENTRY_EGRESS' of default interface scope. */
-		sc::rx::Observable<void> FST_1_PUK_ENTRY_EGRESS_observable = sc::rx::Observable<void>{};
 		
 		/*! Observable for event 'FST_1_SORTING_MODULE_ACTIVE' of default interface scope. */
 		sc::rx::Observable<void> FST_1_SORTING_MODULE_ACTIVE_observable = sc::rx::Observable<void>{};
@@ -3408,12 +3396,6 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Raises the out event 'local_FST_1_ERROR_SYSTEM' of internal scope as a local event. */
 		void raiseLocal_FST_1_ERROR_SYSTEM();
-		
-		/*! Indicates event 'local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of internal scope is active. */
-		bool local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of internal scope as a local event. */
-		void raiseLocal_FST_1_INTERNAL_INGRESS_DISTANCE_VALID();
 		
 		/*! Indicates event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope is active. */
 		bool local_FST_1_ERROR_INGRESS_MISSING_PUK_raised {false};

@@ -46,11 +46,11 @@ void Timer::setMotorState(MotorState nextMotorState) {
         return;
     };
 
-    // starting
     if (motorState == MOTOR_STOP) {
+        // starting
         struct sigevent event;
         // setup pulse
-        SIGEV_PULSE_INIT(&event, connectionId, SIGEV_PULSE_PRIO_INHERIT, pulseCode, pulseValue);
+        SIGEV_PULSE_INIT(&event, connectionId, 10, pulseCode, pulseValue);
         if (timer_create (CLOCK_REALTIME, &event, &timerId) != 0) {
             Logger::getInstance().log(LogLevel::ERROR, "timer_settime failed", "Timer");
         }
@@ -63,6 +63,7 @@ void Timer::setMotorState(MotorState nextMotorState) {
         timerSpec.it_value.tv_nsec = (timeRemaining % 1000) * MILLION;
         timerSpec.it_interval.tv_sec = 0;
         timerSpec.it_interval.tv_nsec = 0;
+        Logger::getInstance().log(LogLevel::DEBUG, "Timer start with " + std::to_string(timeRemaining / 1000) + "s, " + std::to_string((timeRemaining % 1000) * MILLION) + "ns" , "Foo");
 
         if (timer_settime (timerId, 0, &timerSpec, NULL) != 0) {
             Logger::getInstance().log(LogLevel::ERROR, "timer_settime failed", "Timer");
@@ -74,7 +75,8 @@ void Timer::setMotorState(MotorState nextMotorState) {
             std::string(nextMotorState == MOTOR_FAST ? "fast" : "slow") + "\n\tProgress: " +
             std::to_string(static_cast<uint8_t>(((UINT8_MAX - fractionRemaining) * 100) / 255)) + "%\n\tTime: " +
             std::to_string(timeRemaining) + "ms\n\tPulse: " +
-            std::to_string(pulseCode),  
+            std::to_string(pulseCode) + "ms\n\tPulseValue: " +
+            std::to_string(pulseValue),  
             "Timer" 
         );
         return;
@@ -82,7 +84,7 @@ void Timer::setMotorState(MotorState nextMotorState) {
 
     struct itimerspec timerSpec = {};
     if(timer_gettime(timerId,&timerSpec) != 0){
-        Logger::getInstance().log(LogLevel::ERROR, "timer_gettime failed", "Timer");
+        Logger::getInstance().log(LogLevel::ERROR, "timer_gettime failed for pulseCode: " + std::to_string(pulseCode) + ", pulseValue: " + std::to_string(pulseValue), "Timer");
     }
     uint32_t timeRemaining = timerSpec.it_value.tv_sec * 1000 + timerSpec.it_value.tv_nsec / MILLION; // in milliseconds
     uint32_t timeTotal = motorState == MOTOR_FAST ? fastDuration.count()  : slowDuration.count(); // in milliseconds
@@ -98,7 +100,7 @@ void Timer::setMotorState(MotorState nextMotorState) {
         if (timer_delete(timerId) != 0){
             Logger::getInstance().log(LogLevel::ERROR, "timer_delete failed", "Timer");
         }        
-        timerId  = 0;
+        timerId = timer_t{};
         motorState = nextMotorState;
         Logger::getInstance().log(
             LogLevel::TRACE, 
@@ -132,4 +134,9 @@ void Timer::setMotorState(MotorState nextMotorState) {
     );
 }
 
-void Timer::kill(){ timer_delete(timerId); }
+void Timer::kill(){ 
+    if (timer_delete(timerId) != 0){
+        Logger::getInstance().log(LogLevel::ERROR, "timer_delete failed", "Timer");
+    }
+    timerId = timer_t{};
+}

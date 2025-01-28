@@ -32,6 +32,7 @@ Logger& logger = Logger::getInstance();
 
 
 logger.setLogLevel(LogLevel::LOGLEVEL);    // Log-Level setzen
+logger.setLogFile("0.log");
 // Log-Level für verschiedene Klassen individuell festlegen
 // logger.setLogLevelForClass("Mock_ADC", LogLevel::DEBUG); // Standardmodus
 // logger.setLogLevelForClass("ClassB", LogLevel::ERROR, true); // Nur ERROR loggen

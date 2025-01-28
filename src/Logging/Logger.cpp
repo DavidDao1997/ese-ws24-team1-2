@@ -90,9 +90,10 @@ void Logger::processLogs() {
             logQueue.pop();
 
             // Ausgabe in die Datei oder Konsole
-            // if (logFile.is_open()) {
-            //     logFile << logEntry << std::endl;
-            // } else {
+            if (logFile.is_open()) {
+                logFile << logEntry << std::endl;
+            } 
+            // else {
             //     std::cerr << logEntry << std::endl;
             // }
             std::cout << logEntry << std::endl;
