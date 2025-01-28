@@ -1,0 +1,536 @@
+[2025-01-27 14:58:26.605] [INFO]     [Main] Application starting...
+[2025-01-27 14:58:26.607] [INFO]     [Main] GNS must Be Running...
+[2025-01-27 14:58:26.607] [INFO]     [Main] Running as Server -> FESTO1...
+The Global Name space is already in use. GNS or another global service is already running.
+[2025-01-27 14:58:26.636] [TRACE]    [PulseMsgHandler] Creating GNS channel...
+[2025-01-27 14:58:26.637] [TRACE]    [PulseMsgHandler] Created GNS channel...
+[2025-01-27 14:58:26.638] [DEBUG]    [Decoder] Initializing Decoder
+[2025-01-27 14:58:26.640] [TRACE]    [Dispatcher] Replying to connection...
+[2025-01-27 14:58:26.641] [DEBUG]    [Decoder] NAME_FLAG_ATTACH_GLOBAL: 2
+[2025-01-27 14:58:26.641] [DEBUG]    [Decoder] dispatcherConnectionID: 1073741830
+[2025-01-27 14:58:26.642] [TRACE]    [Dispatcher] Replying to connection...
+[2025-01-27 14:58:26.643] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_STOP
+[2025-01-27 14:58:26.644] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_STOP
+[2025-01-27 14:58:26.645] [TRACE]    [FSMController] Sending pulse: PULSE_LR1_OFF
+[2025-01-27 14:58:26.645] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_OFF
+[2025-01-27 14:58:26.646] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_OFF
+[2025-01-27 14:58:26.647] [TRACE]    [FSMController] Sending pulse: PULSE_LY1_OFF
+[2025-01-27 14:58:26.648] [TRACE]    [FSMController] Sending pulse: PULSE_LR2_OFF
+[2025-01-27 14:58:26.648] [TRACE]    [FSMController] Sending pulse: PULSE_LY2_OFF
+[2025-01-27 14:58:26.650] [TRACE]    [PulseMsgHandler] Creating GNS channel...
+[2025-01-27 14:58:26.651] [TRACE]    [PulseMsgHandler] Created GNS channel...
+[2025-01-27 14:58:26.652] [TRACE]    [ActuatorController] Connection to Dispatcher...
+[2025-01-27 14:58:26.653] [TRACE]    [Dispatcher] Replying to connection...
+[2025-01-27 14:58:26.654] [DEBUG]    [ActuatorController] SM_TYPE is ...1
+[2025-01-27 14:58:26.655] [TRACE]    [Dispatcher] received PULSE_SUBSCRIBE...
+[2025-01-27 14:58:26.655] [DEBUG]    [ActuatorController] SM_TYPE IS EJECTOR ...1
+[2025-01-27 14:58:26.656] [TRACE]    [Dispatcher] Connecting ActuatorController... actuatorController1
+[2025-01-27 14:58:26.657] [TRACE]    [ActuatorController] 0: Replying to connection...
+[2025-01-27 14:58:26.658] [TRACE]    [Dispatcher] Replying to connection...
+[2025-01-27 14:58:26.659] [TRACE]    [PulseMsgHandler] Creating GNS channel...
+[2025-01-27 14:58:26.659] [TRACE]    [PulseMsgHandler] Created GNS channel...
+[2025-01-27 14:58:26.861] [TRACE]    [HeartBeat] MSGHANDLER ONLINE...
+[2025-01-27 14:58:26.862] [TRACE]    [PulseMsgHandler] Creating GNS channel...
+[2025-01-27 14:58:26.862] [TRACE]    [PulseMsgHandler] Created GNS channel...
+[2025-01-27 14:58:26.863] [TRACE]    [Dispatcher] Replying to connection...
+[2025-01-27 14:58:26.865] [DEBUG]    [FSMController] sorting Moduel on FST_1 ist EJECTOR!...0
+[2025-01-27 14:58:26.866] [TRACE]    [Decoder] decode...
+[2025-01-27 14:58:26.867] [TRACE]    [Decoder] LBR erkannt
+[2025-01-27 14:58:26.867] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:58:26.868] [TRACE]    [FSMController] received PULSE_LBR_OPEN...0
+[2025-01-27 14:58:30.154] [DEBUG]    [HeightSensorControl] sending BANDHEIGHT_FST_1: 3713
+[2025-01-27 14:58:30.154] [DEBUG]    [FSMController] received PULSE_BANDHEIGHT Festo 1..3713
+[2025-01-27 14:58:41.380] [TRACE]    [Dispatcher] Replying to connection...
+[2025-01-27 14:58:41.390] [TRACE]    [Dispatcher] Replying to connection...
+[2025-01-27 14:58:41.391] [TRACE]    [Dispatcher] received PULSE_SUBSCRIBE...
+[2025-01-27 14:58:41.393] [TRACE]    [Dispatcher] Connecting ActuatorController... actuatorController2
+[2025-01-27 14:58:41.396] [DEBUG]    [FSMController] sorting Moduel on FST_2 is DIVERTER!...1
+[2025-01-27 14:58:41.397] [TRACE]    [Dispatcher] Replying to connection...
+[2025-01-27 14:58:41.403] [TRACE]    [HeartBeat] 0: Replying to connection...
+[2025-01-27 14:58:41.405] [TRACE]    [FSMController] received PULSE_RECONNECT_HEARTBEAT_FESTO(from FST2)...
+[2025-01-27 14:58:41.506] [DEBUG]    [HeartBeat] MessageReceiveOnce First Heartbeat!!
+[2025-01-27 14:58:41.602] [TRACE]    [HeartBeat] MSGSENDER ONLINE AND OTHER FESTO FOUND...
+[2025-01-27 14:58:41.602] [TRACE]    [FSMController] received PULSE_RECONNECT_HEARTBEAT_FESTO(from FST1)...
+[2025-01-27 14:58:41.608] [TRACE]    [Dispatcher] Replying to connection...
+[2025-01-27 14:58:44.898] [DEBUG]    [FSMController] received PULSE_BANDHEIGHT Festo 2..3648
+[2025-01-27 14:58:50.763] [TRACE]    [FSMController] received PULSE_ESTOP_LOW...1
+[2025-01-27 14:58:50.778] [TRACE]    [Decoder] decode...
+[2025-01-27 14:58:50.778] [TRACE]    [Decoder] current level: 0
+[2025-01-27 14:58:50.779] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:58:50.779] [TRACE]    [FSMController] received PULSE_ESTOP_LOW...0
+[2025-01-27 14:58:51.253] [TRACE]    [FSMController] received PULSE_ESTOP_LOW...1
+[2025-01-27 14:58:51.255] [TRACE]    [FSMController] received PULSE_ESTOP_HIGH...1
+[2025-01-27 14:58:51.388] [TRACE]    [Decoder] decode...
+[2025-01-27 14:58:51.388] [TRACE]    [Decoder] current level: 1
+[2025-01-27 14:58:51.389] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:58:51.389] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_OFF
+[2025-01-27 14:58:51.390] [TRACE]    [Decoder] decode...
+[2025-01-27 14:58:51.390] [TRACE]    [FSMController] Sending pulse: PULSE_LY1_OFF
+[2025-01-27 14:58:51.391] [TRACE]    [ActuatorController] 0: Festo 1 LED Green off...
+[2025-01-27 14:58:51.392] [TRACE]    [Decoder] current level: 1
+[2025-01-27 14:58:51.393] [TRACE]    [FSMController] Sending pulse: PULSE_LR1_OFF
+[2025-01-27 14:58:51.393] [TRACE]    [ActuatorController] 0: Festo 1 LED Yellow off...
+[2025-01-27 14:58:51.394] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:58:51.394] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_OFF
+[2025-01-27 14:58:51.394] [TRACE]    [ActuatorController] 0: Festo 1 LED Red off...
+[2025-01-27 14:58:51.396] [TRACE]    [Decoder] decode...
+[2025-01-27 14:58:51.396] [TRACE]    [FSMController] Sending pulse: PULSE_LY2_OFF
+[2025-01-27 14:58:51.397] [TRACE]    [Decoder] current level: 1
+[2025-01-27 14:58:51.398] [TRACE]    [FSMController] Sending pulse: PULSE_LR2_OFF
+[2025-01-27 14:58:51.399] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:58:51.400] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_STOP
+[2025-01-27 14:58:51.401] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 14:58:51.401] [TRACE]    [ActuatorController] [Festo1] Motor stop
+[2025-01-27 14:58:51.402] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_STOP
+[2025-01-27 14:58:51.403] [WARNING]  [PositionTracker.onSortingModuleResting] [FST1]
+[2025-01-27 14:58:51.404] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 14:58:51.405] [WARNING]  [PositionTracker.onSortingModuleResting] [FST2]
+[2025-01-27 14:58:51.405] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 14:58:51.406] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_RESTING
+[2025-01-27 14:58:51.407] [TRACE]    [FSMController] Sending pulse: PULSE_BRSL1_OFF
+[2025-01-27 14:58:51.408] [TRACE]    [FSMController] Sending pulse: PULSE_BGSL1_OFF
+[2025-01-27 14:58:51.408] [TRACE]    [ActuatorController] 0: Festo 1 BUTTON RESET LED OFF
+[2025-01-27 14:58:51.409] [TRACE]    [FSMController] Sending pulse: PULSE_BRSL2_OFF
+[2025-01-27 14:58:51.409] [TRACE]    [ActuatorController] 0: Festo 1 BUTTON START LED OFF
+[2025-01-27 14:58:51.410] [TRACE]    [FSMController] Sending pulse: PULSE_BGSL2_OFF
+[2025-01-27 14:58:51.411] [TRACE]    [FSMController] Sending pulse: PULSE_Q11_OFF
+[2025-01-27 14:58:51.412] [TRACE]    [FSMController] Sending pulse: PULSE_Q12_OFF
+[2025-01-27 14:58:51.412] [TRACE]    [ActuatorController] 0: Festo 1 LED Q1 off......
+[2025-01-27 14:58:51.413] [TRACE]    [FSMController] Sending pulse: PULSE_Q21_OFF
+[2025-01-27 14:58:51.414] [TRACE]    [FSMController] Sending pulse: PULSE_Q22_OFF
+[2025-01-27 14:58:51.414] [TRACE]    [ActuatorController] 0: Festo 1 LED Q2 off......
+[2025-01-27 14:58:51.415] [TRACE]    [FSMController] Sending pulse: PULSE_BGSL1_ON
+[2025-01-27 14:58:51.416] [TRACE]    [FSMController] Sending pulse: PULSE_BGSL2_ON
+[2025-01-27 14:58:51.417] [TRACE]    [ActuatorController] 0: Festo 1 BUTTON START LED ON
+[2025-01-27 14:58:51.418] [TRACE]    [FSMController] received PULSE_ESTOP_HIGH...0
+[2025-01-27 14:58:51.419] [TRACE]    [FSMController] received PULSE_ESTOP_HIGH...0
+[2025-01-27 14:58:51.419] [TRACE]    [FSMController] received PULSE_ESTOP_HIGH...0
+[2025-01-27 14:58:52.127] [TRACE]    [FSMController] Sending pulse: PULSE_BGSL1_OFF
+[2025-01-27 14:58:52.128] [TRACE]    [FSMController] Sending pulse: PULSE_BGSL2_OFF
+[2025-01-27 14:58:52.129] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 14:58:52.130] [TRACE]    [ActuatorController] 0: Festo 1 BUTTON START LED OFF
+[2025-01-27 14:58:52.130] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_ON
+[2025-01-27 14:58:52.131] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 14:58:52.132] [TRACE]    [FSMController] received PULSE_BGS_SHORT...1
+[2025-01-27 14:58:54.948] [TRACE]    [Decoder] decode...
+[2025-01-27 14:58:54.948] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 14:58:54.949] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:58:54.949] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 14:58:54.950] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 14:58:54.951] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 14:58:54.951] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 14:58:54.952] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 14:58:55.282] [TRACE]    [Decoder] decode...
+[2025-01-27 14:58:55.282] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 14:58:55.283] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:58:55.283] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 0 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 14:58:55.284] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1] 1000000
+[2025-01-27 14:58:55.285] [TRACE]    [Timer] New Timer
+[2025-01-27 14:58:55.286] [TRACE]    [Timer] New Timer
+[2025-01-27 14:58:55.287] [TRACE]    [Timer] New Timer
+[2025-01-27 14:58:55.287] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:58:55.288] [DEBUG]    [Foo] Timer start with 0s, 300000000ns
+[2025-01-27 14:58:55.288] [TRACE]    [Timer] Timer started
+	Speed: fast
+	Progress: 0%
+	Time: 300ms
+	Pulse: 1
+[2025-01-27 14:58:55.289] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:58:55.290] [DEBUG]    [Foo] Timer start with 0s, 100000000ns
+[2025-01-27 14:58:55.291] [TRACE]    [Timer] Timer started
+	Speed: fast
+	Progress: 0%
+	Time: 100ms
+	Pulse: 2
+[2025-01-27 14:58:55.292] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:58:55.292] [DEBUG]    [Foo] Timer start with 10s, 0ns
+[2025-01-27 14:58:55.293] [TRACE]    [Timer] Timer started
+	Speed: fast
+	Progress: 0%
+	Time: 10000ms
+	Pulse: 3
+[2025-01-27 14:58:55.294] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 14:58:55.294] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 14:58:55.391] [DEBUG]    [PositionTracker.listen] Message recieved
+	code: PULSE_HS_1_PUK_EXPECTED
+	value: 0
+[2025-01-27 14:58:55.589] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 14:58:55.589] [DEBUG]    [PositionTracker.listen] Message recieved
+	code: PULSE_INGRESS_1_DISTANCE_VALID
+	value: 0
+[2025-01-27 14:58:55.590] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 14:58:55.957] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 14:58:57.313] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 14:58:57.313] [DEBUG]    [FOO] CHANGING
+[2025-01-27 14:58:57.314] [TRACE]    [Timer] Timer speed updated
+	speed: slow
+	Progress: 20%
+	timeRemaining: 7960ms
+	Pulse: 3
+[2025-01-27 14:58:57.315] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 14:58:57.316] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 14:58:58.314] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 0 PUK Type: UNKNOWN PUK AverageHeight: 23
+[2025-01-27 14:58:58.314] [TRACE]    [Timer] New Timer
+[2025-01-27 14:58:58.315] [TRACE]    [Timer] New Timer
+[2025-01-27 14:58:58.316] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:58:58.316] [DEBUG]    [Foo] Timer start with 0s, 100000000ns
+[2025-01-27 14:58:58.317] [TRACE]    [Timer] Timer started
+	Speed: slow
+	Progress: 0%
+	Time: 100ms
+	Pulse: 4
+[2025-01-27 14:58:58.318] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:58:58.318] [DEBUG]    [Foo] Timer start with 10s, 0ns
+[2025-01-27 14:58:58.319] [TRACE]    [Timer] Timer started
+	Speed: slow
+	Progress: 0%
+	Time: 10000ms
+	Pulse: 5
+[2025-01-27 14:58:58.320] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 14:58:58.321] [DEBUG]    [PositionTracker.onIsNotValid] [FST1] HEIGHT_IS_NOT_VALID
+[2025-01-27 14:58:58.321] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 14:58:58.322] [DEBUG]    [FOO] CHANGING
+[2025-01-27 14:58:58.323] [TRACE]    [Timer] Timer speed updated
+	speed: fast
+	Progress: 5%
+	timeRemaining: 94ms
+	Pulse: 4
+[2025-01-27 14:58:58.324] [DEBUG]    [FOO] CHANGING
+[2025-01-27 14:58:58.324] [TRACE]    [Timer] Timer speed updated
+	speed: fast
+	Progress: 0%
+	timeRemaining: 9960ms
+	Pulse: 5
+[2025-01-27 14:58:58.326] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 14:58:58.326] [DEBUG]    [FSMController] received Digit1...57
+[2025-01-27 14:58:58.327] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 14:58:58.328] [DEBUG]    [FSMController] received AverageHeight...23
+[2025-01-27 14:58:58.328] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 14:58:58.417] [DEBUG]    [PositionTracker.listen] Message recieved
+	code: PULSE_SORTING_1_PUK_EXPECTED
+	value: 0
+[2025-01-27 14:58:59.337] [TRACE]    [Decoder] decode...
+[2025-01-27 14:58:59.337] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 14:58:59.338] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:58:59.338] [DEBUG]    [FOO] STOPPING
+[2025-01-27 14:58:59.339] [TRACE]    [Timer] Timer stopped
+	Progress: 10%
+	Time: 8947ms
+	Pulse: 5
+[2025-01-27 14:58:59.340] [DEBUG]    [PositionTracker.onIsNotMetal] [FST1] PUK Eject
+	PUK-ID: 0
+	PUK Type: PUK_WITH_HOLE
+	PUK AverageHeight: 23
+[2025-01-27 14:58:59.341] [TRACE]    [Timer] New Timer
+[2025-01-27 14:58:59.342] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:58:59.343] [DEBUG]    [Foo] Timer start with 180s, 0ns
+[2025-01-27 14:58:59.343] [TRACE]    [Timer] Timer started
+	Speed: fast
+	Progress: 0%
+	Time: 180000ms
+	Pulse: 6
+[2025-01-27 14:58:59.344] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_ACTIVE
+[2025-01-27 14:58:59.345] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 14:58:59.346] [TRACE]    [ActuatorController] 0: Festo 1 SM Active......
+[2025-01-27 14:58:59.374] [TRACE]    [Decoder] decode...
+[2025-01-27 14:58:59.374] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 14:58:59.375] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:58:59.375] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 14:58:59.500] [TRACE]    [Decoder] decode...
+[2025-01-27 14:58:59.500] [TRACE]    [Decoder] LBR erkannt
+[2025-01-27 14:58:59.501] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:58:59.501] [TRACE]    [Timer] Motor state unchanged, Progress: 10%
+[2025-01-27 14:58:59.502] [DEBUG]    [PositionTracker]  PUK between HS1 and LBM1 Removed PUK-ID:0PUK TypePUK_WITH_HOLEPUK AverageHeight FST1:23PUK Average Height FST2
+[2025-01-27 14:58:59.503] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 14:58:59.504] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_STOP
+[2025-01-27 14:58:59.504] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 14:58:59.505] [TRACE]    [FSMController] Sending pulse: PULSE_LY1_ON
+[2025-01-27 14:58:59.506] [TRACE]    [ActuatorController] [Festo1] Motor stop
+[2025-01-27 14:58:59.506] [TRACE]    [FSMController] received PULSE_LBR_INTERRUPTED...0
+[2025-01-27 14:58:59.507] [TRACE]    [ActuatorController] 0: Festo 1 LED Yellow on......
+[2025-01-27 14:59:00.972] [TRACE]    [Decoder] decode...
+[2025-01-27 14:59:00.972] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 14:59:00.973] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:59:00.973] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 14:59:00.974] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 14:59:00.974] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 14:59:00.975] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 14:59:00.976] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 14:59:01.256] [TRACE]    [Decoder] decode...
+[2025-01-27 14:59:01.256] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 14:59:01.257] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:59:01.257] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 14:59:01.258] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1] 1000000
+[2025-01-27 14:59:01.259] [TRACE]    [Timer] New Timer
+[2025-01-27 14:59:01.259] [TRACE]    [Timer] New Timer
+[2025-01-27 14:59:01.260] [TRACE]    [Timer] New Timer
+[2025-01-27 14:59:01.261] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:59:01.261] [DEBUG]    [Foo] Timer start with 0s, 300000000ns
+[2025-01-27 14:59:01.262] [TRACE]    [Timer] Timer started
+	Speed: fast
+	Progress: 0%
+	Time: 300ms
+	Pulse: 1
+[2025-01-27 14:59:01.263] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:59:01.264] [DEBUG]    [Foo] Timer start with 0s, 100000000ns
+[2025-01-27 14:59:01.264] [TRACE]    [Timer] Timer started
+	Speed: fast
+	Progress: 0%
+	Time: 100ms
+	Pulse: 2
+[2025-01-27 14:59:01.265] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:59:01.266] [DEBUG]    [Foo] Timer start with 10s, 0ns
+[2025-01-27 14:59:01.266] [TRACE]    [Timer] Timer started
+	Speed: fast
+	Progress: 0%
+	Time: 10000ms
+	Pulse: 3
+[2025-01-27 14:59:01.267] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 14:59:01.268] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 14:59:01.365] [DEBUG]    [PositionTracker.listen] Message recieved
+	code: PULSE_HS_1_PUK_EXPECTED
+	value: 1
+[2025-01-27 14:59:01.563] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 14:59:01.563] [DEBUG]    [PositionTracker.listen] Message recieved
+	code: PULSE_INGRESS_1_DISTANCE_VALID
+	value: 1
+[2025-01-27 14:59:01.564] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 14:59:01.981] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 14:59:02.981] [TRACE]    [Decoder] decode...
+[2025-01-27 14:59:02.981] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 14:59:02.982] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:59:02.982] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 14:59:02.983] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 14:59:02.983] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 14:59:03.244] [TRACE]    [Decoder] decode...
+[2025-01-27 14:59:03.245] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 14:59:03.246] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:59:03.246] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 2 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 14:59:03.247] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1] 2000000
+[2025-01-27 14:59:03.248] [TRACE]    [Timer] New Timer
+[2025-01-27 14:59:03.248] [TRACE]    [Timer] New Timer
+[2025-01-27 14:59:03.249] [TRACE]    [Timer] New Timer
+[2025-01-27 14:59:03.249] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:59:03.250] [DEBUG]    [Foo] Timer start with 0s, 300000000ns
+[2025-01-27 14:59:03.250] [TRACE]    [Timer] Timer started
+	Speed: fast
+	Progress: 0%
+	Time: 300ms
+	Pulse: 1
+[2025-01-27 14:59:03.252] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:59:03.252] [DEBUG]    [Foo] Timer start with 0s, 100000000ns
+[2025-01-27 14:59:03.253] [TRACE]    [Timer] Timer started
+	Speed: fast
+	Progress: 0%
+	Time: 100ms
+	Pulse: 2
+[2025-01-27 14:59:03.254] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:59:03.254] [DEBUG]    [Foo] Timer start with 10s, 0ns
+[2025-01-27 14:59:03.255] [TRACE]    [Timer] Timer started
+	Speed: fast
+	Progress: 0%
+	Time: 10000ms
+	Pulse: 3
+[2025-01-27 14:59:03.256] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 14:59:03.257] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 14:59:03.286] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 14:59:03.286] [DEBUG]    [FOO] CHANGING
+[2025-01-27 14:59:03.287] [TRACE]    [Timer] Timer speed updated
+	speed: slow
+	Progress: 20%
+	timeRemaining: 7960ms
+	Pulse: 3
+[2025-01-27 14:59:03.288] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 2
+[2025-01-27 14:59:03.288] [DEBUG]    [FOO] CHANGING
+[2025-01-27 14:59:03.289] [TRACE]    [Timer] Timer speed updated
+	speed: slow
+	Progress: 12%
+	timeRemaining: 262ms
+	Pulse: 1
+[2025-01-27 14:59:03.290] [DEBUG]    [FOO] CHANGING
+[2025-01-27 14:59:03.291] [TRACE]    [Timer] Timer speed updated
+	speed: slow
+	Progress: 36%
+	timeRemaining: 63ms
+	Pulse: 2
+[2025-01-27 14:59:03.292] [DEBUG]    [FOO] CHANGING
+[2025-01-27 14:59:03.292] [TRACE]    [Timer] Timer speed updated
+	speed: slow
+	Progress: 0%
+	timeRemaining: 9960ms
+	Pulse: 3
+[2025-01-27 14:59:03.293] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 14:59:03.294] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 14:59:03.354] [DEBUG]    [PositionTracker.listen] Message recieved
+	code: PULSE_HS_1_PUK_EXPECTED
+	value: 2
+[2025-01-27 14:59:03.552] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 14:59:03.552] [DEBUG]    [PositionTracker.listen] Message recieved
+	code: PULSE_INGRESS_1_DISTANCE_VALID
+	value: 2
+[2025-01-27 14:59:03.553] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 14:59:03.988] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 14:59:04.320] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 25
+[2025-01-27 14:59:04.320] [TRACE]    [Timer] New Timer
+[2025-01-27 14:59:04.321] [TRACE]    [Timer] New Timer
+[2025-01-27 14:59:04.322] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:59:04.322] [DEBUG]    [Foo] Timer start with 0s, 100000000ns
+[2025-01-27 14:59:04.323] [TRACE]    [Timer] Timer started
+	Speed: slow
+	Progress: 0%
+	Time: 100ms
+	Pulse: 4
+[2025-01-27 14:59:04.324] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:59:04.324] [DEBUG]    [Foo] Timer start with 10s, 0ns
+[2025-01-27 14:59:04.325] [TRACE]    [Timer] Timer started
+	Speed: slow
+	Progress: 0%
+	Time: 10000ms
+	Pulse: 5
+[2025-01-27 14:59:04.326] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 14:59:04.327] [DEBUG]    [PositionTracker.onIsNotValid] [FST1] HEIGHT_IS_NOT_VALID
+[2025-01-27 14:59:04.327] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 14:59:04.328] [DEBUG]    [FOO] CHANGING
+[2025-01-27 14:59:04.329] [TRACE]    [Timer] Timer speed updated
+	speed: fast
+	Progress: 5%
+	timeRemaining: 94ms
+	Pulse: 4
+[2025-01-27 14:59:04.330] [DEBUG]    [FOO] CHANGING
+[2025-01-27 14:59:04.331] [TRACE]    [Timer] Timer speed updated
+	speed: fast
+	Progress: 0%
+	timeRemaining: 9960ms
+	Pulse: 5
+[2025-01-27 14:59:04.332] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 2
+[2025-01-27 14:59:04.333] [DEBUG]    [FOO] CHANGING
+[2025-01-27 14:59:04.334] [TRACE]    [Timer] Timer speed updated
+	speed: fast
+	Progress: 10%
+	timeRemaining: 8901ms
+	Pulse: 3
+[2025-01-27 14:59:04.335] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 14:59:04.335] [DEBUG]    [FSMController] received Digit1...57
+[2025-01-27 14:59:04.336] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 14:59:04.337] [DEBUG]    [FSMController] received AverageHeight...25
+[2025-01-27 14:59:04.337] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 14:59:04.424] [DEBUG]    [PositionTracker.listen] Message recieved
+	code: PULSE_SORTING_1_PUK_EXPECTED
+	value: 1
+[2025-01-27 14:59:05.352] [TRACE]    [Decoder] decode...
+[2025-01-27 14:59:05.352] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 14:59:05.353] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:59:05.353] [DEBUG]    [FOO] STOPPING
+[2025-01-27 14:59:05.354] [TRACE]    [Timer] Timer stopped
+	Progress: 10%
+	Time: 8938ms
+	Pulse: 5
+[2025-01-27 14:59:05.355] [DEBUG]    [PositionTracker.onIsNotMetal] [FST1] PUK Eject
+	PUK-ID: 1
+	PUK Type: PUK_WITH_HOLE
+	PUK AverageHeight: 25
+[2025-01-27 14:59:05.356] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 14:59:05.838] [TRACE]    [Decoder] decode...
+[2025-01-27 14:59:05.838] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 14:59:05.839] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:59:05.839] [DEBUG]    [PositionTracker] [FST1] PUK between LBM_1 and LBE_1 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 25
+[2025-01-27 14:59:05.840] [TRACE]    [Timer] New Timer
+[2025-01-27 14:59:05.841] [TRACE]    [Timer] New Timer
+[2025-01-27 14:59:05.841] [TRACE]    [Timer] New Timer
+[2025-01-27 14:59:05.842] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:59:05.842] [DEBUG]    [Foo] Timer start with 0s, 50000000ns
+[2025-01-27 14:59:05.844] [TRACE]    [Timer] Timer started
+	Speed: fast
+	Progress: 0%
+	Time: 50ms
+	Pulse: 7
+[2025-01-27 14:59:05.845] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:59:05.845] [DEBUG]    [Foo] Timer start with 0s, 100000000ns
+[2025-01-27 14:59:05.846] [TRACE]    [Timer] Timer started
+	Speed: fast
+	Progress: 0%
+	Time: 100ms
+	Pulse: 8
+[2025-01-27 14:59:05.847] [DEBUG]    [FOO] STARTING
+[2025-01-27 14:59:05.848] [DEBUG]    [Foo] Timer start with 10s, 0ns
+[2025-01-27 14:59:05.849] [TRACE]    [Timer] Timer started
+	Speed: fast
+	Progress: 0%
+	Time: 10000ms
+	Pulse: 9
+[2025-01-27 14:59:05.850] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST1]
+[2025-01-27 14:59:05.850] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 14:59:05.894] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 14:59:05.894] [DEBUG]    [PositionTracker.listen] Message recieved
+	code: PULSE_SORTING_1_DISTANCE_VALID
+	value: 1
+[2025-01-27 14:59:05.895] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 14:59:05.926] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_OFF
+[2025-01-27 14:59:05.926] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 14:59:05.927] [ERROR]    [Timer] timer_gettime failed for pulseCode: 7, pulseValue: 1
+[2025-01-27 14:59:05.927] [TRACE]    [ActuatorController] 0: Festo 1 LED Green off...
+[2025-01-27 14:59:05.928] [DEBUG]    [FOO] STOPPING
+[2025-01-27 14:59:05.928] [TRACE]    [Timer] Timer stopped
+	Progress: 80%
+	Time: 20ms
+	Pulse: 8
+[2025-01-27 14:59:05.929] [DEBUG]    [FOO] STOPPING
+[2025-01-27 14:59:05.930] [TRACE]    [Timer] Timer stopped
+	Progress: 1%
+	Time: 9920ms
+	Pulse: 9
+[2025-01-27 14:59:05.931] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 2
+[2025-01-27 14:59:05.932] [DEBUG]    [FOO] STOPPING
+[2025-01-27 14:59:05.932] [TRACE]    [Timer] Timer stopped
+	Progress: 27%
+	Time: 7304ms
+	Pulse: 3
+[2025-01-27 14:59:05.933] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_STOP
+[2025-01-27 14:59:05.934] [TRACE]    [FSMController] Sending pulse: PULSE_BRSL1_ON
+[2025-01-27 14:59:05.934] [TRACE]    [ActuatorController] [Festo1] Motor stop
+[2025-01-27 14:59:05.935] [TRACE]    [FSMController] Sending pulse: PULSE_Q11_ON
+[2025-01-27 14:59:05.936] [TRACE]    [ActuatorController] 0: Festo 1 BUTTON RESET LED ON
+[2025-01-27 14:59:05.937] [TRACE]    [FSMController] Sending pulse: PULSE_LR1_BLINKING 1 HZ
+[2025-01-27 14:59:05.937] [TRACE]    [ActuatorController] 0: Festo 1 LED Q1 on......
+[2025-01-27 14:59:05.938] [TRACE]    [ActuatorController] 0: Festo 1 LED Red blinking(1000Hz)...
+[2025-01-27 14:59:11.005] [TRACE]    [Decoder] decode...
+[2025-01-27 14:59:11.005] [TRACE]    [Decoder] BGR gedrueckt
+[2025-01-27 14:59:11.006] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:59:11.006] [TRACE]    [Decoder] decode...
+[2025-01-27 14:59:11.007] [TRACE]    [Decoder] BGR gedrueckt
+[2025-01-27 14:59:11.007] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:59:11.178] [TRACE]    [Decoder] decode...
+[2025-01-27 14:59:11.179] [TRACE]    [Decoder] BGR losgelassen
+[2025-01-27 14:59:11.179] [TRACE]    [Decoder] BGR_SHORT erkannt
+[2025-01-27 14:59:11.180] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:59:11.180] [TRACE]    [FSMController] Sending pulse: PULSE_BRSL1_OFF
+[2025-01-27 14:59:11.181] [TRACE]    [FSMController] Sending pulse: PULSE_BRSL1_OFF
+[2025-01-27 14:59:11.181] [TRACE]    [ActuatorController] 0: Festo 1 BUTTON RESET LED OFF
+[2025-01-27 14:59:11.182] [TRACE]    [FSMController] Sending pulse: PULSE_LR1_ON
+[2025-01-27 14:59:11.183] [TRACE]    [ActuatorController] 0: Festo 1 BUTTON RESET LED OFF
+[2025-01-27 14:59:11.183] [TRACE]    [FSMController] received PULSE_BGR_SHORT...0
+[2025-01-27 14:59:11.184] [TRACE]    [ActuatorController] 0: Festo 1 LED Red on......
+[2025-01-27 14:59:11.951] [TRACE]    [ActuatorController] red blinking stopped......
+[2025-01-27 14:59:12.328] [TRACE]    [FSMController] Sending pulse: PULSE_Q11_OFF
+[2025-01-27 14:59:12.328] [TRACE]    [FSMController] Sending pulse: PULSE_BGSL1_ON
+[2025-01-27 14:59:12.329] [TRACE]    [FSMController] Sending pulse: PULSE_LR1_OFF
+[2025-01-27 14:59:12.329] [TRACE]    [ActuatorController] 0: Festo 1 LED Q1 off......
+[2025-01-27 14:59:12.330] [DEBUG]    [FSMController] received Digit1...57
+[2025-01-27 14:59:12.330] [TRACE]    [ActuatorController] 0: Festo 1 BUTTON START LED ON
+[2025-01-27 14:59:12.331] [DEBUG]    [FSMController] received AverageHeight...25
+[2025-01-27 14:59:12.331] [TRACE]    [ActuatorController] 0: Festo 1 LED Red off...
+[2025-01-27 14:59:12.332] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 14:59:21.810] [TRACE]    [Decoder] decode...
+[2025-01-27 14:59:21.810] [TRACE]    [Decoder] LBR erkannt
+[2025-01-27 14:59:21.811] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 14:59:21.812] [TRACE]    [FSMController] Sending pulse: PULSE_BGSL1_OFF
+[2025-01-27 14:59:21.813] [TRACE]    [FSMController] Sending pulse: PULSE_LY1_OFF
+[2025-01-27 14:59:21.813] [TRACE]    [ActuatorController] 0: Festo 1 BUTTON START LED OFF
+[2025-01-27 14:59:21.814] [TRACE]    [FSMController] Sending pulse: PULSE_BRSL1_ON
+[2025-01-27 14:59:21.814] [TRACE]    [ActuatorController] 0: Festo 1 LED Yellow off...
+[2025-01-27 14:59:21.815] [TRACE]    [FSMController] Sending pulse: PULSE_Q21_ON
+[2025-01-27 14:59:21.815] [TRACE]    [ActuatorController] 0: Festo 1 BUTTON RESET LED ON
+[2025-01-27 14:59:21.816] [TRACE]    [FSMController] Sending pulse: PULSE_LR1_BLINKING 0.5 HZ
+[2025-01-27 14:59:21.817] [TRACE]    [ActuatorController] 0: Festo 1 LED Q2 on......
+[2025-01-27 14:59:21.818] [TRACE]    [FSMController] received PULSE_LBR_OPEN...0
+[2025-01-27 14:59:21.818] [TRACE]    [ActuatorController] 0: Festo 1 LED Red blinking(2000Hz)...
