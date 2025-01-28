@@ -54,9 +54,6 @@ class HeartBeat : public PulseMsgHandler {
     std:: mutex otherFestoMutex;
     std::chrono::steady_clock::time_point lastHeartbeatReceived;
 
-    uint32_t sendCnt;
-    std::mutex sendCntMutex;
-
     static int8_t numOfPulses;
     static int8_t pulses[HEARTBEAT_NUM_OF_PULSES];
 };

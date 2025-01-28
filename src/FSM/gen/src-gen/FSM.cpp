@@ -4552,15 +4552,7 @@ void FSM::enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sortin
 {
 	/* Entry action for state 'Idle'. */
 	setFST1SORPE(false);
-}
-
-/* Entry action for state 'Evaluate'. */
-void FSM::enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate()
-{
-	/* Entry action for state 'Evaluate'. */
 	setFST1isMetalTest(false);
-	EVALUATE_observable.next();
-	raiseLocal_EVALUATE();
 }
 
 /* Entry action for state 'EjectingDiverter'. */
@@ -4846,7 +4838,6 @@ void FSM::enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErro
 {
 	/* Entry action for state 'NoErrorRampFull'. */
 	FST_1_BGSL_LIGHT_ON_observable.next();
-	FST_1_BGSL_LIGHT_OFF_observable.next();
 }
 
 /* Entry action for state 'Idle'. */
@@ -5442,6 +5433,13 @@ void FSM::exact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErro
 	FST_1_BGSL_LIGHT_OFF_observable.next();
 }
 
+/* Exit action for state 'NoErrorRampFull'. */
+void FSM::exact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorRampFull()
+{
+	/* Exit action for state 'NoErrorRampFull'. */
+	FST_1_BGSL_LIGHT_OFF_observable.next();
+}
+
 /* Exit action for state 'Ready'. */
 void FSM::exact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready()
 {
@@ -5714,7 +5712,6 @@ void FSM::enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sortin
 void FSM::enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate_default()
 {
 	/* 'default' enter sequence for state Evaluate */
-	enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate();
 	stateConfVector[2] = FSM::State::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Evaluate;
 	stateConfVectorPosition = 2;
 	historyVector[3] = stateConfVector[2];
@@ -9299,6 +9296,7 @@ void FSM::exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErro
 	/* Default exit sequence for state NoErrorRampFull */
 	stateConfVector[10] = FSM::State::FSM_Festo1__Errors_FSM_Errors;
 	stateConfVectorPosition = 10;
+	exact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorRampFull();
 }
 
 /* Default exit sequence for state EStop */
@@ -21036,8 +21034,6 @@ sc::integer FSM::FSM_SystemV2_FSM_System_react(const sc::integer transitioned_be
 			if (HEARTBEAT_FAILED_raised)
 			{ 
 				exseq_FSM_SystemV2_FSM_System();
-				ESTOP_RECEIVED_observable.next();
-				raiseLocal_ESTOP_RECEIVED();
 				MOTOR_1_STOP_observable.next();
 				FST_1_SORTING_MODULE_RESTING_observable.next();
 				FST_2_SORTING_MODULE_RESTING_observable.next();
