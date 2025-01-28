@@ -46,6 +46,7 @@ class HeartBeat : public PulseMsgHandler {
     int32_t festoId;
     int32_t otherFesto;
     int32_t actChannel;
+    int32_t coidAct;
     int32_t dispatcherChannel;
     bool messageReceivedOnce;
     name_attach_t* heartBeatChannel;
@@ -53,6 +54,8 @@ class HeartBeat : public PulseMsgHandler {
     std:: mutex otherFestoMutex;
     std::chrono::steady_clock::time_point lastHeartbeatReceived;
 
+    uint32_t sendCnt;
+    std::mutex sendCntMutex;
 
     static int8_t numOfPulses;
     static int8_t pulses[HEARTBEAT_NUM_OF_PULSES];

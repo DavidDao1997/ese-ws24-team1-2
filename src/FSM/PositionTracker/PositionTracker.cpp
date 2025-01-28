@@ -58,45 +58,45 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     // durations.fst2.sorting.distanceValid.Slow = std::chrono::milliseconds(3000); // we dont need it or? DD
 
     // ---fake calibration---
-    // durations.fst1.ingress.distanceValid.Fast = std::chrono::milliseconds(827);
-    // durations.fst1.ingress.distanceValid.Slow = std::chrono::milliseconds(2952);
-    // durations.fst1.ingress.expected.Fast = std::chrono::milliseconds(1654);
-    // durations.fst1.ingress.expected.Slow = std::chrono::milliseconds(5905);
-    // durations.fst1.ingress.expired.Fast = std::chrono::milliseconds(2562);
-    // durations.fst1.ingress.expired.Slow = std::chrono::milliseconds(7532);
-    // durations.fst1.heightSensor.expected.Fast = std::chrono::milliseconds(628);
-    // durations.fst1.heightSensor.expected.Slow = std::chrono::milliseconds(2892);
-    // durations.fst1.heightSensor.expired.Fast = std::chrono::milliseconds(1200);
-    // durations.fst1.heightSensor.expired.Slow = std::chrono::milliseconds(3444);
-    // durations.fst1.sorting.distanceValid.Fast = std::chrono::milliseconds(729);
-    // durations.fst1.sorting.distanceValid.Slow = std::chrono::milliseconds(2742);
-    // durations.fst1.sorting.expected.Fast = std::chrono::milliseconds(1458);
-    // durations.fst1.sorting.expected.Slow = std::chrono::milliseconds(5485);
-    // durations.fst1.sorting.expired.Fast = std::chrono::milliseconds(2016);
-    // durations.fst1.sorting.expired.Slow = std::chrono::milliseconds(5936);
-    // durations.fst1.egress.expected.Fast = std::chrono::milliseconds(50);
-    // durations.fst1.egress.expected.Slow = std::chrono::milliseconds(100);
-    // durations.fst1.egress.expired.Fast = std::chrono::milliseconds(2000);
-    // durations.fst1.egress.expired.Slow = std::chrono::milliseconds(4000);
-    // durations.fst2.ingress.distanceValid.Fast = std::chrono::milliseconds(0);
-    // durations.fst2.ingress.distanceValid.Slow = std::chrono::milliseconds(0);
-    // durations.fst2.ingress.expected.Fast = std::chrono::milliseconds(1562);
-    // durations.fst2.ingress.expected.Slow = std::chrono::milliseconds(4454);
-    // durations.fst2.ingress.expired.Fast = std::chrono::milliseconds(2123);
-    // durations.fst2.ingress.expired.Slow = std::chrono::milliseconds(4795);
-    // durations.fst2.heightSensor.expected.Fast = std::chrono::milliseconds(594);
-    // durations.fst2.heightSensor.expected.Slow = std::chrono::milliseconds(1959);
-    // durations.fst2.heightSensor.expired.Fast = std::chrono::milliseconds(1147);
-    // durations.fst2.heightSensor.expired.Slow = std::chrono::milliseconds(2529);
-    // durations.fst2.sorting.distanceValid.Fast = std::chrono::milliseconds(698);
-    // durations.fst2.sorting.distanceValid.Slow = std::chrono::milliseconds(1939);
-    // durations.fst2.sorting.expected.Fast = std::chrono::milliseconds(1397);
-    // durations.fst2.sorting.expected.Slow = std::chrono::milliseconds(3878);
-    // durations.fst2.sorting.expired.Fast = std::chrono::milliseconds(1965);
-    // durations.fst2.sorting.expired.Slow = std::chrono::milliseconds(4438);
-    // fsm->setDigitpermm(58);
-    // fsm->setDigitpermm2(53);
-    // fsm->setCalibrated(true);
+    durations.fst1.ingress.distanceValid.Fast = std::chrono::milliseconds(608);
+    durations.fst1.ingress.distanceValid.Slow = std::chrono::milliseconds(2891);
+    durations.fst1.ingress.expected.Fast = std::chrono::milliseconds(1517);
+    durations.fst1.ingress.expected.Slow = std::chrono::milliseconds(5782);
+    durations.fst1.ingress.expired.Fast = std::chrono::milliseconds(2512);
+    durations.fst1.ingress.expired.Slow = std::chrono::milliseconds(7400);
+    durations.fst1.heightSensor.expected.Fast = std::chrono::milliseconds(608);
+    durations.fst1.heightSensor.expected.Slow = std::chrono::milliseconds(3084);
+    durations.fst1.heightSensor.expired.Fast = std::chrono::milliseconds(1230);
+    durations.fst1.heightSensor.expired.Slow = std::chrono::milliseconds(3569);
+    durations.fst1.sorting.distanceValid.Fast = std::chrono::milliseconds(602);
+    durations.fst1.sorting.distanceValid.Slow = std::chrono::milliseconds(2344);
+    durations.fst1.sorting.expected.Fast = std::chrono::milliseconds(1005);
+    durations.fst1.sorting.expected.Slow = std::chrono::milliseconds(3088);
+    durations.fst1.sorting.expired.Fast = std::chrono::milliseconds(2000);
+    durations.fst1.sorting.expired.Slow = std::chrono::milliseconds(5215);
+    durations.fst1.egress.expected.Fast = std::chrono::milliseconds(50);
+    durations.fst1.egress.expected.Slow = std::chrono::milliseconds(100);
+    durations.fst1.egress.expired.Fast = std::chrono::milliseconds(2000);
+    durations.fst1.egress.expired.Slow = std::chrono::milliseconds(4000);
+    durations.fst2.ingress.distanceValid.Fast = std::chrono::milliseconds(784);
+    durations.fst2.ingress.distanceValid.Slow = std::chrono::milliseconds(2214);
+    durations.fst2.ingress.expected.Fast = std::chrono::milliseconds(1568);
+    durations.fst2.ingress.expected.Slow = std::chrono::milliseconds(4428);
+    durations.fst2.ingress.expired.Fast = std::chrono::milliseconds(2133);
+    durations.fst2.ingress.expired.Slow = std::chrono::milliseconds(4888);
+    durations.fst2.heightSensor.expected.Fast = std::chrono::milliseconds(591);
+    durations.fst2.heightSensor.expected.Slow = std::chrono::milliseconds(1996);
+    durations.fst2.heightSensor.expired.Fast = std::chrono::milliseconds(1167);
+    durations.fst2.heightSensor.expired.Slow = std::chrono::milliseconds(2569);
+    durations.fst2.sorting.distanceValid.Fast = std::chrono::milliseconds(702);
+    durations.fst2.sorting.distanceValid.Slow = std::chrono::milliseconds(1975);
+    durations.fst2.sorting.expected.Fast = std::chrono::milliseconds(1405);
+    durations.fst2.sorting.expected.Slow = std::chrono::milliseconds(3951);
+    durations.fst2.sorting.expired.Fast = std::chrono::milliseconds(1977);
+    durations.fst2.sorting.expired.Slow = std::chrono::milliseconds(4489);
+    fsm->setDigitpermm(53);
+    fsm->setDigitpermm2(52);
+    fsm->setCalibrated(true);
     // ----------------------------
     
     onEvent(&fsm->getFST_1_POSITION_INGRESS_NEW_PUK(), [this](){
@@ -112,7 +112,9 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         //     "PositionTracker.onIngressNewPuk");
         Puk* puk = new Puk(nextPukId());              
         heightSensor1.push(puk);
-        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK between LBF1 and HS1 - PUK-ID: " + std::to_string(puk->getPukId()) + " PUK Type: " + puk->pukTypeToString(puk->getPukType()) + " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), " PositionTracker");
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK between LBF1 and HS1 - PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                    " PUK Type: " + puk->pukTypeToString(puk->getPukType()) +
+                                                    " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), " PositionTracker");
         if (puk == nullptr) {
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] " + 
                 std::to_string(heightSensor1.size()) +
@@ -201,7 +203,9 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         sorting1.push(puk);
         int32_t averageHeight = fsm->getAverageHeight();
         puk->setAverageHeight(averageHeight);
-        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK between HS1 and MS1 - PUK-ID: " + std::to_string(puk->getPukId()) + " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker");
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK between HS1 and MS1 - PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                    " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                    " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker");
 
         if (puk == nullptr) {
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] " + 
@@ -258,14 +262,18 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             currentSortingType1 = sortingTypeNext(currentSortingType1, FESTO1);
             fsm->raiseFST_1_PUK_SORTING_PASSTHROUGH();
             //Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Passing", "PositionTracker.onIsMetal");
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK Passthrough - PUK-ID: " + std::to_string(puk->getPukId()) + "PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker.onIsMetal");
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK Passthrough - PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                        "PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker.onIsMetal");
 
         } else {
             // eject
             puk->setTimers(Timer::MotorState::MOTOR_STOP); // could also implement puk->killTimers()
             fsm->raiseFST_1_PUK_SORTING_EJECT();
             //Logger::getInstance().log(LogLevel::DEBUG, "[FST1] Ejecting", "PositionTracker.onIsMetal");
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK Ejected - PUK-ID: " + std::to_string(puk->getPukId()) + "PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker.onIsMetal");
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK Ejected - PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                        "PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker.onIsMetal");
 
         }
     });
@@ -294,12 +302,16 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             puk->setIsMetal(false);
             currentSortingType1 = sortingTypeNext(currentSortingType1, FESTO1);
             fsm->raiseFST_1_PUK_SORTING_PASSTHROUGH();
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK Passthroug - PUK-ID: " + std::to_string(puk->getPukId()) + " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker.onIsNotMetal");
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK Passthroug - PUK-ID: " + std::to_string(puk->getPukId()) + 
+                                                        " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker.onIsNotMetal");
         } else {
             // eject
             puk->setTimers(Timer::MotorState::MOTOR_STOP); // could also implement puk->killTimers()
             fsm->raiseFST_1_PUK_SORTING_EJECT();
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK Ejected - PUK-ID: " + std::to_string(puk->getPukId()) + " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker.onIsNotMetal");
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK Ejected - PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                        " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker.onIsNotMetal");
         }
     });
     onEvent(&fsm->getFST_1_POSITION_SORTING_NEW_PUK(), [this](){
@@ -328,7 +340,9 @@ PositionTracker::PositionTracker(FSM* _fsm) {
                 "PositionTracker.onSortingNewPuk");
             return;
         }
-        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK between LBM_1 and LBE_1 - PUK-ID: " + std::to_string(puk->getPukId()) + " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker");
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK between LBM_1 and LBE_1 - PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                    " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                    " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker");
         egress1.push(puk);
 
         puk->approachingEgress(
@@ -407,7 +421,9 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             return;
         }
         ingress2.push(puk);
-        Logger::getInstance().log(LogLevel::DEBUG, "[FST1&2] PUK between LBE1 and LBF2 - PUK-ID: " + std::to_string(puk->getPukId()) + "PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + "PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker");
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1&2] PUK between LBE1 and LBF2 - PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                    "PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                    "PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker");
 
         puk->approachingIngress(
             motorState2.load(), // motorstate1?
@@ -455,7 +471,9 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             return;
         }
         heightSensor2.push(puk);
-        Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK between LBF_2 and HS_2 - PUK-ID: " + std::to_string(puk->getPukId()) + " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker");
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK between LBF_2 and HS_2 - PUK-ID: " + std::to_string(puk->getPukId()) + 
+                                                    " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                    " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker");
 
         puk->approachingHS(
             motorState2.load(),
@@ -544,8 +562,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             return;
         }
         sorting2.push(puk);       
-        Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK between HS2 and MS2 - PUK-ID: " + std::to_string(puk->getPukId()) + " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()), "PositionTracker");
-
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK between HS2 and MS2 - PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                    " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) +
+                                                    " PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()) +
+                                                    " PUK AverageHeight FST2: " + std::to_string(fsm->getAverageHeight2()), "PositionTracker");
         puk->approachingSorting(
             motorState2.load(),
             new Timer(
@@ -585,13 +605,19 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             // passthrough
             currentSortingType2 = sortingTypeNext(currentSortingType2, FESTO2);
             fsm->raiseFST_2_PUK_SORTING_PASSTHROUGH();
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK Passthrough - PUK-ID: " + std::to_string(puk->getPukId()) + "PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + "PUK AverageHeight: " + std::to_string(puk->getAverageHeight()) + " PUK Average Height FST2: " + std::to_string(fsm->getAverageHeight2()) , "PositionTracker.onIsMetal");
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK Passthrough - PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                        " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()) +
+                                                        " PUK Average Height FST2: " + std::to_string(fsm->getAverageHeight2()), "PositionTracker.onIsMetal");
 
         } else {
             // eject
             puk->setTimers(Timer::MotorState::MOTOR_STOP); // could also implement puk->killTimers()
             fsm->raiseFST_2_PUK_SORTING_EJECT();
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK Ejecting - PUK-ID:" + std::to_string(puk->getPukId()) + "PUK Type" +  puk->pukTypeToString(puk->getPukType()) + "PUK AverageHeight FST1:" + std::to_string(puk->getAverageHeight()) + " PUK Average Height FST2: " + std::to_string(fsm->getAverageHeight2()), "PositionTracker.onIsMetal");
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK Ejecting - PUK-ID: " + std::to_string(puk->getPukId()) + 
+                                                        " PUK Type " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        " PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()) + 
+                                                        " PUK Average Height FST2: " + std::to_string(fsm->getAverageHeight2()), "PositionTracker.onIsMetal");
         }
     });
     onEvent(&fsm->getFST_2_PUK_IS_NOT_METAL(), [this](){
@@ -614,17 +640,26 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             // passthrough
             currentSortingType2 = sortingTypeNext(currentSortingType2, FESTO2);
             fsm->raiseFST_2_PUK_SORTING_PASSTHROUGH();
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK Passthrough - PUK-ID: " + std::to_string(puk->getPukId()) + " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + " PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()) + " PUK AverageHeight FST2: " + std::to_string(fsm->getAverageHeight2()), "PositionTracker.onIsNotMetal");
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK Passthrough - PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                        " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        " PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()) +
+                                                        " PUK AverageHeight FST2: " + std::to_string(fsm->getAverageHeight2()), "PositionTracker.onIsNotMetal");
             return;
         }
 
         // eject
         if (puk->getIsMetal()) {
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK Ejecting - PUK-ID: " + std::to_string(puk->getPukId()) + " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + " PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight())  + " PUK Average Height FST2: " + std::to_string(fsm->getAverageHeight2()), "PositionTracker");
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK Ejecting - PUK-ID: " + std::to_string(puk->getPukId()) + 
+                                                        " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        " PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight())  + 
+                                                        " PUK Average Height FST2: " + std::to_string(fsm->getAverageHeight2()), "PositionTracker");
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] EjectionReason: Metal mismatch", "PositionTracker.onIsNotMetal");
         } else {
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Ejecting PUK TYPE: " + std::to_string(currentSortingType2), "PosiTionTracher.OnIs_NOT_METAL");
-            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK Ejecting - PUK-ID:" + std::to_string(puk->getPukId()) + "PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + " PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()) + "PUK Average Height FST2: " +std::to_string(fsm->getAverageHeight2()) , "PositionTracker");
+            Logger::getInstance().log(LogLevel::DEBUG, "[FST2] PUK Ejecting - PUK-ID: " + std::to_string(puk->getPukId()) + 
+                                                        " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        " PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()) + 
+                                                        " PUK Average Height FST2: " +std::to_string(fsm->getAverageHeight2()) , "PositionTracker");
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Ejecting", "PositionTracker.onIsNotMetal");
         }
         puk->setTimers(Timer::MotorState::MOTOR_STOP); // could also implement puk->killTimers()
@@ -707,7 +742,9 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] PUK is NULLPTR", "PositionTracker.onHSPukRemoved");
         } else {
             puk->setTimers(Timer::MotorState::MOTOR_STOP);
-            Logger::getInstance().log(LogLevel::DEBUG, " PUK between LBF1 and HS1 Removed PUK-ID:" + std::to_string(puk->getPukId()) + "PUK Type" +  puk->pukTypeToString(puk->getPukType()) + "PUK AverageHeight FST1:" + std::to_string(puk->getAverageHeight()) + "PUK Average Height FST2:"+ std::to_string(fsm->getAverageHeight2()), "PositionTracker.onHSPukRemoved");
+            Logger::getInstance().log(LogLevel::DEBUG, " PUK between LBF1 and HS1 Removed PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                        "PUK Type " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        "PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()), "PositionTracker.onHSPukRemoved");
         }
     });
     onEvent(&fsm->getFST_1_POSITION_SORTING_PUK_REMOVED(), [this](){
@@ -717,7 +754,9 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] PUK is NULLPTR", "PositionTracker.onSortingPukRemoved");
         } else {
             puk->setTimers(Timer::MotorState::MOTOR_STOP);
-            Logger::getInstance().log(LogLevel::DEBUG, " PUK between HS1 and LBM1 Removed PUK-ID:" + std::to_string(puk->getPukId()) + "PUK Type" +  puk->pukTypeToString(puk->getPukType()) + "PUK AverageHeight FST1:" + std::to_string(puk->getAverageHeight()) + "PUK Average Height FST2:"+ std::to_string(fsm->getAverageHeight2()), "PositionTracker.onSortingPukRemoved");
+            Logger::getInstance().log(LogLevel::DEBUG, " PUK between HS1 and LBM1 Removed PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                        "PUK Type " +  puk->pukTypeToString(puk->getPukType()) +
+                                                        "PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()), "PositionTracker.onSortingPukRemoved");
         }
     });
     onEvent(&fsm->getFST_1_POSITION_EGRESS_PUK_REMOVED(), [this](){
@@ -727,7 +766,9 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] PUK is NULLPTR", "PositionTracker.onEgressPukRemoved");
         } else {
             puk->setTimers(Timer::MotorState::MOTOR_STOP);
-            Logger::getInstance().log(LogLevel::DEBUG, " PUK between LBM1 and LBE1 Removed PUK-ID:" + std::to_string(puk->getPukId()) + "PUK Type" +  puk->pukTypeToString(puk->getPukType()) + "PUK AverageHeight FST1:" + std::to_string(puk->getAverageHeight()) + "PUK Average Height FST2:"+ std::to_string(fsm->getAverageHeight2()), "PositionTracker.onEgressPukRemoved");
+            Logger::getInstance().log(LogLevel::DEBUG, " PUK between LBM1 and LBE1 Removed PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                        " PUK Type " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        " PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()), "PositionTracker.onEgressPukRemoved");
         }
     });
     onEvent(&fsm->getFST_2_POSITION_INGRESS_PUK_REMOVED(), [this](){
@@ -737,7 +778,9 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] PUK is NULLPTR", "PositionTracker.onIngressPukRemoved");
         } else {
             puk->setTimers(Timer::MotorState::MOTOR_STOP);
-            Logger::getInstance().log(LogLevel::DEBUG, " PUK between LBE1 and LBF2 Removed PUK-ID:" + std::to_string(puk->getPukId()) + "PUK Type" +  puk->pukTypeToString(puk->getPukType()) + "PUK AverageHeight FST1:" + std::to_string(puk->getAverageHeight()) + "PUK Average Height FST2:"+ std::to_string(fsm->getAverageHeight2()), "PositionTracker.onIngressPukRemoved");
+            Logger::getInstance().log(LogLevel::DEBUG, " PUK between LBE1 and LBF2 Removed PUK-ID: " + std::to_string(puk->getPukId()) + 
+                                                        "PUK Type " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        "PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()), "PositionTracker.onIngressPukRemoved");
 
         }
     });
@@ -748,7 +791,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] PUK is NULLPTR", "PositionTracker.onHSPukRemoved");
         } else {
             puk->setTimers(Timer::MotorState::MOTOR_STOP);
-            Logger::getInstance().log(LogLevel::DEBUG, " PUK between LBF2 and HS2 Removed PUK-ID:" + std::to_string(puk->getPukId()) + "PUK Type" +  puk->pukTypeToString(puk->getPukType()) + "PUK AverageHeight FST1:" + std::to_string(puk->getAverageHeight()) + "PUK Average Height FST2:"+ std::to_string(fsm->getAverageHeight2()), "PositionTracker.onHSPukRemoved");
+            Logger::getInstance().log(LogLevel::DEBUG, " PUK between LBF2 and HS2 Removed PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                        "PUK Type " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        "PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()) + 
+                                                        "PUK Average Height FST2: "+ std::to_string(fsm->getAverageHeight2()), "PositionTracker.onHSPukRemoved");
         }
     });
     onEvent(&fsm->getFST_2_POSITION_SORTING_PUK_REMOVED(), [this](){
@@ -758,7 +804,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] PUK is NULLPTR", "PositionTracker.onSortingPukRemoved");
         } else {
             puk->setTimers(Timer::MotorState::MOTOR_STOP);
-            Logger::getInstance().log(LogLevel::DEBUG, " PUK between HS2 and LBM2 Removed PUK-ID:" + std::to_string(puk->getPukId()) + "PUK Type" +  puk->pukTypeToString(puk->getPukType()) + "PUK AverageHeight FST1:" + std::to_string(puk->getAverageHeight()) + "PUK Average Height FST2" + std::to_string(fsm->getAverageHeight2()) , "PositionTracker.onSortingPukRemoved");
+            Logger::getInstance().log(LogLevel::DEBUG, " PUK between HS2 and LBM2 Removed PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                        "PUK Type " +  puk->pukTypeToString(puk->getPukType()) +
+                                                        "PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()) + 
+                                                        "PUK AverageHeight FST2: " + std::to_string(fsm->getAverageHeight2()) , "PositionTracker.onSortingPukRemoved");
         }
     });
     onEvent(&fsm->getFST_2_POSITION_EGRESS_PUK_REMOVED(), [this](){
@@ -769,7 +818,10 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             Logger::getInstance().log(LogLevel::ERROR, "[FST2] PUK is NULLPTR", "PositionTracker.onEgressPukRemoved");
         } else {
             puk->setTimers(Timer::MotorState::MOTOR_STOP);
-            Logger::getInstance().log(LogLevel::DEBUG, " PUK between LBM2 and LBE2 Removed PUK-ID:" + std::to_string(puk->getPukId()) + "PUK Type" +  puk->pukTypeToString(puk->getPukType()) + "PUK AverageHeight FST1:" + std::to_string(puk->getAverageHeight()) + "PUK Average Height FST2:" + std::to_string(fsm->getAverageHeight2()), "PositionTracker.onEgressPukRemoved");
+            Logger::getInstance().log(LogLevel::DEBUG, " PUK between LBM2 and LBE2 Removed PUK-ID: " + std::to_string(puk->getPukId()) +
+                                                        "PUK Type " +  puk->pukTypeToString(puk->getPukType()) + 
+                                                        "PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()) + 
+                                                        "PUK Average Height FST2: " + std::to_string(fsm->getAverageHeight2()), "PositionTracker.onEgressPukRemoved");
         }
     });
     onEvent(&fsm->getESTOP_RECEIVED(), [this](){
