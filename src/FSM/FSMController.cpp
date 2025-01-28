@@ -45,9 +45,9 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     fsm = new FSM();
     subscribeToOutEvents();
 
-    PositionTracker* positionTracker = new PositionTracker(fsm);
 
     fsm->enter();
+    PositionTracker* positionTracker = new PositionTracker(fsm);
 
     fsm->setAReferenceHeight(2200);
     fsm->setBReferenceHeight(3050);
@@ -515,7 +515,7 @@ void FSMController::handlePulse(_pulse msg) {
             fsm-> setFST_2_currentValue(msgVal); 
             fsm->raiseHS_2_SAMPLE();
             //Logger::getInstance().log(LogLevel::DEBUG, "received currentValue... HS2: "+ std::to_string(msgVal), "FSMController");
-            //Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLE...", "FSMController");
+            // Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLE...", "FSMController");
             break;
             //TODO need to rename 
         case PULSE_HS1_SAMPLING_DONE:
