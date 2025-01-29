@@ -118,7 +118,7 @@ int Puk::getAverageHeight(){
 void Puk::setAverageHeight(int averageHeight){
     this->averageHeight = averageHeight;
 }
-    
+
 std::string Puk::pukTypeToString(Puk::PUKType type) {
     switch (type) {
         case Puk::PUKType::PUK_WITH_HOLE:            return "PUK_WITH_HOLE";

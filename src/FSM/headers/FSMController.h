@@ -39,6 +39,7 @@ class FSMController : public PulseMsgHandler {
     static int8_t numOfPulses;
     static int8_t pulses[FSM_CONTROLLER_NUM_OF_PULSES];
 
+    void onEvent(sc::rx::Observable<void>* event ,std::function<void()> callback);
     class VoidObserver : public sc::rx::Observer<void> {
     public:
         // Constructor that accepts a callback of type void() (a function with no parameters and no return value)

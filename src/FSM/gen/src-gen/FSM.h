@@ -67,6 +67,7 @@ class FSM : public sc::EventDrivenInterface
 			FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferDiverter,
 			FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingEjector,
 			FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EvaluateCounter,
+			FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_LBM1Open,
 			FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Start,
 			FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Stop,
 			FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_ErrorFST1,
@@ -185,7 +186,6 @@ class FSM : public sc::EventDrivenInterface
 			Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG,
 			Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF,
 			Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode,
-			Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing,
 			Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational,
 			Festo2__FSM_LAMP_GREEN_EStop,
 			Festo2__FSM_LAMP_GREEN_Error,
@@ -308,6 +308,7 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferDiverter {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingEjector {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EvaluateCounter {2};
+		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_LBM1Open {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Start {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Stop {2};
 		static constexpr const sc::integer scvi_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_ErrorFST1 {2};
@@ -426,7 +427,6 @@ class FSM : public sc::EventDrivenInterface
 		static constexpr const sc::integer scvi_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG {14};
 		static constexpr const sc::integer scvi_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF {14};
 		static constexpr const sc::integer scvi_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode {14};
-		static constexpr const sc::integer scvi_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing {14};
 		static constexpr const sc::integer scvi_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational {14};
 		static constexpr const sc::integer scvi_Festo2__FSM_LAMP_GREEN_EStop {14};
 		static constexpr const sc::integer scvi_Festo2__FSM_LAMP_GREEN_Error {14};
@@ -599,7 +599,6 @@ class FSM : public sc::EventDrivenInterface
 			Internal_local_ESTOP_RECEIVED,
 			Internal_local_SYSTEM_OPERATIONAL_OUT,
 			Internal_local_FST_1_ERROR_SYSTEM,
-			Internal_local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID,
 			Internal_local_FST_1_ERROR_INGRESS_MISSING_PUK,
 			Internal_local_ESTOP_CLEARED,
 			Internal_local_FST_2_NOT_READY,
@@ -646,8 +645,6 @@ class FSM : public sc::EventDrivenInterface
 				virtual ~EventInstance() = default;
 				const Event eventId;
 		};
-		/*! Get observable for event 'FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_INTERNAL_INGRESS_DISTANCE_VALID() noexcept;
 		/*! Raises the in event 'FST_1_RAMP_TIMEOUT' of default interface scope. */
 		void raiseFST_1_RAMP_TIMEOUT();
 		/*! Raises the in event 'FST_2_RAMP_TIMEOUT' of default interface scope. */
@@ -878,8 +875,6 @@ class FSM : public sc::EventDrivenInterface
 		sc::rx::Observable<void>& getFST_1_PUK_DESIRED() noexcept;
 		/*! Get observable for event 'FST_1_PUK_NOT_DESIRED' of default interface scope. */
 		sc::rx::Observable<void>& getFST_1_PUK_NOT_DESIRED() noexcept;
-		/*! Get observable for event 'FST_1_PUK_ENTRY_EGRESS' of default interface scope. */
-		sc::rx::Observable<void>& getFST_1_PUK_ENTRY_EGRESS() noexcept;
 		/*! Get observable for event 'FST_1_SORTING_MODULE_ACTIVE' of default interface scope. */
 		sc::rx::Observable<void>& getFST_1_SORTING_MODULE_ACTIVE() noexcept;
 		/*! Get observable for event 'FST_1_SORTING_MODULE_RESTING' of default interface scope. */
@@ -1114,6 +1109,10 @@ class FSM : public sc::EventDrivenInterface
 		void raiseERROR_SIGNAL();
 		
 		
+		/*! Gets the value of the variable 'ingressFST1' that is defined in the default interface scope. */
+		bool getIngressFST1() const noexcept;
+		/*! Sets the value of the variable 'ingressFST1' that is defined in the default interface scope. */
+		void setIngressFST1(bool ingressFST1) noexcept;
 		/*! Gets the value of the variable 'loopCounter' that is defined in the default interface scope. */
 		sc::integer getLoopCounter() const noexcept;
 		/*! Sets the value of the variable 'loopCounter' that is defined in the default interface scope. */
@@ -1158,10 +1157,18 @@ class FSM : public sc::EventDrivenInterface
 		bool getFastRun() const noexcept;
 		/*! Sets the value of the variable 'FastRun' that is defined in the default interface scope. */
 		void setFastRun(bool FastRun) noexcept;
-		/*! Gets the value of the variable 'FST1IPE' that is defined in the default interface scope. */
-		bool getFST1IPE() const noexcept;
-		/*! Sets the value of the variable 'FST1IPE' that is defined in the default interface scope. */
-		void setFST1IPE(bool FST1IPE) noexcept;
+		/*! Gets the value of the variable 'FST1isMetalTest' that is defined in the default interface scope. */
+		bool getFST1isMetalTest() const noexcept;
+		/*! Sets the value of the variable 'FST1isMetalTest' that is defined in the default interface scope. */
+		void setFST1isMetalTest(bool FST1isMetalTest) noexcept;
+		/*! Gets the value of the variable 'FST2isMetalTest' that is defined in the default interface scope. */
+		bool getFST2isMetalTest() const noexcept;
+		/*! Sets the value of the variable 'FST2isMetalTest' that is defined in the default interface scope. */
+		void setFST2isMetalTest(bool FST2isMetalTest) noexcept;
+		/*! Gets the value of the variable 'FST1IPP' that is defined in the default interface scope. */
+		bool getFST1IPP() const noexcept;
+		/*! Sets the value of the variable 'FST1IPP' that is defined in the default interface scope. */
+		void setFST1IPP(bool FST1IPP) noexcept;
 		/*! Gets the value of the variable 'FST1HMPE' that is defined in the default interface scope. */
 		bool getFST1HMPE() const noexcept;
 		/*! Sets the value of the variable 'FST1HMPE' that is defined in the default interface scope. */
@@ -1556,6 +1563,7 @@ class FSM : public sc::EventDrivenInterface
 		
 	private:
 		
+		bool ingressFST1 {false};
 		sc::integer loopCounter {0};
 		bool calibrated {false};
 		bool eStopCalibratedReturn {false};
@@ -1567,7 +1575,9 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer flatPukHeight {0};
 		bool firstLoopCalibration {false};
 		bool FastRun {false};
-		bool FST1IPE {false};
+		bool FST1isMetalTest {false};
+		bool FST2isMetalTest {false};
+		bool FST1IPP {false};
 		bool FST1HMPE {false};
 		bool FST1SORPE {false};
 		bool FST1EPE {false};
@@ -1662,7 +1672,7 @@ class FSM : public sc::EventDrivenInterface
 		//! the maximum number of orthogonal states defines the dimension of the state configuration vector.
 		static const sc::ushort maxOrthogonalStates {20};
 		//! dimension of the state configuration vector for history states
-		static const sc::ushort maxHistoryStates {11};
+		static const sc::ushort maxHistoryStates {12};
 		
 		
 		
@@ -1681,25 +1691,23 @@ class FSM : public sc::EventDrivenInterface
 		
 		// prototypes of all internal functions
 		
-		void enact_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_PukPresent();
+		void enact_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_Idle();
 		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Idle();
 		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_Measuring_FSM_Festo1__HeightMeasurement__final_();
-		void enact_FSM_Festo1__HeightMeasurement_FSM_Festo1__HeightMeasurement_FSM_Festo1__Outer_HeightMeasurement_HeightMeasurement_FSM_Festo1__Internal_HeightMeasurement_PukExpected();
-		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_PukExpected();
+		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Idle();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingDiverter();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferEjector();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferDiverter();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingEjector();
 		void enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EvaluateCounter();
-		void enact_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_PukExpected();
+		void enact_FSM_Festo1__Egress_FSM_Festo1__Egress_FSM_Festo1__Outer_Egress_Egress_FSM_Festo1__Internal_Egress_IDLE();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void enact_FSM_QualityGate__Motor_SystemMotor_FSM_SystemMotor_Stop();
-		void enact_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_PukExpected();
+		void enact_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress_Ingress_FSM_Festo2__Internal_Ingress_Idle();
 		void enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Idle();
-		void enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_PukExpected();
 		void enact_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__final_();
-		void enact_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_PukExpected();
+		void enact_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_IDLE();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Forward();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Slow();
 		void enact_FSM_Festo2__Motor_SystemMotor_FSM_SystemMotor_Stop();
@@ -1722,8 +1730,7 @@ class FSM : public sc::EventDrivenInterface
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorSorting();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorEgress();
 		void enact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorRampFull();
-		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_PukExpected();
-		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate();
+		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle();
 		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_EjectingDiverter();
 		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferEjector();
 		void enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_TransferDivider();
@@ -1744,7 +1751,6 @@ class FSM : public sc::EventDrivenInterface
 		void enact_Festo1__FSM_LAMP_GREEN_Error();
 		void enact_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF();
 		void enact_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode();
-		void enact_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing();
 		void enact_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational();
 		void enact_Festo2__FSM_LAMP_GREEN_EStop();
 		void enact_Festo2__FSM_LAMP_GREEN_Error();
@@ -1793,6 +1799,7 @@ class FSM : public sc::EventDrivenInterface
 		void exact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorHM();
 		void exact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorSorting();
 		void exact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorEgress();
+		void exact_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_NoErrorRampFull();
 		void exact_FSM_SystemV2_FSM_System_FSM_System__Outer_FSM_Festo_FSM_System_FSM_System__Inner_FSM_Ready();
 		void exact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NoErrorEgress();
 		void exact_Festo2__Errors_FSM_Errors_Festo2__Internal_Errors_NOErrorHM();
@@ -1832,6 +1839,7 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferDiverter_default();
 		void enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingEjector_default();
 		void enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EvaluateCounter_default();
+		void enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_LBM1Open_default();
 		void enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Start_default();
 		void enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Stop_default();
 		void enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_ErrorFST1_default();
@@ -1950,7 +1958,6 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_default();
 		void enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF_default();
 		void enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode_default();
-		void enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing_default();
 		void enseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational_default();
 		void enseq_Festo2__FSM_LAMP_GREEN_EStop_default();
 		void enseq_Festo2__FSM_LAMP_GREEN_Error_default();
@@ -2061,8 +2068,9 @@ class FSM : public sc::EventDrivenInterface
 		void enseq_FSM_Festo2__HeightMeasurement_default();
 		void enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_default();
 		void enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_default();
-		void shenseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement();
+		void dhenseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement();
 		void enseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement_default();
+		void dhenseq_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement();
 		void enseq_FSM_Festo2__Egress_default();
 		void enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_default();
 		void enseq_FSM_Festo2__Egress_FSM_Festo2__Egress_FSM_FEsto2__Outer_Egress_Egress_FSM_Festo2__Internal_Egress_default();
@@ -2132,6 +2140,7 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferDiverter();
 		void exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingEjector();
 		void exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EvaluateCounter();
+		void exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_LBM1Open();
 		void exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Start();
 		void exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Stop();
 		void exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_ErrorFST1();
@@ -2250,7 +2259,6 @@ class FSM : public sc::EventDrivenInterface
 		void exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG();
 		void exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF();
 		void exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode();
-		void exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing();
 		void exseq_Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational();
 		void exseq_Festo2__FSM_LAMP_GREEN_EStop();
 		void exseq_Festo2__FSM_LAMP_GREEN_Error();
@@ -2414,8 +2422,8 @@ class FSM : public sc::EventDrivenInterface
 		void react_FSM_Festo2__Ingress_FSM_Festo2__Ingress_FSM_Festo2__Outer_Ingress__entry_Default();
 		void react_FSM_Festo2__Ingress__entry_Default();
 		void react_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement__entry_Default();
-		void react_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_History();
 		void react_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_Measuring_FSM_Festo2__Outer_HeightMeasurement__entry_Default();
+		void react_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement_HeightMeasurement_FSM_Festo2__Internal_HeightMeasurement_History();
 		void react_FSM_Festo2__HeightMeasurement_FSM_Festo2__HeightMeasurement_FSM_Festo2__Outer_Heightmeasurement__entry_Default();
 		void react_FSM_Festo2__HeightMeasurement__entry_Default();
 		void react_FSM_Festo2__Egress__entry_Default();
@@ -2488,6 +2496,7 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_TransferDiverter_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EjectingEjector_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_EvaluateCounter_react(const sc::integer transitioned_before);
+		sc::integer FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_LBM1Open_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Start_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Stop_react(const sc::integer transitioned_before);
 		sc::integer FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_ErrorFST1_react(const sc::integer transitioned_before);
@@ -2606,7 +2615,6 @@ class FSM : public sc::EventDrivenInterface
 		sc::integer Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_react(const sc::integer transitioned_before);
 		sc::integer Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_OFF_react(const sc::integer transitioned_before);
 		sc::integer Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_ServiceMode_react(const sc::integer transitioned_before);
-		sc::integer Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Distancing_react(const sc::integer transitioned_before);
 		sc::integer Festo2__FSM_LAMP_GREEN_FSM_Festo2__LG_FSM_Festo2__Inner_LampGreen_Operational_react(const sc::integer transitioned_before);
 		sc::integer Festo2__FSM_LAMP_GREEN_EStop_react(const sc::integer transitioned_before);
 		sc::integer Festo2__FSM_LAMP_GREEN_Error_react(const sc::integer transitioned_before);
@@ -2698,9 +2706,6 @@ class FSM : public sc::EventDrivenInterface
 		void runCycle();
 		
 		
-		
-		/*! Observable for event 'FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of default interface scope. */
-		sc::rx::Observable<void> FST_1_INTERNAL_INGRESS_DISTANCE_VALID_observable = sc::rx::Observable<void>{};
 		
 		/*! Indicates event 'FST_1_RAMP_TIMEOUT' of default interface scope is active. */
 		bool FST_1_RAMP_TIMEOUT_raised {false};
@@ -3046,9 +3051,6 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Observable for event 'FST_1_PUK_NOT_DESIRED' of default interface scope. */
 		sc::rx::Observable<void> FST_1_PUK_NOT_DESIRED_observable = sc::rx::Observable<void>{};
-		
-		/*! Observable for event 'FST_1_PUK_ENTRY_EGRESS' of default interface scope. */
-		sc::rx::Observable<void> FST_1_PUK_ENTRY_EGRESS_observable = sc::rx::Observable<void>{};
 		
 		/*! Observable for event 'FST_1_SORTING_MODULE_ACTIVE' of default interface scope. */
 		sc::rx::Observable<void> FST_1_SORTING_MODULE_ACTIVE_observable = sc::rx::Observable<void>{};
@@ -3415,12 +3417,6 @@ class FSM : public sc::EventDrivenInterface
 		
 		/*! Raises the out event 'local_FST_1_ERROR_SYSTEM' of internal scope as a local event. */
 		void raiseLocal_FST_1_ERROR_SYSTEM();
-		
-		/*! Indicates event 'local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of internal scope is active. */
-		bool local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID_raised {false};
-		
-		/*! Raises the out event 'local_FST_1_INTERNAL_INGRESS_DISTANCE_VALID' of internal scope as a local event. */
-		void raiseLocal_FST_1_INTERNAL_INGRESS_DISTANCE_VALID();
 		
 		/*! Indicates event 'local_FST_1_ERROR_INGRESS_MISSING_PUK' of internal scope is active. */
 		bool local_FST_1_ERROR_INGRESS_MISSING_PUK_raised {false};

@@ -45,9 +45,9 @@ FSMController::FSMController(const std::string dispatcherChannelName) {
     fsm = new FSM();
     subscribeToOutEvents();
 
-    PositionTracker* positionTracker = new PositionTracker(fsm);
 
     fsm->enter();
+    PositionTracker* positionTracker = new PositionTracker(fsm);
 
     fsm->setAReferenceHeight(2200);
     fsm->setBReferenceHeight(3050);
@@ -509,18 +509,18 @@ void FSMController::handlePulse(_pulse msg) {
             fsm->setFST_1_currentValue(msgVal);// 2400
             fsm-> raiseHS_1_SAMPLE();
             //Logger::getInstance().log(LogLevel::DEBUG, "received currentValue... HS1: "+ std::to_string(msgVal), "FSMController");
-            //Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLE..."+ std::to_string(msgVal),, "FSMController");
+            // Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLE..."+ std::to_string(msgVal), "FSMController");
             break;
         case PULSE_HS2_SAMPLE:
             fsm-> setFST_2_currentValue(msgVal); 
             fsm->raiseHS_2_SAMPLE();
-            //Logger::getInstance().log(LogLevel::DEBUG, "received currentValue... HS2: "+ std::to_string(msgVal), "FSMController");
-            //Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLE...", "FSMController");
+            // Logger::getInstance().log(LogLevel::DEBUG, "received currentValue... HS2: "+ std::to_string(msgVal), "FSMController");
+            // Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLE...", "FSMController");
             break;
             //TODO need to rename 
         case PULSE_HS1_SAMPLING_DONE:
             fsm-> raiseHS_1_SAMPLING_DONE();
-            averageHeight = fsm->getAverageHeight();
+            averageHeight = fsm->getAverageHeight(); // TODO write to puk
             digit1 = fsm->getDigitpermm();
             Logger::getInstance().log(LogLevel::DEBUG, "received Digit1..."+ std::to_string(digit1), "FSMController");
             Logger::getInstance().log(LogLevel::DEBUG, "received AverageHeight..."+ std::to_string(averageHeight), "FSMController");
@@ -528,7 +528,7 @@ void FSMController::handlePulse(_pulse msg) {
             break; 
         case PULSE_HS2_SAMPLING_DONE:
             fsm-> raiseHS_2_SAMPLING_DONE();
-            averageHeight = fsm->getAverageHeight();
+            averageHeight = fsm->getAverageHeight(); // TODO write to puk
             digit2 = fsm->getDigitpermm2();
             Logger::getInstance().log(LogLevel::DEBUG, "received Digit2..."+ std::to_string(digit2), "FSMController");
             Logger::getInstance().log(LogLevel::DEBUG, "received AverageHeight..."+ std::to_string(averageHeight), "FSMController");

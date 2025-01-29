@@ -1,0 +1,1901 @@
+[2025-01-27 10:50:32.573] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:32.573] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:32.574] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:32.574] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:32.575] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:32.576] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:32.577] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 10:50:32.577] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 10:50:32.899] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:32.899] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:32.900] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:32.900] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 0 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 10:50:32.902] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:32.902] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:32.903] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:32.904] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 819ms Pulse: 1
+[2025-01-27 10:50:32.905] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1638ms Pulse: 2
+[2025-01-27 10:50:32.907] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2554ms Pulse: 3
+[2025-01-27 10:50:32.908] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 10:50:32.909] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 10:50:33.723] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:33.723] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_1_DISTANCE_VALID value: 0
+[2025-01-27 10:50:33.724] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 10:50:34.084] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 10:50:34.543] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_1_PUK_EXPECTED value: 0
+[2025-01-27 10:50:34.597] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:34.597] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:34.598] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:34.598] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:34.600] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 10:50:34.600] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 10:50:34.911] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:34.911] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:34.912] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:34.912] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 10:50:34.913] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:34.914] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:34.914] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:34.915] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 819ms Pulse: 1
+[2025-01-27 10:50:34.916] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1638ms Pulse: 2
+[2025-01-27 10:50:34.917] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2554ms Pulse: 3
+[2025-01-27 10:50:34.918] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 10:50:34.919] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 10:50:34.920] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:34.921] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 79% timeRemaining: 1580ms Pulse: 3
+[2025-01-27 10:50:34.922] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:34.922] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 0% timeRemaining: 2959ms Pulse: 1
+[2025-01-27 10:50:34.923] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 0% timeRemaining: 5920ms Pulse: 2
+[2025-01-27 10:50:34.925] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 0% timeRemaining: 7573ms Pulse: 3
+[2025-01-27 10:50:34.926] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 10:50:34.927] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 10:50:36.007] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 0 PUK Type: UNKNOWN PUK AverageHeight: 18
+[2025-01-27 10:50:36.007] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:36.008] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:36.009] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2850ms Pulse: 4
+[2025-01-27 10:50:36.010] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 3381ms Pulse: 5
+[2025-01-27 10:50:36.011] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 10:50:36.011] [DEBUG]    [PositionTracker.onIsValid] [FST1] HEIGHT_IS_VALID
+[2025-01-27 10:50:36.012] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:36.013] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 645ms Pulse: 4
+[2025-01-27 10:50:36.014] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1210ms Pulse: 5
+[2025-01-27 10:50:36.015] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:36.016] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 37% timeRemaining: 510ms Pulse: 1
+[2025-01-27 10:50:36.017] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 19% timeRemaining: 1323ms Pulse: 2
+[2025-01-27 10:50:36.018] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 14% timeRemaining: 2173ms Pulse: 3
+[2025-01-27 10:50:36.019] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:36.020] [DEBUG]    [FSMController] received Digit1...59
+[2025-01-27 10:50:36.020] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:36.021] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:50:36.022] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 10:50:36.526] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:36.526] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:36.527] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 10:50:36.609] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 10:50:36.659] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPECTED value: 0
+[2025-01-27 10:50:36.972] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:36.973] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:36.974] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:36.974] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:50:37.060] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.060] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:37.061] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.062] [DEBUG]    [PositionTracker.sortingTypeNext] [FST1]SORTING EXPECTED PUK_A -> PUK_B
+[2025-01-27 10:50:37.062] [DEBUG]    [PositionTracker.onIsMetal] [FST1] PUK Passthrough PUK-ID: 0 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:37.064] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 10:50:37.078] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.078] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:37.079] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.079] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:50:37.160] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.161] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:37.161] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.162] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:50:37.224] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPIRED value: 0
+[2025-01-27 10:50:37.268] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.268] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:37.269] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.269] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:50:37.340] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:37.498] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.498] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:37.499] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.499] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:37.500] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 10:50:37.501] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 10:50:37.550] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.550] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:37.551] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.551] [DEBUG]    [PositionTracker] [FST1] PUK between LBM_1 and LBE_1 - PUK-ID: 0 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:37.553] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:37.553] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:37.554] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:37.555] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 737ms Pulse: 7
+[2025-01-27 10:50:37.556] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1475ms Pulse: 8
+[2025-01-27 10:50:37.557] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2018ms Pulse: 9
+[2025-01-27 10:50:37.558] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST1]
+[2025-01-27 10:50:37.559] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 10:50:37.646] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:37.646] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 12% timeRemaining: 2387ms Pulse: 7
+[2025-01-27 10:50:37.647] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 6% timeRemaining: 5117ms Pulse: 8
+[2025-01-27 10:50:37.649] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 4% timeRemaining: 5562ms Pulse: 9
+[2025-01-27 10:50:37.650] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:37.650] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 78% timeRemaining: 1610ms Pulse: 3
+[2025-01-27 10:50:37.652] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 10:50:37.652] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 10:50:37.907] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.907] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:37.908] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.908] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 10:50:37.909] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:37.910] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:37.910] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:37.911] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2983ms Pulse: 1
+[2025-01-27 10:50:37.912] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 5967ms Pulse: 2
+[2025-01-27 10:50:37.913] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 7603ms Pulse: 3
+[2025-01-27 10:50:37.914] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 10:50:37.915] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 10:50:38.702] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 15
+[2025-01-27 10:50:38.702] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:38.703] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:38.704] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2850ms Pulse: 4
+[2025-01-27 10:50:38.705] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 3381ms Pulse: 5
+[2025-01-27 10:50:38.706] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 10:50:38.707] [DEBUG]    [PositionTracker.onIsValid] [FST1] HEIGHT_IS_VALID
+[2025-01-27 10:50:38.708] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:38.708] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 51% timeRemaining: 355ms Pulse: 7
+[2025-01-27 10:50:38.709] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 25% timeRemaining: 1093ms Pulse: 8
+[2025-01-27 10:50:38.710] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 23% timeRemaining: 1551ms Pulse: 9
+[2025-01-27 10:50:38.712] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:38.712] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 645ms Pulse: 4
+[2025-01-27 10:50:38.713] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1210ms Pulse: 5
+[2025-01-27 10:50:38.715] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:38.715] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 27% timeRemaining: 597ms Pulse: 1
+[2025-01-27 10:50:38.716] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 13% timeRemaining: 1413ms Pulse: 2
+[2025-01-27 10:50:38.717] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 10% timeRemaining: 2283ms Pulse: 3
+[2025-01-27 10:50:38.719] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:38.720] [DEBUG]    [FSMController] received Digit1...59
+[2025-01-27 10:50:38.720] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:38.721] [DEBUG]    [FSMController] received AverageHeight...15
+[2025-01-27 10:50:38.721] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 10:50:39.064] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:50:39.064] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:50:39.065] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_DISTANCE_VALID value: 0
+[2025-01-27 10:50:39.065] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:50:39.313] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:39.313] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:39.314] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 10:50:39.358] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:39.510] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 10:50:39.738] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:39.739] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:39.739] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:39.740] [DEBUG]    [PositionTracker.sortingTypeNext] [FST1]SORTING EXPECTED PUK_B -> PUK_C
+[2025-01-27 10:50:39.740] [DEBUG]    [PositionTracker.onIsNotMetal] [FST1] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 15
+[2025-01-27 10:50:39.742] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 10:50:39.802] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPECTED value: 0
+[2025-01-27 10:50:39.924] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPIRED value: 1
+[2025-01-27 10:50:40.125] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:40.125] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:40.126] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:40.127] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:40.128] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:50:40.128] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...0
+[2025-01-27 10:50:40.130] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:40.221] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:40.222] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:40.223] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:40.223] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:40.224] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 10:50:40.224] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 10:50:40.225] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:40.226] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:40.227] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:40.227] [DEBUG]    [PositionTracker] [FST1] PUK between LBM_1 and LBE_1 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 15
+[2025-01-27 10:50:40.228] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.229] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.229] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.230] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 737ms Pulse: 7
+[2025-01-27 10:50:40.231] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1475ms Pulse: 8
+[2025-01-27 10:50:40.232] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2018ms Pulse: 9
+[2025-01-27 10:50:40.233] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST1]
+[2025-01-27 10:50:40.234] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 10:50:40.262] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPIRED value: 0
+[2025-01-27 10:50:40.484] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:40.484] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:40.485] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:40.485] [DEBUG]    [PositionTracker] [FST1&2] PUK between LBE1 and LBF2 - PUK-ID: 0PUK Type: PUK_WITH_HOLE_AND_METALPUK AverageHeight: 18
+[2025-01-27 10:50:40.486] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.487] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.488] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 50ms Pulse: 10
+[2025-01-27 10:50:40.489] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2000ms Pulse: 11
+[2025-01-27 10:50:40.490] [DEBUG]    [PositionTracker.onEgressNewPuk] [FST1]
+[2025-01-27 10:50:40.490] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_BLINKING
+[2025-01-27 10:50:40.491] [TRACE]    [FSMController] received PULSE_LBE_OPEN...0
+[2025-01-27 10:50:40.509] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:40.509] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:40.510] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:40.510] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 10:50:40.511] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.511] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.512] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.513] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 819ms Pulse: 1
+[2025-01-27 10:50:40.514] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1638ms Pulse: 2
+[2025-01-27 10:50:40.515] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2554ms Pulse: 3
+[2025-01-27 10:50:40.516] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 10:50:40.517] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 10:50:40.538] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_2_PUK_EXPECTED value: 0
+[2025-01-27 10:50:40.539] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:40.539] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 41% timeRemaining: 1584ms Pulse: 7
+[2025-01-27 10:50:40.541] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 21% timeRemaining: 4303ms Pulse: 8
+[2025-01-27 10:50:40.542] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 15% timeRemaining: 4921ms Pulse: 9
+[2025-01-27 10:50:40.543] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:40.544] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 82% timeRemaining: 1341ms Pulse: 3
+[2025-01-27 10:50:40.545] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:40.546] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 3% timeRemaining: 2866ms Pulse: 1
+[2025-01-27 10:50:40.547] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 1% timeRemaining: 5850ms Pulse: 2
+[2025-01-27 10:50:40.548] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 1% timeRemaining: 7483ms Pulse: 3
+[2025-01-27 10:50:40.549] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 10:50:40.550] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 10:50:40.958] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...1
+[2025-01-27 10:50:41.513] [DEBUG]    [PositionTracker] [FST2] PUK between LBF_2 and HS_2 - PUK-ID: 0 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:41.514] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:41.515] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:41.515] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1550ms Pulse: 12
+[2025-01-27 10:50:41.516] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2136ms Pulse: 13
+[2025-01-27 10:50:41.518] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST2]
+[2025-01-27 10:50:41.518] [TRACE]    [FSMController] received PULSE_LBF_OPEN...1
+[2025-01-27 10:50:41.584] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 18
+[2025-01-27 10:50:41.584] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:41.585] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:41.585] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2850ms Pulse: 4
+[2025-01-27 10:50:41.586] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 3381ms Pulse: 5
+[2025-01-27 10:50:41.588] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 10:50:41.588] [DEBUG]    [PositionTracker.onIsValid] [FST1] HEIGHT_IS_VALID
+[2025-01-27 10:50:41.589] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:41.590] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 80% timeRemaining: 141ms Pulse: 7
+[2025-01-27 10:50:41.591] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 40% timeRemaining: 873ms Pulse: 8
+[2025-01-27 10:50:41.593] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 33% timeRemaining: 1337ms Pulse: 9
+[2025-01-27 10:50:41.594] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:41.595] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 645ms Pulse: 4
+[2025-01-27 10:50:41.596] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1210ms Pulse: 5
+[2025-01-27 10:50:41.597] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:41.598] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 39% timeRemaining: 497ms Pulse: 1
+[2025-01-27 10:50:41.599] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 19% timeRemaining: 1316ms Pulse: 2
+[2025-01-27 10:50:41.600] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 15% timeRemaining: 2153ms Pulse: 3
+[2025-01-27 10:50:41.601] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:41.602] [DEBUG]    [FSMController] received Digit1...59
+[2025-01-27 10:50:41.602] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:41.603] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:50:41.603] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 10:50:41.731] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:50:41.731] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:50:41.732] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:41.732] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:50:42.095] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:42.095] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:42.096] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 10:50:42.233] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 10:50:42.240] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:42.464] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:42.547] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:42.547] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:42.548] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:42.548] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:50:42.618] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:42.618] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:42.619] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:42.619] [DEBUG]    [PositionTracker.sortingTypeNext] [FST1]SORTING EXPECTED PUK_C -> PUK_A
+[2025-01-27 10:50:42.620] [DEBUG]    [PositionTracker.onIsMetal] [FST1] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:42.621] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 10:50:42.649] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:42.650] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:42.650] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:42.651] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:50:42.715] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:42.715] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:42.716] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:42.716] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:42.717] [TRACE]    [Timer] Timer stopped Progress: 89% Time: 213ms Pulse: 9
+[2025-01-27 10:50:42.718] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:42.719] [TRACE]    [Timer] Timer stopped Progress: 92% Time: 88ms Pulse: 5
+[2025-01-27 10:50:42.720] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:42.721] [TRACE]    [Timer] Timer stopped Progress: 88% Time: 195ms Pulse: 2
+[2025-01-27 10:50:42.722] [TRACE]    [Timer] Timer stopped Progress: 59% Time: 1032ms Pulse: 3
+[2025-01-27 10:50:42.723] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_STOP
+[2025-01-27 10:50:42.723] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...0
+[2025-01-27 10:50:42.724] [TRACE]    [ActuatorController] [Festo1] Motor stop
+[2025-01-27 10:50:42.736] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:42.737] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:42.737] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:42.738] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:42.738] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 10:50:42.739] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:42.739] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 10:50:42.741] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:42.741] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:42.742] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:50:43.066] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPECTED value: 0
+[2025-01-27 10:50:43.493] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:43.494] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 92% timeRemaining: 341ms Pulse: 13
+[2025-01-27 10:50:43.495] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:43.496] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_SLOW
+[2025-01-27 10:50:43.836] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPIRED value: 0
+[2025-01-27 10:50:44.285] [DEBUG]    [PositionTracker.onHSNewPuk] ENTRY HS [FST2]
+[2025-01-27 10:50:44.286] [DEBUG]    [PositionTracker] [FST2] PUK between HS2 and MS2 - PUK-ID: 0 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:44.286] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:44.287] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:44.288] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 1957ms Pulse: 14
+[2025-01-27 10:50:44.289] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2557ms Pulse: 15
+[2025-01-27 10:50:44.290] [DEBUG]    [PositionTracker.onHSNewPuk] [FST2]
+[2025-01-27 10:50:44.291] [DEBUG]    [PositionTracker.onIsValid] [FST2]
+[2025-01-27 10:50:44.292] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:44.292] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 582ms Pulse: 14
+[2025-01-27 10:50:44.293] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1161ms Pulse: 15
+[2025-01-27 10:50:44.295] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:44.295] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:50:44.296] [DEBUG]    [FSMController] received Digit2...53
+[2025-01-27 10:50:44.297] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:50:44.298] [TRACE]    [FSMController] received PULSE_HS2_SAMPLING_DONE...
+[2025-01-27 10:50:44.875] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPECTED value: 0
+[2025-01-27 10:50:45.215] [DEBUG]    [FSMController] received PULSE_MS_TRUE...1
+[2025-01-27 10:50:45.263] [DEBUG]    [PositionTracker.sortingTypeNext] [FST2]SORTING EXPECTED PUK_A -> PUK_B
+[2025-01-27 10:50:45.264] [DEBUG]    [PositionTracker.onIsMetal] [FST2] PUK Passthrough PUK-ID: 0 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:45.265] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:45.266] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 180000ms Pulse: 16
+[2025-01-27 10:50:45.267] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_ACTIVE
+[2025-01-27 10:50:45.268] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...1
+[2025-01-27 10:50:45.455] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPIRED value: 0
+[2025-01-27 10:50:45.487] [DEBUG]    [FSMController] received PULSE_MS_FALSE...1
+[2025-01-27 10:50:45.723] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:45.724] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:45.724] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:45.725] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 695ms Pulse: 17
+[2025-01-27 10:50:45.726] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1390ms Pulse: 19
+[2025-01-27 10:50:45.727] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1968ms Pulse: 18
+[2025-01-27 10:50:45.728] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST2]
+[2025-01-27 10:50:45.729] [TRACE]    [FSMController] received PULSE_LBM_OPEN...1
+[2025-01-27 10:50:46.420] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:50:46.420] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:50:46.421] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_RESTING
+[2025-01-27 10:50:46.421] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:50:46.422] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_DISTANCE_VALID value: 0
+[2025-01-27 10:50:47.116] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_2_PUK_EXPECTED value: 0
+[2025-01-27 10:50:47.485] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:47.486] [TRACE]    [Timer] Timer stopped Progress: 89% Time: 210ms Pulse: 18
+[2025-01-27 10:50:47.487] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:47.487] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_STOP
+[2025-01-27 10:50:47.488] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...1
+[2025-01-27 10:50:48.178] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_ON
+[2025-01-27 10:50:48.179] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:48.180] [TRACE]    [Timer] Timer started Speed: fast Progress: 89% Time: 205ms Pulse: 9
+[2025-01-27 10:50:48.182] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:48.182] [TRACE]    [Timer] Timer started Speed: fast Progress: 92% Time: 85ms Pulse: 5
+[2025-01-27 10:50:48.183] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:48.184] [TRACE]    [Timer] Timer started Speed: fast Progress: 88% Time: 192ms Pulse: 2
+[2025-01-27 10:50:48.185] [TRACE]    [Timer] Timer started Speed: fast Progress: 59% Time: 1031ms Pulse: 3
+[2025-01-27 10:50:48.187] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:48.187] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:48.188] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:48.189] [TRACE]    [Timer] Timer started Speed: fast Progress: 89% Time: 208ms Pulse: 18
+[2025-01-27 10:50:48.190] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:48.190] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:50:48.191] [TRACE]    [FSMController] received PULSE_LBE_OPEN...1
+[2025-01-27 10:50:48.268] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPIRED value: 1
+[2025-01-27 10:50:48.377] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:48.385] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPIRED value: 1
+[2025-01-27 10:50:48.397] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_2_PUK_EXPIRED value: 0
+[2025-01-27 10:50:48.450] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:48.451] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:48.451] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:48.452] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:50:48.570] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:48.571] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:48.572] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:48.572] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 10:50:48.573] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.573] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.574] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.575] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 819ms Pulse: 1
+[2025-01-27 10:50:48.576] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1638ms Pulse: 2
+[2025-01-27 10:50:48.577] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2554ms Pulse: 3
+[2025-01-27 10:50:48.578] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 10:50:48.579] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 10:50:48.712] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:48.713] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:48.714] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:48.714] [DEBUG]    [PositionTracker] [FST1&2] PUK between LBE1 and LBF2 - PUK-ID: 1PUK Type: PUK_WITH_HOLEPUK AverageHeight: 15
+[2025-01-27 10:50:48.715] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.715] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.716] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 50ms Pulse: 10
+[2025-01-27 10:50:48.717] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2000ms Pulse: 11
+[2025-01-27 10:50:48.718] [DEBUG]    [PositionTracker.onEgressNewPuk] [FST1]
+[2025-01-27 10:50:48.719] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_BLINKING
+[2025-01-27 10:50:48.720] [TRACE]    [FSMController] received PULSE_LBE_OPEN...0
+[2025-01-27 10:50:48.746] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:48.747] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:48.747] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:48.748] [DEBUG]    [PositionTracker] [FST1] PUK between LBM_1 and LBE_1 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:48.749] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.750] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.750] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.751] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 737ms Pulse: 7
+[2025-01-27 10:50:48.752] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1475ms Pulse: 8
+[2025-01-27 10:50:48.753] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2018ms Pulse: 9
+[2025-01-27 10:50:48.754] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST1]
+[2025-01-27 10:50:48.755] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 10:50:48.767] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:50:48.844] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:48.844] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 12% timeRemaining: 2376ms Pulse: 7
+[2025-01-27 10:50:48.845] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 6% timeRemaining: 5117ms Pulse: 8
+[2025-01-27 10:50:48.846] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 4% timeRemaining: 5562ms Pulse: 9
+[2025-01-27 10:50:48.848] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:48.848] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 85% timeRemaining: 1073ms Pulse: 3
+[2025-01-27 10:50:48.849] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:48.850] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 33% timeRemaining: 1976ms Pulse: 1
+[2025-01-27 10:50:48.851] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 16% timeRemaining: 4960ms Pulse: 2
+[2025-01-27 10:50:48.852] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 10% timeRemaining: 6768ms Pulse: 3
+[2025-01-27 10:50:48.854] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 10:50:48.854] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 10:50:48.955] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...1
+[2025-01-27 10:50:49.376] [DEBUG]    [PositionTracker] [FST2] PUK between LBF_2 and HS_2 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 15
+[2025-01-27 10:50:49.377] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:49.378] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:49.378] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1550ms Pulse: 12
+[2025-01-27 10:50:49.379] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2136ms Pulse: 13
+[2025-01-27 10:50:49.381] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST2]
+[2025-01-27 10:50:49.381] [TRACE]    [FSMController] received PULSE_LBF_OPEN...1
+[2025-01-27 10:50:49.889] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 18
+[2025-01-27 10:50:49.889] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:49.890] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:49.891] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2850ms Pulse: 4
+[2025-01-27 10:50:49.892] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 3381ms Pulse: 5
+[2025-01-27 10:50:49.893] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 10:50:49.893] [DEBUG]    [PositionTracker.onIsValid] [FST1] HEIGHT_IS_VALID
+[2025-01-27 10:50:49.895] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:49.895] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 51% timeRemaining: 355ms Pulse: 7
+[2025-01-27 10:50:49.896] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 25% timeRemaining: 1093ms Pulse: 8
+[2025-01-27 10:50:49.897] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 22% timeRemaining: 1559ms Pulse: 9
+[2025-01-27 10:50:49.899] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:49.899] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 645ms Pulse: 4
+[2025-01-27 10:50:49.901] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1210ms Pulse: 5
+[2025-01-27 10:50:49.902] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:49.902] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 69% timeRemaining: 253ms Pulse: 1
+[2025-01-27 10:50:49.904] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 34% timeRemaining: 1072ms Pulse: 2
+[2025-01-27 10:50:49.905] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 25% timeRemaining: 1912ms Pulse: 3
+[2025-01-27 10:50:49.906] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:49.907] [DEBUG]    [FSMController] received Digit1...59
+[2025-01-27 10:50:49.907] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:49.908] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:50:49.908] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 10:50:50.156] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:50.156] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:50.157] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 10:50:50.251] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:50:50.251] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:50:50.252] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:50.252] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:50:50.270] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 10:50:50.543] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:50.543] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:50.543] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:50.544] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:50.545] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 10:50:50.545] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:50.546] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 10:50:50.773] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:50.773] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:50.774] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:50.774] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 10:50:50.775] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:50.776] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:50.776] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:50.777] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 819ms Pulse: 1
+[2025-01-27 10:50:50.778] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1638ms Pulse: 2
+[2025-01-27 10:50:50.779] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2554ms Pulse: 3
+[2025-01-27 10:50:50.781] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 10:50:50.781] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 10:50:50.850] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:50.851] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:50.852] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:50.852] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:50:50.922] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:50.922] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:50.923] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:50.923] [DEBUG]    [PositionTracker.sortingTypeNext] [FST1]SORTING EXPECTED PUK_A -> PUK_B
+[2025-01-27 10:50:50.924] [DEBUG]    [PositionTracker.onIsMetal] [FST1] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:50.925] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 10:50:50.929] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:50:50.955] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:50.955] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:50.956] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:50.956] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:50:50.976] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:50.989] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:51.040] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:51.040] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:51.041] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:51.041] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:50:51.111] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPIRED value: 1
+[2025-01-27 10:50:51.147] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:51.147] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:51.148] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:51.148] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:50:51.236] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:51.236] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:51.237] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:51.237] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:51.238] [TRACE]    [Timer] Timer stopped Progress: 89% Time: 219ms Pulse: 9
+[2025-01-27 10:50:51.239] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:51.240] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:51.241] [TRACE]    [Timer] Timer stopped Progress: 77% Time: 576ms Pulse: 3
+[2025-01-27 10:50:51.242] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:51.243] [TRACE]    [Timer] Timer stopped Progress: 56% Time: 355ms Pulse: 1
+[2025-01-27 10:50:51.244] [TRACE]    [Timer] Timer stopped Progress: 28% Time: 1173ms Pulse: 2
+[2025-01-27 10:50:51.245] [TRACE]    [Timer] Timer stopped Progress: 18% Time: 2089ms Pulse: 3
+[2025-01-27 10:50:51.246] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_STOP
+[2025-01-27 10:50:51.246] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...0
+[2025-01-27 10:50:51.247] [TRACE]    [ActuatorController] [Festo1] Motor stop
+[2025-01-27 10:50:51.303] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:51.304] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 90% timeRemaining: 473ms Pulse: 13
+[2025-01-27 10:50:51.305] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:51.306] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:51.306] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_SLOW
+[2025-01-27 10:50:51.778] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPIRED value: 1
+[2025-01-27 10:50:52.128] [DEBUG]    [PositionTracker.onHSNewPuk] ENTRY HS [FST2]
+[2025-01-27 10:50:52.129] [DEBUG]    [PositionTracker] [FST2] PUK between HS2 and MS2 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 15
+[2025-01-27 10:50:52.129] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:52.130] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:52.131] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 1957ms Pulse: 14
+[2025-01-27 10:50:52.132] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2557ms Pulse: 15
+[2025-01-27 10:50:52.133] [DEBUG]    [PositionTracker.onHSNewPuk] [FST2]
+[2025-01-27 10:50:52.134] [DEBUG]    [PositionTracker.onIsValid] [FST2]
+[2025-01-27 10:50:52.134] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:52.135] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 582ms Pulse: 14
+[2025-01-27 10:50:52.136] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1161ms Pulse: 15
+[2025-01-27 10:50:52.137] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:52.138] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:52.139] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:50:52.140] [DEBUG]    [FSMController] received Digit2...53
+[2025-01-27 10:50:52.141] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:50:52.141] [TRACE]    [FSMController] received PULSE_HS2_SAMPLING_DONE...
+[2025-01-27 10:50:52.718] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPECTED value: 1
+[2025-01-27 10:50:53.108] [DEBUG]    [PositionTracker.sortingTypeNext] [FST2]SORTING EXPECTED PUK_B -> PUK_C
+[2025-01-27 10:50:53.109] [DEBUG]    [PositionTracker.onIsNotMetal] [FST2] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 15
+[2025-01-27 10:50:53.110] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:53.111] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 180000ms Pulse: 16
+[2025-01-27 10:50:53.112] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_ACTIVE
+[2025-01-27 10:50:53.113] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...1
+[2025-01-27 10:50:53.297] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPIRED value: 1
+[2025-01-27 10:50:53.573] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:53.574] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:53.574] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:53.575] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 695ms Pulse: 17
+[2025-01-27 10:50:53.576] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1390ms Pulse: 19
+[2025-01-27 10:50:53.577] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1968ms Pulse: 18
+[2025-01-27 10:50:53.578] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST2]
+[2025-01-27 10:50:53.579] [TRACE]    [FSMController] received PULSE_LBM_OPEN...1
+[2025-01-27 10:50:54.271] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:50:54.271] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:50:54.272] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_RESTING
+[2025-01-27 10:50:54.272] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:50:54.273] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_DISTANCE_VALID value: 1
+[2025-01-27 10:50:54.967] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:50:55.330] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:55.330] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:55.331] [TRACE]    [Timer] Timer stopped Progress: 89% Time: 216ms Pulse: 18
+[2025-01-27 10:50:55.332] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:55.332] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_STOP
+[2025-01-27 10:50:55.334] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...1
+[2025-01-27 10:50:56.994] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_ON
+[2025-01-27 10:50:56.995] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:56.996] [TRACE]    [Timer] Timer started Speed: fast Progress: 89% Time: 213ms Pulse: 9
+[2025-01-27 10:50:56.997] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:56.998] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:56.999] [TRACE]    [Timer] Timer started Speed: fast Progress: 77% Time: 570ms Pulse: 3
+[2025-01-27 10:50:57.000] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.000] [TRACE]    [Timer] Timer started Speed: fast Progress: 56% Time: 353ms Pulse: 1
+[2025-01-27 10:50:57.002] [TRACE]    [Timer] Timer started Speed: fast Progress: 28% Time: 1169ms Pulse: 2
+[2025-01-27 10:50:57.003] [TRACE]    [Timer] Timer started Speed: fast Progress: 18% Time: 2083ms Pulse: 3
+[2025-01-27 10:50:57.004] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:57.005] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:57.005] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:57.006] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.007] [TRACE]    [Timer] Timer started Speed: fast Progress: 89% Time: 208ms Pulse: 18
+[2025-01-27 10:50:57.008] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:57.008] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:50:57.009] [TRACE]    [FSMController] received PULSE_LBE_OPEN...1
+[2025-01-27 10:50:57.149] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.149] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 97% timeRemaining: 160ms Pulse: 9
+[2025-01-27 10:50:57.150] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.151] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.152] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 83% timeRemaining: 1222ms Pulse: 3
+[2025-01-27 10:50:57.153] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.154] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 75% timeRemaining: 725ms Pulse: 1
+[2025-01-27 10:50:57.155] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 38% timeRemaining: 3697ms Pulse: 2
+[2025-01-27 10:50:57.156] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 24% timeRemaining: 5724ms Pulse: 3
+[2025-01-27 10:50:57.157] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 10:50:57.158] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 10:50:57.215] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_2_PUK_EXPIRED value: 1
+[2025-01-27 10:50:57.310] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPIRED value: 1
+[2025-01-27 10:50:57.317] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:57.317] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:57.318] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:57.318] [DEBUG]    [PositionTracker] [FST1] PUK between LBM_1 and LBE_1 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:57.319] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.319] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.320] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.321] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2730ms Pulse: 7
+[2025-01-27 10:50:57.322] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 5460ms Pulse: 8
+[2025-01-27 10:50:57.323] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 5837ms Pulse: 9
+[2025-01-27 10:50:57.324] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST1]
+[2025-01-27 10:50:57.325] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 10:50:57.524] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:57.524] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:57.525] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:57.525] [DEBUG]    [PositionTracker] [FST1&2] PUK between LBE1 and LBF2 - PUK-ID: 1PUK Type: PUK_WITH_HOLE_AND_METALPUK AverageHeight: 18
+[2025-01-27 10:50:57.527] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.527] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.528] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 100ms Pulse: 10
+[2025-01-27 10:50:57.529] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 4000ms Pulse: 11
+[2025-01-27 10:50:57.530] [DEBUG]    [PositionTracker.onEgressNewPuk] [FST1]
+[2025-01-27 10:50:57.531] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_BLINKING
+[2025-01-27 10:50:57.532] [TRACE]    [FSMController] received PULSE_LBE_OPEN...0
+[2025-01-27 10:50:57.628] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:50:57.666] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 20
+[2025-01-27 10:50:57.666] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.667] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.667] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2850ms Pulse: 4
+[2025-01-27 10:50:57.668] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 3381ms Pulse: 5
+[2025-01-27 10:50:57.670] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 10:50:57.670] [DEBUG]    [PositionTracker.onIsValid] [FST1] HEIGHT_IS_VALID
+[2025-01-27 10:50:57.671] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.672] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 12% timeRemaining: 641ms Pulse: 7
+[2025-01-27 10:50:57.673] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 6% timeRemaining: 1376ms Pulse: 8
+[2025-01-27 10:50:57.674] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 6% timeRemaining: 1891ms Pulse: 9
+[2025-01-27 10:50:57.675] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.676] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 645ms Pulse: 4
+[2025-01-27 10:50:57.677] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1210ms Pulse: 5
+[2025-01-27 10:50:57.678] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.679] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 93% timeRemaining: 54ms Pulse: 1
+[2025-01-27 10:50:57.680] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 47% timeRemaining: 867ms Pulse: 2
+[2025-01-27 10:50:57.681] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 31% timeRemaining: 1742ms Pulse: 3
+[2025-01-27 10:50:57.682] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:57.683] [DEBUG]    [FSMController] received Digit1...59
+[2025-01-27 10:50:57.683] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:57.684] [DEBUG]    [FSMController] received AverageHeight...20
+[2025-01-27 10:50:57.685] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 10:50:57.733] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:57.733] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:57.734] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 10:50:57.770] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...1
+[2025-01-27 10:50:58.077] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 10:50:58.209] [DEBUG]    [PositionTracker] [FST2] PUK between LBF_2 and HS_2 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:58.209] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:58.210] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:58.211] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1550ms Pulse: 12
+[2025-01-27 10:50:58.212] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2136ms Pulse: 13
+[2025-01-27 10:50:58.213] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST2]
+[2025-01-27 10:50:58.213] [TRACE]    [FSMController] received PULSE_LBF_OPEN...1
+[2025-01-27 10:50:58.313] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:50:58.313] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:50:58.314] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:58.314] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:50:58.321] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:58.547] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:58.637] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:58.637] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:58.638] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:58.638] [DEBUG]    [PositionTracker.sortingTypeNext] [FST1]SORTING EXPECTED PUK_B -> PUK_C
+[2025-01-27 10:50:58.639] [DEBUG]    [PositionTracker.onIsNotMetal] [FST1] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 20
+[2025-01-27 10:50:58.640] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 10:50:58.722] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:58.722] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 78% timeRemaining: 1199ms Pulse: 8
+[2025-01-27 10:50:58.723] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 58% timeRemaining: 2426ms Pulse: 9
+[2025-01-27 10:50:58.724] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:58.725] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 86% timeRemaining: 450ms Pulse: 5
+[2025-01-27 10:50:58.726] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:58.727] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 72% timeRemaining: 2057ms Pulse: 3
+[2025-01-27 10:50:58.728] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 10:50:58.729] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 10:50:59.176] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPIRED value: 1
+[2025-01-27 10:50:59.761] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:50:59.767] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 18
+[2025-01-27 10:50:59.767] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:59.768] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:59.768] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2850ms Pulse: 4
+[2025-01-27 10:50:59.769] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 3381ms Pulse: 5
+[2025-01-27 10:50:59.771] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 10:50:59.771] [DEBUG]    [PositionTracker.onIsValid] [FST1] HEIGHT_IS_VALID
+[2025-01-27 10:50:59.772] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:59.773] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 97% timeRemaining: 34ms Pulse: 8
+[2025-01-27 10:50:59.775] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 76% timeRemaining: 474ms Pulse: 9
+[2025-01-27 10:50:59.776] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:59.776] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:59.777] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 645ms Pulse: 4
+[2025-01-27 10:50:59.778] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1210ms Pulse: 5
+[2025-01-27 10:50:59.779] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:59.780] [DEBUG]    [FSMController] received Digit1...59
+[2025-01-27 10:50:59.781] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:59.781] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:50:59.782] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 10:50:59.799] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:59.799] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:59.800] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:59.800] [DEBUG]    [PositionTracker] [FST1] PUK between LBM_1 and LBE_1 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 20
+[2025-01-27 10:50:59.801] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:59.802] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:59.802] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:59.803] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 737ms Pulse: 7
+[2025-01-27 10:50:59.804] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1475ms Pulse: 8
+[2025-01-27 10:50:59.805] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2018ms Pulse: 9
+[2025-01-27 10:50:59.806] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST1]
+[2025-01-27 10:50:59.807] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 10:50:59.808] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:59.826] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:59.826] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:59.827] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:59.827] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:59.828] [TRACE]    [Timer] Timer stopped Progress: 79% Time: 422ms Pulse: 9
+[2025-01-27 10:50:59.829] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:59.830] [TRACE]    [Timer] Timer stopped Progress: 3% Time: 712ms Pulse: 7
+[2025-01-27 10:50:59.831] [TRACE]    [Timer] Timer stopped Progress: 1% Time: 1449ms Pulse: 8
+[2025-01-27 10:50:59.832] [TRACE]    [Timer] Timer stopped Progress: 1% Time: 1993ms Pulse: 9
+[2025-01-27 10:50:59.832] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:59.833] [TRACE]    [Timer] Timer stopped Progress: 9% Time: 590ms Pulse: 4
+[2025-01-27 10:50:59.834] [TRACE]    [Timer] Timer stopped Progress: 5% Time: 1154ms Pulse: 5
+[2025-01-27 10:50:59.835] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_STOP
+[2025-01-27 10:50:59.836] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...0
+[2025-01-27 10:50:59.837] [TRACE]    [ActuatorController] [Festo1] Motor stop
+[2025-01-27 10:51:00.125] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:00.126] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 89% timeRemaining: 492ms Pulse: 13
+[2025-01-27 10:51:00.127] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:51:00.128] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:00.128] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:51:00.129] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_SLOW
+[2025-01-27 10:51:00.619] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPIRED value: 1
+[2025-01-27 10:51:00.950] [DEBUG]    [PositionTracker.onHSNewPuk] ENTRY HS [FST2]
+[2025-01-27 10:51:00.951] [DEBUG]    [PositionTracker] [FST2] PUK between HS2 and MS2 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:51:00.951] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:00.952] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:00.953] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 1957ms Pulse: 14
+[2025-01-27 10:51:00.954] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2557ms Pulse: 15
+[2025-01-27 10:51:00.955] [DEBUG]    [PositionTracker.onHSNewPuk] [FST2]
+[2025-01-27 10:51:00.956] [DEBUG]    [PositionTracker.onIsValid] [FST2]
+[2025-01-27 10:51:00.956] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:00.957] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 582ms Pulse: 14
+[2025-01-27 10:51:00.958] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1161ms Pulse: 15
+[2025-01-27 10:51:00.959] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:51:00.960] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:00.961] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:51:00.961] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:51:00.962] [DEBUG]    [FSMController] received Digit2...53
+[2025-01-27 10:51:00.963] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:51:00.964] [TRACE]    [FSMController] received PULSE_HS2_SAMPLING_DONE...
+[2025-01-27 10:51:01.540] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPECTED value: 1
+[2025-01-27 10:51:01.881] [DEBUG]    [FSMController] received PULSE_MS_TRUE...1
+[2025-01-27 10:51:01.930] [DEBUG]    [PositionTracker.sortingTypeNext] [FST2]SORTING EXPECTED PUK_C -> PUK_A
+[2025-01-27 10:51:01.930] [DEBUG]    [PositionTracker.onIsMetal] [FST2] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:51:01.931] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:01.932] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 180000ms Pulse: 16
+[2025-01-27 10:51:01.933] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_ACTIVE
+[2025-01-27 10:51:01.934] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...1
+[2025-01-27 10:51:02.119] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPIRED value: 1
+[2025-01-27 10:51:02.153] [DEBUG]    [FSMController] received PULSE_MS_FALSE...1
+[2025-01-27 10:51:02.390] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:02.391] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:02.391] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:02.392] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 695ms Pulse: 17
+[2025-01-27 10:51:02.393] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1390ms Pulse: 19
+[2025-01-27 10:51:02.394] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1968ms Pulse: 18
+[2025-01-27 10:51:02.395] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST2]
+[2025-01-27 10:51:02.396] [TRACE]    [FSMController] received PULSE_LBM_OPEN...1
+[2025-01-27 10:51:03.087] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:51:03.087] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:51:03.088] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_RESTING
+[2025-01-27 10:51:03.088] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:51:03.089] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_DISTANCE_VALID value: 1
+[2025-01-27 10:51:03.783] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:51:04.148] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:51:04.148] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.148] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.150] [TRACE]    [Timer] Timer stopped Progress: 89% Time: 213ms Pulse: 18
+[2025-01-27 10:51:04.150] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:51:04.151] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_STOP
+[2025-01-27 10:51:04.152] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...1
+[2025-01-27 10:51:04.820] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_ON
+[2025-01-27 10:51:04.821] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.822] [TRACE]    [Timer] Timer started Speed: fast Progress: 79% Time: 419ms Pulse: 9
+[2025-01-27 10:51:04.824] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.825] [TRACE]    [Timer] Timer started Speed: fast Progress: 3% Time: 710ms Pulse: 7
+[2025-01-27 10:51:04.826] [TRACE]    [Timer] Timer started Speed: fast Progress: 1% Time: 1446ms Pulse: 8
+[2025-01-27 10:51:04.827] [TRACE]    [Timer] Timer started Speed: fast Progress: 1% Time: 1986ms Pulse: 9
+[2025-01-27 10:51:04.828] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.829] [TRACE]    [Timer] Timer started Speed: fast Progress: 9% Time: 589ms Pulse: 4
+[2025-01-27 10:51:04.830] [TRACE]    [Timer] Timer started Speed: fast Progress: 5% Time: 1153ms Pulse: 5
+[2025-01-27 10:51:04.831] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:51:04.832] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:51:04.832] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:51:04.833] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.834] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.834] [TRACE]    [Timer] Timer started Speed: fast Progress: 89% Time: 208ms Pulse: 18
+[2025-01-27 10:51:04.835] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:51:04.836] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:51:04.837] [TRACE]    [FSMController] received PULSE_LBE_OPEN...1
+[2025-01-27 10:51:05.043] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_2_PUK_EXPIRED value: 1
+[2025-01-27 10:51:05.241] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPIRED value: 1
+[2025-01-27 10:51:05.347] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:05.348] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:51:05.348] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:05.349] [DEBUG]    [PositionTracker] [FST1&2] PUK between LBE1 and LBF2 - PUK-ID: 1PUK Type: PUK_WITH_HOLE_AND_METALPUK AverageHeight: 18
+[2025-01-27 10:51:05.350] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:05.350] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:05.351] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 50ms Pulse: 10
+[2025-01-27 10:51:05.352] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2000ms Pulse: 11
+[2025-01-27 10:51:05.353] [DEBUG]    [PositionTracker.onEgressNewPuk] [FST1]
+[2025-01-27 10:51:05.354] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_BLINKING
+[2025-01-27 10:51:05.355] [TRACE]    [FSMController] received PULSE_LBE_OPEN...0
+[2025-01-27 10:51:05.402] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:51:05.419] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPECTED value: 1
+[2025-01-27 10:51:05.536] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:51:05.536] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:51:05.537] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_DISTANCE_VALID value: 1
+[2025-01-27 10:51:05.537] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:51:05.592] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...1
+[2025-01-27 10:51:05.888] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:05.889] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:51:05.889] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:05.890] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:51:05.960] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:05.960] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:51:05.961] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:05.961] [TRACE]    [Timer] Timer stopped Progress: 98% Time: 22ms Pulse: 5
+[2025-01-27 10:51:05.963] [DEBUG]    [PositionTracker.onIsMetal] [FST1] PUK Eject PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:51:05.964] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:05.965] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 180000ms Pulse: 6
+[2025-01-27 10:51:05.966] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_ACTIVE
+[2025-01-27 10:51:05.967] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 10:51:05.967] [TRACE]    [ActuatorController] 0: Festo 1 SM Active......
+[2025-01-27 10:51:06.003] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:06.003] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:51:06.004] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:06.004] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 10:51:06.038] [DEBUG]    [PositionTracker] [FST2] PUK between LBF_2 and HS_2 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:51:06.039] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:06.039] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:06.040] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1550ms Pulse: 12
+[2025-01-27 10:51:06.041] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2136ms Pulse: 13
+[2025-01-27 10:51:06.042] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST2]
+[2025-01-27 10:51:06.043] [TRACE]    [FSMController] received PULSE_LBF_OPEN...1
+[2025-01-27 10:51:06.044] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:06.044] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:51:06.045] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:06.045] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:51:06.158] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:06.158] [TRACE]    [Decoder] LBR erkannt
+[2025-01-27 10:51:06.159] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:06.159] [TRACE]    [Timer] Motor state unchanged, Progress: 98%
+[2025-01-27 10:51:06.160] [DEBUG]    [PositionTracker]  PUK between HS1 and LBM1 Removed PUK-ID:1PUK TypePUK_WITH_HOLE_AND_METALPUK AverageHeight FST1:18PUK Average Height FST2
+[2025-01-27 10:51:06.161] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:51:06.161] [TRACE]    [FSMController] Sending pulse: PULSE_LY1_ON
+[2025-01-27 10:51:06.162] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:51:06.163] [TRACE]    [FSMController] received PULSE_LBR_INTERRUPTED...0
+[2025-01-27 10:51:06.163] [TRACE]    [ActuatorController] 0: Festo 1 LED Yellow on......
+[2025-01-27 10:51:06.272] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:51:06.363] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:06.363] [TRACE]    [Decoder] LBR erkannt
+[2025-01-27 10:51:06.364] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:06.364] [TRACE]    [FSMController] Sending pulse: PULSE_LY1_OFF
+[2025-01-27 10:51:06.365] [TRACE]    [FSMController] received PULSE_LBR_OPEN...0
+[2025-01-27 10:51:06.365] [TRACE]    [ActuatorController] 0: Festo 1 LED Yellow off...
+[2025-01-27 10:51:06.778] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:06.778] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:51:06.779] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:06.779] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:06.780] [TRACE]    [Timer] Timer stopped Progress: 98% Time: 34ms Pulse: 9
+[2025-01-27 10:51:06.781] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_STOP
+[2025-01-27 10:51:06.782] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...0
+[2025-01-27 10:51:06.782] [TRACE]    [ActuatorController] [Festo1] Motor stop
+[2025-01-27 10:51:07.591] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:51:07.957] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:07.958] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 89% timeRemaining: 492ms Pulse: 13
+[2025-01-27 10:51:07.959] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:51:07.960] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:07.960] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:07.961] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:51:07.962] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_SLOW
+[2025-01-27 10:51:08.451] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPIRED value: 1
+[2025-01-27 10:51:08.782] [DEBUG]    [PositionTracker.onHSNewPuk] ENTRY HS [FST2]
+[2025-01-27 10:51:08.782] [DEBUG]    [PositionTracker] [FST2] PUK between HS2 and MS2 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:51:08.783] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:08.784] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:08.785] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 1957ms Pulse: 14
+[2025-01-27 10:51:08.786] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2557ms Pulse: 15
+[2025-01-27 10:51:08.787] [DEBUG]    [PositionTracker.onHSNewPuk] [FST2]
+[2025-01-27 10:51:08.788] [DEBUG]    [PositionTracker.onIsValid] [FST2]
+[2025-01-27 10:51:08.788] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:08.789] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 582ms Pulse: 14
+[2025-01-27 10:51:08.790] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1161ms Pulse: 15
+[2025-01-27 10:51:08.791] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:51:08.792] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:08.792] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:08.793] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:51:08.794] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:51:08.795] [DEBUG]    [FSMController] received Digit2...53
+[2025-01-27 10:51:08.795] [DEBUG]    [FSMController] received AverageHeight...18[2025-01-27 10:50:32.573] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:32.573] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:32.574] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:32.574] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:32.575] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:32.576] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:32.577] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 10:50:32.577] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 10:50:32.899] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:32.899] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:32.900] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:32.900] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 0 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 10:50:32.902] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:32.902] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:32.903] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:32.904] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 819ms Pulse: 1
+[2025-01-27 10:50:32.905] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1638ms Pulse: 2
+[2025-01-27 10:50:32.907] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2554ms Pulse: 3
+[2025-01-27 10:50:32.908] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 10:50:32.909] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 10:50:33.723] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:33.723] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_1_DISTANCE_VALID value: 0
+[2025-01-27 10:50:33.724] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 10:50:34.084] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 10:50:34.543] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_1_PUK_EXPECTED value: 0
+[2025-01-27 10:50:34.597] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:34.597] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:34.598] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:34.598] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:34.600] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 10:50:34.600] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 10:50:34.911] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:34.911] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:34.912] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:34.912] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 10:50:34.913] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:34.914] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:34.914] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:34.915] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 819ms Pulse: 1
+[2025-01-27 10:50:34.916] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1638ms Pulse: 2
+[2025-01-27 10:50:34.917] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2554ms Pulse: 3
+[2025-01-27 10:50:34.918] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 10:50:34.919] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 10:50:34.920] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:34.921] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 79% timeRemaining: 1580ms Pulse: 3
+[2025-01-27 10:50:34.922] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:34.922] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 0% timeRemaining: 2959ms Pulse: 1
+[2025-01-27 10:50:34.923] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 0% timeRemaining: 5920ms Pulse: 2
+[2025-01-27 10:50:34.925] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 0% timeRemaining: 7573ms Pulse: 3
+[2025-01-27 10:50:34.926] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 10:50:34.927] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 10:50:36.007] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 0 PUK Type: UNKNOWN PUK AverageHeight: 18
+[2025-01-27 10:50:36.007] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:36.008] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:36.009] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2850ms Pulse: 4
+[2025-01-27 10:50:36.010] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 3381ms Pulse: 5
+[2025-01-27 10:50:36.011] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 10:50:36.011] [DEBUG]    [PositionTracker.onIsValid] [FST1] HEIGHT_IS_VALID
+[2025-01-27 10:50:36.012] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:36.013] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 645ms Pulse: 4
+[2025-01-27 10:50:36.014] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1210ms Pulse: 5
+[2025-01-27 10:50:36.015] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:36.016] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 37% timeRemaining: 510ms Pulse: 1
+[2025-01-27 10:50:36.017] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 19% timeRemaining: 1323ms Pulse: 2
+[2025-01-27 10:50:36.018] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 14% timeRemaining: 2173ms Pulse: 3
+[2025-01-27 10:50:36.019] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:36.020] [DEBUG]    [FSMController] received Digit1...59
+[2025-01-27 10:50:36.020] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:36.021] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:50:36.022] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 10:50:36.526] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:36.526] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:36.527] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 10:50:36.609] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 10:50:36.659] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPECTED value: 0
+[2025-01-27 10:50:36.972] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:36.973] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:36.974] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:36.974] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:50:37.060] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.060] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:37.061] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.062] [DEBUG]    [PositionTracker.sortingTypeNext] [FST1]SORTING EXPECTED PUK_A -> PUK_B
+[2025-01-27 10:50:37.062] [DEBUG]    [PositionTracker.onIsMetal] [FST1] PUK Passthrough PUK-ID: 0 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:37.064] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 10:50:37.078] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.078] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:37.079] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.079] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:50:37.160] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.161] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:37.161] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.162] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:50:37.224] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPIRED value: 0
+[2025-01-27 10:50:37.268] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.268] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:37.269] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.269] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:50:37.340] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:37.498] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.498] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:37.499] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.499] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:37.500] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 10:50:37.501] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 10:50:37.550] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.550] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:37.551] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.551] [DEBUG]    [PositionTracker] [FST1] PUK between LBM_1 and LBE_1 - PUK-ID: 0 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:37.553] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:37.553] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:37.554] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:37.555] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 737ms Pulse: 7
+[2025-01-27 10:50:37.556] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1475ms Pulse: 8
+[2025-01-27 10:50:37.557] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2018ms Pulse: 9
+[2025-01-27 10:50:37.558] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST1]
+[2025-01-27 10:50:37.559] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 10:50:37.646] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:37.646] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 12% timeRemaining: 2387ms Pulse: 7
+[2025-01-27 10:50:37.647] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 6% timeRemaining: 5117ms Pulse: 8
+[2025-01-27 10:50:37.649] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 4% timeRemaining: 5562ms Pulse: 9
+[2025-01-27 10:50:37.650] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:37.650] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 78% timeRemaining: 1610ms Pulse: 3
+[2025-01-27 10:50:37.652] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 10:50:37.652] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 10:50:37.907] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:37.907] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:37.908] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:37.908] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 10:50:37.909] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:37.910] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:37.910] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:37.911] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2983ms Pulse: 1
+[2025-01-27 10:50:37.912] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 5967ms Pulse: 2
+[2025-01-27 10:50:37.913] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 7603ms Pulse: 3
+[2025-01-27 10:50:37.914] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 10:50:37.915] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 10:50:38.702] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 15
+[2025-01-27 10:50:38.702] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:38.703] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:38.704] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2850ms Pulse: 4
+[2025-01-27 10:50:38.705] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 3381ms Pulse: 5
+[2025-01-27 10:50:38.706] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 10:50:38.707] [DEBUG]    [PositionTracker.onIsValid] [FST1] HEIGHT_IS_VALID
+[2025-01-27 10:50:38.708] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:38.708] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 51% timeRemaining: 355ms Pulse: 7
+[2025-01-27 10:50:38.709] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 25% timeRemaining: 1093ms Pulse: 8
+[2025-01-27 10:50:38.710] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 23% timeRemaining: 1551ms Pulse: 9
+[2025-01-27 10:50:38.712] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:38.712] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 645ms Pulse: 4
+[2025-01-27 10:50:38.713] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1210ms Pulse: 5
+[2025-01-27 10:50:38.715] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:38.715] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 27% timeRemaining: 597ms Pulse: 1
+[2025-01-27 10:50:38.716] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 13% timeRemaining: 1413ms Pulse: 2
+[2025-01-27 10:50:38.717] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 10% timeRemaining: 2283ms Pulse: 3
+[2025-01-27 10:50:38.719] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:38.720] [DEBUG]    [FSMController] received Digit1...59
+[2025-01-27 10:50:38.720] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:38.721] [DEBUG]    [FSMController] received AverageHeight...15
+[2025-01-27 10:50:38.721] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 10:50:39.064] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:50:39.064] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:50:39.065] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_DISTANCE_VALID value: 0
+[2025-01-27 10:50:39.065] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:50:39.313] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:39.313] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:39.314] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 10:50:39.358] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:39.510] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 10:50:39.738] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:39.739] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:39.739] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:39.740] [DEBUG]    [PositionTracker.sortingTypeNext] [FST1]SORTING EXPECTED PUK_B -> PUK_C
+[2025-01-27 10:50:39.740] [DEBUG]    [PositionTracker.onIsNotMetal] [FST1] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 15
+[2025-01-27 10:50:39.742] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 10:50:39.802] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPECTED value: 0
+[2025-01-27 10:50:39.924] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPIRED value: 1
+[2025-01-27 10:50:40.125] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:40.125] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:40.126] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:40.127] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:40.128] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:50:40.128] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...0
+[2025-01-27 10:50:40.130] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:40.221] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:40.222] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:40.223] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:40.223] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:40.224] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 10:50:40.224] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 10:50:40.225] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:40.226] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:40.227] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:40.227] [DEBUG]    [PositionTracker] [FST1] PUK between LBM_1 and LBE_1 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 15
+[2025-01-27 10:50:40.228] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.229] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.229] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.230] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 737ms Pulse: 7
+[2025-01-27 10:50:40.231] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1475ms Pulse: 8
+[2025-01-27 10:50:40.232] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2018ms Pulse: 9
+[2025-01-27 10:50:40.233] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST1]
+[2025-01-27 10:50:40.234] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 10:50:40.262] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPIRED value: 0
+[2025-01-27 10:50:40.484] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:40.484] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:40.485] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:40.485] [DEBUG]    [PositionTracker] [FST1&2] PUK between LBE1 and LBF2 - PUK-ID: 0PUK Type: PUK_WITH_HOLE_AND_METALPUK AverageHeight: 18
+[2025-01-27 10:50:40.486] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.487] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.488] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 50ms Pulse: 10
+[2025-01-27 10:50:40.489] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2000ms Pulse: 11
+[2025-01-27 10:50:40.490] [DEBUG]    [PositionTracker.onEgressNewPuk] [FST1]
+[2025-01-27 10:50:40.490] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_BLINKING
+[2025-01-27 10:50:40.491] [TRACE]    [FSMController] received PULSE_LBE_OPEN...0
+[2025-01-27 10:50:40.509] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:40.509] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:40.510] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:40.510] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 10:50:40.511] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.511] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.512] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:40.513] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 819ms Pulse: 1
+[2025-01-27 10:50:40.514] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1638ms Pulse: 2
+[2025-01-27 10:50:40.515] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2554ms Pulse: 3
+[2025-01-27 10:50:40.516] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 10:50:40.517] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 10:50:40.538] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_2_PUK_EXPECTED value: 0
+[2025-01-27 10:50:40.539] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:40.539] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 41% timeRemaining: 1584ms Pulse: 7
+[2025-01-27 10:50:40.541] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 21% timeRemaining: 4303ms Pulse: 8
+[2025-01-27 10:50:40.542] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 15% timeRemaining: 4921ms Pulse: 9
+[2025-01-27 10:50:40.543] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:40.544] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 82% timeRemaining: 1341ms Pulse: 3
+[2025-01-27 10:50:40.545] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:40.546] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 3% timeRemaining: 2866ms Pulse: 1
+[2025-01-27 10:50:40.547] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 1% timeRemaining: 5850ms Pulse: 2
+[2025-01-27 10:50:40.548] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 1% timeRemaining: 7483ms Pulse: 3
+[2025-01-27 10:50:40.549] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 10:50:40.550] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 10:50:40.958] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...1
+[2025-01-27 10:50:41.513] [DEBUG]    [PositionTracker] [FST2] PUK between LBF_2 and HS_2 - PUK-ID: 0 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:41.514] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:41.515] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:41.515] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1550ms Pulse: 12
+[2025-01-27 10:50:41.516] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2136ms Pulse: 13
+[2025-01-27 10:50:41.518] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST2]
+[2025-01-27 10:50:41.518] [TRACE]    [FSMController] received PULSE_LBF_OPEN...1
+[2025-01-27 10:50:41.584] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 18
+[2025-01-27 10:50:41.584] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:41.585] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:41.585] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2850ms Pulse: 4
+[2025-01-27 10:50:41.586] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 3381ms Pulse: 5
+[2025-01-27 10:50:41.588] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 10:50:41.588] [DEBUG]    [PositionTracker.onIsValid] [FST1] HEIGHT_IS_VALID
+[2025-01-27 10:50:41.589] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:41.590] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 80% timeRemaining: 141ms Pulse: 7
+[2025-01-27 10:50:41.591] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 40% timeRemaining: 873ms Pulse: 8
+[2025-01-27 10:50:41.593] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 33% timeRemaining: 1337ms Pulse: 9
+[2025-01-27 10:50:41.594] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:41.595] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 645ms Pulse: 4
+[2025-01-27 10:50:41.596] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1210ms Pulse: 5
+[2025-01-27 10:50:41.597] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:41.598] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 39% timeRemaining: 497ms Pulse: 1
+[2025-01-27 10:50:41.599] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 19% timeRemaining: 1316ms Pulse: 2
+[2025-01-27 10:50:41.600] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 15% timeRemaining: 2153ms Pulse: 3
+[2025-01-27 10:50:41.601] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:41.602] [DEBUG]    [FSMController] received Digit1...59
+[2025-01-27 10:50:41.602] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:41.603] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:50:41.603] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 10:50:41.731] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:50:41.731] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:50:41.732] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:41.732] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:50:42.095] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:42.095] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:42.096] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 10:50:42.233] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 10:50:42.240] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:42.464] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:42.547] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:42.547] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:42.548] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:42.548] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:50:42.618] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:42.618] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:42.619] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:42.619] [DEBUG]    [PositionTracker.sortingTypeNext] [FST1]SORTING EXPECTED PUK_C -> PUK_A
+[2025-01-27 10:50:42.620] [DEBUG]    [PositionTracker.onIsMetal] [FST1] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:42.621] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 10:50:42.649] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:42.650] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:42.650] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:42.651] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:50:42.715] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:42.715] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:42.716] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:42.716] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:42.717] [TRACE]    [Timer] Timer stopped Progress: 89% Time: 213ms Pulse: 9
+[2025-01-27 10:50:42.718] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:42.719] [TRACE]    [Timer] Timer stopped Progress: 92% Time: 88ms Pulse: 5
+[2025-01-27 10:50:42.720] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:42.721] [TRACE]    [Timer] Timer stopped Progress: 88% Time: 195ms Pulse: 2
+[2025-01-27 10:50:42.722] [TRACE]    [Timer] Timer stopped Progress: 59% Time: 1032ms Pulse: 3
+[2025-01-27 10:50:42.723] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_STOP
+[2025-01-27 10:50:42.723] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...0
+[2025-01-27 10:50:42.724] [TRACE]    [ActuatorController] [Festo1] Motor stop
+[2025-01-27 10:50:42.736] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:42.737] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:42.737] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:42.738] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:42.738] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 10:50:42.739] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:42.739] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 10:50:42.741] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:42.741] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:42.742] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:50:43.066] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPECTED value: 0
+[2025-01-27 10:50:43.493] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:43.494] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 92% timeRemaining: 341ms Pulse: 13
+[2025-01-27 10:50:43.495] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:43.496] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_SLOW
+[2025-01-27 10:50:43.836] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPIRED value: 0
+[2025-01-27 10:50:44.285] [DEBUG]    [PositionTracker.onHSNewPuk] ENTRY HS [FST2]
+[2025-01-27 10:50:44.286] [DEBUG]    [PositionTracker] [FST2] PUK between HS2 and MS2 - PUK-ID: 0 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:44.286] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:44.287] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:44.288] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 1957ms Pulse: 14
+[2025-01-27 10:50:44.289] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2557ms Pulse: 15
+[2025-01-27 10:50:44.290] [DEBUG]    [PositionTracker.onHSNewPuk] [FST2]
+[2025-01-27 10:50:44.291] [DEBUG]    [PositionTracker.onIsValid] [FST2]
+[2025-01-27 10:50:44.292] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:44.292] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 582ms Pulse: 14
+[2025-01-27 10:50:44.293] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1161ms Pulse: 15
+[2025-01-27 10:50:44.295] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:44.295] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:50:44.296] [DEBUG]    [FSMController] received Digit2...53
+[2025-01-27 10:50:44.297] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:50:44.298] [TRACE]    [FSMController] received PULSE_HS2_SAMPLING_DONE...
+[2025-01-27 10:50:44.875] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPECTED value: 0
+[2025-01-27 10:50:45.215] [DEBUG]    [FSMController] received PULSE_MS_TRUE...1
+[2025-01-27 10:50:45.263] [DEBUG]    [PositionTracker.sortingTypeNext] [FST2]SORTING EXPECTED PUK_A -> PUK_B
+[2025-01-27 10:50:45.264] [DEBUG]    [PositionTracker.onIsMetal] [FST2] PUK Passthrough PUK-ID: 0 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:45.265] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:45.266] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 180000ms Pulse: 16
+[2025-01-27 10:50:45.267] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_ACTIVE
+[2025-01-27 10:50:45.268] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...1
+[2025-01-27 10:50:45.455] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPIRED value: 0
+[2025-01-27 10:50:45.487] [DEBUG]    [FSMController] received PULSE_MS_FALSE...1
+[2025-01-27 10:50:45.723] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:45.724] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:45.724] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:45.725] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 695ms Pulse: 17
+[2025-01-27 10:50:45.726] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1390ms Pulse: 19
+[2025-01-27 10:50:45.727] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1968ms Pulse: 18
+[2025-01-27 10:50:45.728] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST2]
+[2025-01-27 10:50:45.729] [TRACE]    [FSMController] received PULSE_LBM_OPEN...1
+[2025-01-27 10:50:46.420] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:50:46.420] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:50:46.421] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_RESTING
+[2025-01-27 10:50:46.421] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:50:46.422] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_DISTANCE_VALID value: 0
+[2025-01-27 10:50:47.116] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_2_PUK_EXPECTED value: 0
+[2025-01-27 10:50:47.485] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:47.486] [TRACE]    [Timer] Timer stopped Progress: 89% Time: 210ms Pulse: 18
+[2025-01-27 10:50:47.487] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:47.487] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_STOP
+[2025-01-27 10:50:47.488] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...1
+[2025-01-27 10:50:48.178] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_ON
+[2025-01-27 10:50:48.179] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:48.180] [TRACE]    [Timer] Timer started Speed: fast Progress: 89% Time: 205ms Pulse: 9
+[2025-01-27 10:50:48.182] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:48.182] [TRACE]    [Timer] Timer started Speed: fast Progress: 92% Time: 85ms Pulse: 5
+[2025-01-27 10:50:48.183] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:48.184] [TRACE]    [Timer] Timer started Speed: fast Progress: 88% Time: 192ms Pulse: 2
+[2025-01-27 10:50:48.185] [TRACE]    [Timer] Timer started Speed: fast Progress: 59% Time: 1031ms Pulse: 3
+[2025-01-27 10:50:48.187] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:48.187] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:48.188] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:48.189] [TRACE]    [Timer] Timer started Speed: fast Progress: 89% Time: 208ms Pulse: 18
+[2025-01-27 10:50:48.190] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:48.190] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:50:48.191] [TRACE]    [FSMController] received PULSE_LBE_OPEN...1
+[2025-01-27 10:50:48.268] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPIRED value: 1
+[2025-01-27 10:50:48.377] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:48.385] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPIRED value: 1
+[2025-01-27 10:50:48.397] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_2_PUK_EXPIRED value: 0
+[2025-01-27 10:50:48.450] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:48.451] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:48.451] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:48.452] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:50:48.570] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:48.571] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:48.572] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:48.572] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 10:50:48.573] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.573] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.574] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.575] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 819ms Pulse: 1
+[2025-01-27 10:50:48.576] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1638ms Pulse: 2
+[2025-01-27 10:50:48.577] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2554ms Pulse: 3
+[2025-01-27 10:50:48.578] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 10:50:48.579] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 10:50:48.712] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:48.713] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:48.714] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:48.714] [DEBUG]    [PositionTracker] [FST1&2] PUK between LBE1 and LBF2 - PUK-ID: 1PUK Type: PUK_WITH_HOLEPUK AverageHeight: 15
+[2025-01-27 10:50:48.715] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.715] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.716] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 50ms Pulse: 10
+[2025-01-27 10:50:48.717] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2000ms Pulse: 11
+[2025-01-27 10:50:48.718] [DEBUG]    [PositionTracker.onEgressNewPuk] [FST1]
+[2025-01-27 10:50:48.719] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_BLINKING
+[2025-01-27 10:50:48.720] [TRACE]    [FSMController] received PULSE_LBE_OPEN...0
+[2025-01-27 10:50:48.746] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:48.747] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:48.747] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:48.748] [DEBUG]    [PositionTracker] [FST1] PUK between LBM_1 and LBE_1 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:48.749] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.750] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.750] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:48.751] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 737ms Pulse: 7
+[2025-01-27 10:50:48.752] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1475ms Pulse: 8
+[2025-01-27 10:50:48.753] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2018ms Pulse: 9
+[2025-01-27 10:50:48.754] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST1]
+[2025-01-27 10:50:48.755] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 10:50:48.767] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:50:48.844] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:48.844] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 12% timeRemaining: 2376ms Pulse: 7
+[2025-01-27 10:50:48.845] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 6% timeRemaining: 5117ms Pulse: 8
+[2025-01-27 10:50:48.846] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 4% timeRemaining: 5562ms Pulse: 9
+[2025-01-27 10:50:48.848] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:48.848] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 85% timeRemaining: 1073ms Pulse: 3
+[2025-01-27 10:50:48.849] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:48.850] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 33% timeRemaining: 1976ms Pulse: 1
+[2025-01-27 10:50:48.851] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 16% timeRemaining: 4960ms Pulse: 2
+[2025-01-27 10:50:48.852] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 10% timeRemaining: 6768ms Pulse: 3
+[2025-01-27 10:50:48.854] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 10:50:48.854] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 10:50:48.955] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...1
+[2025-01-27 10:50:49.376] [DEBUG]    [PositionTracker] [FST2] PUK between LBF_2 and HS_2 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 15
+[2025-01-27 10:50:49.377] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:49.378] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:49.378] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1550ms Pulse: 12
+[2025-01-27 10:50:49.379] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2136ms Pulse: 13
+[2025-01-27 10:50:49.381] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST2]
+[2025-01-27 10:50:49.381] [TRACE]    [FSMController] received PULSE_LBF_OPEN...1
+[2025-01-27 10:50:49.889] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 18
+[2025-01-27 10:50:49.889] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:49.890] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:49.891] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2850ms Pulse: 4
+[2025-01-27 10:50:49.892] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 3381ms Pulse: 5
+[2025-01-27 10:50:49.893] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 10:50:49.893] [DEBUG]    [PositionTracker.onIsValid] [FST1] HEIGHT_IS_VALID
+[2025-01-27 10:50:49.895] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:49.895] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 51% timeRemaining: 355ms Pulse: 7
+[2025-01-27 10:50:49.896] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 25% timeRemaining: 1093ms Pulse: 8
+[2025-01-27 10:50:49.897] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 22% timeRemaining: 1559ms Pulse: 9
+[2025-01-27 10:50:49.899] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:49.899] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 645ms Pulse: 4
+[2025-01-27 10:50:49.901] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1210ms Pulse: 5
+[2025-01-27 10:50:49.902] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:49.902] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 69% timeRemaining: 253ms Pulse: 1
+[2025-01-27 10:50:49.904] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 34% timeRemaining: 1072ms Pulse: 2
+[2025-01-27 10:50:49.905] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 25% timeRemaining: 1912ms Pulse: 3
+[2025-01-27 10:50:49.906] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:49.907] [DEBUG]    [FSMController] received Digit1...59
+[2025-01-27 10:50:49.907] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:49.908] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:50:49.908] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 10:50:50.156] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:50.156] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:50.157] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 10:50:50.251] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:50:50.251] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:50:50.252] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:50.252] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:50:50.270] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 10:50:50.543] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:50.543] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:50.543] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:50.544] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:50.545] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...0
+[2025-01-27 10:50:50.545] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:50.546] [TRACE]    [ActuatorController] 0: Festo 1 LED Green blinking(500Hz)...
+[2025-01-27 10:50:50.773] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:50.773] [TRACE]    [Decoder] LBF erkannt
+[2025-01-27 10:50:50.774] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:50.774] [DEBUG]    [ PositionTracker] [FST1] PUK between LBF1 and HS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 0
+[2025-01-27 10:50:50.775] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:50.776] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:50.776] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:50.777] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 819ms Pulse: 1
+[2025-01-27 10:50:50.778] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1638ms Pulse: 2
+[2025-01-27 10:50:50.779] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2554ms Pulse: 3
+[2025-01-27 10:50:50.781] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST1]
+[2025-01-27 10:50:50.781] [TRACE]    [FSMController] received PULSE_LBF_OPEN...0
+[2025-01-27 10:50:50.850] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:50.851] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:50.852] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:50.852] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:50:50.922] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:50.922] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:50.923] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:50.923] [DEBUG]    [PositionTracker.sortingTypeNext] [FST1]SORTING EXPECTED PUK_A -> PUK_B
+[2025-01-27 10:50:50.924] [DEBUG]    [PositionTracker.onIsMetal] [FST1] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:50.925] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 10:50:50.929] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:50:50.955] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:50.955] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:50.956] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:50.956] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:50:50.976] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:50.989] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:51.040] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:51.040] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:51.041] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:51.041] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:50:51.111] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPIRED value: 1
+[2025-01-27 10:50:51.147] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:51.147] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:50:51.148] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:51.148] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:50:51.236] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:51.236] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:51.237] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:51.237] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:51.238] [TRACE]    [Timer] Timer stopped Progress: 89% Time: 219ms Pulse: 9
+[2025-01-27 10:50:51.239] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:51.240] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:51.241] [TRACE]    [Timer] Timer stopped Progress: 77% Time: 576ms Pulse: 3
+[2025-01-27 10:50:51.242] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:51.243] [TRACE]    [Timer] Timer stopped Progress: 56% Time: 355ms Pulse: 1
+[2025-01-27 10:50:51.244] [TRACE]    [Timer] Timer stopped Progress: 28% Time: 1173ms Pulse: 2
+[2025-01-27 10:50:51.245] [TRACE]    [Timer] Timer stopped Progress: 18% Time: 2089ms Pulse: 3
+[2025-01-27 10:50:51.246] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_STOP
+[2025-01-27 10:50:51.246] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...0
+[2025-01-27 10:50:51.247] [TRACE]    [ActuatorController] [Festo1] Motor stop
+[2025-01-27 10:50:51.303] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:51.304] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 90% timeRemaining: 473ms Pulse: 13
+[2025-01-27 10:50:51.305] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:51.306] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:51.306] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_SLOW
+[2025-01-27 10:50:51.778] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPIRED value: 1
+[2025-01-27 10:50:52.128] [DEBUG]    [PositionTracker.onHSNewPuk] ENTRY HS [FST2]
+[2025-01-27 10:50:52.129] [DEBUG]    [PositionTracker] [FST2] PUK between HS2 and MS2 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 15
+[2025-01-27 10:50:52.129] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:52.130] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:52.131] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 1957ms Pulse: 14
+[2025-01-27 10:50:52.132] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2557ms Pulse: 15
+[2025-01-27 10:50:52.133] [DEBUG]    [PositionTracker.onHSNewPuk] [FST2]
+[2025-01-27 10:50:52.134] [DEBUG]    [PositionTracker.onIsValid] [FST2]
+[2025-01-27 10:50:52.134] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:52.135] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 582ms Pulse: 14
+[2025-01-27 10:50:52.136] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1161ms Pulse: 15
+[2025-01-27 10:50:52.137] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:52.138] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:52.139] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:50:52.140] [DEBUG]    [FSMController] received Digit2...53
+[2025-01-27 10:50:52.141] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:50:52.141] [TRACE]    [FSMController] received PULSE_HS2_SAMPLING_DONE...
+[2025-01-27 10:50:52.718] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPECTED value: 1
+[2025-01-27 10:50:53.108] [DEBUG]    [PositionTracker.sortingTypeNext] [FST2]SORTING EXPECTED PUK_B -> PUK_C
+[2025-01-27 10:50:53.109] [DEBUG]    [PositionTracker.onIsNotMetal] [FST2] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 15
+[2025-01-27 10:50:53.110] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:53.111] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 180000ms Pulse: 16
+[2025-01-27 10:50:53.112] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_ACTIVE
+[2025-01-27 10:50:53.113] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...1
+[2025-01-27 10:50:53.297] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPIRED value: 1
+[2025-01-27 10:50:53.573] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:53.574] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:53.574] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:53.575] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 695ms Pulse: 17
+[2025-01-27 10:50:53.576] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1390ms Pulse: 19
+[2025-01-27 10:50:53.577] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1968ms Pulse: 18
+[2025-01-27 10:50:53.578] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST2]
+[2025-01-27 10:50:53.579] [TRACE]    [FSMController] received PULSE_LBM_OPEN...1
+[2025-01-27 10:50:54.271] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:50:54.271] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:50:54.272] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_RESTING
+[2025-01-27 10:50:54.272] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:50:54.273] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_DISTANCE_VALID value: 1
+[2025-01-27 10:50:54.967] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:50:55.330] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:55.330] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:55.331] [TRACE]    [Timer] Timer stopped Progress: 89% Time: 216ms Pulse: 18
+[2025-01-27 10:50:55.332] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:55.332] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_STOP
+[2025-01-27 10:50:55.334] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...1
+[2025-01-27 10:50:56.994] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_ON
+[2025-01-27 10:50:56.995] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:56.996] [TRACE]    [Timer] Timer started Speed: fast Progress: 89% Time: 213ms Pulse: 9
+[2025-01-27 10:50:56.997] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:56.998] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:56.999] [TRACE]    [Timer] Timer started Speed: fast Progress: 77% Time: 570ms Pulse: 3
+[2025-01-27 10:50:57.000] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.000] [TRACE]    [Timer] Timer started Speed: fast Progress: 56% Time: 353ms Pulse: 1
+[2025-01-27 10:50:57.002] [TRACE]    [Timer] Timer started Speed: fast Progress: 28% Time: 1169ms Pulse: 2
+[2025-01-27 10:50:57.003] [TRACE]    [Timer] Timer started Speed: fast Progress: 18% Time: 2083ms Pulse: 3
+[2025-01-27 10:50:57.004] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:57.005] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:50:57.005] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:57.006] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.007] [TRACE]    [Timer] Timer started Speed: fast Progress: 89% Time: 208ms Pulse: 18
+[2025-01-27 10:50:57.008] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:50:57.008] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:50:57.009] [TRACE]    [FSMController] received PULSE_LBE_OPEN...1
+[2025-01-27 10:50:57.149] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.149] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 97% timeRemaining: 160ms Pulse: 9
+[2025-01-27 10:50:57.150] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.151] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.152] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 83% timeRemaining: 1222ms Pulse: 3
+[2025-01-27 10:50:57.153] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.154] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 75% timeRemaining: 725ms Pulse: 1
+[2025-01-27 10:50:57.155] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 38% timeRemaining: 3697ms Pulse: 2
+[2025-01-27 10:50:57.156] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 24% timeRemaining: 5724ms Pulse: 3
+[2025-01-27 10:50:57.157] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 10:50:57.158] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 10:50:57.215] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_2_PUK_EXPIRED value: 1
+[2025-01-27 10:50:57.310] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPIRED value: 1
+[2025-01-27 10:50:57.317] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:57.317] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:57.318] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:57.318] [DEBUG]    [PositionTracker] [FST1] PUK between LBM_1 and LBE_1 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:57.319] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.319] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.320] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.321] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2730ms Pulse: 7
+[2025-01-27 10:50:57.322] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 5460ms Pulse: 8
+[2025-01-27 10:50:57.323] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 5837ms Pulse: 9
+[2025-01-27 10:50:57.324] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST1]
+[2025-01-27 10:50:57.325] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 10:50:57.524] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:57.524] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:57.525] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:57.525] [DEBUG]    [PositionTracker] [FST1&2] PUK between LBE1 and LBF2 - PUK-ID: 1PUK Type: PUK_WITH_HOLE_AND_METALPUK AverageHeight: 18
+[2025-01-27 10:50:57.527] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.527] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.528] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 100ms Pulse: 10
+[2025-01-27 10:50:57.529] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 4000ms Pulse: 11
+[2025-01-27 10:50:57.530] [DEBUG]    [PositionTracker.onEgressNewPuk] [FST1]
+[2025-01-27 10:50:57.531] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_BLINKING
+[2025-01-27 10:50:57.532] [TRACE]    [FSMController] received PULSE_LBE_OPEN...0
+[2025-01-27 10:50:57.628] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:50:57.666] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 20
+[2025-01-27 10:50:57.666] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.667] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:57.667] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2850ms Pulse: 4
+[2025-01-27 10:50:57.668] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 3381ms Pulse: 5
+[2025-01-27 10:50:57.670] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 10:50:57.670] [DEBUG]    [PositionTracker.onIsValid] [FST1] HEIGHT_IS_VALID
+[2025-01-27 10:50:57.671] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.672] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 12% timeRemaining: 641ms Pulse: 7
+[2025-01-27 10:50:57.673] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 6% timeRemaining: 1376ms Pulse: 8
+[2025-01-27 10:50:57.674] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 6% timeRemaining: 1891ms Pulse: 9
+[2025-01-27 10:50:57.675] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.676] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 645ms Pulse: 4
+[2025-01-27 10:50:57.677] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1210ms Pulse: 5
+[2025-01-27 10:50:57.678] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:57.679] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 93% timeRemaining: 54ms Pulse: 1
+[2025-01-27 10:50:57.680] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 47% timeRemaining: 867ms Pulse: 2
+[2025-01-27 10:50:57.681] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 31% timeRemaining: 1742ms Pulse: 3
+[2025-01-27 10:50:57.682] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:57.683] [DEBUG]    [FSMController] received Digit1...59
+[2025-01-27 10:50:57.683] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:57.684] [DEBUG]    [FSMController] received AverageHeight...20
+[2025-01-27 10:50:57.685] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 10:50:57.733] [TRACE]    [FSMController] Sending pulse: PULSE_LG1_ON
+[2025-01-27 10:50:57.733] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:57.734] [TRACE]    [ActuatorController] 0: Festo 1 LED Green on......
+[2025-01-27 10:50:57.770] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...1
+[2025-01-27 10:50:58.077] [TRACE]    [ActuatorController] green blinking stopped......
+[2025-01-27 10:50:58.209] [DEBUG]    [PositionTracker] [FST2] PUK between LBF_2 and HS_2 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:50:58.209] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:58.210] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:58.211] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1550ms Pulse: 12
+[2025-01-27 10:50:58.212] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2136ms Pulse: 13
+[2025-01-27 10:50:58.213] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST2]
+[2025-01-27 10:50:58.213] [TRACE]    [FSMController] received PULSE_LBF_OPEN...1
+[2025-01-27 10:50:58.313] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:50:58.313] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:50:58.314] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_DISTANCE_VALID value: 1
+[2025-01-27 10:50:58.314] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:50:58.321] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:58.547] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:58.637] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:58.637] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:58.638] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:58.638] [DEBUG]    [PositionTracker.sortingTypeNext] [FST1]SORTING EXPECTED PUK_B -> PUK_C
+[2025-01-27 10:50:58.639] [DEBUG]    [PositionTracker.onIsNotMetal] [FST1] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 20
+[2025-01-27 10:50:58.640] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 10:50:58.722] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:58.722] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 78% timeRemaining: 1199ms Pulse: 8
+[2025-01-27 10:50:58.723] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 58% timeRemaining: 2426ms Pulse: 9
+[2025-01-27 10:50:58.724] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:58.725] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 86% timeRemaining: 450ms Pulse: 5
+[2025-01-27 10:50:58.726] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:58.727] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 72% timeRemaining: 2057ms Pulse: 3
+[2025-01-27 10:50:58.728] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_SLOW
+[2025-01-27 10:50:58.729] [TRACE]    [ActuatorController] [Festo1] Motor slow
+[2025-01-27 10:50:59.176] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPIRED value: 1
+[2025-01-27 10:50:59.761] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:50:59.767] [DEBUG]    [PositionTracker] [FST1] PUK between HS1 and MS1 - PUK-ID: 1 PUK Type: UNKNOWN PUK AverageHeight: 18
+[2025-01-27 10:50:59.767] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:59.768] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:59.768] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2850ms Pulse: 4
+[2025-01-27 10:50:59.769] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 3381ms Pulse: 5
+[2025-01-27 10:50:59.771] [DEBUG]    [PositionTracker.onHSNewPuk] [FST1]
+[2025-01-27 10:50:59.771] [DEBUG]    [PositionTracker.onIsValid] [FST1] HEIGHT_IS_VALID
+[2025-01-27 10:50:59.772] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:59.773] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 97% timeRemaining: 34ms Pulse: 8
+[2025-01-27 10:50:59.775] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 76% timeRemaining: 474ms Pulse: 9
+[2025-01-27 10:50:59.776] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:59.776] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:59.777] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 645ms Pulse: 4
+[2025-01-27 10:50:59.778] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1210ms Pulse: 5
+[2025-01-27 10:50:59.779] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:50:59.780] [DEBUG]    [FSMController] received Digit1...59
+[2025-01-27 10:50:59.781] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:50:59.781] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:50:59.782] [TRACE]    [FSMController] received PULSE_HS1_SAMPLING_DONE...
+[2025-01-27 10:50:59.799] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:59.799] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:50:59.800] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:59.800] [DEBUG]    [PositionTracker] [FST1] PUK between LBM_1 and LBE_1 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE PUK AverageHeight: 20
+[2025-01-27 10:50:59.801] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:59.802] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:59.802] [TRACE]    [Timer] New Timer
+[2025-01-27 10:50:59.803] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 737ms Pulse: 7
+[2025-01-27 10:50:59.804] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1475ms Pulse: 8
+[2025-01-27 10:50:59.805] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2018ms Pulse: 9
+[2025-01-27 10:50:59.806] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST1]
+[2025-01-27 10:50:59.807] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 10:50:59.808] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:50:59.826] [TRACE]    [Decoder] decode...
+[2025-01-27 10:50:59.826] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:50:59.827] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:50:59.827] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:59.828] [TRACE]    [Timer] Timer stopped Progress: 79% Time: 422ms Pulse: 9
+[2025-01-27 10:50:59.829] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:59.830] [TRACE]    [Timer] Timer stopped Progress: 3% Time: 712ms Pulse: 7
+[2025-01-27 10:50:59.831] [TRACE]    [Timer] Timer stopped Progress: 1% Time: 1449ms Pulse: 8
+[2025-01-27 10:50:59.832] [TRACE]    [Timer] Timer stopped Progress: 1% Time: 1993ms Pulse: 9
+[2025-01-27 10:50:59.832] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:50:59.833] [TRACE]    [Timer] Timer stopped Progress: 9% Time: 590ms Pulse: 4
+[2025-01-27 10:50:59.834] [TRACE]    [Timer] Timer stopped Progress: 5% Time: 1154ms Pulse: 5
+[2025-01-27 10:50:59.835] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_STOP
+[2025-01-27 10:50:59.836] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...0
+[2025-01-27 10:50:59.837] [TRACE]    [ActuatorController] [Festo1] Motor stop
+[2025-01-27 10:51:00.125] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:00.126] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 89% timeRemaining: 492ms Pulse: 13
+[2025-01-27 10:51:00.127] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:51:00.128] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:00.128] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:51:00.129] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_SLOW
+[2025-01-27 10:51:00.619] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPIRED value: 1
+[2025-01-27 10:51:00.950] [DEBUG]    [PositionTracker.onHSNewPuk] ENTRY HS [FST2]
+[2025-01-27 10:51:00.951] [DEBUG]    [PositionTracker] [FST2] PUK between HS2 and MS2 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:51:00.951] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:00.952] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:00.953] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 1957ms Pulse: 14
+[2025-01-27 10:51:00.954] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2557ms Pulse: 15
+[2025-01-27 10:51:00.955] [DEBUG]    [PositionTracker.onHSNewPuk] [FST2]
+[2025-01-27 10:51:00.956] [DEBUG]    [PositionTracker.onIsValid] [FST2]
+[2025-01-27 10:51:00.956] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:00.957] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 582ms Pulse: 14
+[2025-01-27 10:51:00.958] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1161ms Pulse: 15
+[2025-01-27 10:51:00.959] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:51:00.960] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:00.961] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:51:00.961] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:51:00.962] [DEBUG]    [FSMController] received Digit2...53
+[2025-01-27 10:51:00.963] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:51:00.964] [TRACE]    [FSMController] received PULSE_HS2_SAMPLING_DONE...
+[2025-01-27 10:51:01.540] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPECTED value: 1
+[2025-01-27 10:51:01.881] [DEBUG]    [FSMController] received PULSE_MS_TRUE...1
+[2025-01-27 10:51:01.930] [DEBUG]    [PositionTracker.sortingTypeNext] [FST2]SORTING EXPECTED PUK_C -> PUK_A
+[2025-01-27 10:51:01.930] [DEBUG]    [PositionTracker.onIsMetal] [FST2] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:51:01.931] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:01.932] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 180000ms Pulse: 16
+[2025-01-27 10:51:01.933] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_ACTIVE
+[2025-01-27 10:51:01.934] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...1
+[2025-01-27 10:51:02.119] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPIRED value: 1
+[2025-01-27 10:51:02.153] [DEBUG]    [FSMController] received PULSE_MS_FALSE...1
+[2025-01-27 10:51:02.390] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:02.391] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:02.391] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:02.392] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 695ms Pulse: 17
+[2025-01-27 10:51:02.393] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1390ms Pulse: 19
+[2025-01-27 10:51:02.394] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1968ms Pulse: 18
+[2025-01-27 10:51:02.395] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST2]
+[2025-01-27 10:51:02.396] [TRACE]    [FSMController] received PULSE_LBM_OPEN...1
+[2025-01-27 10:51:03.087] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:51:03.087] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:51:03.088] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_RESTING
+[2025-01-27 10:51:03.088] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:51:03.089] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_DISTANCE_VALID value: 1
+[2025-01-27 10:51:03.783] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:51:04.148] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:51:04.148] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.148] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.150] [TRACE]    [Timer] Timer stopped Progress: 89% Time: 213ms Pulse: 18
+[2025-01-27 10:51:04.150] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:51:04.151] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_STOP
+[2025-01-27 10:51:04.152] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...1
+[2025-01-27 10:51:04.820] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_ON
+[2025-01-27 10:51:04.821] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.822] [TRACE]    [Timer] Timer started Speed: fast Progress: 79% Time: 419ms Pulse: 9
+[2025-01-27 10:51:04.824] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.825] [TRACE]    [Timer] Timer started Speed: fast Progress: 3% Time: 710ms Pulse: 7
+[2025-01-27 10:51:04.826] [TRACE]    [Timer] Timer started Speed: fast Progress: 1% Time: 1446ms Pulse: 8
+[2025-01-27 10:51:04.827] [TRACE]    [Timer] Timer started Speed: fast Progress: 1% Time: 1986ms Pulse: 9
+[2025-01-27 10:51:04.828] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.829] [TRACE]    [Timer] Timer started Speed: fast Progress: 9% Time: 589ms Pulse: 4
+[2025-01-27 10:51:04.830] [TRACE]    [Timer] Timer started Speed: fast Progress: 5% Time: 1153ms Pulse: 5
+[2025-01-27 10:51:04.831] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_FAST
+[2025-01-27 10:51:04.832] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:51:04.832] [TRACE]    [ActuatorController] [Festo1] Motor fast
+[2025-01-27 10:51:04.833] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.834] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:04.834] [TRACE]    [Timer] Timer started Speed: fast Progress: 89% Time: 208ms Pulse: 18
+[2025-01-27 10:51:04.835] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:51:04.836] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:51:04.837] [TRACE]    [FSMController] received PULSE_LBE_OPEN...1
+[2025-01-27 10:51:05.043] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_2_PUK_EXPIRED value: 1
+[2025-01-27 10:51:05.241] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPIRED value: 1
+[2025-01-27 10:51:05.347] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:05.348] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:51:05.348] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:05.349] [DEBUG]    [PositionTracker] [FST1&2] PUK between LBE1 and LBF2 - PUK-ID: 1PUK Type: PUK_WITH_HOLE_AND_METALPUK AverageHeight: 18
+[2025-01-27 10:51:05.350] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:05.350] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:05.351] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 50ms Pulse: 10
+[2025-01-27 10:51:05.352] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2000ms Pulse: 11
+[2025-01-27 10:51:05.353] [DEBUG]    [PositionTracker.onEgressNewPuk] [FST1]
+[2025-01-27 10:51:05.354] [TRACE]    [FSMController] Sending pulse: PULSE_LG2_BLINKING
+[2025-01-27 10:51:05.355] [TRACE]    [FSMController] received PULSE_LBE_OPEN...0
+[2025-01-27 10:51:05.402] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_INGRESS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:51:05.419] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_PUK_EXPECTED value: 1
+[2025-01-27 10:51:05.536] [ERROR]    [PositionTracker.listen] PROBLEMSS
+[2025-01-27 10:51:05.536] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:51:05.537] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_1_DISTANCE_VALID value: 1
+[2025-01-27 10:51:05.537] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:51:05.592] [TRACE]    [FSMController] received PULSE_LBF_INTERRUPTED LBF_1...1
+[2025-01-27 10:51:05.888] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:05.889] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:51:05.889] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:05.890] [DEBUG]    [FSMController] received PULSE_MS_TRUE...0
+[2025-01-27 10:51:05.960] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:05.960] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:51:05.961] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:05.961] [TRACE]    [Timer] Timer stopped Progress: 98% Time: 22ms Pulse: 5
+[2025-01-27 10:51:05.963] [DEBUG]    [PositionTracker.onIsMetal] [FST1] PUK Eject PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:51:05.964] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:05.965] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 180000ms Pulse: 6
+[2025-01-27 10:51:05.966] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_ACTIVE
+[2025-01-27 10:51:05.967] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...0
+[2025-01-27 10:51:05.967] [TRACE]    [ActuatorController] 0: Festo 1 SM Active......
+[2025-01-27 10:51:06.003] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:06.003] [TRACE]    [Decoder] LBM erkannt
+[2025-01-27 10:51:06.004] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:06.004] [TRACE]    [FSMController] received PULSE_LBM_OPEN...0
+[2025-01-27 10:51:06.038] [DEBUG]    [PositionTracker] [FST2] PUK between LBF_2 and HS_2 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:51:06.039] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:06.039] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:06.040] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1550ms Pulse: 12
+[2025-01-27 10:51:06.041] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 2136ms Pulse: 13
+[2025-01-27 10:51:06.042] [DEBUG]    [PositionTracker.onIngressNewPuk] [FST2]
+[2025-01-27 10:51:06.043] [TRACE]    [FSMController] received PULSE_LBF_OPEN...1
+[2025-01-27 10:51:06.044] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:06.044] [TRACE]    [Decoder] MS erkannt
+[2025-01-27 10:51:06.045] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:06.045] [DEBUG]    [FSMController] received PULSE_MS_FALSE...0
+[2025-01-27 10:51:06.158] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:06.158] [TRACE]    [Decoder] LBR erkannt
+[2025-01-27 10:51:06.159] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:06.159] [TRACE]    [Timer] Motor state unchanged, Progress: 98%
+[2025-01-27 10:51:06.160] [DEBUG]    [PositionTracker]  PUK between HS1 and LBM1 Removed PUK-ID:1PUK TypePUK_WITH_HOLE_AND_METALPUK AverageHeight FST1:18PUK Average Height FST2
+[2025-01-27 10:51:06.161] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:51:06.161] [TRACE]    [FSMController] Sending pulse: PULSE_LY1_ON
+[2025-01-27 10:51:06.162] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:51:06.163] [TRACE]    [FSMController] received PULSE_LBR_INTERRUPTED...0
+[2025-01-27 10:51:06.163] [TRACE]    [ActuatorController] 0: Festo 1 LED Yellow on......
+[2025-01-27 10:51:06.272] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_1_PUK_EXPECTED value: 1
+[2025-01-27 10:51:06.363] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:06.363] [TRACE]    [Decoder] LBR erkannt
+[2025-01-27 10:51:06.364] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:06.364] [TRACE]    [FSMController] Sending pulse: PULSE_LY1_OFF
+[2025-01-27 10:51:06.365] [TRACE]    [FSMController] received PULSE_LBR_OPEN...0
+[2025-01-27 10:51:06.365] [TRACE]    [ActuatorController] 0: Festo 1 LED Yellow off...
+[2025-01-27 10:51:06.778] [TRACE]    [Decoder] decode...
+[2025-01-27 10:51:06.778] [TRACE]    [Decoder] LBE erkannt
+[2025-01-27 10:51:06.779] [TRACE]    [Decoder] Interrupt received entpacken und weitergabe an dispatcher...
+[2025-01-27 10:51:06.779] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:06.780] [TRACE]    [Timer] Timer stopped Progress: 98% Time: 34ms Pulse: 9
+[2025-01-27 10:51:06.781] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR1_STOP
+[2025-01-27 10:51:06.782] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...0
+[2025-01-27 10:51:06.782] [TRACE]    [ActuatorController] [Festo1] Motor stop
+[2025-01-27 10:51:07.591] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:51:07.957] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:07.958] [TRACE]    [Timer] Timer speed updated speed: slow Progress: 89% timeRemaining: 492ms Pulse: 13
+[2025-01-27 10:51:07.959] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:51:07.960] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:07.960] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:07.961] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:51:07.962] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_SLOW
+[2025-01-27 10:51:08.451] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_HS_2_PUK_EXPIRED value: 1
+[2025-01-27 10:51:08.782] [DEBUG]    [PositionTracker.onHSNewPuk] ENTRY HS [FST2]
+[2025-01-27 10:51:08.782] [DEBUG]    [PositionTracker] [FST2] PUK between HS2 and MS2 - PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:51:08.783] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:08.784] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:08.785] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 1957ms Pulse: 14
+[2025-01-27 10:51:08.786] [TRACE]    [Timer] Timer started Speed: slow Progress: 0% Time: 2557ms Pulse: 15
+[2025-01-27 10:51:08.787] [DEBUG]    [PositionTracker.onHSNewPuk] [FST2]
+[2025-01-27 10:51:08.788] [DEBUG]    [PositionTracker.onIsValid] [FST2]
+[2025-01-27 10:51:08.788] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:08.789] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 582ms Pulse: 14
+[2025-01-27 10:51:08.790] [TRACE]    [Timer] Timer speed updated speed: fast Progress: 0% timeRemaining: 1161ms Pulse: 15
+[2025-01-27 10:51:08.791] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:51:08.792] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:08.792] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:08.793] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:51:08.794] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_FAST
+[2025-01-27 10:51:08.795] [DEBUG]    [FSMController] received Digit2...53
+[2025-01-27 10:51:08.795] [DEBUG]    [FSMController] received AverageHeight...18
+[2025-01-27 10:51:08.796] [TRACE]    [FSMController] received PULSE_HS2_SAMPLING_DONE...
+[2025-01-27 10:51:09.371] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPECTED value: 1
+[2025-01-27 10:51:09.713] [DEBUG]    [FSMController] received PULSE_MS_TRUE...1
+[2025-01-27 10:51:09.761] [DEBUG]    [PositionTracker.sortingTypeNext] [FST2]SORTING EXPECTED PUK_A -> PUK_B
+[2025-01-27 10:51:09.761] [DEBUG]    [PositionTracker.onIsMetal] [FST2] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:51:09.762] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:09.763] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 180000ms Pulse: 16
+[2025-01-27 10:51:09.764] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_ACTIVE
+[2025-01-27 10:51:09.765] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...1
+[2025-01-27 10:51:09.951] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPIRED value: 1
+[2025-01-27 10:51:09.983] [DEBUG]    [FSMController] received PULSE_MS_FALSE...1
+[2025-01-27 10:51:10.221] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:10.221] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:10.222] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:10.222] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 695ms Pulse: 17
+[2025-01-27 10:51:10.223] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1390ms Pulse: 19
+[2025-01-27 10:51:10.225] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1968ms Pulse: 18
+[2025-01-27 10:51:10.226] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST2]
+[2025-01-27 10:51:10.226] [TRACE]    [FSMController] received PULSE_LBM_OPEN...1
+[2025-01-27 10:51:10.918] [TRACE]    [FSMController] Sending pulse: PULSE_SM1_RESTING
+[2025-01-27 10:51:10.918] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_RESTING
+[2025-01-27 10:51:10.919] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_DISTANCE_VALID value: 1
+[2025-01-27 10:51:10.920] [TRACE]    [ActuatorController] 0: Festo 1 SM Resting......
+[2025-01-27 10:51:11.614] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_EGRESS_2_PUK_EXPECTED value: 1
+[2025-01-27 10:51:11.981] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 0
+[2025-01-27 10:51:11.981] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:11.982] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:11.982] [TRACE]    [PositionTracker.updatePukQueue] Processing Puk with ID: 1
+[2025-01-27 10:51:11.983] [TRACE]    [Timer] Timer stopped Progress: 89% Time: 210ms Pulse: 18
+[2025-01-27 10:51:11.984] [TRACE]    [PositionTracker.onMotorSlow] [FST2] Motor Slow
+[2025-01-27 10:51:11.985] [TRACE]    [FSMController] Sending pulse: PULSE_MOTOR2_STOP
+[2025-01-27 10:51:11.986] [TRACE]    [FSMController] received PULSE_LBE_INTERRUPTED...1
+
+[2025-01-27 10:51:08.796] [TRACE]    [FSMController] received PULSE_HS2_SAMPLING_DONE...
+[2025-01-27 10:51:09.371] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPECTED value: 1
+[2025-01-27 10:51:09.713] [DEBUG]    [FSMController] received PULSE_MS_TRUE...1
+[2025-01-27 10:51:09.761] [DEBUG]    [PositionTracker.sortingTypeNext] [FST2]SORTING EXPECTED PUK_A -> PUK_B
+[2025-01-27 10:51:09.761] [DEBUG]    [PositionTracker.onIsMetal] [FST2] PUK Passthrough PUK-ID: 1 PUK Type: PUK_WITH_HOLE_AND_METAL PUK AverageHeight: 18
+[2025-01-27 10:51:09.762] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:09.763] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 180000ms Pulse: 16
+[2025-01-27 10:51:09.764] [TRACE]    [FSMController] Sending pulse: PULSE_SM2_ACTIVE
+[2025-01-27 10:51:09.765] [TRACE]    [FSMController] received PULSE_LBM_INTERRUPTED...1
+[2025-01-27 10:51:09.951] [DEBUG]    [PositionTracker.listen] Message recieved code: PULSE_SORTING_2_PUK_EXPIRED value: 1
+[2025-01-27 10:51:09.983] [DEBUG]    [FSMController] received PULSE_MS_FALSE...1
+[2025-01-27 10:51:10.221] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:10.221] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:10.222] [TRACE]    [Timer] New Timer
+[2025-01-27 10:51:10.222] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 695ms Pulse: 17
+[2025-01-27 10:51:10.223] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1390ms Pulse: 19
+[2025-01-27 10:51:10.225] [TRACE]    [Timer] Timer started Speed: fast Progress: 0% Time: 1968ms Pulse: 18
+[2025-01-27 10:51:10.226] [DEBUG]    [PositionTracker.onSortingNewPuk] [FST2]
+[2025-01-27 10:51:10.226] [TRACE]    [FSMController] received PULSE_LBM_OPEN...1

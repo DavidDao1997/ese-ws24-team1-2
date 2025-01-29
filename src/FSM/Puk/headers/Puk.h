@@ -22,7 +22,7 @@ public:
     };
 
     // Constructor uses UNKNOWN by default
-    explicit Puk(uint32_t pukId);
+    Puk(uint32_t pukId);
     ~Puk();
 
     uint32_t getPukId() const;
@@ -67,4 +67,3 @@ private:
 };
 
 #endif // FSM_PUK_HEADERS_PUK_H_
-
