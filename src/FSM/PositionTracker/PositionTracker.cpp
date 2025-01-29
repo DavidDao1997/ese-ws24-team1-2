@@ -58,46 +58,46 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     // durations.fst2.sorting.distanceValid.Slow = std::chrono::milliseconds(3000); // we dont need it or? DD
 
     // ---fake calibration---
-    durations.fst1.ingress.distanceValid.Fast = std::chrono::milliseconds(973);
-    durations.fst1.ingress.distanceValid.Slow = std::chrono::milliseconds(3685);
-    durations.fst1.ingress.expected.Fast = std::chrono::milliseconds(1622);
-    durations.fst1.ingress.expected.Slow = std::chrono::milliseconds(6142);
-    durations.fst1.ingress.expired.Fast = std::chrono::milliseconds(3301);
-    durations.fst1.ingress.expired.Slow = std::chrono::milliseconds(7713);
-    durations.fst1.heightSensor.expected.Fast = std::chrono::milliseconds(686);
-    durations.fst1.heightSensor.expected.Slow = std::chrono::milliseconds(3017);
-    durations.fst1.heightSensor.expired.Fast = std::chrono::milliseconds(1228);
-    durations.fst1.heightSensor.expired.Slow = std::chrono::milliseconds(3636);
-    durations.fst1.sorting.distanceValid.Fast = std::chrono::milliseconds(668);
-    durations.fst1.sorting.distanceValid.Slow = std::chrono::milliseconds(2647);
-    durations.fst1.sorting.expected.Fast = std::chrono::milliseconds(1336);
-    durations.fst1.sorting.expected.Slow = std::chrono::milliseconds(5294);
-    durations.fst1.sorting.expired.Fast = std::chrono::milliseconds(1922);
-    durations.fst1.sorting.expired.Slow = std::chrono::milliseconds(5911);
-    durations.fst1.egress.expected.Fast = std::chrono::milliseconds(50);
-    durations.fst1.egress.expected.Slow = std::chrono::milliseconds(100);
-    durations.fst1.egress.expired.Fast = std::chrono::milliseconds(2000);
-    durations.fst1.egress.expired.Slow = std::chrono::milliseconds(4000);
-    durations.fst2.ingress.distanceValid.Fast = std::chrono::milliseconds(750);
-    durations.fst2.ingress.distanceValid.Slow = std::chrono::milliseconds(2855);
-    durations.fst2.ingress.expected.Fast = std::chrono::milliseconds(1500);
-    durations.fst2.ingress.expected.Slow = std::chrono::milliseconds(5711);
-    durations.fst2.ingress.expired.Fast = std::chrono::milliseconds(2080);
-    durations.fst2.ingress.expired.Slow = std::chrono::milliseconds(6252);
-    durations.fst2.heightSensor.expected.Fast = std::chrono::milliseconds(632);
-    durations.fst2.heightSensor.expected.Slow = std::chrono::milliseconds(2987);
-    durations.fst2.heightSensor.expired.Fast = std::chrono::milliseconds(1209);
-    durations.fst2.heightSensor.expired.Slow = std::chrono::milliseconds(3604);
-    durations.fst2.sorting.distanceValid.Fast = std::chrono::milliseconds(590);
-    durations.fst2.sorting.distanceValid.Slow = std::chrono::milliseconds(2317);
-    durations.fst2.sorting.expected.Fast = std::chrono::milliseconds(1180);
-    durations.fst2.sorting.expected.Slow = std::chrono::milliseconds(4635);
-    durations.fst2.sorting.expired.Fast = std::chrono::milliseconds(1756);
-    durations.fst2.sorting.expired.Slow = std::chrono::milliseconds(5158);
+    // durations.fst1.ingress.distanceValid.Fast = std::chrono::milliseconds(973);
+    // durations.fst1.ingress.distanceValid.Slow = std::chrono::milliseconds(3685);
+    // durations.fst1.ingress.expected.Fast = std::chrono::milliseconds(1622);
+    // durations.fst1.ingress.expected.Slow = std::chrono::milliseconds(6142);
+    // durations.fst1.ingress.expired.Fast = std::chrono::milliseconds(3301);
+    // durations.fst1.ingress.expired.Slow = std::chrono::milliseconds(7713);
+    // durations.fst1.heightSensor.expected.Fast = std::chrono::milliseconds(686);
+    // durations.fst1.heightSensor.expected.Slow = std::chrono::milliseconds(3017);
+    // durations.fst1.heightSensor.expired.Fast = std::chrono::milliseconds(1228);
+    // durations.fst1.heightSensor.expired.Slow = std::chrono::milliseconds(3636);
+    // durations.fst1.sorting.distanceValid.Fast = std::chrono::milliseconds(668);
+    // durations.fst1.sorting.distanceValid.Slow = std::chrono::milliseconds(2647);
+    // durations.fst1.sorting.expected.Fast = std::chrono::milliseconds(1336);
+    // durations.fst1.sorting.expected.Slow = std::chrono::milliseconds(5294);
+    // durations.fst1.sorting.expired.Fast = std::chrono::milliseconds(1922);
+    // durations.fst1.sorting.expired.Slow = std::chrono::milliseconds(5911);
+    // durations.fst1.egress.expected.Fast = std::chrono::milliseconds(50);
+    // durations.fst1.egress.expected.Slow = std::chrono::milliseconds(100);
+    // durations.fst1.egress.expired.Fast = std::chrono::milliseconds(2000);
+    // durations.fst1.egress.expired.Slow = std::chrono::milliseconds(4000);
+    // durations.fst2.ingress.distanceValid.Fast = std::chrono::milliseconds(750);
+    // durations.fst2.ingress.distanceValid.Slow = std::chrono::milliseconds(2855);
+    // durations.fst2.ingress.expected.Fast = std::chrono::milliseconds(1500);
+    // durations.fst2.ingress.expected.Slow = std::chrono::milliseconds(5711);
+    // durations.fst2.ingress.expired.Fast = std::chrono::milliseconds(2080);
+    // durations.fst2.ingress.expired.Slow = std::chrono::milliseconds(6252);
+    // durations.fst2.heightSensor.expected.Fast = std::chrono::milliseconds(632);
+    // durations.fst2.heightSensor.expected.Slow = std::chrono::milliseconds(2987);
+    // durations.fst2.heightSensor.expired.Fast = std::chrono::milliseconds(1209);
+    // durations.fst2.heightSensor.expired.Slow = std::chrono::milliseconds(3604);
+    // durations.fst2.sorting.distanceValid.Fast = std::chrono::milliseconds(590);
+    // durations.fst2.sorting.distanceValid.Slow = std::chrono::milliseconds(2317);
+    // durations.fst2.sorting.expected.Fast = std::chrono::milliseconds(1180);
+    // durations.fst2.sorting.expected.Slow = std::chrono::milliseconds(4635);
+    // durations.fst2.sorting.expired.Fast = std::chrono::milliseconds(1756);
+    // durations.fst2.sorting.expired.Slow = std::chrono::milliseconds(5158);
 
-    fsm->setDigitpermm(58);
-    fsm->setDigitpermm2(53);
-    fsm->setCalibrated(true);
+    // fsm->setDigitpermm(58);
+    // fsm->setDigitpermm2(53);
+    // fsm->setCalibrated(true);
     // ----------------------------
     
     onEvent(&fsm->getFST_1_POSITION_INGRESS_NEW_PUK(), [this](){
@@ -156,7 +156,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     });
     onEvent(&fsm->getFST_1_PUK_HEIGHT_IS_VALID(), [this](){
         std::lock_guard<std::mutex> lockHeightSensor(sorting1Mutex);
-        Puk* puk = sorting1.front();  // FST1 raises "puk valid/inValid" after "sorting new puk", so we need to use sorting1.front() here
+        Puk* puk = sorting1.back();  // FST1 raises "puk valid/inValid" after "sorting new puk", so we need to use sorting1.front() here
         if (puk == nullptr) {
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] " + 
                 std::to_string(heightSensor1.size()) +
@@ -175,7 +175,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     });
     onEvent(&fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID(), [this](){
         std::lock_guard<std::mutex> lockHeightSensor(sorting1Mutex);
-        Puk* puk = sorting1.front();
+        Puk* puk = sorting1.back();
         if (puk == nullptr) {
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] " + 
                 std::to_string(heightSensor1.size()) +
