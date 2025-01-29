@@ -58,44 +58,80 @@ PositionTracker::PositionTracker(FSM* _fsm) {
     // durations.fst2.sorting.distanceValid.Slow = std::chrono::milliseconds(3000); // we dont need it or? DD
 
     // ---fake calibration---
-    durations.fst1.ingress.distanceValid.Fast = std::chrono::milliseconds(831);
-    durations.fst1.ingress.distanceValid.Slow = std::chrono::milliseconds(3062);
-    durations.fst1.ingress.expected.Fast = std::chrono::milliseconds(1662);
-    durations.fst1.ingress.expected.Slow = std::chrono::milliseconds(6125);
-    durations.fst1.ingress.expired.Fast = std::chrono::milliseconds(2598);
-    durations.fst1.ingress.expired.Slow = std::chrono::milliseconds(8174);
-    durations.fst1.heightSensor.expected.Fast = std::chrono::milliseconds(704);
-    durations.fst1.heightSensor.expected.Slow = std::chrono::milliseconds(3087);
-    durations.fst1.heightSensor.expired.Fast = std::chrono::milliseconds(1257);
-    durations.fst1.heightSensor.expired.Slow = std::chrono::milliseconds(3621);
-    durations.fst1.sorting.distanceValid.Fast = std::chrono::milliseconds(682);
-    durations.fst1.sorting.distanceValid.Slow = std::chrono::milliseconds(2654);
-    durations.fst1.sorting.expected.Fast = std::chrono::milliseconds(1364);
-    durations.fst1.sorting.expected.Slow = std::chrono::milliseconds(5308);
-    durations.fst1.sorting.expired.Fast = std::chrono::milliseconds(1952);
-    durations.fst1.sorting.expired.Slow = std::chrono::milliseconds(5908);
+    //     durations.fst1.ingress.distanceValid.Fast:835ms
+    // durations.fst1.ingress.distanceValid.Slow:2990ms
+    // durations.fst1.ingress.expected.Fast:1670ms
+    // durations.fst1.ingress.expected.Slow:5980ms
+    // durations.fst1.ingress.expired.Fast:2551ms
+    // durations.fst1.ingress.expired.Slow:7650ms
+    // durations.fst1.heightSensor.expected.Fast:617ms
+    // durations.fst1.heightSensor.expected.Slow:2905ms
+    // durations.fst1.heightSensor.expired.Fast:1183ms
+    // durations.fst1.heightSensor.expired.Slow:3388ms
+    // durations.fst1.sorting.distanceValid.Fast:734ms
+    // durations.fst1.sorting.distanceValid.Slow:2773ms
+    // durations.fst1.sorting.expected.Fast:1468ms
+    // durations.fst1.sorting.expected.Slow:5547ms
+    // durations.fst1.sorting.expired.Fast:2014ms
+    // durations.fst1.sorting.expired.Slow:5951ms
+    // durations.fst1.egress.expected.Fast:50ms
+    // durations.fst1.egress.expected.Slow:100ms
+    // durations.fst1.egress.expired.Fast:2000ms
+    // durations.fst1.egress.expired.Slow:4000ms
+    // durations.fst2.ingress.distanceValid.Fast:782ms
+    // durations.fst2.ingress.distanceValid.Slow:2871ms
+    // durations.fst2.ingress.expected.Fast:1565ms
+    // durations.fst2.ingress.expected.Slow:5742ms
+    // durations.fst2.ingress.expired.Fast:2136ms
+    // durations.fst2.ingress.expired.Slow:6278ms
+    // durations.fst2.heightSensor.expected.Fast:648ms
+    // durations.fst2.heightSensor.expected.Slow:2988ms
+    // durations.fst2.heightSensor.expired.Fast:1218ms
+    // durations.fst2.heightSensor.expired.Slow:3565ms
+    // durations.fst2.sorting.distanceValid.Fast:600ms
+    // durations.fst2.sorting.distanceValid.Slow:2306ms
+    // durations.fst2.sorting.expected.Fast:1201ms
+    // durations.fst2.sorting.expected.Slow:4613ms
+    // durations.fst2.sorting.expired.Fast:1777ms
+    // durations.fst2.sorting.expired.Slow:5219ms
+    durations.fst1.ingress.distanceValid.Fast = std::chrono::milliseconds(807);
+    durations.fst1.ingress.distanceValid.Slow = std::chrono::milliseconds(2993);
+    durations.fst1.ingress.expected.Fast = std::chrono::milliseconds(1615);
+    durations.fst1.ingress.expected.Slow = std::chrono::milliseconds(5986);
+    durations.fst1.ingress.expired.Fast = std::chrono::milliseconds(2632);
+    durations.fst1.ingress.expired.Slow = std::chrono::milliseconds(7896);
+    durations.fst1.heightSensor.expected.Fast = std::chrono::milliseconds(688);
+    durations.fst1.heightSensor.expected.Slow = std::chrono::milliseconds(2983);
+    durations.fst1.heightSensor.expired.Fast = std::chrono::milliseconds(1228);
+    durations.fst1.heightSensor.expired.Slow = std::chrono::milliseconds(3530);
+    durations.fst1.sorting.distanceValid.Fast = std::chrono::milliseconds(668);
+    durations.fst1.sorting.distanceValid.Slow = std::chrono::milliseconds(2531);
+    durations.fst1.sorting.expected.Fast = std::chrono::milliseconds(1337);
+    durations.fst1.sorting.expected.Slow = std::chrono::milliseconds(5062);
+    durations.fst1.sorting.expired.Fast = std::chrono::milliseconds(1930);
+    durations.fst1.sorting.expired.Slow = std::chrono::milliseconds(5726);
     durations.fst1.egress.expected.Fast = std::chrono::milliseconds(50);
     durations.fst1.egress.expected.Slow = std::chrono::milliseconds(100);
     durations.fst1.egress.expired.Fast = std::chrono::milliseconds(2000);
     durations.fst1.egress.expired.Slow = std::chrono::milliseconds(4000);
-    durations.fst2.ingress.distanceValid.Fast = std::chrono::milliseconds(774);
-    durations.fst2.ingress.distanceValid.Slow = std::chrono::milliseconds(2141);
-    durations.fst2.ingress.expected.Fast = std::chrono::milliseconds(1549);
-    durations.fst2.ingress.expected.Slow = std::chrono::milliseconds(4282);
-    durations.fst2.ingress.expired.Fast = std::chrono::milliseconds(2112);
-    durations.fst2.ingress.expired.Slow = std::chrono::milliseconds(4790);
-    durations.fst2.heightSensor.expected.Fast = std::chrono::milliseconds(601);
-    durations.fst2.heightSensor.expected.Slow = std::chrono::milliseconds(1990);
-    durations.fst2.heightSensor.expired.Fast = std::chrono::milliseconds(1181);
-    durations.fst2.heightSensor.expired.Slow = std::chrono::milliseconds(2562);
-    durations.fst2.sorting.distanceValid.Fast = std::chrono::milliseconds(698);
-    durations.fst2.sorting.distanceValid.Slow = std::chrono::milliseconds(1945);
-    durations.fst2.sorting.expected.Fast = std::chrono::milliseconds(1396);
-    durations.fst2.sorting.expected.Slow = std::chrono::milliseconds(3890);
-    durations.fst2.sorting.expired.Fast = std::chrono::milliseconds(1963);
-    durations.fst2.sorting.expired.Slow = std::chrono::milliseconds(4436);
+    durations.fst2.ingress.distanceValid.Fast = std::chrono::milliseconds(739);
+    durations.fst2.ingress.distanceValid.Slow = std::chrono::milliseconds(2773);
+    durations.fst2.ingress.expected.Fast = std::chrono::milliseconds(1478);
+    durations.fst2.ingress.expected.Slow = std::chrono::milliseconds(5547);
+    durations.fst2.ingress.expired.Fast = std::chrono::milliseconds(2068);
+    durations.fst2.ingress.expired.Slow = std::chrono::milliseconds(6125);
+    durations.fst2.heightSensor.expected.Fast = std::chrono::milliseconds(670);
+    durations.fst2.heightSensor.expected.Slow = std::chrono::milliseconds(2939);
+    durations.fst2.heightSensor.expired.Fast = std::chrono::milliseconds(1210);
+    durations.fst2.heightSensor.expired.Slow = std::chrono::milliseconds(3540);
+    durations.fst2.sorting.distanceValid.Fast = std::chrono::milliseconds(590);
+    durations.fst2.sorting.distanceValid.Slow = std::chrono::milliseconds(2279);
+    durations.fst2.sorting.expected.Fast = std::chrono::milliseconds(1181);
+    durations.fst2.sorting.expected.Slow = std::chrono::milliseconds(4558);
+    durations.fst2.sorting.expired.Fast = std::chrono::milliseconds(1757);
+    durations.fst2.sorting.expired.Slow = std::chrono::milliseconds(5149);
     fsm->setDigitpermm(58);
-    fsm->setDigitpermm2(52);
+    fsm->setDigitpermm2(53);
     fsm->setCalibrated(true);
     // ----------------------------
     
@@ -154,7 +190,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1]", "PositionTracker.onIngressNewPuk");
     });
     onEvent(&fsm->getFST_1_PUK_HEIGHT_IS_VALID(), [this](){
-        std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
+        std::lock_guard<std::mutex> lockHeightSensor(sorting1Mutex);
         Puk* puk = sorting1.front();  // FST1 raises "puk valid/inValid" after "sorting new puk", so we need to use sorting1.front() here
         if (puk == nullptr) {
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] " + 
@@ -173,7 +209,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         Logger::getInstance().log(LogLevel::DEBUG, "[FST1] HEIGHT_IS_VALID", "PositionTracker.onIsValid");
     });
     onEvent(&fsm->getFST_1_PUK_HEIGHT_IS_NOT_VALID(), [this](){
-        std::lock_guard<std::mutex> lockHeightSensor(heightSensor1Mutex);
+        std::lock_guard<std::mutex> lockHeightSensor(sorting1Mutex);
         Puk* puk = sorting1.front();
         if (puk == nullptr) {
             Logger::getInstance().log(LogLevel::ERROR, "[FST1] " + 
@@ -256,8 +292,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
         }
         puk->setPukType(Puk::PUKType::PUK_WITH_HOLE_AND_METAL);
 
-        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] currentSortingType1 != PUK_B" +std::to_string(currentSortingType1 != PUK_B) + " puk->getIsValid() = " + std::to_string(puk->getIsValid()) , "PositionTracker.onIsMetal");
-        
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] currentSortingType1: " +std::to_string(currentSortingType1) + " puk->getIsValid() = " + std::to_string(puk->getIsValid()) , "PositionTracker.onIsMetal");
         if (currentSortingType1 != PUK_B && puk->getIsValid()) {
             // passthrough
             puk->setIsMetal(true);
@@ -276,7 +311,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK Ejected - PUK-ID: " + std::to_string(puk->getPukId()) +
                                                         "PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
                                                         " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()) +  
-                                                        " PUK desired(A=0,B=1,C=2): A oder B", "PositionTracker.onIsMetal");
+                                                        " PUK desired(A=0,B=1,C=2): A oder C", "PositionTracker.onIsMetal");
 
         }
     });
@@ -300,6 +335,8 @@ PositionTracker::PositionTracker(FSM* _fsm) {
 
         puk->setPukType(Puk::PUKType::PUK_WITH_HOLE);
 
+        
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST1] currentSortingType1: " +std::to_string(currentSortingType1) + " puk->getIsValid() = " + std::to_string(puk->getIsValid()) , "PositionTracker.onIsNotMetal");
         if (currentSortingType1 == PUK_B && puk->getIsValid()) {
             // passthrough
             puk->setIsMetal(false);
@@ -315,7 +352,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
             Logger::getInstance().log(LogLevel::DEBUG, "[FST1] PUK Ejected - PUK-ID: " + std::to_string(puk->getPukId()) +
                                                         " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
                                                         " PUK AverageHeight: " + std::to_string(puk->getAverageHeight()) +
-                                                        " PUK desired(A=0,B=1,C=2): " + std::to_string(currentSortingType1), "PositionTracker.onIsNotMetal");
+                                                        " PUK desired(A=0,B=1,C=2): B", "PositionTracker.onIsNotMetal");
         }
     });
     onEvent(&fsm->getFST_1_POSITION_SORTING_NEW_PUK(), [this](){
@@ -605,6 +642,13 @@ PositionTracker::PositionTracker(FSM* _fsm) {
                 "PositionTracker.onIsMetal");
             return;
         }
+
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2] currentSortingType2: " + std::to_string(currentSortingType2) + 
+            " puk->getIsValid() = " + std::to_string(puk->getIsValid()) +
+            " averageHeights 1/2/threshhold " + 
+            std::to_string(puk->getAverageHeight()) + "/" + 
+            std::to_string(fsm->getAverageHeight2()) + "/" + 
+            std::to_string(HEIGHTTHRESHHOLD), "PositionTracker.onIsNotMetal");
         if (currentSortingType2 != PUK_B && puk->getIsMetal() && puk->getIsValid() && (abs(puk->getAverageHeight() - fsm->getAverageHeight2()) <= HEIGHTTHRESHHOLD ) ) {
             // passthrough
             currentSortingType2 = sortingTypeNext(currentSortingType2, FESTO2);
@@ -642,6 +686,13 @@ PositionTracker::PositionTracker(FSM* _fsm) {
                 "PositionTracker.onIsMetal");
             return;
         }
+
+        Logger::getInstance().log(LogLevel::DEBUG, "[FST2] currentSortingType2: " + std::to_string(currentSortingType2) + 
+            " puk->getIsValid() = " + std::to_string(puk->getIsValid()) +
+            " averageHeights 1/2/threshhold " + 
+            std::to_string(puk->getAverageHeight()) + "/" + 
+            std::to_string(fsm->getAverageHeight2()) + "/" + 
+            std::to_string(HEIGHTTHRESHHOLD), "PositionTracker.onIsNotMetal");
         if (currentSortingType2 == PUK_B && !puk->getIsMetal() && puk->getIsValid() && (abs(puk->getAverageHeight() - fsm->getAverageHeight2()) <= HEIGHTTHRESHHOLD )) {
             // passthrough
             currentSortingType2 = sortingTypeNext(currentSortingType2, FESTO2);
@@ -659,7 +710,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
                                                         " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
                                                         " PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight())  + 
                                                         " PUK Average Height FST2: " + std::to_string(fsm->getAverageHeight2()) +
-                                                        " PUK desired(A=0,B=1,C=2): " + std::to_string(currentSortingType2), "PositionTracker");
+                                                        " PUK desired(A=0,B=1,C=2): A oder C", "PositionTracker");
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] EjectionReason: Metal mismatch", "PositionTracker.onIsNotMetal");
         } else {
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Ejecting PUK TYPE: " + std::to_string(currentSortingType2), "PosiTionTracher.OnIs_NOT_METAL");
@@ -667,7 +718,7 @@ PositionTracker::PositionTracker(FSM* _fsm) {
                                                         " PUK Type: " +  puk->pukTypeToString(puk->getPukType()) + 
                                                         " PUK AverageHeight FST1: " + std::to_string(puk->getAverageHeight()) + 
                                                         " PUK Average Height FST2: " +std::to_string(fsm->getAverageHeight2()) +
-                                                        " PUK desired(A=0,B=1,C=2): " + std::to_string(currentSortingType2) , "PositionTracker");
+                                                        " PUK desired(A=0,B=1,C=2): A oder C", "PositionTracker");
             Logger::getInstance().log(LogLevel::DEBUG, "[FST2] Ejecting", "PositionTracker.onIsNotMetal");
         }
         puk->setTimers(Timer::MotorState::MOTOR_STOP); // could also implement puk->killTimers()

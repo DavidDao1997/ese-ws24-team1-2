@@ -4552,7 +4552,6 @@ void FSM::enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sortin
 {
 	/* Entry action for state 'Idle'. */
 	setFST1SORPE(false);
-	setFST1isMetalTest(false);
 }
 
 /* Entry action for state 'EjectingDiverter'. */
@@ -4845,15 +4844,6 @@ void FSM::enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sortin
 {
 	/* Entry action for state 'Idle'. */
 	setFST2SORPE(false);
-}
-
-/* Entry action for state 'Evaluate'. */
-void FSM::enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate()
-{
-	/* Entry action for state 'Evaluate'. */
-	setFST2isMetalTest(false);
-	EVALUATE_observable.next();
-	raiseLocal_EVALUATE();
 }
 
 /* Entry action for state 'EjectingDiverter'. */
@@ -6520,7 +6510,6 @@ void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sortin
 void FSM::enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate_default()
 {
 	/* 'default' enter sequence for state Evaluate */
-	enact_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate();
 	stateConfVector[11] = FSM::State::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Evaluate;
 	stateConfVectorPosition = 11;
 	historyVector[9] = stateConfVector[11];
@@ -15126,19 +15115,7 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 						react_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_History();
 						FSM_Festo1__Sorting_FSM_Festo1__Sorting_react(2);
 						transitioned_after = 2;
-					}  else
-					{
-						if (MS_1_HIGH_raised)
-						{ 
-							exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting();
-							setFST1isMetalTest(true);
-							EVALUATE_observable.next();
-							raiseLocal_EVALUATE();
-							react_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_History();
-							FSM_Festo1__Sorting_FSM_Festo1__Sorting_react(2);
-							transitioned_after = 2;
-						} 
-					}
+					} 
 				}
 			}
 		} 
@@ -15198,7 +15175,7 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 	{ 
 		if ((transitioned_after) < (2))
 		{ 
-			if ((LBM_1_INTERRUPTED_raised) && ((FST1isMetalTest) == (true)))
+			if ((LBM_1_INTERRUPTED_raised) && ((FST1isMetal) == (true)))
 			{ 
 				exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_PukExpected();
 				FST_1_PUK_IS_METAL_observable.next();
@@ -15207,7 +15184,7 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 				transitioned_after = 2;
 			}  else
 			{
-				if ((LBM_1_INTERRUPTED_raised) && ((FST1isMetalTest) == (false)))
+				if ((LBM_1_INTERRUPTED_raised) && ((FST1isMetal) == (false)))
 				{ 
 					exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_PukExpected();
 					FST_1_PUK_IS_NOT_METAL_observable.next();
@@ -19461,19 +19438,7 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 						react_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_History();
 						FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(11);
 						transitioned_after = 11;
-					}  else
-					{
-						if (MS_2_HIGH_raised)
-						{ 
-							exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting();
-							setFST2isMetalTest(true);
-							EVALUATE_observable.next();
-							raiseLocal_EVALUATE();
-							react_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_History();
-							FSM_Festo2__Sorting_FSM_Festo2__Sorting_react(11);
-							transitioned_after = 11;
-						} 
-					}
+					} 
 				}
 			}
 		} 
@@ -19515,20 +19480,7 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 					enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_PukExpected_default();
 					FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
 					transitioned_after = 11;
-				}  else
-				{
-					if (LBR_2_INTERRUPTED_raised)
-					{ 
-						exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle();
-						FST_2_ERROR_SYSTEM_observable.next();
-						raiseLocal_FST_2_ERROR_SYSTEM();
-						FST_2_ERROR_SORTING_UNKNOWNPUK_observable.next();
-						raiseLocal_FST_2_ERROR_SORTING_UNKNOWNPUK();
-						enseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_Idle_default();
-						FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_react(11);
-						transitioned_after = 11;
-					} 
-				}
+				} 
 			}
 		} 
 		/* If no transition was taken */
@@ -19548,7 +19500,7 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 	{ 
 		if ((transitioned_after) < (11))
 		{ 
-			if ((LBM_2_INTERRUPTED_raised) && ((FST2isMetalTest) == (true)))
+			if ((LBM_2_INTERRUPTED_raised) && ((FST2isMetal) == (true)))
 			{ 
 				exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_PukExpected();
 				FST_2_PUK_IS_METAL_observable.next();
@@ -19557,7 +19509,7 @@ sc::integer FSM::FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorti
 				transitioned_after = 11;
 			}  else
 			{
-				if ((LBM_2_INTERRUPTED_raised) && ((FST2isMetalTest) == (false)))
+				if ((LBM_2_INTERRUPTED_raised) && ((FST2isMetal) == (false)))
 				{ 
 					exseq_FSM_Festo2__Sorting_FSM_Festo2__Sorting_FSM_Festo2__Outer_Sorting_Sorting_FSM_Festo2__Internal_Sorting_PukExpected();
 					FST_2_PUK_IS_NOT_METAL_observable.next();
