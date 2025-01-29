@@ -3521,6 +3521,16 @@ bool FSM::isStateActive(State state) const noexcept
 	}
 }
 
+bool FSM::getIngressFST1() const noexcept
+{
+	return ingressFST1
+	;
+}
+
+void FSM::setIngressFST1(bool ingressFST1_) noexcept
+{
+	this->ingressFST1 = ingressFST1_;
+}
 sc::integer FSM::getLoopCounter() const noexcept
 {
 	return loopCounter
@@ -4552,6 +4562,7 @@ void FSM::enact_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sortin
 {
 	/* Entry action for state 'Idle'. */
 	setFST1SORPE(false);
+	setFST1isMetalTest(false);
 }
 
 /* Entry action for state 'EjectingDiverter'. */
@@ -14277,6 +14288,7 @@ sc::integer FSM::FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingres
 				motor1Forward++;
 				setFst_1_is_distancing(true);
 				setFST1IPP(true);
+				setIngressFST1(true);
 				EVALUATE_observable.next();
 				raiseLocal_EVALUATE();
 				enseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_PukPresent_default();
@@ -14358,7 +14370,19 @@ sc::integer FSM::FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingres
 					enseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_CreatingDistance_default();
 					FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_react(0);
 					transitioned_after = 0;
-				} 
+				}  else
+				{
+					if (!(ingressFST1))
+					{ 
+						exseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_CreatingDistance();
+						setFst_1_is_distancing(false);
+						EVALUATE_observable.next();
+						raiseLocal_EVALUATE();
+						enseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_FSM_Festo1__Internal_Ingress_Idle_default();
+						FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_Ingress_react(0);
+						transitioned_after = 0;
+					} 
+				}
 			}
 		} 
 		/* If no transition was taken */
@@ -14391,7 +14415,8 @@ sc::integer FSM::FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingres
 					exseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_ErrorFST1();
 					setFST1IPP(false);
 					motor1Forward--;
-					FST_1_POSITION_INGRESS_PUK_REMOVED_observable.next();
+					EVALUATE_observable.next();
+					raiseLocal_EVALUATE();
 					enseq_FSM_Festo1_Ingress_FSM_Festo1__Ingress_FSM_Festo1__Outer_Ingress_ErrorFST1_default();
 					FSM_Festo1_Ingress_FSM_Festo1__Ingress_react(0);
 					transitioned_after = 0;
@@ -15115,7 +15140,19 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 						react_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_History();
 						FSM_Festo1__Sorting_FSM_Festo1__Sorting_react(2);
 						transitioned_after = 2;
-					} 
+					}  else
+					{
+						if (MS_1_HIGH_raised)
+						{ 
+							exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting();
+							setFST1isMetalTest(true);
+							EVALUATE_observable.next();
+							raiseLocal_EVALUATE();
+							react_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_History();
+							FSM_Festo1__Sorting_FSM_Festo1__Sorting_react(2);
+							transitioned_after = 2;
+						} 
+					}
 				}
 			}
 		} 
@@ -15175,7 +15212,7 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 	{ 
 		if ((transitioned_after) < (2))
 		{ 
-			if ((LBM_1_INTERRUPTED_raised) && ((FST1isMetal) == (true)))
+			if ((LBM_1_INTERRUPTED_raised) && ((FST1isMetalTest) == (true)))
 			{ 
 				exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_PukExpected();
 				FST_1_PUK_IS_METAL_observable.next();
@@ -15184,7 +15221,7 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 				transitioned_after = 2;
 			}  else
 			{
-				if ((LBM_1_INTERRUPTED_raised) && ((FST1isMetal) == (false)))
+				if ((LBM_1_INTERRUPTED_raised) && ((FST1isMetalTest) == (false)))
 				{ 
 					exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_PukExpected();
 					FST_1_PUK_IS_NOT_METAL_observable.next();
@@ -15208,26 +15245,13 @@ sc::integer FSM::FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorti
 						transitioned_after = 2;
 					}  else
 					{
-						if (LBR_1_INTERRUPTED_raised)
+						if (!(FST1SORPE))
 						{ 
 							exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_PukExpected();
-							FST_1_ERROR_SYSTEM_observable.next();
-							raiseLocal_FST_1_ERROR_SYSTEM();
-							FST_1_ERROR_SORTING_UNKNOWNPUK_observable.next();
-							raiseLocal_FST_1_ERROR_SORTING_UNKNOWNPUK();
 							enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Idle_default();
 							FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_react(2);
 							transitioned_after = 2;
-						}  else
-						{
-							if (!(FST1SORPE))
-							{ 
-								exseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_PukExpected();
-								enseq_FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_FSM_Festo1__Internal_Sorting_Idle_default();
-								FSM_Festo1__Sorting_FSM_Festo1__Sorting_FSM_Festo1__Outer_Sorting_Sorting_react(2);
-								transitioned_after = 2;
-							} 
-						}
+						} 
 					}
 				}
 			}
@@ -17777,7 +17801,18 @@ sc::integer FSM::Evaluate_EvaluateTester_react(const sc::integer transitioned_be
 																																						FST_1_SORTING_MODULE_RESTING_observable.next();
 																																						enseq_Evaluate_EvaluateTester_default();
 																																						transitioned_after = 9;
-																																					} 
+																																					}  else
+																																					{
+																																						if (FST_1_POSITION_INGRESS_DISTANCE_VALID_raised)
+																																						{ 
+																																							exseq_Evaluate_EvaluateTester();
+																																							setIngressFST1(false);
+																																							EVALUATE_observable.next();
+																																							raiseLocal_EVALUATE();
+																																							enseq_Evaluate_EvaluateTester_default();
+																																							transitioned_after = 9;
+																																						} 
+																																					}
 																																				}
 																																			}
 																																		}
@@ -18750,7 +18785,7 @@ sc::integer FSM::FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_RampF
 				transitioned_after = 10;
 			}  else
 			{
-				if (LBR_1_OPEN_raised)
+				if (lbr_1_isOpen)
 				{ 
 					exseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_RampFullUnknownPuk();
 					enseq_FSM_Festo1__Errors_FSM_Errors_FSM_Festo1__Internal_Errors_RampFullMissingPuk_default();

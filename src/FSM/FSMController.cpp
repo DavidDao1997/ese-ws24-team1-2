@@ -509,12 +509,12 @@ void FSMController::handlePulse(_pulse msg) {
             fsm->setFST_1_currentValue(msgVal);// 2400
             fsm-> raiseHS_1_SAMPLE();
             //Logger::getInstance().log(LogLevel::DEBUG, "received currentValue... HS1: "+ std::to_string(msgVal), "FSMController");
-            //Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLE..."+ std::to_string(msgVal),, "FSMController");
+            // Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS1_SAMPLE..."+ std::to_string(msgVal), "FSMController");
             break;
         case PULSE_HS2_SAMPLE:
             fsm-> setFST_2_currentValue(msgVal); 
             fsm->raiseHS_2_SAMPLE();
-            //Logger::getInstance().log(LogLevel::DEBUG, "received currentValue... HS2: "+ std::to_string(msgVal), "FSMController");
+            // Logger::getInstance().log(LogLevel::DEBUG, "received currentValue... HS2: "+ std::to_string(msgVal), "FSMController");
             // Logger::getInstance().log(LogLevel::TRACE, "received PULSE_HS2_SAMPLE...", "FSMController");
             break;
             //TODO need to rename 

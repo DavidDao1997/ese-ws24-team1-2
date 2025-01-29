@@ -1109,6 +1109,10 @@ class FSM : public sc::EventDrivenInterface
 		void raiseERROR_SIGNAL();
 		
 		
+		/*! Gets the value of the variable 'ingressFST1' that is defined in the default interface scope. */
+		bool getIngressFST1() const noexcept;
+		/*! Sets the value of the variable 'ingressFST1' that is defined in the default interface scope. */
+		void setIngressFST1(bool ingressFST1) noexcept;
 		/*! Gets the value of the variable 'loopCounter' that is defined in the default interface scope. */
 		sc::integer getLoopCounter() const noexcept;
 		/*! Sets the value of the variable 'loopCounter' that is defined in the default interface scope. */
@@ -1559,6 +1563,7 @@ class FSM : public sc::EventDrivenInterface
 		
 	private:
 		
+		bool ingressFST1 {false};
 		sc::integer loopCounter {0};
 		bool calibrated {false};
 		bool eStopCalibratedReturn {false};
