@@ -1,34 +1,35 @@
 # Embedded Systems Engineering (ESE) – WS 2024/25 – Team 1-2
 
 Teamprojekt im Rahmen des Moduls **Embedded Systems Engineering** an der HAW Hamburg.  
-Ziel war die Entwicklung einer Steuerungssoftware für eine Sortieranlage, die Bausteine je nach Höhe und Material automatisch aussortiert oder passieren lässt.
+Ziel war die Entwicklung einer Steuerungssoftware für eine Werkstück-Sortieranlage, realisiert mit aktuellen Methoden und Techniken der Softwareentwicklung für Eingebettete Systeme.
 
-## Projektbeschreibung
-Die Sortieranlage ist mit einem **Höhensensor** und einem **Metallsensor** ausgestattet.  
-Anhand der Messwerte werden Bausteine in verschiedene Kategorien eingeteilt. Die Steuerungssoftware trifft auf Basis dieser Sensordaten Entscheidungen, um Bausteine zu sortieren oder durchzulassen.
+## Zielsetzung
+Im Praktikum wurde eine vollständige Softwarelösung für ein eingebettetes System entworfen und umgesetzt – von der Anforderungsanalyse bis hin zum Abnahmetest.  
+Neben der technischen Umsetzung lag ein besonderer Fokus auf Teamarbeit, Koordination und strukturierter Vorgehensweise.
 
-## Vorgehensweise
-Das Projekt wurde nach dem **V-Modell** umgesetzt und umfasste:
-- Anforderungsanalyse
-- Entwurf (inkl. Architekturdesign & FSM-Design)
-- Implementierung
-- Abnahmetest
+## Aufgabenstellung
+- Entwicklung einer **Werkstück-Sortieranlage** auf Basis von zwei **Festo-Transfersystemen** (Förderbandmodule)
+- Steuerung jedes Moduls über einen eigenen **Embedded Controller**
+- Kopplung der beiden Steuerungseinheiten über **Ethernet** mit Kommunikation via **Qnet-Protokoll**
+- Umsetzung der Grundfunktionalität in einem 4er-Team; bei größeren Teams zusätzliche Funktionalitäten
 
-Zur Organisation nutzten wir **Kanban** mit *Trello* für Aufgabenverteilung und Fortschrittskontrolle.
+## Anforderungen
+- Integration und Ansteuerung eines **Höhensensors** und eines **Metallsensors** zur Erkennung von Materialeigenschaften
+- Sortierung der Werkstücke basierend auf Messwerten (aussortieren oder passieren lassen)
+- Entwurf einer **Softwarearchitektur** unter Verwendung von **Embedded System Patterns**
+- Implementierung einer **Finite State Machine (FSM)** zur Ablaufsteuerung
+- Sicherstellung einer zuverlässigen und synchronisierten Kommunikation zwischen den Steuerungseinheiten
 
-## Meine Rolle & Beiträge
-- **Teamorganisation** und Koordination der Arbeitspakete
-- **Dokumentation** sämtlicher Projektphasen
-- Implementierung des **Höhensensors**
-- Teilimplementierung und Design der **Finite State Machine (FSM)**
-- Architekturdesign unter Anwendung von **Embedded System Patterns**
+## Vorgehensweise & Methoden
+- **Vorgehensmodell:** V-Modell (von Anforderungsanalyse über Design und Implementierung bis hin zum Test)
+- **Projektmanagement:** Agile Arbeitsweise mit **Kanban** (Trello)
+- **Designmethoden:** Embedded System Patterns, FSM-Design
+- **Kommunikation & Versionskontrolle:** GitLab
 
 ## Technologien & Tools
-- **Programmiersprache:** (hier ergänzen, z. B. C / C++)
-- **Hardware:** Embedded Controller / Sensoren (Höhensensor, Metallsensor)
-- **Vorgehensmodell:** V-Modell
-- **Projektmanagement:** Kanban (Trello)
-- **Designmethoden:** Embedded System Patterns, FSM-Design
+- **Programmiersprachen:** C++
+- **Hardware:** Embedded Controller, Höhensensor, Metallsensor
+- **Netzwerk:** Ethernet, Qnet-Protokoll
 
 ## Lizenz
 Dieses Projekt wurde im Rahmen einer Hochschulveranstaltung erstellt und dient ausschließlich Demonstrations- und Lernzwecken.
