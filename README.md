@@ -1,17 +1,17 @@
-# Embedded Systems Engineering (ESE) – WS 2024/25 – Team 1-2
+# Embedded Systems Engineering (ESE) – WS 2024 – Team 1-2
 
 Teamprojekt im Rahmen des Moduls **Embedded Systems Engineering** an der HAW Hamburg.  
 Ziel war die Entwicklung einer Steuerungssoftware für eine Werkstück-Sortieranlage, realisiert mit aktuellen Methoden und Techniken der Softwareentwicklung für Eingebettete Systeme.
 
 ## Zielsetzung
-Im Praktikum wurde eine vollständige Softwarelösung für ein eingebettetes System entworfen und umgesetzt – von der Anforderungsanalyse bis hin zum Abnahmetest.  
+Im Praktikum wurde eine vollständige Softwarelösung für ein eingebettetes System entworfen und umgesetzt von der Anforderungsanalyse bis hin zum Abnahmetest.  
 Neben der technischen Umsetzung lag ein besonderer Fokus auf Teamarbeit, Koordination und strukturierter Vorgehensweise.
 
 ## Aufgabenstellung
 - Entwicklung einer **Werkstück-Sortieranlage** auf Basis von zwei **Festo-Transfersystemen** (Förderbandmodule)
 - Steuerung jedes Moduls über einen eigenen **Embedded Controller**
 - Kopplung der beiden Steuerungseinheiten über **Ethernet** mit Kommunikation via **Qnet-Protokoll**
-- Umsetzung der Grundfunktionalität in einem 4er-Team; bei größeren Teams zusätzliche Funktionalitäten
+- Umsetzung der Grundfunktionalität in einem 4er-Team
 
 ## Anforderungen
 - Integration und Ansteuerung eines **Höhensensors** und eines **Metallsensors** zur Erkennung von Materialeigenschaften
